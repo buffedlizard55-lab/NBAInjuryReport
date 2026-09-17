@@ -44,9 +44,13 @@
   <section class="card" style="margin-top:16px">
     <h2>🔁 Last automated re-audit <span class="tiny muted">(GitHub Actions runner, real network)</span></h2>
     <p class="muted small">The registry below was written from a build sandbox with no HTTPS egress, so every claim in it is re-read
-      by <span class="kbd">tools/verify_live.py</span> on a runner: <b>an unexpected status is recorded as DRIFT and fails that job</b>,
-      while a status we already documented (the 404 on the 2026-27 official page, the 500 on the PDF index, the 403 on Bluesky
-      keyword search and on X's pricing page) is recorded as DOCUMENTED-BLOCKER, not as a bug. Raw responses, hashes and timestamps stay in the
+      by <span class="kbd">tools/verify_live.py</span> on a runner. Verdicts, in plain words:
+      <b>CAPABILITY-DRIFT</b> (fails the job) is reserved for the handful of results that would change what this product may claim — the 2026-27 official
+      page going live, the injury-PDF index starting to expose links, the injuries API or scoreboard dying, Bluesky keyword search opening up.
+      <b>DOCUMENTED-BLOCKER</b> means the source still refuses exactly as stated (the 404 on the 2026-27 page is that case).
+      <b>ENV-BLOCKED</b> means only that this script's plain client was refused: ESPN returned 403 here while the Node collector on the same runner read
+      the same URLs minutes later, so blockage on one path is never reported as a source failure or a change.
+      <b>OK-PAGE-CHANGED</b> means reachable, but the wording a probe looked for moved. Raw responses, hashes and timestamps stay in the
       <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/workflows/live-audit.yml" target="_blank" rel="noopener">workflow artifact ↗</a>.</p>
     <div id="auditBox" class="muted small">Loading <span class="kbd">data/audit/latest.json</span>…</div>
   </section>
