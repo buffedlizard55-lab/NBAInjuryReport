@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T08:46:31.881Z",
+  "generated": "2026-09-17T13:49:21.516Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3500,28 +3500,11 @@
       "desc": "Will Detroit return to the top of the East? Looking back at the offseason and taking an early look at the 2026-27 season.",
       "url": "https://www.espn.com/nba/story/_/id/49826930/detroit-pistons-2026-27-season-preview-stats-roster-jalen-duren-cade-cunningham",
       "byline": "NBA Insiders"
-    },
-    {
-      "id": "49827564",
-      "ts": "2026-09-08T11:09:05Z",
-      "sev": "return",
-      "sevLabel": "RETURN / GOOD NEWS",
-      "title": "Biggest injury returns for the 2026-27 NBA season",
-      "desc": "Which stars will be back in action and injury returns to watch for in the 2026-27 NBA season.",
-      "url": "https://www.espn.com/nba/story/_/id/49827564/biggest-injury-returns-2026-27-nba-season-irving-haliburton-doncic-butler-lillard",
-      "byline": "NBA insiders"
     }
   ],
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
       "nuggets.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3529,12 +3512,12 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "trailblazers.bsky.social": {
+      "nba.com": {
         "ok": true,
         "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "sixersnba.bsky.social": {
         "ok": true,
@@ -3542,6 +3525,13 @@
         "name": "Philadelphia 76ers — official",
         "kind": "official-team",
         "team": "PHI"
+      },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
       },
       "dallasmavs.bsky.social": {
         "ok": true,
@@ -3564,13 +3554,6 @@
         "kind": "reporter",
         "team": null
       },
-      "howardbeck.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
       "johnhollinger.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3578,12 +3561,12 @@
         "kind": "reporter",
         "team": null
       },
-      "tomorsborn.bsky.social": {
+      "howardbeck.bsky.social": {
         "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
+        "count": 0,
+        "name": "Howard Beck",
         "kind": "reporter",
-        "team": "SAS"
+        "team": null
       },
       "tomhaberstroh.bsky.social": {
         "ok": true,
@@ -3599,9 +3582,16 @@
         "kind": "reporter",
         "team": "SAS"
       },
+      "tomorsborn.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Tom Orsborn",
+        "kind": "reporter",
+        "team": "SAS"
+      },
       "nbasarah.bsky.social": {
         "ok": true,
-        "count": 5,
+        "count": 4,
         "name": "Sarah Todd",
         "kind": "reporter",
         "team": "UTA"
@@ -3812,32 +3802,6 @@
       "createdAt": "2026-07-03T18:08:53.850Z",
       "indexedAt": "2026-07-03T18:08:54.331Z",
       "url": "https://bsky.app/profile/jmcdonaldsa.bsky.social/post/3mpr5comnwk2i",
-      "sev": "mention",
-      "sevLabel": "NON-INJURY (rest / roster / decision)",
-      "inGameWatch": false,
-      "kindLabel": "non-injury"
-    },
-    {
-      "uri": "at://did:plc:ar64irgfsivc76wkio5oylob/app.bsky.feed.post/3mpk6nevc2s2j",
-      "text": "IMO It’s just really hard to justify upper 30’s for Kessler from a team perspective. I’m interested to hear what offers are like for Duren. We know what Hartenstein just got. And Kessler has been out for a year and has never played on a winning team much less even sniffed the playoffs.",
-      "handle": "nbasarah.bsky.social",
-      "name": "Sarah Todd",
-      "verified": true,
-      "kind": "reporter",
-      "team": "UTA",
-      "outlet": "NBA writer (Utah market)",
-      "role": "Beat writer / columnist",
-      "accountUrl": "https://bsky.app/profile/nbasarah.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/nbasarah.bsky.social",
-        "team": "UTA",
-        "kind": "reporter",
-        "outlet": "NBA writer (Utah market)",
-        "name": "Sarah Todd"
-      },
-      "createdAt": "2026-06-30T23:44:08.319Z",
-      "indexedAt": "2026-06-30T23:44:08.929Z",
-      "url": "https://bsky.app/profile/nbasarah.bsky.social/post/3mpk6nevc2s2j",
       "sev": "mention",
       "sevLabel": "NON-INJURY (rest / roster / decision)",
       "inGameWatch": false,
