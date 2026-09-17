@@ -40,7 +40,7 @@
       <span class="pill ok">✓ 20 reporters added from bylines on the injury feed itself (no handle asserted)</span>
       <span class="pill warn">4 outlet-verified · X handle unconfirmed (none asserted)</span>
       <span class="pill bad">1 retired · 1 inactive on X</span>
-      <span class="pill warn">1 outlet DISPUTED · flagged, not guessed</span>
+      <span class="pill ok">✓ Fischer outlet RESOLVED 2026-09-17 — The Stein Line, quoted from the outlet's own byline</span>
     </div>
   </section>
 
@@ -50,7 +50,7 @@
       <li><b>John Hollinger quit X</b> and is <b>active on Bluesky</b> — verified 2026-09-17: his newest post indexed 01:28Z that day. Use the Bluesky column.</li>
       <li><b>Shams Charania's Bluesky account is abandoned</b> — newest post 2024-02-13 (verified via the public API). Do not poll it; his news reaches this system through ESPN's structured injury comments instead.</li>
       <li><b>Anthony Slater → ESPN: CONFIRMED 2026-09-17</b> (Front Office Sports, 2025-06-13: "Anthony Slater moving from The Athletic to ESPN"), so the flag on that row is cleared.</li>
-      <li><b>Jake Fischer's employer is DISPUTED</b> — Yahoo Sports, "The Stein Line" and "The People's Insider" all appear in 2026 material. His row keeps the handle evidence and marks the outlet unresolved instead of picking one.</li>
+      <li><b>Jake Fischer → The Stein Line: RESOLVED 2026-09-17</b> — the outlet's own Substack byline was fetched live and is quoted verbatim in his row ("Founded by @JakeLFischer, former Yahoo! Sports Senior NBA reporter … Contributor to The Stein Line."). An earlier DISPUTED state is closed by direct evidence, and the same byline is the handle evidence.</li>
       <li><b>20 rows are "cited on the injury feed"</b>: they were added because ESPN's own injury comments carried the byline, and each stores the citation text
         verbatim from <code>data/live/latest.json</code>. <code>tools/smoke_test.js</code> fails if a stored quote is not present in that snapshot, so a row cannot
         outlive its evidence silently. No social handle is asserted for any of them.</li>

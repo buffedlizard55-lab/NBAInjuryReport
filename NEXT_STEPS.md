@@ -1,5 +1,36 @@
 # Next-session priorities
 
+## State at the end of session 6 (2026-09-17, ~19:00Z) — read this first
+
+Shipped on branch `arena/01a0b0ba-nbainjuryreport`: the **test-harness integrity fix of the project**, four dated registry re-validations (incl. closing the Fischer outlet dispute), and three lineup-impact refinements that were on this list.
+
+1. **Dead test closures revived (`tools/smoke_test.js`) — the single most important fix this session.**
+   `check(name, () => {…})` accepted the closure as truthy and never ran it: 6 grouping closures / 12 inner
+   assertions in the lineup-impact section had NEVER executed while the suite reported all-green. The harness now
+   executes closures honestly. Moment it was fixed, one previously-dead assertion went red for real: `role.js`
+   never disclosed a schema-unmarked context file (and neither `intelligence.js` nor the poller even passed
+   `schema` through). Implemented end-to-end; the assertion is now green because the disclosure exists.
+2. **Registry re-validation with dated evidence:** Jake Fischer → **The Stein Line ("The People's Insider")**,
+   resolved by quoting the outlet's own Substack byline fetched live (post dated 2026-04-08) — the DISPUTED flag is
+   closed; Chris Haynes → Amazon Prime (FOS 2025-09-29); Candace Buckner → The Athletic national columnist
+   (Sports Media Watch + TheWrap, both 2026-02-26); Will Guillory → The Athletic Rockets + Pelicans staff writer.
+   A smoke assertion now fails on any silent DISPUTED outlet. `data/verified_sources.json` regenerated (30/23/56/36).
+3. **Impact refinements (were §5 "Remaining"):** median per-game minutes quoted next to the mean with a
+   blowout/divergence disclosure (collector keeps bounded `minutesValues`); a **team-change flag** when the
+   collected sample belongs to a previous team; and a **named** "no contract entry" state (two-way/expired/
+   unpublished — the source does not say which) instead of silence.
+4. **Live re-verification (~19:00Z):** 2026-27 official page still 404 · 2025-26 rules page intact verbatim ·
+   ESPN injuries 200 with the same schema · nba.com Bluesky verification still valid (followsCount 6) ·
+   searchPosts still 403 · Basketball Monster status tags confirmed present in server HTML (settles the
+   third-pass retraction question).
+
+Facts a new session can rely on:
+- Test surface is now honestly reported: **165 smoke** · 48 integration · 24 poll fixtures · 26 regression groups ·
+  4 Python · live replay 74 rows / 12 posts. If a smoke number ever *drops* after editing a closure, suspect the
+  harness, not the code.
+- Same time gates as session 5: `roleStats` fills from the 2026-10-03 preseason tip; the 2026-27 official page
+  is expected around early October; the CI audit tripwire (`CAPABILITY-DRIFT`) fires the moment it goes live.
+
 ## State at the end of session 5 (2026-09-17) — read this first
 
 Shipped on branch `arena/01a0b045-nbainjuryreport`: Session 5 enhancements covering real-time in-game alerting, Basketball Monster-style quick search and status filtering, lineup impact alert propagation, and verified reporter directory subpage upgrades.
@@ -126,13 +157,16 @@ Remaining:
   is displayed for most rows in October, and starts filling in as box scores are collected"* — not a populated column on day one.
 - Depth charts exist only as HTML (`espn-depth-chart-page` records the probed-and-rejected JSON routes). To use them: capture a real fixture,
   write a parser that fails closed on layout change, keep it as corroboration only. Never scrape blind.
-- Reconcile trades: `rosterUrl`/`playerId` drift when a player moves mid-season; the collector keys on `playerId` and re-keys on roster fetch,
-  but the accumulated `roleStats` still carry the old team label. Add an explicit team-change note instead of silently reassigning minutes.
-- Contract capture takes the newest `season.year`; it must also flag a player whose contract entry is missing (two-way/two-way-expired) rather
-  than printing "contract not collected" for a player who simply has no entry.
+- ~~Team-change note~~ **SHIPPED session 6**: when the accumulated sample's team differs from the listing's team, the assessment sets
+  `role.teamChanged`, names both teams and shows "⚠ sample collected with previous team" on the board. Still open: reconciling `playerId`
+  drift on trades at the *collector* level (re-keying history when ESPN issues a new roster entry).
+- ~~Missing contract entry~~ **SHIPPED session 6**: `contract.missing` + "ESPN's roster feed filed no contract entry … (two-way, expired or
+  unpublished; the source does not say which)" is now explicit instead of silence.
 - Add recurrence corroboration across seasons (same body part twice) **only** if listing history is retained long enough; today `injuryEntries`
   is capped at 8 per player and 270 days of listing recency, and first observation must never be presented as injury onset.
-- Minutes are averages over collected games; a 6-game sample of a blowout-heavy stretch misleads. Consider median minutes and per-game spread.
+- ~~Median minutes~~ **SHIPPED session 6**: the collector keeps bounded per-game `minutesValues`, `role.js` quotes the median next to the mean
+  and discloses a wide divergence ("blowout-heavy or injury-shortened sample"). Still open: trimming outliers (e.g. <8 min games for
+  DNP-return/injured-exit artifacts) once real games show how often they occur.
 
 ## 6. Delivery, storage and operations
 

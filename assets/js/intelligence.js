@@ -18,6 +18,7 @@ const Intelligence = (() => {
   function rebuildContext() {
     impactCtx = {
       checkedAt: context.checkedAt || null,
+      schema: context.schema != null ? context.schema : null,   // role.js discloses an unmarked (pre-schema-2) capture instead of trusting it
       rosters: context.rosters || {},
       roles: context.roles || [],
       roleStats: context.roleStats || {},

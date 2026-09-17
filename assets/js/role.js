@@ -101,6 +101,15 @@ const LineupImpact = (function () {
     return null;
   }
 
+  /* Median + spread from bounded per-game minute values (collector stores minutesValues).
+   * A mean over a blowout-heavy 6-game sample misleads silently; the median and range say so. */
+  function medianOf(values) {
+    const v = (values || []).filter(Number.isFinite).slice().sort((a, b) => a - b);
+    if (!v.length) return null;
+    const mid = Math.floor(v.length / 2);
+    return v.length % 2 ? v[mid] : (v[mid - 1] + v[mid]) / 2;
+  }
+
   function numOrNull(v) { const n = Number(v); return Number.isFinite(n) ? n : null; }
 
   function rosterPlayer(player, playerId, team, context) {
@@ -137,19 +146,43 @@ const LineupImpact = (function () {
     };
     if (!row || !row.team) { out.notes.push("No team attached to the listing, so no roster context can be applied."); return out; }
 
+    const cap = (context && context.rosters) ? context.rosters[row.team] : null;
+    /* A context file with NO schema marker predates the schema-2 collector (or was assembled by
+     * hand) — its gaps may simply mean "fields not collected yet". Pinned by the smoke assertion
+     * "schema gap is disclosed", which the test harness had never actually run (dead closure,
+     * found and fixed 2026-09-17, session 6). */
+    if (context && context.schema == null && cap) {
+      out.notes.push("Context file is schema unmarked (no schema field — written by a collector older than schema 2, or assembled by hand): it may predate injury-listing, contract and role-stat fields, so a gap in this file is a capture gap, not a fact about the player.");
+    }
+
     const stats = context && context.roleStats ? context.roleStats[String(row.playerId || row.player)] : null;
     const currentRole = findCurrentRole(row.playerId, row.team, context);
     const t = tierFromObservations(stats, currentRole);
     const evidence = uniqueUrls([currentRole && currentRole.url, ...((stats && stats.sampleUrls) || [])]);
 
+    /* Median minutes + divergence note: a mean over a small, blowout-heavy sample misleads, so
+     * the collector keeps bounded per-game values (minutesValues) and the UI quotes both. */
+    const med = (stats && Array.isArray(stats.minutesValues) && stats.minutesValues.length >= 3 && !t.staleSample)
+      ? medianOf(stats.minutesValues) : null;
+
     out.role = {
       label: TIER_LABEL[t.tier] || ("Role unclear in " + t.games + " collected game(s) — review box scores"),
       tier: t.tier, games: t.games || 0, starts: t.starts || 0,
       avgMinutes: t.avgMinutes == null ? null : Math.round(t.avgMinutes * 10) / 10,
+      medianMinutes: med == null ? null : Math.round(med * 10) / 10,
       startShare: t.share == null ? null : Math.round(t.share * 100) / 100,
       evidence
     };
     if (t.currentGameStarter) out.role.startedThisGame = true;
+    if (med != null && out.role.avgMinutes != null && (out.role.games || 0) >= 5 && Math.abs(out.role.avgMinutes - med) >= 8) {
+      out.notes.push(`Collected minutes swing widely: median ${out.role.medianMinutes} vs mean ${out.role.avgMinutes} over ${out.role.games} game(s) — a blowout-heavy or injury-shortened sample; read the average with care.`);
+    }
+    /* A trade silently aliases minutes: the aggregate keeps the team it was collected under, so
+     * when the listing's team differs the sample must be flagged, not quietly reassigned. */
+    if (stats && stats.team && row.team && stats.team !== row.team) {
+      out.role.teamChanged = true;
+      out.notes.push(`Box-score sample was collected with ${stats.team}; the player has since moved to ${row.team}. A team change resets nothing automatically — the cross-team sample is flagged, and new-team observations keep accumulating from here.`);
+    }
     if (t.staleSample) {
       out.role.staleSample = true;
       out.notes.push("Collected box-score sample exists but was last refreshed " + (t.staleAt || "at an unknown time") + ", outside the " + Math.round(CONFIG.roleFreshMs / 86400000) + "-day window — an old sample is not this week's role, so impact is withheld.");
@@ -170,6 +203,12 @@ const LineupImpact = (function () {
         /* ESPN files $0 for two-way/Exhibit-100 deals. Saying "$0.0M" would read like a fact about
          * the player's worth; it is a quirk of the source, so it is named as one. */
         if (Number(rp.salaryCurrent) === 0) out.contract.zero = true;
+      } else {
+        /* A player present in the roster capture but with NO contract entry at all is its own
+         * state: two-way, expired or simply unpublished — the source does not say which. Silence
+         * here used to read like "contract unknown anywhere", which is a claim we cannot make. */
+        out.contract = { missing: true, label: "ESPN's roster feed filed no contract entry for " + (row.player || "this player") +
+          " — a two-way, an expired deal or an unpublished one; the source does not say which. No contract value is asserted." };
       }
       if (out.listing.count >= 2) out.notes.push(`Injury-listing cadence: ${out.listing.count} dated listings in the last ${Math.round(CONFIG.listingRecentDays / 30)} months on ESPN's roster feed — a recurrence indicator, not a medical history.`);
     } else {
@@ -205,8 +244,8 @@ const LineupImpact = (function () {
       out.impactLabel = "IMPACT UNKNOWN — no role evidence collected";
     }
     /* Distinguish 'this capture has no listing history at all' (collector not run for this team,
-     * or an older file version) from 'this player has one dated listing'. Only the first is a gap. */
-    const cap = context && context.rosters && context.rosters[row.team];
+     * or an older file version) from 'this player has one dated listing'. Only the first is a gap.
+     * (`cap` is hoisted to the top of assess() — the schema-unmarked disclosure uses it too.) */
     const capPlayers = (cap && cap.players) || [];
     if (cap && capPlayers.length && !capPlayers.some(p => Array.isArray(p.injuryEntries))) {
       out.notes.push("This team's roster capture contains no dated injury-listing array at all (file written before that field was collected, or the collector has not run since) — cadence and salary are unavailable BY CAPTURE VERSION, not because the player has none. Re-run tools/collect_context.js.");
@@ -237,7 +276,7 @@ const LineupImpact = (function () {
   function summaryText(assessment) {
     if (!assessment) return "";
     const bits = [assessment.impactLabel];
-    if (assessment.role.games) bits.push(assessment.role.label + " (" + assessment.role.starts + " of " + assessment.role.games + " collected games started" + (assessment.role.avgMinutes != null ? ", " + assessment.role.avgMinutes + " min avg" : "") + ")");
+    if (assessment.role.games) bits.push(assessment.role.label + " (" + assessment.role.starts + " of " + assessment.role.games + " collected games started" + (assessment.role.avgMinutes != null ? ", " + assessment.role.avgMinutes + " min avg" : "") + (assessment.role.medianMinutes != null ? ", median " + assessment.role.medianMinutes : "") + ")");
     if (assessment.listing.count >= 2) bits.push(assessment.listing.count + " dated injury listings");
     return bits.join(" · ");
   }
