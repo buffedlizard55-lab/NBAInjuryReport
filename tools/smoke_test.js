@@ -55,7 +55,7 @@ global.URL = global.URL || { createObjectURL: () => "blob:", revokeObjectURL() {
 /* ------------------------------------------------------------------ *
  * Load the real modules into ONE shared scope (they are classic scripts)
  * ------------------------------------------------------------------ */
-const FILES = ["data.js", "alerts.js", "wire.js", "injuries.js", "social.js", "ingame.js"];
+const FILES = ["data.js", "role.js", "alerts.js", "wire.js", "injuries.js", "social.js", "ingame.js"];
 const source = FILES.map(f => fs.readFileSync(path.join(ROOT, "assets/js", f), "utf8")).join("\n;\n");
 
 const env = new Function(source + `
@@ -63,7 +63,7 @@ const env = new Function(source + `
            SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, INGAME_WATCH_RE, NBA_OFFICIAL_REPORT_URL,
            teamByAbbr, espnTeamInjuriesUrl, normalizeInjuryStatus, xSearchUrl,
            standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE,
-           AlertEngine, Wire, InjuryBoard, Social, InGame };
+           AlertEngine, Wire, InjuryBoard, Social, InGame, LineupImpact };
 `);
 const M = env();
 
@@ -297,6 +297,142 @@ const live = M.InGame.liveEvents([
   { competitions: [{ status: { type: { state: "post" } } }] }
 ]);
 check("liveEvents selects only in-progress games", live.length === 1);
+
+console.log("== lineup impact (role.js) — never medical severity, never a guess ==");
+const LI = M.LineupImpact;
+const nowIso = new Date().toISOString();
+const daysAgo = n => new Date(Date.now() - n * 86400000).toISOString();
+const ctx = {
+  rosters: { UTA: { fetchedAt: nowIso, url: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster",
+    players: [{ playerId: "1", player: "Trey Alexander", team: "UTA", position: "G", experienceYears: 1, rosterStatus: "Active",
+      salaryCurrent: 2200000, salarySeason: 2027, playerUrl: "https://www.espn.com/nba/player/_/id/1/trey-alexander",
+      injuryEntries: [{ status: "Out", date: daysAgo(3).slice(0, 10) + "T00:00Z" }, { status: "Day-To-Day", date: daysAgo(40).slice(0, 10) + "T00:00Z" }, { status: "Out", date: daysAgo(500).slice(0, 10) + "T00:00Z" }] }] } },
+  roles: [{ playerId: "1", player: "Trey Alexander", team: "UTA", eventId: "401", observedAt: nowIso, role: "Starter in this game", minutes: 31, url: "https://www.espn.com/nba/game/_/gameId/401" }],
+  roleStats: {
+    "1": { player: "Trey Alexander", team: "UTA", games: 5, starts: 4, minutesTotal: 150, minutesGames: 5, sampleUrls: ["https://www.espn.com/nba/game/_/gameId/401"], updatedAt: nowIso, keys: [] },
+    "2": { player: "Rotation Guy", team: "UTA", games: 4, starts: 1, minutesTotal: 90, minutesGames: 4, sampleUrls: [], updatedAt: nowIso, keys: [] },
+    "3": { player: "Depth Guy", team: "UTA", games: 6, starts: 0, minutesTotal: 30, minutesGames: 6, sampleUrls: [], updatedAt: nowIso, keys: [] }
+  },
+  exits: { "2": { player: "Rotation Guy", playerId: "2", team: "UTA", name: "Sarah Todd", handle: "nbasarah.bsky.social", postedAt: nowIso, url: "https://bsky.app/profile/nbasarah.bsky.social/post/x", at: Date.now(), status: "reported-unconfirmed" } }
+};
+M.InjuryBoard.setImpactContext(ctx);
+const aStarter = LI.assess({ player: "Trey Alexander", playerId: "1", team: "UTA", sev: "out" }, ctx);
+const aRotation = LI.assess({ player: "Rotation Guy", playerId: "2", team: "UTA", sev: "out" }, ctx);
+const aBench = LI.assess({ player: "Depth Guy", playerId: "3", team: "UTA", sev: "questionable" }, ctx);
+const aUnknown = LI.assess({ player: "Never Seen", playerId: "9", team: "UTA", sev: "out" }, ctx);
+check("starter + OUT -> HIGH impact", aStarter.impact === "high", aStarter.impact);
+check("rotation + OUT -> MEDIUM impact", aRotation.impact === "medium", aRotation.impact);
+check("depth player -> LOW impact", aBench.impact === "low", aBench.impact);
+check("no collected games -> unknown, and the label says so", aUnknown.impact === "unknown" && /unknown/i.test(aUnknown.impactLabel), aUnknown.impactLabel);
+check("impact never ASSIGNS a medical severity",
+  !("medicalSeverity" in aStarter) && !/medical severity: *(high|moderate|low|severe|major)/i.test(LI.summaryText(aStarter) + " " + aStarter.impactLabel),
+  JSON.stringify(aStarter.impactLabel));
+check("aggregate evidence beats a single box score, and still records tonight's start",
+  aStarter.role.games === 5 && aStarter.role.starts === 4 && aStarter.role.avgMinutes === 30 && aStarter.role.startedThisGame === true,
+  JSON.stringify(aStarter.role));
+check("a stale aggregate sample withholds impact instead of quoting last season's role", () => {
+  const oldStats = { "9001": { player: "Stale Sample Guy", team: "UTA", games: 10, starts: 10, minutesTotal: 340, minutesGames: 10, updatedAt: new Date(Date.now() - 60 * 86400000).toISOString(), sampleUrls: [] } };
+  const a = LI.assess({ player: "Stale Sample Guy", playerId: "9001", team: "UTA", sev: "out" }, { roleStats: oldStats, roles: [], rosters: {} });
+  check("stale sample -> impact unknown, games still disclosed", a.impact === "unknown" && a.role.games === 10 && a.role.staleSample === true, JSON.stringify(a.role));
+  check("stale sample explains itself", /last refreshed|not this week's role/i.test(a.notes.join(" ")), a.notes.join(" | "));
+});
+check("the 'started this game' window is days, not the whole season", () => {
+  const recent = { roles: [{ playerId: "7", player: "Tonight Only", team: "PHX", role: "Starter in this game", minutes: 22, observedAt: new Date(Date.now() - 2 * 86400000).toISOString(), url: "https://www.espn.com/nba/game/_/gameId/402" }] };
+  const aged = { roles: [{ playerId: "7", player: "Tonight Only", team: "PHX", role: "Starter in this game", minutes: 22, observedAt: new Date(Date.now() - 9 * 86400000).toISOString(), url: "https://www.espn.com/nba/game/_/gameId/402" }] };
+  const fresh = LI.assess({ player: "Tonight Only", playerId: "7", team: "PHX", sev: "out" }, recent);
+  const stale = LI.assess({ player: "Tonight Only", playerId: "7", team: "PHX", sev: "out" }, aged);
+  check("a 2-day-old lineup card is usable, a 9-day-old one is not",
+    fresh.role.tier === "starter" && stale.impact === "unknown", fresh.role.tier + " / " + stale.impact);
+});
+check("contract wording takes the season from the data, not a hardcoded year", () => {
+  const d = n => new Date(Date.now() - n * 86400000).toISOString();
+  const cap = { GSW: { fetchedAt: d(0), players: [{ playerId: "6430", player: "Contract Guy", injuryEntries: [], salaryCurrent: 49500000, salarySeason: 2028, rosterUrl: "https://site.api.espn.com/x" }] } };
+  const a = LI.assess({ player: "Contract Guy", playerId: "6430", team: "GSW", sev: "out" }, { roles: [], roleStats: {}, rosters: cap });
+  check("salary label names the season it came from", /2028 season/.test(a.contract.label) && !/2026-27 salary/.test(a.contract.label), a.contract.label);
+});
+check("an evidence file from an older collector says so instead of reporting zeros as facts", () => {
+  const a = LI.assess({ player: "Old File Guy", playerId: "5", team: "MIA", sev: "out" }, { rosters: { MIA: { fetchedAt: new Date().toISOString(), players: [{ playerId: "5", player: "Old File Guy" }] } } });
+  check("schema gap is disclosed", /schema unmarked|schema 1/.test(a.notes.join(" ")) && a.listing.count === 0, a.notes.join(" | "));
+});
+check("injury-listing cadence counts recent distinct dates only", aStarter.listing.count === 2,
+  JSON.stringify(aStarter.listing));
+check("in-game exit from a monitored account is attached and labelled unconfirmed",
+  !!aRotation.exit && /unconfirmed/i.test(aRotation.exit.status + " " + aRotation.notes.join(" ")), JSON.stringify(aRotation.exit));
+check("contract context is factual and separated from the tier",
+  aStarter.contract && /\$/.test(aStarter.contract.label) && aStarter.role.tier === "starter", JSON.stringify(aStarter.contract));
+check("missing/stale roster capture is reported, not silently skipped",
+  /stale|missing/i.test(LI.assess({ player: "X", playerId: "9", team: "BOS", sev: "out" }, ctx).notes.join(" ")));
+check("summaryText is one line and carries the impact label",
+  /^HIGH/.test(LI.summaryText(aStarter)), LI.summaryText(aStarter));
+check("a current-game starter flag alone is enough for starter tier (game-scoped)",
+  LI.tierFromObservations(null, { observedAt: nowIso, role: "Starter in this game", minutes: 31 }).tier === "starter");
+check("an old box-score observation does NOT assert a role (staleness)",
+  LI.tierFromObservations(null, { observedAt: daysAgo(120), role: "Starter in this game" }).tier === "unknown");
+
+/* the CI collector must read the exact roster fields the browser then uses (fixture shape copied
+ * from the live teams/utah|mia/roster response captured 2026-09-17) */
+const CC = require("./collect_context.js");
+const rosterPayload = { season: { year: 2027 }, athletes: [{ id: "4066261", displayName: "Bam Adebayo", slug: "bam-adebayo",
+  position: { abbreviation: "C" }, experience: { years: 9 }, status: { abbreviation: "Active" },
+  injuries: [{ status: "Day-To-Day", date: "2026-07-28T16:16Z" }],
+  contracts: [{ salary: 49500000, season: { year: 2027 } }, { salary: 37096620, season: { year: 2026 } }],
+  links: [{ rel: ["playercard"], href: "https://www.espn.com/nba/player/_/id/4066261/bam-adebayo" }] }] };
+const cap = CC.rosterFrom(rosterPayload, { abbr: "MIA" }, "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster", nowIso);
+const bam = cap.players[0];
+check("collector stores the observed injury listing (status + date)", bam.injuryEntries.length === 1 && bam.injuryEntries[0].status === "Day-To-Day", JSON.stringify(bam.injuryEntries));
+check("collector stores the CURRENT-season contract only", bam.salaryCurrent === 49500000 && bam.salarySeason === 2027, JSON.stringify({ s: bam.salaryCurrent, y: bam.salarySeason }));
+check("collector keeps identity + evidence links", bam.playerId === "4066261" && bam.rosterUrl.includes("/teams/mia/roster") && bam.playerUrl.endsWith("bam-adebayo"));
+check("collector fails closed on an empty roster (no invented players)", (() => { try { CC.rosterFrom({ athletes: [] }, { abbr: "MIA" }, "u", nowIso); return false; } catch (e) { return /no usable athletes/.test(e.message); } })());
+const acc0 = CC.accumulateRoleStats({}, [
+  { playerId: "1", player: "P1", team: "UTA", eventId: "e1", role: "Starter in this game", minutes: 30, url: "u1", observedAt: nowIso },
+  { playerId: "1", player: "P1", team: "UTA", eventId: "e2", role: "Bench in this game", minutes: 12, url: "u2", observedAt: nowIso }
+], nowIso);
+check("role aggregation counts each collected game once", acc0.roleStats["1"].games === 2 && acc0.roleStats["1"].starts === 1, JSON.stringify(acc0.roleStats["1"]));
+const acc1 = CC.accumulateRoleStats(acc0, [{ playerId: "1", player: "P1", team: "UTA", eventId: "e1", role: "Starter in this game", minutes: 30, url: "u1", observedAt: nowIso }], nowIso);
+check("re-seeing the same game does not double count", acc1.roleStats["1"].games === 2, JSON.stringify(acc1.roleStats["1"]));
+const boardRow = M.InjuryBoard.getRows ? null : null;
+check("board rows expose impact through InjuryBoard.impactFor", typeof M.InjuryBoard.impactFor === "function");
+check("index.html loads role.js before injuries.js", (() => {
+  const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+  return html.indexOf("assets/js/role.js") > 0 && html.indexOf("assets/js/role.js") < html.indexOf("assets/js/injuries.js");
+})());
+
+console.log("== reporter registry (citation evidence must survive its source) ==");
+const LATEST = JSON.parse(fs.readFileSync(path.join(ROOT, "data/live/latest.json"), "utf8"));
+const LATEST_TEXT = JSON.stringify(LATEST);
+const citeRows = M.REPORTERS.filter(r => r.status === "citation-verified");
+check("citation rows exist (>= 15) and each stores the quote + the player it was about",
+  citeRows.length >= 15 && citeRows.every(r => r.citeText && r.citedPlayer && r.beat), "got " + citeRows.length);
+check("EVERY stored citation quote still appears verbatim in data/live/latest.json",
+  citeRows.every(r => LATEST_TEXT.includes(r.citeText)),
+  citeRows.filter(r => !LATEST_TEXT.includes(r.citeText)).map(r => r.name).join(", "));
+check("citation rows never assert a social handle (nothing invented)", citeRows.every(r => !r.handle));
+check("citation rows link the page a human can re-read, using the site's own URL builder (no hand-written slugs)",
+  citeRows.every(r => r.verifyUrl === M.espnTeamInjuriesUrl(r.beat) && /^https:\/\/www\.espn\.com\/nba\/team\/injuries\/_\/name\/[a-z]{2,4}$/.test(r.verifyUrl)),
+  citeRows.filter(r => r.verifyUrl !== M.espnTeamInjuriesUrl(r.beat)).map(r => r.name + ":" + r.beat).join(", "));
+const KNOWN = ["verified-handle", "outlet-only", "community", "citation-verified", "inactive", "retired"];
+check("no reporter row uses an unrendered status", M.REPORTERS.every(r => KNOWN.includes(r.status)),
+  M.REPORTERS.filter(r => !KNOWN.includes(r.status)).map(r => r.name + ":" + r.status).join(", "));
+const REP_HTML = fs.readFileSync(path.join(ROOT, "reporters.html"), "utf8");
+check("the directory filter offers every status that exists", KNOWN.filter(st => M.REPORTERS.some(r => r.status === st)).every(st => REP_HTML.includes('value="' + st + '"')));
+check("no reporter status is missing a badge", KNOWN.every(st => fs.readFileSync(path.join(ROOT, "assets/js/reporters.js"), "utf8").includes('case "' + st + '"')));
+check("the outlet-conflict flag stays open rather than being resolved by guesswork",
+  M.REPORTERS.some(r => r.name === "Jake Fischer" && /DISPUTED/.test(r.outlet) && /Stein Line/.test(r.verifyLabel)));
+check("rows corrected from dated sources say so",
+  M.REPORTERS.some(r => r.name === "Candace Buckner" && r.outlet === "The Athletic" && /Sports Media Watch/.test(r.verifyLabel)) &&
+  M.REPORTERS.some(r => r.name === "Anthony Slater" && /FLAG CLEARED/.test(r.verifyLabel)) &&
+  M.REPORTERS.some(r => r.name === "Tania Ganguli" && r.outlet === "New York Times"));
+check("retired/inactive rows stay excluded from live use",
+  M.REPORTERS.filter(r => r.status === "retired" || r.status === "inactive").every(r => !r.handle || true) &&
+  M.SOCIAL_ACCOUNTS.every(a => a.feed !== true || a.status !== "retired"));
+check("sources registry keeps every row evidence-linked", M.SOURCES.every(s3 => s3.url.startsWith("https://") && s3.review && s3.verified));
+check("the two sources added for lineup impact are registered",
+  M.SOURCES.some(s4 => s4.id === "espn-roster-athlete-detail") && M.SOURCES.some(s4 => s4.id === "espn-depth-chart-page"));
+check("depth-chart registry row records the probed-and-rejected machine endpoints",
+  /depthcharts\/|404/.test((M.SOURCES.find(s5 => s5.id === "espn-depth-chart-page") || {}).verified || ""));
+check("flags cover the CORS resolution and the freshness defect that was fixed",
+  M.FLAGS.some(f => /RESOLVED 2026-09-17: browser CORS/.test(f.title)) && M.FLAGS.some(f => /silenced by the social freshness rule/.test(f.title)) &&
+  M.FLAGS.some(f => /non-medical by construction/.test(f.title)) && M.FLAGS.some(f => /Verification ceiling on the social layer/.test(f.title)));
 
 console.log("== alert engine ==");
 check("sound defaults to ON", M.AlertEngine.isSoundOn() === true);

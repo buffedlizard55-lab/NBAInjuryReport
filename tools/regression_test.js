@@ -14,8 +14,8 @@ const sandbox = { console, Date, Set, Map, AbortController, AbortSignal, setTime
 };
 sandbox.window = sandbox;
 vm.createContext(sandbox);
-vm.runInContext(['data','alerts','injuries','ingame','social'].map(f => fs.readFileSync('assets/js/' + f + '.js','utf8')).join('\n') + '\nthis.M={AlertEngine,InjuryBoard,InGame,Social,SIGNALS,REPORTERS,espnAbbr};', sandbox);
-const { AlertEngine, InjuryBoard, InGame, Social, SIGNALS, REPORTERS } = sandbox.M;
+vm.runInContext(['data','role','alerts','injuries','ingame','social'].map(f => fs.readFileSync('assets/js/' + f + '.js','utf8')).join('\n') + '\nthis.M={AlertEngine,InjuryBoard,InGame,Social,LineupImpact,SIGNALS,REPORTERS,espnAbbr};', sandbox);
+const { AlertEngine, InjuryBoard, InGame, Social, LineupImpact, SIGNALS, REPORTERS } = sandbox.M;
 check('Freshness rejects old, missing, malformed and future timestamps', () => {
   for (const t of [null, 'no', '2020-01-01', new Date(Date.now()+3600000).toISOString()]) assert.equal(AlertEngine.isFresh(t), false);
   assert.equal(AlertEngine.isFresh(now), true);
@@ -73,6 +73,19 @@ check('Starter observations are explicit and game-scoped, never inferred from DN
   const rows=roles({boxscore:{players:[{team:{abbreviation:'GS'},statistics:[{keys:['minutes'],athletes:[{athlete:{id:'1',displayName:'Test'},starter:true,stats:['12']},{athlete:{id:'2'},didNotPlay:true}]}]}]}},'42',now);
   assert.equal(rows.length,1); assert.equal(rows[0].role,'Starter in this game'); assert.equal(rows[0].minutes,'12'); assert.equal(rows[0].team,'GSW');
 });
+check('Impact is derived only from collected evidence and never invents a role', () => {
+  const none = LineupImpact.assess({ player:'Nobody Here', playerId:'x1', team:'BOS', sev:'out' }, {});
+  assert.equal(none.impact,'unknown');
+  assert.match(none.impactLabel,/unknown/i);
+  assert.match(JSON.stringify(none.notes),/never as|no box-score/i);
+});
+check('A high-impact starter tag never changes alert eligibility, only its wording', () => {
+  const t = new Date().toISOString();
+  const ctx={roles:[],roleStats:{},rosters:{},exits:{}};
+  const a=LineupImpact.assess({player:'P',playerId:'1',team:'UTA',sev:'out'},ctx);
+  assert.ok(a.impactLabel); assert.equal(a.impact,'unknown');   // no evidence => the label cannot invent "starter"
+  void t;
+});
 (async () => {
   const payload={injuries:[{injuries:[{id:'one',status:'Out',date:now,athlete:{displayName:'Test',team:{abbreviation:'BOS'},links:[{rel:['playercard'],href:'https://www.espn.com/nba/player/_/id/123/test'}]}}]}]};
   sandbox.fetch=async()=>({ok:true,json:async()=>payload});
@@ -88,6 +101,39 @@ check('Starter observations are explicit and game-scoped, never inferred from DN
   await InjuryBoard.check(false);
   check('Stale fallback fails closed and retains baseline',()=>{
     assert.match(InjuryBoard.getMeta().error,/stale/);assert.equal(store['nba-injury-seen-v1'],baseline);
+  });
+  /* the freshness fix: a board listing stamped hours ago by the source is still a NEW observation
+     for us, and must not be silenced by the 30-minute social rule */
+  check('Board alerts are judged by observation time, not the source editorial stamp', () => {
+    const stale = { id:'stale-1', player:'Old Stamped Guy', team:'BOS', status:'Out', sev:'out', sevLabel:'OUT',
+      updated: new Date(Date.now() - 6*3600000).toISOString(), shortComment:'', bodyPart:'Left Knee', returnDate:null, fp:'Out|Left Knee||',
+      teamUrl:'https://www.espn.com/nba/team/injuries/_/name/bos', playerUrl:null };
+    const a = InjuryBoard.alertFor ? InjuryBoard.alertFor('new', stale) : null;
+    assert.ok(a, 'alertFor must be exposed for regression');
+    assert.ok(a.observedAt, 'a board alert carries the observation time');
+    assert.ok(AlertEngine.isFresh(a.observedAt, a.maxAgeMs || 1800000), 'the observation is fresh even though the source stamp is 6h old');
+    assert.ok(!AlertEngine.isFresh(a.ts, 1800000), 'and the source timestamp alone would have suppressed it — that was the bug');
+  });
+  check('Social alerts stay bound to post time (old resurfacing posts cannot re-alert)', () => {
+    const old = { uri:'at://old', handle:'x.bsky.social', name:'X', text:'Veteran is out tonight with a knee injury', url:'https://bsky.app/profile/x.bsky.social/post/old',
+      createdAt: new Date(Date.now() - 3*86400000).toISOString(), sev:'out', sevLabel:'OUT (social report)', verified:true, inGameWatch:false };
+    const verdict = Social.checkAlerts([old], false);
+    const alert = verdict.alerts.find(a => a.uri === 'at://old') || verdict.alerts[0];
+    assert.ok(!alert || alert.alertEligible === false, 'a 3-day-old post must not be alert-eligible');
+  });
+  check('Injury-history cadence ignores stale entries and dedupes dates', () => {
+    const d = n => new Date(Date.now() - n*86400000).toISOString().slice(0,10)+'T00:00Z';
+    const cad = LineupImpact.listingCadence({ injuryEntries:[{status:'Out',date:d(2)},{status:'Out',date:d(2)},{status:'Day-To-Day',date:d(900)}] });
+    assert.equal(cad.count,1);
+  });
+  check('In-game exit evidence from the ledger is attached per player, labelled unconfirmed', () => {
+    const { build } = require('./build_intelligence');
+    const snap={generated:new Date().toISOString(),errors:{},injuries:{rows:[]},posts:[]};
+    const prior={claims:{p1:{uri:'p1',handle:'rep.bsky.social',name:'Rep',text:'Ace Bailey left the game with back spasms',url:'https://bsky.app/profile/rep.bsky.social/post/p1',postedAt:new Date().toISOString(),textSha256:'x',inGameWatch:true,player:'Ace Bailey',playerId:'77',team:'UTA',outcome:'pending',verified:true}},history:[],baseline:{}};
+    const built=build(snap,{health:'unavailable',rows:[]},{rosters:{}},prior);
+    assert.ok(built.exits['77'],'exit keyed by playerId');
+    assert.equal(built.exits['77'].status,'reported-unconfirmed');
+    assert.match(built.exits['77'].url,/^https:\/\/bsky\.app/);
   });
   console.log(checks+' regression groups passed');
 })().catch(e=>{console.error(e);process.exitCode=1;});

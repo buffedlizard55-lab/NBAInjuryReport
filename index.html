@@ -43,8 +43,14 @@
   <section class="card" style="margin-top:16px">
     <h2>🔔 Alert center <span class="tiny muted">sound · browser notifications · manual-review links</span></h2>
     <p class="muted small">Fires when a <b>new</b> listing appears or a status <b>changes</b> in any layer — the ESPN structured injury board,
-      ESPN news, a recent allow-listed Bluesky post naming one recognized NBA player, or an explicit injury report. DNP alone does not trigger an exit alert. Opening the page seeds existing items silently. Old, unresolved and ambiguous signals do not sound. Turn sound off (or mute a severity below)
+      ESPN news, a recent allow-listed Bluesky post naming one recognized NBA player, or an explicit official report. Every listing alert is tagged
+      <b>⚡ HIGH LINEUP IMPACT</b> when the player's collected box scores show a starter going out. DNP alone does not trigger an exit alert.
+      Opening the page seeds existing items silently. Unresolved and ambiguous signals do not sound. Turn sound off (or mute a severity below)
       when you only want the log. The tab must remain open; background throttling and source delays can delay alerts.</p>
+    <p class="tiny muted">Freshness has two meanings here and they are kept apart: a <i>social</i> alert must be from a post published in the last
+      30 minutes (so an old post resurfacing cannot re-alert), while a <i>board/official</i> alert fires when the <b>change is observed</b> — a listing's
+      own source timestamp is legitimately hours older (ESPN stamps the report date; the NBA PDF is filed before tip). Suppression by source age is
+      therefore applied only to the social layer.</p>
     <div class="grid two">
       <div>
         <label class="switch">
@@ -89,9 +95,16 @@
   <section class="card" style="margin-top:16px">
     <h2>🏥 Injury board — every team <span class="tiny muted" id="boardCount"></span></h2>
     <p class="muted small">Structured feed (not headline guessing): player, status, injury type/side, game-time-decision flag and estimated return,
-      straight from ESPN's injuries API. Season: <b id="boardSeason">—</b>. Status line: <span id="boardStatus" class="tiny">loading…</span></p>
+      straight from ESPN's injuries API — plus a <b>lineup-impact</b> tag computed only from box scores this project has actually collected.
+      Season: <b id="boardSeason">—</b>. Status line: <span id="boardStatus" class="tiny">loading…</span></p>
+    <p class="tiny muted" id="impactLegend">Lineup impact is loading…</p>
     <div class="tiny muted" id="coverageSummary"></div>
     <div class="board" id="injuryBoard"><div class="muted">Loading injury board…</div></div>
+    <p class="tiny muted">Per-row evidence: <b>lineup impact</b> uses ESPN box scores collected by the poller (games started / minutes) and
+      ESPN's per-player injury-listing dates as a recurrence indicator. <b>It is not a medical severity grade and never will be</b> — no free source
+      reviewed on 2026-09-17 publishes one. A player with no collected box score is labelled <b>unknown</b>, not guessed.
+      Cross-check a role claim on the team's <a href="https://www.espn.com/nba/team/depth/_/name/mia" target="_blank" rel="noopener">ESPN depth chart ↗</a>
+      (human page only — no public JSON API exists for it, verified 2026-09-17, so it is never scraped automatically).</p>
     <p class="tiny muted">Always cross-check the highest-authority source before acting:
       <a href="https://official.nba.com/nba-injury-report-2025-26-season/" target="_blank" rel="noopener">official NBA injury report ↗</a> (2026-27 page not published yet — 404 verified 2026-09-17) ·
       <a href="https://www.espn.com/nba/injuries" target="_blank" rel="noopener">ESPN injuries ↗</a> ·
@@ -212,6 +225,7 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/alerts.js"></script>
 <script src="assets/js/wire.js"></script>
+<script src="assets/js/role.js"></script>
 <script src="assets/js/injuries.js"></script>
 <script src="assets/js/social.js"></script>
 <script src="assets/js/ingame.js"></script>

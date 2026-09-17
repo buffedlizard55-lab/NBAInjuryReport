@@ -388,7 +388,7 @@ const Social = (function () {
   }
 
   return {
-    check: check, classifyPost: classifyPost, fetchAll: fetchAll, isOwnPost: isOwnPost,
+    check: check, checkAlerts: checkAlerts, classifyPost: classifyPost, fetchAll: fetchAll, isOwnPost: isOwnPost,
     render: render, renderFeed: renderFeed, testFeeds: testFeeds, resetSeen: resetSeen,
     setRelay: setRelay, isRelayOn: isRelayOn, toggleRelay: toggleRelay,
     getPosts: () => posts, feedAccounts: feedAccounts, accountStatus: () => accounts,

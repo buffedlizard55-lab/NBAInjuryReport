@@ -2,8 +2,8 @@ name: Public source audit
 on:
   workflow_dispatch:
   push:
-    branches: [arena/01a0ad73-nbainjuryreport]
-    paths: [tools/verify_live.py, .github/workflows/live-audit.yml]
+    branches: [main, "arena/**"]
+    paths: [tools/verify_live.py, tools/collect_official.py, assets/js/data.js, .github/workflows/live-audit.yml]
 permissions:
   contents: write
 jobs:
@@ -13,16 +13,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: sudo apt-get update -qq && sudo apt-get install -y poppler-utils
+      # exits non-zero when a source's status no longer matches what the registry claims
       - run: python3 tools/verify_live.py
-      - name: Persist review evidence on the session branch only
-        if: github.ref == 'refs/heads/arena/01a0ad73-nbainjuryreport'
+      # Evidence lands on whatever branch ran the audit, so the deployed sources page can show
+      # the newest verdicts. The previous version hard-coded one session branch and pushed nothing
+      # at all after that branch was retired.
+      - name: Persist review evidence on the branch that ran the audit
         run: |
-          cp .audit/sample.txt data/audit/sample-report.txt || true
+          cp .audit/nba-pdf-sample.txt data/audit/sample-report.txt 2>/dev/null || cp .audit/sample.txt data/audit/sample-report.txt 2>/dev/null || true
           git config user.name "source-audit bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/audit
-          git diff --cached --quiet || git commit -m "audit: record observed source responses"
-          git push origin HEAD:arena/01a0ad73-nbainjuryreport
+          if git diff --cached --quiet; then
+            echo "no audit changes to commit"
+          else
+            git commit -m "audit: record observed source responses ($(date -u +%Y-%m-%dT%H:%MZ))"
+            git push origin "HEAD:${{ github.ref_name }}"
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:

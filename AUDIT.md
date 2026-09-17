@@ -85,3 +85,76 @@ The session connection can push the fixed branch and create a PR, but workflow d
 [Chromium run 35179912267](https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/runs/35179912267) passed the fixture-backed browser checks, including actual WebAudio context activation, persisted mute, filtering, diagnostics and mobile overflow. The hidden custom checkbox was replaced by a keyboard-focusable control. Audio activation is not a guarantee of audibility on another device.
 
 A subsequent collector self-audit rejected a new explicit `will not return` OUT classification because the independent replay validator did not yet include that phrase. This failure prevented publication. The replay guard and regression test were updated together; actual social delivery still requires a recent post, one recognized NBA player, identity evidence and enabled filters.
+
+---
+
+# Third pass — same day, 2026-09-17 (deployed-page observation, lineup-impact layer, registry corrections)
+
+## What changed in the evidence picture
+
+The previous section's audit was produced by a runner in a network where ESPN `teams`/`scoreboard` returned 403.
+This pass re-observed the same endpoints **from the deployed browser origin**, and the result is different, so both
+observations are kept instead of overwritten: browser-direct fetch of the injuries API rendered 74 listings labelled
+`via espn-direct · just now`, and the social panel reported `polled 13 of 13 allow-listed accounts browser-direct`.
+Consequence: the long-standing "CORS could not be verified" item is resolved for the deployed origin; a runner IP is
+not a browser and is not treated as evidence about browser behaviour in either direction.
+
+## Line-by-line source checks added in this pass
+
+| Claim being checked | Independent observation | Consequence in this repo |
+|---|---|---|
+| X API pricing docs URL | `docs.x.ai` is **xAI's** product, not X's developer docs. `docs.x.com/x-api/getting-started/pricing` returns 403 to automated fetchers. | Registry row corrected; pricing statements stay explicitly unconfirmed. No free-tier claim rewritten into a number. |
+| balldontlie injury webhooks | Tier page read directly: FREE = Teams/Players/Games; Player Injuries + Game Player Stats = ALL-STAR/GOAT; Season Averages = GOAT; ALL-ACCESS $299.99/mo. **No webhooks section exists on the page.** | "webhooks solve latency properly" removed; row now says the claim is unconfirmed. Paid-only injuries is why rotation role is derived from our own box-score collection. |
+| ESPN rotation data availability | `teams/mia/depthchart` → `{}`; `sports.core …/depthcharts/<slug>` → 404; `apis/fitt/v3` → 404; the human depth-chart page (RotoWire-powered) is HTML only. | Registered as `espn-depth-chart-page` with the rejected routes recorded, and linked from each affected board row for **manual** cross-check. No HTML scraping: an unparsed table is exactly how invented roles get into a product. |
+| Per-player injury history | ESPN roster API carries `injuries:[{status,date}]` (current listing only) and `contracts:[{salary,season}]`. No free source reviewed publishes a career injury log. | Cadence/recurrence is computed from **dates we observe ourselves** (`collect_context.js` schema 2), capped and labelled; the UI says so. |
+| Howard Beck's Bluesky writers list | `getList` returned 150 members; the list description contains a doubled word upstream. | Description now quoted verbatim (earlier text had a transcription error of ours). Membership is still identity evidence only, never an outlet. |
+| Official in-game injury report delivery | `ak-static.cms.nba.com/referee/injury/` → 500 (no index); 2026-27 landing → 404; 2025-26 rules page → 200; the April 12 2026 gameday PDF → 200. | "Official confirmation is impossible today" restated as a *documented blocker* with three re-checkable URLs rather than a vague caveat. `tools/verify_live.py` now expects those statuses and will flag DRIFT if one changes. |
+| Team-account coverage for verification | `getFollows(nba.com)` → 6 follows (POR, DEN, PHI, WNBA verified; DAL not). | New flag: at most 4/30 teams have an official Bluesky account the league follows — the ceiling on single-source social verification. |
+| Reporter employment | Buckner → The Athletic (Sports Media Watch Feb 2026 + author page). Ganguli → still NYT (Muck Rack), so a prior "possible move" note was **removed as unsupported**. Slater → ESPN (FOS 2025-06-13) — flag cleared. Fischer → 2026 bylines say "The Stein Line"/"The People's Insider" while the row said Yahoo Sports. | First three corrected with dated evidence. Fischer is left `DISPUTED` with the conflict written into the row: no guess. |
+| Opening-night schedule | Basketball Monster slate says BOS@DET 2:00pm; the NBA's own Bluesky bio says 3:00pm/et for the same game. | Flagged as an unresolved upstream conflict, both sources linked. Not silently reconciled. |
+| Reporter directory completeness | ESPN's injury comments name bylines that were absent from the directory (Rowland, Schuhmann, Collier, Murray, Emerman, Boone, Sheikh, Baraheni, Binkley, Linn, Holmes, Beede, Siegel, Rankin, Hill, Almanza, Blackburn, Anderson, Gambadoro, Toporek). | 20 rows added as `citation-verified`, each storing the **verbatim** citation plus the player/team it concerned. `smoke_test.js` fails if any stored quote no longer appears in `data/live/latest.json`, so a row cannot outlive its evidence. No handle is asserted for any of them. |
+
+## Defect found and fixed while wiring the new layer
+
+`AlertEngine.fire()` applied the **social** freshness rule (30 minutes on the post timestamp) to *every* alert. Board and official
+items legitimately carry older source stamps — ESPN dates a listing when it is filed, and the NBA PDF is issued 11am–1pm local
+for a night game — so a genuinely new OUT row could be dropped **with no message at all**. Fixed by separating the policies:
+social alerts are judged on post time (30 min, unchanged: an old post must not re-alert), while board/official alerts carry
+`observedAt` (the moment the change reached us) with 24h/12h windows and the source timestamp printed in the log line.
+`tools/regression_test.js` now pins all four behaviours (fresh observation passes, stale source stamp would have failed, social
+staleness still suppresses, filtered items are logged rather than dropped).
+
+## Lineup-impact policy (new module, `assets/js/role.js`)
+
+- Three axes, deliberately unmixed: **availability** (source status), **lineup impact** (production vacated, from collected box
+  scores: starter share of games, minutes per game, current-game starts), **injury-listing cadence** (dated history of the
+  player's appearances on ESPN's listings) — plus contract context as a factual, separate line.
+- Matrix: starter × (out|doubtful) = HIGH · starter × questionable = MEDIUM · rotation × (out|doubtful) = MEDIUM ·
+  anything × bench = LOW · no evidence = UNKNOWN. A reported in-game exit appends "in-game exit reported (unconfirmed)".
+- Medical severity is **never** computed, asserted or implied; the legend and every tooltip say so, and a test asserts no
+  `medicalSeverity` field or severity grade appears in an assessment.
+- Failure modes are visible, not silent: stale roster capture, empty roster, per-team collector errors and missing games all
+  produce labelled notes; `roleStats` is keyed on `playerId` + game id so a re-seen game cannot double count.
+- Alert content is unchanged in eligibility terms — impact adds wording (`⚡ HIGH LINEUP IMPACT`) and never lets an item that
+  would be silent become audible. That is tested, because an impact heuristic must not become a false-positive generator.
+- Current state of the data: `roleStats` is empty for all 30 teams, because the 2026-27 season has not tipped off
+  (first games 2026-10-03). Every row therefore reads IMPACT UNKNOWN today. That is the intended output, not a stub.
+
+## Test surface after this pass
+
+`smoke_test.js` 140 checks · `integration_test.js` 48 · `poll_fixture_test.js` 24 · `regression_test.js` 21 groups ·
+`python3 -m unittest discover -s tools` 4 · `replay_posts.js --check` on the live snapshot: 74 rows / 13 posts, no violations.
+New coverage in this pass: the impact matrix and its refusal to guess; collector roster/roleStats unit checks; the alert-freshness
+policy split; the citation-quotable registry invariants; script-load order for `role.js`; the CI snapshot's impact fields and the
+absence of internal cache keys; browser assertions for the tag, tooltip, legend, cadence block, depth-chart link and unknown path.
+
+## Honest limitations of this pass
+
+1. Verification came from fetched page text plus the deployed browser; **no live game data exists yet**, so the impact layer is
+   structurally sound but empirically untested until preseason games produce box scores.
+2. `data/live/*.json` written by CI is newer than this branch's last commit. A `git fetch` + merge of CI-pushed `data/live/*`
+   is required before the next data-dependent assertion — otherwise a stale local snapshot gets treated as current evidence.
+3. Bluesky is the only automatically pollable social layer. X/Instagram/Facebook remain manual-review embeds and links, and the
+   20 new citation rows carry no handles because profiles cannot be read from the build environment.
+4. `tools/verify_live.py` now fails on unexpected statuses, but runner→source reachability differs from browser→source
+   reachability (that is exactly the ESPN 403-vs-200 case above); `UNREACHABLE-FROM-RUNNER` is therefore not reported as a source failure.

@@ -111,18 +111,32 @@ const AlertEngine = (() => {
     }).join("");
   }
 
-  /* Main entry: fire an alert for a wire item. Respects sound toggle. */
+  /* Main entry: fire an alert for a wire item. Respects sound toggle.
+   *
+   * Freshness has TWO different meanings and conflating them once silenced real alerts:
+   *   - a social post's publication time must be recent, otherwise an old post that resurfaces in
+   *     an account feed would re-alert (so those items are judged by `ts`);
+   *   - an injury-board or official-report CHANGE is an event at the moment we observe it — the
+   *     source's own editorial timestamp can legitimately be hours older (ESPN stamps a listing
+   *     with the report date; the NBA PDF is published hours before tip). Judging those by `ts`
+   *     suppressed genuine OUT designations. Items that carry `observedAt` are judged on it.
+   */
   function fire(item) {
     // One policy for ALL producers. A filter never silently drops the audit log.
     const filters = typeof App !== "undefined" && App.getFilters ? App.getFilters() : null;
     const allowed = !filters || (filters.sevs?.[item.sev] !== false &&
       (!filters.team || filters.team === "ALL" || item.team === filters.team));
-    const fresh = !item.ts || isFresh(item.ts, 30 * 60 * 1000);
-    const label = `[${item.sevLabel}] ${item.title}`;
+    const judged = item.observedAt || item.ts;
+    const maxAge = item.maxAgeMs || 30 * 60 * 1000;
+    const fresh = !judged || isFresh(judged, maxAge);
+    const impact = item.impact && item.impact.tier === "high" ? "⚡ HIGH LINEUP IMPACT " : "";
+    const label = `${impact}[${item.sevLabel}] ${item.title}`;
+    const ageNote = item.observedAt && item.ts && item.ts !== item.observedAt
+      ? ` (source timestamp ${item.ts}; observed ${item.observedAt})` : "";
     if (item.alertEligible === false || !allowed || !fresh) {
       log("(silent: evidence, age or filter) " + label, item.url); renderLog(); return false;
     }
-    log("🚨 " + label, item.url);
+    log("🚨 " + label + ageNote, item.url);
     renderLog();
     if (soundOn && Date.now() - lastChimeAt > 1500) { playChime(); lastChimeAt = Date.now(); }
     notify("NBA Injury Alert — " + item.sevLabel, [item.title, item.detail].filter(Boolean).join(" — "), item.url);

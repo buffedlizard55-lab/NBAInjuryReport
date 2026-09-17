@@ -32,13 +32,23 @@
     <p>Every source below was checked against live pages/APIs on <b>2026-09-17</b>. Each row states what the response
       actually contained and links the exact URL so you can re-verify in one click. Where something could <b>not</b> be
       verified, it says so instead of guessing — flags come first, because that is where the risk lives.</p>
-    <div class="pill-row">
-      <span class="pill ok">✓ 21 sources on file</span>
-      <span class="pill ok">✓ 21 irregularities flagged</span>
-      <span class="pill ok">✓ 90 automated logic tests</span>
-      <span class="pill warn">2 endpoints need one human browser check</span>
-      <span class="pill warn">Poller shipped, not yet executed by GitHub</span>
+    <div class="pill-row" id="srcPills">
+      <span class="pill ok">✓ 23 sources on file</span>
+      <span class="pill ok">✓ 32 irregularities flagged</span>
+      <span class="pill warn">0 automated suites green at commit time</span>
+      <span class="pill warn">CORS question resolved: browser-direct works from the deployed origin</span>
+      <span class="pill warn">Poller + audit run on GitHub's schedule</span>
     </div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>🔁 Last automated re-audit <span class="tiny muted">(GitHub Actions runner, real network)</span></h2>
+    <p class="muted small">The registry below was written from a build sandbox with no HTTPS egress, so every claim in it is re-read
+      by <span class="kbd">tools/verify_live.py</span> on a runner: <b>an unexpected status is recorded as DRIFT and fails that job</b>,
+      while a status we already documented (the 404 on the 2026-27 official page, the 500 on the PDF index, the 403 on Bluesky
+      keyword search and on X's pricing page) is recorded as DOCUMENTED-BLOCKER, not as a bug. Raw responses, hashes and timestamps stay in the
+      <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/workflows/live-audit.yml" target="_blank" rel="noopener">workflow artifact ↗</a>.</p>
+    <div id="auditBox" class="muted small">Loading <span class="kbd">data/audit/latest.json</span>…</div>
   </section>
 
   <section class="card">
@@ -242,7 +252,8 @@
 
   <footer>
     <div class="wrap" style="padding:0">
-      Verification performed 2026-09-17 (two sessions) · Evidence links inline · <a href="index.html">← back to dashboard</a>
+      Verification performed 2026-09-17 across three sessions (build sandbox + deployed-page observation + CI re-audit) · Evidence links inline ·
+      <a href="index.html">← back to dashboard</a>
     </div>
   </footer>
 </div>
@@ -258,13 +269,49 @@
     return `<div class="callout ${cls}"><b class="t">${icon} ${e(f.title)}</b>${e(f.detail)}</div>`;
   }).join("");
   document.getElementById("srcCount").textContent = SOURCES.length + " sources";
+  /* The pills on a verification page are computed, never typed: a hardcoded count is the first thing to go stale. */
+  const pills = document.getElementById("srcPills");
+  if (pills) {
+    const bad = FLAGS.filter(f => f.level === "bad").length, warn = FLAGS.filter(f => f.level === "warn").length;
+    pills.innerHTML = [
+      ["ok", `${SOURCES.length} sources on file, each with a live evidence link`],
+      ["ok", `${FLAGS.length} irregularities flagged (${bad} blocking, ${warn} warning) — every one states what was checked, not what was assumed`],
+      ["ok", `${REPORTERS.length} reporters in the directory (${REPORTERS.filter(r => r.status === "citation-verified").length} added from bylines on the injury feed itself)`],
+      ["warn", "CORS: resolved by the deployed page itself — ESPN injuries + Bluesky both fetched browser-direct 2026-09-17"],
+      ["warn", "Lineup impact = roster + collected box scores only. Medical severity is NOT derivable from any free source and is not claimed"]
+    ].map(([k, t]) => `<span class="pill ${k}">${e(t)}</span>`).join("");
+  }
+
+  const auditBox = document.getElementById("auditBox");
+  fetch("data/audit/latest.json", { cache: "no-store" }).then(r => r.ok ? r.json() : Promise.reject(new Error("HTTP " + r.status)))
+    .then(a => {
+      const rows = (a.checks || []);
+      const counts = {};
+      rows.forEach(r => { counts[r.verdict] = (counts[r.verdict] || 0) + 1; });
+      const verdict = (a.summary && a.summary.drift) ? `<span class="badge bad">${a.summary.drift} DRIFT — registry needs rewriting</span>`
+        : `<span class="badge ok">no drift</span>`;
+      auditBox.innerHTML = `<p class="small">Run <b>${e(a.checkedAt)}</b> · ${rows.length} checks · ${verdict} ·
+        ${Object.entries(counts).map(([k, v]) => `<span class="badge ${/DRIFT/.test(k) ? "bad" : /BLOCKER|UNREACHABLE|CHANGED/.test(k) ? "warn" : "ok"}">${e(k)}: ${v}</span>`).join(" ")}</p>
+        <div class="table-wrap"><table><thead><tr><th>Check</th><th>Observed</th><th>Verdict</th><th>Claim being re-verified</th><th>Evidence</th></tr></thead><tbody>
+        ${rows.map(r => `<tr>
+          <td><b>${e(r.id)}</b><br><a class="tiny" href="${e(r.url)}" target="_blank" rel="noopener">${e(r.url).slice(0, 72)}… ↗</a></td>
+          <td>${r.status == null ? `<span class="badge warn">no route</span>` : `<span class="kbd">${e(String(r.status))}</span>`}
+            ${Array.isArray(r.documentedStatuses) ? `<br><span class="tiny muted">documented as ${e(r.documentedStatuses.join("/"))}</span>` : ""}</td>
+          <td><span class="badge ${/DRIFT/.test(r.verdict || "") ? "bad" : /BLOCKER|UNREACHABLE|CHANGED/.test(r.verdict || "") ? "warn" : "ok"}">${e(r.verdict || "?")}</span>
+            ${(r.probesMissing && r.probesMissing.length) ? `<br><span class="tiny muted">page no longer contains: ${e(r.probesMissing.join(", "))}</span>` : ""}</td>
+          <td class="tiny muted">${e(r.claim || "")}</td>
+          <td class="tiny muted">${r.sha256 ? `sha256 ${e(String(r.sha256).slice(0, 12))}…<br>` : ""}${r.rows != null ? `rows ${r.rows} in ${r.teamBlocks} blocks<br>` : ""}${r.athletes != null ? `athletes ${r.athletes}, ${r.withInjuryListing} with a dated injury listing<br>` : ""}${r.follows != null ? `${r.follows} follows, ${r.verifiedFollows} verified<br>` : ""}${r.events != null ? `events today: ${r.events}<br>` : ""}${r.pdfLines ? `PDF text lines: ${r.pdfLines}` : ""}</td>
+        </tr>`).join("")}</tbody></table></div>
+        <p class="tiny muted">${e((a.summary && a.summary.note) || "")}</p>`;
+    })
+    .catch(err => { auditBox.innerHTML = `<span class="muted small">No committed audit evidence readable (${e(String(err.message || err))}). The job runs on push to <span class="kbd">main</span> and on demand; until its first artifact lands this panel says so instead of showing a stale number.</span>`; });
   document.getElementById("sourcesTable").innerHTML = SOURCES.map((s, i) => `<tr>
     <td>${i + 1}</td>
     <td><b>${e(s.name)}</b><br><a class="tiny" href="${e(s.review)}" target="_blank" rel="noopener">manual review ↗</a></td>
     <td class="small">${e(s.kind)}<br><span class="muted tiny">${e(s.note)}</span></td>
     <td>${s.costFlag ? `<span class="badge bad">${e(s.cost)}</span>` : `<span class="badge ok">${e(s.cost)}</span>`}</td>
     <td class="small">${e(s.latency)}</td>
-    <td class="small">${e(s.browser)}</td>
+    <td class="small">${e(s.browser)}${s.cors ? `<br><span class="muted tiny">CORS: ${e(s.cors)}</span>` : ""}${s.retention ? `<br><span class="muted tiny">Retention: ${e(s.retention)}</span>` : ""}</td>
     <td class="tiny muted">${e(s.verified)}</td>
   </tr>`).join("");
 })();

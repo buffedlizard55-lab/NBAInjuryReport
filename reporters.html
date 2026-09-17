@@ -24,17 +24,23 @@
   <section class="hero">
     <h1>Reporter directory &amp; evidence ledger</h1>
     <p>The second verification layer: the people who break or confirm injury news — often <i>before</i> the official designation.
-      This page keeps two identity layers apart, because they have different evidence quality:
-      <b>X handles</b> (verified 2026-09-17 in the first pass, each with a link) and
+      This page keeps three identity layers apart, because their evidence quality differs and mixing them is how a directory starts lying:
+      <b>X handles</b> (verified 2026-09-17 in the first pass, each with a link),
       <b>Bluesky handles</b> (re-verified live 2026-09-17 against the Bluesky public API — including Bluesky's own
-      verification objects and a curated 150-member NBA-writers list). Only the Bluesky layer can be polled automatically for free,
-      so it is what feeds the live wire.</p>
-    <div class="pill-row">
+      verification objects and a curated 150-member NBA-writers list), and
+      <b>bylines observed on the injury feed itself</b> — reporters named inside ESPN's injury comments for a specific player, with the quote stored
+      verbatim so it can be re-checked. Only the Bluesky layer can be polled automatically for free, so it is what feeds the live wire;
+      the citation layer carries <b>no asserted handle</b>, because a profile that cannot be read from this environment is not evidence.</p>
+    <p class="tiny muted">Counts below are computed from <code>assets/js/data.js</code> at page load, not typed in — if a row is added or a status
+      changes, these numbers move with it (a hardcoded count on a verification page is exactly the kind of stale claim this project flags).</p>
+    <div class="pill-row" id="reporterPills" data-pills>
       <span class="pill ok">✓ 25 X handles verified</span>
-      <span class="pill ok">✓ 8 Bluesky reporters verified today</span>
+      <span class="pill ok">✓ 8 Bluesky reporters verified 2026-09-17</span>
       <span class="pill ok">✓ 7 official/outlet Bluesky accounts verified</span>
+      <span class="pill ok">✓ 20 reporters added from bylines on the injury feed itself (no handle asserted)</span>
       <span class="pill warn">4 outlet-verified · X handle unconfirmed (none asserted)</span>
       <span class="pill bad">1 retired · 1 inactive on X</span>
+      <span class="pill warn">1 outlet DISPUTED · flagged, not guessed</span>
     </div>
   </section>
 
@@ -43,7 +49,11 @@
       <li><b>Wojnarowski is retired</b> (Sept 2024) — historical reference only, never a live source.</li>
       <li><b>John Hollinger quit X</b> and is <b>active on Bluesky</b> — verified 2026-09-17: his newest post indexed 01:28Z that day. Use the Bluesky column.</li>
       <li><b>Shams Charania's Bluesky account is abandoned</b> — newest post 2024-02-13 (verified via the public API). Do not poll it; his news reaches this system through ESPN's structured injury comments instead.</li>
-      <li><b>Anthony Slater's 2026 bylines point to ESPN</b>, not The Athletic — confirm his employer before citing.</li>
+      <li><b>Anthony Slater → ESPN: CONFIRMED 2026-09-17</b> (Front Office Sports, 2025-06-13: "Anthony Slater moving from The Athletic to ESPN"), so the flag on that row is cleared.</li>
+      <li><b>Jake Fischer's employer is DISPUTED</b> — Yahoo Sports, "The Stein Line" and "The People's Insider" all appear in 2026 material. His row keeps the handle evidence and marks the outlet unresolved instead of picking one.</li>
+      <li><b>20 rows are "cited on the injury feed"</b>: they were added because ESPN's own injury comments carried the byline, and each stores the citation text
+        verbatim from <code>data/live/latest.json</code>. <code>tools/smoke_test.js</code> fails if a stored quote is not present in that snapshot, so a row cannot
+        outlive its evidence silently. No social handle is asserted for any of them.</li>
       <li><b>David Aldridge may have two X handles</b> (@davidaldridgedc active; Muck Rack lists @daldridgetnt) — confirm before citing.</li>
       <li><b>Kevin O'Connor is @KevinOConnor at Yahoo Sports</b> (not @KevinOConnorNBA, not The Ringer).</li>
     </ul>
@@ -93,6 +103,7 @@
         <option value="verified-handle">✓ handle verified</option>
         <option value="outlet-only">outlet verified · handle unverified</option>
         <option value="community">community-listed</option>
+        <option value="citation-verified">cited on the injury feed (no handle asserted)</option>
         <option value="inactive">inactive on X</option>
         <option value="retired">retired</option>
       </select>
@@ -214,6 +225,8 @@
   <footer>
     <div class="wrap" style="padding:0">
       X layer verified 2026-09-17 (first pass) · Bluesky layer verified live 2026-09-17 via the public API ·
+      citation layer re-checked against <code>data/live/latest.json</code> by <code>tools/smoke_test.js</code> on every run — a row whose quote
+      no longer appears in the snapshot fails the build instead of quietly staying up ·
       <a href="sources.html">Verification log</a> · <a href="index.html">← back to dashboard</a>
     </div>
   </footer>

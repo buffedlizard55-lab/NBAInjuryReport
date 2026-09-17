@@ -20,12 +20,17 @@ on:
     # every 10 minutes (GitHub throttles heavily frequent crons on free runners)
     - cron: "*/10 * * * *"
   workflow_dispatch:
+  # Any session branch may carry collector changes, so every arena/** branch is watched —
+  # an earlier revision named one specific past branch and silently stopped running once
+  # that branch was gone. A workflow whose triggers rot quietly is worse than no workflow.
   push:
-    branches: [main, arena/01a0ad73-nbainjuryreport]
+    branches: [main, "arena/**"]
     paths:
       - "tools/poll_watch.js"
+      - "tools/collect_context.js"
+      - "tools/build_intelligence.js"
+      - "tools/collect_official.py"
       - "assets/js/**"
-      - "tools/**"
       - ".github/workflows/injury-watch.yml"
 
 permissions:
@@ -107,5 +112,8 @@ jobs:
           name: injury-watch-snapshot
           path: |
             data/live/latest.json
+            data/live/context.json
+            data/live/intelligence.json
+            data/live/official.json
             data/history/
           retention-days: 14

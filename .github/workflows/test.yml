@@ -2,7 +2,9 @@ name: Tests
 on:
   pull_request:
   push:
-    branches: [arena/01a0ad73-nbainjuryreport]
+    # main plus any session branch — hardcoding one branch name left this suite unrun
+    # for a whole session when the branch changed (found 2026-09-17, third pass).
+    branches: [main, "arena/**"]
 permissions:
   contents: read
 jobs:
