@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T03:53:12.411Z",
+  "generated": "2026-09-17T03:56:13.301Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -186,7 +186,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4277961.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4277961/jaren-jackson-jr",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/uta",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/utah",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jaren%20Jackson%20Jr.%20injury",
         "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD"
@@ -516,7 +516,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/6430.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/6430/jimmy-butler-iii",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gsw",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gs",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jimmy%20Butler%20III%20injury",
         "fp": "Out|Right Knee Leg|2026-12-01|OUT"
@@ -666,7 +666,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4606840.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4606840/jamir-watkins",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/was",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jamir%20Watkins%20injury",
         "fp": "Out|Left Knee Leg|2027-04-01|OUT"
@@ -846,7 +846,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4713010.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4713010/david-jones-garcia",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sas",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sa",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=David%20Jones%20Garcia%20injury",
         "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD"
@@ -1086,7 +1086,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5101845.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/5101845/jayden-quaintance",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sas",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sa",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jayden%20Quaintance%20injury",
         "fp": "Out|Right Knee Leg|2026-12-01|OUT"
@@ -1266,7 +1266,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5289900.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/5289900/mohamed-diawara",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/nyk",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ny",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Mohamed%20Diawara%20injury",
         "fp": "Day-To-Day|Finger Arm|2026-10-01|GTD"
@@ -1326,7 +1326,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4433268.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4433268/trey-alexander",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/uta",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/utah",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Trey%20Alexander%20injury",
         "fp": "Day-To-Day|Left Ribs Torso|2026-10-01|GTD"
@@ -1446,7 +1446,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3934672.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/3934672/jalen-brunson",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/nyk",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ny",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jalen%20Brunson%20injury",
         "fp": "Day-To-Day|Left Wrist Arm|2026-10-01|GTD"
@@ -1836,7 +1836,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5160992.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/5160992/alex-sarr",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/was",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Alex%20Sarr%20injury",
         "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD"
@@ -1866,7 +1866,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/6583.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/6583/anthony-davis",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/was",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Anthony%20Davis%20injury",
         "fp": "Day-To-Day|Left Finger Arm|2026-10-01|GTD"
@@ -1896,7 +1896,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4277905.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4277905/trae-young",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/was",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Trae%20Young%20injury",
         "fp": "Day-To-Day|Right Quadriceps Leg|2026-10-01|GTD"
@@ -1986,7 +1986,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4576086.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4576086/bryce-mcgowens",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/nop",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/no",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Bryce%20McGowens%20injury",
         "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD"
@@ -2196,7 +2196,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4432171.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4432171/moses-moody",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gsw",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gs",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Moses%20Moody%20injury",
         "fp": "Out|Left Knee Leg|2026-12-01|OUT"
@@ -2319,26 +2319,19 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
       "nuggets.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Denver Nuggets — official",
         "kind": "official-team",
         "team": "DEN"
+      },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "sixersnba.bsky.social": {
         "ok": true,
@@ -2347,6 +2340,13 @@
         "kind": "official-team",
         "team": "PHI"
       },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
       "dallasmavs.bsky.social": {
         "ok": true,
         "count": 0,
@@ -2354,17 +2354,17 @@
         "kind": "official-team",
         "team": "DAL"
       },
-      "mikevorkunov.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Mike Vorkunov",
-        "kind": "reporter",
-        "team": null
-      },
       "samvecenie.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Sam Vecenie",
+        "kind": "reporter",
+        "team": null
+      },
+      "mikevorkunov.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Mike Vorkunov",
         "kind": "reporter",
         "team": null
       },
@@ -2382,13 +2382,6 @@
         "kind": "reporter",
         "team": null
       },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
-        "kind": "reporter",
-        "team": null
-      },
       "tomorsborn.bsky.social": {
         "ok": true,
         "count": 2,
@@ -2402,6 +2395,13 @@
         "name": "Jeff McDonald",
         "kind": "reporter",
         "team": "SAS"
+      },
+      "tomhaberstroh.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tom Haberstroh",
+        "kind": "reporter",
+        "team": null
       },
       "nbasarah.bsky.social": {
         "ok": true,
@@ -2486,8 +2486,8 @@
       "createdAt": "2026-07-13T03:11:25.244Z",
       "indexedAt": "2026-07-13T03:11:25.567Z",
       "url": "https://bsky.app/profile/nbasarah.bsky.social/post/3mqipt373ns2g",
-      "sev": "questionable",
-      "sevLabel": "⚠ IN-GAME EXIT WATCH (social, unconfirmed)",
+      "sev": "out",
+      "sevLabel": "OUT FOR THE GAME (in-game, social report)",
       "inGameWatch": true,
       "kindLabel": "ingame-watch"
     },

@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-17T03:53:11.849Z",
+  "checkedAt": "2026-09-17T03:56:12.993Z",
   "rosters": {
     "CHA": {
       "fetchedAt": "2026-09-17T03:53:11.849Z",
@@ -2778,11 +2778,205 @@
           "team": "WAS"
         }
       ]
+    },
+    "UTA": {
+      "fetchedAt": "2026-09-17T03:56:12.993Z",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster",
+      "players": [
+        {
+          "playerId": "4433268",
+          "player": "Trey Alexander",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4873138",
+          "player": "Ace Bailey",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4277919",
+          "player": "Mo Bamba",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4683933",
+          "player": "Tamar Bates",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4683766",
+          "player": "Isaiah Collier",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4684793",
+          "player": "Kyle Filipowski",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4433627",
+          "player": "Keyonte George",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4432811",
+          "player": "Josh Green",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4397077",
+          "player": "Jaxson Hayes",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4396963",
+          "player": "Blake Hinson",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4277961",
+          "player": "Jaren Jackson Jr.",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4066336",
+          "player": "Lauri Markkanen",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4898237",
+          "player": "Bez Mbeng",
+          "team": "UTA"
+        },
+        {
+          "playerId": "3133602",
+          "player": "Svi Mykhailiuk",
+          "team": "UTA"
+        },
+        {
+          "playerId": "3102530",
+          "player": "Jusuf Nurkic",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4065663",
+          "player": "Josh Okogie",
+          "team": "UTA"
+        },
+        {
+          "playerId": "5041955",
+          "player": "Darryn Peterson",
+          "team": "UTA"
+        },
+        {
+          "playerId": "5105839",
+          "player": "Brice Sensabaugh",
+          "team": "UTA"
+        },
+        {
+          "playerId": "4432827",
+          "player": "Oscar Tshiebwe",
+          "team": "UTA"
+        }
+      ]
+    },
+    "NOP": {
+      "fetchedAt": "2026-09-17T03:56:12.993Z",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/roster",
+      "players": [
+        {
+          "playerId": "4397136",
+          "player": "Saddiq Bey",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4712862",
+          "player": "Malik Dia",
+          "team": "NOP"
+        },
+        {
+          "playerId": "5144091",
+          "player": "Jeremiah Fears",
+          "team": "NOP"
+        },
+        {
+          "playerId": "5170947",
+          "player": "AJ Johnson",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4277813",
+          "player": "Herbert Jones",
+          "team": "NOP"
+        },
+        {
+          "playerId": "3442",
+          "player": "DeAndre Jordan",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4683634",
+          "player": "Bennedict Mathurin",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4997538",
+          "player": "Karlo Matkovic",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4576086",
+          "player": "Bryce McGowens",
+          "team": "NOP"
+        },
+        {
+          "playerId": "5061589",
+          "player": "Yves Missi",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4397688",
+          "player": "Trey Murphy III",
+          "team": "NOP"
+        },
+        {
+          "playerId": "3907497",
+          "player": "Dejounte Murray",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4432068",
+          "player": "Josh Oduro",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4703115",
+          "player": "Jaron Pierre Jr.",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4277956",
+          "player": "Jordan Poole",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4869780",
+          "player": "Derik Queen",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4431675",
+          "player": "Trendon Watford",
+          "team": "NOP"
+        },
+        {
+          "playerId": "4395628",
+          "player": "Zion Williamson",
+          "team": "NOP"
+        }
+      ]
     }
   },
   "roles": [],
-  "errors": {
-    "NOP": "HTTP 400",
-    "UTA": "HTTP 400"
-  }
+  "errors": {}
 }
