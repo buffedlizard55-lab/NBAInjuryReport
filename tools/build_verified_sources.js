@@ -20,7 +20,7 @@ const out = {
   generated: new Date().toISOString().slice(0, 10),
   project: "NBAInjuryReport — live injury alert notification system (all 30 NBA teams)",
   live_site: "https://buffedlizard55-lab.github.io/NBAInjuryReport/",
-  method: "Single source of truth: assets/js/data.js. Each entry verified line-by-line against live official pages/APIs on 2026-09-17 (verification channel: assistant page-fetch tool; shell HTTPS egress is blocked in the build environment). See sources.html for evidence links. Session 2 added the structured all-30-team ESPN injuries API and the free Bluesky/AT-Protocol social layer; both carry their exact evidence strings in the source rows below.",
+  method: "Single source of truth: assets/js/data.js. Each entry verified line-by-line against live official pages/APIs on 2026-09-17 across four passes (verification channels: assistant page-fetch tool + GitHub Actions runner audit data/audit/latest.json; shell HTTPS egress is blocked in the build environment). See sources.html for evidence links. Session 2 added the structured all-30-team ESPN injuries API and the free Bluesky/AT-Protocol social layer; session 4 re-verified the official/ESPN/Bluesky rows and fixed the social alert-eligibility gate (identity evidence, not only the verification object); both carry their exact evidence strings in the source rows below.",
   endpoints: ENDPOINTS,
   counts: {
     teams: TEAMS.length,
@@ -55,7 +55,7 @@ const out = {
   },
   schedule_verified: {
     as_of: "2026-09-17",
-    state: "offseason (ESPN scoreboard ?dates=20260917 returned ZERO events — re-verified live this session)",
+    state: "offseason (ESPN scoreboard ?dates=20260917 returned ZERO events — re-verified live on 2026-09-17, session-4 pass: 2026-27 official page still 404, injuries feed still 200, nba.com Bluesky verification still valid)",
     preseason_tip: "2026-10-03 MIA @ TOR (ESPN scoreboard event 401902644, Videotron Centre, Quebec City)",
     opening_night: "2026-10-20: BOS@DET 3pm ET, PHI@NYK 7pm ET, OKC@SAS 9:30pm ET — confirmed by the OFFICIAL NBA Bluesky account bio on 2026-09-17, independently of Basketball Monster",
     metadata_irregularity: "ESPN's scoreboard league block still describes season '2025-26' with a calendar ending 2026-06-13 while ESPN's own injuries endpoint reports season 2026-27 Preseason. Flagged; the app ignores the scoreboard league block."
@@ -66,7 +66,7 @@ const out = {
   scheduled_collection: {
     mechanism: "GitHub Actions workflow .github/workflows/injury-watch.yml running tools/poll_watch.js every 10 minutes (plus manual dispatch)",
     writes: ["data/live/latest.json (same-origin snapshot: injuries, news, social posts)", "data/history/YYYY-MM-DD.jsonl (append-only timestamped history)", "data/history/firsts.json (earliest observed timestamp per player / per in-game-watch post)", "data/history/index.json (run counts per day)"],
-    status: "Code shipped and dry-run locally on 2026-09-17. NOT yet executed by GitHub — the sandbox has no shell egress and Actions permissions were not readable with the available token. The first push to main triggers it: CHECK THE ACTIONS TAB.",
+    status: "RUNNING: first successful end-to-end run 2026-09-17 (GitHub Actions, see FLAGS entry \"First fully-automated collection run verified end-to-end\"); every 10 minutes on main and arena/** plus manual dispatch. Snapshots commit to data/live and data/history with a rebase-retry because the branch is written by collector, audit bot and humans at once. GitHub documents scheduled runs as best-effort; they are a recorder, not a push channel.",
     caveats: ["GitHub documents scheduled workflows as best-effort (delays under load)", "scheduled workflows are disabled after 60 days without repository activity", "runs every 10 minutes, so it is a recorder, not a real-time push channel"]
   },
   key_limitations: [

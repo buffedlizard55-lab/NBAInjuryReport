@@ -46,7 +46,9 @@ function build(snapshot, official, context, prior = {}, now = new Date().toISOSt
       postedAt: post.createdAt, firstObservedAt: now, player: player?.player || null,
       playerId: player?.playerId || null, team: player?.team || null,
       status: claimStatus(post.text), inGameWatch: post.inGameWatch === true,
-      identityVerifiedAtCollection: post.verified === true, outcome: 'pending',
+      // identity evidence established when the poller collected the post (reporter list/bio evidence
+      // counts); bskyVerified is the stronger Bluesky-object subset, kept separate for scoring
+      identityVerifiedAtCollection: post.verified === true, bskyVerified: post.bskyVerified === true, outcome: 'pending',
       note: player ? 'Awaiting game-scoped official evidence; no score from silence.' : 'Player unresolved or multiple players; not auto-scored.' };
   }
   for (const claim of Object.values(claims)) {

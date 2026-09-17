@@ -188,3 +188,54 @@ restored (with decompression in place) for the next run to settle, and the reaso
 withdrawal is the general lesson: a bug in a verification tool produces confident, specific, wrong
 findings faster than anything else in the system. Linking out instead of scraping stays the policy on
 its own merits either way.
+
+---
+
+# Fourth pass — 2026-09-17, session 4 (~14:15–14:50Z): full re-read, live re-verification, identity-gate fix
+
+## Scope
+
+Re-read every shipped file line by line: `index.html`, `reporters.html`, `sources.html`, all nine `assets/js` modules, `assets/css/style.css`, all of `tools/` (poller, collectors, ledger, validators, audit), all four `.github/workflows`, and the data contracts (`data/live/*.json`, `data/audit/latest.json`, `data/verified_sources.json`). Ran the full local test surface before touching anything: 147 smoke + 48 integration + 24 poll-fixture + 21 regression groups + 4 Python tests + `replay_posts --check` on the live snapshot — all green.
+
+## Live re-verification (this session, direct fetch channel, 2026-09-17 ~14:25Z)
+
+| Source | Observation | Consequence |
+|---|---|---|
+| [NBA 2026–27 report](https://official.nba.com/nba-injury-report-2026-27-season/) | **404** ("404 Error \| Not Found", XID 62906610) | Official adapter remains blocked by a missing page, not broken. The 2026-09-17 finding stands. |
+| [NBA 2025–26 report](https://official.nba.com/nba-injury-report-2025-26-season/) | **200**; deadline rules text re-read: 5 p.m. day-before, 11 a.m.–1 p.m. gameday (8–10 a.m. if tip ≤5 p.m.), 1 p.m. back-to-back, "updated on a continual basis" — verbatim match with the registry | Registry row now cites both re-reads. |
+| [ESPN injuries API](https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries) | **200**; `season {year:2027, name:"Preseason", displayName:"2026-27"}`; per-block schema unchanged; sampled Mouhamed Gueye (ATL) `Day-To-Day` dated 2026-07-19 with the Brad Rowland byline intact | The primary board is stable across all four same-day reads. |
+| [NBA Bluesky profile](https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com) | **200**; `verification.verifiedStatus: "valid"` (issuer bsky.app, `isValid: true`); bio still states the Oct 20 openers (Celtics/Pistons 3:00pm/et, 76ers/Knicks 7:00pm/et, Thunder/Spurs 9:30pm/et); `followersCount: 122,490`, `followsCount: 6` | The 4-of-30 official-team-account ceiling on the social layer still holds. |
+
+The remaining 18 registry checks (official PDF index, PDF sample, ESPN teams/scoreboard/roster/depth/injuries-page, Bluesky follows/list/search, X pricing docs, Basketball Monster, Covers, RotoBaller, balldontlie, and the two dated reporter-move evidence pages) are re-run by the independent GitHub Actions audit (`Public source audit`) — this session's `data.js` changes trigger it, and the verdicts land in `data/audit/latest.json` for the reader to check.
+
+**Tool irregularity, recorded not hidden:** the page-fetch proxy intermittently failed with its own `InvalidAccessKeyId` error (an error in the fetch channel, not in any source). Four retries on the Basketball Monster URL all hit it; those checks are therefore settled by the runner audit above, not by this pass.
+
+## Defects found and fixed in this pass
+
+| Area | Finding | Resolution / test |
+|---|---|---|
+| `assets/js/social.js:feedAccounts/checkAlerts` | **Alert eligibility was keyed on the Bluesky verification object alone.** Four of the eight allow-listed reporters — Jeff McDonald and Tom Orsborn (Spurs beat writers), Tom Haberstroh, John Hollinger — carry *recorded* identity evidence (Howard Beck's 150-member list membership + self-declared beat, the same standard the reporter directory applies to every row) but no verification object, so their posts could **never sound an alert** even when they named exactly one recognized NBA player with explicit OUT language. Meanwhile the eligibility rule's stated purpose ("sound requires identity evidence") was not actually the rule in the code. | `feedAccounts()` now carries two fields: `bskyVerified` (the verification object → the ✓ badge) and `verified` (alert eligibility): **reporters qualify on recorded evidence; official league/team accounts still require the verification object**, so the flagged `dallasmavs` account (followed by the NBA but object-less, row says "treat as club-run only after a second source confirms") stays silent. The feed shows a distinct `◐ evidence` badge; the evidence ledger stores both fields (`identityVerifiedAtCollection` + `bskyVerified`). Pinned by two new regression groups (`regression_test.js`): eligible reporter, verified league account, silent team account, and same-post eligible/silent via `checkAlerts`. The CI poller runs the same function, so browser and archive agree. |
+| `assets/css/style.css` | `.tag.ok`, `.tag.warn`, `.tag.gtd` were used by `social.js` (✓ badge, relay tag) and `injuries.js` (GTD tag) but **never defined** — those badges rendered with the base dark tag style, so a Bluesky-verified post and an unverified one looked the same. | Styles added for all three classes. |
+| `tools/build_verified_sources.js` | `scheduled_collection.status` still read "NOT yet executed by GitHub" and the schedule note said "re-verified live this session" as if session 2 had not ended — the poller has run on GitHub since 2026-09-17 (first successful end-to-end run documented in FLAGS). Stale text in a verification artifact is exactly what the audit exists to catch. | Text corrected to state the running state (every 10 min on main + arena/**, rebase-retry commit step, best-effort cron caveat); `data/verified_sources.json` regenerated (30 teams / 23 sources / 56 reporters / 36 flags). |
+
+## Line-by-line observations (no change required)
+
+- **Alert engine** (`alerts.js`): the two freshness policies remain correctly separated (social judged on post time 30 min; board/official judged on `observedAt` with 24h/12h windows); chime burst coalescing (1.5 s) and the mute-independent test sound are intact.
+- **Injury board** (`injuries.js`): failed/stale snapshots keep last-good rows and the baseline (tested); the `standardAbbr` six-club mapping is pinned by the smoke test; per-row impact tags, cadence block and review links all present.
+- **In-game monitor** (`ingame.js`): DNP rows are display-only and never sound (`alertEligible: false`, tested); `COACH'S DECISION` and similar non-injury reasons excluded; failed game IDs surface as a warning, not as "no findings".
+- **Ledger** (`tools/build_intelligence.js`): forward-only, no absence-based verdicts; reconciliation is game-scoped within 4 h and labels a later official row "later official designation, not proof of predictive accuracy"; conflict → review, never an automatic wrong-report penalty.
+- **Collector/audit tooling** (`tools/poll_watch.js`, `tools/collect_context.js`, `tools/collect_official.py`, `tools/verify_live.py`, all workflows): single-flight, rebase-retry push, self-audit on real data before commit, fail-closed PDF layout parser, and the `CAPABILITY-DRIFT`/`ENV-BLOCKED`/`UNREACHABLE-FROM-RUNNER` verdict vocabulary all intact. The runner-side re-audit triggered by this session's push is the independent check for the 18 URLs this pass could not re-read.
+- **UI** (`index.html`): alert center now states explicitly that in-game exit / "questionable to return" language from a monitored account raises an *unconfirmed* alert with the post link, and that DNP reasons never sound; the social panel now explains the ✓ vs ◐-evidence badges.
+
+## Test surface after this pass
+
+`smoke_test.js` 147 · `integration_test.js` 48 · `poll_fixture_test.js` 24 · `regression_test.js` **23 groups** (+2 new identity-gate groups) · `python3 -m unittest discover -s tools` 4 · `replay_posts.js --check` on the live snapshot: 74 rows / 12 posts, no invariant violations. The GitHub `Tests` job additionally runs the Chromium UI suite on merge.
+
+## Remaining irregularities (unchanged from the third pass unless noted)
+
+1. **Critical (time-gated):** no live official report exists to discover — the 2026-27 page is still 404 (re-verified this pass); the adapter is ready and fails closed.
+2. **Critical (structural):** free low-latency coverage for every reporter/team/game is not achieved; browser polling is open-tab, Actions cron is best-effort.
+3. **Critical (access):** X/Instagram/Facebook reads and live-broadcast transcription remain unconnected; no bypasses.
+4. **High:** in-game behavior (exit, QTR, return-to-game) is still empirically unexercised — first games tip 2026-10-03; the impact layer's `roleStats` will start filling only then.
+5. **High:** identity verification is now evidence-based for reporters (fixed this pass) but the *legacy X rows* still rest on first-pass evidence; revalidation of every X row remains open.
+6. **Medium–Low:** as itemized in [NEXT_STEPS.md](NEXT_STEPS.md) — Git-as-storage, cross-tab dedupe, QTR outcome scoring, depth-chart corroboration.

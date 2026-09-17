@@ -43,7 +43,10 @@
   <section class="card" style="margin-top:16px">
     <h2>🔔 Alert center <span class="tiny muted">sound · browser notifications · manual-review links</span></h2>
     <p class="muted small">Fires when a <b>new</b> listing appears or a status <b>changes</b> in any layer — the ESPN structured injury board,
-      ESPN news, a recent allow-listed Bluesky post naming one recognized NBA player, or an explicit official report. Every listing alert is tagged
+      ESPN news, a recent allow-listed Bluesky post naming one recognized NBA player, or an explicit official report. <b>In-game:</b> when a monitored
+      account posts exit or “questionable to return” language about a recognized player, an <b>unconfirmed</b> alert fires with the post link —
+      that is the fastest signal a player hurt on a play is not coming back, and it does not wait for the official designation. ESPN's per-game DNP
+      reasons are shown in the in-game monitor below but never sound, because a DNP row cannot prove an in-game exit. Every listing alert is tagged
       <b>⚡ HIGH LINEUP IMPACT</b> when the player's collected box scores show a starter going out. DNP alone does not trigger an exit alert.
       Opening the page seeds existing items silently. Unresolved and ambiguous signals do not sound. Turn sound off (or mute a severity below)
       when you only want the log. The tab must remain open; background throttling and source delays can delay alerts.</p>
@@ -115,9 +118,12 @@
     <!-- ============ SOCIAL ============ -->
     <section class="card" style="margin-top:16px">
       <h2>📡 Social layer <span class="tiny muted">verified accounts · free · no key</span></h2>
-      <p class="muted small">Reads the <b>Bluesky/AT-Protocol public API</b> for an allow-list of verified accounts: the official NBA account,
-        verified team accounts, and working reporters. Posts containing injury language are classified and can raise alerts —
-        including <b>in-game exit language</b> (“left the game”, “locker room”, “questionable to return”) before any official designation.</p>
+    <p class="muted small">Reads the <b>Bluesky/AT-Protocol public API</b> for an allow-list of accounts whose identity evidence is recorded in the
+      registry (full list on the <a href="reporters.html">Reporters page</a>): the official NBA account, team accounts that carry a valid Bluesky
+      verification object, and working reporters — a <span class="tag ok">✓</span> badge means the account's own Bluesky verification object was
+      valid when checked, <span class="tag ok">◐ evidence</span> means recorded evidence (curated-list membership / self-declared beat) which also
+      qualifies a reporter for alerts. Posts containing injury language are classified and can raise alerts —
+      including <b>in-game exit language</b> (“left the game”, “locker room”, “questionable to return”) before any official designation.</p>
       <div class="tiny" id="socialStatus"><span class="dot warn"></span>not polled yet</div>
       <div class="btn-row">
         <button class="btn sm" id="socialNow">↻ Poll social now</button>
