@@ -1,9 +1,7 @@
 {
-  "generated": "2026-09-17T03:18:55.502Z",
+  "generated": "2026-09-17T03:20:38.690Z",
   "source": "github-actions-poller",
-  "errors": {
-    "news": "normalizeNews is not defined"
-  },
+  "errors": {},
   "injuries": {
     "season": "2026-27",
     "seasonRaw": {
@@ -2236,7 +2234,88 @@
     ],
     "blocks": 27
   },
-  "news": [],
+  "news": [
+    {
+      "id": "49961989",
+      "ts": "2026-09-17T03:06:15Z",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "title": "Sources: Suns add center depth with free agent Duop Reath",
+      "desc": "The Phoenix Suns, looking for depth in the wake of Mark Williams' injury, are signing center Duop Reath to a deal, sources told ESPN's Shams Charania.",
+      "url": "https://www.espn.com/nba/story/_/id/49961989/sources-suns-add-center-depth-free-agent-duop-reath",
+      "byline": null
+    },
+    {
+      "id": "49939898",
+      "ts": "2026-09-15T13:39:45Z",
+      "sev": "return",
+      "sevLabel": "RETURN / GOOD NEWS",
+      "title": "Boston Celtics offseason recap, early 2026-27 season preview",
+      "desc": "It was an offseason of change for the Celtics. Can they still compete in the upgraded Eastern Conference?",
+      "url": "https://www.espn.com/nba/story/_/id/49939898/boston-celtics-offseason-recap-early-2026-27-season-preview-jayson-tatum",
+      "byline": "NBA Insiders"
+    },
+    {
+      "id": "49925264",
+      "ts": "2026-09-13T07:48:54Z",
+      "sev": "return",
+      "sevLabel": "RETURN / GOOD NEWS",
+      "title": "'Has the talent to be All-Star this year': Jefferson on Ben Simmons return to NBA",
+      "desc": "Richard Jefferson gives his perspective on Ben Simmons return to the NBA with the Sacramento Kings",
+      "url": "https://www.espn.com/video/clip/_/id/49925264/jefferson-ben-simmons-return-nba",
+      "byline": null
+    },
+    {
+      "id": "49925238",
+      "ts": "2026-09-13T07:45:15Z",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "title": "Jefferson believes Bogut is going to be 'outstanding' coach",
+      "desc": "Richard Jefferson reflects on being teammates with Aussie great Andrew Bogut, his future as a coach, and his infamous injury in Cleveland",
+      "url": "https://www.espn.com/video/clip/_/id/49925238/jefferson-believes-bogut-going-outstanding-coach",
+      "byline": null
+    },
+    {
+      "id": "49904356",
+      "ts": "2026-09-11T20:35:12Z",
+      "sev": "out",
+      "sevLabel": "OUT",
+      "title": "Suns' Mark Williams to miss months after shoulder surgery",
+      "desc": "Phoenix Suns center Mark Williams had surgery Thursday to repair a torn labrum in his left shoulder and will miss several months.",
+      "url": "https://www.espn.com/nba/story/_/id/49904356/sources-suns-mark-williams-miss-shoulder-surgery",
+      "byline": null
+    },
+    {
+      "id": "49880687",
+      "ts": "2026-09-11T10:55:36Z",
+      "sev": "return",
+      "sevLabel": "RETURN / GOOD NEWS",
+      "title": "Indiana Pacers offseason recap, early 2026-27 season preview",
+      "desc": "Will Haliburton's return push the Pacers back to the top of the East? Looking back at the offseason and taking an early look at the 2026-27 season.",
+      "url": "https://www.espn.com/nba/story/_/id/49880687/indiana-pacers-2026-27-season-preview-stats-roster-tyrese-haliburton",
+      "byline": "NBA Insiders"
+    },
+    {
+      "id": "49826930",
+      "ts": "2026-09-10T15:20:23Z",
+      "sev": "return",
+      "sevLabel": "RETURN / GOOD NEWS",
+      "title": "Detroit Pistons offseason recap, early 2026-27 season preview",
+      "desc": "Will Detroit return to the top of the East? Looking back at the offseason and taking an early look at the 2026-27 season.",
+      "url": "https://www.espn.com/nba/story/_/id/49826930/detroit-pistons-2026-27-season-preview-stats-roster-jalen-duren-cade-cunningham",
+      "byline": "NBA Insiders"
+    },
+    {
+      "id": "49827564",
+      "ts": "2026-09-08T11:09:05Z",
+      "sev": "return",
+      "sevLabel": "RETURN / GOOD NEWS",
+      "title": "Biggest injury returns for the 2026-27 NBA season",
+      "desc": "Which stars will be back in action and injury returns to watch for in the 2026-27 NBA season.",
+      "url": "https://www.espn.com/nba/story/_/id/49827564/biggest-injury-returns-2026-27-nba-season-irving-haliburton-doncic-butler-lillard",
+      "byline": "NBA insiders"
+    }
+  ],
   "socialPath": "direct",
   "social": {
     "accounts": {
