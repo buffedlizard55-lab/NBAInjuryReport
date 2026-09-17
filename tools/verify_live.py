@@ -117,7 +117,8 @@ CHECKS = [
          claim='Registry: keyword search is not available without a key (403 observed) — a documented limitation, deliberately not worked around. A 200 here would mean broader free coverage becomes possible.'),
     dict(id='x-docs-pricing', url='https://docs.x.com/x-api/getting-started/pricing',
          expect=[403, 200, 301, 302, 307],
-         claim='Registry (x-api): the pricing page challenges automated fetchers, so no price in the registry is confirmed — and the row now points at docs.x.com, not the xAI documentation it used to link.'),
+         mustRe={'pricing content present': r'\$|tier|month'},
+         claim='Registry (x-api): reachability depends on the path, not on the page — this build sandbox is challenged (403) while the repo\'s own runner audit fetched it with HTTP 200 (~780 KB) on 2026-09-17. A readable page is not a licensed feed, so no price from it is quoted in the registry; and the row now points at docs.x.com, not the xAI documentation it used to link.'),
     dict(id='basketballmonster', url='https://basketballmonster.com/playernews.aspx',
          expect=[200, 403], mustRe={'player-news page': r'player\s*news|PlayerNews', 'source attribution': r'source',
                                     'status tag word in raw HTML': r'INJURED'},
@@ -276,8 +277,7 @@ def probe(spec, row, scratch):
         row['meaning'] = 'No route from the runner (DNS/TLS/timeout). Says nothing about the source, and nothing about browser access.'
     elif status in ENV_STATUSES and status not in expect:
         row['verdict'] = 'ENV-BLOCKED'
-        row['meaning'] = ('HTTP %d from a datacenter IP. The claim under test is about the source and the browser path, '
-                          'which are evidenced elsewhere (the deployed page prints its own transport). Not counted as drift.' % status)
+        row['meaning'] = ('HTTP %d to this script\'s plain client. The same URL can succeed from Node on the same runner and from a browser on the deployed origin - ESPN is fingerprinting clients, not blocking machines or IPs. The claim under test is about the source and the browser path, evidenced elsewhere; not counted as drift.' % status)
     elif status not in expect:
         row['verdict'] = ('CAPABILITY-DRIFT' if spec.get('critical') else 'DRIFT-RECORDED') + ('' if status != 200 else '-NEWLY-OK')
         row['meaning'] = ('The source answers differently than the registry states. '
