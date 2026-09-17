@@ -19,7 +19,8 @@ no paid tiers — it runs entirely in the browser on GitHub Pages, with a free s
 | 🏆 Reliability scorecard | `reporters.html` | Forward-collected: log each call with its post URL → points, accuracy, firsts; JSON export/import. "First" becomes defensible once the poller has timestamp history |
 | 🕒 **Free server-side poller** | `.github/workflows/injury-watch.yml` | **New this session.** Every 10 min: snapshots injuries/news/social → `data/live/latest.json` (same-origin, CORS-proof) + appends `data/history/*.jsonl` + records first-seen timestamps per player |
 | 📚 Line-by-line verification log | `sources.html` | 21 sources, 21 irregularity flags, evidence links, limitations, roadmap, re-verification checklist |
-| 🧪 Logic tests | `tools/smoke_test.js` | **90 checks**, run against the real browser modules in Node (with a DOM stub): status normalization, alert diffing, wire de-duplication + HTML escaping, social classification, in-game extraction |
+| 🧪 Logic + integration tests | `tools/smoke_test.js`, `tools/integration_test.js` | **103 logic checks** against the real modules in Node (DOM stub) + **45 integration checks** that boot the actual page scripts against fixture responses, assert every element id exists in the page that loads it, and exercise the ESPN-blocked → CI-snapshot fallback |
+| 🔎 Live-data self-audit | `tools/replay_posts.js [snapshot] --check` | Replays a real captured snapshot through the current classifier and fails on invariant violations (non-standard team codes, OUT labels without an out phrase, duplicate posts). Runs in CI **before** any snapshot is committed |
 
 ## Verification performed 2026-09-17 (all links re-openable)
 
@@ -39,6 +40,24 @@ Everything below was fetched live during this session; evidence links are in `so
 
 Irregularities were **flagged, not hidden** — see `sources.html` → Flags (21 of them).
 
+## What the first live run changed (real data beat the fixtures)
+
+The free GitHub Actions poller ran for real on **2026-09-17T03:10:21Z** (run `35177148985`) and committed a snapshot:
+**73 structured injury rows, 8 classified news items, 34 injury-relevant social posts, 13/13 accounts reachable, zero errors.**
+Reading that snapshot row-by-row — then replaying every post through the classifier — found four defects that no fixture would have caught:
+
+| Defect found on live data | Why it mattered | Fix |
+|---|---|---|
+| ESPN returns **its own** team codes for six clubs (`GS`, `NO`, `NY`, `SA`, `UTAH`, `WSH`) | 13 rows in the first snapshot had orphan chips, missed the team filter and produced broken links | `standardAbbr()` in `data.js`, applied in both the board and the poller; six mappings pinned by tests |
+| `getAuthorFeed` also returns **reposts**, authored by someone else | five never-vetted accounts (`businessdecisionmv`, `katelynburns.com`, `cornpuzzle`, `playest`, `yourmandevine`) leaked into the "verified" layer | only the polled account's own posts are accepted |
+| Free-form posts produced false positives — "THE VOICE IS BACK.", "locker room culture", "out for rest" | an injury alert that cries wolf is worse than no alert | explicit injury vocabulary is required; the in-game regex now needs an exit phrase; rest/roster news is labelled non-injury |
+| The same post was stored twice (repost reached two feeds) | double-counting and double-alerting in the history/first-to-report trail | de-duplicated by post uri in both the layer and the poller |
+
+The poller also no longer duplicates the browser's logic: it loads `assets/js/injuries.js` and `assets/js/social.js`
+behind a DOM stub and calls the same `normalize()` / `classifyPost()` the dashboard uses, so the archive and the page
+can never disagree about what an injury is. `node tools/replay_posts.js <snapshot> --check` re-asserts the invariants
+on fresh data in CI, before anything is committed.
+
 ## Really-free reality check
 
 | Want | Status |
@@ -54,7 +73,9 @@ Irregularities were **flagged, not hidden** — see `sources.html` → Flags (21
 ```bash
 python3 -m http.server 8080      # open http://localhost:8080
 
-node tools/smoke_test.js         # 90 logic checks (no browser needed)
+node tools/smoke_test.js         # 103 logic checks (no browser needed)
+node tools/integration_test.js   # 45 checks: boots the real page scripts against fixtures
+node tools/replay_posts.js data/live/latest.json --check   # self-audit a real snapshot
 node tools/poll_watch.js --dry-run   # exercise the poller without writing
 node tools/poll_watch.js         # write data/live/latest.json + data/history/*
 node tools/build_verified_sources.js # regenerate data/verified_sources.json
@@ -70,7 +91,9 @@ node tools/build_verified_sources.js # regenerate data/verified_sources.json
 - `assets/js/social.js` — Bluesky layer + 3-path transport + in-game exit classification
 - `assets/js/wire.js` — unified chat-style stream
 - `assets/js/ingame.js` — live-game absence monitor
-- `tools/poll_watch.js` + `.github/workflows/injury-watch.yml` — free server-side poller (snapshots + history + firsts)
+- `tools/poll_watch.js` + `.github/workflows/injury-watch.yml` — free server-side poller (snapshots + history + firsts); shares the browser's normalisers
+- `tools/replay_posts.js` — replays a real snapshot through the classifier; `--check` mode is the CI live-data self-audit
+- `tools/smoke_test.js`, `tools/integration_test.js` — 103 logic + 45 integration checks
 - `data/verified_sources.json` — machine-readable registry (generated)
 
 **Next work and limitations:** [`NEXT_STEPS.md`](NEXT_STEPS.md).

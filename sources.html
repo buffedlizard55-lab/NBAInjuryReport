@@ -110,6 +110,27 @@
               it is a third-party attribution quoted by ESPN, not a substitute for the original post.</td>
             <td><a href="https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries?team=atl" target="_blank" rel="noopener">ATL block ↗</a></td>
           </tr>
+          <tr>
+            <td><b>The free poller ran for real — and the first live snapshot exposed four defects no fixture would have caught</b></td>
+            <td>Run <span class="kbd">35177148985</span> (push to main, 2026-09-17T03:10:21Z) succeeded with <b>73 structured injury rows</b>,
+              8 classified news items, 34 injury-relevant posts, <b>13/13 accounts reachable</b>, <span class="kbd">errors = {}</span> — and committed
+              <span class="kbd">data/live/latest.json</span>, <span class="kbd">data/history/2026-09-17.jsonl</span> and <span class="kbd">firsts.json</span>.
+              Reading that snapshot row-by-row and replaying the posts through the classifier found: (1) ESPN emits <b>its own</b> team codes
+              <span class="kbd">GS / NO / NY / SA / UTAH / WSH</span> for six clubs, breaking chips, filters and links; (2) <span class="kbd">getAuthorFeed</span>
+              returns <b>reposts</b>, which pulled in five never-vetted accounts; (3) "THE VOICE IS BACK." was classified as an injury mention because the gate
+              matched the body word <i>back</i>; (4) the same post was stored twice via two feeds. All four are fixed in the shared code paths, and
+              <span class="kbd">tools/replay_posts.js --check</span> now re-asserts the invariants <b>in CI on fresh data</b> before any snapshot is committed.</td>
+            <td><a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/workflows/injury-watch.yml" target="_blank" rel="noopener">open Actions ↗</a><br>
+              <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/data/live/latest.json" target="_blank" rel="noopener">open live snapshot ↗</a></td>
+          </tr>
+          <tr>
+            <td><b>The archive and the dashboard now share one normaliser — the drift is what caused those bugs</b></td>
+            <td>The poller used to duplicate the browser's injuries/social logic, so the two could disagree about what a row or a post meant.
+              <span class="kbd">tools/poll_watch.js</span> now loads <span class="kbd">assets/js/injuries.js</span> and <span class="kbd">assets/js/social.js</span>
+              behind a tiny DOM stub and calls the same <span class="kbd">normalize()</span> / <span class="kbd">classifyPost()</span> the page uses. One source of
+              truth, one behaviour, and a smoke check pins it so a future edit cannot quietly re-fork the logic.</td>
+            <td><a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/tools/poll_watch.js" target="_blank" rel="noopener">open poller ↗</a></td>
+          </tr>
         </tbody>
       </table>
     </div>

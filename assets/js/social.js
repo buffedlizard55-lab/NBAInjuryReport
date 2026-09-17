@@ -1,158 +1,225 @@
-/* Social second layer — FREE, key-less, allow-list based.
+/* =====================================================================================
+ * social.js — free, keyless social layer (Bluesky / AT Protocol)
  *
- * WHAT IT IS: the Bluesky / AT-Protocol public API (public.api.bsky.app) read per
- * VERIFIED account. Verified live 2026-09-17: getAuthorFeed works with no key and no
- * account; searchPosts does NOT (HTTP 403 unauthenticated) — that limitation is
- * documented in data.js FLAGS and is why this layer polls an allow-list of accounts
- * instead of searching for keywords.
+ * WHY BLUESKY AND NOT X: X's API has no free read tier (~$200/mo entry), and scraping X or
+ * Instagram breaks their terms. Bluesky serves a fully public, keyless HTTP API, so it is the
+ * only major network where a serious-but-broke injury tracker can follow verified reporters
+ * legitimately. It is NOT a replacement for X — it is a second layer, and the UI says so.
  *
- * THREE TRANSPORT PATHS (in order), because browser CORS could not be proven from the
- * sandbox that built this:
- *   1. browser-direct  -> public.api.bsky.app (fastest, no third party)
- *   2. same-origin     -> data/social/latest.json, written by the free GitHub Actions
- *                         poller (tools/poll_watch.js). Same origin = CORS cannot apply.
- *   3. relay (opt-in)  -> a public CORS relay, only if the user explicitly enables it.
- * The panel prints which path each account actually used, so nothing is hidden.
+ * VERIFIED LIVE 2026-09-17, no key and no account:
+ *   ✅ app.bsky.feed.getAuthorFeed            (per-account posts)
+ *   ✅ app.bsky.actor.searchActorsTypeahead   (handle discovery / existence check)
+ *   ✅ app.bsky.graph.getList                 (members of a curated list)
+ *   ✅ app.bsky.graph.getFollows              (who an account follows)
+ *   ❌ app.bsky.feed.searchPosts              → HTTP 403 without auth
+ * The 403 is the important one: this layer follows KNOWN accounts reliably but cannot keyword
+ * search. So it polls a verified allow-list (data.js SOCIAL_ACCOUNTS + BSKY_REPORTERS, every
+ * handle carrying its own evidence) instead of pretending to search.
  *
- * ALERTING: a post is alerted when it is new (by post URI) and matches an injury signal.
- * Posts that merely MENTION an injury are logged, not alerted — see classifyPost().
- * In-game exit language ("left the game", "locker room", "won't return", "questionable
- * to return") raises an IN-GAME EXIT WATCH alert even before any official designation,
- * clearly labelled as a social report rather than a league designation.
- */
-"use strict";
+ * TWO BUGS FOUND BY REPLAYING THE FIRST LIVE CI SNAPSHOT (tools/replay_posts.js):
+ *   1. getAuthorFeed also returns REPOSTS, whose author is somebody else entirely — five
+ *      never-vetted accounts leaked into the layer that way. Only the account's own posts count.
+ *   2. Free-form posts produced false positives: "THE VOICE IS BACK." read as an injury,
+ *      "locker room culture" read as an in-game exit, a rest/roster decision read as an injury.
+ *      Fixed with an explicit injury gate + vocabulary rule in data.js, validated by replay.
+ *
+ * REACHABILITY: three paths, in order, and the UI always states which one was used —
+ *   1. direct         (browser → public.api.bsky.app; CORS could NOT be proven from the build
+ *                      sandbox, which has no browser and no response headers — flagged, not hidden)
+ *   2. ci-snapshot    (same-origin data/live/latest.json from the GitHub Actions poller; cannot
+ *                      be blocked by CORS and needs no key, at the cost of being as fresh as the
+ *                      last scheduled run)
+ *   3. relay (opt-in) (public CORS relay, OFF by default, labelled wherever it is used)
+ * ===================================================================================== */
+const Social = (function () {
+  const SEEN_KEY = "nba-social-seen-v1";
+  const RELAY_KEY = "nba-social-relay";
+  const ALERT_SEV = { out: true, doubtful: true, questionable: true };
 
-const Social = (() => {
-  const LS_SEEN = "nba-social-seen-v1";
-  const LS_RELAY = "nba-social-relay-on";
-  const LS_LAST = "nba-social-last-poll";
-  const POLL_EVERY_MS = 3 * 60 * 1000;   // be polite to a free public API
-  const PER_ACCOUNT_LIMIT = 20;
-  const MAX_POSTS = 120;
+  const WATCH_RE = (typeof INGAME_WATCH_RE !== "undefined") ? INGAME_WATCH_RE
+    : /\b(won'?t return|will not return|head(ed|ing)? (to|for) the locker room|left the game|helped off)\b/i;
+  const GATE_RE = (typeof SOCIAL_INJURY_GATE_RE !== "undefined") ? SOCIAL_INJURY_GATE_RE : /\b(injur\w+|questionable|doubtful|ruled out)\b/i;
+  const VOCAB_RE = (typeof SOCIAL_INJURY_VOCAB_RE !== "undefined") ? SOCIAL_INJURY_VOCAB_RE : /(injur\w+|knee|ankle|surg\w*)/i;
 
-  let posts = [];
-  let accountStatus = {};
-  let lastPoll = Number(localStorage.getItem(LS_LAST) || 0);
-  let relayOn = localStorage.getItem(LS_RELAY) === "on";
-  let primed = false;
+  const SEV_LABEL = {
+    out: "OUT (social report)", doubtful: "DOUBTFUL", questionable: "QUESTIONABLE / DAY-TO-DAY",
+    probable: "PROBABLE", return: "CLEARED / RETURNING", mention: "INJURY MENTION"
+  };
 
-  /* ---------- injury classification for free text ---------- */
-  /* In-game exit language — the highest-latency-value signal in this whole project,
-   * because it can appear SECONDS after a player walks to the locker room. */
-  /* Canonical regex lives in data.js so the CI poller classifies identically to the browser. */
-  const WATCH_RE = (typeof INGAME_WATCH_RE !== "undefined") ? INGAME_WATCH_RE : /\b(won'?t return|locker room|left the game|questionable to return|limping|helped off)\b/i;
-  /* Hard designations */
-  const DESIGNATION_RE = /\b(ruled out|officially out|out for|is out|will miss|out indefinitely|season-?ending|surgery|torn|fracture\w*|sprain\w*|strain\w*|soreness|illness|concussion|injury report|doubtful|probable|day-?to-?day|gtd|game-?time decision|questionable|available|cleared|active|will play)\b/i;
+  let posts = [], accounts = {}, fetchedAt = null, path = null, error = null;
+
+  const LS = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v == null ? d : v; } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
+  };
+
+  const esc = (typeof AlertEngine !== "undefined" && AlertEngine.escapeHtml)
+    ? AlertEngine.escapeHtml
+    : (s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])));
+
+  /* ---------- classification ---------- */
 
   function classifyPost(text) {
     const t = String(text || "");
-    const inj = /\b(injur\w+|hurt|sore|soreness|sprain|strain|torn|fracture\w*|concussion|illness|sick|surgery|achilles|acl|mcl|meniscus|hamstring|ankle|knee|calf|groin|wrist|thumb|quad|oblique|hip|foot|leg|back|shoulder|elbow|hand|finger|toe|neck|ribs?|protocol|questionable|doubtful|probable|out|gtd|day-?to-?day|locker room|limp\w*)\b/i;
-    if (!inj.test(t) && !WATCH_RE.test(t)) return null;
+    if (!GATE_RE.test(t) && !WATCH_RE.test(t)) return null;
 
-    /* 1. severity by the SAME ordered classifier used by the ESPN news wire */
-    let sev = "mention", sevLabel = "INJURY MENTION";
-    if (typeof SIGNALS !== "undefined") {
-      for (const s of SIGNALS) {
-        if (s.re.test(t)) { sev = s.sev; sevLabel = s.label; break; }
-      }
+    /* RULE: an injury signal requires injury VOCABULARY, or in-game exit language.
+     * Availability news with no injury word — "out for rest", "will be without X tonight",
+     * a rotation plan — is at most a non-injury mention. Replaying the first live CI snapshot
+     * (tools/replay_posts.js) is how this rule was validated against real posts. */
+    const hasVocab = VOCAB_RE.test(t);
+    const isWatch = WATCH_RE.test(t);
+    if (!hasVocab && !isWatch) {
+      return { sev: "mention", sevLabel: "NON-INJURY (rest / roster / decision)", kind: "non-injury" };
     }
-    /* 2. IN-GAME EXIT language always wins the label, because that is the single most
-     *    time-critical case: a player leaving a game in progress. If the post also states a
-     *    hard designation ("ruled out for the remainder of the game") severity is 'out';
-     *    otherwise it is 'questionable to return'-class — both pass the default filter.
-     *    The label always says it is a social report, never a league designation. */
-    if (WATCH_RE.test(t)) {
-      if (sev === "out") return { sev: "out", sevLabel: "OUT FOR THE GAME (in-game, social report)", kind: "ingame-watch" };
-      return { sev: "questionable", sevLabel: "⚠ IN-GAME EXIT WATCH (social, unconfirmed)", kind: "ingame-watch" };
+
+    /* IN-GAME EXIT language always wins the label and is ALWAYS marked unconfirmed: a social
+     * post is not a league designation and the UI must never imply that it is. */
+    if (isWatch) {
+      const ord = (typeof classifySocialSeverity === "function") ? classifySocialSeverity(t) : { sev: "questionable" };
+      const escalated = ord.sev === "out" || ord.sev === "doubtful";
+      return {
+        sev: escalated ? ord.sev : "questionable",
+        sevLabel: escalated ? "OUT FOR THE GAME (in-game, social report)" : "⚠ IN-GAME EXIT WATCH (social, unconfirmed)",
+        kind: "ingame-watch"
+      };
     }
-    if (sev === "out" && DESIGNATION_RE.test(t)) {
-      return { sev: "out", sevLabel: "OUT (social report)", kind: "designation" };
-    }
-    return { sev, sevLabel, kind: "mention" };
+    const sev = (typeof classifySocialSeverity === "function") ? classifySocialSeverity(t).sev : "mention";
+    return { sev: sev, sevLabel: SEV_LABEL[sev] || "INJURY MENTION", kind: sev === "mention" ? "mention" : "designation" };
   }
 
   /* ---------- transport ---------- */
-  function relayUrl(u) { return ENDPOINTS.corsRelay + encodeURIComponent(u); }
 
-  async function getJson(url, timeoutMs) {
+  function isRelayOn() { return LS.get(RELAY_KEY, "0") === "1"; }
+  function setRelay(on) { LS.set(RELAY_KEY, on ? "1" : "0"); }
+  function wrap(url) { return isRelayOn() ? (ENDPOINTS.corsRelay + encodeURIComponent(url)) : url; }
+
+  async function getJSON(url, ms) {
     const ctrl = new AbortController();
-    const to = setTimeout(() => ctrl.abort(), timeoutMs || 15000);
+    const timer = setTimeout(() => ctrl.abort(), ms || 12000);
     try {
-      const res = await fetch(url, { signal: ctrl.signal, cache: "no-store" });
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      return { data: await res.json(), path: "direct" };
-    } finally { clearTimeout(to); }
-  }
-
-  /* Try direct, then (if enabled) relay. Returns {data, path} or throws. */
-  async function getJsonWithFallback(url) {
-    const tried = [];
-    try { const r = await getJson(url); return r; }
-    catch (e) { tried.push("direct: " + e.message); }
-    if (relayOn) {
-      try { const r = await getJson(relayUrl(url), 20000); r.path = "relay"; return r; }
-      catch (e) { tried.push("relay: " + e.message); }
-    }
-    const err = new Error(tried.join(" | "));
-    err.tried = tried;
-    throw err;
-  }
-
-  async function getSnapshot() {
-    try {
-      const res = await fetch(ENDPOINTS.socialSnapshot + "?t=" + Math.floor(Date.now() / 60000), { cache: "no-store" });
+      const res = await fetch(wrap(url), { signal: ctrl.signal, cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status);
       return await res.json();
-    } catch (e) { return null; }
+    } finally { clearTimeout(timer); }
   }
 
-  /* ---------- account list ---------- */
+  /* Both registries hold feed-enabled accounts; normalise them to one shape. */
   function feedAccounts() {
-    const official = (typeof SOCIAL_ACCOUNTS !== "undefined" ? SOCIAL_ACCOUNTS : []).filter(a => a.feed);
-    const reporters = (typeof BSKY_REPORTERS !== "undefined" ? BSKY_REPORTERS : []).filter(a => a.feed);
-    return official.concat(reporters.map(r => ({
-      handle: r.handle, name: r.name, kind: "reporter", team: r.team, bskyVerified: r.bskyVerified,
-      outlet: r.outlet, role: r.role, url: r.evidence
-    })));
+    const out = [];
+    for (const a of (typeof SOCIAL_ACCOUNTS !== "undefined" ? SOCIAL_ACCOUNTS : [])) {
+      if (a.feed) out.push({ handle: a.handle, name: a.name, kind: a.kind, team: a.team || null, outlet: a.outlet || null, role: a.role || null, verified: !!a.bskyVerified, url: a.url || ("https://bsky.app/profile/" + a.handle) });
+    }
+    for (const r of (typeof BSKY_REPORTERS !== "undefined" ? BSKY_REPORTERS : [])) {
+      if (r.feed !== false) out.push({ handle: r.handle, name: r.name, kind: "reporter", team: r.team || null, outlet: r.outlet || null, role: r.role || null, verified: !!r.bskyVerified, url: r.evidence || ("https://bsky.app/profile/" + r.handle) });
+    }
+    return out;
   }
 
-  function postUrl(handle, uri) {
-    const rkey = String(uri || "").split("/").pop();
-    return rkey ? ("https://bsky.app/profile/" + handle + "/post/" + rkey) : ("https://bsky.app/profile/" + handle);
+  /* getAuthorFeed also returns reposts, whose author is somebody else entirely. Only the
+   * polled account's OWN posts belong to this layer. */
+  function isOwnPost(item, handle) {
+    if (!item || !item.post) return false;
+    if (item.reason) return false;
+    const author = (item.post.author || {}).handle;
+    return !!author && author.toLowerCase() === String(handle).toLowerCase();
   }
 
   function normalizeFeed(data, acct) {
     const out = [];
     for (const item of ((data && data.feed) || [])) {
-      const p = item.post; if (!p) continue;
+      if (!isOwnPost(item, acct.handle)) continue;
+      const p = item.post;
       const rec = p.record || {};
-      const author = p.author || {};
-      const handle = author.handle || acct.handle;
-      const text = String(rec.text || "").trim();
+      const text = String(rec.text || "");
+      const cls = classifyPost(text);
+      if (!cls) continue;                                  // not injury-related → dropped, not shown
+      const rkey = String(p.uri || "").split("/").pop();
       out.push({
-        uri: p.uri,
-        text,
-        handle,
-        name: author.displayName || acct.name,
+        uri: p.uri || (acct.handle + "-" + rkey),
+        text: text,
+        handle: acct.handle,
+        name: acct.name || (p.author && p.author.displayName) || acct.handle,
+        verified: !!acct.verified,
+        kind: acct.kind,
+        team: acct.team,
+        outlet: acct.outlet,
+        role: acct.role,
+        accountUrl: acct.url,
+        account: { url: acct.url, team: acct.team, kind: acct.kind, outlet: acct.outlet, name: acct.name },
         createdAt: rec.createdAt || p.indexedAt || null,
         indexedAt: p.indexedAt || null,
-        url: postUrl(handle, p.uri),
-        account: acct,
-        verified: !!acct.bskyVerified
+        url: "https://bsky.app/profile/" + acct.handle + "/post/" + rkey,
+        sev: cls.sev,
+        sevLabel: cls.sevLabel,
+        inGameWatch: cls.kind === "ingame-watch",
+        kindLabel: cls.kind
       });
     }
     return out;
   }
 
-  function getSeen() {
-    try { return new Set(JSON.parse(localStorage.getItem(LS_SEEN) || "[]")); }
-    catch (e) { return new Set(); }
+  async function fetchDirect() {
+    const list = feedAccounts();
+    const got = [];
+    const status = {};
+    for (const acct of list) {
+      try {
+        const data = await getJSON(ENDPOINTS.bskyAuthorFeed + encodeURIComponent(acct.handle) + "&limit=20&filter=posts_no_replies", 12000);
+        const mine = normalizeFeed(data, acct);
+        status[acct.handle] = { ok: true, count: mine.length, name: acct.name, kind: acct.kind, team: acct.team };
+        got.push.apply(got, mine);
+      } catch (e) {
+        status[acct.handle] = { ok: false, error: e.message, name: acct.name, kind: acct.kind, team: acct.team };
+      }
+    }
+    /* defensive de-duplication: one post must never be counted (or alerted) twice */
+    const byUri = new Map();
+    for (const p of got) if (!byUri.has(p.uri)) byUri.set(p.uri, p);
+    const deduped = Array.from(byUri.values());
+    const okCount = Object.values(status).filter(s => s.ok).length;
+    if (list.length && okCount === 0) {
+      throw new Error("all " + list.length + " author feeds failed (first: " + ((status[list[0].handle] || {}).error || "?") + ")");
+    }
+    return { posts: deduped, accounts: status, path: "direct", duplicatesDropped: got.length - deduped.length };
   }
-  function saveSeen(set) { localStorage.setItem(LS_SEEN, JSON.stringify([...set].slice(-1200))); }
 
-  /* ---------- alerting ---------- */
-  function alertPosts(list, isFirstLoad) {
-    const seen = getSeen();
+  async function fetchSnapshot() {
+    const snap = await getJSON(ENDPOINTS.socialSnapshot, 10000);
+    if (!snap || !Array.isArray(snap.posts)) throw new Error("snapshot has no posts");
+    const status = {};
+    for (const row of (snap.accounts || [])) {
+      status[row.handle] = { ok: !!row.ok, count: row.count || 0, error: row.error || null, name: row.name, kind: row.kind, team: row.team || null };
+    }
+    const got = snap.posts.map(p => Object.assign({}, p, {
+      sevLabel: p.sevLabel || SEV_LABEL[p.sev] || "INJURY MENTION",
+      kindLabel: p.inGameWatch ? "ingame-watch" : (p.sev === "mention" ? "mention" : "designation"),
+      account: { url: p.accountUrl, team: p.team, kind: p.kind, outlet: p.outlet, name: p.name }
+    }));
+    return { posts: got, accounts: status, path: "ci-snapshot", generated: snap.generated };
+  }
+
+  async function fetchAll() {
+    const attempts = [];
+    try {
+      const r = await fetchDirect();
+      return Object.assign({ fetchedAt: new Date().toISOString(), error: null, relayUsed: isRelayOn() }, r);
+    } catch (e1) { attempts.push("direct: " + e1.message); }
+    try {
+      const r = await fetchSnapshot();
+      return Object.assign({ fetchedAt: r.generated || null, error: null, relayUsed: false }, r);
+    } catch (e2) { attempts.push("ci-snapshot: " + e2.message); }
+    return { posts: [], accounts: {}, fetchedAt: null, path: null, relayUsed: isRelayOn(), error: attempts.join(" · ") };
+  }
+
+  /* ---------- seen-state / alerts ---------- */
+
+  function seenSet() { try { return new Set(JSON.parse(LS.get(SEEN_KEY, "[]")) || []); } catch (e) { return new Set(); } }
+  function saveSeen(set) { LS.set(SEEN_KEY, JSON.stringify(Array.from(set).slice(-1200))); }
+
+  function checkAlerts(list, isFirstLoad) {
+    const seen = seenSet();
+    const firstEver = seen.size === 0;
     const fresh = [];
     for (const p of list) {
       if (seen.has(p.uri)) continue;
@@ -160,171 +227,159 @@ const Social = (() => {
       fresh.push(p);
     }
     saveSeen(seen);
-
-    if (!primed) {
-      primed = true;
-      if (fresh.length) {
-        AlertEngine.log(`📡 Social layer seeded ${fresh.length} existing post(s) silently (no alert storm on first load).`, null);
-        AlertEngine.renderLog();
-      }
-      return [];
-    }
-    if (isFirstLoad) return [];
-    const f = (typeof App !== "undefined" && App.getFilters) ? App.getFilters() : null;
-    for (const p of fresh) {
-      const c = classifyPost(p.text);
-      if (!c) continue;
-      const where = p.account.kind === "reporter" ? `${p.account.outlet || "reporter"}` : (p.account.kind === "official-team" ? "official team account" : "official league account");
-      const who = p.verified ? `${p.name} (@${p.handle}, Bluesky-verified)` : `${p.name} (@${p.handle})`;
-      const title = `${c.sevLabel} · ${who} [${where}] — "${p.text.slice(0, 180)}"`;
-      const allowedSev = f ? !!f.sevs[c.sev] : ["out", "doubtful", "questionable"].includes(c.sev);
-      const allowedTeam = f ? (f.team === "ALL" || !p.account.team || f.team === p.account.team) : true;
-      if (c.kind !== "mention" && allowedSev && allowedTeam) {
-        AlertEngine.fire({ sev: c.sev, sevLabel: c.sevLabel + " · Bluesky", title, url: p.url, extraUrl: p.account.url });
-      } else {
-        AlertEngine.log(`(logged, not alerted: ${c.sevLabel}) ${p.name}: ${p.text.slice(0, 140)}`, p.url);
-      }
-    }
-    AlertEngine.renderLog();
-    return fresh;
+    if (isFirstLoad || firstEver) return { alerts: [], fresh: fresh.length, first: true };
+    const alerts = fresh
+      .filter(p => p.inGameWatch || ALERT_SEV[p.sev])
+      .map(p => ({
+        kind: p.inGameWatch ? "social-ingame" : "social",
+        sev: p.sev, sevLabel: p.sevLabel,
+        title: (p.inGameWatch ? "IN-GAME EXIT (unconfirmed) — " : "") + p.name + (p.team ? " (" + p.team + ")" : ""),
+        detail: p.text,
+        url: p.url,
+        source: "Bluesky · @" + p.handle + (p.outlet ? " · " + p.outlet : ""),
+        ts: p.createdAt
+      }));
+    return { alerts: alerts, fresh: fresh.length, first: false };
   }
 
-  /* ---------- main fetch ---------- */
-  async function fetchAll(reason) {
-    const accts = feedAccounts();
-    const results = await Promise.all(accts.map(async acct => {
-      const url = ENDPOINTS.bskyAuthorFeed + encodeURIComponent(acct.handle) + "&limit=" + PER_ACCOUNT_LIMIT;
-      try {
-        const { data, path } = await getJsonWithFallback(url);
-        const list = normalizeFeed(data, acct);
-        accountStatus[acct.handle] = { ok: true, path, count: list.length, at: new Date().toISOString(), error: null };
-        return list;
-      } catch (e) {
-        accountStatus[acct.handle] = { ok: false, path: "failed", count: 0, at: new Date().toISOString(), error: e.message, tried: e.tried || [] };
-        return [];
-      }
-    }));
-    lastPoll = Date.now();
-    localStorage.setItem(LS_LAST, String(lastPoll));
-    return { posts: results.flat(), reason };
+  function resetSeen() { saveSeen(new Set(posts.map(p => p.uri))); return posts.length; }
+
+  /* ---------- rendering ---------- */
+
+  function ago(iso) {
+    if (!iso) return "";
+    const d = new Date(iso); if (isNaN(d)) return "";
+    const mins = Math.round((Date.now() - d.getTime()) / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return mins + "m ago";
+    const hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + "h ago";
+    return Math.round(hrs / 24) + "d ago";
   }
 
-  function mergeAndSort(list) {
-    const byUri = {};
-    for (const p of list.concat(posts)) byUri[p.uri] = p;
-    posts = Object.values(byUri)
-      .sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0))
-      .slice(0, MAX_POSTS);
-    return posts;
+  function linkify(text) {
+    return esc(text)
+      .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
+      .replace(/@([a-z0-9-]+(?:\.[a-z0-9-]+)+)/gi, function (m, h) {
+        return '<a href="https://bsky.app/profile/' + esc(h) + '" target="_blank" rel="noopener">' + esc(m) + '</a>';
+      });
   }
 
-  /* ---------- render ---------- */
   function renderStatus() {
     const el = document.getElementById("socialStatus");
     if (!el) return;
-    const accts = feedAccounts();
-    const ok = accts.filter(a => accountStatus[a.handle] && accountStatus[a.handle].ok);
-    const fail = accts.filter(a => accountStatus[a.handle] && !accountStatus[a.handle].ok);
-    const paths = [...new Set(ok.map(a => accountStatus[a.handle].path))];
-    const skipped = accts.filter(a => !accountStatus[a.handle]);
-    let html = `<span class="dot ${ok.length ? "ok" : (fail.length ? "bad" : "warn")}"></span>`;
-    html += ok.length
-      ? `${ok.length}/${accts.length} verified accounts reachable via <b>${paths.join(" + ")}</b> · last poll ${new Date(lastPoll).toLocaleTimeString()}`
-      : (fail.length ? `0/${accts.length} reachable — ${AlertEngine.escapeHtml(fail[0].name)}: ${AlertEngine.escapeHtml(accountStatus[fail[0].handle].error || "")}` : `not polled yet`);
-    if (skipped.length) html += ` · ${skipped.length} not polled`;
-    if (fail.length) html += ` · ${fail.length} failed`;
-    el.innerHTML = html;
-
-    const detail = document.getElementById("socialDetail");
-    if (detail) {
-      detail.innerHTML = accts.map(a => {
-        const s = accountStatus[a.handle];
-        const badge = s ? (s.ok ? `<span class="badge ok">${s.count} posts · ${s.path}</span>` : `<span class="badge bad">unreachable</span>`) : `<span class="badge dim">not polled</span>`;
-        return `<tr><td><a href="${a.url || ("https://bsky.app/profile/" + a.handle)}" target="_blank" rel="noopener">${AlertEngine.escapeHtml(a.name)}</a>
-          <br><span class="tiny muted">@${AlertEngine.escapeHtml(a.handle)}${a.outlet ? " · " + AlertEngine.escapeHtml(a.outlet) : ""}${a.role ? " · " + AlertEngine.escapeHtml(a.role) : ""}</span></td>
-          <td>${a.kind === "official-league" ? "official league" : a.kind === "official-team" ? ("official team " + (a.team || "")) : "reporter/insider"}</td>
-          <td>${a.bskyVerified ? '<span class="badge ok">Bluesky-verified</span>' : '<span class="badge warn">no verification object</span>'}</td>
-          <td>${badge}${s && !s.ok ? `<br><span class="tiny muted">${AlertEngine.escapeHtml(s.error || "")}</span>` : ""}</td></tr>`;
-      }).join("");
-    }
-  }
-
-  function renderFeed() {
-    const el = document.getElementById("socialFeed");
-    if (!el) return;
-    if (!posts.length) {
-      el.innerHTML = `<div class="muted small">No posts loaded yet. Free social access needs either (a) browser access to public.api.bsky.app, or (b) the same-origin snapshot the free poller writes to <span class="kbd">data/social/latest.json</span>. Click <b>Test feeds</b> for a per-account diagnosis, or read the accounts directly via the links above.</div>`;
+    const all = Object.values(accounts);
+    const ok = all.filter(a => a.ok).length;
+    const label = { "direct": "browser → Bluesky (direct)", "ci-snapshot": "CI snapshot (data/live/latest.json)" }[path] || "no path";
+    if (error) {
+      el.innerHTML = '<span class="bad">✖ social layer unavailable</span> · ' + esc(error) +
+        ' · <button class="btn sm" onclick="Social.toggleRelay()">' + (isRelayOn() ? "disable relay" : "try CORS relay") + '</button>';
       return;
     }
-    el.innerHTML = posts.slice(0, 40).map(p => {
-      const c = classifyPost(p.text);
-      const when = p.createdAt ? new Date(p.createdAt).toLocaleString() : "time unknown";
-      return `<div class="post${c && c.kind === "ingame-watch" ? " watch" : ""}">
-        <div class="wire-meta">
-          ${c ? `<span class="tag ${c.sev}">${AlertEngine.escapeHtml(c.sevLabel)}</span>` : `<span class="tag mention">NO INJURY SIGNAL</span>`}
-          <span><b>${AlertEngine.escapeHtml(p.name)}</b> @${AlertEngine.escapeHtml(p.handle)}</span>
-          <span>· ${AlertEngine.escapeHtml(when)}</span>
-          ${p.verified ? '<span class="badge ok">verified</span>' : ''}
-          ${p.account.kind === "official-team" || p.account.kind === "official-league" ? '<span class="badge info">official</span>' : ''}
-        </div>
-        <div>${AlertEngine.escapeHtml(p.text).slice(0, 700)}</div>
-        <div class="wire-links tiny">
-          <a href="${AlertEngine.escapeHtml(p.url)}" target="_blank" rel="noopener">open post on Bluesky ↗</a>
-          <a href="${xSearchUrl(p.text.split(/[.\n]/)[0].slice(0, 60))}" target="_blank" rel="noopener">find on X ↗</a>
-        </div>
-      </div>`;
+    el.innerHTML = 'via <b>' + esc(label) + '</b>' + (isRelayOn() ? ' <span class="tag warn">relay</span>' : '') +
+      ' · accounts reachable <b>' + ok + '/' + all.length + '</b>' +
+      (fetchedAt ? ' · ' + esc(ago(fetchedAt)) : "") +
+      (path === "ci-snapshot" ? ' <span class="muted tiny">(direct access blocked from this browser — the CI snapshot is same-origin, so it always works)</span>' : "");
+  }
+
+  function renderDetail() {
+    const el = document.getElementById("socialDetail");
+    if (!el) return;
+    const rows = Object.entries(accounts);
+    if (!rows.length) { el.innerHTML = '<span class="muted tiny">No account data yet.</span>'; return; }
+    el.innerHTML = '<table class="table tiny"><thead><tr><th>account</th><th>kind</th><th>team</th><th>reachable</th><th>injury posts</th></tr></thead><tbody>' +
+      rows.sort((a, b) => a[0].localeCompare(b[0])).map(([handle, a]) =>
+        '<tr><td><a href="https://bsky.app/profile/' + esc(handle) + '" target="_blank" rel="noopener">@' + esc(handle) + '</a>' +
+        (a.name ? '<div class="muted tiny">' + esc(a.name) + '</div>' : "") + '</td>' +
+        '<td>' + esc(a.kind || "reporter") + '</td><td>' + esc(a.team || "—") + '</td>' +
+        '<td>' + (a.ok ? '<span class="good">yes</span>' : '<span class="bad" title="' + esc(a.error || "") + '">no</span>') + '</td>' +
+        '<td>' + (a.count == null ? "—" : a.count) + '</td></tr>').join("") + '</tbody></table>';
+  }
+
+  function renderFeed(filters) {
+    const el = document.getElementById("socialFeed");
+    if (!el) return;
+    const f = filters || (typeof App !== "undefined" && App.getFilters ? App.getFilters() : null);
+    const shown = posts.filter(p => !(f && f.team && f.team !== "ALL" && p.team !== f.team))
+      .slice().sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+    if (!shown.length) {
+      el.innerHTML = '<div class="empty">' + (error
+        ? esc(error)
+        : "No injury-related posts from the verified accounts right now. Keyword search is not available on Bluesky without auth (HTTP 403), so this layer only shows accounts on the verified allow-list — it will not invent posts.") + '</div>';
+      return;
+    }
+    el.innerHTML = shown.map(p => {
+      const cls = p.inGameWatch ? "ingame-watch" : p.sev;
+      return '<div class="post sev-border-' + esc(p.inGameWatch ? "out" : p.sev) + '">' +
+        '<div class="post-head"><span class="tag ' + esc(cls) + '">' + esc(p.sevLabel) + '</span>' +
+        '<b>' + esc(p.name) + '</b>' +
+        (p.verified ? '<span class="tag ok" title="Bluesky verification or outlet-domain verification">✓</span>' : "") +
+        (p.outlet ? '<span class="muted tiny">' + esc(p.outlet) + '</span>' : "") +
+        (p.team ? '<span class="tag team">' + esc(p.team) + '</span>' : "") +
+        '<span class="post-when tiny muted">' + esc(ago(p.createdAt)) + '</span></div>' +
+        '<div class="post-text">' + linkify(p.text) + '</div>' +
+        '<div class="post-foot tiny"><a href="' + esc(p.url) + '" target="_blank" rel="noopener">open on Bluesky ↗</a>' +
+        ' · <span class="muted">' + esc(p.role || (p.kind === "official-team" ? "official team account" : p.kind === "official-league" ? "official league account" : "reporter")) + '</span></div></div>';
     }).join("");
   }
 
-  /* ---------- diagnostics ---------- */
+  function render(filters) { renderStatus(); renderFeed(filters); renderDetail(); }
+
+  /* ---------- diagnostics: what actually happened in THIS browser ---------- */
+
   async function testFeeds() {
-    const out = [];
-    const probe = feedAccounts()[0] || { handle: "nba.com", name: "NBA" };
-    const url = ENDPOINTS.bskyAuthorFeed + encodeURIComponent(probe.handle) + "&limit=1";
-    try { const r = await getJson(url); out.push(`direct OK (${r.data.feed ? r.data.feed.length : 0} posts) for @${probe.handle}`); }
-    catch (e) { out.push(`direct FAILED for @${probe.handle}: ${e.message}`); }
-    if (relayOn) {
-      try { const r = await getJson(relayUrl(url), 20000); out.push(`relay OK (${r.data.feed ? r.data.feed.length : 0} posts)`); }
-      catch (e) { out.push(`relay FAILED: ${e.message}`); }
-    } else { out.push("relay disabled (tick 'allow public relay' to test it)"); }
-    const snap = await getSnapshot();
-    out.push(snap ? `snapshot OK (generated ${snap.generated || "?"})` : "snapshot missing (data/social/latest.json not written yet — the Actions poller has not run)");
-    AlertEngine.log("🔎 Social feed test → " + out.join(" · "), null);
-    AlertEngine.renderLog();
-    return out;
+    const out = document.getElementById("testFeeds");
+    if (out) out.innerHTML = "testing…";
+    const first = feedAccounts()[0] || { handle: "nba.com" };
+    const lines = [];
+    const t0 = Date.now();
+    try {
+      const d = await getJSON(ENDPOINTS.bskyAuthorFeed + encodeURIComponent(first.handle) + "&limit=5", 10000);
+      lines.push("✅ direct Bluesky GET @" + first.handle + " — " + ((d.feed || []).length) + " items in " + (Date.now() - t0) + "ms");
+    } catch (e) {
+      lines.push("❌ direct Bluesky GET @" + first.handle + " — " + e.message + (/40[13]/.test(e.message) ? " (the browser blocked this cross-origin request)" : ""));
+    }
+    try {
+      const d = await getJSON(ENDPOINTS.socialSnapshot, 8000);
+      lines.push("✅ same-origin CI snapshot — generated " + (d.generated || "?") + ", " + ((d.posts || []).length) + " injury posts from " + ((d.accounts || []).length) + " accounts");
+    } catch (e) {
+      lines.push("❌ same-origin CI snapshot — " + e.message + (/404/.test(e.message) ? " (run the injury-watch workflow to publish it)" : ""));
+    }
+    if (out) out.innerHTML = lines.map(l => '<div>' + esc(l) + '</div>').join("");
+    return lines;
   }
 
-  /* ---------- called by App.refresh ---------- */
-  async function check(isFirstLoad, force) {
-    /* Same-origin snapshot first: instant paint, and it is the only path guaranteed
-     * to work regardless of CORS. Live refresh still happens on its own cadence. */
-    const snap = await getSnapshot();
-    if (snap && Array.isArray(snap.posts)) {
-      for (const p of snap.posts) if (!accountStatus[p.handle]) accountStatus[p.handle] = { ok: true, path: "snapshot", count: 0, at: snap.generated, error: null };
-      mergeAndSort(snap.posts.map(p => Object.assign({}, p, {
-        url: p.url, account: p.account || { handle: p.handle, name: p.name || p.handle, kind: p.kind || "reporter", team: p.team || null, bskyVerified: !!p.verified, url: "https://bsky.app/profile/" + p.handle }
-      })));
-      renderFeed(); renderStatus();
-    }
-    const due = force || (Date.now() - lastPoll) > POLL_EVERY_MS;
-    if (!due && posts.length) { renderStatus(); return posts; }
+  /* ---------- entry point used by app.js ---------- */
 
-    const before = posts.length;
-    const { posts: fetched } = await fetchAll(force ? "manual" : "scheduled");
-    mergeAndSort(fetched);
-    alertPosts(fetched, isFirstLoad || before === 0);
-    renderFeed();
-    renderStatus();
+  async function check(isFirstLoad, force) {
+    const res = await fetchAll();
+    posts = res.posts; accounts = res.accounts; fetchedAt = res.fetchedAt; path = res.path; error = res.error;
+    const diff = checkAlerts(posts, !!isFirstLoad);
+    if (!isFirstLoad && diff.alerts.length && typeof AlertEngine !== "undefined") {
+      for (const a of diff.alerts) AlertEngine.fire(a);
+      AlertEngine.renderLog();
+    }
+    render();
+    const nowEl = document.getElementById("socialNow");
+    if (nowEl) nowEl.textContent = posts.length ? (posts.length + " injury posts · newest " + ago(posts.map(p => p.createdAt).sort().pop())) : "no injury posts right now";
     return posts;
   }
 
-  function setRelay(on) {
-    relayOn = !!on;
-    localStorage.setItem(LS_RELAY, relayOn ? "on" : "off");
-    return relayOn;
+  function toggleRelay() {
+    setRelay(!isRelayOn());
+    const box = document.getElementById("relayToggle");
+    if (box) box.checked = isRelayOn();
+    const state = document.getElementById("relayState");
+    if (state) state.textContent = isRelayOn() ? "ON (third-party relay)" : "off (direct only)";
+    return check(false, true);
   }
-  function isRelayOn() { return relayOn; }
-  function resetSeen() { localStorage.removeItem(LS_SEEN); primed = false; }
 
-  return { check, fetchAll, classifyPost, renderFeed, renderStatus, testFeeds, setRelay, isRelayOn, resetSeen, getPosts: () => posts, feedAccounts, accountStatus: () => accountStatus, getSnapshot, INGAME_WATCH_RE: WATCH_RE };
+  return {
+    check: check, classifyPost: classifyPost, fetchAll: fetchAll, isOwnPost: isOwnPost,
+    render: render, renderFeed: renderFeed, testFeeds: testFeeds, resetSeen: resetSeen,
+    setRelay: setRelay, isRelayOn: isRelayOn, toggleRelay: toggleRelay,
+    getPosts: () => posts, feedAccounts: feedAccounts, accountStatus: () => accounts,
+    getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, count: posts.length }),
+    INGAME_WATCH_RE: WATCH_RE, GATE_RE: GATE_RE
+  };
 })();

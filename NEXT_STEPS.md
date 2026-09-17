@@ -7,7 +7,7 @@ Everything below is stated honestly — no claim is made without a verified sour
 
 | Capability | Status | Evidence |
 |---|---|---|
-| Structured injury board, all 30 teams (status, injury type/side, GTD flag, est. return, sourced comment) | **Working** | ESPN structured injuries API, two live fetches + `?team=mia` filter; 90 tests green |
+| Structured injury board, all 30 teams (status, injury type/side, GTD flag, est. return, sourced comment) | **Working, verified on real data** | ESPN structured injuries API + the first CI snapshot (73 rows); 103 logic + 45 integration checks green |
 | Chat-style merged wire across 4 layers | Working | `assets/js/wire.js` + tests (dedupe, escaping, severity tags) |
 | Sound alert with on/off toggle + test button, browser notifications, per-severity filters, clickable source on every alert | Working | `assets/js/alerts.js`; fires on new listing **and** status change (`InjuryBoard.diffAlerts`, tested) |
 | Free social layer for verified accounts (league, teams, reporters) | Working code path; browser CORS still to confirm once by hand | Bluesky public API verified unauthenticated for 4 endpoints; 403 for `searchPosts` (documented) |
@@ -15,18 +15,26 @@ Everything below is stated honestly — no claim is made without a verified sour
 | In-game absence monitor (injury-reason DNPs during live games) | Structure-verified, **not live-tested** | ESPN summary API, completed game 401811041 |
 | Reporter directory with identity evidence | 25 X handles + 8 Bluesky reporters + 7 official/outlet accounts verified; ~21 teams still lack a named in-arena writer | `reporters.html`, evidence link per row |
 | Reliability scorecard (forward-collected, evidence URLs, JSON export/import) | Working | `reporters.html`; rubric + points are tested |
-| Free server-side poller (snapshots + history + first-seen timestamps) | Code shipped, dry-run locally; **GitHub has not run it yet** | `.github/workflows/injury-watch.yml`, `tools/poll_watch.js` |
+| Free server-side poller (snapshots + history + first-seen timestamps) | **Working — ran on GitHub 2026-09-17T03:10:21Z** and committed a snapshot with 0 errors | Run `35177148985`; `data/live/latest.json`, `data/history/2026-09-17.jsonl`, `firsts.json` |
+| CI self-audit on live data (team codes, OUT labels, duplicates) | Working | `tools/replay_posts.js --check`, wired into the workflow **before** the commit step |
 
 ## 🚧 Action required by a human (cannot be automated from this environment)
 
 1. **Open the live site once and check the two data paths.** The build sandbox blocks shell HTTPS and returns no response headers, so browser CORS is unproven for
    `site.web.api.espn.com/…/injuries` and `public.api.bsky.app`. Expected: the board status line says `via espn-direct`, and the social panel says
    `via direct`. If either says `snapshot` or `unreachable`, tick **Allow public relay fallback** (Bluesky only) or rely on the poller snapshot. Record the result in `sources.html`.
-2. **Confirm the first Actions run.** Push to `main` triggers `injury-watch`; scheduled runs follow every 10 minutes. Check the Actions tab for a green run and that
-   `data/live/latest.json` appears. If Actions is disabled for the repo (or the bot token cannot push workflow files), enable Actions and re-run the workflow manually.
+2. ~~Confirm the first Actions run.~~ **Done 2026-09-17** — run `35177148985` succeeded and committed a real snapshot (73 rows / 13-of-13 accounts / no errors).
+   Still worth a glance after any change to `tools/poll_watch.js`: the new self-audit step fails the run loudly rather than committing a suspect snapshot.
 3. **Swap in the 2026-27 official injury report URL** the moment `official.nba.com/nba-injury-report-2026-27-season/` stops returning 404
    (verified 404 on 2026-09-17). One constant: `NBA_OFFICIAL_REPORT_URL` in `assets/js/data.js`, then re-run `tools/build_verified_sources.js`.
 4. **Live-validate the in-game monitor on 2026-10-03** (preseason tip, MIA @ TOR). Opening night is 2026-10-20 (BOS@DET, PHI@NYK, OKC@SAS — confirmed by the official NBA account).
+
+## ⚠️ Known transient state (honest, short-lived)
+
+The snapshot currently committed on `main` was produced by the **pre-fix** poller, so the new self-audit deliberately fails against it
+(13 rows still carry ESPN's own team codes `UTAH/GS/WSH/SA/NY/NO`, and one post is stored twice). The next `injury-watch` run — triggered by
+the push that contains this file — regenerates it with the shared normalisers, and the audit runs **before** the commit, so a bad snapshot
+can no longer be committed. Re-check the Actions tab once; if that run is green, this paragraph is obsolete.
 
 ## ⛔ Hard limitations (blockers, not excuses)
 

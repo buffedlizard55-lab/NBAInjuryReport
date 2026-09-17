@@ -28,157 +28,45 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 const DRY = process.argv.includes("--dry-run");
 const TIMEOUT_MS = 20000;
+const UA = "NBAInjuryReport-poller (+https://github.com/buffedlizard55-lab/NBAInjuryReport)";
 
 /* ---- load the single source of truth (data.js is plain data + pure functions) ---- */
 const dataSrc = fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8");
 const D = new Function(dataSrc + `
   return { ENDPOINTS, TEAMS, SIGNALS, SOCIAL_ACCOUNTS, BSKY_REPORTERS, INGAME_WATCH_RE,
-           normalizeInjuryStatus, teamByAbbr, BLUESKY_LIST_SOURCE };
+           SOCIAL_INJURY_GATE_RE, SOCIAL_NON_INJURY_RE, classifySocialSeverity, standardAbbr, normalizeInjuryStatus, teamByAbbr, BLUESKY_LIST_SOURCE };
 `)();
+
+/* The browser modules are IIFEs that assume a DOM. Stub the few globals they touch so the poller
+ * and the dashboard run the SAME normaliser and the SAME classifier — duplicated logic drifts,
+ * and drift here means the site and the archive disagree about what an injury is.
+ * (This is exactly how the bugs fixed on 2026-09-17 were found: the first live snapshot had rows
+ * whose fields the browser could not read, because the two paths had drifted.) */
+const _store = {};
+global.localStorage = {
+  getItem: k => (k in _store ? _store[k] : null),
+  setItem: (k, v) => { _store[k] = String(v); },
+  removeItem: k => { delete _store[k]; }
+};
+global.document = { getElementById: () => null, querySelectorAll: () => [], createElement: () => ({ style: {} }), addEventListener() { } };
+global.window = global;
+const moduleSrc = ["assets/js/data.js", "assets/js/alerts.js", "assets/js/injuries.js", "assets/js/social.js"].map(f => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n;\n");
+const B = new Function(moduleSrc + "\n;return { InjuryBoard, Social, AlertEngine };")();
 
 async function getJson(url) {
   const ctrl = new AbortController();
   const to = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
-    const res = await fetch(url, { signal: ctrl.signal, headers: { "user-agent": "NBAInjuryReport-poller (+https://github.com/buffedlizard55-lab/NBAInjuryReport)" } });
+    const res = await fetch(url, { signal: ctrl.signal, headers: { "user-agent": UA } });
     if (!res.ok) throw new Error("HTTP " + res.status);
     return await res.json();
   } finally { clearTimeout(to); }
 }
 
 /* ---------------- layer 1: structured ESPN injury board ---------------- */
-function espnTeamInjuries(abbr) { return "https://www.espn.com/nba/team/injuries/_/name/" + String(abbr || "").toLowerCase(); }
-function athleteUrl(a) {
-  const pc = ((a && a.links) || []).find(l => (l.rel || []).includes("playercard"));
-  return (pc && pc.href) || ("https://www.espn.com/nba/player/_/id/" + ((a && a.id) || ""));
-}
-function normalizeInjuries(data) {
-  const rows = [];
-  for (const block of ((data && data.injuries) || [])) {
-    for (const raw of (block.injuries || [])) {
-      const athlete = raw.athlete || {};
-      const abbr = (athlete.team && athlete.team.abbreviation) || "?";
-      const statusText = String(raw.status || "");
-      const typeName = (raw.type && raw.type.name) || "";
-      const fantasy = (raw.details && raw.details.fantasyStatus && raw.details.fantasyStatus.description) || "";
-      const norm = D.normalizeInjuryStatus(statusText, typeName, fantasy);
-      const note = (((raw.notes || {}).items) || [])[0] || {};
-      const d = raw.details || {};
-      const item = {
-        id: String(raw.id || (athlete.id + "-" + statusText)),
-        player: athlete.displayName || athlete.shortName || "Unknown player",
-        playerId: athlete.id || null,
-        position: (athlete.position && (athlete.position.abbreviation || athlete.position.displayName)) || "",
-        team: abbr,
-        status: statusText,
-        sev: norm.sev,
-        sevLabel: norm.label,
-        fantasyStatus: fantasy,
-        injuryType: d.type || "",
-        injuryLocation: d.location || "",
-        injurySide: d.side || "",
-        returnDate: d.returnDate || "",
-        bodyPart: [d.side, d.type, d.location].filter(Boolean).join(" "),
-        updated: raw.date || null,
-        shortComment: raw.shortComment || "",
-        longComment: raw.longComment || "",
-        noteHeadline: note.headline || "",
-        noteText: note.text || "",
-        noteDate: note.date || "",
-        noteSource: note.source || "",
-        playerUrl: athleteUrl(athlete),
-        teamUrl: espnTeamInjuries(abbr),
-        officialUrl: "https://official.nba.com/nba-injury-report-2025-26-season/",
-        headshot: (athlete.headshot && athlete.headshot.href) || null
-      };
-      item.fp = item.status + "|" + item.shortComment.slice(0, 160) + "|" + item.noteHeadline.slice(0, 120);
-      rows.push(item);
-    }
-  }
-  rows.sort((a, b) => new Date(b.updated || 0) - new Date(a.updated || 0));
-  return rows;
-}
-
-/* ---------------- layer 2: ESPN news (classified) ---------------- */
-function classify(text) {
-  for (const s of D.SIGNALS) if (s.re.test(text)) return { sev: s.sev, sevLabel: s.label };
-  return null;
-}
-function normalizeNews(data) {
-  const out = [];
-  for (const a of ((data && data.articles) || [])) {
-    const text = (a.headline || "") + " " + (a.description || "");
-    const hit = classify(text);
-    if (!hit) continue;
-    out.push({
-      id: String(a.id || ""), ts: a.published || a.lastModified || null,
-      title: a.headline || "", desc: a.description || "", byline: a.byline || "ESPN",
-      url: (a.links && a.links.web && a.links.web.href) || "https://www.espn.com/nba/",
-      sev: hit.sev, sevLabel: hit.sevLabel
-    });
-  }
-  return out;
-}
-
-/* ---------------- layer 3: Bluesky verified allow-list ---------------- */
-function socialAccounts() {
-  const official = D.SOCIAL_ACCOUNTS.filter(a => a.feed).map(a => ({
-    handle: a.handle, name: a.name, kind: a.kind, team: a.team, verified: !!a.bskyVerified, url: a.url, outlet: null, role: null
-  }));
-  const reps = D.BSKY_REPORTERS.filter(a => a.feed).map(a => ({
-    handle: a.handle, name: a.name, kind: "reporter", team: a.team, verified: !!a.bskyVerified,
-    url: a.evidence, outlet: a.outlet || null, role: a.role || null
-  }));
-  return official.concat(reps);
-}
-function postUrl(handle, uri) {
-  const rkey = String(uri || "").split("/").pop();
-  return rkey ? ("https://bsky.app/profile/" + handle + "/post/" + rkey) : ("https://bsky.app/profile/" + handle);
-}
-async function fetchSocial() {
-  const accts = socialAccounts();
-  const posts = [];
-  const status = {};
-  /* sequential-ish batches of 4 to stay polite to a free public API */
-  for (let i = 0; i < accts.length; i += 4) {
-    const batch = accts.slice(i, i + 4);
-    const results = await Promise.all(batch.map(async a => {
-      try {
-        const data = await getJson(D.ENDPOINTS.bskyAuthorFeed + encodeURIComponent(a.handle) + "&limit=20");
-        status[a.handle] = { ok: true, count: (data.feed || []).length };
-        return ((data.feed) || []).map(item => {
-          const p = item.post || {};
-          const rec = p.record || {};
-          const author = p.author || {};
-          const handle = author.handle || a.handle;
-          const text = String(rec.text || "").trim();
-          const t = text;
-          const inj = /\b(injur\w+|hurt|sore|soreness|sprain|strain|torn|fracture\w*|concussion|illness|sick|surgery|achilles|acl|mcl|meniscus|hamstring|ankle|knee|calf|groin|wrist|thumb|quad|oblique|hip|foot|leg|back|shoulder|elbow|hand|finger|toe|neck|ribs?|protocol|questionable|doubtful|probable|out|gtd|day-?to-?day|locker room|limp\w*)\b/i;
-          if (!inj.test(t) && !D.INGAME_WATCH_RE.test(t)) return null;   // keep only injury-relevant posts
-          const sev = classify(t);
-          return {
-            uri: p.uri, text,
-            handle, name: author.displayName || a.name,
-            createdAt: rec.createdAt || p.indexedAt || null,
-            indexedAt: p.indexedAt || null,
-            url: postUrl(handle, p.uri),
-            verified: !!a.verified, kind: a.kind, team: a.team, outlet: a.outlet, role: a.role,
-            accountUrl: a.url,
-            sev: sev ? sev.sev : "mention",
-            sevLabel: sev ? sev.sevLabel : "INJURY MENTION",
-            inGameWatch: D.INGAME_WATCH_RE.test(t)
-          };
-        }).filter(Boolean);
-      } catch (e) {
-        status[a.handle] = { ok: false, error: e.message };
-        return [];
-      }
-    }));
-    results.forEach(r => posts.push(...r));
-  }
-  posts.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-  return { posts, status };
-}
+/* NOTE: the injuries + social normalisers used to be duplicated here. They now come from
+ * assets/js/injuries.js and assets/js/social.js (loaded above with DOM stubs) so the archive and
+ * the dashboard can never disagree about what a row or a post means. */
 
 /* ---------------- history + first-to-report ---------------- */
 function readJsonSafe(p, fallback) {
@@ -239,24 +127,42 @@ function recordHistory(rows, posts, news) {
 /* ---------------- main ---------------- */
 (async () => {
   const out = { generated: new Date().toISOString(), source: "github-actions-poller", errors: {} };
-  let rows = [], news = [], posts = [], socialStatus = {};
+  let rows = [], news = [], posts = [], socialStatus = {}, season = null, seasonRaw = null;
 
+  /* injuries — shared normaliser (assets/js/injuries.js), same rows the dashboard renders */
   try {
-    const inj = await getJson(D.ENDPOINTS.injuries);
-    rows = normalizeInjuries(inj);
-    out.injuries = { season: (inj.season && inj.season.displayName) || null, seasonRaw: inj.season || null, rows, blocks: (inj.injuries || []).length };
-  } catch (e) { out.errors.injuries = e.message; out.injuries = { season: null, rows: [] }; }
+    const payload = await getJson(D.ENDPOINTS.injuries);
+    seasonRaw = (payload && payload.season) || null;
+    season = (seasonRaw && (seasonRaw.displayName || seasonRaw.name)) || null;
+    rows = B.InjuryBoard.normalize(payload);          // identical to the browser path
+    out.injuries = { season, seasonRaw, rows, blocks: (payload.injuries || []).length };
+  } catch (e) {
+    out.errors.injuries = e.message;
+    out.injuries = { season: null, seasonRaw: null, rows: [] };
+  }
 
+  /* news — the same ordered SIGNALS classifier the dashboard uses */
   try {
     const nw = await getJson(D.ENDPOINTS.news);
     news = normalizeNews(nw);
     out.news = news;
   } catch (e) { out.errors.news = e.message; out.news = []; }
 
+  /* social — shared fetch + classifier (assets/js/social.js). check() also updates seen-state in
+   * the stubbed localStorage, which is harmless because nothing is persisted from here. */
   try {
-    const soc = await fetchSocial();
-    posts = soc.posts; socialStatus = soc.status;
+    await B.Social.check(true, true);
+    posts = B.Social.getPosts();
+    socialStatus = B.Social.accountStatus();
+    const meta = B.Social.getMeta();
+    if (meta && meta.error) out.errors.social = meta.error;
+    if (meta && meta.path) out.socialPath = meta.path;
   } catch (e) { out.errors.social = e.message; }
+  /* one post must never be stored twice (found in the first snapshot: a repost picked up from a
+   * second account produced a duplicate uri, which would have double-counted and double-alerted) */
+  const seenUris = new Set();
+  posts = posts.filter(p => !seenUris.has(p.uri) && seenUris.add(p.uri));
+  posts.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
   out.social = { accounts: socialStatus };
   out.posts = posts;
 
@@ -270,6 +176,7 @@ function recordHistory(rows, posts, news) {
 
   console.log(`poll_watch: injuries=${rows.length} news=${news.length} posts=${posts.length} socialAccounts=${Object.keys(socialStatus).length}`);
   console.log(`  history day ${hist.day} · firsts tracked: ${hist.firsts}`);
+  console.log(`  team codes: ${new Set(rows.map(r => r.team)).size} distinct (all must be standard 3-letter codes)`);
   if (Object.keys(out.errors).length) console.log("  errors:", out.errors);
   if (DRY) console.log("  (dry run — nothing written)");
 })().catch(e => { console.error("poll_watch failed:", e); process.exit(1); });
