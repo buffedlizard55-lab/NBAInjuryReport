@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T21:22:40.303Z",
+  "generated": "2026-09-17T21:27:05.076Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3557,12 +3557,12 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "sixersnba.bsky.social": {
+      "nba.com": {
         "ok": true,
         "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "trailblazers.bsky.social": {
         "ok": true,
@@ -3571,6 +3571,13 @@
         "kind": "official-team",
         "team": "POR"
       },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
+      },
       "dallasmavs.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3578,31 +3585,10 @@
         "kind": "official-team",
         "team": "DAL"
       },
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
-      "samvecenie.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Sam Vecenie",
-        "kind": "reporter",
-        "team": null
-      },
       "howardbeck.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
-      "johnhollinger.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "John Hollinger",
         "kind": "reporter",
         "team": null
       },
@@ -3613,6 +3599,20 @@
         "kind": "reporter",
         "team": null
       },
+      "samvecenie.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Sam Vecenie",
+        "kind": "reporter",
+        "team": null
+      },
+      "johnhollinger.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "John Hollinger",
+        "kind": "reporter",
+        "team": null
+      },
       "tomhaberstroh.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3620,17 +3620,17 @@
         "kind": "reporter",
         "team": null
       },
-      "jmcdonaldsa.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Jeff McDonald",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "tomorsborn.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Tom Orsborn",
+        "kind": "reporter",
+        "team": "SAS"
+      },
+      "jmcdonaldsa.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Jeff McDonald",
         "kind": "reporter",
         "team": "SAS"
       },
