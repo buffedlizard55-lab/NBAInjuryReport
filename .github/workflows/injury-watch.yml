@@ -100,9 +100,22 @@ jobs:
           git add data/live data/history
           if git diff --cached --quiet; then
             echo "no changes to commit"
-          else
-            git commit -m "injury-watch: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
-            git push
+            exit 0
+          fi
+          git commit -m "injury-watch: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+          # This branch is written by the collector, the audit bot and humans at once, so a rejected
+          # push is expected occasionally: rebase onto the moved branch and retry instead of failing
+          # the run, and never pretend the data is lost if the retry cannot land (the artifact has it).
+          PUSH_OK=0
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then PUSH_OK=1; break; fi
+            echo "push attempt $attempt rejected (branch moved during the run) - rebasing and retrying"
+            git fetch origin "$GITHUB_REF_NAME" || true
+            git rebase "origin/$GITHUB_REF_NAME" || { git rebase --abort; echo "rebase not clean; stopping, artifact carries this run"; break; }
+            sleep $((attempt * 5))
+          done
+          if [ "$PUSH_OK" != 1 ]; then
+            echo "::warning::this run's snapshot was not committed to $GITHUB_REF_NAME (concurrent write). The artifact still carries it and the next scheduled run re-commits; nothing was hand-edited."
           fi
 
       - name: Upload artifact (always, so data survives even if the commit is blocked)

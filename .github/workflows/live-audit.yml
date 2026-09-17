@@ -34,10 +34,21 @@ jobs:
           git add data/audit
           if git diff --cached --quiet; then
             echo "no audit changes to commit"
-          else
-            git commit -m "audit: record observed source responses ($(date -u +%Y-%m-%dT%H:%MZ))"
-            git push origin "HEAD:${{ github.ref_name }}"
+            exit 0
           fi
+          git commit -m "audit: record observed source responses ($(date -u +%Y-%m-%dT%H:%MZ))"
+          PUSH_OK=0
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then PUSH_OK=1; break; fi
+            echo "push attempt $attempt rejected (collector committed first) - rebasing and retrying"
+            git fetch origin "$GITHUB_REF_NAME" || true
+            git rebase "origin/$GITHUB_REF_NAME" || { git rebase --abort; echo "rebase not clean; stopping"; break; }
+            sleep $((attempt * 5))
+          done
+          if [ "$PUSH_OK" != 1 ]; then
+            echo "::warning::audit evidence not committed to $GITHUB_REF_NAME this run; it remains in the workflow artifact."
+          fi
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
