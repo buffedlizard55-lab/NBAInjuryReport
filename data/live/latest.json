@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T14:46:33.669Z",
+  "generated": "2026-09-17T17:07:03.574Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3512,26 +3512,12 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
       "nba.com": {
         "ok": true,
         "count": 0,
         "name": "NBA — official league account",
         "kind": "official-league",
         "team": null
-      },
-      "dallasmavs.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Dallas Mavericks",
-        "kind": "official-team",
-        "team": "DAL"
       },
       "sixersnba.bsky.social": {
         "ok": true,
@@ -3540,12 +3526,19 @@
         "kind": "official-team",
         "team": "PHI"
       },
-      "samvecenie.bsky.social": {
+      "trailblazers.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Sam Vecenie",
-        "kind": "reporter",
-        "team": null
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
+      "dallasmavs.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Dallas Mavericks",
+        "kind": "official-team",
+        "team": "DAL"
       },
       "howardbeck.bsky.social": {
         "ok": true,
@@ -3561,12 +3554,26 @@
         "kind": "reporter",
         "team": null
       },
+      "samvecenie.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Sam Vecenie",
+        "kind": "reporter",
+        "team": null
+      },
       "johnhollinger.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "John Hollinger",
         "kind": "reporter",
         "team": null
+      },
+      "tomorsborn.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Tom Orsborn",
+        "kind": "reporter",
+        "team": "SAS"
       },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
@@ -3581,13 +3588,6 @@
         "name": "Tom Haberstroh",
         "kind": "reporter",
         "team": null
-      },
-      "tomorsborn.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
-        "kind": "reporter",
-        "team": "SAS"
       },
       "nbasarah.bsky.social": {
         "ok": true,
