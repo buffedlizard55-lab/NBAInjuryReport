@@ -94,11 +94,13 @@ const FIX = {
   bsky: { feed: [{ post: { uri: "at://did:plc:x/app.bsky.feed.post/abc", author: { handle: "howardbeck.bsky.social", displayName: "Howard Beck" }, record: { text: "Lakers say Luka Doncic has left the game and is headed to the locker room.", createdAt: "2026-09-17T02:00:00Z" }, indexedAt: "2026-09-17T02:00:01Z" } }] }
 };
 const requested = [];
+let blockEspn = false;
 global.fetch = async (url) => {
   const u = String(url);
   requested.push(u);
   const ok = body => ({ ok: true, status: 200, json: async () => body });
-  if (u.includes("/nba/injuries")) return ok(FIX.injuries);
+  if (u.includes("/nba/injuries")) return blockEspn ? { ok: false, status: 403, json: async () => ({}) } : ok(FIX.injuries);
+  if (u.includes("data/live/latest.json")) return ok({ generated: "2026-09-17T03:10:21Z", injuries: { season: "2026-27", rows: [{ id: "ci-1", player: "CI Snapshot Star", playerId: null, position: "G", team: "BOS", teamName: "Boston Celtics", status: "Out", sev: "out", sevLabel: "OUT", fantasyStatus: null, bodyPart: "Left Knee", returnDate: null, updated: "2026-09-16T12:00:00Z", shortComment: "from the CI snapshot", longComment: "", noteSource: "RotoWire", playerUrl: null, teamUrl: "https://www.espn.com/nba/team/injuries/_/name/bos", officialUrl: "https://official.nba.com/", fp: "Out|Left Knee||" }], blocksRaw: [] }, posts: [], accounts: [] });
   if (u.includes("/nba/news")) return ok(FIX.news);
   if (u.includes("/scoreboard")) return ok(FIX.scoreboard);
   if (u.includes("public.api.bsky.app")) return ok(FIX.bsky);
@@ -119,7 +121,7 @@ console.log("== runtime: App.init() refresh chain ==");
   check("the app requested the ESPN news feed", requested.some(u => u.includes("/nba/news")));
   check("the app requested the scoreboard", requested.some(u => u.includes("/scoreboard")));
   check("the app polled the Bluesky allow-list", requested.some(u => u.includes("public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed")));
-  check("it also looks for the CORS-proof snapshot", requested.some(u => u.includes("data/live/latest.json")));
+
 
   check("injury board panel rendered the fixture player", /Mouhamed Gueye/.test(els.injuryBoard.innerHTML), els.injuryBoard.innerHTML.slice(0, 120));
   check("injury board shows the team group", /ATL/.test(els.injuryBoard.innerHTML));
@@ -147,6 +149,15 @@ console.log("== runtime: App.init() refresh chain ==");
   check("alert log rendered without throwing", typeof els.alertLog.innerHTML === "string");
   check("last-refresh stamp written", /Last refresh:/.test(document.getElementById("lastUpdated").textContent));
   check("no alert storm on first load (fixtures seed silently)", !/🚨/.test(els.alertLog.innerHTML), els.alertLog.innerHTML.slice(0, 160));
+
+  /* --- scenario 2: ESPN unreachable in the browser -> same-origin CI snapshot must take over --- */
+  console.log("== fallback: ESPN blocked -> same-origin CI snapshot ==");
+  blockEspn = true;
+  await M.InjuryBoard.check(true);
+  check("falls back to the CI snapshot when the browser cannot reach ESPN", M.InjuryBoard.getMeta().path === "ci-snapshot", JSON.stringify(M.InjuryBoard.getMeta()));
+  check("snapshot rows render (with the CI-authored fields)", /CI Snapshot Star/.test(els.injuryBoard.innerHTML));
+  check("status line names the path so the reader knows the provenance", /ci-snapshot/.test(els.boardStatus.innerHTML));
+  check("no error is shown when a fallback worked", !/no board data/.test(els.boardStatus.innerHTML));
 
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);

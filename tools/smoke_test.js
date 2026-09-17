@@ -62,6 +62,7 @@ const env = new Function(source + `
   return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC,
            SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, INGAME_WATCH_RE, NBA_OFFICIAL_REPORT_URL,
            teamByAbbr, espnTeamInjuriesUrl, normalizeInjuryStatus, xSearchUrl,
+           standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE,
            AlertEngine, Wire, InjuryBoard, Social, InGame };
 `);
 const M = env();
@@ -89,6 +90,41 @@ check("Bluesky reporter handles look like handles",
 check("every social account has verification evidence", M.SOCIAL_ACCOUNTS.every(a => a.verified && a.url));
 check("only feed-enabled accounts are polled", M.SOCIAL_ACCOUNTS.some(a => a.feed) && M.SOCIAL_ACCOUNTS.some(a => !a.feed));
 check("the curated writers list has a source URL + count", !!M.BLUESKY_LIST_SOURCE.url && M.BLUESKY_LIST_SOURCE.members > 0);
+
+/* regression guards for bugs found by replaying the FIRST LIVE CI SNAPSHOT (2026-09-17).
+ * Each one cost real false positives on real data; they must never come back. */
+console.log("== regressions found on live data ==");
+check("ESPN's own abbreviations are normalised (GS/NO/NY/SA/UTAH/WSH → GSW/NOP/NYK/SAS/UTA/WAS)",
+  [["GS","GSW"],["NO","NOP"],["NY","NYK"],["SA","SAS"],["UTAH","UTA"],["WSH","WAS"],["ATL","ATL"]]
+    .every(([a, b]) => M.standardAbbr(a) === b));
+check("every normalised abbreviation maps to a real team (no orphan chips)",
+  ["GS","NO","NY","SA","UTAH","WSH"].every(a => !!M.teamByAbbr(M.standardAbbr(a))));
+check("social gate rejects a body-word false positive ('THE VOICE IS BACK.')",
+  M.Social.classifyPost("THE VOICE IS BACK.") === null);
+check("social gate rejects 'locker room culture' (needs an exit phrase, not the words alone)",
+  M.Social.classifyPost("We talk Spurs locker room culture and the season ahead.") === null);
+check("roster news with no injury word is dropped entirely (never alerted)",
+  M.Social.classifyPost("Spurs will be without Carter Bryant vs. Bucks tonight.") === null);
+check("rest news that reaches the gate is labelled non-injury, not an alert",
+  (M.Social.classifyPost("No Tarris Reed Jr., who is out for rest after 9 rebounds.") || {}).kind === "non-injury");
+check("a real in-game exit still escalates after tightening",
+  (M.Social.classifyPost("Ace Bailey did not start the second half and will not return due to back spasms.") || {}).kind === "ingame-watch");
+check("a routine draft-procedure note is not labelled OUT",
+  M.Social.classifyPost("Spurs pick Jayden Quaintance underwent a scheduled clean-up procedure on his right knee.").sev !== "out");
+check("only the polled account's OWN posts count (reposts are authored by someone else)",
+  M.Social.isOwnPost({ post: { author: { handle: "x.bsky.social" } } }, "x.bsky.social") === true &&
+  M.Social.isOwnPost({ post: { author: { handle: "someone.bsky.social" } } }, "x.bsky.social") === false &&
+  M.Social.isOwnPost({ reason: {}, post: { author: { handle: "x.bsky.social" } } }, "x.bsky.social") === false);
+check("the poller shares the browser normalisers instead of duplicating them",
+  /B\.InjuryBoard\.normalize/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")) &&
+  /B\.Social\.check/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")));
+check("CI runs the live-data self-audit before committing a snapshot",
+  /replay_posts\.js data\/live\/latest\.json --check/.test(fs.readFileSync(path.join(ROOT, ".github/workflows/injury-watch.yml"), "utf8")));
+check("posts are de-duplicated by uri (found: one post stored twice)",
+  /seenUris/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")) &&
+  /deduped/.test(fs.readFileSync(path.join(ROOT, "assets/js/social.js"), "utf8")));
+check("the poller refuses to invent data (errors are reported, never filled in)",
+  /errors: \{\}/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")));
 
 console.log("== status normalization (ESPN structured board) ==");
 check("observed 'Day-To-Day' + INJURY_STATUS_DAYTODAY + GTD -> questionable",

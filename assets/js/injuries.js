@@ -1,275 +1,295 @@
-/* Structured injury board — the primary injury layer.
+/* =====================================================================================
+ * injuries.js — STRUCTURED injury board (all 30 teams)
  *
- * SOURCE (verified live 2026-09-17, see sources.html -> 'espn-injuries-api'):
+ * Source: ESPN's site API injuries endpoint (keyless, verified live twice on 2026-09-17):
  *   https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries
- *   -> { season{displayName}, injuries:[ { id, displayName:team, injuries:[ {
- *          id, status, date, shortComment, longComment,
- *          athlete:{ id, displayName, shortName, position{abbreviation}, team{abbreviation}, headshot{ href },
- *                    links:[ {rel:['playercard',...], href} ] },
- *          notes:{ items:[ { date, headline, text, source } ] },
- *          type:{ name:"INJURY_STATUS_*" }, details:{ fantasyStatus{description,abbreviation}, type, location, side, returnDate }
- *      } ] } ] }
- *   ?team=<abbr> verified working (returns one team block).
+ *   https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries?team=mia
  *
- * Design rule (same as every other module here): the app never invents an injury.
- * It copies the feed's own words, keeps the feed's own status string, and links every
- * row to (a) ESPN's page for that team, (b) the official NBA injury-report page, and
- * (c) a one-click X search — so any human can re-verify in seconds.
+ * This is a different class of data from the news wire: every row arrives with a status, an
+ * injury type/side, a game-time-decision flag, an estimated return date and a sourced comment.
+ * So the board reports instead of guessing, and it alerts on CHANGES — new listing, status
+ * change, return-date change — which is what a beat reporter actually needs to see.
  *
- * ALERTING: entries are keyed by ESPN's injury id + status. A NEW injury id, or a
- * status CHANGE on an existing id, raises an alert (subject to the severity filters).
- * Unchanged rows never re-alert, which is what makes this usable during a slate.
- */
-"use strict";
+ * Honest limits, surfaced in the UI:
+ *   - ESPN is a public but unofficial endpoint; it is one of 21 sources on sources.html.
+ *     Nothing here is presented as a league designation.
+ *   - ESPN returns its OWN abbreviations for six clubs (GS/NO/NY/SA/UTAH/WSH — observed live in
+ *     the first CI snapshot). standardAbbr() in data.js normalises them; without it those teams'
+ *     chips, filters and review links silently break.
+ *   - The payload's season block says 2026-27 Preseason while still carrying July Summer League
+ *     items. Both are rendered with their own dates and never relabelled.
+ *
+ * Fallback path: if the browser cannot reach ESPN (CORS/offline), the same-origin snapshot
+ * data/live/latest.json written by the GitHub Actions poller is used instead. The status line
+ * always states which path produced the rows.
+ * ===================================================================================== */
+const InjuryBoard = (function () {
+  const KEY = "nba-injury-seen-v1";
 
-const InjuryBoard = (() => {
-  const LS_KEYS = "nba-injury-keys-v1";   // { "<id>": "<status + shortComment hash>" }
-  let board = [];                          // normalized flat rows
-  let primed = false;                      // first load seeds silently (no alert storm)
-  const MAX_ROWS = 700;
+  let rows = [], season = "", fetchedAt = null, path = null, error = null;
 
-  /* ---------- helpers ---------- */
-  function athleteUrl(a) {
-    const links = (a && a.links) || [];
-    const pc = links.find(l => (l.rel || []).includes("playercard"));
-    return (pc && pc.href) || ("https://www.espn.com/nba/player/_/id/" + ((a && a.id) || ""));
-  }
-  function espnTeamInjuries(abbr) {
-    return "https://www.espn.com/nba/team/injuries/_/name/" + String(abbr || "").toLowerCase();
-  }
-  function newestNote(entry) {
-    const items = (entry.notes && entry.notes.items) || [];
-    return items.length ? items[0] : null;
-  }
-  /* A short, stable fingerprint of the row's current wording, so a re-worded comment
-   * (i.e. new information) counts as an update. */
-  function fingerprint(raw, status) {
-    const s = String((raw && raw.shortComment) || "").slice(0, 160);
-    const n = newestNote(raw);
-    const h = String((n && n.headline) || "").slice(0, 120);
-    return status + "|" + s + "|" + h;
+  const LS = {
+    get() { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { return {}; } },
+    set(o) { try { localStorage.setItem(KEY, JSON.stringify(o)); } catch (e) { } }
+  };
+
+  const esc = (typeof AlertEngine !== "undefined" && AlertEngine.escapeHtml)
+    ? AlertEngine.escapeHtml
+    : (s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])));
+
+  function fp(row) {
+    return [row.status, row.bodyPart || "", row.returnDate || "", row.fantasyStatus || ""].join("|");
   }
 
   /* ---------- normalization ---------- */
-  function normalize(data) {
+
+  function teamOf(block, athlete) {
+    const raw = (athlete && athlete.team && athlete.team.abbreviation) ||
+      (block && (block.abbreviation || block.shortDisplayName)) || "";
+    const abbr = (typeof standardAbbr === "function") ? standardAbbr(raw) : String(raw).toUpperCase();
+    const team = (typeof teamByAbbr === "function") ? teamByAbbr(abbr) : null;
+    return { abbr: abbr, name: (team && (team.city + " " + team.name)) || (block && block.displayName) || null };
+  }
+
+  function normalize(payload) {
     const out = [];
-    const blocks = (data && data.injuries) || [];
+    const blocks = (payload && payload.injuries) || [];
     for (const block of blocks) {
-      const teamAbbr = (block.displayName && block.id) ? null : null; // team abbr comes off the athlete
-      for (const raw of (block.injuries || [])) {
-        const athlete = raw.athlete || {};
-        const abbr = (athlete.team && athlete.team.abbreviation) || guessAbbrFromBlock(block);
-        const statusText = String(raw.status || "");
-        const typeName = (raw.type && raw.type.name) || "";
-        const fantasy = (raw.details && raw.details.fantasyStatus && raw.details.fantasyStatus.description) || "";
+      for (const inj of (block.injuries || [])) {
+        const a = inj.athlete || {};
+        const det = inj.details || {};
+        const note = ((inj.notes && inj.notes.items) || [])[0] || {};
+        const t = teamOf(block, a);
+        const status = String(inj.status || "Unknown");
         const norm = (typeof normalizeInjuryStatus === "function")
-          ? normalizeInjuryStatus(statusText, typeName, fantasy)
-          : { sev: "mention", label: statusText.toUpperCase() };
-        const note = newestNote(raw);
-        const d = raw.details || {};
-        const bodyPart = [d.side, d.type, d.location].filter(Boolean).join(" ");
-        out.push({
-          id: String(raw.id || (athlete.id + "-" + statusText)),
-          player: athlete.displayName || athlete.shortName || "Unknown player",
-          playerId: athlete.id || null,
-          position: (athlete.position && (athlete.position.abbreviation || athlete.position.displayName)) || "",
-          team: abbr || "?",
-          status: statusText,
+          ? normalizeInjuryStatus(status, (inj.type && inj.type.name) || "", (det.fantasyStatus && det.fantasyStatus.description) || "")
+          : { sev: "mention", label: status };
+        const links = a.links || [];
+        const card = links.filter(l => (l.rel || []).indexOf("playercard") >= 0)[0] || links[0] || null;
+        const row = {
+          id: String(inj.id || ((a.id || a.displayName || "?") + "-" + status)),
+          player: a.displayName || "Unknown player",
+          playerId: a.id || null,
+          position: (a.position && a.position.abbreviation) || null,
+          team: t.abbr,
+          teamName: t.name,
+          status: status,
           sev: norm.sev,
           sevLabel: norm.label,
-          fantasyStatus: fantasy,                    // e.g. "GTD" (game-time decision)
-          injuryType: d.type || "",
-          injuryLocation: d.location || "",
-          injurySide: d.side || "",
-          returnDate: d.returnDate || "",
-          bodyPart: bodyPart,
-          updated: raw.date || null,                 // when the comment was last modified (feed's own field)
-          shortComment: raw.shortComment || "",
-          longComment: raw.longComment || "",
-          noteHeadline: (note && note.headline) || "",
-          noteText: (note && note.text) || "",
-          noteDate: (note && note.date) || "",
-          noteSource: (note && note.source) || "",
-          playerUrl: athleteUrl(athlete),
-          teamUrl: espnTeamInjuries(abbr),
+          updated: inj.date || note.date || null,
+          returnDate: det.returnDate || null,
+          fantasyStatus: (det.fantasyStatus && det.fantasyStatus.description) || null,
+          injuryType: det.type || null,
+          injuryLocation: det.location || null,
+          injurySide: det.side || null,
+          bodyPart: [det.side, det.type, det.location].filter(Boolean).join(" ") || null,
+          shortComment: inj.shortComment || note.headline || "",
+          longComment: inj.longComment || note.text || "",
+          noteHeadline: note.headline || null,
+          noteText: note.text || null,
+          noteDate: note.date || null,
+          noteSource: note.source || null,
+          headshot: (a.headshot && a.headshot.href) || null,
+          playerUrl: (card && card.href) || null,
+          teamUrl: (typeof espnTeamInjuriesUrl === "function") ? espnTeamInjuriesUrl(t.abbr) : null,
           officialUrl: (typeof NBA_OFFICIAL_REPORT_URL !== "undefined") ? NBA_OFFICIAL_REPORT_URL : "https://official.nba.com/",
-          headshot: (athlete.headshot && athlete.headshot.href) || null,
-          fp: fingerprint(raw, statusText)
-        });
+          searchUrl: (typeof xSearchUrl === "function") ? xSearchUrl(row_query(a.displayName)) : null
+        };
+        row.fp = fp(row);
+        out.push(row);
       }
     }
-    /* newest first by the feed's own updated timestamp */
-    out.sort((a, b) => new Date(b.updated || 0) - new Date(a.updated || 0));
-    board = out.slice(0, MAX_ROWS);
-    return board;
+    // newest-first, exactly as the feed dates them
+    out.sort((x, y) => new Date(y.updated || 0) - new Date(x.updated || 0));
+    return out;
   }
-  const BLOCK_ABBR = { "Atlanta Hawks": "ATL", "Boston Celtics": "BOS", "Brooklyn Nets": "BKN", "Charlotte Hornets": "CHA", "Chicago Bulls": "CHI", "Cleveland Cavaliers": "CLE", "Dallas Mavericks": "DAL", "Denver Nuggets": "DEN", "Detroit Pistons": "DET", "Golden State Warriors": "GSW", "Houston Rockets": "HOU", "Indiana Pacers": "IND", "LA Clippers": "LAC", "Los Angeles Lakers": "LAL", "Memphis Grizzlies": "MEM", "Miami Heat": "MIA", "Milwaukee Bucks": "MIL", "Minnesota Timberwolves": "MIN", "New Orleans Pelicans": "NOP", "New York Knicks": "NYK", "Oklahoma City Thunder": "OKC", "Orlando Magic": "ORL", "Philadelphia 76ers": "PHI", "Phoenix Suns": "PHX", "Portland Trail Blazers": "POR", "Sacramento Kings": "SAC", "San Antonio Spurs": "SAS", "Toronto Raptors": "TOR", "Utah Jazz": "UTA", "Washington Wizards": "WAS" };
-  function guessAbbrFromBlock(block) {
-    return BLOCK_ABBR[block && block.displayName] || null;
-  }
+  function row_query(name) { return String(name || "") + " injury"; }
 
-  /* ---------- fetch ----------
-   * Path 1: browser-direct to ESPN (site.web.api.espn.com).
-   * Path 2: the same-origin snapshot written every run by the free GitHub Actions poller
-   *         (data/live/latest.json). Same origin => CORS cannot apply, so this path always works
-   *         once the workflow has run at least once. The UI reports which path was used. */
-  let lastPath = "none";
-  function path() { return lastPath; }
+  /* ---------- fetch: direct -> same-origin CI snapshot ---------- */
 
-  async function fetchSnapshot() {
-    try {
-      const res = await fetch(ENDPOINTS.liveSnapshot + "?t=" + Math.floor(Date.now() / 300000), { cache: "no-store" });
-      if (!res.ok) throw new Error("HTTP " + res.status);
-      const snap = await res.json();
-      if (!snap || !snap.injuries || !Array.isArray(snap.injuries.rows) || !snap.injuries.rows.length) throw new Error("snapshot has no injury rows");
-      lastPath = "snapshot " + (snap.generated || "?");
-      return snap.injuries;
-    } catch (e) {
-      console.warn("injury snapshot unavailable", e);
-      return null;
-    }
-  }
-
-  async function fetchBoard(teamAbbr) {
-    const url = (teamAbbr && teamAbbr !== "ALL") ? (ENDPOINTS.injuriesTeam + teamAbbr.toLowerCase()) : ENDPOINTS.injuries;
+  async function fetchWithTimeout(url, ms) {
     const ctrl = new AbortController();
-    const to = setTimeout(() => ctrl.abort(), 20000);
+    const timer = setTimeout(() => ctrl.abort(), ms || 15000);
     try {
       const res = await fetch(url, { signal: ctrl.signal, cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status);
-      const data = await res.json();
-      lastPath = "espn-direct";
-      return data;
-    } catch (e) {
-      console.warn("injury board direct fetch failed — trying same-origin snapshot", e);
-      const snap = await fetchSnapshot();
-      if (snap) return { season: snap.season, injuries: snap.blocks ? snap.blocks : undefined, rows: snap.rows, __snapshot: true };
-      return null;
-    } finally { clearTimeout(to); }
+      return await res.json();
+    } finally { clearTimeout(timer); }
   }
 
-  /* Snapshot rows were already normalized by tools/poll_watch.js using THIS module's rules,
-   * so they are trusted as-is; we only recompute the fingerprint for alert de-duplication. */
-  function normalizeFromSnapshot(rows) {
-    board = rows.map(r => Object.assign({}, r, { fp: r.fp || (r.status + "|" + String(r.shortComment || "").slice(0, 160)) })).slice(0, MAX_ROWS);
-    return board;
-  }
-
-  /* ---------- diffing / alerts ---------- */
-  function getKeys() {
-    try { return JSON.parse(localStorage.getItem(LS_KEYS) || "{}"); }
-    catch (e) { return {}; }
-  }
-  function saveKeys(k) { localStorage.setItem(LS_KEYS, JSON.stringify(k)); }
-
-  function diffAlerts(rows, isFirstLoad) {
-    const keys = getKeys();
-    const fresh = [];
-    for (const r of rows) {
-      const prev = keys[r.id];
-      if (prev === undefined) fresh.push({ row: r, kind: "new" });
-      else if (prev !== r.fp) fresh.push({ row: r, kind: "update" });
-      keys[r.id] = r.fp;
-    }
-    /* prune keys we no longer see (feed drops resolved entries) but keep it bounded */
-    const ids = new Set(rows.map(r => r.id));
-    for (const k of Object.keys(keys)) if (!ids.has(k) && Object.keys(keys).length > 900) delete keys[k];
-    saveKeys(keys);
-
-    if (!primed) {
-      primed = true;
-      if (fresh.length) {
-        AlertEngine.log(`🏥 Injury board seeded ${fresh.length} existing listing(s) silently (no alert storm on first load).`, null);
-        AlertEngine.renderLog();
-      }
-      return;
-    }
-    if (isFirstLoad) return;
-
-    const f = (typeof App !== "undefined" && App.getFilters) ? App.getFilters() : null;
-    for (const item of fresh) {
-      const r = item.row;
-      const sevOn = f ? !!f.sevs[r.sev] : (r.sev === "out" || r.sev === "doubtful" || r.sev === "questionable");
-      const teamOn = f ? (f.team === "ALL" || f.team === r.team) : true;
-      const title = `${item.kind === "new" ? "NEW" : "STATUS CHANGE"} · ${r.player} (${r.team}, ${r.position || "—"}) — ${r.status}` +
-        (r.fantasyStatus ? ` [${r.fantasyStatus}]` : "") +
-        (r.bodyPart ? ` · ${r.bodyPart}` : "") +
-        (r.returnDate ? ` · est. return ${r.returnDate}` : "");
-      if (sevOn && teamOn) {
-        AlertEngine.fire({ sev: r.sev, sevLabel: r.sevLabel + " · ESPN injury board", title, url: r.teamUrl, extraUrl: r.playerUrl });
-      } else {
-        AlertEngine.log(`(muted by filter: ${r.sevLabel}) ${title}`, r.teamUrl);
+  async function fetchBoard() {
+    try {
+      const data = await fetchWithTimeout(ENDPOINTS.injuries, 15000);
+      rows = normalize(data);
+      season = (data && data.season && (data.season.displayName || data.season.name)) || "";
+      fetchedAt = new Date().toISOString();
+      path = "espn-direct";
+      error = null;
+    } catch (e1) {
+      try {
+        const snap = await fetchWithTimeout(ENDPOINTS.liveSnapshot, 10000);
+        if (!snap || !snap.injuries || !Array.isArray(snap.injuries.rows)) throw new Error("snapshot has no rows");
+        rows = snap.injuries.rows.map(r => Object.assign({}, r, { fp: r.fp || fp(r) }));
+        season = (snap.injuries.seasonRaw && snap.injuries.seasonRaw.displayName) || snap.injuries.season || "";
+        fetchedAt = snap.generated || null;
+        path = "ci-snapshot";
+        error = null;
+      } catch (e2) {
+        rows = [];
+        error = "ESPN direct: " + e1.message + " · CI snapshot: " + e2.message +
+          (String(e2.message).indexOf("404") >= 0 || String(e2.message).indexOf("Failed to fetch") >= 0
+            ? " (404 usually means the Actions poller has not published data yet)" : "");
+        path = null;
       }
     }
-    if (fresh.length) AlertEngine.renderLog();
-  }
-
-  /* ---------- render ---------- */
-  function render(rows) {
-    const countEl = document.getElementById("boardCount");
-    const el = document.getElementById("injuryBoard");
-    if (countEl) countEl.textContent = `${rows.length} listings · ${new Set(rows.map(r => r.team)).size} teams`;
-    if (!el) return;
-    if (!rows.length) {
-      el.innerHTML = `<div class="muted">No injury listings returned. Manual review:
-        <a href="https://www.espn.com/nba/injuries" target="_blank" rel="noopener">ESPN injuries ↗</a> ·
-        <a href="${NBA_OFFICIAL_REPORT_URL}" target="_blank" rel="noopener">official NBA report ↗</a></div>`;
-      return;
-    }
-    const byTeam = {};
-    for (const r of rows) (byTeam[r.team] = byTeam[r.team] || []).push(r);
-    const order = (typeof TEAMS !== "undefined") ? TEAMS.map(t => t.abbr) : Object.keys(byTeam);
-    const teams = Object.keys(byTeam).sort((a, b) => order.indexOf(a) - order.indexOf(b));
-    el.innerHTML = teams.map(abbr => {
-      const team = (typeof teamByAbbr === "function") ? teamByAbbr(abbr) : null;
-      const list = byTeam[abbr].map(r => {
-        const when = r.updated ? new Date(r.updated).toLocaleString() : "date not stated";
-        const extras = [r.fantasyStatus ? `fantasy: ${r.fantasyStatus}` : "", r.bodyPart, r.returnDate ? "est. return " + r.returnDate : ""].filter(Boolean).join(" · ");
-        return `<div class="board-row">
-          <span class="tag ${r.sev}">${AlertEngine.escapeHtml(r.sevLabel)}</span>
-          <span class="board-player"><a href="${AlertEngine.escapeHtml(r.playerUrl)}" target="_blank" rel="noopener">${AlertEngine.escapeHtml(r.player)}</a>
-            <span class="tiny muted">${AlertEngine.escapeHtml(r.position || "")}</span></span>
-          <span class="board-status tiny muted">${AlertEngine.escapeHtml(r.status || "—")}${extras ? " · " + AlertEngine.escapeHtml(extras) : ""} · updated ${AlertEngine.escapeHtml(when)}</span>
-          ${r.shortComment ? `<div class="board-comment">${AlertEngine.escapeHtml(r.shortComment)}
-            ${r.noteSource ? `<span class="tiny muted">— ${AlertEngine.escapeHtml(r.noteSource)}${r.noteDate ? ", " + AlertEngine.escapeHtml(new Date(r.noteDate).toLocaleDateString()) : ""}</span>` : ""}</div>` : ""}
-          <div class="wire-links tiny">
-            <a href="${AlertEngine.escapeHtml(r.playerUrl)}" target="_blank" rel="noopener">ESPN player ↗</a>
-            <a href="${xSearchUrl(r.player + " injury")}" target="_blank" rel="noopener">confirm on X ↗</a>
-          </div>
-        </div>`;
-      }).join("");
-      return `<details class="board-team" ${byTeam[abbr].some(r => r.sev === "out") ? "open" : ""}>
-        <summary><b>${AlertEngine.escapeHtml(abbr)}</b> ${AlertEngine.escapeHtml(team ? (team.city + " " + team.name) : "")}
-          <span class="tiny muted">${byTeam[abbr].length} listing(s)</span>
-          <a class="tiny" href="${espnTeamInjuries(abbr)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">ESPN team page ↗</a>
-        </summary>${list}</details>`;
-    }).join("");
-  }
-
-  /* ---------- orchestration (called by App.refresh) ---------- */
-  async function check(isFirstLoad) {
-    const data = await fetchBoard("ALL");
-    const statusEl = document.getElementById("boardStatus");
-    if (!data) {
-      if (statusEl) statusEl.innerHTML = `<span class="dot bad"></span>injury board unreachable — manual review links below`;
-      return null;
-    }
-    const rows = data.__snapshot ? normalizeFromSnapshot(data.rows) : normalize(data);
-    const season = (data.season && data.season.displayName) || "season not stated";
-    if (statusEl) {
-      statusEl.innerHTML = `<span class="dot ok"></span>OK · ${rows.length} listings · ${season} · via <b>${AlertEngine.escapeHtml(path())}</b> · ${new Date().toLocaleTimeString()}`;
-    }
-    const seasonEl = document.getElementById("boardSeason");
-    if (seasonEl) seasonEl.textContent = season;
-    if (isFirstLoad && rows.length) {
-      /* keep localStorage-free seed semantics identical to other layers */
-    }
-    diffAlerts(rows, isFirstLoad);
-    render(rows);
     return rows;
   }
 
-  function resetSeen() { localStorage.removeItem(LS_KEYS); primed = false; }
+  /* ---------- alert diffing ---------- */
 
-  return { check, normalize, render, fetchBoard, diffAlerts, resetSeen, getRows: () => board, fingerprint, path };
+  function alertFor(kind, row, extra) {
+    const title = (kind === "new" ? "NEW LISTING — " : "STATUS CHANGE — ") + row.player + " (" + row.team + "): " + row.status;
+    return {
+      kind: kind, sev: row.sev, sevLabel: row.sevLabel, title: title,
+      detail: [extra, row.shortComment || row.longComment,
+        row.bodyPart ? "injury: " + row.bodyPart : "",
+        row.returnDate ? "est. return " + row.returnDate : ""].filter(Boolean).join(" · "),
+      url: row.teamUrl || row.playerUrl, player: row.player, team: row.team, ts: new Date().toISOString()
+    };
+  }
+
+  function saveBaseline(list, seededAt) {
+    const map = {};
+    for (const r of list) map[r.id] = r.fp;
+    LS.set({ map: map, seededAt: seededAt || Date.now() });
+  }
+
+  /* silent=true only on first load: an alert list that fires for ~75 pre-existing listings the
+   * moment the page opens is noise, and noise trains people to ignore alerts. The UI says so. */
+  function diffAlerts(list, silent) {
+    const store = LS.get();
+    if (!store.map || !store.seededAt || silent) {
+      saveBaseline(list, store.seededAt || Date.now());
+      return [];
+    }
+    const alerts = [];
+    for (const r of list) {
+      const prev = store.map[r.id];
+      if (prev === undefined) alerts.push(alertFor("new", r));
+      else if (prev !== r.fp) {
+        const parts = [];
+        const [pStatus, pBody, pRet] = String(prev).split("|");
+        if (pStatus !== r.status) parts.push(pStatus + " → " + r.status);
+        if (pBody !== (r.bodyPart || "")) parts.push("injury: " + (r.bodyPart || "—"));
+        if (pRet !== (r.returnDate || "")) parts.push("est. return " + (pRet || "—") + " → " + (r.returnDate || "—"));
+        alerts.push(alertFor("change", r, parts.join(" · ")));
+      }
+    }
+    saveBaseline(list, store.seededAt);
+    if (alerts.length && typeof AlertEngine !== "undefined") {
+      for (const a of alerts) AlertEngine.fire(a);
+      if (AlertEngine.renderLog) AlertEngine.renderLog();
+    }
+    return alerts;
+  }
+
+  /* ---------- rendering ---------- */
+
+  function ago(iso) {
+    if (!iso) return "";
+    const d = new Date(iso); if (isNaN(d)) return "";
+    const mins = Math.round((Date.now() - d.getTime()) / 60000);
+    if (mins < 1) return "just now";
+    if (mins < 60) return mins + "m ago";
+    const hrs = Math.round(mins / 60);
+    if (hrs < 24) return hrs + "h ago";
+    return Math.round(hrs / 24) + "d ago";
+  }
+
+  const SEV_ORDER = { out: 0, doubtful: 1, questionable: 2, mention: 3, probable: 4, return: 5 };
+
+  function render(filters) {
+    const box = document.getElementById("injuryBoard");
+    if (!box) return;
+    const f = filters || (typeof App !== "undefined" && App.getFilters ? App.getFilters() : null);
+    const shown = rows.filter(r => {
+      if (f && f.team && f.team !== "ALL" && r.team !== f.team) return false;
+      if (f && f.sevs && typeof f.sevs === "object") {
+        const want = Object.keys(f.sevs).filter(k => f.sevs[k]);
+        if (want.length && want.indexOf(r.sev) < 0) return false;
+      }
+      return true;
+    });
+
+    const count = document.getElementById("boardCount");
+    const seasonEl = document.getElementById("boardSeason");
+    const statusEl = document.getElementById("boardStatus");
+    if (count) count.textContent = shown.length + (shown.length !== rows.length ? " of " + rows.length : "") + " listings";
+    if (seasonEl) seasonEl.textContent = season || "—";
+    if (statusEl) {
+      statusEl.innerHTML = error
+        ? '<span class="bad">✖ no board data</span> · ' + esc(error)
+        : 'via <b>' + esc(path || "—") + '</b>' + (fetchedAt ? ' · ' + esc(ago(fetchedAt)) : "");
+    }
+
+    if (!shown.length) {
+      box.innerHTML = error
+        ? '<div class="empty">No structured board available. Tried the ESPN injuries endpoint directly, then the same-origin CI snapshot.<br><span class="tiny muted">' + esc(error) + '</span></div>'
+        : '<div class="empty">No listings match the current filters' + (rows.length ? " (" + rows.length + " exist)" : "") + '.</div>';
+      return;
+    }
+
+    const byTeam = {};
+    for (const r of shown) (byTeam[r.team] = byTeam[r.team] || []).push(r);
+    const teams = Object.keys(byTeam).sort((a, b) => {
+      const wa = Math.min.apply(null, byTeam[a].map(r => SEV_ORDER[r.sev] ?? 9));
+      const wb = Math.min.apply(null, byTeam[b].map(r => SEV_ORDER[r.sev] ?? 9));
+      return wa - wb || a.localeCompare(b);
+    });
+
+    box.innerHTML = teams.map(team => {
+      const list = byTeam[team].slice().sort((x, y) =>
+        (SEV_ORDER[x.sev] ?? 9) - (SEV_ORDER[y.sev] ?? 9) || new Date(y.updated || 0) - new Date(x.updated || 0));
+      return '<div class="board-team">' +
+        '<div class="board-team-head"><b class="abbr">' + esc(team) + '</b>' +
+        '<span class="muted tiny">' + esc(list[0].teamName || "") + ' · ' + list.length + '</span></div>' +
+        list.map(r =>
+          '<div class="board-row sev-border-' + esc(r.sev) + '">' +
+          '<div class="br-top"><span class="tag ' + esc(r.sev) + '">' + esc(r.sevLabel) + '</span>' +
+          '<b class="br-player">' + esc(r.player) + '</b>' +
+          (r.position ? '<span class="muted tiny">' + esc(r.position) + '</span>' : "") +
+          (r.fantasyStatus ? '<span class="tag gtd" title="ESPN fantasy status">' + esc(r.fantasyStatus) + '</span>' : "") +
+          '<span class="br-when tiny muted" title="' + esc(r.updated || "") + '">' + esc(ago(r.updated)) + '</span></div>' +
+          '<div class="br-meta tiny muted">' +
+          (r.bodyPart ? esc(r.bodyPart) + " · " : "") +
+          (r.returnDate ? "est. return " + esc(r.returnDate) + " · " : "") +
+          "ESPN: " + esc(r.status) + (r.noteSource ? " · per " + esc(r.noteSource) : "") +
+          '</div>' +
+          (r.shortComment ? '<div class="br-comment">' + esc(r.shortComment) + '</div>' : "") +
+          '<div class="br-links tiny">' +
+          (r.playerUrl ? '<a href="' + esc(r.playerUrl) + '" target="_blank" rel="noopener">player page</a>' : "") +
+          (r.teamUrl ? ' · <a href="' + esc(r.teamUrl) + '" target="_blank" rel="noopener">team injuries</a>' : "") +
+          (r.officialUrl ? ' · <a href="' + esc(r.officialUrl) + '" target="_blank" rel="noopener">official report</a>' : "") +
+          (r.searchUrl ? ' · <a href="' + esc(r.searchUrl) + '" target="_blank" rel="noopener">search reporting</a>' : "") +
+          '</div></div>').join("") +
+        '</div>';
+    }).join("");
+  }
+
+  /* ---------- entry point used by app.js ---------- */
+
+  async function check(isFirstLoad) {
+    await fetchBoard();
+    diffAlerts(rows, !!isFirstLoad);   // fires through AlertEngine (see diffAlerts)
+    render();
+    return rows;
+  }
+
+  function resetSeen() { saveBaseline([], Date.now()); return true; }
+
+  return {
+    check: check, normalize: normalize, diffAlerts: diffAlerts, render: render,
+    fetchBoard: fetchBoard, resetSeen: resetSeen, getRows: () => rows, fp: fp,
+    fingerprint: fp, getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, season: season, count: rows.length })
+  };
 })();

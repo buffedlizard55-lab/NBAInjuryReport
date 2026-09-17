@@ -58,6 +58,13 @@ jobs:
             console.log("errors:", JSON.stringify(s.errors||{}));
           '
 
+      # Self-audit on REAL data, not fixtures: verifies every row uses a standard team code and
+      # has a review link, that no post is labelled OUT without an explicit out phrase, that no
+      # alert-worthy post lacks injury vocabulary, and that no post is stored twice. This is what
+      # catches classifier/abbreviation drift the moment it appears, in CI.
+      - name: Self-audit the fresh snapshot (fails the run on a violation)
+        run: node tools/replay_posts.js data/live/latest.json --check
+
       - name: Commit the snapshot + history
         run: |
           git config user.name "injury-watch bot"

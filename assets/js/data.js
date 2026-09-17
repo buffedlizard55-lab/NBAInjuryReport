@@ -52,10 +52,35 @@ const INJURY_STATUS_RULES = [
   { sev: "probable", label: "PROBABLE", re: /probable/i },
   { sev: "return", label: "CLEARED / RETURNING", re: /(cleared|available|active|return(ing)? to (play|lineup))/i }
 ];
+/* ESPN's OWN team abbreviations differ from the standard 3-letter codes for six clubs.
+ * Observed DIRECTLY in the live injuries payload on 2026-09-17 (the run collected 73 rows over
+ * 27 teams): ESPN returned "GS", "NO", "NY", "SA", "UTAH" and "WSH" where the rest of this project
+ * uses GSW/NOP/NYK/SAS/UTA/WAS. Without this mapping those teams' chips, filters and X-search
+ * links silently break — a real bug found by reading the first CI snapshot, not by guessing. */
+const ESPN_ABBR_FIX = { GS: "GSW", NO: "NOP", NY: "NYK", SA: "SAS", UTAH: "UTA", WSH: "WAS" };
+function standardAbbr(abbr) {
+  const a = String(abbr || "").toUpperCase();
+  const mapped = ESPN_ABBR_FIX[a] || a;
+  return (typeof teamByAbbr === "function" && teamByAbbr(mapped)) ? mapped : a;
+}
+
+/* Injury gate for SOCIAL text — deliberately stricter than the news-headline classifier.
+ * Social posts are free-form, so generic body words ("back", "leg", "hand") and the bare word
+ * "out" produce embarrassing false positives: the first live poll classified "THE VOICE IS BACK."
+ * as an injury mention. Only injury-SPECIFIC language (or in-game exit language) passes here. */
+const SOCIAL_INJURY_GATE_RE = /\b(injur\w+|hurt|sore(ness)?|spasms?|sprain\w*|strain\w*|torn|tore|fracture\w*|concussion\w*|illness|sick|surgery|surgical|procedure|achilles|acl\b|mcl\b|meniscus|hamstring|calf|groin|wrist|thumb|quad|oblique|ribs?|protocol|questionable|doubtful|probable|game-?time decision|gtd|day-?to-?day|ruled out|out (tonight|tomorrow|indefinitely|vs\.?)|out (for|with) (the )?(rest|game|season|year|remainder|a |an |his |her |left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion|quad|oblique)|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|walking boot|injury report|limping|limp\w*|training staff|cleared to (return|play)|return to play|available (tonight|for))/i;
+
+/* Availability news that is NOT an injury (rest, load management, coach's decision).
+ * Real example from the first live poll: "…no Tarris Reed Jr., who is out for rest…".
+ * These are logged at MENTION level so they never raise an injury alert by default. */
+const SOCIAL_INJURY_VOCAB_RE = /(injur\w+|hurt|sore(ness)?|spasms?|sprain\w*|strain\w*|torn|tore|fracture\w*|concussion\w*|illness|sick|surg\w*|procedure|achilles|acl\b|mcl\b|meniscus|hamstring|ankle|knee|calf|groin|wrist|thumb|quad|oblique|ribs?|protocol|walking boot|limp\w*|training staff|injury report)/i;
+
+const SOCIAL_NON_INJURY_RE = /(for rest|rest (day|game)|load management|coach'?s decision|maintenance day|scheduled rest)/i;
+
 /* In-game exit language — the highest-latency-value signal in the project, because it can
  * appear SECONDS after a player walks to the locker room. Canonical definition lives here so
  * the browser (assets/js/social.js) and the CI poller (tools/poll_watch.js) classify identically. */
-const INGAME_WATCH_RE = /\b(won'?t return|will not return|not return(ing)?|out for the (rest|remainder) of the (game|half|night)|questionable to return|locker room|left the game|leaves the game|helped off|carried off|limping|hobbl\w+|headed to the locker|tweaked|re-?aggravated|reinjur\w+|injury timeout|down on the (floor|court))\b/i;
+const INGAME_WATCH_RE = /\b(won'?t return|will not return|not return(ing)?|out for the (rest|remainder) of the (game|half|night)|questionable to return|head(ed|ing)? (to|for) the locker room|to the locker room|into the locker room|left the game|leaves the game|helped off|carried off|limping|hobbl\w+|tweaked|re-?aggravated|reinjur\w+|injury timeout|down on the (floor|court))\b/i;
 
 function normalizeInjuryStatus(statusText, typeName, fantasyStatus) {
   const t = [statusText, typeName, fantasyStatus].filter(Boolean).join(" ");
@@ -212,6 +237,22 @@ const BSKY_REPORTERS = [
     verified: "2026-09-17 — valid Bluesky verification object (issuer bsky.app) surfaced by searchActorsTypeahead; beat/outlet field deliberately left generic until re-confirmed" }
 ];
 
+/* Social-post severity ladder — STRICTER than the news-headline classifier by design.
+ * Why: free-form posts produced two real false positives in the first live poll —
+ * "We talk Spurs locker room culture" (in-game watch) and a "clean-up procedure" post labelled
+ * RETURN. Each rung below requires an explicit phrase, so labels stay explainable and testable. */
+const SOCIAL_SEVERITY = [
+  { sev: "out", re: /(ruled out|officially out|out for (the )?(game|season|year|remainder)|out (tonight|tomorrow|indefinitely|vs\.?)|out with (a|an|his|her|left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion)|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|season-?ending|underwent [^.?!]{0,40}surgery|had surgery)/i },
+  { sev: "doubtful", re: /\bdoubtful\b/i },
+  { sev: "questionable", re: /(questionable|game-?time decision|\bgtd\b|day-?to-?day)/i },
+  { sev: "probable", re: /\bprobable\b/i },
+  { sev: "return", re: /(cleared to (return|play)|upgraded to|will play|active (tonight|for)|available (tonight|for|to play)|return(s|ing)? to (play|the lineup|action))/i }
+];
+function classifySocialSeverity(text) {
+  for (const r of SOCIAL_SEVERITY) if (r.re.test(text)) return { sev: r.sev };
+  return { sev: "mention" };
+}
+
 /* Verified reporter / insider directory.
  * status: verified-handle (X handle confirmed to belong to this person),
  *         outlet-only (person+outlet confirmed; X handle NOT confirmed — no handle asserted),
@@ -310,7 +351,13 @@ const FLAGS = [
   { level: "warn", title: "Browser CORS for the Bluesky public API could NOT be verified from this build environment", detail: "Shell HTTPS egress is blocked here and the page-fetch tool reports no response headers, so cross-origin permission can only be proven inside a real browser. Mitigation shipped: (1) the social layer tries browser-direct first, (2) falls back to the same-origin snapshot written by the free GitHub Actions poller (data/social/latest.json — CORS cannot apply), (3) offers an explicitly labelled, opt-in public relay as a last resort, and (4) prints per-account status + a 'Test feeds' button so the first human to open the page sees exactly which path worked. FLAGGED as needing one human confirmation." },
   { level: "info", title: "GitHub Actions cron is best-effort, not a real-time guarantee", detail: "The free poller (.github/workflows/injury-watch.yml) runs on a schedule; GitHub documents that scheduled workflows can be delayed during high load and are disabled after 60 days of repository inactivity. So the poller is a history/first-to-report recorder, not a latency guarantee. The docs and the UI label it accordingly." },
   { level: "info", title: "Build environment blocks most outbound HTTPS from the shell", detail: "curl to google.com and site.api.espn.com fails (SSL_ERROR_SYSCALL); only api.github.com is reachable directly. ALL source verification in this project is therefore performed via the assistant's independent page-fetch tool, live, with evidence links included so any human can re-verify in a normal browser." },
-  { level: "info", title: "X timeline embeds are intermittently rate-limited by X itself", detail: "Observed 2026-09-17 on the deployed site: syndication.twimg.com can return 'Rate limit exceeded' for embedded timelines. Embeds are best-effort eyeballs only; every embed has a direct x.com link, and alerting never depends on them." }
+  { level: "info", title: "X timeline embeds are intermittently rate-limited by X itself", detail: "Observed 2026-09-17 on the deployed site: syndication.twimg.com can return 'Rate limit exceeded' for embedded timelines. Embeds are best-effort eyeballs only; every embed has a direct x.com link, and alerting never depends on them." },
+  { level: "info", title: "First fully-automated collection run verified end-to-end (GitHub Actions)",
+    detail: "Run 35177148985 (push to main, 2026-09-17T03:10:21Z) completed successfully and committed data/live/latest.json + data/history/2026-09-17.jsonl + firsts.json: 73 structured injury rows across 27 team blocks, 8 classified news items, 34 injury-relevant posts, 13/13 allow-listed accounts reachable, errors = {}. The workflow runs every 10 minutes and needs no key, no account and no manual input. Re-check the Actions tab after any change to tools/poll_watch.js: a broken poller fails loudly (it reports errors and never invents rows)." },
+  { level: "warn", title: "ESPN returns its OWN team abbreviations for six clubs (found in live data)",
+    detail: "Reading the first CI snapshot row-by-row showed ESPN emits GS, NO, NY, SA, UTAH and WSH where the rest of this project uses GSW/NOP/NYK/SAS/UTA/WAS. Consequence if unhandled: those six teams get orphan chips, miss the team filter and produce broken review links. Fixed centrally in data.js (ESPN_ABBR_FIX + standardAbbr()) and applied in both the browser board and the poller; the smoke test now pins all six mappings so the bug cannot return." },
+  { level: "warn", title: "Two classifier false positives and one author-attribution bug, found on real posts",
+    detail: "Replaying the first live snapshot (tools/replay_posts.js) exposed: (1) 'THE VOICE IS BACK.' classified as an injury mention because the gate matched the body word 'back'; (2) 'locker room culture' classified as an in-game exit watch; (3) rest/roster news ('out for rest') treated as injury news; (4) getAuthorFeed returns REPOSTS, which pulled five never-vetted accounts into the layer (businessdecisionmv, katelynburns.com, cornpuzzle, playest, yourmandevine). Replay also found the SAME post stored twice (duplicate uri), because a repost could arrive through two accounts' feeds. All of it is fixed: explicit injury vocabulary is required, the in-game regex needs an exit phrase, only the polled account's own posts are accepted, and posts are de-duplicated by uri in both the browser layer and the poller. tools/replay_posts.js plus 11 pinned regression checks keep them fixed. Nothing was hidden: these were found because the project replays real captures instead of trusting fixtures." },
 ];
 
 const SCORING_RUBRIC = [
@@ -320,4 +367,5 @@ const SCORING_RUBRIC = [
   { outcome: "Unresolved / pending", points: "0", desc: "Awaiting official designation or game outcome." },
   { outcome: "Wrong", points: "−2", desc: "Report contradicted by official designation, team announcement, or game action." },
   { outcome: "Fabricated / deleted without correction", points: "−5", desc: "Reserved for serious credibility failures." }
+
 ];

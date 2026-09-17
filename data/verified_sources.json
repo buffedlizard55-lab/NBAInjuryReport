@@ -30,7 +30,7 @@
       "inactive": 1,
       "outlet-only": 4
     },
-    "flags": 21,
+    "flags": 24,
     "socialAccounts": 7,
     "socialAccountsPolled": 5,
     "blueskyReporters": 8,
@@ -602,6 +602,21 @@
       "level": "info",
       "title": "X timeline embeds are intermittently rate-limited by X itself",
       "detail": "Observed 2026-09-17 on the deployed site: syndication.twimg.com can return 'Rate limit exceeded' for embedded timelines. Embeds are best-effort eyeballs only; every embed has a direct x.com link, and alerting never depends on them."
+    },
+    {
+      "level": "info",
+      "title": "First fully-automated collection run verified end-to-end (GitHub Actions)",
+      "detail": "Run 35177148985 (push to main, 2026-09-17T03:10:21Z) completed successfully and committed data/live/latest.json + data/history/2026-09-17.jsonl + firsts.json: 73 structured injury rows across 27 team blocks, 8 classified news items, 34 injury-relevant posts, 13/13 allow-listed accounts reachable, errors = {}. The workflow runs every 10 minutes and needs no key, no account and no manual input. Re-check the Actions tab after any change to tools/poll_watch.js: a broken poller fails loudly (it reports errors and never invents rows)."
+    },
+    {
+      "level": "warn",
+      "title": "ESPN returns its OWN team abbreviations for six clubs (found in live data)",
+      "detail": "Reading the first CI snapshot row-by-row showed ESPN emits GS, NO, NY, SA, UTAH and WSH where the rest of this project uses GSW/NOP/NYK/SAS/UTA/WAS. Consequence if unhandled: those six teams get orphan chips, miss the team filter and produce broken review links. Fixed centrally in data.js (ESPN_ABBR_FIX + standardAbbr()) and applied in both the browser board and the poller; the smoke test now pins all six mappings so the bug cannot return."
+    },
+    {
+      "level": "warn",
+      "title": "Two classifier false positives and one author-attribution bug, found on real posts",
+      "detail": "Replaying the first live snapshot (tools/replay_posts.js) exposed: (1) 'THE VOICE IS BACK.' classified as an injury mention because the gate matched the body word 'back'; (2) 'locker room culture' classified as an in-game exit watch; (3) rest/roster news ('out for rest') treated as injury news; (4) getAuthorFeed returns REPOSTS, which pulled five never-vetted accounts into the layer (businessdecisionmv, katelynburns.com, cornpuzzle, playest, yourmandevine). Replay also found the SAME post stored twice (duplicate uri), because a repost could arrive through two accounts' feeds. All of it is fixed: explicit injury vocabulary is required, the in-game regex needs an exit phrase, only the polled account's own posts are accepted, and posts are de-duplicated by uri in both the browser layer and the poller. tools/replay_posts.js plus 11 pinned regression checks keep them fixed. Nothing was hidden: these were found because the project replays real captures instead of trusting fixtures."
     }
   ],
   "scoring_rubric": [
