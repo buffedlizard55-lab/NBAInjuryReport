@@ -155,18 +155,58 @@ const App = (() => {
     const p = n => String(n).padStart(2, "0");
     return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}`;
   }
+  /* Normalize the long-documented nba.com liveData scoreboard shape into the
+   * ESPN-ish event shape renderGames/InGame already consume. The CDN payload is
+   * UNVERIFIABLE from the build environment (see sources.html -> nba-cdn-scoreboard),
+   * so every field is read defensively; used ONLY as an ESPN failover. */
+  function normalizeCdn(games) {
+    return (games || []).map(g => ({
+      id: g.gameId || ("cdn-" + Math.random().toString(36).slice(2)),
+      date: g.gameTimeUTC || null,
+      links: { web: { href: "https://www.nba.com/games" } },
+      competitions: [{
+        status: { type: {
+          state: g.gameStatus === 2 ? "in" : g.gameStatus === 3 ? "post" : "pre",
+          shortDetail: String(g.gameStatusText || "")
+        } },
+        competitors: [
+          { homeAway: "away", team: { abbreviation: (g.awayTeam && g.awayTeam.teamTricode) || "?" }, score: g.awayTeam && g.awayTeam.score != null ? String(g.awayTeam.score) : "" },
+          { homeAway: "home", team: { abbreviation: (g.homeTeam && g.homeTeam.teamTricode) || "?" }, score: g.homeTeam && g.homeTeam.score != null ? String(g.homeTeam.score) : "" }
+        ]
+      }]
+    }));
+  }
+
   async function fetchScoreboard() {
     const el = document.getElementById("games");
+    const srcEl = document.getElementById("gamesSrc");
     try {
       const res = await fetch(`${ENDPOINTS.scoreboard}?dates=${yyyymmdd(new Date())}`, { cache: "no-store" });
       if (!res.ok) throw new Error("HTTP " + res.status);
       const data = await res.json();
       setApiStatus("sb", true, `OK · ${(data.events || []).length} games · ${new Date().toLocaleTimeString()}`);
+      if (srcEl) srcEl.innerHTML = `Source: ESPN scoreboard API · <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">open ESPN scoreboard ↗</a>`;
       renderGames(data.events || []);
+      return data.events || [];
     } catch (e) {
-      console.warn("scoreboard failed", e);
-      setApiStatus("sb", false, "failed (" + e.message + ")");
-      if (el) el.innerHTML = `<div class="muted small">Scoreboard unavailable. Manual review: <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">ESPN scoreboard</a></div>`;
+      console.warn("ESPN scoreboard failed, trying NBA.com CDN failover", e);
+      try {
+        const res = await fetch(ENDPOINTS.nbaCdnScoreboard, { cache: "no-store" });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        const games = (data.scoreboard && data.scoreboard.games) || [];
+        const events = normalizeCdn(games);
+        if (!events.length && !Array.isArray(games)) throw new Error("unexpected CDN payload");
+        setApiStatus("sb", true, `⚠ ESPN failed — NBA.com CDN failover · ${events.length} games · ${new Date().toLocaleTimeString()} (failover is untested from build env — verify against ESPN)`);
+        if (srcEl) srcEl.innerHTML = `Source: NBA.com CDN (experimental failover — unverified; cross-check <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">ESPN ↗</a> or <a href="https://www.nba.com/scores" target="_blank" rel="noopener">nba.com/scores ↗</a>)`;
+        renderGames(events);
+        return events;
+      } catch (e2) {
+        console.warn("NBA CDN failover also failed", e2);
+        setApiStatus("sb", false, "failed (ESPN: " + e.message + "; CDN: " + e2.message + ")");
+        if (el) el.innerHTML = `<div class="muted small">Scoreboard unavailable from both feeds. Manual review: <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">ESPN scoreboard</a> · <a href="https://www.nba.com/scores" target="_blank" rel="noopener">nba.com/scores</a></div>`;
+        return null;
+      }
     }
   }
   function renderGames(events) {
@@ -208,7 +248,9 @@ const App = (() => {
     const arts = await fetchNews();
     if (arts) ingest(arts, isFirstLoad);
     else renderWire([]);
-    await fetchScoreboard();
+    const events = await fetchScoreboard();
+    try { await InGame.check(events || [], isFirstLoad); }
+    catch (e) { console.warn("in-game monitor error", e); }
     const upd = document.getElementById("lastUpdated");
     if (upd) upd.textContent = "Last refresh: " + new Date().toLocaleString();
   }
@@ -289,6 +331,7 @@ const App = (() => {
     const resetSeen = document.getElementById("resetSeen");
     if (resetSeen) resetSeen.addEventListener("click", () => {
       localStorage.removeItem(LS_SEEN); wireItems = [];
+      if (typeof InGame !== "undefined") InGame.resetSeen();
       AlertEngine.log("↺ Seen-history reset — next refresh re-seeds the wire.", null);
       AlertEngine.renderLog(); refresh(true);
     });
@@ -299,7 +342,7 @@ const App = (() => {
     refresh(true).then(() => startPolling());
   }
 
-  return { init };
+  return { init, getFilters };
 })();
 
 document.addEventListener("DOMContentLoaded", () => App.init());
