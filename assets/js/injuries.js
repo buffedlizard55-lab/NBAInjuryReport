@@ -248,6 +248,44 @@ const InjuryBoard = (function () {
     return "https://www.espn.com/nba/team/depth/_/name/" + slug;   // verified live 2026-09-17 (human page, RotoWire-supplied)
   }
 
+  /* ---------- coverage gaps: which teams the snapshot says NOTHING about ----------
+   * A board titled "every team" that quietly omits three of them invites exactly the wrong
+   * inference. Observed live 2026-09-17: ESPN's injuries feed returned 27 team blocks; CLE, DET
+   * and LAL had no block at all. That is a statement about the snapshot, never about the players —
+   * an omitted block is not clearance, and this says so next to each team's own review link. */
+  function coverageGaps(list) {
+    if (typeof TEAMS === "undefined" || !Array.isArray(TEAMS)) return [];
+    const snapshot = Array.isArray(list) ? list : rows;
+    const present = new Set(snapshot.map(r => r && r.team).filter(Boolean));
+    return TEAMS.filter(t => !present.has(t.abbr))
+      .map(t => ({ abbr: t.abbr, name: t.city + " " + t.name, url: espnTeamInjuriesUrl(t.abbr), nbaUrl: nbaTeamUrl(t.abbr) }));
+  }
+
+  function renderCoverage(list) {
+    const el = document.getElementById("boardCoverage");
+    if (!el) return;
+    const snapshot = Array.isArray(list) ? list : rows;
+    if (error) {
+      el.innerHTML = '<span class="muted tiny">Refresh failed, so no team-coverage statement can be made from this snapshot — ' +
+        'the rows below are last-good data. <a href="https://www.espn.com/nba/injuries" target="_blank" rel="noopener">ESPN injuries ↗</a></span>';
+      return;
+    }
+    if (!snapshot.length) {
+      el.innerHTML = '<span class="muted tiny">This snapshot carries no listings at all, so no per-team coverage claim is made. ' +
+        'Zero listings is not evidence that every player is healthy.</span>';
+      return;
+    }
+    const gaps = coverageGaps(snapshot);
+    const covered = TEAMS.length - gaps.length;
+    el.innerHTML = gaps.length
+      ? '<span class="tag warn">coverage gap</span> <b>' + covered + '/' + TEAMS.length + '</b> teams returned at least one listing in this snapshot; <b>' +
+        gaps.length + '</b> returned none: ' +
+        gaps.map(g => '<a href="' + esc(g.url) + '" target="_blank" rel="noopener" title="' + esc(g.name) + ' — confirm manually; absence here is not clearance">' + esc(g.abbr) + ' ↗</a>').join(", ") +
+        ' <span class="muted tiny">— ESPN omitting a team block is NOT evidence that nobody on it is injured. Each link opens that team\'s own ESPN injuries page.</span>'
+      : '<span class="good">all ' + TEAMS.length + ' teams returned at least one listing in this snapshot</span>' +
+        ' <span class="muted tiny">— still not clearance: a block with no rows is not a verified-healthy roster.</span>';
+  }
+
   let boardSearchQuery = "";
   let boardStatusFilter = "ALL";
 
@@ -315,6 +353,9 @@ const InjuryBoard = (function () {
         ? '<span class="bad">✖ refresh failed — last-good data, alerts paused</span> · ' + esc(error)
         : 'via <b>' + esc(path || "—") + '</b>' + (fetchedAt ? ' · ' + esc(ago(fetchedAt)) : "");
     }
+    /* Rendered BEFORE the "nothing matches" early return so a coverage gap is still stated when the
+     * current filter hides every row. */
+    renderCoverage();
 
     if (!shown.length) {
       box.innerHTML = error
@@ -393,6 +434,7 @@ const InjuryBoard = (function () {
     check: check, normalize: normalize, diffAlerts: diffAlerts, render: render,
     fetchBoard: fetchBoard, resetSeen: resetSeen, getRows: () => rows, fp: fp,
     impactFor: impactFor, setImpactContext: setImpactContext, impactShort: impactShort, depthUrl: espnTeamDepthUrl,
+    coverageGaps: coverageGaps, renderCoverage: renderCoverage,
     alertFor: alertFor, setSearch: setSearch, setStatusFilter: setStatusFilter, resetFilter: resetFilter,
     fingerprint: fp, getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, season: season, count: rows.length })
   };

@@ -30,6 +30,7 @@ import re
 import subprocess
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -47,6 +48,89 @@ ROOT = Path(__file__).resolve().parent.parent
 # just not by this script's deliberately plain user agent. We do not spoof browser headers to get around
 # that — the point of this job is honest evidence, and the collector's own output is the counter-evidence.
 ENV_STATUSES = {403, 406, 407, 408, 409, 425, 429, 451, 500, 502, 503, 504, 202, 520, 521, 522, 524, 525, 530}
+
+
+FALLBACK_LIST_URI = 'at://did:plc:rkpzrwxex34r36ypejhew7ml/app.bsky.graph.list/3llmezwbnrp2d'
+
+
+def registry_list_uri():
+    """Read the Bluesky list AT-URI out of the registry so this check cannot drift from the URL the
+    site publishes.
+
+    `app.bsky.graph.getList` takes `list=<AT-URI>`. The previous revision of this file requested
+    `?user=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca` — `user=` is not a
+    parameter of that XRPC and a bare DID is not an AT-URI, so the endpoint answered HTTP 400 on
+    every run while the registry kept quoting "150 members" from a different read. Verified live
+    2026-09-17: the AT-URI form returns 200 with listItemCount 150."""
+    try:
+        m = re.search(r'uri:\s*"(at://[^"]+app\.bsky\.graph\.list/[^"]+)"',
+                      (ROOT / 'assets/js/data.js').read_text())
+        if m:
+            return m.group(1)
+    except Exception:
+        pass
+    return FALLBACK_LIST_URI
+
+
+def verified_object(actor):
+    """True when a Bluesky actor carries a valid verification object.
+
+    The previous revision counted `verification.verified` — a field that does not exist in the
+    response — so `verifiedFollows` was 0 on every run, including runs where 4 of the 6 accounts
+    the NBA follows carried valid objects. Live shape re-read 2026-09-17 (getFollows nba.com):
+    verification:{verifications:[{issuer, issuerHandle, isValid, ...}], verifiedStatus:'valid'}."""
+    v = (actor or {}).get('verification') or {}
+    if v.get('verifiedStatus') == 'valid':
+        return True
+    return any(x.get('isValid') is True for x in (v.get('verifications') or []))
+
+
+def classify_verdict(spec, row):
+    """Decide one row's verdict. Split out so the mapping is unit-testable
+    (tools/test_verify_live.py) instead of only observable through a live network run.
+
+    `verifiesOn` (default [200]) names the statuses that would actually VERIFY the claim in
+    spec['claim']. It exists because the previous mapping printed 'OK' whenever 200 was merely
+    *tolerated* by `expect`: espn-scoreboard, espn-roster-mia and espn-teams-mia all came back 403
+    on the last committed run and all printed 'OK' — three checks reported as verified that had
+    read nothing. 'OK' now means the claim was verified; a tolerated refusal is ENV-BLOCKED with
+    verified=false."""
+    if row.get('verdict'):
+        return row                                    # criticalLinks already decided this row
+    status = row.get('status')
+    verifies = spec.get('verifiesOn') or [200]
+    expect = spec.get('expect', [200])
+    row['verified'] = status in verifies
+    if status is None:
+        row['verdict'] = 'UNREACHABLE-FROM-RUNNER'
+        row['meaning'] = 'No route from the runner (DNS/TLS/timeout). Says nothing about the source, and nothing about browser access.'
+    elif status in verifies:
+        if spec.get('blockerVerdict'):
+            row['verdict'] = 'DOCUMENTED-BLOCKER'
+            row['meaning'] = ('Still exactly as the registry documents it (HTTP %s). This claim IS about the refusal, '
+                              'so the response verifies it — nothing is broken and no capability changed.' % status)
+        else:
+            row['verdict'] = 'OK-PAGE-CHANGED' if row.get('probesMissing') else 'OK'
+            if row.get('probesMissing'):
+                row['meaning'] = 'Reachable as documented, but the wording this check looks for moved: %s' % ", ".join(row['probesMissing'])
+    elif status in ENV_STATUSES:
+        row['verdict'] = 'ENV-BLOCKED'
+        row['meaning'] = ('HTTP %s to this script\'s plain client, so the claim under test was NOT verified by this run. '
+                          'The same URL can succeed from Node on the same runner and from a browser on the deployed origin '
+                          '(measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the '
+                          'same minute) - client fingerprinting, not a source outage and not a capability change.' % status)
+    elif spec.get('critical'):
+        row['verdict'] = 'CAPABILITY-DRIFT'
+        row['meaning'] = ('HTTP %s is not one of the statuses that verify this claim, and this check is marked critical: '
+                          'what the product may claim has changed. Rewrite the registry row and the UI copy built on it.' % status)
+    elif status not in expect:
+        row['verdict'] = 'DRIFT-RECORDED' + ('-NEWLY-OK' if status == 200 else '')
+        row['meaning'] = ('The source answers differently than the registry states. Recorded only; not a capability change.')
+    else:
+        row['verdict'] = 'DOCUMENTED-BLOCKER'
+        row['meaning'] = ('HTTP %s is tolerated by the registry but does not verify the claim under test. '
+                          'Still blocked/unavailable as documented; not counted as drift.' % status)
+    return row
 
 
 def decompress(body, encoding):
@@ -69,15 +153,17 @@ def decompress(body, encoding):
 
 CHECKS = [
     dict(id='nba-season', url='https://official.nba.com/nba-injury-report-2026-27-season/',
-         expect=[404], links=True, critical=True,
+         expect=[404], links=True, critical=True, verifiesOn=[404], blockerVerdict=True,
          claim='Registry: the 2026-27 injury-report landing page does not exist yet, so no official current-season index can be polled. If this ever returns 200 with report links, the official layer becomes automatable — that single change is why this check fails the job.'),
     dict(id='nba-previous', url='https://official.nba.com/nba-injury-report-2025-26-season/',
          expect=[200], links=True,
          mustRe={'deadline 5pm-ish': r'5\s*:?\s*(00)?\s*p\.?\s*m', 'continual updates': r'continual', 'injury report wording': r'injury\s+report'},
          claim='Registry: deadline rules text (5 p.m. the day before; 11 a.m.–1 p.m. on game day; 1 p.m. for the second night of a back-to-back). Probes are tolerant of markup because the page is CMS-rendered.'),
     dict(id='nba-pdf-index', url='https://ak-static.cms.nba.com/referee/injury/',
-         expect=[500, 503, 200, 403, 404], links=True, criticalLinks=True,
-         claim='Registry: the PDF directory is not browsable (HTTP 500), so the newest report cannot be enumerated. A 200 with links is a capability change.'),
+         expect=[500, 503, 200, 403, 404], links=True, criticalLinks=True, verifiesOn=[500, 503], blockerVerdict=True,
+         claim='Registry: the PDF directory is not browsable (HTTP 500 observed directly, HTTP 503 on the 2026-09-17 committed '
+               'runner run - a 278-byte error page either way, no links), so the newest report cannot be enumerated. A 200 with '
+               'links is a capability change and fails this job.'),
     dict(id='nba-pdf-sample', url='https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf',
          expect=[200], pdf=True, critical=True,
          claim='Registry: timestamped official PDFs exist and parse (Game Date/Time, Matchup, Team, Player, Status, Reason). The regression fixture for the parser is generated from this response.'),
@@ -108,12 +194,20 @@ CHECKS = [
     dict(id='bluesky-follows', url='https://public.api.bsky.app/xrpc/app.bsky.graph.getFollows?actor=nba.com&limit=50',
          expect=[200], json_stats='follows',
          claim='Registry: the league follows ~6 accounts, so at most 4 of 30 teams have an official Bluesky presence — the verification ceiling on the social layer.'),
-    dict(id='bluesky-list', url='https://public.api.bsky.app/xrpc/app.bsky.graph.getList?user=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca',
-         expect=[200, 400], json_stats='list',
-         mustRe={'members returned': r'items'},
-         claim='Registry (bluesky-reporter-list): Howard Beck\'s curated NBA-writers list, used to build the reporter roster from real data instead of memory. Status of this check, stated plainly: app.bsky.graph.getList takes `user=`, not `actor=` (fixed), and with the correct parameter the runner STILL answers HTTP 400 while a direct read from the build tool returned the list with 150 members — so this check documents that the endpoint refuses this client/parameter combination, and the member count in the registry rests on the read that succeeded, marked with its date and URL. It is NOT evidence that the list is gone, and this job cannot decide the question.'),
+    dict(id='bluesky-list',
+         url='https://public.api.bsky.app/xrpc/app.bsky.graph.getList?list='
+             + urllib.parse.quote(registry_list_uri(), safe='') + '&limit=5',
+         expect=[200], json_stats='list',
+         mustRe={'members returned': r'"items"', 'list name present': r'NBA\s+Writers'},
+         claim='Registry (bluesky-reporter-list): Howard Beck\'s curated NBA-writers list (150 members), used to build the reporter '
+               'roster from real data instead of memory. CORRECTED 2026-09-17 (session 7): this check used to request '
+               '`?user=<handle>&list=<bare DID>`, which is not how app.bsky.graph.getList works — `user=` is not a parameter and a bare '
+               'DID is not an AT-URI — so the endpoint answered HTTP 400 on every run and the check never verified the list it claimed to '
+               'check. The correct form is `list=<AT-URI>` (the same at:// URI the registry publishes, read from data.js at run time so the '
+               'two cannot drift). Verified live the same day: HTTP 200, list.name "NBA Writers/Broadcasters/Podcasters/Bloggers", '
+               'listItemCount 150, purpose referencelist, creator howardbeck.bsky.social with a valid verification object.'),
     dict(id='bluesky-search', url='https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=NBA%20injury&limit=1',
-         expect=[403, 200], critical=True,
+         expect=[403, 200], critical=True, verifiesOn=[403], blockerVerdict=True,
          claim='Registry: keyword search is not available without a key (403 observed) — a documented limitation, deliberately not worked around. A 200 here would mean broader free coverage becomes possible.'),
     dict(id='x-docs-pricing', url='https://docs.x.com/x-api/getting-started/pricing',
          expect=[403, 200, 301, 302, 307],
@@ -166,11 +260,22 @@ def json_peek(data, kind):
         leagues = data.get('leagues') or [{}]
         out['leagueSeason'] = {k: leagues[0].get(k) for k in ('season', 'date')} if leagues else None
     elif kind == 'roster':
-        athletes = []
-        try:
-            athletes = (data.get('team') or {}).get('roster', {}).get('entries', [])
-        except Exception:
-            athletes = []
+        # ESPN's roster payload carries athletes[] AT THE TOP LEVEL. Re-read live 2026-09-17
+        # (response timestamp 2026-09-17T21:00:13Z): {"timestamp":...,"season":{...},"athletes":[{id,
+        # displayName, position.abbreviation, experience.years, status.abbreviation,
+        # injuries:[{status,date}], contracts:[{salary,season{year}}]}, ...]}. The previous revision
+        # read data['team']['roster']['entries'] — a path that does not exist in this payload — so a
+        # 200 would still have been reported as athletes: 0. Same class of bug as the gzipped probe
+        # and the getList parameter: a check that cannot fail. The old path is kept only as a
+        # labelled fallback so a future shape change is reported, not silently zero.
+        athletes = data.get('athletes')
+        out['athletesPath'] = 'athletes (top level)'
+        if not isinstance(athletes, list):
+            try:
+                athletes = ((data.get('team') or {}).get('roster') or {}).get('entries') or []
+            except Exception:
+                athletes = []
+            out['athletesPath'] = 'team.roster.entries (fallback — not the shape observed live 2026-09-17)'
         out['athletes'] = len(athletes)
         out['withInjuryListing'] = sum(1 for a in athletes if a.get('injuries'))
         out['withContract'] = sum(1 for a in athletes if a.get('contracts') or a.get('contract'))
@@ -192,12 +297,18 @@ def json_peek(data, kind):
     elif kind == 'follows':
         follows = data.get('profiles') or data.get('follows') or []   # the API renamed this field in 2024
         out['follows'] = len(follows)
-        out['verifiedFollows'] = sum(1 for f in follows if bool((f.get('verification') or {}).get('verified')))
+        out['verifiedFollows'] = sum(1 for f in follows if verified_object(f))
+        out['unverifiedHandles'] = [f.get('handle') for f in follows if not verified_object(f)][:12]
         out['followsHandles'] = [f.get('handle') for f in follows][:12]
     elif kind == 'list':
-        out['listName'] = (data.get('list') or {}).get('displayName')
-        out['listPurpose'] = (data.get('list') or {}).get('purpose')
-        out['listDesc'] = (data.get('list') or {}).get('description')
+        lst = data.get('list') or {}
+        # The record's own field is `name`; `displayName` does not exist on app.bsky.graph.defs#listView,
+        # so listName was null on every run even when the list came back complete.
+        out['listName'] = lst.get('name') or lst.get('displayName')
+        out['listPurpose'] = lst.get('purpose')
+        out['listDesc'] = lst.get('description')
+        out['listItemCount'] = lst.get('listItemCount')
+        out['listCreatorHandle'] = (lst.get('creator') or {}).get('handle')
         out['listItems'] = len(data.get('items') or [])
     return out
 
@@ -272,25 +383,7 @@ def probe(spec, row, scratch):
                           'so every claim that it cannot must be rewritten. Links captured in outboundLinks.' % len(row['outboundLinks']))
         return row
 
-    if status is None:
-        row['verdict'] = 'UNREACHABLE-FROM-RUNNER'
-        row['meaning'] = 'No route from the runner (DNS/TLS/timeout). Says nothing about the source, and nothing about browser access.'
-    elif status in ENV_STATUSES and status not in expect:
-        row['verdict'] = 'ENV-BLOCKED'
-        row['meaning'] = ('HTTP %d to this script\'s plain client. The same URL can succeed from Node on the same runner and from a browser on the deployed origin - ESPN is fingerprinting clients, not blocking machines or IPs. The claim under test is about the source and the browser path, evidenced elsewhere; not counted as drift.' % status)
-    elif status not in expect:
-        row['verdict'] = ('CAPABILITY-DRIFT' if spec.get('critical') else 'DRIFT-RECORDED') + ('' if status != 200 else '-NEWLY-OK')
-        row['meaning'] = ('The source answers differently than the registry states. '
-                          + ('This changes what the product may claim — rewrite the registry row and the UI copy built on it.'
-                             if spec.get('critical') else 'Recorded only; not a capability change.'))
-    elif 200 in expect:
-        row['verdict'] = 'OK-PAGE-CHANGED' if row.get('probesMissing') else 'OK'
-        if row.get('probesMissing'):
-            row['meaning'] = 'Reachable as documented, but the wording this check looks for moved: %s' % ", ".join(row['probesMissing'])
-    else:
-        row['verdict'] = 'DOCUMENTED-BLOCKER'
-        row['meaning'] = 'Still blocked exactly as the registry says it is. This is the expected state, not a failure.'
-    return row
+    return classify_verdict(spec, row)
 
 
 def text_kind(ctype):
@@ -313,7 +406,8 @@ def main():
 
     for spec in CHECKS:
         row = {'id': spec['id'], 'url': spec['url'], 'documentedStatuses': spec.get('expect', [200]),
-               'claim': spec['claim'], 'critical': bool(spec.get('critical'))}
+               'claim': spec['claim'], 'critical': bool(spec.get('critical')),
+               'verifiesOn': spec.get('verifiesOn') or [200], 'verified': False}
         try:
             probe(spec, row, scratch)
         except Exception as exc:
@@ -321,20 +415,27 @@ def main():
             row['verdict'] = 'TOOL-ERROR'
             row['meaning'] = type(exc).__name__ + ': ' + str(exc)[:200]
         evidence['checks'].append(row)
-        print('%-22s %-10s %-22s %s' % (row['id'], row.get('status') or 'n/a', row['verdict'], row.get('finalUrl', '')))
+        print('%-22s %-10s %-22s %-9s %s' % (row['id'], row.get('status') or 'n/a', row['verdict'],
+                                              'verified' if row.get('verified') else 'NOT-verified',
+                                              row.get('finalUrl', '')))
 
     counts = {}
     for r in evidence['checks']:
         counts[r['verdict']] = counts.get(r['verdict'], 0) + 1
     drift = sum(1 for r in evidence['checks'] if r['verdict'].startswith('CAPABILITY-DRIFT'))
     tool_errors = sum(1 for r in evidence['checks'] if r['verdict'] == 'TOOL-ERROR')
+    verified = sum(1 for r in evidence['checks'] if r.get('verified'))
     evidence['summary'] = {
         'total': len(evidence['checks']), 'byVerdict': counts,
+        'verifiedByThisRun': verified, 'notVerifiedByThisRun': len(evidence['checks']) - verified,
         'capabilityDrift': drift, 'toolErrors': tool_errors,
         'note': 'CAPABILITY-DRIFT (exit 1) means a source now answers in a way that changes what this product may claim — typically the official '
                 'report page becoming live or the PDF index becoming browsable. DRIFT-RECORDED, ENV-BLOCKED and UNREACHABLE-FROM-RUNNER are written '
                 'here for the reader instead of failing the job: runners and browsers take different paths, and third-party pages redesign on their '
-                'own schedule. The site always prints which transport served each panel, so a reader can tell the two apart.'}
+                'own schedule. The site always prints which transport served each panel, so a reader can tell the two apart. '
+                'verifiedByThisRun counts ONLY the checks whose observed status can verify the claim in their `claim` text - a tolerated '
+                '403 on a JSON endpoint is ENV-BLOCKED with verified=false, never an OK, because an audit that reports a check it could '
+                'not run is worse than no audit.'}
 
     dest = ROOT / 'data/audit/latest.json'
     dest.parent.mkdir(parents=True, exist_ok=True)

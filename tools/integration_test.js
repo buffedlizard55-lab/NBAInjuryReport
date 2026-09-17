@@ -129,6 +129,19 @@ console.log("== runtime: App.init() refresh chain ==");
   check("injury board status line reports the fetch path", /via/.test(els.boardStatus.innerHTML));
   check("board season label populated", els.boardSeason.textContent === "2026-27", els.boardSeason.textContent);
   check("board count populated", /listing/.test(els.boardCount.textContent), els.boardCount.textContent);
+  /* Coverage gap: the fixture board carries one team block (ATL), so 29 teams must be named as
+   * saying nothing — a board titled "every team" must not let an absent block read as a healthy
+   * roster, and the one team that IS covered must not appear in the gap list. */
+  check("board names the teams this snapshot says nothing about, and spares the one it covers",
+    /coverage gap/.test(els.boardCoverage.innerHTML) && /Boston Celtics/.test(els.boardCoverage.innerHTML) &&
+    !/Atlanta Hawks/.test(els.boardCoverage.innerHTML) &&
+    els.boardCoverage.innerHTML.replace(/<[^>]+>/g, " ").indexOf("1/30") >= 0,
+    els.boardCoverage.innerHTML.slice(0, 240));
+  check("the coverage line refuses to treat an absent block as clearance",
+    /NOT evidence that nobody/.test(els.boardCoverage.innerHTML));
+  check("every absent team links its own ESPN injuries page",
+    (els.boardCoverage.innerHTML.match(/espn\.com\/nba\/team\/injuries\/_\/name\//g) || []).length >= 28,
+    String((els.boardCoverage.innerHTML.match(/espn\.com\/nba\/team\/injuries/g) || []).length));
 
   check("wire rendered merged items", /wire-item/.test(els.wire.innerHTML));
   check("wire contains the social in-game exit post", /locker room/i.test(els.wire.innerHTML));
@@ -158,6 +171,10 @@ console.log("== runtime: App.init() refresh chain ==");
   check("snapshot rows render (with the CI-authored fields)", /CI Snapshot Star/.test(els.injuryBoard.innerHTML));
   check("status line names the path so the reader knows the provenance", /ci-snapshot/.test(els.boardStatus.innerHTML));
   check("no error is shown when a fallback worked", !/no board data/.test(els.boardStatus.innerHTML));
+  check("the coverage line follows the snapshot that actually served the rows",
+    /coverage gap/.test(els.boardCoverage.innerHTML) && /Atlanta Hawks/.test(els.boardCoverage.innerHTML) &&
+    !/Boston Celtics/.test(els.boardCoverage.innerHTML) &&
+    els.boardCoverage.innerHTML.replace(/<[^>]+>/g, " ").indexOf("29") >= 0, els.boardCoverage.innerHTML.slice(0, 240));
 
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
