@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T14:44:19.304Z",
+  "generated": "2026-09-17T14:46:33.669Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3526,19 +3526,19 @@
         "kind": "official-league",
         "team": null
       },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
       "dallasmavs.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Dallas Mavericks",
         "kind": "official-team",
         "team": "DAL"
+      },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "samvecenie.bsky.social": {
         "ok": true,
@@ -3568,19 +3568,19 @@
         "kind": "reporter",
         "team": null
       },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
-        "kind": "reporter",
-        "team": null
-      },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Jeff McDonald",
         "kind": "reporter",
         "team": "SAS"
+      },
+      "tomhaberstroh.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tom Haberstroh",
+        "kind": "reporter",
+        "team": null
       },
       "tomorsborn.bsky.social": {
         "ok": true,
