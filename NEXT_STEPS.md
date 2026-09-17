@@ -1,5 +1,30 @@
 # Next-session priorities
 
+## State at the end of session 3 (2026-09-17, ~05:26Z) — read this first
+
+Merged to `main`: PR #8 (lineup-impact layer, alert-freshness fix, CI trigger fix, registry re-verification, 20 citation-verified
+reporter rows, rewritten source audit) and PR #9 (three claims the first audit run disproved, corrected in place).
+Everything below is green on `main`: `Tests` (including the extended Chromium suite), `injury-watch`, `Public source audit`,
+`Deploy dashboard`. Deployed: https://buffedlizard55-lab.github.io/NBAInjuryReport/ — rows currently read `IMPACT: UNKNOWN`
+with real salary/cadence lines, because `roleStats` is empty until the 2026-10-03 preseason tip. That is correct behaviour.
+
+Facts a new session can rely on without re-deriving:
+- `data/live/context.json` is schema 2: 30 rosters, 559 players, 54 with dated injury listings, 0 collector errors.
+  `data/live/latest.json` publishes impact fields on 74/74 rows. Both are written only by CI — never hand-edit them.
+- The repo's own runner audit (22 checks, no drift) is committed to `data/audit/latest.json` and rendered on the sources page,
+  with a per-check `meaning` line. Verdict vocabulary: `CAPABILITY-DRIFT` (fails the job), `DOCUMENTED-BLOCKER`, `ENV-BLOCKED`,
+  `OK-PAGE-CHANGED`, `UNREACHABLE-FROM-RUNNER`, `TOOL-ERROR`.
+- ESPN refuses *this Python client* (403 on `site.api.espn.com`, 202 with empty body on `www.espn.com`) while Node on the same
+  runner and a browser on the deployed origin succeed. Do not generalise a blockage into "the source is down"; do not spoof
+  browser headers to make the audit greener.
+- Branch hygiene: this session's branch is written by the collector bot, the audit bot and the human at once. Pushes will be
+  rejected occasionally; `git fetch` + rebase (or merge with `-X theirs` for `data/**`, which CI owns) is the fix, and the
+  commit steps now do exactly that.
+
+The single most valuable next action is **time-based, not code-based**: after 2026-10-03, confirm `roleStats` starts filling
+from box scores, that a starter's OUT alert renders `HIGH IMPACT` + the `⚡` log prefix, and that an in-game exit alert carries
+the post link. Until then the impact layer is structurally tested but empirically unexercised — say so rather than implying otherwise.
+
 ## 1. Establish a genuinely live official injury stream
 
 - Inspect NBA season-report delivery when the current-season page exposes report links. Current result: 2026–27 page 404; prior season HTML has no timestamped injury PDF links.
