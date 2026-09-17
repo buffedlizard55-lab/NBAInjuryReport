@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T05:14:40.362Z",
+  "generated": "2026-09-17T05:17:51.430Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3522,6 +3522,13 @@
         "kind": "official-team",
         "team": "DEN"
       },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
+      },
       "nba.com": {
         "ok": true,
         "count": 0,
@@ -3536,26 +3543,12 @@
         "kind": "official-team",
         "team": "POR"
       },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
       "dallasmavs.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Dallas Mavericks",
         "kind": "official-team",
         "team": "DAL"
-      },
-      "howardbeck.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
       },
       "samvecenie.bsky.social": {
         "ok": true,
@@ -3568,6 +3561,13 @@
         "ok": true,
         "count": 0,
         "name": "Mike Vorkunov",
+        "kind": "reporter",
+        "team": null
+      },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
         "kind": "reporter",
         "team": null
       },
