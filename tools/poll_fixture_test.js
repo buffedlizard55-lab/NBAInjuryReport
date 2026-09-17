@@ -59,6 +59,20 @@ const FEED = { feed: [
 ] };
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "nba-poll-"));
+/* Evidence files the poller is allowed to read for lineup impact — the same shape the CI
+ * collector writes (tools/collect_context.js). Written into the scratch dir, never the repo. */
+fs.mkdirSync(path.join(tmp, "data/live"), { recursive: true });
+const nowIso = new Date().toISOString();
+const daysAgo = n => new Date(Date.now() - n * 86400000).toISOString();
+fs.writeFileSync(path.join(tmp, "data/live/context.json"), JSON.stringify({
+  checkedAt: nowIso, schema: 2,
+  rosters: { UTA: { fetchedAt: nowIso, url: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster",
+    players: [{ playerId: "9001", player: "Trey Alexander", team: "UTA", position: "G", experienceYears: 2, rosterStatus: "Active",
+      salaryCurrent: 6500000, salarySeason: 2027, playerUrl: "https://www.espn.com/nba/player/_/id/9001/trey-alexander", rosterUrl: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster",
+      injuryEntries: [{ status: "Out", date: daysAgo(4).slice(0, 10) + "T00:00Z" }, { status: "Day-To-Day", date: daysAgo(60).slice(0, 10) + "T00:00Z" }] }] } },
+  roles: [], roleStats: { "9001": { player: "Trey Alexander", team: "UTA", games: 5, starts: 5, minutesTotal: 160, minutesGames: 5, sampleUrls: ["https://www.espn.com/nba/game/_/gameId/401"], updatedAt: nowIso, keys: [] } },
+  roleEventIds: ["401"]
+}));
 const stub = path.join(tmp, "stub.js");
 fs.writeFileSync(stub, `
 const fixtures = ${JSON.stringify({ INJURIES, NEWS, FEED })};
@@ -92,6 +106,18 @@ check("injuries normalised — both rows kept", snap.injuries.rows.length === 2,
 check("ESPN's own codes are standardised (UTAH → UTA, GS → GSW)",
   snap.injuries.rows.some(r => r.team === "UTA") && snap.injuries.rows.some(r => r.team === "GSW"),
   snap.injuries.rows.map(r => r.team).join(","));
+/* the impact context must travel from the evidence files into the snapshot the browser reads */
+const utaRow = snap.injuries.rows.find(r => r.player === "Trey Alexander");
+check("snapshot rows carry lineup impact (starter + OUT -> high)",
+  utaRow && utaRow.impact === "high" && utaRow.roleTier === "starter" && utaRow.roleGames === 5, JSON.stringify(utaRow && { impact: utaRow.impact, role: utaRow.roleTier, games: utaRow.roleGames }));
+check("impact keeps the roster cadence observation", (utaRow.listingCount || 0) === 2, JSON.stringify({ c: utaRow.listingCount, d: utaRow.listingDates }));
+check("internal cache fields are not published", !("_impact" in utaRow) && !("_impactKey" in utaRow));
+check("players with no collected box score stay unknown, not guessed",
+  (() => { const m = snap.injuries.rows.find(r => r.player === "Moses Moody"); return m && m.impact === "unknown"; })());
+const hist0 = JSON.parse(require("fs").readFileSync(path.join(tmp, "data/history", new Date().toISOString().slice(0, 10) + ".jsonl"), "utf8").trim().split("\n")[0]);
+check("history rows record the impact observation alongside the status",
+  hist0.injuries.some(r => r.player === "Trey Alexander" && r.impact === "high"), JSON.stringify(hist0.injuries.map(r => [r.player, r.impact])));
+
 check("severity normalised from the ESPN status + fantasy flag",
   (snap.injuries.rows.find(r => r.player === "Trey Alexander") || {}).sev === "out" &&
   (snap.injuries.rows.find(r => r.player === "Moses Moody") || {}).sev === "questionable");

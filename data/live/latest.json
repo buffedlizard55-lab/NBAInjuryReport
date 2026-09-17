@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T03:57:22.701Z",
+  "generated": "2026-09-17T05:14:40.362Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -39,7 +39,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/phx",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Duop%20Reath%20injury",
-        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-17"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/roster",
+        "salaryCurrent": 2221677,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532571",
@@ -69,7 +86,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/lac",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Brandon%20Ingram%20injury",
-        "fp": "Day-To-Day|Right Heel Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Heel Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-14"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
+        "salaryCurrent": 40000000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532558",
@@ -99,7 +133,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/hou",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Fred%20VanVleet%20injury",
-        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-11"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
+        "salaryCurrent": 25000000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532554",
@@ -129,7 +180,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/phx",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Mark%20Williams%20injury",
-        "fp": "Out|Left Shoulder Arm|2027-02-01|OUT"
+        "fp": "Out|Left Shoulder Arm|2027-02-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-11"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/roster",
+        "salaryCurrent": 6276531,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532551",
@@ -159,7 +227,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/tor",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Nate%20Bittle%20injury",
-        "fp": "Day-To-Day|Right Lower Leg Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Lower Leg Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-10"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532549",
@@ -189,7 +272,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/utah",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jaren%20Jackson%20Jr.%20injury",
-        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-10"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster",
+        "salaryCurrent": 49000000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532548",
@@ -219,7 +319,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/dal",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Kyrie%20Irving%20injury",
-        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-10"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/roster",
+        "salaryCurrent": 39416562,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532547",
@@ -249,7 +366,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ind",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Tyrese%20Haliburton%20injury",
-        "fp": "Day-To-Day|Right Achilles Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Achilles Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-09"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/roster",
+        "salaryCurrent": 48924624,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532529",
@@ -279,7 +413,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/okc",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Isaiah%20Hartenstein%20injury",
-        "fp": "Day-To-Day|Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-07"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
+        "salaryCurrent": 28500000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532519",
@@ -309,7 +460,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/por",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Ja%20Morant%20injury",
-        "fp": "Day-To-Day|Left Elbow Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Elbow Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-04"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/roster",
+        "salaryCurrent": 42166510,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532491",
@@ -339,7 +507,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sac",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Domantas%20Sabonis%20injury",
-        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-02"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/roster",
+        "salaryCurrent": 45472000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532489",
@@ -369,7 +554,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mia",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Giannis%20Antetokounmpo%20injury",
-        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-02"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
+        "salaryCurrent": 58456566,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532487",
@@ -399,7 +601,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/orl",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Franz%20Wagner%20injury",
-        "fp": "Day-To-Day|Right Calf Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Calf Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-02"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/roster",
+        "salaryCurrent": 41754690,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532401",
@@ -429,7 +648,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/lac",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jordan%20Miller%20injury",
-        "fp": "Out|Shoulder Arm|2027-03-01|OUT"
+        "fp": "Out|Shoulder Arm|2027-03-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-08-26"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
+        "salaryCurrent": 2497812,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532397",
@@ -459,7 +695,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/cha",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Brandon%20Miller%20injury",
-        "fp": "Day-To-Day|Left Shoulder Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Shoulder Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-08-25"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster",
+        "salaryCurrent": 15104625,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532395",
@@ -489,7 +742,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/por",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Shaedon%20Sharpe%20injury",
-        "fp": "Out|Right Knee Leg|2027-03-01|OUT"
+        "fp": "Out|Right Knee Leg|2027-03-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-08-24"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/roster",
+        "salaryCurrent": 20089286,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532392",
@@ -519,7 +789,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gs",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jimmy%20Butler%20III%20injury",
-        "fp": "Out|Right Knee Leg|2026-12-01|OUT"
+        "fp": "Out|Right Knee Leg|2026-12-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-08-24"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/roster",
+        "salaryCurrent": 56832773,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532352",
@@ -549,7 +836,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/dal",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Santi%20Aldama%20injury",
-        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-08-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/roster",
+        "salaryCurrent": 17007043,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532339",
@@ -579,7 +883,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/lac",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Bradley%20Beal%20injury",
-        "fp": "Day-To-Day|Left Hip Torso|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Hip Torso|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-08-14"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
+        "salaryCurrent": 5621700,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532263",
@@ -609,7 +930,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/hou",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Kevin%20Durant%20injury",
-        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-08-05"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
+        "salaryCurrent": 43902439,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532255",
@@ -639,7 +977,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sac",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Keegan%20Murray%20injury",
-        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-31"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/roster",
+        "salaryCurrent": 24137931,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-57028",
@@ -669,7 +1024,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jamir%20Watkins%20injury",
-        "fp": "Out|Left Knee Leg|2027-04-01|OUT"
+        "fp": "Out|Left Knee Leg|2027-04-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-30"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/roster",
+        "salaryCurrent": 2150917,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532242",
@@ -699,7 +1071,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/okc",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Ajay%20Mitchell%20injury",
-        "fp": "Day-To-Day|Right Calf Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Calf Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-30"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
+        "salaryCurrent": 2850000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532232",
@@ -729,7 +1118,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mia",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Bam%20Adebayo%20injury",
-        "fp": "Day-To-Day|Not Specified Back Torso|2026-10-01|GTD"
+        "fp": "Day-To-Day|Not Specified Back Torso|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-28"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
+        "salaryCurrent": 49500000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532224",
@@ -759,7 +1165,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mem",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Scotty%20Pippen%20Jr.%20injury",
-        "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-27"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
+        "salaryCurrent": 2461462,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532217",
@@ -789,7 +1212,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/bos",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jayson%20Tatum%20injury",
-        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-27"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bos/roster",
+        "salaryCurrent": 58456566,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532210",
@@ -819,7 +1259,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/phi",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Kentavious%20Caldwell-Pope%20injury",
-        "fp": "Day-To-Day|Right Finger Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Finger Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-25"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/roster",
+        "salaryCurrent": 21621500,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532193",
@@ -849,7 +1306,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sa",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=David%20Jones%20Garcia%20injury",
-        "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-22"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/roster",
+        "salaryCurrent": 0,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532168",
@@ -879,7 +1353,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mem",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Walter%20Clayton%20Jr.%20injury",
-        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-20"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
+        "salaryCurrent": 4190520,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532167",
@@ -909,7 +1400,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mem",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Karim%20Lopez%20injury",
-        "fp": "Day-To-Day|Undisclosed Other|2026-10-01|GTD"
+        "fp": "Day-To-Day|Undisclosed Other|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-20"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532159",
@@ -939,7 +1445,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/okc",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Otega%20Oweh%20injury",
-        "fp": "Day-To-Day|Left Lower Leg Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Lower Leg Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532155",
@@ -969,7 +1490,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/den",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Trevon%20Brazile%20injury",
-        "fp": "Day-To-Day|Undisclosed Other|2026-10-01|GTD"
+        "fp": "Day-To-Day|Undisclosed Other|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532152",
@@ -999,7 +1535,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/tor",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Alijah%20Martin%20injury",
-        "fp": "Day-To-Day|Not Specified Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Not Specified Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/roster",
+        "salaryCurrent": 0,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532150",
@@ -1029,7 +1582,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/tor",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Chucky%20Hepburn%20injury",
-        "fp": "Day-To-Day|Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/roster",
+        "salaryCurrent": 0,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532149",
@@ -1059,7 +1629,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/tor",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Collin%20Murray-Boyles%20injury",
-        "fp": "Day-To-Day|Finger Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Finger Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/roster",
+        "salaryCurrent": 6649560,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-56348",
@@ -1089,7 +1676,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sa",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jayden%20Quaintance%20injury",
-        "fp": "Out|Right Knee Leg|2026-12-01|OUT"
+        "fp": "Out|Right Knee Leg|2026-12-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532127",
@@ -1119,7 +1721,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/phx",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=CJ%20Huntley%20injury",
-        "fp": "Day-To-Day|Not Specified Hamstring Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Not Specified Hamstring Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/roster",
+        "salaryCurrent": 0,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-56292",
@@ -1149,7 +1768,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/atl",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Mouhamed%20Gueye%20injury",
-        "fp": "Day-To-Day|Left Foot Leg|2026-10-15|GTD"
+        "fp": "Day-To-Day|Left Foot Leg|2026-10-15|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-19"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster",
+        "salaryCurrent": 2406205,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532102",
@@ -1179,7 +1815,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/atl",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Keshon%20Gilbert%20injury",
-        "fp": "Day-To-Day|Hip Torso|2026-10-01|GTD"
+        "fp": "Day-To-Day|Hip Torso|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-18"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532101",
@@ -1209,7 +1860,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/atl",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=RayJ%20Dennis%20injury",
-        "fp": "Day-To-Day|Right Achilles Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Achilles Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-18"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster",
+        "salaryCurrent": 0,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532065",
@@ -1239,7 +1907,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mia",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Trevor%20Keels%20injury",
-        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-18"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
+        "salaryCurrent": 0,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532062",
@@ -1269,7 +1954,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ny",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Mohamed%20Diawara%20injury",
-        "fp": "Day-To-Day|Finger Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Finger Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-18"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/roster",
+        "salaryCurrent": 1272870,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532043",
@@ -1299,7 +2001,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/chi",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Dailyn%20Swain%20injury",
-        "fp": "Day-To-Day|Wrist Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Wrist Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-17"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "532041",
@@ -1329,7 +2046,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/utah",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Trey%20Alexander%20injury",
-        "fp": "Day-To-Day|Left Ribs Torso|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Ribs Torso|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-17"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster",
+        "salaryCurrent": 0,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531919",
@@ -1359,7 +2093,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mia",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Ryan%20Conwell%20injury",
-        "fp": "Day-To-Day|Not Specified Hip Torso|2026-10-01|GTD"
+        "fp": "Day-To-Day|Not Specified Hip Torso|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-15"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531807",
@@ -1389,7 +2138,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/orl",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Izaiyah%20Nelson%20injury",
-        "fp": "Day-To-Day|Left Ankle Leg|2026-11-01|GTD"
+        "fp": "Day-To-Day|Left Ankle Leg|2026-11-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-13"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531578",
@@ -1419,7 +2183,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mia",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Myron%20Gardner%20injury",
-        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-08"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
+        "salaryCurrent": 2150917,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531509",
@@ -1449,7 +2230,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ny",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jalen%20Brunson%20injury",
-        "fp": "Day-To-Day|Left Wrist Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Wrist Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-07"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/roster",
+        "salaryCurrent": 37739521,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531329",
@@ -1479,7 +2277,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/okc",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Thomas%20Sorber%20injury",
-        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-01"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
+        "salaryCurrent": 4887720,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531314",
@@ -1509,7 +2324,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/orl",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jonathan%20Isaac%20injury",
-        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-01"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/roster",
+        "salaryCurrent": 14500000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531295",
@@ -1539,7 +2371,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/chi",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Zach%20Collins%20injury",
-        "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-01"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/roster",
+        "salaryCurrent": 18080496,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-55021",
@@ -1569,7 +2418,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/bkn",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Nolan%20Traore%20injury",
-        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-06-30"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bkn/roster",
+        "salaryCurrent": 4002000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531183",
@@ -1599,7 +2465,24 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sac",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Zach%20LaVine%20injury",
-        "fp": "Day-To-Day|Right Hand Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Hand Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-06-29"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/roster",
+        "salaryCurrent": 48967380,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531146",
@@ -1629,7 +2512,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/dal",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Dereck%20Lively%20II%20injury",
-        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/roster",
+        "salaryCurrent": 7239130,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531126",
@@ -1659,7 +2557,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mil",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Kevin%20Porter%20Jr.%20injury",
-        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mil/roster",
+        "salaryCurrent": 5134000,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531114",
@@ -1689,7 +2602,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sac",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=De'Andre%20Hunter%20injury",
-        "fp": "Day-To-Day|Left Eye Head|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Eye Head|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/roster",
+        "salaryCurrent": 24910714,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531031",
@@ -1719,7 +2647,20 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mem",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Richie%20Saunders%20injury",
-        "fp": "Out|Right Knee Leg|2026-12-01|OUT"
+        "fp": "Out|Right Knee Leg|2026-12-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531013",
@@ -1749,7 +2690,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/chi",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Josh%20Giddey%20injury",
-        "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/roster",
+        "salaryCurrent": 25000000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531011",
@@ -1779,7 +2735,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mem",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jaylen%20Wells%20injury",
-        "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
+        "salaryCurrent": 2296271,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "531008",
@@ -1809,7 +2780,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/mem",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Zach%20Edey%20injury",
-        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
+        "salaryCurrent": 6332760,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "530998",
@@ -1839,7 +2825,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Alex%20Sarr%20injury",
-        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/roster",
+        "salaryCurrent": 12370680,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "530997",
@@ -1869,7 +2870,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Anthony%20Davis%20injury",
-        "fp": "Day-To-Day|Left Finger Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Finger Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/roster",
+        "salaryCurrent": 58456566,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "530951",
@@ -1899,7 +2915,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Trae%20Young%20injury",
-        "fp": "Day-To-Day|Right Quadriceps Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Quadriceps Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/roster",
+        "salaryCurrent": 48967380,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-54297",
@@ -1929,7 +2960,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/okc",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jalen%20Williams%20injury",
-        "fp": "Day-To-Day|Left Hamstring Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Hamstring Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
+        "salaryCurrent": 41500000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-54240",
@@ -1959,7 +3005,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/lac",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Yanic%20Konan%20Niederhauser%20injury",
-        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
+        "salaryCurrent": 2880960,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-54220",
@@ -1989,7 +3050,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/no",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Bryce%20McGowens%20injury",
-        "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/roster",
+        "salaryCurrent": 2584539,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-54208",
@@ -2019,7 +3095,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/por",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Damian%20Lillard%20injury",
-        "fp": "Day-To-Day|Left Achilles Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Achilles Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/roster",
+        "salaryCurrent": 13398000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-54184",
@@ -2049,7 +3140,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/cha",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=PJ%20Hall%20injury",
-        "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster",
+        "salaryCurrent": 0,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-54164",
@@ -2079,7 +3185,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/chi",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Rob%20Dillingham%20injury",
-        "fp": "Day-To-Day|Right Wrist Arm|2026-10-01|GTD"
+        "fp": "Day-To-Day|Right Wrist Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/roster",
+        "salaryCurrent": 6889320,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-54135",
@@ -2109,7 +3230,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/hou",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Steven%20Adams%20injury",
-        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD"
+        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
+        "salaryCurrent": 13000000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "-54122",
@@ -2139,7 +3275,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/okc",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Nikola%20Topic%20injury",
-        "fp": "Day-To-Day|Not Specified Back Torso|2026-10-01|GTD"
+        "fp": "Day-To-Day|Not Specified Back Torso|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
+        "salaryCurrent": 5429760,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "529971",
@@ -2169,7 +3320,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/min",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Donte%20DiVincenzo%20injury",
-        "fp": "Out|Right Achilles Leg|2027-04-01|OUT"
+        "fp": "Out|Right Achilles Leg|2027-04-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/min/roster",
+        "salaryCurrent": 11990000,
+        "salarySeason": 2026,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "525487",
@@ -2199,7 +3365,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gs",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Moses%20Moody%20injury",
-        "fp": "Out|Left Knee Leg|2026-12-01|OUT"
+        "fp": "Out|Left Knee Leg|2026-12-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/roster",
+        "salaryCurrent": 12500000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       },
       {
         "id": "518463",
@@ -2229,7 +3410,22 @@
         "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ind",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Johnny%20Furphy%20injury",
-        "fp": "Out|Right Knee Leg|2027-01-01|OUT"
+        "fp": "Out|Right Knee Leg|2027-01-01|OUT",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/roster",
+        "salaryCurrent": 2296271,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
       }
     ],
     "blocks": 27
@@ -2319,6 +3515,13 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
+      "nuggets.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Denver Nuggets — official",
+        "kind": "official-team",
+        "team": "DEN"
+      },
       "nba.com": {
         "ok": true,
         "count": 0,
@@ -2332,13 +3535,6 @@
         "name": "Portland Trail Blazers — official",
         "kind": "official-team",
         "team": "POR"
-      },
-      "nuggets.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Denver Nuggets — official",
-        "kind": "official-team",
-        "team": "DEN"
       },
       "sixersnba.bsky.social": {
         "ok": true,
@@ -2354,6 +3550,13 @@
         "kind": "official-team",
         "team": "DAL"
       },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
       "samvecenie.bsky.social": {
         "ok": true,
         "count": 3,
@@ -2368,17 +3571,17 @@
         "kind": "reporter",
         "team": null
       },
-      "howardbeck.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
       "johnhollinger.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "John Hollinger",
+        "kind": "reporter",
+        "team": null
+      },
+      "tomhaberstroh.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tom Haberstroh",
         "kind": "reporter",
         "team": null
       },
@@ -2388,13 +3591,6 @@
         "name": "Jeff McDonald",
         "kind": "reporter",
         "team": "SAS"
-      },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
-        "kind": "reporter",
-        "team": null
       },
       "tomorsborn.bsky.social": {
         "ok": true,

@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-17T03:57:25.166Z",
-  "inputGenerated": "2026-09-17T03:57:22.701Z",
+  "generated": "2026-09-17T05:14:41.438Z",
+  "inputGenerated": "2026-09-17T05:14:40.362Z",
   "inputFresh": true,
   "claims": {
     "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3mqpt2qmdd22q": {
@@ -1242,5 +1242,7 @@
       "change": "first observed (not injury onset)"
     }
   ],
+  "exits": {},
+  "exitNote": "exits maps a player to the most recent monitored-post in-game exit signal. Unconfirmed by design: a social post is not an official designation.",
   "note": "Automatic evidence ledger. No historical accuracy or global first-to-report score is asserted. Conflicts require review, not a wrong-report penalty."
 }

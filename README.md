@@ -17,6 +17,7 @@ NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster pla
 | In-game signals | Recent social exit/QTR language is a **reported, unconfirmed signal**, not a league designation. DNP and generic game injury arrays do **not** establish an in-game exit and do not sound. Actual live-game exit latency has not been validated. |
 | Official NBA adapter | Season-page link discovery → linked PDF → layout parser → health flags. Never guesses timestamped URLs. Real historical PDF regression fixture: 229 rows across 30 teams. **No live report discovered in this audit**; automatic official confirmation remains blocked until an official page exposes report links. |
 | Player identity/context | Daily best-effort all-team ESPN roster collection; explicit starter/bench observations during current games. Unknown if absent, stale or blocked. No inferred medical severity, no unsupported season-long rotation classification. |
+| Lineup impact (not medical severity) | `assets/js/role.js` grades each listing HIGH/MEDIUM/LOW/UNKNOWN from **collected** evidence only: box-score starts/minutes (≥3 games, ≥60% starts for a starter), the current game's lineup card, injury-listing cadence from dated ESPN roster entries, and reported in-game exits from the ledger. Offseason reality: no 2026-27 games have been collected yet, so most rows read IMPACT UNKNOWN — by design, never guessed. |
 | History | Automatic, source-linked forward injury-listing changes. First observation is **not injury onset**. Not a complete medical history. Working ledger retains 30 days / up to 10,000 changes. |
 | Social intelligence | Automatic post ledger, one-player exact-name resolution, original text/URL/hash, posted/first-observed times. A narrow game-date-matched official comparison can mark corroboration or conflict for review. **No established accuracy scores or global first-to-report rankings.** In-game claims stay pending without game-specific outcomes. |
 | X / Instagram / Facebook | **No authorized read connector configured.** X embeds and links are manual review only, not alert inputs. Current pricing and access entitlements are not asserted. |
@@ -43,7 +44,7 @@ These observations do not certify every legacy reporter link or guarantee later 
 
 1. Offline logic, integration, poller, regression and official-PDF tests.
 2. Official report discovery and PDF parsing (`poppler-utils`).
-3. Roster/current-game role collection.
+3. Roster/current-game role collection (`tools/collect_context.js`) — dated injury listings, contracts, starter/minutes samples deduped per game; feeds the lineup-impact layer.
 4. ESPN and Bluesky snapshot collection using shared browser classifiers.
 5. Automatic observation ledger and source-linked injury history.
 6. Live-snapshot invariant check, snapshot/history commit and artifact upload.
@@ -60,6 +61,7 @@ node tools/poll_fixture_test.js
 node tools/regression_test.js
 python3 -m unittest discover -s tools -p 'test_*.py'
 node tools/replay_posts.js data/live/latest.json --check
+python3 tools/verify_live.py          # records drift if a source's HTTP behaviour changes
 ```
 
 Real Chromium UI tests (fixture transports, not proof of live coverage):

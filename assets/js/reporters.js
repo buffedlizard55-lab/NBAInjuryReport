@@ -25,10 +25,19 @@ const Reporters = (() => {
       case "verified-handle": return `<span class="badge ok">✓ handle verified</span>`;
       case "outlet-only": return `<span class="badge warn">outlet verified · handle unverified</span>`;
       case "community": return `<span class="badge info">community-listed · re-confirm</span>`;
+      case "citation-verified": return `<span class="badge ok">cited on the injury feed · no handle asserted</span>`;
       case "inactive": return `<span class="badge dim">confirmed · inactive on X</span>`;
       case "retired": return `<span class="badge bad">retired · historical only</span>`;
       default: return "";
     }
+  }
+  /* A citation row's evidence is the byline text itself, stored verbatim in data.js from the
+   same ESPN snapshot the board renders. Show its tail so a reader can compare without opening anything. */
+  const dataSnapshotUrl = "https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/data/live/latest.json";
+  function citeTail(r) {
+    const t = String(r.citeText || "");
+    const i = Math.max(t.lastIndexOf(". "), t.lastIndexOf("; "));
+    return (i > 0 ? t.slice(i + 2) : t).slice(0, 150);
   }
   function tierBadge(t) {
     return t === 1 ? `<span class="badge bad">TIER 1 · lead insider</span>`
@@ -68,7 +77,7 @@ const Reporters = (() => {
       <td>${tierBadge(r.tier)}</td>
       <td>${xLink(r)}</td>
       <td>${bskyCell(r)}</td>
-      <td>${statusBadge(r)}<br><a class="tiny" href="${r.verifyUrl}" target="_blank" rel="noopener">verification ↗</a></td>
+      <td>${statusBadge(r)}${r.citeText ? `<br><span class="tiny muted cite">“…${AlertEngine.escapeHtml(citeTail(r))}”</span><br><a class="tiny" href="${dataSnapshotUrl}" target="_blank" rel="noopener">stored snapshot ↗</a>` : ""}<br><a class="tiny" href="${r.verifyUrl}" target="_blank" rel="noopener">${r.citeText ? "ESPN injury page ↗" : "verification ↗"}</a></td>
       <td class="tiny muted">${AlertEngine.escapeHtml(r.notes || "")}</td>
       <td data-score-for="${AlertEngine.escapeHtml(r.name)}" class="tiny"><span class="muted">—</span></td>
     </tr>`).join("");
@@ -95,6 +104,25 @@ const Reporters = (() => {
       listEl.innerHTML = `Roster built from <a href="${BLUESKY_LIST_SOURCE.url}" target="_blank" rel="noopener">${AlertEngine.escapeHtml(BLUESKY_LIST_SOURCE.name)}</a>
         (${BLUESKY_LIST_SOURCE.members} members, read live via the public API). ${AlertEngine.escapeHtml(BLUESKY_LIST_SOURCE.verified)}`;
     }
+  }
+
+  /* Pills are computed from the registry so the numbers on a verification page cannot go stale. */
+  function renderPills() {
+    const el = document.getElementById("reporterPills");
+    if (!el || typeof REPORTERS === "undefined") return;
+    const by = st => REPORTERS.filter(r => r.status === st).length;
+    const bsky = (typeof BSKY_REPORTERS !== "undefined") ? BSKY_REPORTERS.length : 0;
+    const accounts = (typeof SOCIAL_ACCOUNTS !== "undefined") ? SOCIAL_ACCOUNTS.length : 0;
+    const pills = [
+      ["ok", `✓ ${by("verified-handle")} X handles verified (first pass 2026-09-17, each with an evidence link)`],
+      ["ok", `✓ ${bsky} reporter Bluesky accounts verified against the public API 2026-09-17`],
+      ["ok", `✓ ${accounts} official league/team/outlet Bluesky accounts verified`],
+      ["ok", `✓ ${by("citation-verified")} reporters added from bylines on the injury feed itself (no handle asserted)`],
+      ["warn", `${by("outlet-only")} outlet-verified · X handle unconfirmed (none asserted)`],
+      ["bad", `${by("retired")} retired · ${by("inactive")} inactive on X`],
+      ["warn", `${REPORTERS.length} rows in the directory`]
+    ];
+    el.innerHTML = pills.map(([k, t]) => `<span class="pill ${k}">${AlertEngine.escapeHtml(t)}</span>`).join("");
   }
 
   /* --- Scorecard --- */
@@ -221,6 +249,7 @@ const Reporters = (() => {
     const filter = { tier: "ALL", status: "ALL", q: "" };
     renderTable(filter);
     renderBsky();
+    renderPills();
     renderRubric();
     buildForm();
     paintScores();

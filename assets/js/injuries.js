@@ -41,6 +41,27 @@ const InjuryBoard = (function () {
     return [row.status, row.bodyPart || "", row.returnDate || "", row.fantasyStatus || ""].join("|");
   }
 
+  /* ---------- lineup impact (never medical severity) ----------
+   * Context comes from the same-origin evidence files (data/live/context.json + the exits map in
+   * data/live/intelligence.json). With no context the answer is "unknown", never a guess. */
+  let injectedContext = null;                       // used by the CI poller, which has no DOM/Intelligence
+  function setImpactContext(ctx) { injectedContext = ctx || null; return true; }
+  function impactContext() {
+    if (typeof Intelligence !== "undefined" && Intelligence.impactContext) {
+      const c = Intelligence.impactContext();
+      if (c) return c;
+    }
+    return injectedContext;
+  }
+  function impactFor(row) {
+    if (typeof LineupImpact === "undefined") return null;
+    const ctx = impactContext() || {};
+    if (row && row._impact && row._impactKey === row.fp && row._impactCtx === ctx) return row._impact;  // cached per listing per context load
+    const a = LineupImpact.assess(row, ctx);
+    if (row) { row._impact = a; row._impactKey = row.fp; row._impactCtx = ctx; }
+    return a;
+  }
+
   /* ---------- normalization ---------- */
 
   function teamOf(block, athlete) {
@@ -152,12 +173,16 @@ const InjuryBoard = (function () {
 
   function alertFor(kind, row, extra) {
     const title = (kind === "new" ? "NEW LISTING — " : "STATUS CHANGE — ") + row.player + " (" + row.team + "): " + row.status;
+    const impact = impactFor(row);
     return {
       kind: kind, sev: row.sev, sevLabel: row.sevLabel, title: title,
-      detail: [extra, row.shortComment || row.longComment,
+      impact: impact ? { tier: impact.impact, label: impact.impactLabel } : null,
+      detail: [extra, typeof LineupImpact !== "undefined" ? LineupImpact.summaryText(impact) : null, row.shortComment || row.longComment,
         row.bodyPart ? "injury: " + row.bodyPart : "",
         row.returnDate ? "est. return " + row.returnDate : ""].filter(Boolean).join(" · "),
-      url: row.teamUrl || row.playerUrl, player: row.player, team: row.team, ts: row.updated || null, alertEligible: AlertEngine.isFresh(row.updated, 24 * 60 * 60 * 1000)
+      url: row.teamUrl || row.playerUrl, reviewUrl: row.playerUrl, player: row.player, team: row.team,
+      ts: row.updated || null, observedAt: new Date().toISOString(), maxAgeMs: 24 * 60 * 60 * 1000,
+      alertEligible: AlertEngine.isFresh(row.updated, 24 * 60 * 60 * 1000)
     };
   }
 
@@ -210,6 +235,18 @@ const InjuryBoard = (function () {
   }
 
   const SEV_ORDER = { out: 0, doubtful: 1, questionable: 2, mention: 3, probable: 4, return: 5 };
+  const IMPACT_ORDER = { high: 0, medium: 1, unknown: 2, low: 3 };
+
+  function impactShort(imp) {
+    if (!imp) return "";
+    if (imp.impact === "unknown") return "IMPACT: UNKNOWN";
+    const role = imp.role.tier === "starter" ? "starter" : imp.role.tier === "rotation" ? "rotation" : imp.role.tier === "bench" ? "depth" : "role?";
+    return imp.impact.toUpperCase() + " IMPACT · " + role;
+  }
+  function espnTeamDepthUrl(abbr) {
+    const slug = (typeof espnAbbr === "function") ? espnAbbr(abbr) : String(abbr).toLowerCase();
+    return "https://www.espn.com/nba/team/depth/_/name/" + slug;   // verified live 2026-09-17 (human page, RotoWire-supplied)
+  }
 
   function render(filters) {
     const box = document.getElementById("injuryBoard");
@@ -252,29 +289,46 @@ const InjuryBoard = (function () {
 
     box.innerHTML = teams.map(team => {
       const list = byTeam[team].slice().sort((x, y) =>
-        (SEV_ORDER[x.sev] ?? 9) - (SEV_ORDER[y.sev] ?? 9) || new Date(y.updated || 0) - new Date(x.updated || 0));
+        (SEV_ORDER[x.sev] ?? 9) - (SEV_ORDER[y.sev] ?? 9) || IMPACT_ORDER[(impactFor(x) || {}).impact] - IMPACT_ORDER[(impactFor(y) || {}).impact]
+        || new Date(y.updated || 0) - new Date(x.updated || 0));
       return '<div class="board-team">' +
         '<div class="board-team-head"><b class="abbr">' + esc(team) + '</b>' +
-        '<span class="muted tiny">' + esc(list[0].teamName || "") + ' · ' + list.length + '</span></div>' +
-        list.map(r =>
-          '<div class="board-row sev-border-' + esc(r.sev) + '">' +
+        '<span class="muted tiny">' + esc(list[0].teamName || "") + ' · ' + list.length + '</span>' +
+        '<a class="tiny" href="' + espnTeamDepthUrl(team) + '" target="_blank" rel="noopener">ESPN depth chart ↗</a></div>' +
+        list.map(r => {
+          const imp = impactFor(r);
+          const listing = imp && imp.listing && imp.listing.count
+            ? '<div class="br-history tiny"><b>' + (imp.listing.count > 1 ? "Injury-listing cadence" : "Dated injury listings observed") + ' (ESPN roster feed, ' + imp.listing.count + ' listing' + (imp.listing.count > 1 ? "s" : "") + ' in ~9 months):</b> ' +
+              esc(imp.listing.dates.slice(-6).join(", ")) +
+              (imp.listing.source ? ' · <a href="' + esc(imp.listing.source) + '" target="_blank" rel="noopener">source JSON ↗</a>' : "") +
+              '<br><span class="muted">Cadence is how often the player appeared on a listing — not a medical history.</span></div>'
+            : "";
+          return '<div class="board-row sev-border-' + esc(r.sev) + '">' +
           '<div class="br-top"><span class="tag ' + esc(r.sev) + '">' + esc(r.sevLabel) + '</span>' +
           '<b class="br-player">' + esc(r.player) + '</b>' +
           (r.position ? '<span class="muted tiny">' + esc(r.position) + '</span>' : "") +
+          (imp ? '<span class="tag impact-' + esc(imp.impact) + '" title="' + esc(imp.notes.join(" ")) + '">' + esc(impactShort(imp)) + '</span>' : "") +
+          (imp && imp.exit ? '<span class="tag watch" title="Reported by a monitored account — not a league designation">IN-GAME EXIT (reported)</span>' : "") +
           (r.fantasyStatus ? '<span class="tag gtd" title="ESPN fantasy status">' + esc(r.fantasyStatus) + '</span>' : "") +
           '<span class="br-when tiny muted" title="' + esc(r.updated || "") + '">' + esc(ago(r.updated)) + '</span></div>' +
           '<div class="br-meta tiny muted">' +
           (r.bodyPart ? esc(r.bodyPart) + " · " : "") +
           (r.returnDate ? "est. return " + esc(r.returnDate) + " · " : "") +
-          "Role: unknown (not inferred from injury) · Medical severity: not assessed · ESPN: " + esc(r.status) + (r.noteSource ? " · per " + esc(r.noteSource) : "") +
+          "Lineup impact: " + esc(imp ? imp.impactLabel : "not computed") +
+          (imp && imp.role.games ? " · role from " + imp.role.starts + "/" + imp.role.games + " collected box score(s)" + (imp.role.avgMinutes != null ? ", " + imp.role.avgMinutes + " min avg" : "") : "") +
+          (imp && imp.contract && imp.contract.salary != null ? " · " + esc(imp.contract.label) : "") +
+          " · Medical severity: not assessed · ESPN: " + esc(r.status) + (r.noteSource ? " · per " + esc(r.noteSource) : "") +
           '</div>' +
+          (imp ? '<div class="br-why tiny muted">' + esc(imp.notes[0] || "") + (imp.role.evidence.length ? ' · <a href="' + esc(imp.role.evidence[0]) + '" target="_blank" rel="noopener">box-score evidence ↗</a>' : "") + '</div>' : "") +
           (r.shortComment ? '<div class="br-comment">' + esc(r.shortComment) + '</div>' : "") +
+          listing +
           '<div class="br-links tiny">' +
           (r.playerUrl ? '<a href="' + esc(r.playerUrl) + '" target="_blank" rel="noopener">player page</a>' : "") +
           (r.teamUrl ? ' · <a href="' + esc(r.teamUrl) + '" target="_blank" rel="noopener">team injuries</a>' : "") +
           (r.officialUrl ? ' · <a href="' + esc(r.officialUrl) + '" target="_blank" rel="noopener">NBA report index (not row confirmation)</a>' : "") +
           (r.searchUrl ? ' · <a href="' + esc(r.searchUrl) + '" target="_blank" rel="noopener">search reporting</a>' : "") +
-          '</div></div>').join("") +
+          '</div></div>';
+        }).join("") +
         '</div>';
     }).join("");
   }
@@ -293,6 +347,8 @@ const InjuryBoard = (function () {
   return {
     check: check, normalize: normalize, diffAlerts: diffAlerts, render: render,
     fetchBoard: fetchBoard, resetSeen: resetSeen, getRows: () => rows, fp: fp,
+    impactFor: impactFor, setImpactContext: setImpactContext, impactShort: impactShort, depthUrl: espnTeamDepthUrl,
+    alertFor: alertFor,
     fingerprint: fp, getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, season: season, count: rows.length })
   };
 })();

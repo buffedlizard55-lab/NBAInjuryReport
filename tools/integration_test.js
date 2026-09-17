@@ -21,7 +21,7 @@ function check(name, cond, extra) {
 
 /* ---------------- 1. static wiring check: JS ids vs HTML ids ---------------- */
 const PAGES = {
-  "index.html": ["assets/js/data.js", "assets/js/alerts.js", "assets/js/wire.js", "assets/js/injuries.js", "assets/js/social.js", "assets/js/ingame.js", "assets/js/intelligence.js", "assets/js/app.js"],
+  "index.html": ["assets/js/data.js", "assets/js/alerts.js", "assets/js/wire.js", "assets/js/role.js", "assets/js/injuries.js", "assets/js/social.js", "assets/js/ingame.js", "assets/js/intelligence.js", "assets/js/app.js"],
   "reporters.html": ["assets/js/data.js", "assets/js/alerts.js", "assets/js/intelligence.js", "assets/js/reporters.js"]
 };
 console.log("== wiring: element ids referenced in JS exist in the HTML that loads it ==");
@@ -41,8 +41,8 @@ for (const [page, scripts] of Object.entries(PAGES)) {
 {
   const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
   const order = [...html.matchAll(/<script src="assets\/js\/([a-z]+\.js)"><\/script>/g)].map(m => m[1]);
-  check("index.html script order is data -> alerts -> wire -> injuries -> social -> ingame -> app",
-    order.join(",") === "data.js,alerts.js,wire.js,injuries.js,social.js,ingame.js,intelligence.js,app.js", order.join(","));
+  check("index.html script order is data -> alerts -> wire -> role -> injuries -> social -> ingame -> intelligence -> app",
+    order.join(",") === "data.js,alerts.js,wire.js,role.js,injuries.js,social.js,ingame.js,intelligence.js,app.js", order.join(","));
   check("sources.html loads data.js + alerts.js", /src="assets\/js\/data\.js"/.test(fs.readFileSync(path.join(ROOT, "sources.html"), "utf8")));
   check(".nojekyll present (GitHub Pages doesn't preprocess assets)", fs.existsSync(path.join(ROOT, ".nojekyll")));
 }

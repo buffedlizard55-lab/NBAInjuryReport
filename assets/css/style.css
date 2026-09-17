@@ -275,3 +275,13 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 #historySearch { max-width: 420px; margin-bottom: 14px; }
 #playerHistory .table-wrap { max-height: 520px; overflow: auto; }
 #autoScorecard details { margin: 16px 0; }
+
+/* ===== Lineup-impact tags (role.js). Impact is a lineup statement, never a medical grade. ===== */
+.tag.impact-high { background: rgba(255,93,93,.16); color: #ffa8a8; border: 1px solid rgba(255,93,93,.4); }
+.tag.impact-medium { background: rgba(255,190,61,.14); color: #ffd97a; border: 1px solid rgba(255,190,61,.35); }
+.tag.impact-low { background: rgba(61,220,132,.12); color: #8ff0b6; border: 1px solid rgba(61,220,132,.3); }
+.tag.impact-unknown { background: rgba(148,163,184,.14); color: #b6c2d6; border: 1px dashed rgba(148,163,184,.5); }
+.tag.watch { background: rgba(255,138,61,.16); color: #ffb27a; border: 1px solid rgba(255,138,61,.45); }
+.br-why { margin-top: 3px; color: var(--muted); }
+.br-history { margin-top: 5px; padding: 6px 8px; border: 1px dashed var(--line); border-radius: 7px; color: var(--muted); }
+.board-team-head a { margin-left: auto; }

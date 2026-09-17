@@ -54,8 +54,47 @@ global.localStorage = {
 };
 global.document = { getElementById: () => null, querySelectorAll: () => [], createElement: () => ({ style: {} }), addEventListener() { } };
 global.window = global;
-const moduleSrc = ["assets/js/data.js", "assets/js/alerts.js", "assets/js/injuries.js", "assets/js/social.js"].map(f => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n;\n");
-const B = new Function(moduleSrc + "\n;return { InjuryBoard, Social, AlertEngine };")();
+const moduleSrc = ["assets/js/data.js", "assets/js/role.js", "assets/js/alerts.js", "assets/js/injuries.js", "assets/js/social.js"].map(f => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n;\n");
+const B = new Function(moduleSrc + "\n;return { InjuryBoard, Social, AlertEngine, LineupImpact };")();
+
+/* Same evidence files the dashboard reads, so a snapshot row and a rendered row cannot disagree
+ * about lineup impact. Missing/stale file => no context => the impact module answers "unknown". */
+function impactContextFor() {
+  /* prefer the writable root (tests point NBA_WATCH_OUT at a scratch dir), fall back to the repo */
+  const dir = [OUT_ROOT, ROOT].find(d => fs.existsSync(path.join(d, "data/live/context.json")));
+  if (!dir) return null;
+  try {
+    const ctx = JSON.parse(fs.readFileSync(path.join(dir, "data/live/context.json"), "utf8"));
+    let exits = {};
+    try { exits = JSON.parse(fs.readFileSync(path.join(dir, "data/live/intelligence.json"), "utf8")).exits || {}; } catch (e) { }
+    return { checkedAt: ctx.checkedAt || null, rosters: ctx.rosters || {}, roles: ctx.roles || [], roleStats: ctx.roleStats || {}, exits };
+  } catch (e) { return null; }
+}
+
+/* Flatten the impact object into stable public fields so the archive is readable without the
+ * browser module present, and drop the internal cache. Impact is a LINEUP statement only. */
+function annotateImpacts(rows) {
+  if (!B.InjuryBoard.impactFor) return rows;
+  for (const r of rows) {
+    const a = B.InjuryBoard.impactFor(r);
+    if (a) {
+      r.impact = a.impact;                       // high | medium | low | unknown
+      r.impactLabel = a.impactLabel;
+      r.roleTier = a.role.tier;
+      r.roleGames = a.role.games; r.roleStarts = a.role.starts; r.roleAvgMinutes = a.role.avgMinutes;
+      r.roleEvidence = a.role.evidence || [];
+      r.listingCount = a.listing.count; r.listingDates = a.listing.dates.slice(-8);
+      r.listingSource = a.listing.source || null;
+      if (a.contract && a.contract.salary != null) { r.salaryCurrent = a.contract.salary; r.salarySeason = a.contract.season; }
+      if (a.exit) r.inGameExitReported = { at: a.exit.at, by: a.exit.by, url: a.exit.url, status: a.exit.status };
+      r.impactNotes = a.notes;
+    } else {
+      r.impact = "unknown"; r.impactLabel = "IMPACT UNKNOWN — impact module or evidence unavailable";
+    }
+    delete r._impact; delete r._impactKey; delete r._impactCtx;
+  }
+  return rows;
+}
 
 async function getJson(url) {
   const ctrl = new AbortController();
@@ -113,7 +152,13 @@ function recordHistory(rows, posts, news) {
   const file = path.join(dir, day + ".jsonl");
   const line = JSON.stringify({
     ts: new Date().toISOString(),
-    injuries: rows.map(r => ({ id: r.id, player: r.player, team: r.team, playerId: r.playerId, status: r.status, sev: r.sev, fp: r.fp, updated: r.updated, url: r.teamUrl, reason: r.bodyPart })),
+    injuries: rows.map(r => ({
+      id: r.id, player: r.player, team: r.team, playerId: r.playerId, status: r.status, sev: r.sev, fp: r.fp,
+      updated: r.updated, url: r.teamUrl, reason: r.bodyPart,
+      /* lineup impact is an OBSERVATION about rotation role, never a medical severity claim */
+      impact: r.impact || "unknown", impactLabel: r.impactLabel || null, roleTier: r.roleTier || "unknown",
+      roleGames: r.roleGames ?? 0, roleStarts: r.roleStarts ?? 0, listingCount: r.listingCount ?? 0
+    })),
     posts: posts.map(p => ({ uri: p.uri, handle: p.handle, createdAt: p.createdAt, sev: p.sev, inGameWatch: p.inGameWatch, text: p.text, url: p.url })),
     news: news.map(n => ({ id: n.id, ts: n.ts, sev: n.sev, title: n.title, url: n.url }))
   });
@@ -176,6 +221,8 @@ function recordHistory(rows, posts, news) {
     seasonRaw = (payload && payload.season) || null;
     season = (seasonRaw && (seasonRaw.displayName || seasonRaw.name)) || null;
     rows = B.InjuryBoard.normalize(payload);          // identical to the browser path
+    if (B.InjuryBoard.setImpactContext) B.InjuryBoard.setImpactContext(impactContextFor());
+    annotateImpacts(rows);
     out.injuries = { season, seasonRaw, rows, blocks: (payload.injuries || []).length };
   } catch (e) {
     out.errors.injuries = e.message;

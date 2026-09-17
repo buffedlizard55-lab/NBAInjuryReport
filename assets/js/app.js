@@ -126,7 +126,10 @@ const App = (() => {
             ts: r.updated || new Date().toISOString(),
             sev: r.sev, sevLabel: r.sevLabel, layer: "espn-board",
             text: `${r.player} (${r.team}${r.position ? ", " + r.position : ""}) — ${r.status}`,
-            detail: [r.shortComment, r.bodyPart ? "injury: " + r.bodyPart : "", r.returnDate ? "est. return " + r.returnDate : ""].filter(Boolean).join(" · "),
+            /* lineup impact rides along with the listing it was computed from, so the wire never
+             * shows a bare "Out" without saying whether it removes a starter or a depth player */
+            detail: [r.shortComment, r.bodyPart ? "injury: " + r.bodyPart : "", r.returnDate ? "est. return " + r.returnDate : "",
+              typeof InjuryBoard !== "undefined" && InjuryBoard.impactFor ? LineupImpact.summaryText(InjuryBoard.impactFor(r)) : ""].filter(Boolean).join(" · "),
             url: r.teamUrl, extraUrl: r.playerUrl, team: r.team, player: r.player,
             source: "ESPN injury board" + (r.fantasyStatus ? " · " + r.fantasyStatus : "")
           });

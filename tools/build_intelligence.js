@@ -72,7 +72,17 @@ function build(snapshot, official, context, prior = {}, now = new Date().toISOSt
     const s = scores[c.handle] ||= { handle: c.handle, name: c.name, observed: 0, corroborated: 0, conflicts: 0, pending: 0, accuracy: null };
     s.observed++; s[c.outcome === 'corroborated' ? 'corroborated' : c.outcome === 'conflict-review' ? 'conflicts' : 'pending']++;
   }
-  return { generated: now, inputGenerated: snapshot.generated, inputFresh: valid, claims, scores: Object.values(scores), baseline, history: history.slice(-10000),
+  /* In-game exit signals per player, for the lineup-impact layer. A post is REPORTED evidence,
+   * never a league designation, and only an exactly resolved player is attached. */
+  const exits = {};
+  for (const c of Object.values(claims)) {
+    if (!c.inGameWatch || !c.player) continue;
+    const key = String(c.playerId || c.player);
+    const at = Date.parse(c.postedAt || c.firstObservedAt || 0) || 0;
+    if (!exits[key] || at > (exits[key].at || 0)) exits[key] = { player: c.player, playerId: c.playerId || null, team: c.team || null, name: c.name, handle: c.handle, postedAt: c.postedAt, url: c.url, text: String(c.text || '').slice(0, 240), at, status: 'reported-unconfirmed' };
+  }
+  return { generated: now, inputGenerated: snapshot.generated, inputFresh: valid, claims, scores: Object.values(scores), baseline, history: history.slice(-10000), exits,
+    exitNote: 'exits maps a player to the most recent monitored-post in-game exit signal. Unconfirmed by design: a social post is not an official designation.',
     note: 'Automatic evidence ledger. No historical accuracy or global first-to-report score is asserted. Conflicts require review, not a wrong-report penalty.' };
 }
 if (require.main === module) {
