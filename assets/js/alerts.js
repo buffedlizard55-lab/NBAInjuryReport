@@ -6,6 +6,7 @@ const AlertEngine = (() => {
   const LS_SOUND = "nba-alerts-sound-on";
   const LS_LOG = "nba-alerts-log-v1";
   let audioCtx = null;
+  let lastChimeAt = 0;
   let soundOn = (localStorage.getItem(LS_SOUND) ?? "on") === "on";
 
   function ctx() {
@@ -58,6 +59,7 @@ const AlertEngine = (() => {
 
   function setSoundOn(v) {
     soundOn = !!v;
+    if (soundOn) ctx(); // user gesture unlocks browser audio
     localStorage.setItem(LS_SOUND, soundOn ? "on" : "off");
     return soundOn;
   }
@@ -111,16 +113,30 @@ const AlertEngine = (() => {
 
   /* Main entry: fire an alert for a wire item. Respects sound toggle. */
   function fire(item) {
+    // One policy for ALL producers. A filter never silently drops the audit log.
+    const filters = typeof App !== "undefined" && App.getFilters ? App.getFilters() : null;
+    const allowed = !filters || (filters.sevs?.[item.sev] !== false &&
+      (!filters.team || filters.team === "ALL" || item.team === filters.team));
+    const fresh = !item.ts || isFresh(item.ts, 30 * 60 * 1000);
     const label = `[${item.sevLabel}] ${item.title}`;
+    if (item.alertEligible === false || !allowed || !fresh) {
+      log("(silent: evidence, age or filter) " + label, item.url); renderLog(); return false;
+    }
     log("🚨 " + label, item.url);
     renderLog();
-    if (soundOn) playChime();
-    notify("NBA Injury Alert — " + item.sevLabel, item.title, item.url);
+    if (soundOn && Date.now() - lastChimeAt > 1500) { playChime(); lastChimeAt = Date.now(); }
+    notify("NBA Injury Alert — " + item.sevLabel, [item.title, item.detail].filter(Boolean).join(" — "), item.url);
+    return true;
+  }
+
+  function isFresh(iso, maxAge = 20 * 60 * 1000) {
+    const age = Date.now() - Date.parse(iso);
+    return Number.isFinite(age) && age >= -60000 && age <= maxAge;
   }
 
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
-  return { playChime, testSound, setSoundOn, isSoundOn, notifPermission, requestNotifPermission, notify, log, clearLog, renderLog, getLog, fire, escapeHtml };
+  return { isFresh, playChime, testSound, setSoundOn, isSoundOn, notifPermission, requestNotifPermission, notify, log, clearLog, renderLog, getLog, fire, escapeHtml };
 })();

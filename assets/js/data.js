@@ -154,12 +154,13 @@ const TEAM_ALIASES = {
 
 /* Injury-signal classifier patterns (applied to headline + description). Order = severity. */
 const SIGNALS = [
-  { sev: "out", label: "OUT", re: /\b(ruled out|ruled?[\w'’]* [^.?!]{0,40}?\bout\b|sits? out|out (vs\.?|for|tonight|tomorrow|until|at least)|out for (the )?(season|year|playoffs)|out indefinitely|will miss|to miss|sidelined|undergo(ing)? .*surgery|season-ending|torn (acl|mcl|meniscus|achilles|labrum|ligament)|ruptured? (achilles|acl)|fracture[ds]?|surgery)\b/i },
+  { sev: "mention", label: "AMBIGUOUS — REVIEW", re: /\b(not ruled out|has not been ruled out|not out|no longer questionable)\b/i },
+  { sev: "out", label: "OUT", re: /\b(ruled out|ruled?[\w'’]* [^.?!]{0,40}?\bout\b|sits? out|out (vs\.?|for|tonight|tomorrow|until|at least)|out for (the )?(season|year|playoffs)|out indefinitely|will miss|to miss|sidelined|season-ending)\b/i },
   { sev: "doubtful", label: "DOUBTFUL", re: /\bdoubtful\b/i },
   { sev: "questionable", label: "QUESTIONABLE", re: /\b(questionable|game-?time decision|\bgtd\b|day-?to-?day)\b/i },
   { sev: "probable", label: "PROBABLE", re: /\bprobable\b/i },
   { sev: "return", label: "RETURN / GOOD NEWS", re: /\b(cleared|upgraded|will play|expected to play|available|return(s|ing)?|activated|cleared to return|no longer|removed from .*injury)\b/i },
-  { sev: "mention", label: "INJURY MENTION", re: /\b(injur(y|ed|ies|ing)|hurt|sprain|strain|soreness|contusion|concussion|illness|knee|ankle|hamstring|calf|groin|back spasms|shoulder|wrist|elbow|hip|foot|toe|finger|hand|neck|oblique|achilles|acl|mcl|meniscus|labrum|hernia|migraine|protocol)\b/i }
+  { sev: "mention", label: "INJURY MENTION", re: /\b(injur(y|ed|ies|ing)|hurt|surgery|fracture|torn|sprain|strain|soreness|contusion|concussion|illness|knee|ankle|hamstring|calf|groin|back spasms|shoulder|wrist|elbow|hip|foot|toe|finger|hand|neck|oblique|achilles|acl|mcl|meniscus|labrum|hernia|migraine|protocol)\b/i }
 ];
 
 /* =====================================================================================
@@ -242,13 +243,14 @@ const BSKY_REPORTERS = [
  * "We talk Spurs locker room culture" (in-game watch) and a "clean-up procedure" post labelled
  * RETURN. Each rung below requires an explicit phrase, so labels stay explainable and testable. */
 const SOCIAL_SEVERITY = [
-  { sev: "out", re: /(ruled out|officially out|out for (the )?(game|season|year|remainder)|out (tonight|tomorrow|indefinitely|vs\.?)|out with (a|an|his|her|left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion)|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|season-?ending|underwent [^.?!]{0,40}surgery|had surgery)/i },
+  { sev: "out", re: /(ruled out|officially out|out for (the )?(game|season|year|remainder)|out (tonight|tomorrow|indefinitely|vs\.?)|out with (a|an|his|her|left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion)|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|season-?ending)/i },
   { sev: "doubtful", re: /\bdoubtful\b/i },
   { sev: "questionable", re: /(questionable|game-?time decision|\bgtd\b|day-?to-?day)/i },
   { sev: "probable", re: /\bprobable\b/i },
   { sev: "return", re: /(cleared to (return|play)|upgraded to|will play|active (tonight|for)|available (tonight|for|to play)|return(s|ing)? to (play|the lineup|action))/i }
 ];
 function classifySocialSeverity(text) {
+  if (/\b(not ruled out|has not been ruled out|not out|no longer questionable)\b/i.test(text)) return { sev: "mention" };
   for (const r of SOCIAL_SEVERITY) if (r.re.test(text)) return { sev: r.sev };
   return { sev: "mention" };
 }
@@ -260,7 +262,7 @@ function classifySocialSeverity(text) {
  *         inactive (confirmed but not usable on X), retired (historical only). */
 const REPORTERS = [
   // ---- Tier 1: lead NBA insiders ----
-  { name: "Shams Charania", handle: "ShamsCharania", outlet: "ESPN", role: "Senior NBA Insider" , bsky: "johnhollinger.bsky.social", tier: 1, beat: null, status: "verified-handle", verifyLabel: "ESPN's Shams Charania (ESPN 2026 buzz live blog) + Basketball Monster source links", verifyUrl: "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason", notes: "Replaced Wojnarowski as ESPN's lead NBA insider (Oct 2024). First to report many injuries/transactions." },
+  { name: "Shams Charania", handle: "ShamsCharania", outlet: "ESPN", role: "Senior NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "ESPN's Shams Charania (ESPN 2026 buzz live blog) + Basketball Monster source links", verifyUrl: "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason", notes: "Replaced Wojnarowski as ESPN's lead NBA insider (Oct 2024). First to report many injuries/transactions." },
   { name: "Chris Haynes", handle: "ChrisBHaynes", outlet: "NBA on Prime Video", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Front Office Sports: Haynes joins Amazon Prime NBA team; Sotwe profile @ChrisBHaynes", verifyUrl: "https://frontofficesports.com/chris-haynes-marcus-thompson-amazon-prime-nba-team/", notes: "Previously ESPN / Yahoo Sports / TNT / Bleacher Report." },
   { name: "Marc Stein", handle: "TheSteinLine", outlet: "The Stein Line (Substack)", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Substack author sameAs twitter.com/TheSteinLine; co-host #thisleague UNCUT", verifyUrl: "https://marcstein.substack.com/p/debut-episode-of-thisleague-uncut", notes: "Covering the NBA since 1994; ex-ESPN, ex-New York Times." },
   { name: "Jake Fischer", handle: "JakeLFischer", outlet: "Yahoo Sports", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Basketball Monster source link twitter.com/JakeLFischer; Tier-1 in reporter-rankings", verifyUrl: "https://basketballmonster.com/playernews.aspx", notes: "Listed Tier 1 alongside Shams/Stein/Haynes in community reporter rankings." },

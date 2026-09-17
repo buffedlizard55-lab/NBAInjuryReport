@@ -61,6 +61,7 @@ const Social = (function () {
 
   function classifyPost(text) {
     const t = String(text || "");
+    if (/\b(not ruled out|has not been ruled out|not out|no longer questionable)\b/i.test(t)) return { sev: "mention", sevLabel: "AMBIGUOUS — REVIEW", kind: "mention" };
     if (!GATE_RE.test(t) && !WATCH_RE.test(t)) return null;
 
     /* RULE: an injury signal requires injury VOCABULARY, or in-game exit language.
@@ -77,7 +78,7 @@ const Social = (function () {
      * post is not a league designation and the UI must never imply that it is. */
     if (isWatch) {
       const ord = (typeof classifySocialSeverity === "function") ? classifySocialSeverity(t) : { sev: "questionable" };
-      const escalated = ord.sev === "out" || ord.sev === "doubtful";
+      const escalated = ord.sev === "out";
       return {
         sev: escalated ? ord.sev : "questionable",
         sevLabel: escalated ? "OUT FOR THE GAME (in-game, social report)" : "⚠ IN-GAME EXIT WATCH (social, unconfirmed)",
@@ -163,16 +164,21 @@ const Social = (function () {
     const list = feedAccounts();
     const got = [];
     const status = {};
-    for (const acct of list) {
+    // Bounded parallelism: an unavailable account cannot delay all remaining accounts.
+    let cursor = 0;
+    await Promise.all(Array.from({ length: Math.min(4, list.length) }, async () => {
+      while (cursor < list.length) {
+      const acct = list[cursor++];
       try {
-        const data = await getJSON(ENDPOINTS.bskyAuthorFeed + encodeURIComponent(acct.handle) + "&limit=20&filter=posts_no_replies", 12000);
+        const data = await getJSON(ENDPOINTS.bskyAuthorFeed + encodeURIComponent(acct.handle) + "&limit=50", 12000);
         const mine = normalizeFeed(data, acct);
         status[acct.handle] = { ok: true, count: mine.length, name: acct.name, kind: acct.kind, team: acct.team };
         got.push.apply(got, mine);
       } catch (e) {
         status[acct.handle] = { ok: false, error: e.message, name: acct.name, kind: acct.kind, team: acct.team };
       }
-    }
+      }
+    }));
     /* defensive de-duplication: one post must never be counted (or alerted) twice */
     const byUri = new Map();
     for (const p of got) if (!byUri.has(p.uri)) byUri.set(p.uri, p);
@@ -187,7 +193,9 @@ const Social = (function () {
   async function fetchSnapshot() {
     const snap = await getJSON(ENDPOINTS.socialSnapshot, 10000);
     if (!snap || !Array.isArray(snap.posts)) throw new Error("snapshot has no posts");
-    const status = {};
+    if (snap.errors?.social) throw new Error("collector: " + snap.errors.social);
+    if (!AlertEngine.isFresh(snap.generated)) throw new Error("stale social snapshot: " + snap.generated);
+    const status = Object.assign({}, snap.social?.accounts || {});
     for (const row of (snap.accounts || [])) {
       status[row.handle] = { ok: !!row.ok, count: row.count || 0, error: row.error || null, name: row.name, kind: row.kind, team: row.team || null };
     }
@@ -219,7 +227,8 @@ const Social = (function () {
 
   function checkAlerts(list, isFirstLoad) {
     const seen = seenSet();
-    const firstEver = seen.size === 0;
+    const firstEver = LS.get("nba-social-primed", "0") !== "1";
+    LS.set("nba-social-primed", "1");
     const fresh = [];
     for (const p of list) {
       if (seen.has(p.uri)) continue;
@@ -230,15 +239,19 @@ const Social = (function () {
     if (isFirstLoad || firstEver) return { alerts: [], fresh: fresh.length, first: true };
     const alerts = fresh
       .filter(p => p.inGameWatch || ALERT_SEV[p.sev])
-      .map(p => ({
+      .map(p => {
+        const player = typeof Intelligence !== "undefined" ? Intelligence.resolveText(p.text) : null;
+        return {
         kind: p.inGameWatch ? "social-ingame" : "social",
         sev: p.sev, sevLabel: p.sevLabel,
-        title: (p.inGameWatch ? "IN-GAME EXIT (unconfirmed) — " : "") + p.name + (p.team ? " (" + p.team + ")" : ""),
+        alertEligible: !!player && p.verified === true && AlertEngine.isFresh(p.createdAt, 30 * 60 * 1000),
+        team: player?.team || null,
+        title: p.text.slice(0, 240) + " — " + (p.inGameWatch ? "IN-GAME EXIT (unconfirmed) — " : "") + p.name + (p.team ? " (" + p.team + ")" : ""),
         detail: p.text,
         url: p.url,
         source: "Bluesky · @" + p.handle + (p.outlet ? " · " + p.outlet : ""),
         ts: p.createdAt
-      }));
+      }; });
     return { alerts: alerts, fresh: fresh.length, first: false };
   }
 
@@ -279,7 +292,7 @@ const Social = (function () {
     el.innerHTML = 'via <b>' + esc(label) + '</b>' + (isRelayOn() ? ' <span class="tag warn">relay</span>' : '') +
       ' · accounts reachable <b>' + ok + '/' + all.length + '</b>' +
       (fetchedAt ? ' · ' + esc(ago(fetchedAt)) : "") +
-      (path === "ci-snapshot" ? ' <span class="muted tiny">(direct access blocked from this browser — the CI snapshot is same-origin, so it always works)</span>' : "");
+      (path === "ci-snapshot" ? ' <span class="muted tiny">(direct access blocked from this browser — the CI snapshot is same-origin, but can be stale or unavailable)</span>' : "");
   }
 
   function renderDetail() {
@@ -328,7 +341,7 @@ const Social = (function () {
   /* ---------- diagnostics: what actually happened in THIS browser ---------- */
 
   async function testFeeds() {
-    const out = document.getElementById("testFeeds");
+    const out = document.getElementById("feedDiagnostics");
     if (out) out.innerHTML = "testing…";
     const first = feedAccounts()[0] || { handle: "nba.com" };
     const lines = [];
@@ -353,8 +366,8 @@ const Social = (function () {
 
   async function check(isFirstLoad, force) {
     const res = await fetchAll();
-    posts = res.posts; accounts = res.accounts; fetchedAt = res.fetchedAt; path = res.path; error = res.error;
-    const diff = checkAlerts(posts, !!isFirstLoad);
+    if (!res.error) posts = res.posts; accounts = res.accounts; fetchedAt = res.fetchedAt; path = res.path; error = res.error;
+    const diff = error ? { alerts: [] } : checkAlerts(posts, !!isFirstLoad);
     if (!isFirstLoad && diff.alerts.length && typeof AlertEngine !== "undefined") {
       for (const a of diff.alerts) AlertEngine.fire(a);
       AlertEngine.renderLog();

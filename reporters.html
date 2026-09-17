@@ -11,7 +11,7 @@
 <header class="site-header">
   <div class="nav-inner">
     <div class="brand">🏀 NBA <span>Injury Alert System</span></div>
-    <span class="live-dot"><i></i>VERIFIED DIRECTORY</span>
+    <span class="live-dot"><i></i>SOURCE DIRECTORY</span>
     <nav class="links">
       <a href="index.html">Dashboard</a>
       <a href="reporters.html" class="active">Reporters &amp; Scorecard</a>
@@ -22,7 +22,7 @@
 
 <div class="wrap">
   <section class="hero">
-    <h1>Verified reporters, insiders &amp; beat writers</h1>
+    <h1>Reporter directory &amp; evidence ledger</h1>
     <p>The second verification layer: the people who break or confirm injury news — often <i>before</i> the official designation.
       This page keeps two identity layers apart, because they have different evidence quality:
       <b>X handles</b> (verified 2026-09-17 in the first pass, each with a link) and
@@ -48,6 +48,13 @@
       <li><b>Kevin O'Connor is @KevinOConnor at Yahoo Sports</b> (not @KevinOConnorNBA, not The Ringer).</li>
     </ul>
   </div>
+
+  <section class="card" style="margin-top:16px">
+    <h2>Automatic forward collection</h2>
+    <p class="muted small">No manual entry is required. One-player, explicit claims can be compared with a later official designation for the same game date within four hours. In-game exits and questionable-to-return reports need game-specific outcomes and remain pending. A later change in status is not proof a reporter was wrong.</p>
+    <div id="autoScorecard">Loading automated evidence…</div>
+  </section>
+  <div class="callout warn"><b>Directory verification is not report verification.</b> Legacy evidence and tiers below are historical curation, not measured accuracy or proof of current in-arena attendance. Team-account coverage is incomplete. No source is promised to cover every game. Recheck each linked identity before relying on it.</div>
 
   <!-- ============ BLUESKY LAYER ============ -->
   <section class="card">
@@ -115,11 +122,11 @@
         search endpoint is 403 without auth — so this project scores calls <b>forward</b>, with the post URL as evidence.
         The free GitHub Actions poller (<a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/actions" target="_blank" rel="noopener">actions ↗</a>)
         appends a timestamped snapshot every run; once it has run for a while it becomes the <b>hard timestamp history</b> that
-        makes a "+3 first to report" claim defensible. Until then, treat "Firsts" as self-reported.</div>
+        records when this project first observed a post, not who was first globally. Until then, treat "Firsts" as self-reported.</div>
     </section>
 
     <section class="card" style="margin-top:16px">
-      <h2>🏆 Live scoreboard</h2>
+      <h2>Legacy local annotations (not automated accuracy)</h2>
       <p class="muted small">Computed from your logged calls (stored in this browser).</p>
       <div class="table-wrap">
         <table>
@@ -136,7 +143,7 @@
   </div>
 
   <section class="card" style="margin-top:16px">
-    <h2>📝 Log a reporter's call</h2>
+    <h2>Optional legacy annotation tool — not needed for collection</h2>
     <p class="muted small">When a tracked account posts injury news: log it, paste the post URL, then update the outcome once the official
       designation or game action confirms or contradicts it. Log pending calls immediately (0 pts) and re-log with the final outcome.</p>
     <form id="callForm">
@@ -214,6 +221,7 @@
 
 <script src="assets/js/data.js"></script>
 <script src="assets/js/alerts.js"></script>
+<script src="assets/js/intelligence.js"></script>
 <script src="assets/js/reporters.js"></script>
 </body>
 </html>

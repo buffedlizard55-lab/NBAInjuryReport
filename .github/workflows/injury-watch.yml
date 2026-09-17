@@ -24,7 +24,8 @@ on:
     branches: [main]
     paths:
       - "tools/poll_watch.js"
-      - "assets/js/data.js"
+      - "assets/js/**"
+      - "tools/**"
       - ".github/workflows/injury-watch.yml"
 
 permissions:
@@ -48,10 +49,27 @@ jobs:
       # Fast, offline sanity check of the poller itself (fixtures, no network): catches a broken
       # function reference before the real run wastes a schedule slot.
       - name: Poller self-test (offline, fixtures)
-        run: node tools/poll_fixture_test.js
+        run: |
+          node tools/smoke_test.js
+          node tools/integration_test.js
+          node tools/poll_fixture_test.js
+          node tools/regression_test.js
+          python3 -m unittest discover -s tools -p 'test_*.py'
+
+      - name: PDF extraction dependency
+        run: sudo apt-get update -qq && sudo apt-get install -y poppler-utils
+
+      - name: Discover and parse linked official reports
+        run: python3 tools/collect_official.py
+
+      - name: Collect rosters and live game roles
+        run: node tools/collect_context.js
 
       - name: Poll every free source
         run: node tools/poll_watch.js
+
+      - name: Build automatic claim ledger and player history
+        run: node tools/build_intelligence.js
 
       - name: Show what was collected
         run: |

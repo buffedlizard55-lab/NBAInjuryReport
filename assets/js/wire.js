@@ -14,6 +14,7 @@ const Wire = (function () {
   const MAX = 400;
 
   const LAYER_LABEL = {
+    "official-nba": { text: "NBA official", cls: "board", title: "League PDF designation with game date" },
     "espn-board": { text: "ESPN injury board", cls: "board", title: "structured listing: status + injury + estimated return" },
     "espn-news": { text: "ESPN news", cls: "news", title: "ESPN news headline, classified" },
     "social": { text: "Social (Bluesky)", cls: "social", title: "post from a verified account on the allow-list" },
