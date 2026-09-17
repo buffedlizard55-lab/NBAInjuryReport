@@ -1,4 +1,14 @@
-/* Reporters directory + forward-tracking reliability scorecard (localStorage). */
+/* Reporter directory + forward-tracking reliability scorecard.
+ *
+ * Two identity layers:
+ *   1. X handles (the legacy directory) — verified in the first session, kept with their evidence links.
+ *   2. Bluesky handles — verified live 2026-09-17 against the Bluesky public API
+ *      (Bluesky's own verification objects + Howard Beck's curated 150-member NBA writers list).
+ * Layer 2 is the one that can actually be polled automatically for free, so it feeds the live wire.
+ *
+ * Scoring is forward-collected and evidence-based: every logged call must carry the post URL.
+ * "First" is only claimable once the GitHub Actions poller has timestamp history (see NEXT_STEPS.md).
+ */
 "use strict";
 
 const Reporters = (() => {
@@ -23,12 +33,22 @@ const Reporters = (() => {
   function tierBadge(t) {
     return t === 1 ? `<span class="badge bad">TIER 1 · lead insider</span>`
       : t === 2 ? `<span class="badge warn">TIER 2 · national/beat</span>`
-      : `<span class="badge dim">TIER 3 · analyst/other</span>`;
+        : `<span class="badge dim">TIER 3 · analyst/other</span>`;
   }
-
   function xLink(r) {
     if (r.handle) return `<a href="https://x.com/${r.handle}" target="_blank" rel="noopener">@${r.handle} ↗</a>`;
     return `<a href="${xSearchUrl(r.name + " NBA")}" target="_blank" rel="noopener">search X ↗</a>`;
+  }
+  function bskyFor(name) {
+    const list = (typeof BSKY_REPORTERS !== "undefined") ? BSKY_REPORTERS : [];
+    return list.find(b => b.name.toLowerCase() === String(name).toLowerCase());
+  }
+  function bskyCell(r) {
+    const b = bskyFor(r.name);
+    if (!b) return `<span class="tiny muted">—</span>`;
+    return `<a href="https://bsky.app/profile/${b.handle}" target="_blank" rel="noopener">@${b.handle} ↗</a>` +
+      (b.bskyVerified ? `<br><span class="badge ok">Bluesky-verified</span>` : `<br><span class="badge warn">no verification object</span>`) +
+      `<br><span class="tiny muted"><a href="${b.evidence}" target="_blank" rel="noopener">evidence ↗</a></span>`;
   }
 
   function renderTable(filter) {
@@ -38,7 +58,7 @@ const Reporters = (() => {
     const rows = REPORTERS.filter(r =>
       (filter.tier === "ALL" || String(r.tier) === filter.tier) &&
       (filter.status === "ALL" || r.status === filter.status) &&
-      (!q || (r.name + " " + r.outlet + " " + r.role + " " + (r.handle || "")).toLowerCase().includes(q))
+      (!q || (r.name + " " + r.outlet + " " + r.role + " " + (r.handle || "") + " " + ((bskyFor(r.name) || {}).handle || "")).toLowerCase().includes(q))
     );
     const counts = document.getElementById("repCount");
     if (counts) counts.textContent = `${rows.length} of ${REPORTERS.length} shown`;
@@ -47,11 +67,34 @@ const Reporters = (() => {
       <td>${AlertEngine.escapeHtml(r.outlet)}${r.beat ? `<br><span class="team-chip">${r.beat}</span>` : ""}</td>
       <td>${tierBadge(r.tier)}</td>
       <td>${xLink(r)}</td>
+      <td>${bskyCell(r)}</td>
       <td>${statusBadge(r)}<br><a class="tiny" href="${r.verifyUrl}" target="_blank" rel="noopener">verification ↗</a></td>
       <td class="tiny muted">${AlertEngine.escapeHtml(r.notes || "")}</td>
       <td data-score-for="${AlertEngine.escapeHtml(r.name)}" class="tiny"><span class="muted">—</span></td>
     </tr>`).join("");
     paintScores();
+  }
+
+  /* ---- Bluesky allow-list table (the pollable layer) ---- */
+  function renderBsky() {
+    const el = document.getElementById("bskyTable");
+    if (!el) return;
+    const official = (typeof SOCIAL_ACCOUNTS !== "undefined") ? SOCIAL_ACCOUNTS : [];
+    const reps = (typeof BSKY_REPORTERS !== "undefined") ? BSKY_REPORTERS : [];
+    const rows = official.map(a => Object.assign({}, a, { kindLabel: a.kind === "official-league" ? "Official league" : a.kind === "official-team" ? ("Official team " + (a.team || "")) : a.kind === "outlet" ? "Outlet account" : "Stats site" }))
+      .concat(reps.map(r => ({ handle: r.handle, name: r.name, kindLabel: "Reporter · " + (r.outlet || "outlet unconfirmed"), team: r.team, bskyVerified: r.bskyVerified, verified: r.verified, url: r.evidence, feed: r.feed })));
+    el.innerHTML = rows.map(a => `<tr>
+      <td><b>${AlertEngine.escapeHtml(a.name)}</b><br><a class="tiny" href="${a.url}" target="_blank" rel="noopener">@${AlertEngine.escapeHtml(a.handle)} ↗</a></td>
+      <td class="small">${AlertEngine.escapeHtml(a.kindLabel)}${a.team ? ` <span class="team-chip">${a.team}</span>` : ""}</td>
+      <td>${a.bskyVerified ? '<span class="badge ok">Bluesky-verified</span>' : '<span class="badge warn">no verification object</span>'}</td>
+      <td>${a.feed ? '<span class="badge info">polled for alerts</span>' : '<span class="badge dim">evidence only</span>'}</td>
+      <td class="tiny muted">${AlertEngine.escapeHtml(a.verified)}</td>
+    </tr>`).join("");
+    const listEl = document.getElementById("bskyListInfo");
+    if (listEl && typeof BLUESKY_LIST_SOURCE !== "undefined") {
+      listEl.innerHTML = `Roster built from <a href="${BLUESKY_LIST_SOURCE.url}" target="_blank" rel="noopener">${AlertEngine.escapeHtml(BLUESKY_LIST_SOURCE.name)}</a>
+        (${BLUESKY_LIST_SOURCE.members} members, read live via the public API). ${AlertEngine.escapeHtml(BLUESKY_LIST_SOURCE.verified)}`;
+    }
   }
 
   /* --- Scorecard --- */
@@ -70,7 +113,8 @@ const Reporters = (() => {
       else if (c.outcome === "wrong" || c.outcome === "fabricated") s.wrong++;
     }
     return Object.entries(by).map(([reporter, s]) => ({
-      reporter, ...s, acc: (s.correct + s.wrong) ? (100 * s.correct / (s.correct + s.wrong)).toFixed(0) + "%" : "—"
+      reporter, n: s.n, pts: s.pts, firsts: s.firsts,
+      acc: (s.correct + s.wrong) ? (100 * s.correct / (s.correct + s.wrong)).toFixed(0) + "%" : "—"
     })).sort((a, b) => b.pts - a.pts);
   }
   function paintScores() {
@@ -85,15 +129,15 @@ const Reporters = (() => {
       sb.innerHTML = rows.length ? rows.map((s, i) =>
         `<tr><td>${i + 1}</td><td><b>${AlertEngine.escapeHtml(s.reporter)}</b></td><td>${s.pts}</td>
          <td>${s.n}</td><td>${s.acc}</td><td>${s.firsts}</td></tr>`).join("")
-        : `<tr><td colspan="6" class="muted">No calls logged yet. Use the form below the first time a tracked reporter posts injury news.</td></tr>`;
+        : `<tr><td colspan="6" class="muted">No calls logged yet. Log the first one when a tracked account posts injury news.</td></tr>`;
     }
     const log = document.getElementById("callsLog");
     if (log) {
       const calls = getCalls();
-      log.innerHTML = calls.length ? calls.slice(0, 50).map(c =>
+      log.innerHTML = calls.length ? calls.slice(0, 60).map(c =>
         `<div class="alert-entry"><time>${AlertEngine.escapeHtml(new Date(c.ts).toLocaleString())}</time>
          <b>${AlertEngine.escapeHtml(c.reporter)}</b> — ${AlertEngine.escapeHtml(c.player)}: ${AlertEngine.escapeHtml(c.claim)}
-         [${AlertEngine.escapeHtml(c.outcome)} · ${pointsFor(c.outcome)} pts]
+         [${AlertEngine.escapeHtml(c.outcome)} · ${pointsFor(c.outcome)} pts${c.platform ? " · " + AlertEngine.escapeHtml(c.platform) : ""}]
          ${c.url ? ` <a href="${AlertEngine.escapeHtml(c.url)}" target="_blank" rel="noopener">post ↗</a>` : ""}
          <button class="btn sm ghost" data-del="${c.id}" style="margin-left:8px">remove</button></div>`).join("")
         : `<div class="muted small">No logged calls yet.</div>`;
@@ -114,8 +158,15 @@ const Reporters = (() => {
   function buildForm() {
     const sel = document.getElementById("callReporter");
     if (!sel) return;
-    sel.innerHTML = REPORTERS.filter(r => r.status !== "retired")
+    const base = REPORTERS.filter(r => r.status !== "retired")
+      .map(r => ({ name: r.name, outlet: r.outlet }));
+    const extra = ((typeof BSKY_REPORTERS !== "undefined") ? BSKY_REPORTERS : [])
+      .filter(b => !base.some(x => x.name.toLowerCase() === b.name.toLowerCase()))
+      .map(b => ({ name: b.name, outlet: (b.outlet || "outlet unconfirmed") + " (Bluesky)" }));
+    sel.innerHTML = base.concat(extra)
+      .sort((a, b) => a.name.localeCompare(b.name))
       .map(r => `<option value="${AlertEngine.escapeHtml(r.name)}">${AlertEngine.escapeHtml(r.name)} — ${AlertEngine.escapeHtml(r.outlet)}</option>`).join("");
+
     document.getElementById("callForm").addEventListener("submit", ev => {
       ev.preventDefault();
       const calls = getCalls();
@@ -126,6 +177,7 @@ const Reporters = (() => {
         player: document.getElementById("callPlayer").value.trim(),
         claim: document.getElementById("callClaim").value.trim(),
         url: document.getElementById("callUrl").value.trim(),
+        platform: document.getElementById("callPlatform").value,
         outcome: document.getElementById("callOutcome").value
       });
       saveCalls(calls);
@@ -133,6 +185,7 @@ const Reporters = (() => {
       paintScores();
       AlertEngine.log(`📝 Scored call: ${calls[0].reporter} on ${calls[0].player} [${calls[0].outcome}]`, calls[0].url || null);
     });
+
     const exp = document.getElementById("exportCalls");
     if (exp) exp.addEventListener("click", () => {
       const blob = new Blob([JSON.stringify(getCalls(), null, 2)], { type: "application/json" });
@@ -154,7 +207,7 @@ const Reporters = (() => {
           try {
             const data = JSON.parse(rd.result);
             if (!Array.isArray(data)) throw new Error("not an array");
-            saveCalls(data.concat(getCalls()).slice(0, 1000));
+            saveCalls(data.concat(getCalls()).slice(0, 2000));
             paintScores();
             alert("Imported " + data.length + " calls.");
           } catch (e) { alert("Import failed: " + e.message); }
@@ -167,6 +220,7 @@ const Reporters = (() => {
   function init() {
     const filter = { tier: "ALL", status: "ALL", q: "" };
     renderTable(filter);
+    renderBsky();
     renderRubric();
     buildForm();
     paintScores();
@@ -178,7 +232,7 @@ const Reporters = (() => {
     if (q) q.addEventListener("input", () => { filter.q = q.value; renderTable(filter); });
   }
 
-  return { init };
+  return { init, scoreboard };
 })();
 
 document.addEventListener("DOMContentLoaded", () => Reporters.init());

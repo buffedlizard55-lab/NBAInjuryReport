@@ -1,0 +1,81 @@
+# Free server-side injury watcher (no API keys, no secrets, no cost on a public repo).
+#
+# What it does every run:
+#   1. Pulls the structured ESPN injury board (all 30 teams), the ESPN NBA news feed, and the
+#      verified Bluesky allow-list (official league + team accounts and verified reporters).
+#   2. Writes a same-origin snapshot to data/live/latest.json — this is what makes the browser
+#      social layer work even if the browser blocks cross-origin calls (CORS).
+#   3. Appends a timestamped line to data/history/YYYY-MM-DD.jsonl and updates
+#      data/history/firsts.json, which is the evidence trail for "who reported it first".
+#
+# HONEST LIMITS (also shown in the UI and sources.html):
+#   - GitHub documents that scheduled workflows are best-effort: runs can be delayed under load,
+#     and scheduled workflows are disabled after 60 days without repository activity.
+#   - The commit-back step uses the default GITHUB_TOKEN; if repository settings forbid it,
+#     the artifacts are still uploaded so nothing is lost.
+name: injury-watch
+
+on:
+  schedule:
+    # every 10 minutes (GitHub throttles heavily frequent crons on free runners)
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tools/poll_watch.js"
+      - "assets/js/data.js"
+      - ".github/workflows/injury-watch.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: injury-watch
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Poll every free source
+        run: node tools/poll_watch.js
+
+      - name: Show what was collected
+        run: |
+          node -e '
+            const s=require("./data/live/latest.json");
+            console.log("generated:", s.generated);
+            console.log("injury rows:", (s.injuries&&s.injuries.rows||[]).length, "season:", s.injuries&&s.injuries.season);
+            console.log("news items:", (s.news||[]).length, "social posts:", (s.posts||[]).length);
+            console.log("errors:", JSON.stringify(s.errors||{}));
+          '
+
+      - name: Commit the snapshot + history
+        run: |
+          git config user.name "injury-watch bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/live data/history
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+          else
+            git commit -m "injury-watch: snapshot $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push
+          fi
+
+      - name: Upload artifact (always, so data survives even if the commit is blocked)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: injury-watch-snapshot
+          path: |
+            data/live/latest.json
+            data/history/
+          retention-days: 14

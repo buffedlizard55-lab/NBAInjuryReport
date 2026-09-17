@@ -238,3 +238,30 @@ footer .wrap { padding-bottom: 20px; }
 .dnp-item .tag.questionable { border-color: var(--warn); }
 .dnp-item a { font-size: 0.8rem; }
 ol.tight li, ul.tight li { margin-bottom: 6px; }
+
+/* ===== Structured injury board ===== */
+.board { display: flex; flex-direction: column; gap: 8px; max-height: 620px; overflow-y: auto; padding-right: 4px; }
+.board-team { border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); }
+.board-team > summary {
+  cursor: pointer; padding: 9px 12px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+  font-size: 0.9rem; list-style: none;
+}
+.board-team > summary::-webkit-details-marker { display: none; }
+.board-team > summary::before { content: "▸"; color: var(--muted); }
+.board-team[open] > summary::before { content: "▾"; }
+.board-team[open] > summary { border-bottom: 1px solid var(--line); }
+.board-row { padding: 9px 12px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 3px; }
+.board-row:last-child { border-bottom: none; }
+.board-player { font-weight: 700; }
+.board-status { display: block; }
+.board-comment { color: var(--muted); font-size: 0.84rem; }
+
+/* ===== Social layer ===== */
+.social-feed { display: flex; flex-direction: column; gap: 8px; max-height: 460px; overflow-y: auto; margin-top: 10px; }
+.post {
+  border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  background: var(--card-2); border-radius: 8px; padding: 9px 12px; font-size: 0.88rem;
+}
+.post.watch { border-left-color: var(--warn); background: rgba(255,190,61,.06); }
+.post .wire-meta { margin-bottom: 4px; }
+.post .wire-links { margin-top: 5px; }

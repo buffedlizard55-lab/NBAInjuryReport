@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Verified NBA Reporters &amp; Reliability Scorecard — NBA Injury Alert System</title>
-<meta name="description" content="Line-by-line verified directory of NBA insiders, reporters and beat writers with X links, verification evidence, and a forward-tracking reliability scorecard.">
+<meta name="description" content="Line-by-line verified directory of NBA insiders, reporters and beat writers: X and Bluesky identity evidence, official-account list, and a forward-tracking reliability scorecard.">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -23,13 +23,17 @@
 <div class="wrap">
   <section class="hero">
     <h1>Verified reporters, insiders &amp; beat writers</h1>
-    <p>The second verification layer: people who break or confirm injury news — often <i>before</i> the official designation.
-      Every row was checked line-by-line on 2026-09-17. Handles are only shown when confirmed to belong to that person;
-      otherwise the directory says so honestly and gives you a search link instead.</p>
+    <p>The second verification layer: the people who break or confirm injury news — often <i>before</i> the official designation.
+      This page keeps two identity layers apart, because they have different evidence quality:
+      <b>X handles</b> (verified 2026-09-17 in the first pass, each with a link) and
+      <b>Bluesky handles</b> (re-verified live 2026-09-17 against the Bluesky public API — including Bluesky's own
+      verification objects and a curated 150-member NBA-writers list). Only the Bluesky layer can be polled automatically for free,
+      so it is what feeds the live wire.</p>
     <div class="pill-row">
-      <span class="pill ok">✓ 25 handles verified</span>
-      <span class="pill warn">4 outlet-verified (handle unconfirmed — none asserted)</span>
-      <span class="pill">5 community-listed (re-confirm)</span>
+      <span class="pill ok">✓ 25 X handles verified</span>
+      <span class="pill ok">✓ 8 Bluesky reporters verified today</span>
+      <span class="pill ok">✓ 7 official/outlet Bluesky accounts verified</span>
+      <span class="pill warn">4 outlet-verified · X handle unconfirmed (none asserted)</span>
       <span class="pill bad">1 retired · 1 inactive on X</span>
     </div>
   </section>
@@ -37,15 +41,39 @@
   <div class="callout warn"><b class="t">⚠ Read this before using the list for alerts</b>
     <ul class="tight" style="margin:6px 0 0; padding-left:18px">
       <li><b>Wojnarowski is retired</b> (Sept 2024) — historical reference only, never a live source.</li>
-      <li><b>John Hollinger quit X</b> — his bio says "I'm done here"; follow him on Bluesky/Threads instead.</li>
-      <li><b>Anthony Slater's 2026 bylines point to ESPN</b>, not The Athletic — confirm his current employer before citing.</li>
-      <li><b>David Aldridge may have two handles</b> (@davidaldridgedc active; Muck Rack lists @daldridgetnt) — confirm before citing.</li>
+      <li><b>John Hollinger quit X</b> and is <b>active on Bluesky</b> — verified 2026-09-17: his newest post indexed 01:28Z that day. Use the Bluesky column.</li>
+      <li><b>Shams Charania's Bluesky account is abandoned</b> — newest post 2024-02-13 (verified via the public API). Do not poll it; his news reaches this system through ESPN's structured injury comments instead.</li>
+      <li><b>Anthony Slater's 2026 bylines point to ESPN</b>, not The Athletic — confirm his employer before citing.</li>
+      <li><b>David Aldridge may have two X handles</b> (@davidaldridgedc active; Muck Rack lists @daldridgetnt) — confirm before citing.</li>
       <li><b>Kevin O'Connor is @KevinOConnor at Yahoo Sports</b> (not @KevinOConnorNBA, not The Ringer).</li>
     </ul>
   </div>
 
+  <!-- ============ BLUESKY LAYER ============ -->
   <section class="card">
-    <h2>Directory <span class="tiny muted" id="repCount"></span></h2>
+    <h2>🟦 Bluesky layer — the free, pollable allow-list <span class="tiny muted" id="bskyCount"></span></h2>
+    <p class="muted small">These are the accounts the live social layer actually reads, with the identity evidence for each one.
+      A <b>Bluesky-verified</b> badge means Bluesky's own verification object was present and valid when checked
+      (issuer <span class="kbd">bsky.app</span> or the outlet's own domain account, e.g. <span class="kbd">theathletic.com</span>) —
+      which is stronger evidence than an unverified handle. Accounts without it are kept, but labelled.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Account</th><th>Type</th><th>Identity evidence</th><th>Used for</th><th>Verification note (2026-09-17)</th></tr></thead>
+        <tbody id="bskyTable"></tbody>
+      </table>
+    </div>
+    <p class="tiny muted" id="bskyListInfo"></p>
+    <div class="callout info"><b class="t">ℹ Why an allow-list instead of keyword search?</b>
+      Verified 2026-09-17: the Bluesky public API answers <span class="kbd">getAuthorFeed</span> and
+      <span class="kbd">searchActorsTypeahead</span> with no key, but returns <b>HTTP 403</b> for
+      <span class="kbd">searchPosts</span> unauthenticated. So a keyword firehose is not available for free —
+      which is honestly a quality win: every automated social alert here comes from a named, verified account instead of an anonymous post.
+      The trade-off is documented: a first report from an account not on this list will not be caught by this layer.</div>
+  </section>
+
+  <!-- ============ MAIN DIRECTORY ============ -->
+  <section class="card" style="margin-top:16px">
+    <h2>Directory (X layer) <span class="tiny muted" id="repCount"></span></h2>
     <div class="filterbar">
       <select id="tierFilter" aria-label="Filter by tier">
         <option value="ALL">All tiers</option>
@@ -61,11 +89,11 @@
         <option value="inactive">inactive on X</option>
         <option value="retired">retired</option>
       </select>
-      <input type="text" id="repSearch" placeholder="Search name, outlet, role…" style="max-width:260px">
+      <input type="text" id="repSearch" placeholder="Search name, outlet, role…" style="max-width:240px">
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Reporter</th><th>Outlet / beat</th><th>Tier</th><th>X</th><th>Verification</th><th>Notes</th><th>Score</th></tr></thead>
+        <thead><tr><th>Reporter</th><th>Outlet / beat</th><th>Tier</th><th>X</th><th>Bluesky (pollable)</th><th>Verification</th><th>Notes</th><th>Score</th></tr></thead>
         <tbody id="reporterTable"></tbody>
       </table>
     </div>
@@ -82,11 +110,12 @@
           <tbody id="rubric"></tbody>
         </table>
       </div>
-      <div class="callout info"><b class="t">ℹ Why forward-tracking (for now)?</b>
-        Historical scoring needs bulk access to reporters' past posts. X's free tier has no usable read access and
-        historical search is paywalled/rate-limited, so automated back-testing is blocked until paid API access exists.
-        The honest path: score every new call going forward (below), and optionally backfill manually from
-        <a href="https://x.com/search-advanced" target="_blank" rel="noopener">X advanced search</a> with the post URL as evidence.</div>
+      <div class="callout info"><b class="t">ℹ Forward-tracking now, history later</b>
+        Automated historical back-testing needs bulk access to past posts. X's free tier has no usable read access and Bluesky's
+        search endpoint is 403 without auth — so this project scores calls <b>forward</b>, with the post URL as evidence.
+        The free GitHub Actions poller (<a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/actions" target="_blank" rel="noopener">actions ↗</a>)
+        appends a timestamped snapshot every run; once it has run for a while it becomes the <b>hard timestamp history</b> that
+        makes a "+3 first to report" claim defensible. Until then, treat "Firsts" as self-reported.</div>
     </section>
 
     <section class="card" style="margin-top:16px">
@@ -108,8 +137,8 @@
 
   <section class="card" style="margin-top:16px">
     <h2>📝 Log a reporter's call</h2>
-    <p class="muted small">When a tracked reporter posts injury news: log it, paste the post URL, then update the outcome once the
-      official designation or game action confirms or contradicts it. Log pending calls immediately (0 pts) and edit by re-logging with the final outcome.</p>
+    <p class="muted small">When a tracked account posts injury news: log it, paste the post URL, then update the outcome once the official
+      designation or game action confirms or contradicts it. Log pending calls immediately (0 pts) and re-log with the final outcome.</p>
     <form id="callForm">
       <div class="form-grid">
         <div>
@@ -125,8 +154,17 @@
           <input type="text" id="callClaim" required placeholder="What did they report?">
         </div>
         <div>
+          <label for="callPlatform">Where did they post it?</label>
+          <select id="callPlatform">
+            <option value="X">X / Twitter</option>
+            <option value="Bluesky">Bluesky</option>
+            <option value="TV/radio">TV / radio</option>
+            <option value="Article">Article / team site</option>
+          </select>
+        </div>
+        <div>
           <label for="callUrl">Post URL (evidence)</label>
-          <input type="url" id="callUrl" placeholder="https://x.com/.../status/...">
+          <input type="url" id="callUrl" placeholder="https://bsky.app/profile/… or https://x.com/…">
         </div>
         <div>
           <label for="callOutcome">Outcome</label>
@@ -144,22 +182,32 @@
     </form>
   </section>
 
-  <section class="card" style="margin-top:16px">
-    <h2>🧾 Logged calls</h2>
-    <div class="alert-log" id="callsLog" style="max-height:340px"></div>
-  </section>
+  <div class="grid two">
+    <section class="card" style="margin-top:16px">
+      <h2>🧾 Logged calls</h2>
+      <div class="alert-log" id="callsLog" style="max-height:340px"></div>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h2>🔔 Recent alerts <span class="tiny muted">from the dashboard (same browser)</span></h2>
+      <div class="alert-log" id="alertLog" style="max-height:340px"></div>
+    </section>
+  </div>
 
   <section class="card" style="margin-top:16px">
-    <h2>🔭 Beat-writer expansion (one per team) — how it gets filled in</h2>
-    <p class="muted small">The goal is a verified in-arena beat writer for all 30 clubs. Rows are only promoted to the directory above
-      after the same line-by-line check (outlet bio + confirmed handle). Until then, use the per-team X searches on the
-      <a href="index.html">dashboard</a>. Confirmed pipeline so far: DAL (MacMahon ✓, Afseth outlet-only), LAL (McMenamin ✓),
-      GSW (Slater ✓, Thompson ✓), MIA (Winderman ✓, Reynolds outlet-only), CHI (Johnson outlet-only), NYK/BKN (Begley ✓), NOP (Guillory ✓).</p>
+    <h2>🔭 Beat-writer expansion (one in-arena writer per team) — honest status</h2>
+    <p class="muted small">The goal is a verified in-arena writer for all 30 clubs. Rows are promoted here only after the same line-by-line
+      check (outlet bio + confirmed handle). Current confirmed pipeline: <b>DAL</b> MacMahon ✓ · <b>LAL</b> McMenamin ✓ ·
+      <b>GSW</b> Slater ✓, Thompson ✓ · <b>MIA</b> Winderman ✓ (Reynolds outlet-only) · <b>CHI</b> K.C. Johnson (outlet-only) ·
+      <b>NYK/BKN</b> Begley ✓ · <b>NOP</b> Guillory ✓ · <b>SAS</b> McDonald + Orsborn ✓ (Bluesky, verified today) ·
+      <b>UTA</b> Sarah Todd ✓ (Bluesky). <b>Remaining teams are NOT covered yet</b> — for those, use the per-team X and Bluesky search links on the
+      <a href="index.html">dashboard</a>. Adding a row without checking it is exactly the failure mode this project is trying to avoid.</p>
   </section>
 
   <footer>
     <div class="wrap" style="padding:0">
-      Directory verified 2026-09-17 · Handles re-confirmable via the X column · <a href="sources.html">Verification log</a>
+      X layer verified 2026-09-17 (first pass) · Bluesky layer verified live 2026-09-17 via the public API ·
+      <a href="sources.html">Verification log</a> · <a href="index.html">← back to dashboard</a>
     </div>
   </footer>
 </div>

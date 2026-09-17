@@ -2,71 +2,75 @@
 
 **Live site:** https://buffedlizard55-lab.github.io/NBAInjuryReport/
 
-A free, working **injury alert notification system for all players on all 30 NBA teams**,
-modeled on [Basketball Monster's player news](https://basketballmonster.com/playernews.aspx).
-No accounts, no API keys — it runs entirely in the browser on GitHub Pages.
+A free, working **injury alert notification system for all players on all 30 NBA teams**, modelled on
+[Basketball Monster's player news](https://basketballmonster.com/playernews.aspx). No accounts, no API keys,
+no paid tiers — it runs entirely in the browser on GitHub Pages, with a free server-side poller for history.
 
-## What it does
+## What it does now
 
 | Feature | Where | How |
 |---|---|---|
-| 💬 Live injury wire (chat-like, newest first) | `index.html` | ESPN NBA news API, classified OUT / DOUBTFUL / QUESTIONABLE / PROBABLE / RETURN / MENTION |
-| 🔔 Sound + browser-notification alerts | Alert center on `index.html` | Pleasant WebAudio chime (toggle + test button), Notification API, persisted alert log — every alert links its source |
-| 🏥 In-game injury monitor | Scoreboard card | ESPN game-summary API `boxscore.players[].statistics[].athletes[] {didNotPlay, reason, ejected}`; injury-reason DNPs alert in real time; non-injury reasons (e.g. directly-observed "COACH'S DECISION") excluded. **Structure-verified 2026-09-17, untested until 2026-10-03 tip-off** |
-| 📅 Live-game detection + failover | Scoreboard card | ESPN scoreboard API (primary) → NBA.com CDN JSON (defensive failover, unverified from build env) |
-| 🏟 Per-team cross-checks | Teams table | One click to ESPN team injuries, official NBA.com team site, X injury search |
-| 📡 Social pulse | Dashboard embeds | Free X timeline embeds (no key) for verified league/insider accounts, with link fallbacks (X rate-limits embeds — links always provided) |
-| 🧑‍💼 Verified reporter directory (36 rows) | `reporters.html` | Tiered insiders/beat writers; handles shown **only** when confirmed (25 verified); verification link per row |
-| 🏆 Forward-tracking reliability scorecard | `reporters.html` | Log calls with post-URL evidence → points/accuracy/firsts leaderboard, JSON export/import |
-| 📚 Line-by-line verification log | `sources.html` | 16 sources with evidence links, 12 irregularity flags, limitations, roadmap |
-| 🧪 Logic smoke tests | `tools/smoke_test.js` | 35 checks: classifier, 30-team integrity, in-game extraction incl. "COACH'S DECISION" exclusion |
+| 🏥 **Structured injury board — all 30 teams** | `index.html` | **New this session.** ESPN's structured injuries API gives status, injury type/side/location, game-time-decision flag, estimated return date and a sourced news line per player — no headline guessing |
+| 💬 Live injury wire (chat-style, merged) | `index.html` | One reverse-chronological stream fed by the injury board, ESPN news, the social layer and the in-game monitor |
+| 🔔 Alerts: pleasant chime (toggle + test), browser notifications, per-severity filters, review links | Alert center | Fires on **new** listings and **status changes**; already-seen items never re-alert; every alert links its source |
+| 📡 **Social layer — free and live** | `index.html` | **New this session.** Bluesky/AT-Protocol public API (no key) for a verified allow-list: official NBA account, verified team accounts, verified reporters. In-game exit language triggers an "out for the game / in-game exit watch" alert, labelled as a social report |
+| 🏥 In-game monitor | Scoreboard card | ESPN game summary: players not playing for injury reasons during live games (the observed non-injury value "COACH'S DECISION" is excluded). Structure-verified 2026-09-17, live-untested until 2026-10-03 |
+| 🧑‍💼 Verified directory: X **and** Bluesky | `reporters.html` | X layer from session 1 (25 verified handles) + Bluesky layer verified live this session (8 reporters, 7 official/outlet accounts) with per-row evidence links |
+| 🏆 Reliability scorecard | `reporters.html` | Forward-collected: log each call with its post URL → points, accuracy, firsts; JSON export/import. "First" becomes defensible once the poller has timestamp history |
+| 🕒 **Free server-side poller** | `.github/workflows/injury-watch.yml` | **New this session.** Every 10 min: snapshots injuries/news/social → `data/live/latest.json` (same-origin, CORS-proof) + appends `data/history/*.jsonl` + records first-seen timestamps per player |
+| 📚 Line-by-line verification log | `sources.html` | 21 sources, 21 irregularity flags, evidence links, limitations, roadmap, re-verification checklist |
+| 🧪 Logic tests | `tools/smoke_test.js` | **90 checks**, run against the real browser modules in Node (with a DOM stub): status normalization, alert diffing, wire de-duplication + HTML escaping, social classification, in-game extraction |
 
-## Verification re-run 2026-09-17 (this session)
+## Verification performed 2026-09-17 (all links re-openable)
 
-Every source re-checked live via page-fetch: ESPN news/scoreboard/summary APIs, ESPN injuries pages (league + team), official.nba.com report (rules verbatim), Basketball Monster (Mark Williams injury matches ESPN wire), Covers (dated 2026-09-17), RotoBaller (2026-09-16 feed), nba.com/heat (MIA@TOR 10/03 hub), GitHub Pages deployment (built; wire working with live data). Irregularities found were **flagged, not hidden** — see `sources.html` → Flags.
+Everything below was fetched live during this session; evidence links are in `sources.html`.
 
-## Verified sources (2026-09-17, evidence linked on `sources.html`)
+- **ESPN structured injuries API** — all-30-team payload with `status`, `date`, `shortComment`, `athlete{…,links}`,
+  `notes.items[]` (sourced news line), `type.name` enum and `details{fantasyStatus,type,side,returnDate}`.
+  Sampled real rows: Mouhamed Gueye (ATL, fractured left foot), Jayson Tatum (BOS), Giannis Antetokounmpo (MIA). `?team=` filter verified.
+- **ESPN news + scoreboard + teams + summary APIs** — re-verified; scoreboard returned **0 events** for 2026-09-17 (offseason).
+- **Bluesky public API** — `getAuthorFeed`, `searchActorsTypeahead`, `graph.getList`, `graph.getFollows` all work unauthenticated;
+  `searchPosts` returns **403** (documented, not worked around).
+- **Official NBA Bluesky account** — valid Bluesky verification object; bio independently confirms opening night
+  2026-10-20 (BOS@DET 3pm ET, PHI@NYK 7pm ET, OKC@SAS 9:30pm ET).
+- **Official NBA injury report** — 2025-26 page live with the full deadline rules text; the 2026-27 URL returns **404**.
+- **Official injury-PDF index** — `ak-static.cms.nba.com/referee/injury/` returns **HTTP 500** (link-only).
+- **Howard Beck's 150-member NBA writers list on Bluesky** — read live; used to build the reporter roster from real data instead of memory.
 
-- **ESPN NBA news/scoreboard/teams JSON APIs** — fetched live; power the wire + scoreboard. Unofficial/undocumented (ESPN retired its public API in 2014), no key needed.
-- **Official NBA injury report** — https://official.nba.com/nba-injury-report-2025-26-season/ (deadline rules confirmed: 5pm local day-before, 11am–1pm gameday, 1pm back-to-backs).
-- **Official NBA injury PDFs** — `ak-static.cms.nba.com/referee/injury/…` timestamped issues.
-- **Basketball Monster player news** — reverse-engineered as the wire *format model* (no public API; link out, don't scrape).
-- **ESPN injuries pages** — league + per-team (`/nba/team/injuries/_/name/{abbr}` pattern verified).
-- **Covers.com + RotoBaller** — tertiary cross-checks. NBA.com team sites, NBA CDN JSON (fallback).
+Irregularities were **flagged, not hidden** — see `sources.html` → Flags (21 of them).
 
-## Reporter directory highlights
+## Really-free reality check
 
-- Tier 1: Shams Charania (ESPN), Chris Haynes (NBA on Prime), Marc Stein, Jake Fischer (Yahoo). **Wojnarowski retired Sept 2024 — excluded from live use.**
-- Tier 2/3: 20+ national reporters + verified beat writers (Slater, McMenamin, MacMahon, Begley, Guillory, Winderman…), each with outlet, role, tier, handle status, and a verification link.
-- Honest statuses: `handle verified` · `outlet verified, handle unverified (none asserted)` · `community-listed` · `inactive on X` · `retired`.
-
-## Key limitations (documented, not hidden)
-
-1. **No free programmatic X/IG/FB read access** — automated social listening + historical back-testing need X API Basic (~$200/mo) or higher. The site ships embeds + search links + forward-tracking instead.
-2. **ESPN endpoints are unofficial** — status indicators + official fallback links included.
-3. **Severity is keyword-detected** — confirm via linked sources.
-4. **No free feed has structured "questionable to return" data** — QTR in-game alerts ride the news layer + reporter directory (see `NEXT_STEPS.md`).
-5. **In-game monitor untested against live games** — offseason now; validate at 2026-10-03 preseason tip.
-6. Alerts/scores live in browser localStorage (no server yet).
-
-**Next work:** see [`NEXT_STEPS.md`](NEXT_STEPS.md) — prioritized backlog (P0: live-validate in-game monitor 2026-10-03; P1: server poller via GitHub Actions, beat-writer completion, official PDF watcher) with the honest limitation list.
+| Want | Status |
+|---|---|
+| Official NBA designations | ✅ linked, but the 2026-27 page does not exist yet (404) |
+| Structured, all-team status feed | ✅ ESPN structured injuries API (unofficial but working) |
+| Automated social listening | ✅ **Bluesky** (no key). ❌ X/Instagram/Facebook — X reads start ~$200/mo, IG/FB have no free public API |
+| Historical back-testing of reporters | ⚠️ X history is paywalled; Bluesky keyword search is 403. This project forward-collects instead, with the poller building timestamp history |
+| Alerts while the tab is closed | ❌ not yet (needs Web Push/Discord/email — roadmap) |
 
 ## Run locally / test
 
 ```bash
-# any static server, e.g.
-python3 -m http.server 8080
-# open http://localhost:8080
+python3 -m http.server 8080      # open http://localhost:8080
 
-# logic smoke tests (no browser needed)
-node tools/smoke_test.js
-
-# regenerate data/verified_sources.json from assets/js/data.js
-node tools/build_verified_sources.js
+node tools/smoke_test.js         # 90 logic checks (no browser needed)
+node tools/poll_watch.js --dry-run   # exercise the poller without writing
+node tools/poll_watch.js         # write data/live/latest.json + data/history/*
+node tools/build_verified_sources.js # regenerate data/verified_sources.json
 ```
 
-## Verification
+## Files
 
-- `sources.html` — full registry + flags + methodology + re-verification checklist
-- `data/verified_sources.json` — machine-readable source registry
-- `assets/js/data.js` — single source of truth for teams, reporters, sources, flags
+- `index.html` — dashboard: alert center, injury board, social layer, games/in-game, wire, team links
+- `reporters.html` — verified directory (X + Bluesky) and the reliability scorecard
+- `sources.html` — verification log, flags, methodology, limitations, roadmap
+- `assets/js/data.js` — **single source of truth**: endpoints, 30 teams, 21 sources, 36 reporters, social allow-list, flags
+- `assets/js/injuries.js` — structured board + change detection
+- `assets/js/social.js` — Bluesky layer + 3-path transport + in-game exit classification
+- `assets/js/wire.js` — unified chat-style stream
+- `assets/js/ingame.js` — live-game absence monitor
+- `tools/poll_watch.js` + `.github/workflows/injury-watch.yml` — free server-side poller (snapshots + history + firsts)
+- `data/verified_sources.json` — machine-readable registry (generated)
+
+**Next work and limitations:** [`NEXT_STEPS.md`](NEXT_STEPS.md).

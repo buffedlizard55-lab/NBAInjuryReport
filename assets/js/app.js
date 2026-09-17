@@ -1,42 +1,43 @@
-/* Dashboard: live ESPN-powered injury wire + scoreboard + polling + filters. */
+/* Dashboard orchestrator: pulls every layer, feeds the unified wire, drives alerts.
+ *
+ * Layers (all free, all key-less):
+ *   1. InjuryBoard  -> ESPN structured injuries API (all 30 teams)      [primary designation source]
+ *   2. News         -> ESPN NBA news API                                 [editorial, fast in-game updates]
+ *   3. Social       -> Bluesky public API, verified allow-list           [reporters + official accounts]
+ *   4. InGame       -> ESPN game summary API while a game is live       [in-arena absences]
+ * Plus always-visible links to the OFFICIAL NBA report for manual verification.
+ */
 "use strict";
 
 const App = (() => {
   const LS_SEEN = "nba-wire-seen-v1";
   const LS_FILTERS = "nba-wire-filters-v1";
-  let wireItems = [];       // all classified injury items, newest first
+  const DEFAULT_FILTERS = { team: "ALL", sevs: { out: true, doubtful: true, questionable: true, probable: false, return: false, mention: false } };
+
   let pollTimer = null;
   let pollIntervalSec = 60;
   let lastGoodNews = null;
+  let newsItems = [];      // kept for the ESPN-news layer only
+  let socialMirrored = new Set();
 
   function getSeen() {
     try { return new Set(JSON.parse(localStorage.getItem(LS_SEEN) || "[]")); }
     catch (e) { return new Set(); }
   }
-  function saveSeen(set) {
-    localStorage.setItem(LS_SEEN, JSON.stringify([...set].slice(-500)));
-  }
+  function saveSeen(set) { localStorage.setItem(LS_SEEN, JSON.stringify([...set].slice(-800))); }
 
   function getFilters() {
-    try {
-      return Object.assign(
-        { team: "ALL", sevs: { out: true, doubtful: true, questionable: true, probable: false, return: false, mention: false } },
-        JSON.parse(localStorage.getItem(LS_FILTERS) || "{}")
-      );
-    } catch (e) {
-      return { team: "ALL", sevs: { out: true, doubtful: true, questionable: true, probable: false, return: false, mention: false } };
-    }
+    try { return Object.assign({}, DEFAULT_FILTERS, JSON.parse(localStorage.getItem(LS_FILTERS) || "{}")); }
+    catch (e) { return Object.assign({}, DEFAULT_FILTERS); }
   }
   function saveFilters(f) { localStorage.setItem(LS_FILTERS, JSON.stringify(f)); }
 
+  /* ---------- shared classifier (ESPN news headline/description) ---------- */
   function classify(headline, desc) {
     const text = (headline + " " + (desc || "")).trim();
-    for (const s of SIGNALS) {
-      if (s.re.test(text)) return { sev: s.sev, sevLabel: s.label };
-    }
+    for (const s of SIGNALS) if (s.re.test(text)) return { sev: s.sev, sevLabel: s.label };
     return null;
   }
-
   function detectTeams(headline, desc) {
     const text = (" " + headline + " " + (desc || "")).toLowerCase();
     const found = [];
@@ -44,18 +45,15 @@ const App = (() => {
       const aliases = TEAM_ALIASES[t.abbr] || [];
       if (aliases.some(a => text.includes(a))) found.push(t.abbr);
     }
-    // bare abbreviation match (e.g. "MIA @ TOR") as a second pass
     const upper = (" " + headline + " " + (desc || "")).toUpperCase().replace(/[^A-Z]/g, " ");
-    for (const t of TEAMS) {
-      if (!found.includes(t.abbr) && upper.split(/\s+/).includes(t.abbr)) found.push(t.abbr);
-    }
+    for (const t of TEAMS) if (!found.includes(t.abbr) && upper.split(/\s+/).includes(t.abbr)) found.push(t.abbr);
     return found;
   }
-
   function articleUrl(a) {
-    return (a.links && a.links.web && a.links.web.href) || a.links?.mobile?.href || "https://www.espn.com/nba/";
+    return (a.links && a.links.web && a.links.web.href) || (a.links && a.links.mobile && a.links.mobile.href) || "https://www.espn.com/nba/";
   }
 
+  /* ---------- layer 2: ESPN news ---------- */
   async function fetchNews() {
     const ctrl = new AbortController();
     const to = setTimeout(() => ctrl.abort(), 20000);
@@ -73,7 +71,7 @@ const App = (() => {
     } finally { clearTimeout(to); }
   }
 
-  function ingest(articles, isFirstLoad) {
+  function ingestNews(articles, isFirstLoad) {
     const seen = getSeen();
     const fresh = [];
     for (const a of articles) {
@@ -83,92 +81,112 @@ const App = (() => {
       if (!hit) continue;
       const id = String(a.id || a.nowId || headline);
       if (seen.has(id)) continue;
+      seen.add(id);
       const teams = detectTeams(headline, desc);
       const item = {
-        id,
-        title: headline,
-        desc,
-        byline: a.byline || "ESPN",
-        published: a.published || a.lastModified || null,
-        url: articleUrl(a),
-        sev: hit.sev,
-        sevLabel: hit.sevLabel,
-        teams,
-        fresh: true
+        id, key: "news-" + id, ts: a.published || a.lastModified || new Date().toISOString(),
+        title: headline, desc, byline: a.byline || "ESPN", url: articleUrl(a),
+        sev: hit.sev, sevLabel: hit.sevLabel, teams, team: teams[0] || null, player: null, layer: "espn-news"
       };
+      newsItems.push(item);
+      /* the wire expects {text, detail} — the news object carries {title, desc}, so map explicitly
+       * (a mismatch here renders "undefined" in the stream; the integration test covers it) */
+      Wire.push({
+        key: item.key, ts: item.ts, sev: item.sev, sevLabel: item.sevLabel, layer: "espn-news",
+        text: item.title, detail: item.desc, url: item.url,
+        team: teams[0] || null, player: null, source: item.byline
+      });
       fresh.push(item);
-      seen.add(id);
     }
     saveSeen(seen);
-    // merge: newest first by published desc
-    wireItems = wireItems.concat(fresh).sort((x, y) =>
-      new Date(y.published || 0) - new Date(x.published || 0));
-    // alerts only for new qualifying items after first load (first load seeds silently)
+    newsItems.sort((x, y) => new Date(y.ts || 0) - new Date(x.ts || 0));
     if (!isFirstLoad) {
       const f = getFilters();
       for (const item of fresh) {
-        if (f.sevs[item.sev]) AlertEngine.fire(item);
-        else { AlertEngine.log(`(muted by filter: ${item.sevLabel}) ${item.title}`, item.url); }
+        if (f.sevs[item.sev]) AlertEngine.fire({ sev: item.sev, sevLabel: item.sevLabel, title: item.title, url: item.url });
+        else AlertEngine.log(`(muted by filter: ${item.sevLabel}) ${item.title}`, item.url);
       }
       AlertEngine.renderLog();
     }
-    renderWire(fresh.map(i => i.id));
+    return fresh;
   }
 
-  function renderWire(flashIds) {
-    const el = document.getElementById("wire");
-    const countEl = document.getElementById("wireCount");
-    if (!el) return;
-    const f = getFilters();
-    const flash = new Set(flashIds || []);
-    const shown = wireItems.filter(i =>
-      (f.team === "ALL" || i.teams.includes(f.team) || (f.team === "UNK" && i.teams.length === 0)) &&
-      f.sevs[i.sev]);
-    if (countEl) countEl.textContent = `${shown.length} shown · ${wireItems.length} tracked this session`;
-    if (!shown.length) {
-      el.innerHTML = `<div class="muted">No wire items match the current filters. ` +
-        (wireItems.length ? `Try enabling more severities. ` : `The wire seeds on each refresh from ESPN's latest NBA news. `) +
-        `Manual review: <a href="https://www.espn.com/nba/injuries" target="_blank" rel="noopener">ESPN injuries</a> · ` +
-        `<a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster</a> · ` +
-        `<a href="https://official.nba.com/nba-injury-report-2025-26-season/" target="_blank" rel="noopener">Official NBA report</a></div>`;
-      return;
+  /* ---------- layer 1: structured injury board ---------- */
+  async function runBoard(isFirstLoad) {
+    try {
+      const rows = await InjuryBoard.check(isFirstLoad);
+      if (rows) {
+        for (const r of rows) {
+          Wire.push({
+            key: "board-" + r.id + "-" + r.fp,
+            ts: r.updated || new Date().toISOString(),
+            sev: r.sev, sevLabel: r.sevLabel, layer: "espn-board",
+            text: `${r.player} (${r.team}${r.position ? ", " + r.position : ""}) — ${r.status}`,
+            detail: [r.shortComment, r.bodyPart ? "injury: " + r.bodyPart : "", r.returnDate ? "est. return " + r.returnDate : ""].filter(Boolean).join(" · "),
+            url: r.teamUrl, extraUrl: r.playerUrl, team: r.team, player: r.player,
+            source: "ESPN injury board" + (r.fantasyStatus ? " · " + r.fantasyStatus : "")
+          });
+        }
+      }
+      return rows;
+    } catch (e) {
+      console.warn("injury board layer error", e);
+      return null;
     }
-    el.innerHTML = shown.slice(0, 80).map(i => {
-      const when = i.published ? new Date(i.published).toLocaleString() : "time unknown";
-      const chips = i.teams.map(t => {
-        const team = teamByAbbr(t);
-        return `<a class="team-chip" style="border-color:${team.color}" href="${espnTeamInjuriesUrl(t)}" target="_blank" rel="noopener" title="ESPN ${team.city} ${team.name} injuries (manual review)">${t}</a>`;
-      }).join("");
-      return `<div class="wire-item sev-${i.sev}${flash.has(i.id) ? " flash" : ""}">
-        <div class="wire-meta"><span class="tag ${i.sev}">${AlertEngine.escapeHtml(i.sevLabel)}</span>
-        <span>${AlertEngine.escapeHtml(when)}</span><span>· ${AlertEngine.escapeHtml(i.byline)}</span>${chips}</div>
-        <div class="wire-title">${AlertEngine.escapeHtml(i.title)}</div>
-        ${i.desc ? `<p class="wire-desc">${AlertEngine.escapeHtml(i.desc)}</p>` : ""}
-        <div class="wire-links"><a href="${AlertEngine.escapeHtml(i.url)}" target="_blank" rel="noopener">ESPN source ↗</a>
-        <a href="${xSearchUrl(i.title.split(":")[0].slice(0, 80))}" target="_blank" rel="noopener">search X for confirmation ↗</a></div>
-      </div>`;
-    }).join("");
   }
 
-  /* --- Scoreboard --- */
+  /* ---------- layer 3: social ---------- */
+  async function runSocial(isFirstLoad, force) {
+    try {
+      const posts = await Social.check(isFirstLoad, force);
+      for (const p of posts) {
+        const c = Social.classifyPost(p.text);
+        if (!c) continue;
+        const key = "social-" + p.uri + "-" + c.sev;
+        if (socialMirrored.has(key)) continue;
+        socialMirrored.add(key);
+        Wire.push({
+          key, ts: p.createdAt || p.indexedAt || new Date().toISOString(),
+          sev: c.sev, sevLabel: c.sevLabel, layer: "social",
+          text: `${p.name}${p.verified ? " ✓" : ""} (@${p.handle}): ${p.text.slice(0, 220)}`,
+          url: p.url, extraUrl: p.account && p.account.url, team: (p.account && p.account.team) || null, player: null,
+          source: p.account && p.account.kind === "reporter" ? (p.account.outlet || "reporter") : (p.account && p.account.kind === "official-team" ? "official team account" : "official league account")
+        });
+      }
+      return posts;
+    } catch (e) {
+      console.warn("social layer error", e);
+      return [];
+    }
+  }
+
+  /* ---------- layer 4: in-game ---------- */
+  async function runInGame(events, isFirstLoad) {
+    try {
+      await InGame.check(events || [], isFirstLoad);
+      for (const f of (InGame.getFindings ? InGame.getFindings() : [])) {
+        Wire.push({
+          key: "ingame-" + f.id, ts: new Date().toISOString(), sev: f.sev, sevLabel: f.sevLabel, layer: "in-game",
+          text: `${f.player} (${f.team}) — ${f.reason} [${f.matchup}]`,
+          detail: "Detected from ESPN's game summary while the game is live. DNP = did not play, reason as stated by ESPN.",
+          url: f.url, player: f.player, team: f.team === "?" ? null : f.team, source: "ESPN game summary"
+        });
+      }
+    } catch (e) { console.warn("in-game monitor error", e); }
+  }
+
+  /* ---------- scoreboard ---------- */
   function yyyymmdd(d) {
     const p = n => String(n).padStart(2, "0");
     return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}`;
   }
-  /* Normalize the long-documented nba.com liveData scoreboard shape into the
-   * ESPN-ish event shape renderGames/InGame already consume. The CDN payload is
-   * UNVERIFIABLE from the build environment (see sources.html -> nba-cdn-scoreboard),
-   * so every field is read defensively; used ONLY as an ESPN failover. */
   function normalizeCdn(games) {
     return (games || []).map(g => ({
       id: g.gameId || ("cdn-" + Math.random().toString(36).slice(2)),
       date: g.gameTimeUTC || null,
       links: { web: { href: "https://www.nba.com/games" } },
       competitions: [{
-        status: { type: {
-          state: g.gameStatus === 2 ? "in" : g.gameStatus === 3 ? "post" : "pre",
-          shortDetail: String(g.gameStatusText || "")
-        } },
+        status: { type: { state: g.gameStatus === 2 ? "in" : g.gameStatus === 3 ? "post" : "pre", shortDetail: String(g.gameStatusText || "") } },
         competitors: [
           { homeAway: "away", team: { abbreviation: (g.awayTeam && g.awayTeam.teamTricode) || "?" }, score: g.awayTeam && g.awayTeam.score != null ? String(g.awayTeam.score) : "" },
           { homeAway: "home", team: { abbreviation: (g.homeTeam && g.homeTeam.teamTricode) || "?" }, score: g.homeTeam && g.homeTeam.score != null ? String(g.homeTeam.score) : "" }
@@ -197,36 +215,37 @@ const App = (() => {
         const games = (data.scoreboard && data.scoreboard.games) || [];
         const events = normalizeCdn(games);
         if (!events.length && !Array.isArray(games)) throw new Error("unexpected CDN payload");
-        setApiStatus("sb", true, `⚠ ESPN failed — NBA.com CDN failover · ${events.length} games · ${new Date().toLocaleTimeString()} (failover is untested from build env — verify against ESPN)`);
+        setApiStatus("sb", true, `⚠ ESPN failed — NBA.com CDN failover · ${events.length} games · ${new Date().toLocaleTimeString()} (untested path — cross-check ESPN)`);
         if (srcEl) srcEl.innerHTML = `Source: NBA.com CDN (experimental failover — unverified; cross-check <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">ESPN ↗</a> or <a href="https://www.nba.com/scores" target="_blank" rel="noopener">nba.com/scores ↗</a>)`;
         renderGames(events);
         return events;
       } catch (e2) {
-        console.warn("NBA CDN failover also failed", e2);
         setApiStatus("sb", false, "failed (ESPN: " + e.message + "; CDN: " + e2.message + ")");
         if (el) el.innerHTML = `<div class="muted small">Scoreboard unavailable from both feeds. Manual review: <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">ESPN scoreboard</a> · <a href="https://www.nba.com/scores" target="_blank" rel="noopener">nba.com/scores</a></div>`;
         return null;
       }
     }
   }
+
   function renderGames(events) {
     const el = document.getElementById("games");
     if (!el) return;
     if (!events.length) {
-      el.innerHTML = `<div class="muted">No games today. Verified schedule notes: preseason tips <b>2026-10-03</b> (MIA @ TOR per ESPN) and opening night is <b>2026-10-20</b> — BOS@DET, PHI@NYK, OKC@SAS (per Basketball Monster). In-game alerts activate automatically once live games appear here.</div>`;
+      el.innerHTML = `<div class="muted">No games today. Verified schedule: preseason tips <b>2026-10-03</b> (MIA @ TOR per ESPN) and opening night is <b>2026-10-20</b> — BOS@DET, PHI@NYK, OKC@SAS
+        (confirmed 2026-09-17 by the <a href="https://bsky.app/profile/nba.com" target="_blank" rel="noopener">official NBA account</a>). In-game alerts activate automatically once live games appear here.</div>`;
       return;
     }
     el.innerHTML = events.map(ev => {
       const comp = (ev.competitions || [])[0] || {};
-      const cs = (comp.competitors || []).slice().sort((a, b) => (a.homeAway === "home" ? 1 : -1));
+      const cs = (comp.competitors || []).slice();
       const away = cs.find(c => c.homeAway === "away") || {};
       const home = cs.find(c => c.homeAway === "home") || {};
       const st = (comp.status && comp.status.type) || {};
       const state = st.state || "pre";
-      const detail = (comp.status && (comp.status.type.shortDetail || comp.status.type.detail)) || ev.date;
+      const detail = (comp.status && (st.shortDetail || st.detail)) || ev.date;
       const when = ev.date ? new Date(ev.date).toLocaleString() : "";
-      const matchup = `${away.team?.abbreviation || "?"} @ ${home.team?.abbreviation || "?"}`;
-      const score = (state === "in" || state === "post") ? `${away.score ?? ""} – ${home.score ?? ""}` : when;
+      const matchup = `${(away.team && away.team.abbreviation) || "?"} @ ${(home.team && home.team.abbreviation) || "?"}`;
+      const score = (state === "in" || state === "post") ? `${away.score != null ? away.score : ""} – ${home.score != null ? home.score : ""}` : when;
       const gameUrl = (ev.links && ev.links.web && ev.links.web.href) || `https://www.espn.com/nba/game/_/gameId/${ev.id}`;
       return `<div class="game${state === "in" ? " live" : ""}">
         <span class="st ${state}">${state === "in" ? "● LIVE" : state === "post" ? "FINAL" : "SCHEDULED"}</span>
@@ -244,13 +263,16 @@ const App = (() => {
     el.innerHTML = `<span class="dot ${ok ? "ok" : "bad"}"></span>${AlertEngine.escapeHtml(text)}`;
   }
 
-  async function refresh(isFirstLoad) {
+  /* ---------- refresh ---------- */
+  async function refresh(isFirstLoad, opts) {
+    opts = opts || {};
     const arts = await fetchNews();
-    if (arts) ingest(arts, isFirstLoad);
-    else renderWire([]);
+    if (arts) ingestNews(arts, isFirstLoad);
+    await runBoard(isFirstLoad);
+    await runSocial(isFirstLoad, !!opts.forceSocial);
     const events = await fetchScoreboard();
-    try { await InGame.check(events || [], isFirstLoad); }
-    catch (e) { console.warn("in-game monitor error", e); }
+    await runInGame(events || [], isFirstLoad);
+    Wire.render([]);
     const upd = document.getElementById("lastUpdated");
     if (upd) upd.textContent = "Last refresh: " + new Date().toLocaleString();
   }
@@ -263,27 +285,26 @@ const App = (() => {
   }
   function stopPolling() { if (pollTimer) clearInterval(pollTimer); pollTimer = null; }
 
-  /* --- Filters UI --- */
+  /* ---------- filters UI ---------- */
   function buildTeamFilter() {
     const sel = document.getElementById("teamFilter");
     if (!sel) return;
     sel.innerHTML = `<option value="ALL">All teams</option>` +
-      TEAMS.map(t => `<option value="${t.abbr}">${t.abbr} — ${t.city} ${t.name}</option>`).join("") +
-      `<option value="UNK">No team detected</option>`;
+      TEAMS.map(t => `<option value="${t.abbr}">${t.abbr} — ${t.city} ${t.name}</option>`).join("");
     sel.value = getFilters().team;
     sel.addEventListener("change", () => {
-      const f = getFilters(); f.team = sel.value; saveFilters(f); renderWire([]);
+      const f = getFilters(); f.team = sel.value; saveFilters(f); Wire.render([]);
     });
   }
   function buildSevChecks() {
     const box = document.getElementById("sevChecks");
     if (!box) return;
     const f = getFilters();
-    const defs = [["out", "OUT"], ["doubtful", "DOUBTFUL"], ["questionable", "QUESTIONABLE"], ["probable", "PROBABLE"], ["return", "RETURN/GOOD"], ["mention", "MENTIONS"]];
+    const defs = [["out", "OUT"], ["doubtful", "DOUBTFUL"], ["questionable", "QUESTIONABLE / QTR"], ["probable", "PROBABLE"], ["return", "RETURN/GOOD"], ["mention", "MENTIONS"]];
     box.innerHTML = defs.map(([k, label]) =>
       `<label><input type="checkbox" data-sev="${k}"${f.sevs[k] ? " checked" : ""}> ${label}</label>`).join("");
     box.querySelectorAll("input").forEach(inp => inp.addEventListener("change", () => {
-      const ff = getFilters(); ff.sevs[inp.dataset.sev] = inp.checked; saveFilters(ff); renderWire([]);
+      const ff = getFilters(); ff.sevs[inp.dataset.sev] = inp.checked; saveFilters(ff); Wire.render([]);
     }));
   }
   function buildTeamsTable() {
@@ -294,29 +315,57 @@ const App = (() => {
       <td><a href="${espnTeamInjuriesUrl(t.abbr)}" target="_blank" rel="noopener">ESPN injuries ↗</a></td>
       <td><a href="${nbaTeamUrl(t.abbr)}" target="_blank" rel="noopener">NBA.com ↗</a></td>
       <td><a href="${xSearchUrl(t.city + " " + t.name + " injury")}" target="_blank" rel="noopener">X search ↗</a></td>
+      <td><a href="https://bsky.app/search?q=${encodeURIComponent(t.city + " " + t.name)}" target="_blank" rel="noopener">Bluesky search ↗</a></td>
     </tr>`).join("");
   }
 
-  function wireSoundToggle() {
+  function wireControls() {
     const t = document.getElementById("soundToggle");
-    if (!t) return;
-    t.checked = AlertEngine.isSoundOn();
-    const paint = () => {
-      const s = document.getElementById("soundState");
-      if (s) s.textContent = t.checked ? "ON — you will hear the chime on new alerts" : "OFF — alerts are silent (log + notifications only)";
-    };
-    t.addEventListener("change", () => { AlertEngine.setSoundOn(t.checked); paint(); });
-    paint();
+    if (t) {
+      t.checked = AlertEngine.isSoundOn();
+      const paint = () => {
+        const s = document.getElementById("soundState");
+        if (s) s.textContent = t.checked ? "ON — you will hear the chime on new qualifying alerts" : "OFF — silent (log + browser notifications only)";
+      };
+      t.addEventListener("change", () => { AlertEngine.setSoundOn(t.checked); paint(); });
+      paint();
+    }
+    const relay = document.getElementById("relayToggle");
+    if (relay) {
+      relay.checked = Social.isRelayOn();
+      const paintRelay = () => {
+        const s = document.getElementById("relayState");
+        if (s) s.textContent = relay.checked
+          ? "ON — if the browser blocks public.api.bsky.app directly, requests are routed through the third-party api.allorigins.win relay (only Bluesky public data passes through; nothing about you is sent)."
+          : "OFF — direct browser access only. If the social panel says 'unreachable', tick this box.";
+      };
+      relay.addEventListener("change", () => { Social.setRelay(relay.checked); paintRelay(); });
+      paintRelay();
+    }
   }
 
   function init() {
     buildTeamFilter();
     buildSevChecks();
     buildTeamsTable();
-    wireSoundToggle();
+    wireControls();
     AlertEngine.renderLog();
+
     const testBtn = document.getElementById("testSound");
     if (testBtn) testBtn.addEventListener("click", () => AlertEngine.testSound());
+    const testFeeds = document.getElementById("testFeeds");
+    if (testFeeds) testFeeds.addEventListener("click", async () => {
+      testFeeds.disabled = true; testFeeds.textContent = "Testing…";
+      await Social.testFeeds();
+      testFeeds.disabled = false; testFeeds.textContent = "🔎 Test feeds";
+    });
+    const socialNow = document.getElementById("socialNow");
+    if (socialNow) socialNow.addEventListener("click", async () => {
+      socialNow.disabled = true; socialNow.textContent = "Polling…";
+      await runSocial(false, true);
+      Wire.render([]);
+      socialNow.disabled = false; socialNow.textContent = "↻ Poll social now";
+    });
     const notifBtn = document.getElementById("notifBtn");
     const paintNotif = () => {
       if (!notifBtn) return;
@@ -326,23 +375,29 @@ const App = (() => {
     };
     if (notifBtn) notifBtn.addEventListener("click", async () => { await AlertEngine.requestNotifPermission(); paintNotif(); });
     paintNotif();
+
     const clearBtn = document.getElementById("clearLog");
     if (clearBtn) clearBtn.addEventListener("click", () => AlertEngine.clearLog());
     const resetSeen = document.getElementById("resetSeen");
     if (resetSeen) resetSeen.addEventListener("click", () => {
-      localStorage.removeItem(LS_SEEN); wireItems = [];
+      localStorage.removeItem(LS_SEEN);
+      newsItems = []; socialMirrored = new Set();
       if (typeof InGame !== "undefined") InGame.resetSeen();
-      AlertEngine.log("↺ Seen-history reset — next refresh re-seeds the wire.", null);
+      if (typeof InjuryBoard !== "undefined") InjuryBoard.resetSeen();
+      if (typeof Social !== "undefined") Social.resetSeen();
+      Wire.clear();
+      AlertEngine.log("↺ Seen-history reset across every layer — next refresh re-seeds silently.", null);
       AlertEngine.renderLog(); refresh(true);
     });
     const pollSel = document.getElementById("pollSel");
     if (pollSel) pollSel.addEventListener("change", () => { pollIntervalSec = parseInt(pollSel.value, 10) || 60; startPolling(); });
     const nowBtn = document.getElementById("refreshNow");
     if (nowBtn) nowBtn.addEventListener("click", () => refresh(false));
+
     refresh(true).then(() => startPolling());
   }
 
-  return { init, getFilters };
+  return { init, getFilters, refresh, classify, detectTeams };
 })();
 
 document.addEventListener("DOMContentLoaded", () => App.init());
