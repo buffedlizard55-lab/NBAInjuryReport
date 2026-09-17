@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T17:07:03.574Z",
+  "generated": "2026-09-17T17:50:01.710Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3512,13 +3512,6 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
       "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3533,6 +3526,13 @@
         "kind": "official-team",
         "team": "POR"
       },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
+      },
       "dallasmavs.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3540,10 +3540,10 @@
         "kind": "official-team",
         "team": "DAL"
       },
-      "howardbeck.bsky.social": {
+      "samvecenie.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
+        "count": 3,
+        "name": "Sam Vecenie",
         "kind": "reporter",
         "team": null
       },
@@ -3554,10 +3554,10 @@
         "kind": "reporter",
         "team": null
       },
-      "samvecenie.bsky.social": {
+      "howardbeck.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Sam Vecenie",
+        "count": 0,
+        "name": "Howard Beck",
         "kind": "reporter",
         "team": null
       },
@@ -3575,19 +3575,19 @@
         "kind": "reporter",
         "team": "SAS"
       },
-      "jmcdonaldsa.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Jeff McDonald",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "tomhaberstroh.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Tom Haberstroh",
         "kind": "reporter",
         "team": null
+      },
+      "jmcdonaldsa.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
       },
       "nbasarah.bsky.social": {
         "ok": true,
