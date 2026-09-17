@@ -82,7 +82,7 @@ const InGame = (() => {
           out.push({
             id: "inj-" + eventId + "-" + ((inj.athlete && inj.athlete.id) || name) + "-" + status,
             kind: "LISTING",
-            player: name, team: standardAbbr(abbr) || "?", alertEligible: false, reason: (status + (detail ? " — " + detail : "")).trim(),
+            player: name, team: standardAbbr(abbr) || "?", alertEligible: /^(out|doubtful|questionable|day-to-day)$/i.test(status) || /return|remainder|locker/i.test(text), reason: (status + (detail ? " — " + detail : "")).trim(),
             matchup, url: eventUrl(eventId),
             sev: normalizeInjuryStatus(status).sev,
             sevLabel: (status || "INJURY LISTING").toUpperCase() + " — GAME LISTING (EXIT UNPROVEN)"

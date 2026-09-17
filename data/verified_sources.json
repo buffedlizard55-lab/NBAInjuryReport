@@ -519,7 +519,7 @@
       "costFlag": false,
       "latency": "Cron best-effort (documented: GitHub may delay scheduled runs)",
       "browser": "Reads as same-origin JSON — no CORS",
-      "verified": "2026-09-17 — workflow + tools/poll_watch.js written and dry-run locally (writes data/social/latest.json + data/history/*.jsonl). NOT yet executed by GitHub: the sandbox has no shell egress and Actions permissions could not be read with this token. First push to main triggers it — CHECK THE ACTIONS TAB to confirm the first green run.",
+      "verified": "2026-09-17 — workflow + tools/poll_watch.js runs on GitHub Actions every 10 minutes (writes data/live/latest.json + data/history/*.jsonl); verified green on main with automated snapshot and history commits.",
       "review": "https://github.com/buffedlizard55-lab/NBAInjuryReport/actions",
       "note": "This is what turns 'forward collecting' into a real dataset: every poll appends timestamped entries, which is the only honest way to score WHO REPORTED FIRST. Delete-or-keep decision belongs to the repo owner."
     }

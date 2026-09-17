@@ -129,7 +129,7 @@ const AlertEngine = (() => {
     const judged = item.observedAt || item.ts;
     const maxAge = item.maxAgeMs || 30 * 60 * 1000;
     const fresh = !judged || isFresh(judged, maxAge);
-    const impact = item.impact && item.impact.tier === "high" ? "⚡ HIGH LINEUP IMPACT " : "";
+    const impact = item.impact && (item.impact.impact === "high" || item.impact.tier === "high" || (item.impact.role && item.impact.role.tier === "starter" && (item.sev === "out" || item.sev === "doubtful"))) ? "⚡ HIGH LINEUP IMPACT " : "";
     const label = `${impact}[${item.sevLabel}] ${item.title}`;
     const ageNote = item.observedAt && item.ts && item.ts !== item.observedAt
       ? ` (source timestamp ${item.ts}; observed ${item.observedAt})` : "";

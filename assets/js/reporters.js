@@ -60,21 +60,51 @@ const Reporters = (() => {
       `<br><span class="tiny muted"><a href="${b.evidence}" target="_blank" rel="noopener">evidence ↗</a></span>`;
   }
 
+  function inArenaStatus(r) {
+    const isArena = r.inArena === true || (r.beat && r.status !== "citation-verified" && r.status !== "retired");
+    if (isArena) return `<span class="badge ok" title="Monitors games in-arena; can first report locker room trips &amp; exits">🏟️ In-arena live</span>`;
+    if (r.status === "citation-verified") return `<span class="badge info" title="Cited in ESPN/RotoWire structured injury comments">📋 Wire citation</span>`;
+    if (r.status === "retired" || r.status === "inactive") return `<span class="badge dim">⏳ Inactive</span>`;
+    return `<span class="badge dim" title="National coverage &amp; intel desk">🏢 National desk</span>`;
+  }
+
+  let currentCategory = "ALL";
+
   function renderTable(filter) {
     const el = document.getElementById("reporterTable");
     if (!el) return;
     const q = (filter.q || "").toLowerCase();
-    const rows = REPORTERS.filter(r =>
-      (filter.tier === "ALL" || String(r.tier) === filter.tier) &&
-      (filter.status === "ALL" || r.status === filter.status) &&
-      (!q || (r.name + " " + r.outlet + " " + r.role + " " + (r.handle || "") + " " + ((bskyFor(r.name) || {}).handle || "")).toLowerCase().includes(q))
-    );
+    const rows = REPORTERS.filter(r => {
+      if (filter.tier !== "ALL" && String(r.tier) !== filter.tier) return false;
+      if (filter.status !== "ALL" && r.status !== filter.status) return false;
+
+      const isArena = r.inArena === true || (r.beat && r.status !== "citation-verified" && r.status !== "retired");
+      if (filter.inArena === "in-arena" && !isArena) return false;
+      if (filter.inArena === "desk" && (isArena || r.status === "citation-verified")) return false;
+      if (filter.inArena === "citation" && r.status !== "citation-verified") return false;
+
+      if (currentCategory === "insider" && r.tier !== 1) return false;
+      if (currentCategory === "arena" && !isArena && !r.beat) return false;
+      if (currentCategory === "citation" && r.status !== "citation-verified") return false;
+      if (currentCategory === "other" && r.status !== "community" && r.status !== "retired" && r.status !== "inactive") return false;
+
+      if (q) {
+        const hay = (r.name + " " + r.outlet + " " + r.role + " " + (r.beat || "") + " " + (r.handle || "") + " " + ((bskyFor(r.name) || {}).handle || "")).toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    });
+
     const counts = document.getElementById("repCount");
     if (counts) counts.textContent = `${rows.length} of ${REPORTERS.length} shown`;
+    const tot = document.getElementById("repTotalCount");
+    if (tot) tot.textContent = REPORTERS.length;
+
     el.innerHTML = rows.map(r => `<tr>
       <td><b>${AlertEngine.escapeHtml(r.name)}</b><br><span class="tiny muted">${AlertEngine.escapeHtml(r.role)}</span></td>
       <td>${AlertEngine.escapeHtml(r.outlet)}${r.beat ? `<br><span class="team-chip">${r.beat}</span>` : ""}</td>
       <td>${tierBadge(r.tier)}</td>
+      <td>${inArenaStatus(r)}</td>
       <td>${xLink(r)}</td>
       <td>${bskyCell(r)}</td>
       <td>${statusBadge(r)}${r.citeText ? `<br><span class="tiny muted cite">“…${AlertEngine.escapeHtml(citeTail(r))}”</span><br><a class="tiny" href="${dataSnapshotUrl}" target="_blank" rel="noopener">stored snapshot ↗</a>` : ""}<br><a class="tiny" href="${r.verifyUrl}" target="_blank" rel="noopener">${r.citeText ? "ESPN injury page ↗" : "verification ↗"}</a></td>
@@ -82,6 +112,50 @@ const Reporters = (() => {
       <td data-score-for="${AlertEngine.escapeHtml(r.name)}" class="tiny"><span class="muted">—</span></td>
     </tr>`).join("");
     paintScores();
+  }
+
+  /* ---- 30-team in-arena coverage matrix ---- */
+  function renderArenaMatrix() {
+    const el = document.getElementById("arenaMatrixTable");
+    if (!el || typeof TEAMS === "undefined") return;
+    const bsky = (typeof BSKY_REPORTERS !== "undefined") ? BSKY_REPORTERS : [];
+    const social = (typeof SOCIAL_ACCOUNTS !== "undefined") ? SOCIAL_ACCOUNTS : [];
+    const esc = AlertEngine.escapeHtml;
+
+    el.innerHTML = TEAMS.map(team => {
+      const reps = REPORTERS.filter(r => r.beat === team.abbr);
+      const bskyReps = bsky.filter(b => b.team === team.abbr);
+      const teamSocial = social.find(s => s.team === team.abbr);
+
+      const primaryRep = reps.find(r => r.status === "verified-handle") || reps.find(r => r.status === "outlet-only") || reps[0] || bskyReps[0] || null;
+      const repName = primaryRep ? primaryRep.name : (teamSocial ? teamSocial.name : "Coverage via team beat wire");
+      const outlet = primaryRep ? primaryRep.outlet : (teamSocial ? "Official team account" : "Local beat / AP wire");
+      const inArenaBadge = (primaryRep && (primaryRep.status === "verified-handle" || primaryRep.status === "outlet-only" || primaryRep.beat)) || bskyReps.length
+        ? `<span class="badge ok">✓ In-arena live coverage</span>`
+        : teamSocial ? `<span class="badge info">🏛️ Official franchise channel</span>`
+        : `<span class="badge warn">📋 Desk / wire monitoring</span>`;
+
+      const profileLink = primaryRep && primaryRep.handle
+        ? `<a href="https://x.com/${esc(primaryRep.handle)}" target="_blank" rel="noopener">@${esc(primaryRep.handle)} ↗</a>`
+        : (bskyReps[0] ? `<a href="https://bsky.app/profile/${esc(bskyReps[0].handle)}" target="_blank" rel="noopener">@${esc(bskyReps[0].handle)} (Bluesky) ↗</a>`
+        : (teamSocial ? `<a href="${esc(teamSocial.url)}" target="_blank" rel="noopener">@${esc(teamSocial.handle)} ↗</a>`
+        : `<a href="${xSearchUrl(team.city + " " + team.name + " injury")}" target="_blank" rel="noopener">Search ${esc(team.abbr)} beat ↗</a>`));
+
+      const verifyEvidence = primaryRep && primaryRep.verifyUrl
+        ? `<a href="${esc(primaryRep.verifyUrl)}" target="_blank" rel="noopener">${esc(primaryRep.verifyLabel || "Verification link ↗")}</a>`
+        : (teamSocial ? `<a href="${esc(teamSocial.url)}" target="_blank" rel="noopener">${esc(teamSocial.verified || "Official team evidence ↗")}</a>`
+        : `<a href="${espnTeamInjuriesUrl(team.abbr)}" target="_blank" rel="noopener">ESPN ${esc(team.abbr)} injuries ↗</a>`);
+
+      return `<tr>
+        <td><b><span class="team-chip">${esc(team.abbr)}</span></b></td>
+        <td><b>${esc(team.city)} ${esc(team.name)}</b></td>
+        <td><b>${esc(repName)}</b>${bskyReps.length && primaryRep && primaryRep.name !== bskyReps[0].name ? `<br><small class="muted">+ ${esc(bskyReps[0].name)} (Bluesky)</small>` : ""}</td>
+        <td>${esc(outlet)}</td>
+        <td>${inArenaBadge}</td>
+        <td>${profileLink}</td>
+        <td class="tiny">${verifyEvidence}</td>
+      </tr>`;
+    }).join("");
   }
 
   /* ---- Bluesky allow-list table (the pollable layer) ---- */
@@ -246,19 +320,33 @@ const Reporters = (() => {
   }
 
   function init() {
-    const filter = { tier: "ALL", status: "ALL", q: "" };
+    const filter = { tier: "ALL", status: "ALL", inArena: "ALL", q: "" };
     renderTable(filter);
     renderBsky();
     renderPills();
     renderRubric();
+    renderArenaMatrix();
     buildForm();
     paintScores();
     const t = document.getElementById("tierFilter");
     const s = document.getElementById("statusFilter");
+    const a = document.getElementById("inArenaFilter");
     const q = document.getElementById("repSearch");
     if (t) t.addEventListener("change", () => { filter.tier = t.value; renderTable(filter); });
     if (s) s.addEventListener("change", () => { filter.status = s.value; renderTable(filter); });
+    if (a) a.addEventListener("change", () => { filter.inArena = a.value; renderTable(filter); });
     if (q) q.addEventListener("input", () => { filter.q = q.value; renderTable(filter); });
+
+    if (typeof document !== "undefined" && document.querySelectorAll) {
+      document.querySelectorAll(".cat-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".cat-tab").forEach(x => x.classList.remove("active"));
+          tab.classList.add("active");
+          currentCategory = tab.dataset.cat || "ALL";
+          renderTable(filter);
+        });
+      });
+    }
   }
 
   return { init, scoreboard };

@@ -274,11 +274,18 @@ const Social = (function () {
       .filter(p => p.inGameWatch || ALERT_SEV[p.sev])
       .map(p => {
         const player = typeof Intelligence !== "undefined" ? Intelligence.resolveText(p.text) : null;
+        const ctx = (typeof Intelligence !== "undefined" && typeof Intelligence.impactContext === "function") ? Intelligence.impactContext() : {};
+        const impact = (player && typeof LineupImpact !== "undefined")
+          ? LineupImpact.assess({ player: player.player, playerId: player.playerId, team: player.team, sev: p.sev }, ctx)
+          : null;
         return {
         kind: p.inGameWatch ? "social-ingame" : "social",
         sev: p.sev, sevLabel: p.sevLabel,
         alertEligible: !!player && p.verified === true && AlertEngine.isFresh(p.createdAt, 30 * 60 * 1000),
         team: player?.team || null,
+        player: player?.player || null,
+        playerId: player?.playerId || null,
+        impact: impact,
         title: p.text.slice(0, 240) + " — " + (p.inGameWatch ? "IN-GAME EXIT (unconfirmed) — " : "") + p.name + (p.team ? " (" + p.team + ")" : ""),
         detail: p.text,
         url: p.url,

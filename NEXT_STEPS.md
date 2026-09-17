@@ -1,6 +1,32 @@
 # Next-session priorities
 
-## State at the end of session 4 (2026-09-17, ~14:50Z) — read this first
+## State at the end of session 5 (2026-09-17) — read this first
+
+Shipped on branch `arena/01a0b045-nbainjuryreport`: Session 5 enhancements covering real-time in-game alerting, Basketball Monster-style quick search and status filtering, lineup impact alert propagation, and verified reporter directory subpage upgrades.
+
+**Key enhancements and defect fixes:**
+1. **Lineup impact alert propagation (`assets/js/alerts.js`, `assets/js/social.js`, `assets/js/app.js`):**
+   Fixed property mismatch where `alerts.js:fire` checked `item.impact.tier === "high"` (which was undefined because `LineupImpact.assess` sets `out.impact = "high"` and `out.role.tier = "starter"`). Alerts now check `(item.impact.impact === "high" || item.impact.tier === "high")` and prepend `⚡ HIGH LINEUP IMPACT` to the alert label and log. Attached lineup impact assessments directly to social post alerts and classified news wire items whenever an NBA player is identified. Pinned with new regression checks (26 total passed).
+2. **Basketball Monster-style Injury Board toolbar (`index.html`, `assets/js/injuries.js`, `assets/css/style.css`):**
+   Added an instant search bar (`#boardSearch`, `#boardResetFilter`) and quick status filter tabs (`#boardStatusFilters`) with live count badges for `All`, `🔴 OUT`, `🟠 Doubtful`, `🟡 Questionable / GTD`, `🟢 Probable`, and `🔵 Return / Good` directly above the structured injury board. Users can filter by player name, injury detail, or status in real time.
+3. **Live ongoing game injury alerting (`assets/js/ingame.js`):**
+   Updated `InGame.extract` so that in-game injury designations from live ESPN summaries (status Out, Questionable, Doubtful, or in-game exit notes like "questionable to return", "locker room") are alert-eligible (`alertEligible: true`), fulfilling the requirement to alert on players injured during ongoing games while keeping pre-game DNP scratches alert-ineligible.
+4. **Reporter directory subpage categorization & 30-team matrix (`reporters.html`, `assets/js/reporters.js`):**
+   Added interactive Category Filter Tabs (`All Directory`, `Official League & Team`, `Lead Insiders (Tier 1)`, `In-Arena Beat Writers (30 Teams)`, `Cited Wire Bylines`, `Others & Review`), an In-Arena Live Exit Reporting capability column and filter (`#inArenaFilter`), and a dedicated **30-Team In-Arena Coverage & Live Exit Intelligence Matrix** card (`#matrixCard`, `#arenaMatrixTable`) showing each franchise's verified beat writer, outlet, courtside exit tracking status, profile link, and manual verification link.
+5. **Sound test visual feedback (`assets/js/app.js`):**
+   Added button state feedback (`🔔 Playing chime…` / `⚠ Audio unavailable`) when `#testSound` is clicked, providing immediate confirmation alongside WebAudio chime playback.
+6. **Registry text synchronization:**
+   Corrected outdated "NOT yet executed by GitHub" text in `assets/js/data.js` and regenerated `data/verified_sources.json`.
+7. **Test suite passing:**
+   All 147 unit tests (`smoke_test.js`), 26 regression groups (`regression_test.js`), 48 integration/runtime/wiring checks (`integration_test.js`), 24 end-to-end poll fixture tests (`poll_fixture_test.js`), 4 Python unit tests, and post replay checks pass with 0 errors.
+
+Facts a new session can rely on:
+- Live site: https://buffedlizard55-lab.github.io/NBAInjuryReport/
+- Directory: https://buffedlizard55-lab.github.io/NBAInjuryReport/reporters.html
+- `data/live/context.json` is schema 2; box-score role stats will accumulate once the 2026-10-03 preseason tips.
+- The 2026-27 official injury report landing page is expected around October 2026; until then, the last verified page (2025-26 rules) is linked and the 404 is tracked by the runner audit.
+
+## State at the end of session 4 (2026-09-17, ~14:50Z)
 
 Merged to `main`: session-4 pass — full line-by-line re-read of every shipped file, four direct live re-verifications
 (2026-27 official page still 404; 2025-26 rules text verbatim; injuries feed identical schema; nba.com Bluesky verification

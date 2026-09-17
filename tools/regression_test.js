@@ -157,5 +157,38 @@ check('A high-impact starter tag never changes alert eligibility, only its wordi
     assert.equal(built.exits['77'].status,'reported-unconfirmed');
     assert.match(built.exits['77'].url,/^https:\/\/bsky\.app/);
   });
+  check('AlertEngine fires with HIGH LINEUP IMPACT prefix when impact is high', () => {
+    AlertEngine.clearLog();
+    const item = { sev:'out', sevLabel:'OUT', title:'Starter Star — Out', team:'BOS', ts:now, alertEligible:true, impact:{ impact:'high', role:{ tier:'starter' } } };
+    AlertEngine.fire(item);
+    const log = AlertEngine.getLog();
+    assert.ok(log.length > 0 && log[0].message.includes('⚡ HIGH LINEUP IMPACT'), 'high impact alert must carry lightning prefix');
+  });
+  check('InGame live summary listings with Questionable or Out are alert-eligible', () => {
+    const summary = {
+      boxscore: { players: [{ team: { abbreviation: 'BOS' }, statistics: [{ athletes: [{ athlete: { id: '9', displayName: 'Bench DNP' }, didNotPlay: true, reason: 'Knee' }] }] }] },
+      injuries: [{ team: { abbreviation: 'BOS' }, injuries: [{ athlete: { id: '10', displayName: 'InGame Exit' }, status: 'Questionable', details: { comment: 'questionable to return with ankle sprain' } }] }]
+    };
+    const rows = InGame.extract(summary, '999', 'BOS @ MIA');
+    const dnp = rows.find(r => r.kind === 'DNP');
+    const qtr = rows.find(r => r.kind === 'LISTING');
+    assert.equal(dnp.alertEligible, false, 'pregame DNP stays alert-ineligible');
+    assert.equal(qtr.alertEligible, true, 'in-game Questionable listing in live game is alert-eligible');
+  });
+  check('Social alerts attach lineup impact when player is resolved', () => {
+    sandbox.Intelligence = {
+      resolveText: t => /Starter Player/.test(String(t)) ? { player:'Starter Player', team:'GSW', playerId:'6430' } : null,
+      impactContext: () => ({
+        roles: [{ playerId: '6430', team: 'GSW', role: 'Starter in this game', observedAt: now }],
+        roleStats: {}, rosters: {}, exits: {}
+      })
+    };
+    const post = { uri: 'at://impact/1', handle: 'rep.bsky.social', name: 'Reporter', text: 'Starter Player has been ruled out tonight with knee soreness',
+      url: 'https://bsky.app/profile/rep.bsky.social/post/imp', createdAt: now, sev: 'out', sevLabel: 'OUT (social report)', verified: true, inGameWatch: false };
+    const res = Social.checkAlerts([post], false);
+    assert.equal(res.alerts.length, 1);
+    assert.ok(res.alerts[0].impact, 'resolved player must have impact attached');
+    assert.equal(res.alerts[0].impact.impact, 'high', 'starter ruled out must produce high impact');
+  });
   console.log(checks+' regression groups passed');
 })().catch(e=>{console.error(e);process.exitCode=1;});
