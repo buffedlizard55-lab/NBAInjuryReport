@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-17T05:08:00.308316+00:00",
+  "checkedAt": "2026-09-17T05:11:01.693787+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -10,11 +10,12 @@
       ],
       "claim": "Registry: the 2026-27 injury-report landing page does not exist yet, so no official current-season index can be polled. If this ever returns 200 with report links, the official layer becomes automatable \u2014 that single change is why this check fails the job.",
       "critical": true,
+      "encoding": null,
       "status": 404,
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 1131,
-      "sha256": "468dd8235251967a4e2e95cb4c6d239d96fa026ce77fddf2bdbaa3daf0735d56",
+      "sha256": "a6b788e50ae08aac6ff19e008e335ad953712e8e24c6731e25b62cd106875903",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -29,17 +30,18 @@
       "documentedStatuses": [
         200
       ],
-      "claim": "Registry: deadline rules text (5 p.m. the day before; 11 a.m.\u20131 p.m. on game day; 1 p.m. for the second night of a back-to-back).",
+      "claim": "Registry: deadline rules text (5 p.m. the day before; 11 a.m.\u20131 p.m. on game day; 1 p.m. for the second night of a back-to-back). Probes are tolerant of markup because the page is CMS-rendered.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 116516,
-      "sha256": "6a62b7b9ab7b1b24f2063c271f2f48373863bbeef40038fb3eeb3c574dbb2121",
+      "sha256": "2eee835a8aa88721d27e9d10ed7c193f0908f1d6cb6204eb337eeff2a01db98c",
       "probes": {
-        "5 p.m": true,
-        "1 p.m": true,
-        "injury report": true
+        "deadline 5pm-ish": true,
+        "continual updates": true,
+        "injury report wording": true
       },
       "probesMissing": [],
       "outboundLinks": [
@@ -77,22 +79,22 @@
       "url": "https://ak-static.cms.nba.com/referee/injury/",
       "documentedStatuses": [
         500,
+        503,
         200,
         403,
         404
       ],
       "claim": "Registry: the PDF directory is not browsable (HTTP 500), so the newest report cannot be enumerated. A 200 with links is a capability change.",
       "critical": false,
-      "error": "HTTP Error 503: Service Unavailable",
+      "encoding": null,
       "status": 503,
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
       "bytes": 280,
-      "sha256": "c492f93d5fe398ff20028b72faf9cbd5d8349adfef044c2bb4cc309759e52d3c",
+      "sha256": "f2f6478db3e9325e644a4fb18ca48b6e6c6e291f7d6db7a64b3ed4746c427363",
       "outboundLinks": [],
       "frames": [],
-      "verdict": "ENV-BLOCKED",
-      "meaning": "HTTP 503 from a datacenter IP. The claim under test is about the source and the browser path, which are evidenced elsewhere (the deployed page prints its own transport). Not counted as drift."
+      "verdict": "OK"
     },
     {
       "id": "nba-pdf-sample",
@@ -102,6 +104,7 @@
       ],
       "claim": "Registry: timestamped official PDFs exist and parse (Game Date/Time, Matchup, Team, Player, Status, Reason). The regression fixture for the parser is generated from this response.",
       "critical": true,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf",
       "contentType": "application/pdf",
@@ -120,11 +123,12 @@
       ],
       "claim": "Registry: THE primary board \u2014 one block per team with status + date + shortComment + details{type, side, returnDate} + notes. 403 here would mean the board must rely on the CI snapshot or stop.",
       "critical": true,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
       "bytes": 848875,
-      "sha256": "8cf409d42ded6122c9577ea9a338584833cf8301a5460f51c538d97575562552",
+      "sha256": "025ca5cca4934f1dca8e59157c8316eebd68281ba6ef7819ce2a8cf95555b64a",
       "teamBlocks": 27,
       "rows": 74,
       "season": {
@@ -143,12 +147,13 @@
       ],
       "claim": "Registry: 30 teams, addressable by abbreviation. Runner saw 403 in an earlier audit \u2014 recorded, not enforced.",
       "critical": false,
+      "encoding": null,
       "error": "HTTP Error 403: Forbidden",
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
       "contentType": "text/html",
       "bytes": 437,
-      "sha256": "021d37fef2af430bf80398493aae1fb48f446634016b1131d6f84707c0864682",
+      "sha256": "8524636c81e8c8c4dc775080cb93562a9858654c0b5502677080ac4b51637c21",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 from a datacenter IP. The claim under test is about the source and the browser path, which are evidenced elsewhere (the deployed page prints its own transport). Not counted as drift."
     },
@@ -161,11 +166,12 @@
       ],
       "claim": "Registry: drives live-game detection for in-game alerts. A hard failure here must never be read as \"no games today\".",
       "critical": true,
+      "encoding": null,
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "text/html",
       "bytes": 442,
-      "sha256": "be3de1190f32763afaa3e45071ad1b8da77ca7c4d49acecdddf1794a1bec4daf",
+      "sha256": "87b555e3ed0a885323175ef474749c58e7ea8623e10d06c5d341db6fd2f22321",
       "verdict": "OK"
     },
     {
@@ -177,11 +183,12 @@
       ],
       "claim": "Registry (espn-roster-athlete-detail): per-athlete position, experience, injuries[]{status,date} and contracts[]{salary,season} \u2014 the only free machine-readable input to the lineup-impact layer.",
       "critical": false,
+      "encoding": null,
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "text/html",
       "bytes": 456,
-      "sha256": "4ada0bdd8c70981190998995652c30cf0b2f55ceb7f305da43d38b9bf9054355",
+      "sha256": "d57bc4b3fe23aeb7b624e588d84981878a591d34115a89986c58b577b8f3769a",
       "verdict": "OK"
     },
     {
@@ -192,12 +199,13 @@
       ],
       "claim": "Registry (espn-depth-chart-page): rotation order is HTML-only (RotoWire-supplied); no JSON equivalent exists, so this page is a manual cross-check link and never a scrape target.",
       "critical": false,
+      "encoding": null,
       "status": 202,
       "finalUrl": "https://www.espn.com/nba/team/depth/_/name/mia",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 0,
-      "verdict": "DRIFT-RECORDED",
-      "meaning": "The source answers differently than the registry states. Recorded only; not a capability change."
+      "verdict": "ENV-BLOCKED",
+      "meaning": "HTTP 202 from a datacenter IP. The claim under test is about the source and the browser path, which are evidenced elsewhere (the deployed page prints its own transport). Not counted as drift."
     },
     {
       "id": "espn-injuries-page",
@@ -207,12 +215,13 @@
       ],
       "claim": "Registry: human injury table with estimated return dates and reporter attributions.",
       "critical": false,
+      "encoding": null,
       "status": 202,
       "finalUrl": "https://www.espn.com/nba/injuries",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 0,
-      "verdict": "DRIFT-RECORDED",
-      "meaning": "The source answers differently than the registry states. Recorded only; not a capability change."
+      "verdict": "ENV-BLOCKED",
+      "meaning": "HTTP 202 from a datacenter IP. The claim under test is about the source and the browser path, which are evidenced elsewhere (the deployed page prints its own transport). Not counted as drift."
     },
     {
       "id": "espn-teams-mia",
@@ -223,11 +232,12 @@
       ],
       "claim": "Registry: /teams/mia returns Miami Heat \u2014 the reason abbreviations, not numeric ids, are used everywhere.",
       "critical": false,
+      "encoding": null,
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "text/html",
       "bytes": 445,
-      "sha256": "bbf55296e494c28ae698c4a68c8cb82709470075cc2edecd0f84e1155678cb16",
+      "sha256": "435405dfddaf55afea2a3add2a22e7c1399070cd0d8884a9fdfa2575d8fd302f",
       "verdict": "OK"
     },
     {
@@ -238,11 +248,12 @@
       ],
       "claim": "Registry: nba.com carries a valid Bluesky verification object and its bio states the 2026-27 opener times.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
       "contentType": "application/json; charset=utf-8",
       "bytes": 1352,
-      "sha256": "5351cbd6dceb5240b403a9bb83656d140f8b39d9c2093760b27d08406732983a",
+      "sha256": "1f16f3d7ec50a2a68c9953a55812e7c77841fde2f4c2bc6da1e53d619c1f3ddb",
       "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
       "verification": {
         "verifications": [
@@ -259,7 +270,7 @@
         "trustedVerifierStatus": "none"
       },
       "displayName": "NBA",
-      "followers": 122386,
+      "followers": 122387,
       "bioSnippet": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! \ud83c\udfc0 3:00pm/et: Celtics/Pistons \ud83c\udfc0 7:00pm/et: 76ers/Knicks \ud83c\udfc0 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
       "verdict": "OK"
     },
@@ -271,6 +282,7 @@
       ],
       "claim": "Registry: the league follows ~6 accounts, so at most 4 of 30 teams have an official Bluesky presence \u2014 the verification ceiling on the social layer.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.graph.getFollows?actor=nba.com&limit=50",
       "contentType": "application/json; charset=utf-8",
@@ -290,23 +302,31 @@
     },
     {
       "id": "bluesky-list",
-      "url": "https://public.api.bsky.app/xrpc/app.bsky.graph.getList?actor=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca",
+      "url": "https://public.api.bsky.app/xrpc/app.bsky.graph.getList?user=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca",
       "documentedStatuses": [
         200,
         400
       ],
-      "claim": "Registry (bluesky-reporter-list): Howard Beck's curated NBA-writers list, used to build the reporter roster from real data instead of memory.",
+      "claim": "Registry (bluesky-reporter-list): Howard Beck's curated NBA-writers list, used to build the reporter roster from real data instead of memory. Fixed in this pass: app.bsky.graph.getList takes `user=`, not `actor=`, so an earlier revision of this check was answering 400 for the wrong reason and would have been read as the list disappearing.",
       "critical": false,
+      "encoding": null,
       "status": 400,
-      "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.graph.getList?actor=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca",
+      "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.graph.getList?user=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca",
       "contentType": "application/json; charset=utf-8",
       "bytes": 135,
       "sha256": "c949e2d3c86c72791ccbb435a941e76246791e96ee8bd79c76a55470f892bd92",
+      "probes": {
+        "members returned": false
+      },
+      "probesMissing": [
+        "members returned"
+      ],
       "listName": null,
       "listPurpose": null,
       "listDesc": null,
       "listItems": 0,
-      "verdict": "OK"
+      "verdict": "OK-PAGE-CHANGED",
+      "meaning": "Reachable as documented, but the wording this check looks for moved: members returned"
     },
     {
       "id": "bluesky-search",
@@ -317,6 +337,7 @@
       ],
       "claim": "Registry: keyword search is not available without a key (403 observed) \u2014 a documented limitation, deliberately not worked around. A 200 here would mean broader free coverage becomes possible.",
       "critical": true,
+      "encoding": null,
       "status": 403,
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=NBA%20injury&limit=1",
       "contentType": "text/html",
@@ -336,6 +357,7 @@
       ],
       "claim": "Registry (x-api): the pricing page challenges automated fetchers, so no price in the registry is confirmed \u2014 and the row now points at docs.x.com, not the xAI documentation it used to link.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://docs.x.com/x-api/getting-started/pricing",
       "contentType": "text/html; charset=utf-8",
@@ -347,17 +369,20 @@
       "id": "basketballmonster",
       "url": "https://basketballmonster.com/playernews.aspx",
       "documentedStatuses": [
-        200
+        200,
+        403
       ],
-      "claim": "Registry: the reference model \u2014 status tags, X source links, impact ratings, item age. Read for format; never scraped into the pipeline.",
+      "claim": "Registry: the reference model \u2014 status tags, X source links, impact ratings, item age. Measured today: the RAW HTML does not contain the tag words the rendered page shows (the list is client-rendered), which is a second reason this site links out instead of scraping \u2014 a faithful copy would need to execute their JavaScript.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
       "bytes": 115019,
-      "sha256": "d35b31c02440d2fd7d6d2ff6fd6289e5e7552faa55c732da98a55549a3d0d852",
+      "sha256": "e267ccd75040aee7c22a8c7b33c13a011c39e7a699f8836958be4119500de6a9",
       "probes": {
-        "INJURED": true
+        "player-news page": true,
+        "source attribution": true
       },
       "probesMissing": [],
       "outboundLinks": [
@@ -396,15 +421,17 @@
         200,
         403
       ],
-      "claim": "Registry: tertiary all-30-team cross-check with source attribution.",
+      "claim": "Registry: tertiary all-30-team cross-check with source attribution. An earlier run found no probe text at all because the body was still gzipped \u2014 the audit tool now decompresses before probing.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://www.covers.com/sport/basketball/nba/injuries",
       "contentType": "text/html; charset=utf-8",
       "bytes": 374071,
       "sha256": "e2ea77203a8d50c43dc2d5213ddff91bb5373337ba331bf0a1775e20d70fc82e",
       "probes": {
-        "injur": true
+        "injury table": true,
+        "teams named": true
       },
       "probesMissing": [],
       "outboundLinks": [
@@ -448,6 +475,7 @@
       ],
       "claim": "Registry: dated fantasy injury items with per-item source links.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://www.rotoballer.com/player-news?sport=nba",
       "contentType": "text/html; charset=UTF-8",
@@ -494,13 +522,15 @@
       ],
       "claim": "Registry (balldontlie): injuries are a paid tier and the page has no webhooks section \u2014 which is why the earlier webhook claim was marked unconfirmed.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://nba.balldontlie.io/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 456971,
       "sha256": "d70b20e7961770f33f2b7dd59d0c952341d5c97169409f3ef300c0c88ae9f52b",
       "probes": {
-        "ALL-STAR": true
+        "paid tier named ALL-STAR": true,
+        "injury endpoint mentioned": true
       },
       "probesMissing": [],
       "verdict": "OK"
@@ -515,6 +545,7 @@
       ],
       "claim": "Registry (Anthony Slater): dated evidence for the Athletic\u2192ESPN move that cleared the flag on his row. A 404 means the evidence link rotted, not that the move is wrong \u2014 so it is recorded, not enforced.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
       "contentType": "text/html; charset=UTF-8",
@@ -532,6 +563,7 @@
       ],
       "claim": "Registry (Candace Buckner): dated evidence for the Washington Post\u2192Athletic move that corrected her outlet.",
       "critical": false,
+      "encoding": null,
       "status": 200,
       "finalUrl": "https://www.sportsmediawatch.com/2026/02/new-york-times-hires-ex-washington-post-sportswriters/",
       "contentType": "text/html; charset=UTF-8",
@@ -545,8 +577,8 @@
     "byVerdict": {
       "DOCUMENTED-BLOCKER": 1,
       "OK": 17,
-      "ENV-BLOCKED": 2,
-      "DRIFT-RECORDED": 2
+      "ENV-BLOCKED": 3,
+      "OK-PAGE-CHANGED": 1
     },
     "capabilityDrift": 0,
     "toolErrors": 0,
