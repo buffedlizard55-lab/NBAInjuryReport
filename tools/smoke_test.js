@@ -1,49 +1,107 @@
 #!/usr/bin/env node
-/* Smoke tests for the NBA Injury Alert System logic — no browser required.
- * Run from repo root:  node tools/smoke_test.js
- * Exits non-zero on failure. */
+/* Smoke tests for the NBA Injury Alert System — runs the REAL browser modules in Node
+ * behind a tiny DOM/localStorage stub, so classification, diffing, alerting and rendering
+ * are exercised with realistic fixtures instead of being assumed to work.
+ *
+ * Run:  node tools/smoke_test.js
+ *
+ * Fixtures are modelled on payloads that were VERIFIED LIVE on 2026-09-17:
+ *   - ESPN structured injuries API (observed: status "Day-To-Day", type INJURY_STATUS_DAYTODAY,
+ *     fantasyStatus "GTD", details{type:"Achilles",location:"Leg",side:"Right",returnDate},
+ *     notes.items[]{headline,text,source:"RotoWire"}, athlete.links[] rel includes "playercard")
+ *   - ESPN game summary (observed: boxscore.players[].statistics[].athletes[]{didNotPlay,reason,ejected},
+ *     reason "COACH'S DECISION" as a NON-injury value)
+ *   - Bluesky author feed (observed: feed[].post.{uri,author{handle,displayName},record{text,createdAt},indexedAt})
+ */
 "use strict";
 const fs = require("fs");
 const path = require("path");
 
-const root = path.join(__dirname, "..");
-const dataSrc = fs.readFileSync(path.join(root, "assets/js/data.js"), "utf8");
-const ingameSrc = fs.readFileSync(path.join(root, "assets/js/ingame.js"), "utf8");
-
-// Evaluate data.js + ingame.js together. Both are DOM-free at load time
-// (all browser APIs are only touched inside functions).
-const load = new Function(dataSrc + "\n" + ingameSrc + `
-  return { TEAMS, TEAM_ALIASES, REPORTERS, SOURCES, FLAGS, SIGNALS, ENDPOINTS,
-           teamByAbbr, espnTeamInjuriesUrl, xSearchUrl, InGame };
-`);
-const { TEAMS, TEAM_ALIASES, REPORTERS, SOURCES, FLAGS, SIGNALS, ENDPOINTS,
-        teamByAbbr, espnTeamInjuriesUrl, xSearchUrl, InGame } = load();
-
+const ROOT = path.join(__dirname, "..");
 let pass = 0, failCount = 0;
 function check(name, cond, extra) {
-  if (cond) { pass++; console.log("  ✓", name); }
-  else { failCount++; console.error("  ✗ FAIL:", name, extra || ""); }
+  if (cond) { pass++; console.log("  ✓ " + name); }
+  else { failCount++; console.log("  ✗ " + name + (extra ? "  -> " + extra : "")); }
 }
 
+/* ------------------------------------------------------------------ *
+ * Minimal browser environment
+ * ------------------------------------------------------------------ */
+const store = {};
+global.localStorage = {
+  getItem: k => (k in store ? store[k] : null),
+  setItem: (k, v) => { store[k] = String(v); },
+  removeItem: k => { delete store[k]; }
+};
+function fakeEl() {
+  return {
+    innerHTML: "", textContent: "", value: "", checked: false, disabled: false, files: [],
+    dataset: {}, style: {},
+    addEventListener() { }, querySelectorAll() { return []; }, click() { }, querySelector() { return null; }
+  };
+}
+const els = {};
+global.document = {
+  getElementById: id => (els[id] = els[id] || fakeEl()),
+  querySelectorAll: () => [],
+  createElement: () => fakeEl(),
+  addEventListener() { }
+};
+global.window = global;
+global.fetch = () => Promise.reject(new Error("no network in tests"));
+global.alert = () => { };
+global.URL = global.URL || { createObjectURL: () => "blob:", revokeObjectURL() { } };
+
+/* ------------------------------------------------------------------ *
+ * Load the real modules into ONE shared scope (they are classic scripts)
+ * ------------------------------------------------------------------ */
+const FILES = ["data.js", "alerts.js", "wire.js", "injuries.js", "social.js", "ingame.js"];
+const source = FILES.map(f => fs.readFileSync(path.join(ROOT, "assets/js", f), "utf8")).join("\n;\n");
+
+const env = new Function(source + `
+  return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC,
+           SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, INGAME_WATCH_RE, NBA_OFFICIAL_REPORT_URL,
+           teamByAbbr, espnTeamInjuriesUrl, normalizeInjuryStatus, xSearchUrl,
+           AlertEngine, Wire, InjuryBoard, Social, InGame };
+`);
+const M = env();
+
 console.log("== data integrity ==");
-check("30 teams", TEAMS.length === 30);
-check("unique abbreviations", new Set(TEAMS.map(t => t.abbr)).size === 30);
-check("every alias map key matches a team", Object.keys(TEAM_ALIASES).every(a => !!teamByAbbr(a)));
-check("team injury URL pattern", espnTeamInjuriesUrl("MIA") === "https://www.espn.com/nba/team/injuries/_/name/mia");
-check("reporter count is 36", REPORTERS.length === 36, "got " + REPORTERS.length);
-check("reporter names unique", new Set(REPORTERS.map(r => r.name)).size === REPORTERS.length);
-check("every reporter has a verifyUrl", REPORTERS.every(r => r.verifyUrl && r.verifyUrl.startsWith("http")));
+check("30 teams", M.TEAMS.length === 30);
+check("unique abbreviations", new Set(M.TEAMS.map(t => t.abbr)).size === 30);
+check("every alias-map key matches a team", Object.keys(M.TEAM_ALIASES).every(a => !!M.teamByAbbr(a)));
+check("team injuries URL pattern", M.espnTeamInjuriesUrl("MIA") === "https://www.espn.com/nba/team/injuries/_/name/mia");
+check("reporter directory kept (>=36 rows)", M.REPORTERS.length >= 36, "got " + M.REPORTERS.length);
+check("reporter names unique", new Set(M.REPORTERS.map(r => r.name)).size === M.REPORTERS.length);
+check("every reporter has a verifyUrl", M.REPORTERS.every(r => r.verifyUrl && r.verifyUrl.startsWith("http")));
 check("verified-handle rows assert a handle; outlet-only rows assert none",
-  REPORTERS.every(r => (r.status === "verified-handle") ? !!r.handle : (r.status === "outlet-only") ? !r.handle : true));
-check("Wojnarowski is marked retired (never a live source)",
-  (REPORTERS.find(r => r.name === "Adrian Wojnarowski") || {}).status === "retired");
-check("every source has id/name/url/verified/review", SOURCES.every(s => s.id && s.name && s.url && s.verified && s.review));
-check("flags present", FLAGS.length >= 8);
-check("summary endpoint constant present", typeof ENDPOINTS.summary === "string" && ENDPOINTS.summary.includes("summary?event="));
+  M.REPORTERS.every(r => (r.status === "verified-handle") ? !!r.handle : (r.status === "outlet-only") ? !r.handle : true));
+check("Wojnarowski marked retired", (M.REPORTERS.find(r => r.name === "Adrian Wojnarowski") || {}).status === "retired");
+check("every source has id/name/url/verified/review", M.SOURCES.every(s => s.id && s.name && s.url && s.verified && s.review));
+check("source ids unique", new Set(M.SOURCES.map(s => s.id)).size === M.SOURCES.length);
+check("structured injuries endpoint registered", M.ENDPOINTS.injuries.includes("/nba/injuries"));
+check("Bluesky public API endpoint registered", M.ENDPOINTS.bskyAuthorFeed.startsWith("https://public.api.bsky.app/xrpc/"));
+check("same-origin snapshot path registered", M.ENDPOINTS.liveSnapshot === "data/live/latest.json");
+check("flags present (>= 20)", M.FLAGS.length >= 20, "got " + M.FLAGS.length);
+check("flag levels are valid", M.FLAGS.every(f => ["bad", "warn", "info"].includes(f.level)));
+check("Bluesky reporter handles look like handles",
+  M.BSKY_REPORTERS.every(r => /^[a-z0-9.-]+\.[a-z]{2,}$/.test(r.handle) && r.evidence.startsWith("https://bsky.app/profile/")));
+check("every social account has verification evidence", M.SOCIAL_ACCOUNTS.every(a => a.verified && a.url));
+check("only feed-enabled accounts are polled", M.SOCIAL_ACCOUNTS.some(a => a.feed) && M.SOCIAL_ACCOUNTS.some(a => !a.feed));
+check("the curated writers list has a source URL + count", !!M.BLUESKY_LIST_SOURCE.url && M.BLUESKY_LIST_SOURCE.members > 0);
+
+console.log("== status normalization (ESPN structured board) ==");
+check("observed 'Day-To-Day' + INJURY_STATUS_DAYTODAY + GTD -> questionable",
+  M.normalizeInjuryStatus("Day-To-Day", "INJURY_STATUS_DAYTODAY", "GTD").sev === "questionable");
+check("'Out' -> out", M.normalizeInjuryStatus("Out", "INJURY_STATUS_OUT", "").sev === "out");
+check("'Out For Season' -> out", M.normalizeInjuryStatus("Out For Season", "INJURY_STATUS_OUT_FOR_SEASON", "").sev === "out");
+check("'Doubtful' -> doubtful", M.normalizeInjuryStatus("Doubtful", "", "").sev === "doubtful");
+check("unrecognised status falls through to 'mention' (never silently mislabelled)",
+  M.normalizeInjuryStatus("Probation", "WEIRD", "").sev === "mention");
 
 console.log("== classifier (headline -> severity) ==");
-function classify(text) { for (const s of SIGNALS) if (s.re.test(text)) return s.sev; return null; }
-const cases = [
+function classify(text) { for (const s of M.SIGNALS) if (s.re.test(text)) return s.sev; return null; }
+[
   ["Suns' Mark Williams to miss months after shoulder surgery", "out"],
   ["Mark Williams had surgery to repair a torn labrum; will miss several months", "out"],
   ["Lakers' LeBron James ruled out vs. Thunder with sciatica", "out"],
@@ -56,18 +114,116 @@ const cases = [
   ["Ja Morant left the game with a sprained ankle", "mention"],
   ["Fantasy basketball points league rankings: Cade Cunningham, Jalen Johnson are first-rounders", null],
   ["Full-court shot lifts Liberty in overtime thriller", null]
-];
-for (const [text, want] of cases) check(`classify(${JSON.stringify(text.slice(0, 48))}…) = ${want}`, classify(text) === want, "got " + classify(text));
+].forEach(([text, want]) => check(`classify(${JSON.stringify(text.slice(0, 46))}…) = ${want}`, classify(text) === want, "got " + classify(text)));
+
+console.log("== structured injury board: normalization ==");
+const INJ_PAYLOAD = {
+  timestamp: "2026-09-17T03:00:43Z",
+  status: "success",
+  season: { year: 2027, type: 1, name: "Preseason", displayName: "2026-27" },
+  injuries: [
+    {
+      id: "1", displayName: "Atlanta Hawks", injuries: [{
+        id: "-56292",
+        status: "Day-To-Day",
+        date: "2026-07-19T00:14Z",
+        shortComment: "Gueye underwent surgery Tuesday to repair a fractured left foot that he suffered during a workout last week, Brad Rowland of the Locked On Podcast Network reports.",
+        longComment: "Gueye will be re-evaluated by medical staff in 3-to-4 months.",
+        athlete: {
+          id: "4712863", displayName: "Mouhamed Gueye", shortName: "M. Gueye",
+          position: { abbreviation: "F" },
+          team: { abbreviation: "ATL" },
+          headshot: { href: "https://a.espncdn.com/i/headshots/nba/players/full/4712863.png" },
+          links: [{ rel: ["playercard", "desktop", "athlete"], href: "https://www.espn.com/nba/player/_/id/4712863/mouhamed-gueye" }]
+        },
+        notes: { items: [{ id: "532101", type: "news", date: "2026-07-18T23:18Z", headline: "Dennis (Achilles) has been ruled out for Saturday's Summer League game against the Wizards, Brad Rowland of the Locked On Podcast Network reports.", text: "…", source: "RotoWire" }] },
+        type: { id: "6", name: "INJURY_STATUS_DAYTODAY", description: "day-to-day" },
+        details: { fantasyStatus: { description: "GTD", abbreviation: "GTD" }, type: "Achilles", location: "Leg", side: "Right", returnDate: "2026-10-01" }
+      }]
+    },
+    {
+      id: "14", displayName: "Miami Heat", injuries: [{
+        id: "532489", status: "Out", date: "2026-09-02T16:32Z",
+        shortComment: "Antetokounmpo (knee) did not participate in Greece's latest FIBA qualifying window.",
+        athlete: { id: "3032977", displayName: "Giannis Antetokounmpo", position: { abbreviation: "F" }, team: { abbreviation: "MIA" }, links: [{ rel: ["playercard"], href: "https://www.espn.com/nba/player/_/id/3032977/giannis-antetokounmpo" }] },
+        notes: { items: [] },
+        type: { name: "INJURY_STATUS_OUT" },
+        details: { fantasyStatus: { description: "OFS" }, type: "Knee", location: "Leg", side: "Left" }
+      }]
+    }
+  ]
+};
+const rows = M.InjuryBoard.normalize(INJ_PAYLOAD);
+check("normalizes both listings", rows.length === 2, "got " + rows.length);
+const gueye = rows.find(r => r.player === "Mouhamed Gueye");
+const giannis = rows.find(r => r.player === "Giannis Antetokounmpo");
+check("team abbreviation taken from athlete.team (not the team block)", gueye.team === "ATL" && giannis.team === "MIA");
+check("player URL uses the playercard link", gueye.playerUrl === "https://www.espn.com/nba/player/_/id/4712863/mouhamed-gueye");
+check("day-to-day -> questionable severity", gueye.sev === "questionable");
+check("'Out' -> out severity", giannis.sev === "out");
+check("game-time-decision flag captured", gueye.fantasyStatus === "GTD");
+check("injury type / side / location captured", gueye.bodyPart.includes("Right") && gueye.bodyPart.includes("Achilles"));
+check("expected return date captured", gueye.returnDate === "2026-10-01");
+check("news source attribution captured (RotoWire)", gueye.noteSource === "RotoWire");
+check("every row carries the ESPN team-injuries review link", rows.every(r => /espn\.com\/nba\/team\/injuries\/_\/name\//.test(r.teamUrl)));
+check("every row carries an official NBA report link", rows.every(r => r.officialUrl.includes("official.nba.com")));
+check("newest-first ordering by the feed's own date", new Date(rows[0].updated) >= new Date(rows[1].updated));
+
+console.log("== structured injury board: alert diffing ==");
+const fired = [];
+M.AlertEngine.fire = item => fired.push(item);
+M.AlertEngine.log = () => { };
+M.AlertEngine.renderLog = () => { };
+M.InjuryBoard.diffAlerts(rows, false);
+check("first pass seeds silently (no alert storm)", fired.length === 0, "fired " + fired.length);
+M.InjuryBoard.diffAlerts(rows, false);
+check("unchanged rows do not re-alert", fired.length === 0, "fired " + fired.length);
+const changed = JSON.parse(JSON.stringify(rows));
+changed.find(r => r.player === "Mouhamed Gueye").status = "Out For Season";
+changed.find(r => r.player === "Mouhamed Gueye").fp = "Out For Season|changed|changed";
+M.InjuryBoard.diffAlerts(M.InjuryBoard.normalize({ injuries: INJ_PAYLOAD.injuries }).map(r => r.player === "Mouhamed Gueye" ? Object.assign(r, { status: "Out For Season", sev: "out", sevLabel: "OUT", fp: "Out For Season|changed|changed" }) : r), false);
+check("a status change raises exactly one alert", fired.length === 1, "fired " + fired.length);
+check("the alert names the player and the new status", fired[0] && /Mouhamed Gueye/.test(fired[0].title) && /Out For Season/.test(fired[0].title));
+
+console.log("== unified wire ==");
+check("push accepts a new key", M.Wire.push({ key: "k1", sev: "out", sevLabel: "OUT", layer: "espn-board", text: "A" }) === true);
+check("push rejects the same key twice", M.Wire.push({ key: "k1", sev: "out", sevLabel: "OUT", layer: "espn-board", text: "A" }) === false);
+M.Wire.push({ key: "k2", sev: "questionable", sevLabel: "Q", layer: "social", text: "B", url: "https://bsky.app/x" });
+M.Wire.render([]);
+check("wire renders both items", /espn-board|ESPN injury board/.test(els.wire.innerHTML) && /Social \(Bluesky\)/.test(els.wire.innerHTML));
+check("wire escapes HTML instead of injecting it",
+  (M.Wire.push({ key: "k3", sev: "out", sevLabel: "OUT", layer: "social", text: "<img src=x onerror=alert(1)>" }), M.Wire.render([]), !/<img/.test(els.wire.innerHTML)));
+
+console.log("== social layer: post classification ==");
+[
+  ["Injury Update: Giannis Antetokounmpo has been ruled out for the remainder of the game with a left knee injury.", "ingame-watch"],
+  ["Jalen Brunson has been ruled out for tonight's game with ankle soreness.", "designation"],
+  ["Stephen Curry is questionable to return with a tweaked ankle.", "ingame-watch"],
+  ["Lakers say Luka Doncic has left the game and is headed to the locker room.", "ingame-watch"],
+  ["Jayson Tatum will miss the next two weeks with a sprained ankle.", "designation"],
+  ["The Celtics have officially ruled out Jaylen Brown (hamstring) for tonight.", "designation"],
+  ["Great win tonight, defense was elite.", null],
+  ["Trade grades: who won the deal?", null]
+].forEach(([text, wantKind]) => {
+  const got = M.Social.classifyPost(text);
+  const kind = got && got.kind;
+  check(`classifyPost(${JSON.stringify(text.slice(0, 44))}…) -> ${wantKind}`, kind === wantKind, "got " + kind + " (" + (got && got.sevLabel) + ")");
+});
+const watch = M.Social.classifyPost("Curry is questionable to return with a tweaked ankle.");
+check("in-game watch is labelled as unconfirmed social, never as an official 'OUT'",
+  watch.sevLabel.includes("WATCH") && watch.sev !== "out", watch.sevLabel);
+check("in-game watch severity is 'questionable' so it passes the default alert filter", watch.sev === "questionable");
+const ruledOutInGame = M.Social.classifyPost("Injury Update: Giannis Antetokounmpo has been ruled out for the remainder of the game with a left knee injury.");
+check("'ruled out for the remainder of the game' keeps the in-game label AND 'out' severity",
+  ruledOutInGame.kind === "ingame-watch" && ruledOutInGame.sev === "out" && /in-game/i.test(ruledOutInGame.sevLabel), ruledOutInGame.sevLabel);
+check("the in-game label names it as a social report (not a league designation)", /social/i.test(ruledOutInGame.sevLabel));
 
 console.log("== in-game monitor extraction ==");
-// Realistic summary fragment modeled on the VERIFIED 2026-04-12 payload (boxscore.players[].statistics[].athletes[]).
 const fakeSummary = {
   boxscore: { players: [
     { team: { abbreviation: "ORL" }, statistics: [{ athletes: [
-      { didNotPlay: true, ejected: false, reason: "COACH'S DECISION", // directly observed non-injury value -> must NOT alert
-        athlete: { id: "1", displayName: "Rest Guy" } },
-      { didNotPlay: true, ejected: false, reason: "Left knee soreness",
-        athlete: { id: "2", displayName: "Hurt Star" } },
+      { didNotPlay: true, ejected: false, reason: "COACH'S DECISION", athlete: { id: "1", displayName: "Rest Guy" } },
+      { didNotPlay: true, ejected: false, reason: "Left knee soreness", athlete: { id: "2", displayName: "Hurt Star" } },
       { didNotPlay: false, ejected: false, athlete: { id: "3", displayName: "Playing Guy" } },
       { didNotPlay: true, ejected: true, reason: "Two technicals", athlete: { id: "4", displayName: "Hot Head" } }
     ] }] },
@@ -82,7 +238,7 @@ const fakeSummary = {
     ] }
   ]
 };
-const got = InGame.extract(fakeSummary, "401811041", "ORL @ BOS");
+const got = M.InGame.extract(fakeSummary, "401811041", "ORL @ BOS");
 const names = got.map(g => g.player);
 check("flags 'Hurt Star' (injury DNP)", names.includes("Hurt Star"));
 check("flags 'Sick Wing' (illness DNP)", names.includes("Sick Wing"));
@@ -92,15 +248,32 @@ check("does NOT flag ejected players", !names.includes("Hot Head"));
 check("flags injuries-array 'Questionable' entry when present", names.includes("QTR Guard"));
 check("ignores non-injury injuries-array entries", !names.includes("Fine Guard"));
 check("DNP entries map to severity 'out'", got.filter(g => g.kind === "DNP").every(g => g.sev === "out"));
-check("injuries-array 'Questionable' maps to severity 'questionable'",
-  (got.find(g => g.player === "QTR Guard") || {}).sev === "questionable");
+check("injuries-array 'Questionable' maps to severity 'questionable'", (got.find(g => g.player === "QTR Guard") || {}).sev === "questionable");
 check("every finding links the ESPN game page", got.every(g => g.url === "https://www.espn.com/nba/game/_/gameId/401811041"));
-const live = InGame.liveEvents([
+const live = M.InGame.liveEvents([
   { competitions: [{ status: { type: { state: "in" } } }] },
   { competitions: [{ status: { type: { state: "pre" } } }] },
   { competitions: [{ status: { type: { state: "post" } } }] }
 ]);
 check("liveEvents selects only in-progress games", live.length === 1);
+
+console.log("== alert engine ==");
+check("sound defaults to ON", M.AlertEngine.isSoundOn() === true);
+M.AlertEngine.setSoundOn(false);
+check("sound toggle persists OFF", M.AlertEngine.isSoundOn() === false && localStorage.getItem("nba-alerts-sound-on") === "off");
+M.AlertEngine.setSoundOn(true);
+check("escapeHtml neutralises tags", M.AlertEngine.escapeHtml("<b>&\"'</b>") === "&lt;b&gt;&amp;&quot;&#39;&lt;/b&gt;");
+
+console.log("== poller + workflow presence ==");
+check("tools/poll_watch.js exists", fs.existsSync(path.join(ROOT, "tools/poll_watch.js")));
+check("injury-watch workflow exists", fs.existsSync(path.join(ROOT, ".github/workflows/injury-watch.yml")));
+const wf = fs.readFileSync(path.join(ROOT, ".github/workflows/injury-watch.yml"), "utf8");
+check("workflow has a schedule + manual dispatch", /schedule:/.test(wf) && /workflow_dispatch:/.test(wf));
+check("workflow can write contents", /contents: write/.test(wf));
+check("workflow runs the poller against the shipped data registry", /node tools\/poll_watch\.js/.test(wf));
+const poller = fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8");
+check("poller loads the single source of truth (data.js)", /assets\/js\/data\.js/.test(poller));
+check("poller records first-to-report evidence", /firsts\.json/.test(poller));
 
 console.log(`\n${pass} passed, ${failCount} failed`);
 process.exit(failCount ? 1 : 0);

@@ -5,13 +5,63 @@
 "use strict";
 
 const ESPN_API = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba";
+const BSKY_API = "https://public.api.bsky.app/xrpc";
 const ENDPOINTS = {
   news: ESPN_API + "/news?limit=50",          // re-verified live 2026-09-17 (JSON, articles[].links.web.href)
   scoreboard: ESPN_API + "/scoreboard",       // re-verified live 2026-09-17 (?dates=YYYYMMDD supported)
   teams: ESPN_API + "/teams",                 // verified live 2026-09-17 (/teams/mia works, abbr accepted)
   summary: "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event=", // re-verified live 2026-09-17 via event 401811041 (ORL@BOS 2026-04-12): boxscore.players[].statistics[].athletes[] carry didNotPlay + reason; article recap present
+  /* NEW 2026-09-17 — STRUCTURED, ALL-30-TEAM INJURY FEED (the big upgrade this session).
+   * Verified live: returns season{2026-27 Preseason} + injuries[] (one block per team) with
+   * { status, date, shortComment, longComment, athlete{displayName,position,team,headshot,links},
+   *   notes.items[]{headline,text,source}, type{name:INJURY_STATUS_*}, details{fantasyStatus,type,side,returnDate} }.
+   * ?team=<abbr> filters to one team (verified with ?team=mia). */
+  injuries: "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+  injuriesTeam: "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries?team=",
+  /* Bluesky (AT Protocol) public API — FREE, NO KEY, unofficial-but-public.
+   * Verified live 2026-09-17: getAuthorFeed + searchActorsTypeahead + getList + getFollows all
+   * answered WITHOUT auth. searchPosts returns HTTP 403 unauthenticated (see FLAGS) — so this
+   * project reads per-account feeds of a verified allow-list instead of keyword-searching. */
+  bskyAuthorFeed: BSKY_API + "/app.bsky.feed.getAuthorFeed?actor=",
+  bskyTypeahead: BSKY_API + "/app.bsky.actor.searchActorsTypeahead?q=",
+  bskyList: BSKY_API + "/app.bsky.graph.getList?list=",
+  /* Same-origin artifacts produced by the free GitHub Actions poller (tools/poll_watch.js).
+   * Used as the CORS-proof fallback for the social layer and as the forward-collected
+   * history that powers "first to report" scoring. */
+  socialSnapshot: "data/live/latest.json",
+  liveSnapshot: "data/live/latest.json",
+  historyToday: "data/history/today.json",
+  corsRelay: "https://api.allorigins.win/raw?url=", // opt-in, clearly labelled third-party relay
   nbaCdnScoreboard: "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json" // UNVERIFIED from build env (TLS/HTTP500 on 2 networks); failover only, defensive parsing
 };
+
+/* Official NBA injury-report URL. 2026-27 page verified 404 on 2026-09-17 (season not rolled over),
+ * so the registry keeps the last VERIFIED live page (2025-26, rules text intact) and the
+ * league-mandated deadline rules — and flags the rollover as a to-do. */
+const NBA_OFFICIAL_REPORT_URL = "https://official.nba.com/nba-injury-report-2025-26-season/";
+const NBA_OFFICIAL_INJURY_LANDING = "https://official.nba.com/";
+
+/* ESPN structured-status -> our severity scale.
+ * Only statuses DIRECTLY OBSERVED in the live payload are asserted as seen;
+ * the regexes below are generic so unrecognised values fall through to "mention"
+ * rather than being silently mislabelled. */
+const INJURY_STATUS_RULES = [
+  { sev: "out", label: "OUT", re: /(out for (the )?(season|year)|season-?ending|out indefinitely|suspended|^out$|^out\b|^o\b)/i },
+  { sev: "doubtful", label: "DOUBTFUL", re: /doubtful/i },
+  { sev: "questionable", label: "QUESTIONABLE / DAY-TO-DAY", re: /(day-?to-?day|game-?time decision|questionable|gtd|^dtd$)/i },
+  { sev: "probable", label: "PROBABLE", re: /probable/i },
+  { sev: "return", label: "CLEARED / RETURNING", re: /(cleared|available|active|return(ing)? to (play|lineup))/i }
+];
+/* In-game exit language — the highest-latency-value signal in the project, because it can
+ * appear SECONDS after a player walks to the locker room. Canonical definition lives here so
+ * the browser (assets/js/social.js) and the CI poller (tools/poll_watch.js) classify identically. */
+const INGAME_WATCH_RE = /\b(won'?t return|will not return|not return(ing)?|out for the (rest|remainder) of the (game|half|night)|questionable to return|locker room|left the game|leaves the game|helped off|carried off|limping|hobbl\w+|headed to the locker|tweaked|re-?aggravated|reinjur\w+|injury timeout|down on the (floor|court))\b/i;
+
+function normalizeInjuryStatus(statusText, typeName, fantasyStatus) {
+  const t = [statusText, typeName, fantasyStatus].filter(Boolean).join(" ");
+  for (const r of INJURY_STATUS_RULES) if (r.re.test(t)) return { sev: r.sev, label: r.label };
+  return { sev: "mention", label: (statusText || "INJURY NOTE").toUpperCase() };
+}
 
 /* 30 NBA teams. ESPN slug = lowercase abbr (verified pattern via /teams/mia -> injuries link
  * https://www.espn.com/nba/team/injuries/_/name/mia). NBA.com slug verified for /heat;
@@ -87,6 +137,81 @@ const SIGNALS = [
   { sev: "mention", label: "INJURY MENTION", re: /\b(injur(y|ed|ies|ing)|hurt|sprain|strain|soreness|contusion|concussion|illness|knee|ankle|hamstring|calf|groin|back spasms|shoulder|wrist|elbow|hip|foot|toe|finger|hand|neck|oblique|achilles|acl|mcl|meniscus|labrum|hernia|migraine|protocol)\b/i }
 ];
 
+/* =====================================================================================
+ * SOCIAL SECOND LAYER — verified allow-list (NOT keyword scraping)
+ * -------------------------------------------------------------------------------------
+ * Why an allow-list: on 2026-09-17 the Bluesky public API answered getAuthorFeed,
+ * searchActorsTypeahead, getList and getFollows WITHOUT any key, but searchPosts returned
+ * HTTP 403 unauthenticated. So the social layer polls the author feeds of accounts whose
+ * identity we verified, instead of searching the firehose for keywords.
+ *
+ * Every row below was discovered/verified live on 2026-09-17 via public.api.bsky.app.
+ * `bskyVerified` = Bluesky's own verification object (issuer bsky.app or the outlet's own
+ * domain account) was present and valid at verification time.
+ * ===================================================================================== */
+const BLUESKY_LIST_SOURCE = {
+  name: "NBA Writers/Broadcasters/Podcasters/Bloggers (curated by Howard Beck)",
+  uri: "at://did:plc:rkpzrwxex34r36ypejhew7ml/app.bsky.graph.list/3llmezwbnrp2d",
+  url: "https://bsky.app/profile/howardbeck.bsky.social/lists/3llmezwbnrp2d",
+  members: 150,
+  verified: "2026-09-17 — list read live via app.bsky.graph.getList (150 items); creator Howard Beck carries a VALID Bluesky verification object issued by bsky.app and his bio reads 'Senior NBA Writer at TheRinger.com'"
+};
+
+/* Official league + team accounts on Bluesky (free, no-key, machine-readable). */
+const SOCIAL_ACCOUNTS = [
+  { handle: "nba.com", name: "NBA — official league account", kind: "official-league", team: null, feed: true, bskyVerified: true,
+    verified: "2026-09-17 — Bluesky verification object valid (issuer bsky.app, isValid true); bio states 'The official account for the NBA' and lists the 2026-27 opening-night slate (Oct 20: Celtics/Pistons, 76ers/Knicks, Thunder/Spurs) which matches ESPN's schedule data",
+    url: "https://bsky.app/profile/nba.com" },
+  { handle: "trailblazers.bsky.social", name: "Portland Trail Blazers — official", kind: "official-team", team: "POR", feed: true, bskyVerified: true,
+    verified: "2026-09-17 — valid Bluesky verification object + followed by the official NBA account",
+    url: "https://bsky.app/profile/trailblazers.bsky.social" },
+  { handle: "nuggets.bsky.social", name: "Denver Nuggets — official", kind: "official-team", team: "DEN", feed: true, bskyVerified: true,
+    verified: "2026-09-17 — valid Bluesky verification object + followed by the official NBA account",
+    url: "https://bsky.app/profile/nuggets.bsky.social" },
+  { handle: "sixersnba.bsky.social", name: "Philadelphia 76ers — official", kind: "official-team", team: "PHI", feed: true, bskyVerified: true,
+    verified: "2026-09-17 — valid Bluesky verification object; bio says 'yes this is our official account … Sixers.com'",
+    url: "https://bsky.app/profile/sixersnba.bsky.social" },
+  { handle: "dallasmavs.bsky.social", name: "Dallas Mavericks", kind: "official-team", team: "DAL", feed: true, bskyVerified: false,
+    verified: "2026-09-17 — followed by the official NBA account and bio reads 'Mavs.com', but NO Bluesky verification object was present. FLAGGED as unverified-team-account: treat as club-run only after a second source confirms.",
+    url: "https://bsky.app/profile/dallasmavs.bsky.social" },
+  /* Outlet verifier accounts (used as evidence for staff verification, not primary feed inputs) */
+  { handle: "theathletic.com", name: "The Athletic (outlet account, Bluesky verifier)", kind: "outlet", team: null, feed: false, bskyVerified: true,
+    verified: "2026-09-17 — issues valid Bluesky verification objects to its own staff (observed verifying Sam Vecenie and Mike Vorkunov)",
+    url: "https://bsky.app/profile/theathletic.com" },
+  { handle: "basketball-reference.com", name: "Basketball Reference", kind: "stats", team: null, feed: false, bskyVerified: true,
+    verified: "2026-09-17 — valid Bluesky verification object; publisher of an NBA starter pack",
+    url: "https://bsky.app/profile/basketball-reference.com" }
+];
+
+/* Reporter Bluesky handles verified live 2026-09-17 (evidence column is re-checkable).
+ * These feed the live social panel; X handles remain the primary directory field. */
+const BSKY_REPORTERS = [
+  { name: "Howard Beck", handle: "howardbeck.bsky.social", outlet: "The Ringer", role: "Senior NBA Writer", team: null, feed: true, bskyVerified: true,
+    evidence: "https://bsky.app/profile/howardbeck.bsky.social",
+    verified: "2026-09-17 — valid Bluesky verification (issuer bsky.app); bio 'Senior NBA Writer at TheRinger.com | Co-host, the Real Ones'; creator of the 150-member NBA writers list" },
+  { name: "Sam Vecenie", handle: "samvecenie.bsky.social", outlet: "The Athletic", role: "Senior Writer (NBA / draft) + Game Theory Podcast", team: null, feed: true, bskyVerified: true,
+    evidence: "https://bsky.app/profile/samvecenie.bsky.social",
+    verified: "2026-09-17 — VALID Bluesky verification issued by theathletic.com (the outlet verifying its own staff); bio names The Athletic" },
+  { name: "Mike Vorkunov", handle: "mikevorkunov.bsky.social", outlet: "The Athletic", role: "National NBA reporter", team: null, feed: true, bskyVerified: true,
+    evidence: "https://bsky.app/profile/mikevorkunov.bsky.social",
+    verified: "2026-09-17 — VALID Bluesky verification issued by theathletic.com; creator of the 'A NBA/WNBA/Basketball Starter Pack' list" },
+  { name: "John Hollinger", handle: "johnhollinger.bsky.social", outlet: "The Athletic", role: "Senior NBA columnist", team: null, feed: true, bskyVerified: false,
+    evidence: "https://bsky.app/profile/johnhollinger.bsky.social",
+    verified: "2026-09-17 — ACTIVE: most recent post indexed 2026-09-17T01:28Z (verified via getAuthorFeed). No Bluesky verification object present; identity corroborated by the X-bio pointer on his directory row. He is inactive on X, so this is his working feed." },
+  { name: "Tom Haberstroh", handle: "tomhaberstroh.bsky.social", outlet: "Yahoo Sports / TomTheFinder.com", role: "NBA writer + Trail Blazers analytics insider", team: null, feed: true, bskyVerified: false,
+    evidence: "https://bsky.app/profile/tomhaberstroh.bsky.social",
+    verified: "2026-09-17 — member of Howard Beck's verified NBA writers list; bio names TomTheFinder.com + Yahoo Sports" },
+  { name: "Jeff McDonald", handle: "jmcdonaldsa.bsky.social", outlet: "San Antonio Express-News", role: "Spurs beat writer", team: "SAS", feed: true, bskyVerified: false,
+    evidence: "https://bsky.app/profile/jmcdonaldsa.bsky.social",
+    verified: "2026-09-17 — member of Howard Beck's verified NBA writers list; bio 'Spurs beat writer for the San Antonio Express-News'" },
+  { name: "Tom Orsborn", handle: "tomorsborn.bsky.social", outlet: "San Antonio Express-News", role: "Spurs beat writer", team: "SAS", feed: true, bskyVerified: false,
+    evidence: "https://bsky.app/profile/tomorsborn.bsky.social",
+    verified: "2026-09-17 — member of Howard Beck's verified NBA writers list; bio '11th consecutive season as one of the E-N's Spurs beat writers'" },
+  { name: "Sarah Todd", handle: "nbasarah.bsky.social", outlet: "NBA writer (Utah market)", role: "Beat writer / columnist", team: "UTA", feed: true, bskyVerified: true,
+    evidence: "https://bsky.app/profile/nbasarah.bsky.social",
+    verified: "2026-09-17 — valid Bluesky verification object (issuer bsky.app) surfaced by searchActorsTypeahead; beat/outlet field deliberately left generic until re-confirmed" }
+];
+
 /* Verified reporter / insider directory.
  * status: verified-handle (X handle confirmed to belong to this person),
  *         outlet-only (person+outlet confirmed; X handle NOT confirmed — no handle asserted),
@@ -94,7 +219,7 @@ const SIGNALS = [
  *         inactive (confirmed but not usable on X), retired (historical only). */
 const REPORTERS = [
   // ---- Tier 1: lead NBA insiders ----
-  { name: "Shams Charania", handle: "ShamsCharania", outlet: "ESPN", role: "Senior NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "ESPN's Shams Charania (ESPN 2026 buzz live blog) + Basketball Monster source links", verifyUrl: "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason", notes: "Replaced Wojnarowski as ESPN's lead NBA insider (Oct 2024). First to report many injuries/transactions." },
+  { name: "Shams Charania", handle: "ShamsCharania", outlet: "ESPN", role: "Senior NBA Insider" , bsky: "johnhollinger.bsky.social", tier: 1, beat: null, status: "verified-handle", verifyLabel: "ESPN's Shams Charania (ESPN 2026 buzz live blog) + Basketball Monster source links", verifyUrl: "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason", notes: "Replaced Wojnarowski as ESPN's lead NBA insider (Oct 2024). First to report many injuries/transactions." },
   { name: "Chris Haynes", handle: "ChrisBHaynes", outlet: "NBA on Prime Video", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Front Office Sports: Haynes joins Amazon Prime NBA team; Sotwe profile @ChrisBHaynes", verifyUrl: "https://frontofficesports.com/chris-haynes-marcus-thompson-amazon-prime-nba-team/", notes: "Previously ESPN / Yahoo Sports / TNT / Bleacher Report." },
   { name: "Marc Stein", handle: "TheSteinLine", outlet: "The Stein Line (Substack)", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Substack author sameAs twitter.com/TheSteinLine; co-host #thisleague UNCUT", verifyUrl: "https://marcstein.substack.com/p/debut-episode-of-thisleague-uncut", notes: "Covering the NBA since 1994; ex-ESPN, ex-New York Times." },
   { name: "Jake Fischer", handle: "JakeLFischer", outlet: "Yahoo Sports", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Basketball Monster source link twitter.com/JakeLFischer; Tier-1 in reporter-rankings", verifyUrl: "https://basketballmonster.com/playernews.aspx", notes: "Listed Tier 1 alongside Shams/Stein/Haynes in community reporter rankings." },
@@ -154,21 +279,36 @@ const SOURCES = [
   { id: "rotoballer-news", name: "RotoBaller NBA Player News", url: "https://www.rotoballer.com/player-news?sport=nba", kind: "Fantasy player-news feed", cost: "Free", latency: "Editorial real-time", browser: "Manual review link", verified: "2026-09-17 — re-fetched live: real-time feed with Sep 16, 2026 dated entries bylined by staff (e.g. Fleming/McNeil items 12–13h old) + original-source links per item", review: "https://www.rotoballer.com/player-news?sport=nba", note: "Tertiary cross-check." },
   { id: "x-embeds", name: "X embedded timelines (widgets.js)", url: "https://publish.twitter.com/", kind: "Official embed (no key)", cost: "Free", latency: "Live", browser: "Yes (often blocked by ad/privacy blockers or X rate limits)", verified: "2026-09-17 — observed on the deployed GitHub Pages site: syndication.twimg.com intermittently returns 'Rate limit exceeded' for timeline embeds; direct X links are shown as fallback next to every embed", review: "https://publish.twitter.com/", note: "Used for the Social Pulse panel with link fallbacks. NOT programmable alert input." },
   { id: "x-api", name: "X API (official, for future automation)", url: "https://docs.x.ai/api", kind: "REST/streaming API", cost: "Free tier is write-only/limited; reads start ~$200/mo Basic; Pro $5,000/mo", costFlag: true, latency: "Real-time (filtered stream)", browser: "No (server-side)", verified: "2026-09-17 — multiple 2026 pricing roundups agree: no usable free read tier", review: "https://www.wearefounders.uk/the-x-api-price-hike-a-blow-to-indie-hackers/", note: "BLOCKER for automated social listening + historical scoring. Pricing sources disagree on details — confirm at checkout." },
-  { id: "balldontlie", name: "balldontlie NBA API", url: "https://nba.balldontlie.io/", kind: "JSON API (key required)", cost: "Free tier: teams/players/games ONLY. Player Injuries + webhooks need paid tiers.", costFlag: true, latency: "Webhooks incl. nba.injury.* on paid plans", browser: "Possible with key (don't expose keys client-side)", verified: "2026-09-17 — official tier table: Player Injuries = ALL-STAR/GOAT only; injury webhooks = ALL-ACCESS", review: "https://nba.balldontlie.io/", note: "NOT a free injury source. Candidate paid upgrade path (injury webhooks solve latency properly)." }
+  { id: "balldontlie", name: "balldontlie NBA API", url: "https://nba.balldontlie.io/", kind: "JSON API (key required)", cost: "Free tier: teams/players/games ONLY. Player Injuries + webhooks need paid tiers.", costFlag: true, latency: "Webhooks incl. nba.injury.* on paid plans", browser: "Possible with key (don't expose keys client-side)", verified: "2026-09-17 — official tier table: Player Injuries = ALL-STAR/GOAT only; injury webhooks = ALL-ACCESS", review: "https://nba.balldontlie.io/", note: "NOT a free injury source. Candidate paid upgrade path (injury webhooks solve latency properly)." },
+  /* ---- added 2026-09-17 (second session) ---- */
+  { id: "espn-injuries-api", name: "ESPN NBA Injuries API — STRUCTURED, ALL 30 TEAMS (site.web.api.espn.com)", url: ENDPOINTS.injuries, kind: "JSON API (unofficial, no key). THE PRIMARY INJURY BOARD.", cost: "Free", costFlag: false, latency: "Editorial — updates as beat reporters file (minutes in-season)", browser: "Attempted browser-direct. NOTE: this endpoint lives on site.web.api.espn.com, a DIFFERENT host from site.api.espn.com (whose CORS policy is proven by the existing live news feed). CORS for this host could not be verified from the build sandbox, so the module falls back to the same-origin CI snapshot data/live/latest.json. First human page-load confirms which path is used — the UI prints it.", verified: "2026-09-17 — re-fetched live TWICE: header season {year:2027, type:1, name:'Preseason', displayName:'2026-27'}; injuries[] is one block per team with {status:'Day-To-Day', date, shortComment, longComment, athlete{displayName, position, team, headshot, links[playercard]}, notes.items[]{type:'news', date, headline, text, source:'RotoWire'}, type{name:'INJURY_STATUS_DAYTODAY'}, details{fantasyStatus:{description:'GTD'}, type:'Achilles', location:'Leg', side:'Right', returnDate}}. Sampled real entries: Mouhamed Gueye (ATL) fractured left foot, Jayson Tatum (BOS), Giannis Antetokounmpo (MIA). ?team=<abbr> filter verified with ?team=mia (140KB payload -> 8 chunks).", review: ENDPOINTS.injuries, note: "This is the closest free equivalent to Basketball Monster's structured injury board: status + injury type + GTD flag + expected return date + a sourced news line per player. Replaces headline keyword-guessing as the primary signal. Unofficial endpoint — the same caveat as every ESPN API here." },
+  { id: "bsky-public-api", name: "Bluesky / AT-Protocol public API (public.api.bsky.app)", url: "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=howardbeck.bsky.social&limit=3", kind: "JSON API (public, NO KEY, no account needed)", cost: "Free", costFlag: false, latency: "Posts appear in the feed within seconds of publishing (indexedAt field)", browser: "Attempted browser-direct; CORS unconfirmed from this sandbox — same-origin snapshot + labelled relay provided as fallbacks", verified: "2026-09-17 — four endpoints answered WITHOUT auth: getAuthorFeed (returns feed[].post.{uri,author.handle,record.createdAt,record.text,indexedAt}), searchActorsTypeahead (returned the official nba.com account, Sarah Todd, WNBA), graph.getList (150 members), graph.getFollows. app.bsky.feed.searchPosts returned HTTP 403 unauthenticated — DOCUMENTED LIMITATION, not worked around.", review: "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=howardbeck.bsky.social&limit=1", note: "This is the free social layer: per-account feeds of verified league/team/reporter accounts. Bluesky's own verification objects (issuer bsky.app or an outlet's domain account) are read and displayed, which is stronger identity evidence than an unverified X handle." },
+  { id: "bsky-official-accounts", name: "Official NBA league + team accounts on Bluesky", url: "https://bsky.app/profile/nba.com", kind: "Official organisation accounts (second verification layer)", cost: "Free", costFlag: false, latency: "Seconds after posting", browser: "Same path as bsky-public-api", verified: "2026-09-17 — nba.com carries a VALID Bluesky verification object and its bio ('The official account for the NBA') names the 2026-27 opener: Oct 20 Celtics/Pistons 3pm ET, 76ers/Knicks 7pm ET, Thunder/Spurs 9:30pm ET. That independently confirms the schedule previously sourced only from Basketball Monster. Team accounts verified: trailblazers, nuggets, sixersnba (valid verification objects, all followed by the NBA account) and dallasmavs (followed by NBA, bio 'Mavs.com', NO verification object → flagged, not asserted as official).", review: "https://public.api.bsky.app/xrpc/app.bsky.graph.getFollows?actor=nba.com&limit=50", note: "Team accounts are the best free source for official 'player ruled out' graphics on game day. Only accounts with a valid Bluesky verification object (or double confirmation) are used." },
+  { id: "bsky-reporter-list", name: "NBA writers list on Bluesky (curated by Howard Beck)", url: BLUESKY_LIST_SOURCE.url, kind: "Curated, machine-readable list of working NBA writers", cost: "Free", costFlag: false, latency: "n/a (identity source, not a feed)", browser: "Yes via app.bsky.graph.getList", verified: "2026-09-17 — read live: 150 members, purpose 'referencelist', description 'everyone I'm following who writes, reports, blogs, pods, analyzes or otherwise yammmers about the NBA for a living'. Creator Howard Beck holds a VALID Bluesky verification object and his bio names TheRinger.com. Sampled members with self-declared beats: Jeff McDonald + Tom Orsborn (Spurs beat, San Antonio Express-News), Sam Vecenie (The Athletic — verified BY theathletic.com), Mike Vorkunov (The Athletic — verified by theathletic.com), Tom Haberstroh (Yahoo/TomTheFinder), Mark Jones (broadcaster).", review: BLUESKY_LIST_SOURCE.url, note: "Used to build the Bluesky reporter roster from real data instead of memory. Membership proves a person writes about the NBA for a living; it does NOT prove an outlet, so each row still carries its own evidence link and, where applicable, 'unconfirmed outlet'." },
+  { id: "injury-history-poller", name: "This repo's own GitHub Actions injury poller (forward collection)", url: "https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/workflows/injury-watch.yml", kind: "Server-side snapshotter (Actions cron -> committed JSON)", cost: "Free (public repo Actions)", costFlag: false, latency: "Cron best-effort (documented: GitHub may delay scheduled runs)", browser: "Reads as same-origin JSON — no CORS", verified: "2026-09-17 — workflow + tools/poll_watch.js written and dry-run locally (writes data/social/latest.json + data/history/*.jsonl). NOT yet executed by GitHub: the sandbox has no shell egress and Actions permissions could not be read with this token. First push to main triggers it — CHECK THE ACTIONS TAB to confirm the first green run.", review: "https://github.com/buffedlizard55-lab/NBAInjuryReport/actions", note: "This is what turns 'forward collecting' into a real dataset: every poll appends timestamped entries, which is the only honest way to score WHO REPORTED FIRST. Delete-or-keep decision belongs to the repo owner." }
 ];
 
 /* Irregularities / requirements flags raised during verification. */
 const FLAGS = [
   { level: "bad", title: "Requirements mention 'NFL' / 'NFL football games' inside an NBA project", detail: "The brief asks for NFL coverage in two places but the repo is NBAInjuryReport and the stated goal is NBA. This build implements NBA only. If NFL is actually wanted, that is a separate league adapter (different APIs, teams, reporters)." },
+  { level: "info", title: "NEW 2026-09-17: 'NFL'/'offensive player' wording confirmed as a copy-paste artefact — treated as NBA-only, and 'offensive player' is implemented as 'every rostered player'", detail: "Second session in a row the brief asks for NFL coverage and 'offensive players'. Basketball has no offensive/defensive platoons, so an 'offensive player exit' has no meaning. Decision: the alert engine covers ALL players on ALL 30 teams and lets you narrow by team + severity, which is a strict superset of any 'offensive player' rule. No functionality is lost; the wording is flagged rather than silently ignored." },
   { level: "warn", title: "'Offensive player' is NFL terminology — meaningless in basketball", detail: "Basketball has Guards/Forwards/Centers, not offense/defense units; all rotation players matter for fantasy. The alert engine therefore tracks ALL players and lets you filter by team and severity instead of 'offensive' vs not." },
-  { level: "warn", title: "It is the offseason — there are no live games to alert on today", detail: "Verified 2026-09-17: ESPN scoreboard returns zero events; preseason starts 2026-10-03 (MIA@TOR); opening night is 2026-10-20 (BOS@DET, PHI@NYK, OKC@SAS per Basketball Monster). In-game 'questionable to return' alerts only become meaningful once games tip. The poller + sound + log are testable now via the Test button and any breaking offseason news." },
-  { level: "bad", title: "Truly automated X/Instagram/Facebook listening is NOT free", detail: "X free tier is write-only/extremely limited; usable reads start ~$200/mo. Instagram/Facebook have no free public injury-post APIs at all. This build ships the honest version: embedded X timelines, one-click reporter/X-search links, and a forward-tracking scorecard — with the paid upgrade path documented. Anyone promising free real-time scraping is describing ToS-violating scrapers that break constantly." },
-  { level: "warn", title: "ESPN's free JSON endpoints are unofficial and undocumented", detail: "ESPN retired its public API in 2014. The site.api endpoints work today (verified live) and are widely used, but can change or rate-limit without notice. Mitigation: multi-source design, status indicators, cached last-good data, and official manual-review links everywhere." },
+  { level: "warn", title: "It is the offseason — there are no live games to alert on today", detail: "Re-verified 2026-09-17: ESPN scoreboard (?dates=20260917) returned ZERO events; preseason starts 2026-10-03 (MIA@TOR); opening night is 2026-10-20 (BOS@DET, PHI@NYK, OKC@SAS — now independently confirmed by the official NBA Bluesky account, not just Basketball Monster). In-game 'questionable to return' alerts only become meaningful once games tip. The poller + sound + log are testable now via the Test button and any breaking offseason news." },
+  { level: "bad", title: "Truly automated X/Instagram/Facebook listening is NOT free", detail: "X free tier is write-only/extremely limited; usable reads start ~$200/mo. Instagram/Facebook have no free public injury-post APIs at all. RESOLVED AS FAR AS FREE ALLOWS (2026-09-17): a genuinely free, no-key, machine-readable social layer now exists in this build — the Bluesky/AT-Protocol public API, polled per verified account. X/IG/FB remain manual (embeds + search links + the reporter scorecard)." },
+  { level: "warn", title: "Bluesky's free public API allows per-account feeds but NOT keyword search", detail: "Verified 2026-09-17: app.bsky.feed.getAuthorFeed, app.bsky.actor.searchActorsTypeahead, app.bsky.graph.getList and app.bsky.graph.getFollows all answered WITHOUT authentication; app.bsky.feed.searchPosts returned HTTP 403 Forbidden unauthenticated. Consequence: the social layer is an allow-list of verified accounts (league, teams, reporters), not a keyword firehose. That is a feature for signal quality — but it means an injury first reported by an account NOT on the list will not be caught by this layer." },
+  { level: "warn", title: "ESPN's free JSON endpoints are unofficial and undocumented", detail: "ESPN retired its public API in 2014. The site.api/site.web.api endpoints work today (verified live) and are widely used, but can change or rate-limit without notice. Mitigation: multi-source design, status indicators, cached last-good data, and official manual-review links everywhere." },
+  { level: "warn", title: "ESPN's season metadata disagrees between its own endpoints", detail: "Observed 2026-09-17: the structured injuries feed reports season {year:2027, name:'Preseason', displayName:'2026-27'}, while the scoreboard response for the same day still describes the league block as season '2025-26' with a calendar ending 2026-06-13. Do not read season/calendar from the scoreboard league block — the app ignores it. Flagged for review at season rollover." },
+  { level: "info", title: "ESPN's structured injuries feed carries named beat-reporter attributions", detail: "Directly observed 2026-09-17 while verifying: entries whose comment text credits a human reporter (e.g. 'Brad Rowland of the Locked On Podcast Network reports', 'John Schuhmann of NBA.com reports') alongside a news item and source (RotoWire). These are third-party attributions quoted BY ESPN — the social layer's job is to score the original poster, and this feed is an evidence trail for that, not a substitute." },
+  { level: "warn", title: "The official NBA injury-report page has NOT rolled over to 2026-27", detail: "Verified 2026-09-17: https://official.nba.com/nba-injury-report-2026-27-season/ returns HTTP 404, and the live season page is still titled '2025-26 Season' (its rules text is intact and was re-read verbatim today). Consequence: the site currently links the last VERIFIED official page and flags the rollover. The moment the 2026-27 URL exists it must be swapped in everywhere (index.html, data.js, sources.html). Also verified: https://official.nba.com/ is live ('Today's Officials September 16, 2026')." },
+  { level: "warn", title: "The official injury-PDF index is NOT browsable (HTTP 500)", detail: "Re-checked 2026-09-17: https://ak-static.cms.nba.com/referee/injury/ returns HTTP 500, so there is no index to poll. Individual timestamped PDFs (e.g. Injury-Report_2026-04-12_01_00PM.pdf) were verified in the previous session. A PDF watcher therefore has to be built from the official.nba.com season page, not from a directory listing — noted in NEXT_STEPS." },
   { level: "warn", title: "balldontlie injury data is paywalled (free tier has no injuries)", detail: "Its tier table reserves Player Injuries and nba.injury.* webhooks for paid plans. Do not plan around it as a free source." },
-  { level: "info", title: "Reporter-directory corrections found during verification", detail: "Wojnarowski is RETIRED (excluded from live use). Anthony Slater's 2026 bylines point at ESPN, not The Athletic (confirm employer). Kevin O'Connor is @KevinOConnor at Yahoo (not @KevinOConnorNBA). John Hollinger quit posting on X (see Bluesky). David Aldridge may have two handles (@davidaldridgedc vs @daldridgetnt). Details on the Reporters page." },
-  { level: "info", title: "ESPN numeric team IDs are unreliable from memory — abbreviations used instead", detail: "Spot-check caught a wrong assumption (teams/14 is Miami, not the Lakers). The app therefore uses 3-letter abbreviations everywhere (/teams/mia verified working), avoiding the ID mapping entirely." },
-  { level: "warn", title: "In-game injury monitor is implemented but NOT yet battle-tested (offseason)", detail: "Added 2026-09-17: for live games the app polls the ESPN game-summary API and flags players whose DNP reason matches injury keywords (the directly-observed non-injury value 'COACH'S DECISION' is excluded). Payload structure was verified against a completed game (ORL@BOS 2026-04-12), but no live game exists to validate against until preseason tips 2026-10-03. Structured 'questionable to return' data exists in NO free feed found — QTR alerts currently depend on the news layer + the reporter directory; see NEXT_STEPS.md." },
-  { level: "warn", title: "Irregularity found and fixed: NBA.com CDN fallback was documented as 'implemented' but was not", detail: "Session audit 2026-09-17: the source registry claimed the cdn.nba.com scoreboard fallback was implemented; app.js contained no such code. It is now implemented as an ESPN-failover with defensive parsing — and honestly marked untested, because cdn.nba.com is unreachable from the build environment (TLS block via shell, HTTP 500 via fetch tool). Validate in a real browser." },
+  { level: "info", title: "Reporter-directory corrections found during verification", detail: "Wojnarowski is RETIRED (excluded from live use). Anthony Slater's 2026 bylines point at ESPN, not The Athletic (confirm employer). Kevin O'Connor is @KevinOConnor at Yahoo (not @KevinOConnorNBA). John Hollinger quit posting on X and is ACTIVE on Bluesky (verified: post indexed 2026-09-17T01:28Z). David Aldridge may have two handles (@davidaldridgedc vs @daldridgetnt). Details on the Reporters page." },
+  { level: "info", title: "Shams Charania's Bluesky account exists but is ABANDONED — do not treat it as a live feed", detail: "Verified 2026-09-17 via getAuthorFeed: shamscharania.bsky.social's most recent post is dated 2024-02-13, i.e. he does not use Bluesky. It is excluded from the live social allow-list. His breaking news still lands on X (manual) and inside ESPN's structured injury comments (automatic)." },
+  { level: "info", title: "ESPN numeric team IDs are unreliable from memory — abbreviations used instead", detail: "Spot-check caught a wrong assumption (teams/14 is Miami, not the Lakers — re-confirmed live today: /teams/mia returns Miami Heat, id 14). The app therefore uses 3-letter abbreviations everywhere, avoiding the ID mapping entirely." },
+  { level: "warn", title: "In-game injury monitor is implemented but NOT yet battle-tested (offseason)", detail: "For live games the app polls the ESPN game-summary API and flags players whose DNP reason matches injury keywords (the directly-observed non-injury value 'COACH'S DECISION' is excluded). Payload structure was verified against a completed game (ORL@BOS 2026-04-12), but no live game exists to validate against until preseason tips 2026-10-03. Structured 'questionable to return' data exists in NO free feed found — QTR alerts currently depend on the news layer + the reporter directory; see NEXT_STEPS.md." },
+  { level: "warn", title: "Irregularity found and fixed: NBA.com CDN fallback was documented as 'implemented' but was not", detail: "Session audit 2026-09-17 (first session): the source registry claimed the cdn.nba.com scoreboard fallback was implemented; app.js contained no such code. It is now implemented as an ESPN-failover with defensive parsing — and honestly marked untested, because cdn.nba.com is unreachable from the build environment (TLS block via shell, HTTP 500 via fetch tool). Validate in a real browser." },
+  { level: "warn", title: "Browser CORS for the Bluesky public API could NOT be verified from this build environment", detail: "Shell HTTPS egress is blocked here and the page-fetch tool reports no response headers, so cross-origin permission can only be proven inside a real browser. Mitigation shipped: (1) the social layer tries browser-direct first, (2) falls back to the same-origin snapshot written by the free GitHub Actions poller (data/social/latest.json — CORS cannot apply), (3) offers an explicitly labelled, opt-in public relay as a last resort, and (4) prints per-account status + a 'Test feeds' button so the first human to open the page sees exactly which path worked. FLAGGED as needing one human confirmation." },
+  { level: "info", title: "GitHub Actions cron is best-effort, not a real-time guarantee", detail: "The free poller (.github/workflows/injury-watch.yml) runs on a schedule; GitHub documents that scheduled workflows can be delayed during high load and are disabled after 60 days of repository inactivity. So the poller is a history/first-to-report recorder, not a latency guarantee. The docs and the UI label it accordingly." },
   { level: "info", title: "Build environment blocks most outbound HTTPS from the shell", detail: "curl to google.com and site.api.espn.com fails (SSL_ERROR_SYSCALL); only api.github.com is reachable directly. ALL source verification in this project is therefore performed via the assistant's independent page-fetch tool, live, with evidence links included so any human can re-verify in a normal browser." },
   { level: "info", title: "X timeline embeds are intermittently rate-limited by X itself", detail: "Observed 2026-09-17 on the deployed site: syndication.twimg.com can return 'Rate limit exceeded' for embedded timelines. Embeds are best-effort eyeballs only; every embed has a direct x.com link, and alerting never depends on them." }
 ];

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sources, Verification Log &amp; Limitations — NBA Injury Alert System</title>
-<meta name="description" content="Line-by-line verified source registry, irregularity flags, methodology, limitations and roadmap for the NBA injury alert system.">
+<title>Sources, Verification Log &amp; Honest Limitations — NBA Injury Alert System</title>
+<meta name="description" content="Line-by-line verification log for every NBA injury data source used by this project: what was fetched, when, what the payload contained, what is free, what is blocked, and what still needs a human check.">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -23,13 +23,96 @@
 <div class="wrap">
   <section class="hero">
     <h1>Sources, verification log &amp; honest limitations</h1>
-    <p>Every data source below was checked line-by-line against live, official pages on <b>2026-09-17</b>.
-      Each row links the evidence so you can re-verify in one click. Flags, methodology, limitations and the roadmap follow.</p>
+    <p>Every source below was checked against live pages/APIs on <b>2026-09-17</b>. Each row states what the response
+      actually contained and links the exact URL so you can re-verify in one click. Where something could <b>not</b> be
+      verified, it says so instead of guessing — flags come first, because that is where the risk lives.</p>
+    <div class="pill-row">
+      <span class="pill ok">✓ 21 sources on file</span>
+      <span class="pill ok">✓ 21 irregularities flagged</span>
+      <span class="pill ok">✓ 90 automated logic tests</span>
+      <span class="pill warn">2 endpoints need one human browser check</span>
+      <span class="pill warn">Poller shipped, not yet executed by GitHub</span>
+    </div>
   </section>
 
   <section class="card">
     <h2>🚩 Irregularity flags <span class="tiny muted">(review these first)</span></h2>
     <div id="flags"></div>
+  </section>
+
+  <!-- WHAT CHANGED -->
+  <section class="card" style="margin-top:16px">
+    <h2>🆕 What changed on 2026-09-17 (this session)</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Finding</th><th>What was verified live</th><th>Evidence link</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Structured, all-30-team injury feed exists and is free</b></td>
+            <td>ESPN's <span class="kbd">site.web.api.espn.com/…/nba/injuries</span> returns one block per team with
+              <span class="kbd">status</span>, <span class="kbd">date</span>, <span class="kbd">shortComment</span>,
+              <span class="kbd">athlete</span> (with player-page link), <span class="kbd">notes.items[]</span> (sourced news line),
+              <span class="kbd">type.name</span> (e.g. <span class="kbd">INJURY_STATUS_DAYTODAY</span>) and
+              <span class="kbd">details</span> (fantasyStatus <span class="kbd">GTD</span>, injury type, side, estimated return date).
+              Sampled rows: Mouhamed Gueye (ATL, fractured left foot), Jayson Tatum (BOS), Giannis Antetokounmpo (MIA).
+              The <span class="kbd">?team=</span> filter works (verified with <span class="kbd">?team=mia</span>).</td>
+            <td><a href="https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries" target="_blank" rel="noopener">open feed ↗</a></td>
+          </tr>
+          <tr>
+            <td><b>A genuinely free social layer exists — but not for keyword search</b></td>
+            <td>Bluesky's public API answered <span class="kbd">getAuthorFeed</span>, <span class="kbd">searchActorsTypeahead</span>,
+              <span class="kbd">graph.getList</span> and <span class="kbd">graph.getFollows</span> with <b>no key and no account</b>.
+              <span class="kbd">searchPosts</span> returned <b>HTTP 403</b> — so the layer polls a verified allow-list instead.
+              Identity evidence comes from Bluesky's own verification objects plus Howard Beck's curated 150-member NBA writers list.</td>
+            <td><a href="https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=howardbeck.bsky.social&limit=1" target="_blank" rel="noopener">open feed ↗</a></td>
+          </tr>
+          <tr>
+            <td><b>Opening night independently confirmed by the league itself</b></td>
+            <td>The official NBA Bluesky account (valid Bluesky verification object, bio “The official account for the NBA”) states:
+              “The 2026-27 NBA season tips off Tuesday, Oct. 20 … 3:00pm/et: Celtics/Pistons, 7:00pm/et: 76ers/Knicks, 9:30pm/et: Thunder/Spurs”.
+              That matches the slate previously sourced only from Basketball Monster. Zero games existed on 2026-09-17 (scoreboard returned 0 events).</td>
+            <td><a href="https://bsky.app/profile/nba.com" target="_blank" rel="noopener">open profile ↗</a></td>
+          </tr>
+          <tr>
+            <td><b>The official 2026-27 injury-report page does not exist yet</b></td>
+            <td><span class="kbd">official.nba.com/nba-injury-report-2026-27-season/</span> → <b>HTTP 404</b>. The live page is still
+              titled “2025-26 Season” with the full deadline rules text intact (5 p.m. local day before; 11 a.m.–1 p.m. game day;
+              8–10 a.m. for early tips; 1 p.m. for back-to-backs; updated continually). The app links the last verified page and flags the rollover.</td>
+            <td><a href="https://official.nba.com/nba-injury-report-2025-26-season/" target="_blank" rel="noopener">2025-26 page ↗</a> ·
+                <a href="https://official.nba.com/nba-injury-report-2026-27-season/" target="_blank" rel="noopener">2026-27 (404) ↗</a></td>
+          </tr>
+          <tr>
+            <td><b>The official injury-PDF index cannot be browsed</b></td>
+            <td><span class="kbd">ak-static.cms.nba.com/referee/injury/</span> → <b>HTTP 500</b>. Individual timestamped PDFs were verified in the
+              previous session, but there is no index to poll — so any future "watch for new official PDF" feature must be built from the
+              official.nba.com season page instead.</td>
+            <td><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf" target="_blank" rel="noopener">example PDF ↗</a> ·
+                <a href="https://ak-static.cms.nba.com/referee/injury/" target="_blank" rel="noopener">index (HTTP 500) ↗</a></td>
+          </tr>
+          <tr>
+            <td><b>ESPN's season metadata contradicts itself across endpoints</b></td>
+            <td>The injuries feed reports season <span class="kbd">{year:2027, name:"Preseason", displayName:"2026-27"}</span> while the scoreboard
+              league block still says season <span class="kbd">2025-26</span> with a calendar ending 2026-06-13. The app ignores the scoreboard
+              league block entirely; flagged for the season-rollover review.</td>
+            <td><a href="https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20260917" target="_blank" rel="noopener">scoreboard ↗</a></td>
+          </tr>
+          <tr>
+            <td><b>Shams Charania's Bluesky account is abandoned</b></td>
+            <td><span class="kbd">getAuthorFeed</span> shows his most recent post dated <b>2024-02-13</b>. He is therefore excluded from the polled
+              allow-list — polling him would silently produce zero coverage. His breaking news still reaches this system through ESPN's structured
+              injury comments and the X panel.</td>
+            <td><a href="https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=shamscharania.bsky.social&limit=1" target="_blank" rel="noopener">open feed ↗</a></td>
+          </tr>
+          <tr>
+            <td><b>ESPN's injury comments credit named human reporters</b></td>
+            <td>Observed inside the structured feed: “…Brad Rowland of the Locked On Podcast Network reports”, “…John Schuhmann of NBA.com reports”,
+              alongside <span class="kbd">notes.items[].source: "RotoWire"</span>. Useful as an evidence trail for scoring who reported what —
+              it is a third-party attribution quoted by ESPN, not a substitute for the original post.</td>
+            <td><a href="https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries?team=atl" target="_blank" rel="noopener">ATL block ↗</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section class="card" style="margin-top:16px">
@@ -40,24 +123,47 @@
         <tbody id="sourcesTable"></tbody>
       </table>
     </div>
-    <p class="tiny muted">Machine-readable copy: <a href="data/verified_sources.json">data/verified_sources.json</a></p>
+    <p class="tiny muted">Machine-readable copy: <a href="data/verified_sources.json">data/verified_sources.json</a> (regenerated from
+      <span class="kbd">assets/js/data.js</span> by <span class="kbd">node tools/build_verified_sources.js</span>).</p>
   </section>
 
   <section class="card" style="margin-top:16px">
-    <h2>🧬 What "reverse-engineering Basketball Monster" means here</h2>
+    <h2>🔗 Manual verification links — check any alert by hand</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>What you want to confirm</th><th>Authority</th><th>Link</th></tr></thead>
+        <tbody>
+          <tr><td>League-mandated participation status (the highest authority)</td><td>NBA official</td><td><a href="https://official.nba.com/nba-injury-report-2025-26-season/" target="_blank" rel="noopener">official.nba.com injury report ↗</a></td></tr>
+          <tr><td>A single player's current status + injury detail</td><td>ESPN</td><td><a href="https://www.espn.com/nba/injuries" target="_blank" rel="noopener">ESPN injuries (all teams) ↗</a></td></tr>
+          <tr><td>The same thing per team</td><td>ESPN</td><td><a href="https://www.espn.com/nba/team/injuries/_/name/mia" target="_blank" rel="noopener">/nba/team/injuries/_/name/{abbr} ↗</a></td></tr>
+          <tr><td>Fantasy-style news stream with source links (the model for this project)</td><td>Basketball Monster</td><td><a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">basketballmonster.com/playernews.aspx ↗</a></td></tr>
+          <tr><td>Third-party aggregation with dated comments</td><td>Covers</td><td><a href="https://www.covers.com/sport/basketball/nba/injuries" target="_blank" rel="noopener">covers.com NBA injuries ↗</a></td></tr>
+          <tr><td>Second fantasy feed, original-source links per item</td><td>RotoBaller</td><td><a href="https://www.rotoballer.com/player-news?sport=nba" target="_blank" rel="noopener">rotoballer.com player news ↗</a></td></tr>
+          <tr><td>Official club statement</td><td>Team sites</td><td><a href="https://www.nba.com/heat" target="_blank" rel="noopener">nba.com/&lt;team&gt; ↗</a></td></tr>
+          <tr><td>Reporters' own posts (social layer)</td><td>Bluesky / X</td><td><a href="reporters.html">verified directory + evidence ↗</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>🧬 What “reverse-engineering Basketball Monster” means here</h2>
     <p class="muted small">Basketball Monster's <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">player news</a>
-      has no public API and no CORS access, so it cannot be a live feed input — it is the <b>reference model</b> for the wire format instead:</p>
+      has no public API and no CORS access, so it cannot be a live feed input — it is the <b>reference model</b> for the wire format instead.
+      As of this session the mapping is much closer than a keyword guess, because the ESPN structured feed supplies the same kinds of fields:</p>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Basketball Monster field</th><th>This system's equivalent</th><th>Feed input used</th></tr></thead>
         <tbody>
-          <tr><td>Status tag (INJURED / NOTE / TRADED…)</td><td>Severity tag (OUT / DOUBTFUL / QUESTIONABLE / PROBABLE / RETURN / MENTION)</td><td>ESPN news headline+description keyword classifier</td></tr>
-          <tr><td>Player + team + position</td><td>Headline + auto-detected team chips</td><td>ESPN news + 30-team alias map</td></tr>
-          <tr><td>Impact rating (low → monster)</td><td>Severity ordering + alert toggles</td><td>Configurable; OUT/DOUBTFUL/QUESTIONABLE alert by default</td></tr>
-          <tr><td>Source link (usually the X post)</td><td>ESPN source link + one-click "search X for confirmation"</td><td>ESPN article URL (in-API) + X search deep link</td></tr>
-          <tr><td>Age ("5.4d")</td><td>Published timestamp</td><td>ESPN <span class="kbd">published</span> field</td></tr>
-          <tr><td>Upcoming-games panel</td><td>Live scoreboard + dual-source failover</td><td>ESPN scoreboard API (?dates=YYYYMMDD), NBA.com CDN failover</td></tr>
-          <tr><td>(no equivalent)</td><td>🏥 In-game injury monitor — players not playing <i>for injury reasons</i> during live games, with alerts</td><td>ESPN game-summary API: boxscore.players[].statistics[].athletes[] {didNotPlay, reason, ejected}. Verified fields only; non-injury reasons (e.g. "COACH'S DECISION", directly observed) excluded</td></tr>
+          <tr><td>Status tag (INJURED / NOTE / TRADED…)</td><td>Severity tag (OUT / DOUBTFUL / QUESTIONABLE / PROBABLE / RETURN / MENTION)</td><td>ESPN <span class="kbd">status</span> + <span class="kbd">type.name</span> enum, plus the same classifier over news headlines</td></tr>
+          <tr><td>Player + team + position</td><td>Player + team chip + position</td><td>ESPN structured injuries feed (<span class="kbd">athlete.displayName</span>, <span class="kbd">.team.abbreviation</span>, <span class="kbd">.position.abbreviation</span>)</td></tr>
+          <tr><td>Injury description (“shoulder labrum surgery”)</td><td>Injury type + side + location + estimated return date</td><td>ESPN <span class="kbd">details{type,side,location,returnDate}</span> + <span class="kbd">shortComment</span></td></tr>
+          <tr><td>Impact rating (low → monster)</td><td>Severity ordering + per-severity alert toggles</td><td>Configurable; OUT/DOUBTFUL/QUESTIONABLE alert by default</td></tr>
+          <tr><td>Source link (usually the X post)</td><td>Source link chain: team injuries page, player page, official NBA report, plus social post when the signal came from Bluesky</td><td>ESPN API URLs + Bluesky post URLs + official.nba.com</td></tr>
+          <tr><td>Age of the news (“5.4d”)</td><td>Timestamps: feed <span class="kbd">date</span> field + this project's own first-seen timestamp</td><td>ESPN <span class="kbd">date</span> + <span class="kbd">data/history/firsts.json</span> from the poller</td></tr>
+          <tr><td>Game-time-decision flag</td><td>GTD badge on the row</td><td>ESPN <span class="kbd">details.fantasyStatus.description</span> (observed value “GTD”)</td></tr>
+          <tr><td>Upcoming-games panel</td><td>Live scoreboard + dual-source failover + in-game monitor</td><td>ESPN scoreboard API (NBA.com CDN as defensive failover)</td></tr>
+          <tr><td>(no equivalent)</td><td>⚠ In-game exit watch from social posts (“left the game”, “locker room”, “questionable to return”) — alerted before any official designation, labelled as a social report</td><td>Bluesky verified allow-list + <span class="kbd">INGAME_WATCH_RE</span> shared with the poller</td></tr>
         </tbody>
       </table>
     </div>
@@ -67,46 +173,49 @@
     <section class="card" style="margin-top:16px">
       <h2>⛔ Limitations (blockers, not excuses)</h2>
       <ol class="tight small">
-        <li><b>No free programmatic X/IG/FB read access.</b> Real-time social listening and historical back-testing need X API Basic ($200/mo) or higher, or a compliant vendor. Instagram/Facebook offer nothing usable for free.</li>
-        <li><b>ESPN endpoints are unofficial.</b> They work today and are widely used, but ESPN can change/rate-limit them without notice. The app shows feed status and keeps official manual links everywhere.</li>
-        <li><b>Severity is keyword-detected.</b> "Out" in "shootout" style contexts, trade rumors mentioning injuries, etc. can misfire — always confirm via the linked source.</li>
-        <li><b>Offseason = thin signal.</b> No games until 2026-10-03; in-game tracking only matters Oct → June. Consequence: the new in-game injury monitor is <b>verified against a completed game's payload structure but untested against a live game</b> — validate on 2026-10-03.</li>
-        <li><b>No free feed carries structured "questionable to return" data.</b> QTR in-game alerts therefore depend on the ESPN news layer + the reporter directory (manual review links). See <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/NEXT_STEPS.md" target="_blank" rel="noopener">NEXT_STEPS.md</a>.</li>
-        <li><b>Scores/alerts live in your browser</b> (localStorage). No server yet, so no cross-device sync, no push when the tab is closed, no shared scorecard.</li>
-        <li><b>NBA.com CDN failover is unverifiable from the build environment</b> (TLS-blocked via shell, HTTP 500 via fetch tool — 2026-09-17). Wired defensively; first real browser use will confirm or disable it.</li>
-        <li><b>X timeline embeds are best-effort</b> — X rate-limits syndication (observed 2026-09-17 on the deployed site). Alerts never depend on embeds; direct links are always provided.</li>
+        <li><b>X / Instagram / Facebook have no free read access.</b> Real-time X listening and X-based historical back-testing need the paid API (~$200/mo). IG/FB offer nothing usable. The free social layer therefore runs on Bluesky, which is a real, working, no-key feed — but it is not X.</li>
+        <li><b>Bluesky keyword search is not free either.</b> <span class="kbd">searchPosts</span> → HTTP 403 unauthenticated (verified). The layer polls a verified allow-list; a first report from an account not on that list will be missed by this layer.</li>
+        <li><b>Two endpoints still need one human browser check.</b> This sandbox blocks shell HTTPS and reports no response headers, so CORS for <span class="kbd">site.web.api.espn.com</span> and <span class="kbd">public.api.bsky.app</span> is unproven. Both modules fall back to the same-origin CI snapshot and print the path that actually worked; the relay is opt-in and labelled.</li>
+        <li><b>The official NBA report has not rolled to 2026-27</b> (404 verified) and the PDF index returns HTTP 500, so the highest-authority source is currently link-only.</li>
+        <li><b>The poller has not run yet.</b> The workflow is written and dry-run locally, but GitHub has not executed it (and Actions permissions were not readable with the available token). Until it runs, the same-origin snapshot is empty and "first to report" timestamps are not yet evidence-grade.</li>
+        <li><b>ESPN endpoints are unofficial and self-contradicting.</b> They work today; the metadata mismatch between endpoints is documented above. Every alert ships with manual-review links for that reason.</li>
+        <li><b>Severity is still classification, not truth.</b> The structured board's status is copied verbatim from ESPN; social posts are classified from wording and an “in-game exit watch” is explicitly unconfirmed.</li>
+        <li><b>State is browser-local</b> (localStorage): no cross-device sync, no alerting while the tab is closed, no shared scorecard. The poller's committed history is the only server-side record.</li>
+        <li><b>In-game monitor is structure-verified but not live-tested</b> — no NBA game exists until 2026-10-03.</li>
       </ol>
     </section>
     <section class="card" style="margin-top:16px">
       <h2>🗺 Roadmap (next sessions)</h2>
-      <p class="muted small">Full prioritized backlog with effort estimates: <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/NEXT_STEPS.md" target="_blank" rel="noopener">NEXT_STEPS.md ↗</a></p>
+      <p class="muted small">Full prioritized backlog with effort estimates:
+        <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/NEXT_STEPS.md" target="_blank" rel="noopener">NEXT_STEPS.md ↗</a></p>
       <ol class="tight small">
-        <li><b>Validate the in-game injury monitor live</b> on 2026-10-03 (first preseason tip) — top priority; it is structure-verified but untested in real time.</li>
-        <li><b>Beat-writer completion:</b> verify one in-arena beat writer per team (outlet bio + handle check) and promote from the expansion pipeline.</li>
-        <li><b>Server poller (GitHub Actions cron or small worker):</b> snapshot ESPN news + scoreboard every 1–2 min, commit JSON history → enables true "first to report" timestamps + shared data.</li>
-        <li><b>Paid social tier (optional):</b> X API Basic filtered stream for the Tier-1/2 handle list → automated social alerts + historical backfill for the scorecard.</li>
-        <li><b>Official PDF watcher:</b> poll official.nba.com season page for new injury-report PDF issues; parse status tables.</li>
-        <li><b>Push alerts:</b> Web Push / email / Discord webhook when the tab is closed.</li>
+        <li><b>Confirm the two CORS paths in a real browser</b> and record the result here (one click on “Test feeds” + one page load produces the evidence).</li>
+        <li><b>Validate the in-game monitor live</b> on 2026-10-03 (first preseason tip) and the poller's 10-minute cadence against a real slate.</li>
+        <li><b>Swap in the 2026-27 official injury-report URL</b> the moment it exists (it is 404 today).</li>
+        <li><b>Beat-writer completion:</b> one verified in-arena writer per team; SAS and UTA were added on the Bluesky side this session, ~21 teams still have no named in-arena writer.</li>
+        <li><b>Official-PDF watcher</b> driven by the season page (the directory index is HTTP 500).</li>
+        <li><b>Push alerts when the tab is closed</b> (Web Push / Discord / email) — the poller already produces the events.</li>
+        <li><b>Optional paid tiers</b> if budget exists: X API Basic for X-side automation; balldontlie ALL-ACCESS webhooks as a paid official-ish push channel.</li>
       </ol>
     </section>
   </div>
 
   <section class="card" style="margin-top:16px">
-    <h2>🔁 Re-verification checklist (run monthly, and at season start 2026-10-03)</h2>
+    <h2>🔁 Re-verification checklist (monthly, and at season start 2026-10-03)</h2>
     <ol class="tight small">
-      <li><b>2026-10-03 (first live games):</b> watch the in-game monitor against a real live game; if ESPN's live summary shape differs, adjust <span class="kbd">assets/js/ingame.js</span> extraction — this is the current top risk item.</li>
-      <li>Force one NBA.com CDN failover (dev tools: block site.api.espn.com) to confirm the fallback mapping renders correctly.</li>
-      <li>Open each "Manual review" link in the registry; confirm the page/API still responds.</li>
-      <li>Check for the new <b>2026-27 official.nba.com injury report page</b> (2025-26 URL pattern will likely roll over).</li>
-      <li>Re-confirm any reporter row marked outlet-only / community / flagged (Slater employer, Aldridge handles, Hollinger status).</li>
-      <li>Confirm X embed timelines still render (they are rate-limited by X — replace with link-only cards if it worsens).</li>
+      <li>Open <span class="kbd">https://official.nba.com/nba-injury-report-2026-27-season/</span> — when it stops returning 404, replace <span class="kbd">NBA_OFFICIAL_REPORT_URL</span> in <span class="kbd">assets/js/data.js</span>, then re-run <span class="kbd">node tools/build_verified_sources.js</span>.</li>
+      <li>Force-test both fallback paths in devtools (block <span class="kbd">site.web.api.espn.com</span> → the board must render from <span class="kbd">data/live/latest.json</span>; block <span class="kbd">public.api.bsky.app</span> → the social panel must say which path it used).</li>
+      <li>Watch the in-game monitor against a real live game; if ESPN's live summary shape differs from the verified completed-game payload, adjust <span class="kbd">assets/js/ingame.js</span>.</li>
+      <li>Re-read each Bluesky account's verification badge (verification objects can be revoked) and re-run <span class="kbd">graph.getList</span> on Howard Beck's list for new writers.</li>
+      <li>Re-confirm every row marked outlet-only / community / flagged (Slater's employer, Aldridge's handles, Hollinger's status).</li>
+      <li>Run <span class="kbd">node tools/smoke_test.js</span> — all 90 checks must stay green before shipping changes.</li>
       <li>Re-check X API and balldontlie pricing before budgeting any paid tier.</li>
     </ol>
   </section>
 
   <footer>
     <div class="wrap" style="padding:0">
-      Verification performed 2026-09-17 · Evidence links inline · <a href="index.html">← back to dashboard</a>
+      Verification performed 2026-09-17 (two sessions) · Evidence links inline · <a href="index.html">← back to dashboard</a>
     </div>
   </footer>
 </div>

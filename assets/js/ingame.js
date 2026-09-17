@@ -146,7 +146,7 @@ const InGame = (() => {
   async function check(events, isFirstLoad) {
     const box = document.getElementById("ingameBox");
     const live = liveEvents(events);
-    if (!live.length) { render(box, [], [], null); return; }
+    if (!live.length) { lastFindings = []; render(box, [], [], null); return; }
 
     const results = await Promise.all(live.map(async ev => {
       const comp = (ev.competitions || [])[0] || {};
@@ -182,10 +182,13 @@ const InGame = (() => {
       }
     }
     if (fresh.length && box) AlertEngine.renderLog();
+    lastFindings = findings;
     render(box, live, findings, findings.length ? "DNP = did not play, reason as stated by ESPN. Always confirm via the linked game page + X search." : null);
   }
 
-  function resetSeen() { localStorage.removeItem(LS_SEEN); seenPrimed = false; }
+  let lastFindings = [];   // exposed so App can mirror them into the unified wire
 
-  return { check, extract, liveEvents, resetSeen, INJURY_REASON_RE, NON_INJURY_RE };
+  function resetSeen() { localStorage.removeItem(LS_SEEN); seenPrimed = false; lastFindings = []; }
+
+  return { check, extract, liveEvents, resetSeen, getFindings: () => lastFindings, INJURY_REASON_RE, NON_INJURY_RE };
 })();
