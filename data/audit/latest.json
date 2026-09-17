@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-17T05:17:57.457880+00:00",
+  "checkedAt": "2026-09-17T05:25:30.132935+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -15,7 +15,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 1129,
-      "sha256": "c931242a113d254db63d8c30ca6fe1ccd5981dcf9d996c16dfa568b0f7d96a96",
+      "sha256": "3fc754b28d76b315fe814778e7e5116d47a7b7a400169c1efdbf2bc5a93dfd0f",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -37,7 +37,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 116516,
-      "sha256": "8ba426aba335ff8c91a3590770f76b27fab3cc0176b7fd504d4d4c8d305e9a88",
+      "sha256": "16b6424c5cff6601f70c8e6422fb9ff42264ddd58a81a5b3abd454c4ae0d44a4",
       "probes": {
         "deadline 5pm-ish": true,
         "continual updates": true,
@@ -91,7 +91,7 @@
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
       "bytes": 280,
-      "sha256": "df7b3e313420e2eaf2a76ec4a93fd7805f67637fdf638978485fd1963a5d768c",
+      "sha256": "4d79e37181e302734458e9cddaf1baeb3c873c14ba2ae629091015e79a6be601",
       "outboundLinks": [],
       "frames": [],
       "verdict": "OK"
@@ -128,7 +128,7 @@
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
       "bytes": 848875,
-      "sha256": "ceb5096446cf4f6b04256f2d503205707997f0bf037cc630d61e95bd3d0cb84e",
+      "sha256": "ad04298f25833af499351d0d542cb4f0661fdf0af181a19c1db5daf267db73d7",
       "teamBlocks": 27,
       "rows": 74,
       "season": {
@@ -153,7 +153,7 @@
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
       "contentType": "text/html",
       "bytes": 439,
-      "sha256": "d65bb9bc11990121a643ddd262e62a2a2e8df85589e0d864274afa869b1fce47",
+      "sha256": "6e4f1dca0f3771c3c429f35bf87c58c4693eaacac953f573409b7074b0cf1fc1",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client. The same URL can succeed from Node on the same runner and from a browser on the deployed origin - ESPN is fingerprinting clients, not blocking machines or IPs. The claim under test is about the source and the browser path, evidenced elsewhere; not counted as drift."
     },
@@ -171,7 +171,7 @@
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "text/html",
       "bytes": 444,
-      "sha256": "1d9ed579b6805fd90fe5f8856fd2a53289bbf9bcfe612daed75077a86ee20bb5",
+      "sha256": "437f2fa5c3c88a586ce11e330edeb85a101ed3070e9ed0ea5cd677b4cb3a7430",
       "verdict": "OK"
     },
     {
@@ -188,7 +188,7 @@
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "text/html",
       "bytes": 458,
-      "sha256": "c73145a6b6d42448f8519d957e51dfe47bba4a71cc067937c8e6700a43516a8e",
+      "sha256": "3e4e15ce1502a080d6d03a8cec269c789f20ec152b4b8dfe47589eb6aea1f358",
       "verdict": "OK"
     },
     {
@@ -237,7 +237,7 @@
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "text/html",
       "bytes": 447,
-      "sha256": "94433e1ec605e97cf9fb1d184be85a1fe4c178907ae0af87c168bfee6ba50d11",
+      "sha256": "18f34af7bd2e93d9347722705abc109ef22e93aab733163ed5fd6795a7f98de2",
       "verdict": "OK"
     },
     {
@@ -253,7 +253,7 @@
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
       "contentType": "application/json; charset=utf-8",
       "bytes": 1352,
-      "sha256": "2c2aaef0edfb6e89550670e114b1b0cecc1e25da9af9b03a5890abc24627b688",
+      "sha256": "0e835622ab84bbd5bd7a0bcfb1ffe3bba1b4a17565c2843100dafa97aae3bebd",
       "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
       "verification": {
         "verifications": [
@@ -270,7 +270,7 @@
         "trustedVerifierStatus": "none"
       },
       "displayName": "NBA",
-      "followers": 122389,
+      "followers": 122390,
       "bioSnippet": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! \ud83c\udfc0 3:00pm/et: Celtics/Pistons \ud83c\udfc0 7:00pm/et: 76ers/Knicks \ud83c\udfc0 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
       "verdict": "OK"
     },
@@ -383,7 +383,7 @@
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
       "bytes": 115019,
-      "sha256": "7fc57138ee84205697d5f8512781a2c3b17ecbcff98c1c7c3de368ab47ee57b2",
+      "sha256": "564091f93ab4351614ee638bf490524a9b97bc7b888d4ab524127c3aa116edba",
       "probes": {
         "player-news page": true,
         "source attribution": true,
