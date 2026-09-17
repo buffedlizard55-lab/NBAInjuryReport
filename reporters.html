@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verified NBA Reporters &amp; Reliability Scorecard — NBA Injury Alert System</title>
+<meta name="description" content="Line-by-line verified directory of NBA insiders, reporters and beat writers with X links, verification evidence, and a forward-tracking reliability scorecard.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-inner">
+    <div class="brand">🏀 NBA <span>Injury Alert System</span></div>
+    <span class="live-dot"><i></i>VERIFIED DIRECTORY</span>
+    <nav class="links">
+      <a href="index.html">Dashboard</a>
+      <a href="reporters.html" class="active">Reporters &amp; Scorecard</a>
+      <a href="sources.html">Sources &amp; Verification</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <h1>Verified reporters, insiders &amp; beat writers</h1>
+    <p>The second verification layer: people who break or confirm injury news — often <i>before</i> the official designation.
+      Every row was checked line-by-line on 2026-09-17. Handles are only shown when confirmed to belong to that person;
+      otherwise the directory says so honestly and gives you a search link instead.</p>
+    <div class="pill-row">
+      <span class="pill ok">✓ 25 handles verified</span>
+      <span class="pill warn">4 outlet-verified (handle unconfirmed — none asserted)</span>
+      <span class="pill">5 community-listed (re-confirm)</span>
+      <span class="pill bad">1 retired · 1 inactive on X</span>
+    </div>
+  </section>
+
+  <div class="callout warn"><b class="t">⚠ Read this before using the list for alerts</b>
+    <ul class="tight" style="margin:6px 0 0; padding-left:18px">
+      <li><b>Wojnarowski is retired</b> (Sept 2024) — historical reference only, never a live source.</li>
+      <li><b>John Hollinger quit X</b> — his bio says "I'm done here"; follow him on Bluesky/Threads instead.</li>
+      <li><b>Anthony Slater's 2026 bylines point to ESPN</b>, not The Athletic — confirm his current employer before citing.</li>
+      <li><b>David Aldridge may have two handles</b> (@davidaldridgedc active; Muck Rack lists @daldridgetnt) — confirm before citing.</li>
+      <li><b>Kevin O'Connor is @KevinOConnor at Yahoo Sports</b> (not @KevinOConnorNBA, not The Ringer).</li>
+    </ul>
+  </div>
+
+  <section class="card">
+    <h2>Directory <span class="tiny muted" id="repCount"></span></h2>
+    <div class="filterbar">
+      <select id="tierFilter" aria-label="Filter by tier">
+        <option value="ALL">All tiers</option>
+        <option value="1">Tier 1 — lead insiders</option>
+        <option value="2">Tier 2 — national / beat</option>
+        <option value="3">Tier 3 — analyst / other</option>
+      </select>
+      <select id="statusFilter" aria-label="Filter by verification status">
+        <option value="ALL">All statuses</option>
+        <option value="verified-handle">✓ handle verified</option>
+        <option value="outlet-only">outlet verified · handle unverified</option>
+        <option value="community">community-listed</option>
+        <option value="inactive">inactive on X</option>
+        <option value="retired">retired</option>
+      </select>
+      <input type="text" id="repSearch" placeholder="Search name, outlet, role…" style="max-width:260px">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Reporter</th><th>Outlet / beat</th><th>Tier</th><th>X</th><th>Verification</th><th>Notes</th><th>Score</th></tr></thead>
+        <tbody id="reporterTable"></tbody>
+      </table>
+    </div>
+    <p class="tiny muted">Tier 1 = lead league-wide news-breakers · Tier 2 = national reporters + in-market beat writers (often first in-arena) ·
+      Tier 3 = analysts/columnists (context &amp; confirmation, rarely first). "Score" fills in as you log calls below.</p>
+  </section>
+
+  <div class="grid two">
+    <section class="card" style="margin-top:16px">
+      <h2>📏 Scoring rubric</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Outcome</th><th>Points</th><th>Meaning</th></tr></thead>
+          <tbody id="rubric"></tbody>
+        </table>
+      </div>
+      <div class="callout info"><b class="t">ℹ Why forward-tracking (for now)?</b>
+        Historical scoring needs bulk access to reporters' past posts. X's free tier has no usable read access and
+        historical search is paywalled/rate-limited, so automated back-testing is blocked until paid API access exists.
+        The honest path: score every new call going forward (below), and optionally backfill manually from
+        <a href="https://x.com/search-advanced" target="_blank" rel="noopener">X advanced search</a> with the post URL as evidence.</div>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h2>🏆 Live scoreboard</h2>
+      <p class="muted small">Computed from your logged calls (stored in this browser).</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>#</th><th>Reporter</th><th>Pts</th><th>Calls</th><th>Accuracy</th><th>Firsts</th></tr></thead>
+          <tbody id="scoreboard"></tbody>
+        </table>
+      </div>
+      <div class="btn-row">
+        <button class="btn sm ghost" id="exportCalls">Export JSON</button>
+        <button class="btn sm ghost" id="importCalls">Import JSON</button>
+        <input type="file" id="importFile" accept="application/json" style="display:none">
+      </div>
+    </section>
+  </div>
+
+  <section class="card" style="margin-top:16px">
+    <h2>📝 Log a reporter's call</h2>
+    <p class="muted small">When a tracked reporter posts injury news: log it, paste the post URL, then update the outcome once the
+      official designation or game action confirms or contradicts it. Log pending calls immediately (0 pts) and edit by re-logging with the final outcome.</p>
+    <form id="callForm">
+      <div class="form-grid">
+        <div>
+          <label for="callReporter">Reporter</label>
+          <select id="callReporter"></select>
+        </div>
+        <div>
+          <label for="callPlayer">Player (e.g. LeBron James — LAL)</label>
+          <input type="text" id="callPlayer" required placeholder="Player name — TEAM">
+        </div>
+        <div>
+          <label for="callClaim">Claim (e.g. "Ruled out, ankle, will miss 2 weeks")</label>
+          <input type="text" id="callClaim" required placeholder="What did they report?">
+        </div>
+        <div>
+          <label for="callUrl">Post URL (evidence)</label>
+          <input type="url" id="callUrl" placeholder="https://x.com/.../status/...">
+        </div>
+        <div>
+          <label for="callOutcome">Outcome</label>
+          <select id="callOutcome">
+            <option value="pending">Unresolved / pending (0)</option>
+            <option value="first_correct">First + correct (+3)</option>
+            <option value="correct">Correct, not first (+1)</option>
+            <option value="partial">Partially correct (+0.5)</option>
+            <option value="wrong">Wrong (−2)</option>
+            <option value="fabricated">Fabricated / deleted w/o correction (−5)</option>
+          </select>
+        </div>
+      </div>
+      <div class="btn-row"><button class="btn" type="submit">Log call</button></div>
+    </form>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>🧾 Logged calls</h2>
+    <div class="alert-log" id="callsLog" style="max-height:340px"></div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>🔭 Beat-writer expansion (one per team) — how it gets filled in</h2>
+    <p class="muted small">The goal is a verified in-arena beat writer for all 30 clubs. Rows are only promoted to the directory above
+      after the same line-by-line check (outlet bio + confirmed handle). Until then, use the per-team X searches on the
+      <a href="index.html">dashboard</a>. Confirmed pipeline so far: DAL (MacMahon ✓, Afseth outlet-only), LAL (McMenamin ✓),
+      GSW (Slater ✓, Thompson ✓), MIA (Winderman ✓, Reynolds outlet-only), CHI (Johnson outlet-only), NYK/BKN (Begley ✓), NOP (Guillory ✓).</p>
+  </section>
+
+  <footer>
+    <div class="wrap" style="padding:0">
+      Directory verified 2026-09-17 · Handles re-confirmable via the X column · <a href="sources.html">Verification log</a>
+    </div>
+  </footer>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/alerts.js"></script>
+<script src="assets/js/reporters.js"></script>
+</body>
+</html>

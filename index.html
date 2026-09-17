@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NBA Injury Alert System — Live Injury Wire &amp; Alerts</title>
+<meta name="description" content="Free, live NBA injury alert dashboard: ESPN-powered injury wire, live scoreboard, sound + browser alerts, verified reporter directory, and official manual-review links.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-inner">
+    <div class="brand">🏀 NBA <span>Injury Alert System</span></div>
+    <span class="live-dot"><i></i>LIVE WIRE</span>
+    <nav class="links">
+      <a href="index.html" class="active">Dashboard</a>
+      <a href="reporters.html">Reporters &amp; Scorecard</a>
+      <a href="sources.html">Sources &amp; Verification</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <h1>Live NBA injury wire &amp; alert dashboard</h1>
+    <p>Low-latency injury signals for all 30 NBA teams from free, verified sources — modeled on
+      <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster's player news</a>.
+      Every alert carries a link for manual review. No account, no keys, works in your browser.</p>
+    <div class="pill-row">
+      <span class="pill ok">✓ ESPN API verified live 2026-09-17</span>
+      <span class="pill ok">✓ Official NBA report linked</span>
+      <span class="pill warn">Offseason: preseason tips 2026-10-03</span>
+      <span class="pill">Opening night 2026-10-20</span>
+    </div>
+  </section>
+
+  <div class="statusbar" id="statusbar">
+    <span><b>News feed:</b> <span id="newsStatus"><span class="dot warn"></span>connecting…</span></span>
+    <span><b>Scoreboard:</b> <span id="sbStatus"><span class="dot warn"></span>connecting…</span></span>
+    <span style="margin-left:auto" id="lastUpdated">Last refresh: —</span>
+  </div>
+
+  <div class="grid two">
+    <!-- ALERT CENTER -->
+    <section class="card">
+      <h2>🔔 Alert center</h2>
+      <p class="muted small">Sounds + logs + (optionally) notifies you when a <b>new</b> injury item matches your severity filters.
+        Already-seen items never re-alert. In-season, live games also surface in the scoreboard below.</p>
+      <label class="switch" style="margin-top:6px">
+        <input type="checkbox" id="soundToggle" checked>
+        <span class="track"></span>
+        <span><span class="switch-label">Alert sound</span><br><span class="switch-state" id="soundState"></span></span>
+      </label>
+      <div class="btn-row">
+        <button class="btn" id="testSound">▶ Test sound</button>
+        <button class="btn ghost" id="notifBtn">Enable browser notifications</button>
+      </div>
+      <div class="btn-row">
+        <label for="pollSel" class="tiny muted" style="margin:0">Auto-refresh</label>
+        <select id="pollSel" style="width:auto">
+          <option value="30">30s</option>
+          <option value="60" selected>60s</option>
+          <option value="120">2 min</option>
+          <option value="300">5 min</option>
+        </select>
+        <span class="tiny muted" id="pollState"></span>
+        <button class="btn sm ghost" id="refreshNow">Refresh now</button>
+        <button class="btn sm ghost" id="resetSeen">Reset seen history</button>
+        <button class="btn sm danger" id="clearLog">Clear log</button>
+      </div>
+      <h3 style="margin-top:16px">Alert log <span class="tiny muted">(with manual-review links)</span></h3>
+      <div class="alert-log" id="alertLog"></div>
+    </section>
+
+    <!-- SCOREBOARD -->
+    <section class="card">
+      <h2>📅 Today's games <span class="tiny muted">(live detection for in-game alerts)</span></h2>
+      <div id="games"><div class="muted">Loading scoreboard…</div></div>
+      <p class="tiny muted">Source: ESPN scoreboard API · <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">open ESPN scoreboard ↗</a></p>
+    </section>
+  </div>
+
+  <!-- WIRE -->
+  <section class="card" style="margin-top:16px">
+    <h2>💬 Injury wire <span class="tiny muted" id="wireCount"></span></h2>
+    <p class="muted small">Classified from ESPN's latest NBA news. Severity is keyword-detected — always confirm via the linked source before acting.</p>
+    <div class="filterbar">
+      <select id="teamFilter" aria-label="Filter by team"></select>
+      <div class="checks" id="sevChecks"></div>
+    </div>
+    <div class="wire" id="wire"><div class="muted">Loading wire…</div></div>
+  </section>
+
+  <!-- SOCIAL PULSE -->
+  <section class="card" style="margin-top:16px">
+    <h2>📡 Social pulse <span class="tiny muted">(free X embeds — no API key needed)</span></h2>
+    <p class="muted small">Embedded timelines from verified league/insider accounts. If your ad-blocker hides them, use the direct links.
+      Full reporter directory + reliability scorecard: <a href="reporters.html">Reporters &amp; Scorecard →</a></p>
+    <div class="grid two">
+      <div class="embed-box">
+        <b class="small">NBA on ESPN</b> <a class="tiny" href="https://x.com/ESPNNBA" target="_blank" rel="noopener">@ESPNNBA ↗</a>
+        <a class="twitter-timeline" data-height="380" data-chrome="noheader nofooter noborders dark" href="https://twitter.com/ESPNNBA?ref_src=twsrc%5Etfw">Loading @ESPNNBA…</a>
+      </div>
+      <div class="embed-box">
+        <b class="small">Shams Charania (ESPN)</b> <a class="tiny" href="https://x.com/ShamsCharania" target="_blank" rel="noopener">@ShamsCharania ↗</a>
+        <a class="twitter-timeline" data-height="380" data-chrome="noheader nofooter noborders dark" href="https://twitter.com/ShamsCharania?ref_src=twsrc%5Etfw">Loading @ShamsCharania…</a>
+      </div>
+    </div>
+    <p class="tiny muted">Heads-up: truly automated X listening + historical analysis require paid API access (reads start ~$200/mo).
+      See <a href="sources.html">Sources &amp; Verification</a> for the documented limitation and upgrade path.</p>
+  </section>
+
+  <!-- TEAMS -->
+  <section class="card" style="margin-top:16px">
+    <h2>🏟 All 30 teams — official cross-check links</h2>
+    <p class="muted small">One-click manual verification per team: ESPN injuries page, official NBA.com team site, and an X injury search.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Team</th><th>ESPN injuries</th><th>NBA.com official</th><th>X search</th></tr></thead>
+        <tbody id="teamsTable"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- OFFICIAL QUICK LINKS -->
+  <section class="card" style="margin-top:16px">
+    <h2>✅ Official sources — always one click away</h2>
+    <div class="btn-row">
+      <a class="btn ghost sm" href="https://official.nba.com/nba-injury-report-2025-26-season/" target="_blank" rel="noopener">Official NBA injury report ↗</a>
+      <a class="btn ghost sm" href="https://www.espn.com/nba/injuries" target="_blank" rel="noopener">ESPN injuries (all teams) ↗</a>
+      <a class="btn ghost sm" href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster news ↗</a>
+      <a class="btn ghost sm" href="https://www.covers.com/sport/basketball/nba/injuries" target="_blank" rel="noopener">Covers injuries ↗</a>
+      <a class="btn ghost sm" href="https://www.rotoballer.com/player-news?sport=nba" target="_blank" rel="noopener">RotoBaller news ↗</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap" style="padding:0">
+      Free sources only · Severity labels are keyword-detected — confirm via linked sources ·
+      Data: ESPN (unofficial API) · Not affiliated with the NBA, ESPN, or Basketball Monster ·
+      <a href="sources.html">Verification log</a> · Updated 2026-09-17
+    </div>
+  </footer>
+</div>
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/alerts.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

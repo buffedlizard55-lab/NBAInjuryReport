@@ -1,0 +1,177 @@
+/* Central verified data registry for the NBA Injury Alert System.
+ * Every URL below was verified live on 2026-09-17 unless marked otherwise.
+ * Verification evidence + method for each source lives in SOURCES and on sources.html.
+ */
+"use strict";
+
+const ESPN_API = "https://site.api.espn.com/apis/site/v2/sports/basketball/nba";
+const ENDPOINTS = {
+  news: ESPN_API + "/news?limit=50",          // verified live 2026-09-17 (JSON, articles[].links.web.href)
+  scoreboard: ESPN_API + "/scoreboard",       // verified live 2026-09-17 (?dates=YYYYMMDD supported)
+  teams: ESPN_API + "/teams",                 // verified live 2026-09-17 (/teams/mia works, abbr accepted)
+  summary: "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event="
+};
+
+/* 30 NBA teams. ESPN slug = lowercase abbr (verified pattern via /teams/mia -> injuries link
+ * https://www.espn.com/nba/team/injuries/_/name/mia). NBA.com slug verified for /heat;
+ * remaining slugs follow the same long-standing nba.com/<team> pattern and each link is
+ * clickable for manual verification. */
+const TEAMS = [
+  { abbr: "ATL", name: "Hawks", city: "Atlanta", nba: "hawks", color: "#E03A3E" },
+  { abbr: "BOS", name: "Celtics", city: "Boston", nba: "celtics", color: "#007A33" },
+  { abbr: "BKN", name: "Nets", city: "Brooklyn", nba: "nets", color: "#8a8d8f" },
+  { abbr: "CHA", name: "Hornets", city: "Charlotte", nba: "hornets", color: "#1D1160" },
+  { abbr: "CHI", name: "Bulls", city: "Chicago", nba: "bulls", color: "#CE1141" },
+  { abbr: "CLE", name: "Cavaliers", city: "Cleveland", nba: "cavaliers", color: "#860038" },
+  { abbr: "DAL", name: "Mavericks", city: "Dallas", nba: "mavericks", color: "#00538C" },
+  { abbr: "DEN", name: "Nuggets", city: "Denver", nba: "nuggets", color: "#0E2240" },
+  { abbr: "DET", name: "Pistons", city: "Detroit", nba: "pistons", color: "#C8102E" },
+  { abbr: "GSW", name: "Warriors", city: "Golden State", nba: "warriors", color: "#1D428A" },
+  { abbr: "HOU", name: "Rockets", city: "Houston", nba: "rockets", color: "#CE1141" },
+  { abbr: "IND", name: "Pacers", city: "Indiana", nba: "pacers", color: "#002D62" },
+  { abbr: "LAC", name: "Clippers", city: "LA", nba: "clippers", color: "#C8102E" },
+  { abbr: "LAL", name: "Lakers", city: "Los Angeles", nba: "lakers", color: "#552583" },
+  { abbr: "MEM", name: "Grizzlies", city: "Memphis", nba: "grizzlies", color: "#5D76A9" },
+  { abbr: "MIA", name: "Heat", city: "Miami", nba: "heat", color: "#98002E" },
+  { abbr: "MIL", name: "Bucks", city: "Milwaukee", nba: "bucks", color: "#00471B" },
+  { abbr: "MIN", name: "Timberwolves", city: "Minnesota", nba: "timberwolves", color: "#0C2340" },
+  { abbr: "NOP", name: "Pelicans", city: "New Orleans", nba: "pelicans", color: "#0C2340" },
+  { abbr: "NYK", name: "Knicks", city: "New York", nba: "knicks", color: "#006BB6" },
+  { abbr: "OKC", name: "Thunder", city: "Oklahoma City", nba: "thunder", color: "#007AC1" },
+  { abbr: "ORL", name: "Magic", city: "Orlando", nba: "magic", color: "#0077C0" },
+  { abbr: "PHI", name: "76ers", city: "Philadelphia", nba: "sixers", color: "#006BB6" },
+  { abbr: "PHX", name: "Suns", city: "Phoenix", nba: "suns", color: "#1D1160" },
+  { abbr: "POR", name: "Trail Blazers", city: "Portland", nba: "blazers", color: "#E03A3E" },
+  { abbr: "SAC", name: "Kings", city: "Sacramento", nba: "kings", color: "#5A2D81" },
+  { abbr: "SAS", name: "Spurs", city: "San Antonio", nba: "spurs", color: "#8a8d8f" },
+  { abbr: "TOR", name: "Raptors", city: "Toronto", nba: "raptors", color: "#CE1141" },
+  { abbr: "UTA", name: "Jazz", city: "Utah", nba: "jazz", color: "#002B5C" },
+  { abbr: "WAS", name: "Wizards", city: "Washington", nba: "wizards", color: "#002B5C" }
+];
+function teamByAbbr(a) { return TEAMS.find(t => t.abbr === a); }
+function espnTeamInjuriesUrl(abbr) { return "https://www.espn.com/nba/team/injuries/_/name/" + abbr.toLowerCase(); }
+function espnTeamUrl(abbr, slug) {
+  const t = teamByAbbr(abbr);
+  return "https://www.espn.com/nba/team/_/name/" + abbr.toLowerCase() + "/" + (slug || (t.city + "-" + t.name)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+function nbaTeamUrl(abbr) { return "https://www.nba.com/" + teamByAbbr(abbr).nba; }
+function xSearchUrl(q) { return "https://x.com/search?q=" + encodeURIComponent(q); }
+
+/* Aliases for detecting team mentions inside headlines/descriptions. */
+const TEAM_ALIASES = {
+  ATL: ["atlanta hawks", "atlanta", "hawks"], BOS: ["boston celtics", "boston", "celtics"],
+  BKN: ["brooklyn nets", "brooklyn", "nets"], CHA: ["charlotte hornets", "charlotte", "hornets"],
+  CHI: ["chicago bulls", "chicago", "bulls"], CLE: ["cleveland cavaliers", "cleveland", "cavaliers", "cavs"],
+  DAL: ["dallas mavericks", "dallas", "mavericks", "mavs"], DEN: ["denver nuggets", "denver", "nuggets"],
+  DET: ["detroit pistons", "detroit", "pistons"], GSW: ["golden state warriors", "golden state", "warriors", "dubs"],
+  HOU: ["houston rockets", "houston", "rockets"], IND: ["indiana pacers", "indiana", "pacers"],
+  LAC: ["la clippers", "clippers"], LAL: ["los angeles lakers", "lakers"],
+  MEM: ["memphis grizzlies", "memphis", "grizzlies", "grizz"], MIA: ["miami heat", "miami", "heat"],
+  MIL: ["milwaukee bucks", "milwaukee", "bucks"], MIN: ["minnesota timberwolves", "minnesota", "timberwolves", "wolves"],
+  NOP: ["new orleans pelicans", "new orleans", "pelicans", "pels"], NYK: ["new york knicks", "knicks"],
+  OKC: ["oklahoma city thunder", "oklahoma city", "thunder"], ORL: ["orlando magic", "orlando", "magic"],
+  PHI: ["philadelphia 76ers", "philadelphia", "sixers", "76ers"], PHX: ["phoenix suns", "phoenix", "suns"],
+  POR: ["portland trail blazers", "portland", "trail blazers", "blazers"], SAC: ["sacramento kings", "sacramento", "kings"],
+  SAS: ["san antonio spurs", "san antonio", "spurs"], TOR: ["toronto raptors", "toronto", "raptors"],
+  UTA: ["utah jazz", "utah", "jazz"], WAS: ["washington wizards", "washington", "wizards"]
+};
+
+/* Injury-signal classifier patterns (applied to headline + description). Order = severity. */
+const SIGNALS = [
+  { sev: "out", label: "OUT", re: /\b(ruled out|ruled?[\w'’]* [^.?!]{0,40}?\bout\b|sits? out|out (vs\.?|for|tonight|tomorrow|until|at least)|out for (the )?(season|year|playoffs)|out indefinitely|will miss|to miss|sidelined|undergo(ing)? .*surgery|season-ending|torn (acl|mcl|meniscus|achilles|labrum|ligament)|ruptured? (achilles|acl)|fracture[ds]?|surgery)\b/i },
+  { sev: "doubtful", label: "DOUBTFUL", re: /\bdoubtful\b/i },
+  { sev: "questionable", label: "QUESTIONABLE", re: /\b(questionable|game-?time decision|\bgtd\b|day-?to-?day)\b/i },
+  { sev: "probable", label: "PROBABLE", re: /\bprobable\b/i },
+  { sev: "return", label: "RETURN / GOOD NEWS", re: /\b(cleared|upgraded|will play|expected to play|available|return(s|ing)?|activated|cleared to return|no longer|removed from .*injury)\b/i },
+  { sev: "mention", label: "INJURY MENTION", re: /\b(injur(y|ed|ies|ing)|hurt|sprain|strain|soreness|contusion|concussion|illness|knee|ankle|hamstring|calf|groin|back spasms|shoulder|wrist|elbow|hip|foot|toe|finger|hand|neck|oblique|achilles|acl|mcl|meniscus|labrum|hernia|migraine|protocol)\b/i }
+];
+
+/* Verified reporter / insider directory.
+ * status: verified-handle (X handle confirmed to belong to this person),
+ *         outlet-only (person+outlet confirmed; X handle NOT confirmed — no handle asserted),
+ *         community (handle from the community-maintained r/NBA approved list — re-confirm),
+ *         inactive (confirmed but not usable on X), retired (historical only). */
+const REPORTERS = [
+  // ---- Tier 1: lead NBA insiders ----
+  { name: "Shams Charania", handle: "ShamsCharania", outlet: "ESPN", role: "Senior NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "ESPN's Shams Charania (ESPN 2026 buzz live blog) + Basketball Monster source links", verifyUrl: "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason", notes: "Replaced Wojnarowski as ESPN's lead NBA insider (Oct 2024). First to report many injuries/transactions." },
+  { name: "Chris Haynes", handle: "ChrisBHaynes", outlet: "NBA on Prime Video", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Front Office Sports: Haynes joins Amazon Prime NBA team; Sotwe profile @ChrisBHaynes", verifyUrl: "https://frontofficesports.com/chris-haynes-marcus-thompson-amazon-prime-nba-team/", notes: "Previously ESPN / Yahoo Sports / TNT / Bleacher Report." },
+  { name: "Marc Stein", handle: "TheSteinLine", outlet: "The Stein Line (Substack)", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Substack author sameAs twitter.com/TheSteinLine; co-host #thisleague UNCUT", verifyUrl: "https://marcstein.substack.com/p/debut-episode-of-thisleague-uncut", notes: "Covering the NBA since 1994; ex-ESPN, ex-New York Times." },
+  { name: "Jake Fischer", handle: "JakeLFischer", outlet: "Yahoo Sports", role: "NBA Insider", tier: 1, beat: null, status: "verified-handle", verifyLabel: "Basketball Monster source link twitter.com/JakeLFischer; Tier-1 in reporter-rankings", verifyUrl: "https://basketballmonster.com/playernews.aspx", notes: "Listed Tier 1 alongside Shams/Stein/Haynes in community reporter rankings." },
+  { name: "Adrian Wojnarowski", handle: "wojespn", outlet: "St. Bonaventure (ex-ESPN)", role: "RETIRED from reporting — historical reference only", tier: 1, beat: null, status: "retired", verifyLabel: "Retired Sept 2024 to become St. Bonaventure MBB GM (Inquirer, Oct 2024)", verifyUrl: "https://www.inquirer.com/sixers/espn-insider-shams-charania-adrian-wojnarowski-20241007.html", notes: "Do NOT use for live alerts. Kept for historical scoring context only." },
+  // ---- Tier 2: ESPN national ----
+  { name: "Brian Windhorst", handle: "WindhorstESPN", outlet: "ESPN", role: "NBA Insider / Hoop Collective host", tier: 2, beat: null, status: "verified-handle", verifyLabel: "twitter.com/windhorstespn verified profile; ESPN 2026 buzz live blog", verifyUrl: "https://twitter.com/windhorstespn?lang=", notes: "Intel + context; co-hosts The Hoop Collective with Bontemps & MacMahon." },
+  { name: "Tim Bontemps", handle: "TimBontemps", outlet: "ESPN", role: "Senior NBA Writer", tier: 2, beat: null, status: "verified-handle", verifyLabel: "ESPN Press Room bio lists @TimBontemps", verifyUrl: "https://espnpressroom.com/us/bios/tim-bontemps/", notes: "Breaking news + MVP straw polls; Hoop Collective co-host." },
+  { name: "Bobby Marks", handle: "BobbyMarks42", outlet: "ESPN", role: "NBA Front Office Insider", tier: 2, beat: null, status: "verified-handle", verifyLabel: "ESPN Press Room bio; @BobbyMarks42 profile (Front Office Insider @ESPNNBA)", verifyUrl: "https://espnpressroom.com/bio/bobby-marks/", notes: "Ex-Nets assistant GM; cap/roster context around injury replacements." },
+  { name: "Ramona Shelburne", handle: "ramonashelburne", outlet: "ESPN", role: "Senior Writer / NBA Insider", tier: 2, beat: null, status: "verified-handle", verifyLabel: "sameAs twitter.com/ramonashelburne; ESPN 2026 buzz live blog", verifyUrl: "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason", notes: "Investigative + breaking news; NBA Today contributor." },
+  { name: "Tim MacMahon", handle: "espn_macmahon", outlet: "ESPN", role: "NBA Writer (Mavericks / Southwest)", tier: 2, beat: "DAL", status: "verified-handle", verifyLabel: "Cited as 'Tim MacMahon of ESPN' on ESPN injuries page; @espn_macmahon in Hoop Collective posts", verifyUrl: "https://www.espn.com/nba/injuries", notes: "Dallas-area beat; frequently first on Mavericks injury news." },
+  { name: "Dave McMenamin", handle: "mcten", outlet: "ESPN", role: "NBA Writer (Lakers / Cavs)", tier: 2, beat: "LAL", status: "verified-handle", verifyLabel: "ESPN byline 'McMenamin: Lakers…' in 2026 buzz blog; @mcten on Lakers coverage threads", verifyUrl: "https://www.espn.com/nba/story/_/id/48377855/2026-nba-buzz-latest-live-updates-news-intel-nba-draft-offseason", notes: "Travels with the Lakers; in-arena injury updates." },
+  { name: "Baxter Holmes", handle: "BaxterHolmes", outlet: "ESPN", role: "Senior Writer (investigative)", tier: 2, beat: null, status: "verified-handle", verifyLabel: "ESPN Press Room bio; twitter.com/BaxterHolmes on his public page", verifyUrl: "https://espnpressroom.com/bio/baxter-holmes/", notes: "Investigations/longform; ex-Lakers and ex-Celtics beat." },
+  { name: "Malika Andrews", handle: "malika_andrews", outlet: "ESPN", role: "Host, NBA Today / NBA Countdown", tier: 2, beat: null, status: "verified-handle", verifyLabel: "x.com/malika_andrews (ESPN bio) + Muck Rack sameAs", verifyUrl: "https://x.com/malika_andrews", notes: "Relay + interviews rather than first-break news; good confirmation layer." },
+  { name: "Anthony Slater", handle: "anthonyVslater", outlet: "ESPN", role: "Warriors / NBA writer", tier: 2, beat: "GSW", status: "verified-handle", verifyLabel: "x.com/anthonyVslater June 2026 intel post links espn.com; bio: covers Warriors/NBA for ESPN", verifyUrl: "https://x.com/anthonyVslater/status/2067229196238442514", notes: "FLAG: outlet appears to have moved from The Athletic to ESPN — re-confirm employer before citing." },
+  { name: "Kevin Pelton", handle: "kpelton", outlet: "ESPN", role: "Analytics writer", tier: 3, beat: null, status: "community", verifyLabel: "r/NBA approved Twitter list: National - Kevin Pelton - ESPN", verifyUrl: "https://www.reddit.com/r/nba/comments/14hvsfj/soliciting_updates_to_the_rnba_approved_twitter/", notes: "Analyst, not a news-breaker. Community-listed handle — re-confirm." },
+  // ---- Tier 2: other national outlets ----
+  { name: "Sam Amick", handle: "sam_amick", outlet: "The Athletic", role: "Senior NBA Writer", tier: 2, beat: null, status: "verified-handle", verifyLabel: "x.com/sam_amick (Senior NBA Writer, The Athletic) + Muck Rack verified", verifyUrl: "https://x.com/sam_amick/status/1952477469627515182?lang=en", notes: "Also VP of the Pro Basketball Writers Association." },
+  { name: "John Hollinger", handle: "johnhollinger", outlet: "The Athletic", role: "Senior NBA columnist", tier: 3, beat: null, status: "inactive", verifyLabel: "x.com/johnhollinger bio", verifyUrl: "https://x.com/johnhollinger?lang=en", notes: "FLAG: bio says 'I'm done here' — moved to Bluesky (johnhollinger.bsky.social) + IG/Threads @TheJohnHollinger. Do not rely on X." },
+  { name: "Marc J. Spears", handle: "MarcJSpears", outlet: "Andscape / ESPN", role: "Senior NBA Writer", tier: 2, beat: null, status: "verified-handle", verifyLabel: "Andscape contributor page sameAs twitter.com/MarcJSpears", verifyUrl: "https://andscape.com/contributors/marc-spears/", notes: "" },
+  { name: "Chris Mannix", handle: "SIChrisMannix", outlet: "Sports Illustrated", role: "Senior Writer", tier: 2, beat: null, status: "verified-handle", verifyLabel: "x.com/sichrismannix bio: SI Senior Writer, NBA on NBC, NBC Sports Boston", verifyUrl: "https://x.com/sichrismannix", notes: "Also NBA on NBC + NBC Sports Boston + DAZN Boxing." },
+  { name: "Michael Scotto", handle: "MikeAScotto", outlet: "HoopsHype (USA Today)", role: "NBA Insider", tier: 2, beat: null, status: "verified-handle", verifyLabel: "x.com/MikeAScotto posts citing league sources to @hoopshype", verifyUrl: "https://x.com/MikeAScotto/status/2040776839078031569", notes: "Transaction + injury news with 'league sources told @hoopshype' format." },
+  { name: "Ian Begley", handle: "IanBegley", outlet: "SNY", role: "Knicks / Nets / NBA reporter", tier: 2, beat: "NYK", status: "verified-handle", verifyLabel: "x.com/IanBegley bio: covers Knicks, Nets and NBA for @SNYtv", verifyUrl: "https://x.com/IanBegley/highlights", notes: "Best Knicks/Nets in-market injury follow." },
+  { name: "Zach Lowe", handle: "ZachLowe_NBA", outlet: "The Ringer", role: "Host, The Zach Lowe Show", tier: 3, beat: null, status: "verified-handle", verifyLabel: "Awful Announcing: Lowe joined The Ringer (Mar 2025) after ESPN layoff (Sept 2024)", verifyUrl: "https://awfulannouncing.com/ringer/zach-lowe-writing-sports-media.html", notes: "Analysis, not breaking news. Also on IG @zachlowenba." },
+  { name: "Kevin O'Connor", handle: "KevinOConnor", outlet: "Yahoo Sports", role: "NBA analyst", tier: 3, beat: null, status: "verified-handle", verifyLabel: "x.com/KevinOConnor bio: Yahoo; @YahooSports posts", verifyUrl: "https://x.com/YahooSports/status/2069103450894250299", notes: "FLAG: handle is @KevinOConnor (no NBA suffix); outlet is Yahoo Sports (ex-Ringer). Analysis, not breaking news." },
+  { name: "Howard Beck", handle: "howardbeck", outlet: "The Ringer", role: "Senior NBA Writer", tier: 2, beat: null, status: "verified-handle", verifyLabel: "linktr.ee/howardbeck: Sr NBA Writer, The Ringer (past: SI, NYT, B/R)", verifyUrl: "https://linktr.ee/howardbeck", notes: "X handles are case-insensitive; also seen as @HowardBeck." },
+  { name: "David Aldridge", handle: "davidaldridgedc", outlet: "The Athletic", role: "Columnist", tier: 2, beat: null, status: "verified-handle", verifyLabel: "x.com/davidaldridgedc bio: @TheAthletic columnist, HOF 2016", verifyUrl: "https://x.com/davidaldridgedc?lang=en", notes: "FLAG: Muck Rack lists an older/alternate handle @daldridgetnt — both may exist; confirm before citing." },
+  { name: "Marcus Thompson", handle: "ThompsonScribe", outlet: "The Athletic + NBA on Prime", role: "Lead columnist", tier: 2, beat: "GSW", status: "verified-handle", verifyLabel: "Muck Rack: Lead Columnist, The Athletic; FOS: joined Amazon Prime NBA team", verifyUrl: "https://frontofficesports.com/chris-haynes-marcus-thompson-amazon-prime-nba-team/", notes: "Bay Area based; columns + Prime Video features." },
+  // ---- Verified in-market beat writers ----
+  { name: "Will Guillory", handle: "WillGuillory", outlet: "The Athletic", role: "Pelicans beat writer", tier: 2, beat: "NOP", status: "verified-handle", verifyLabel: "Basketball Monster source link twitter.com/WillGuillory", verifyUrl: "https://basketballmonster.com/playernews.aspx", notes: "In-arena Pelicans coverage." },
+  { name: "Ira Winderman", handle: "IraHeatBeat", outlet: "South Florida Sun Sentinel", role: "Heat beat writer", tier: 2, beat: "MIA", status: "verified-handle", verifyLabel: "Basketball Monster source link twitter.com/IraHeatBeat; cited on ESPN injuries page", verifyUrl: "https://basketballmonster.com/playernews.aspx", notes: "Longtime Heat beat; cited by ESPN injury report." },
+  // ---- Outlet-confirmed, handle NOT confirmed (no handle asserted) ----
+  { name: "Tim Reynolds", handle: null, outlet: "Associated Press", role: "NBA writer (Heat / national)", tier: 2, beat: "MIA", status: "outlet-only", verifyLabel: "Cited as 'Tim Reynolds of Associated Press' on ESPN injuries page", verifyUrl: "https://www.espn.com/nba/injuries", notes: "AP lines move fast and are widely syndicated. X handle not verified — use search link." },
+  { name: "K.C. Johnson", handle: null, outlet: "Chicago Sports Network", role: "Bulls beat writer", tier: 2, beat: "CHI", status: "outlet-only", verifyLabel: "Cited as 'K.C. Johnson of Chicago Sports Network' on ESPN injuries page", verifyUrl: "https://africa.espn.com/nba/injuries", notes: "Longtime Bulls beat. X handle not verified — use search link." },
+  { name: "Grant Afseth", handle: null, outlet: "DallasHoopsJournal.com", role: "Mavericks beat writer", tier: 2, beat: "DAL", status: "outlet-only", verifyLabel: "Cited as 'Grant Afseth of DallasHoopsJournal.com' on ESPN injuries page", verifyUrl: "http://editions-origin.espn.com/nba/injuries", notes: "X handle not verified — use search link." },
+  { name: "Christian Clark", handle: null, outlet: "The Athletic", role: "NBA writer (beat TBD)", tier: 3, beat: null, status: "outlet-only", verifyLabel: "Cited as 'Christian Clark of The Athletic' on ESPN injuries page", verifyUrl: "https://www.espn.com/nba/injuries", notes: "FLAG: exact current beat unclear from citation — confirm before relying on." },
+  // ---- Community-listed (r/NBA approved Twitter list — re-confirm handles) ----
+  { name: "Mike Vorkunov", handle: "MikeVorkunov", outlet: "The Athletic", role: "National NBA reporter", tier: 3, beat: null, status: "community", verifyLabel: "r/NBA approved Twitter list thread", verifyUrl: "https://www.reddit.com/r/nba/comments/14hvsfj/soliciting_updates_to_the_rnba_approved_twitter/", notes: "Community-listed — open the X profile and confirm identity before scoring." },
+  { name: "Melissa Rohlin", handle: "melissarohlin", outlet: "Fox Sports", role: "National NBA reporter", tier: 3, beat: null, status: "community", verifyLabel: "r/NBA approved Twitter list thread", verifyUrl: "https://www.reddit.com/r/nba/comments/14hvsfj/soliciting_updates_to_the_rnba_approved_twitter/", notes: "Community-listed — open the X profile and confirm identity before scoring." },
+  { name: "Candace Buckner", handle: "CandaceDBuckner", outlet: "Washington Post", role: "Sports reporter", tier: 3, beat: null, status: "community", verifyLabel: "r/NBA approved Twitter list thread", verifyUrl: "https://www.reddit.com/r/nba/comments/14hvsfj/soliciting_updates_to_the_rnba_approved_twitter/", notes: "Community-listed — open the X profile and confirm identity before scoring." },
+  { name: "Tania Ganguli", handle: "taniaganguli", outlet: "New York Times", role: "NBA reporter", tier: 3, beat: null, status: "community", verifyLabel: "r/NBA approved Twitter list thread", verifyUrl: "https://www.reddit.com/r/nba/comments/14hvsfj/soliciting_updates_to_the_rnba_approved_twitter/", notes: "Community-listed — open the X profile and confirm identity before scoring." }
+];
+
+/* Line-by-line verified source registry. */
+const SOURCES = [
+  { id: "espn-news-api", name: "ESPN NBA News API (site.api.espn.com)", url: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50", kind: "JSON API (unofficial, no key)", cost: "Free", latency: "~1–5 min behind ESPN.com", browser: "Yes", verified: "2026-09-17 — fetched live; returns header + articles[] with headline, description, published, links.web.href", review: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=2", note: "UNOFFICIAL/undocumented (ESPN retired its public API in 2014). Powers this site's live wire. Cache + poll politely." },
+  { id: "espn-scoreboard-api", name: "ESPN NBA Scoreboard API", url: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard", kind: "JSON API (unofficial, no key)", cost: "Free", latency: "Near-live in games", browser: "Yes", verified: "2026-09-17 — fetched live; leagues/events/competitions; supports ?dates=YYYYMMDD", review: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20260917&limit=5", note: "Drives live-game detection for in-game alerts. Same unofficial caveat as above." },
+  { id: "espn-teams-api", name: "ESPN NBA Teams API", url: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams", kind: "JSON API (unofficial, no key)", cost: "Free", latency: "Static/slow-moving", browser: "Yes", verified: "2026-09-17 — /teams/14 and /teams/mia both return Miami Heat (abbr accepted, no numeric IDs needed)", review: "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia", note: "Also exposes per-team injuries page links (rel=injuries)." },
+  { id: "espn-injuries-page", name: "ESPN NBA Injuries page", url: "https://www.espn.com/nba/injuries", kind: "Official ESPN injury report page", cost: "Free", latency: "Editorial (minutes–hours)", browser: "Manual review link", verified: "2026-09-17 — live 2026-27 season table (NAME/POS/EST. RETURN/STATUS/COMMENT)", review: "https://www.espn.com/nba/injuries", note: "Per-team variant verified: /nba/team/injuries/_/name/mia (pattern from API rel=injuries link)." },
+  { id: "nba-official-report", name: "NBA Official Injury Report (official.nba.com)", url: "https://official.nba.com/nba-injury-report-2025-26-season/", kind: "League-mandated official report", cost: "Free", latency: "Deadline-driven (5pm local day-before; 11am–1pm gameday; 1pm for back-to-backs)", browser: "Manual review link", verified: "2026-09-17 — page live; rules text confirmed; old season URLs redirect to current season page", review: "https://official.nba.com/nba-injury-report-2025-26-season/", note: "Highest authority for designations. 2026-27 season page expected ~Oct 2026 (currently offseason)." },
+  { id: "nba-injury-pdfs", name: "NBA Official Injury Report PDFs (ak-static.cms.nba.com)", url: "https://ak-static.cms.nba.com/referee/injury/", kind: "Timestamped official PDFs", cost: "Free", latency: "Multiple issues per gameday", browser: "Manual review link", verified: "2026-09-17 — indexed PDFs verified (e.g. Injury-Report_2026-04-12_01_00PM.pdf) with Game Date/Time/Matchup/Team/Player/Status/Reason", review: "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf", note: "Filenames embed issue timestamps; no stable 'latest' URL found — use season page, not deep links." },
+  { id: "bm-playernews", name: "Basketball Monster Player News", url: "https://basketballmonster.com/playernews.aspx", kind: "Fantasy injury news (reference model)", cost: "Free page (site has premium tiers)", latency: "Editorial, X-sourced", browser: "Manual review link", verified: "2026-09-17 — live: status tags (INJURED/NOTE/TRADED), X source links, impact ratings, 10/20 opening-night slate", review: "https://basketballmonster.com/playernews.aspx", note: "Reverse-engineered as the wire format model. No public API/CORS — link out, do not scrape." },
+  { id: "nba-cdn-scoreboard", name: "NBA.com CDN live scoreboard JSON", url: "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json", kind: "JSON (unofficial, no key)", cost: "Free", latency: "Near-live in games", browser: "Yes (normally)", verified: "Documented in multiple open-source clients; NOT directly fetchable from this sandbox (TLS blocked) — needs browser-side confirmation", review: "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json", note: "Implemented as secondary score source with graceful fallback to ESPN." },
+  { id: "nba-cdn-schedule", name: "NBA.com CDN season schedule JSON", url: "https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_1.json", kind: "JSON (unofficial, no key)", cost: "Free", latency: "Static", browser: "Yes (normally)", verified: "Documented (scheduleLeagueV2_1.json); same sandbox caveat as above", review: "https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_1.json", note: "Fallback schedule source; ESPN nextEvent also exposes upcoming games." },
+  { id: "nba-team-sites", name: "NBA.com official team sites (nba.com/<team>)", url: "https://www.nba.com/heat", kind: "Official team pages", cost: "Free", latency: "Editorial", browser: "Manual review link", verified: "2026-09-17 — nba.com/heat live (schedule, tickets, game hubs); pattern assumed for other 29 clubs", review: "https://www.nba.com/heat", note: "Each team link is clickable for manual verification." },
+  { id: "covers-injuries", name: "Covers.com NBA Injuries", url: "https://www.covers.com/sport/basketball/nba/injuries", kind: "Aggregated injury table", cost: "Free", latency: "Editorial", browser: "Manual review link", verified: "2026-09-17 — live table with dated status comments + reporter attribution", review: "https://www.covers.com/sport/basketball/nba/injuries", note: "Tertiary cross-check with source attribution." },
+  { id: "rotoballer-news", name: "RotoBaller NBA Player News", url: "https://www.rotoballer.com/player-news?sport=nba", kind: "Fantasy player-news feed", cost: "Free", latency: "Editorial real-time", browser: "Manual review link", verified: "2026-09-17 — live real-time fantasy news feed", review: "https://www.rotoballer.com/player-news?sport=nba", note: "Tertiary cross-check." },
+  { id: "x-embeds", name: "X embedded timelines (widgets.js)", url: "https://publish.twitter.com/", kind: "Official embed (no key)", cost: "Free", latency: "Live", browser: "Yes (often blocked by ad/privacy blockers)", verified: "Publish.twitter.com is X's official embed tool; timeline embeds need no API key", review: "https://publish.twitter.com/", note: "Used for the Social Pulse panel with link fallbacks. NOT programmable alert input." },
+  { id: "x-api", name: "X API (official, for future automation)", url: "https://docs.x.ai/api", kind: "REST/streaming API", cost: "Free tier is write-only/limited; reads start ~$200/mo Basic; Pro $5,000/mo", costFlag: true, latency: "Real-time (filtered stream)", browser: "No (server-side)", verified: "2026-09-17 — multiple 2026 pricing roundups agree: no usable free read tier", review: "https://www.wearefounders.uk/the-x-api-price-hike-a-blow-to-indie-hackers/", note: "BLOCKER for automated social listening + historical scoring. Pricing sources disagree on details — confirm at checkout." },
+  { id: "balldontlie", name: "balldontlie NBA API", url: "https://nba.balldontlie.io/", kind: "JSON API (key required)", cost: "Free tier: teams/players/games ONLY. Player Injuries + webhooks need paid tiers.", costFlag: true, latency: "Webhooks incl. nba.injury.* on paid plans", browser: "Possible with key (don't expose keys client-side)", verified: "2026-09-17 — official tier table: Player Injuries = ALL-STAR/GOAT only; injury webhooks = ALL-ACCESS", review: "https://nba.balldontlie.io/", note: "NOT a free injury source. Candidate paid upgrade path (injury webhooks solve latency properly)." }
+];
+
+/* Irregularities / requirements flags raised during verification. */
+const FLAGS = [
+  { level: "bad", title: "Requirements mention 'NFL' / 'NFL football games' inside an NBA project", detail: "The brief asks for NFL coverage in two places but the repo is NBAInjuryReport and the stated goal is NBA. This build implements NBA only. If NFL is actually wanted, that is a separate league adapter (different APIs, teams, reporters)." },
+  { level: "warn", title: "'Offensive player' is NFL terminology — meaningless in basketball", detail: "Basketball has Guards/Forwards/Centers, not offense/defense units; all rotation players matter for fantasy. The alert engine therefore tracks ALL players and lets you filter by team and severity instead of 'offensive' vs not." },
+  { level: "warn", title: "It is the offseason — there are no live games to alert on today", detail: "Verified 2026-09-17: ESPN scoreboard returns zero events; preseason starts 2026-10-03 (MIA@TOR); opening night is 2026-10-20 (BOS@DET, PHI@NYK, OKC@SAS per Basketball Monster). In-game 'questionable to return' alerts only become meaningful once games tip. The poller + sound + log are testable now via the Test button and any breaking offseason news." },
+  { level: "bad", title: "Truly automated X/Instagram/Facebook listening is NOT free", detail: "X free tier is write-only/extremely limited; usable reads start ~$200/mo. Instagram/Facebook have no free public injury-post APIs at all. This build ships the honest version: embedded X timelines, one-click reporter/X-search links, and a forward-tracking scorecard — with the paid upgrade path documented. Anyone promising free real-time scraping is describing ToS-violating scrapers that break constantly." },
+  { level: "warn", title: "ESPN's free JSON endpoints are unofficial and undocumented", detail: "ESPN retired its public API in 2014. The site.api endpoints work today (verified live) and are widely used, but can change or rate-limit without notice. Mitigation: multi-source design, status indicators, cached last-good data, and official manual-review links everywhere." },
+  { level: "warn", title: "balldontlie injury data is paywalled (free tier has no injuries)", detail: "Its tier table reserves Player Injuries and nba.injury.* webhooks for paid plans. Do not plan around it as a free source." },
+  { level: "info", title: "Reporter-directory corrections found during verification", detail: "Wojnarowski is RETIRED (excluded from live use). Anthony Slater's 2026 bylines point at ESPN, not The Athletic (confirm employer). Kevin O'Connor is @KevinOConnor at Yahoo (not @KevinOConnorNBA). John Hollinger quit posting on X (see Bluesky). David Aldridge may have two handles (@davidaldridgedc vs @daldridgetnt). Details on the Reporters page." },
+  { level: "info", title: "ESPN numeric team IDs are unreliable from memory — abbreviations used instead", detail: "Spot-check caught a wrong assumption (teams/14 is Miami, not the Lakers). The app therefore uses 3-letter abbreviations everywhere (/teams/mia verified working), avoiding the ID mapping entirely." }
+];
+
+const SCORING_RUBRIC = [
+  { outcome: "First + correct", points: "+3", desc: "Reporter was first among tracked sources AND the report proved correct." },
+  { outcome: "Correct (not first)", points: "+1", desc: "Report proved correct but someone else broke it first." },
+  { outcome: "Partially correct", points: "+0.5", desc: "Direction right, details materially off (e.g. 'weeks' vs 'days')." },
+  { outcome: "Unresolved / pending", points: "0", desc: "Awaiting official designation or game outcome." },
+  { outcome: "Wrong", points: "−2", desc: "Report contradicted by official designation, team announcement, or game action." },
+  { outcome: "Fabricated / deleted without correction", points: "−5", desc: "Reserved for serious credibility failures." }
+];
