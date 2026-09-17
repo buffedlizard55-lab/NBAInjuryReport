@@ -5,7 +5,9 @@
     "sev": "questionable",
     "updated": "2026-09-14T19:08Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/lac"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/lac",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Fred VanVleet (HOU)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -13,7 +15,9 @@
     "sev": "questionable",
     "updated": "2026-09-11T20:46Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/hou"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/hou",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Mark Williams (PHX)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -21,7 +25,9 @@
     "sev": "out",
     "updated": "2026-09-11T16:03Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/phx"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/phx",
+    "lastStatus": "Out",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Nate Bittle (TOR)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -29,7 +35,9 @@
     "sev": "questionable",
     "updated": "2026-09-10T01:30Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/tor"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/tor",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jaren Jackson Jr. (UTAH)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -45,7 +53,9 @@
     "sev": "questionable",
     "updated": "2026-09-10T00:05Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/dal"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/dal",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Tyrese Haliburton (IND)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -53,7 +63,9 @@
     "sev": "questionable",
     "updated": "2026-09-09T23:48Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/ind"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/ind",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Isaiah Hartenstein (OKC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -61,7 +73,9 @@
     "sev": "questionable",
     "updated": "2026-09-07T21:31Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Ja Morant (POR)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -69,7 +83,9 @@
     "sev": "questionable",
     "updated": "2026-09-04T18:52Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/por"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/por",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Domantas Sabonis (SAC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -77,7 +93,9 @@
     "sev": "questionable",
     "updated": "2026-09-02T16:35Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sac"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sac",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Giannis Antetokounmpo (MIA)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -85,7 +103,9 @@
     "sev": "questionable",
     "updated": "2026-09-02T16:32Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Franz Wagner (ORL)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -93,7 +113,9 @@
     "sev": "questionable",
     "updated": "2026-09-02T16:17Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/orl"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/orl",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jordan Miller (LAC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -101,7 +123,9 @@
     "sev": "out",
     "updated": "2026-08-26T20:04Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/lac"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/lac",
+    "lastStatus": "Out",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Brandon Miller (CHA)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -109,7 +133,9 @@
     "sev": "questionable",
     "updated": "2026-08-25T15:58Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/cha"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/cha",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Shaedon Sharpe (POR)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -117,7 +143,9 @@
     "sev": "out",
     "updated": "2026-08-24T20:23Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/por"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/por",
+    "lastStatus": "Out",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jimmy Butler III (GS)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -133,7 +161,9 @@
     "sev": "questionable",
     "updated": "2026-08-19T17:24Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/dal"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/dal",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Bradley Beal (LAC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -141,7 +171,9 @@
     "sev": "questionable",
     "updated": "2026-08-14T00:02Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/lac"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/lac",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Kevin Durant (HOU)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -149,7 +181,9 @@
     "sev": "questionable",
     "updated": "2026-08-05T15:22Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/hou"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/hou",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Keegan Murray (SAC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -157,7 +191,9 @@
     "sev": "questionable",
     "updated": "2026-07-31T15:26Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sac"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sac",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jamir Watkins (WSH)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -173,7 +209,9 @@
     "sev": "questionable",
     "updated": "2026-07-30T15:59Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Bam Adebayo (MIA)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -181,7 +219,9 @@
     "sev": "questionable",
     "updated": "2026-07-28T16:16Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Scotty Pippen Jr. (MEM)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -189,7 +229,9 @@
     "sev": "questionable",
     "updated": "2026-07-27T18:26Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jayson Tatum (BOS)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -197,7 +239,9 @@
     "sev": "questionable",
     "updated": "2026-07-27T16:11Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/bos"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/bos",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Kentavious Caldwell-Pope (PHI)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -205,7 +249,9 @@
     "sev": "questionable",
     "updated": "2026-07-25T21:44Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/phi"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/phi",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "David Jones Garcia (SA)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -221,7 +267,9 @@
     "sev": "questionable",
     "updated": "2026-07-20T01:00Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Karim Lopez (MEM)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -229,7 +277,9 @@
     "sev": "questionable",
     "updated": "2026-07-20T00:57Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Otega Oweh (OKC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -237,7 +287,9 @@
     "sev": "questionable",
     "updated": "2026-07-19T22:56Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Trevon Brazile (DEN)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -245,7 +297,9 @@
     "sev": "questionable",
     "updated": "2026-07-19T22:41Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/den"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/den",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Alijah Martin (TOR)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -253,7 +307,9 @@
     "sev": "questionable",
     "updated": "2026-07-19T22:30Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/tor"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/tor",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Chucky Hepburn (TOR)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -261,7 +317,9 @@
     "sev": "questionable",
     "updated": "2026-07-19T22:26Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/tor"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/tor",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Collin Murray-Boyles (TOR)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -269,7 +327,9 @@
     "sev": "questionable",
     "updated": "2026-07-19T22:24Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/tor"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/tor",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jayden Quaintance (SA)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -285,7 +345,9 @@
     "sev": "questionable",
     "updated": "2026-07-19T02:49Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/phx"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/phx",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Mouhamed Gueye (ATL)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -293,7 +355,9 @@
     "sev": "questionable",
     "updated": "2026-07-19T00:14Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/atl"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/atl",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Keshon Gilbert (ATL)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -301,7 +365,9 @@
     "sev": "questionable",
     "updated": "2026-07-18T23:19Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/atl"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/atl",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "RayJ Dennis (ATL)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -309,7 +375,9 @@
     "sev": "questionable",
     "updated": "2026-07-18T23:18Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/atl"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/atl",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Trevor Keels (MIA)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -317,7 +385,9 @@
     "sev": "questionable",
     "updated": "2026-07-18T02:56Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Mohamed Diawara (NY)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -333,7 +403,9 @@
     "sev": "questionable",
     "updated": "2026-07-17T21:31Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/chi"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/chi",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Trey Alexander (UTAH)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -349,7 +421,9 @@
     "sev": "questionable",
     "updated": "2026-07-15T18:28Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Izaiyah Nelson (ORL)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -357,7 +431,9 @@
     "sev": "questionable",
     "updated": "2026-07-13T14:40Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/orl"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/orl",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Myron Gardner (MIA)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -365,7 +441,9 @@
     "sev": "questionable",
     "updated": "2026-07-08T19:52Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mia",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jalen Brunson (NY)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -381,7 +459,9 @@
     "sev": "questionable",
     "updated": "2026-07-01T22:31Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jonathan Isaac (ORL)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -389,7 +469,9 @@
     "sev": "questionable",
     "updated": "2026-07-01T17:22Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/orl"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/orl",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Zach Collins (CHI)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -397,7 +479,9 @@
     "sev": "questionable",
     "updated": "2026-07-01T02:31Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/chi"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/chi",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Nolan Traore (BKN)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -405,7 +489,9 @@
     "sev": "questionable",
     "updated": "2026-06-30T13:28Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/bkn"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/bkn",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Zach LaVine (SAC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -413,7 +499,9 @@
     "sev": "questionable",
     "updated": "2026-06-29T14:02Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sac"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sac",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Dereck Lively II (DAL)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -421,7 +509,9 @@
     "sev": "questionable",
     "updated": "2026-06-26T20:09Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/dal"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/dal",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Kevin Porter Jr. (MIL)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -429,7 +519,9 @@
     "sev": "questionable",
     "updated": "2026-06-26T00:46Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mil"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mil",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "De'Andre Hunter (SAC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -437,7 +529,9 @@
     "sev": "questionable",
     "updated": "2026-06-25T18:21Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sac"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sac",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Richie Saunders (MEM)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -445,7 +539,9 @@
     "sev": "out",
     "updated": "2026-06-25T00:34Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem",
+    "lastStatus": "Out",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Josh Giddey (CHI)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -453,7 +549,9 @@
     "sev": "questionable",
     "updated": "2026-06-24T18:04Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/chi"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/chi",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Jaylen Wells (MEM)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -461,7 +559,9 @@
     "sev": "questionable",
     "updated": "2026-06-24T17:36Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Zach Edey (MEM)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -469,7 +569,9 @@
     "sev": "questionable",
     "updated": "2026-06-24T17:01Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/mem",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Alex Sarr (WSH)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -501,7 +603,9 @@
     "sev": "questionable",
     "updated": "2026-06-16T14:43Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Yanic Konan Niederhauser (LAC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -509,7 +613,9 @@
     "sev": "questionable",
     "updated": "2026-06-16T14:38Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/lac"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/lac",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Bryce McGowens (NO)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -525,7 +631,9 @@
     "sev": "questionable",
     "updated": "2026-06-16T14:34Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/por"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/por",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "PJ Hall (CHA)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -533,7 +641,9 @@
     "sev": "questionable",
     "updated": "2026-06-16T14:32Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/cha"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/cha",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Rob Dillingham (CHI)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -541,7 +651,9 @@
     "sev": "questionable",
     "updated": "2026-06-16T14:30Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/chi"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/chi",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Steven Adams (HOU)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -549,7 +661,9 @@
     "sev": "questionable",
     "updated": "2026-06-16T14:28Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/hou"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/hou",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Nikola Topic (OKC)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -557,7 +671,9 @@
     "sev": "questionable",
     "updated": "2026-06-16T14:20Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/okc",
+    "lastStatus": "Day-To-Day",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Donte DiVincenzo (MIN)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -565,7 +681,9 @@
     "sev": "out",
     "updated": "2026-04-26T17:52Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/min"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/min",
+    "lastStatus": "Out",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "Moses Moody (GS)": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -581,7 +699,9 @@
     "sev": "out",
     "updated": "2026-02-09T21:43Z",
     "source": "ESPN structured injuries API",
-    "evidence": "https://www.espn.com/nba/team/injuries/_/name/ind"
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/ind",
+    "lastStatus": "Out",
+    "lastSeen": "2026-09-17T03:18:59.744Z"
   },
   "SOCIAL-WATCH @jmcdonaldsa.bsky.social 2026-08-26T20:48:10.961Z": {
     "firstSeenByThisProject": "2026-09-17T03:10:22.659Z",
@@ -596,5 +716,117 @@
     "source": "Bluesky @nbasarah.bsky.social",
     "evidence": "https://bsky.app/profile/nbasarah.bsky.social/post/3mqipt373ns2g",
     "text": "Ace Bailey, who started today, his first game in Vegas this year, did not start the second half and will not return due to back spasms that he's been dealing with since the first game of SLC Summer Le"
+  },
+  "Duop Reath (PHX)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-09-17T02:30Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/phx"
+  },
+  "Jaren Jackson Jr. (UTA)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-09-10T00:41Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/uta"
+  },
+  "Jimmy Butler III (GSW)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Out",
+    "sev": "out",
+    "updated": "2026-08-24T15:23Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/gsw"
+  },
+  "Jamir Watkins (WAS)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Out",
+    "sev": "out",
+    "updated": "2026-07-30T20:11Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/was"
+  },
+  "David Jones Garcia (SAS)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-07-22T19:16Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sas"
+  },
+  "Jayden Quaintance (SAS)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Out",
+    "sev": "out",
+    "updated": "2026-07-19T12:33Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/sas"
+  },
+  "Mohamed Diawara (NYK)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-07-18T02:45Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/nyk"
+  },
+  "Trey Alexander (UTA)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-07-17T19:29Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/uta"
+  },
+  "Jalen Brunson (NYK)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-07-07T15:14Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/nyk"
+  },
+  "Alex Sarr (WAS)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-06-24T14:36Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/was"
+  },
+  "Anthony Davis (WAS)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-06-24T14:26Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/was"
+  },
+  "Trae Young (WAS)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-06-22T18:50Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/was"
+  },
+  "Bryce McGowens (NOP)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Day-To-Day",
+    "sev": "questionable",
+    "updated": "2026-06-16T14:36Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/nop"
+  },
+  "Moses Moody (GSW)": {
+    "firstSeenByThisProject": "2026-09-17T03:18:59.744Z",
+    "status": "Out",
+    "sev": "out",
+    "updated": "2026-03-24T20:48Z",
+    "source": "ESPN structured injuries API",
+    "evidence": "https://www.espn.com/nba/team/injuries/_/name/gsw"
   }
 }
