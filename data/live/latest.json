@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T05:00:18.823Z",
+  "generated": "2026-09-17T05:03:27.023Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -55,8 +55,7 @@
         "salaryCurrent": 2221677,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -103,8 +102,7 @@
         "salaryCurrent": 40000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -151,8 +149,7 @@
         "salaryCurrent": 25000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -199,8 +196,7 @@
         "salaryCurrent": 6276531,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -245,8 +241,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -293,8 +288,7 @@
         "salaryCurrent": 49000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -341,8 +335,7 @@
         "salaryCurrent": 39416562,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -389,8 +382,7 @@
         "salaryCurrent": 48924624,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -437,8 +429,7 @@
         "salaryCurrent": 28500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -485,8 +476,7 @@
         "salaryCurrent": 42166510,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -533,8 +523,7 @@
         "salaryCurrent": 45472000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -581,8 +570,7 @@
         "salaryCurrent": 58456566,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -629,8 +617,7 @@
         "salaryCurrent": 41754690,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -677,8 +664,7 @@
         "salaryCurrent": 2497812,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -725,8 +711,7 @@
         "salaryCurrent": 15104625,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -773,8 +758,7 @@
         "salaryCurrent": 20089286,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -821,8 +805,7 @@
         "salaryCurrent": 56832773,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -869,8 +852,7 @@
         "salaryCurrent": 17007043,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -917,8 +899,7 @@
         "salaryCurrent": 5621700,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -965,8 +946,7 @@
         "salaryCurrent": 43902439,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1013,8 +993,7 @@
         "salaryCurrent": 24137931,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1061,8 +1040,7 @@
         "salaryCurrent": 2150917,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1109,8 +1087,7 @@
         "salaryCurrent": 2850000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1157,8 +1134,7 @@
         "salaryCurrent": 49500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1205,8 +1181,7 @@
         "salaryCurrent": 2461462,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1253,8 +1228,7 @@
         "salaryCurrent": 58456566,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1301,8 +1275,7 @@
         "salaryCurrent": 21621500,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1349,8 +1322,7 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1397,8 +1369,7 @@
         "salaryCurrent": 4190520,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1443,8 +1414,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1489,8 +1459,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1535,8 +1504,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1583,8 +1551,7 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1631,8 +1598,7 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1679,8 +1645,7 @@
         "salaryCurrent": 6649560,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1725,8 +1690,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1773,8 +1737,7 @@
         "salaryCurrent": 0,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1821,8 +1784,7 @@
         "salaryCurrent": 2406205,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1867,8 +1829,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1915,8 +1876,7 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -1963,8 +1923,7 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2011,8 +1970,7 @@
         "salaryCurrent": 1272870,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2057,8 +2015,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2105,8 +2062,7 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2151,8 +2107,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2197,8 +2152,7 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2245,8 +2199,7 @@
         "salaryCurrent": 2150917,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2293,8 +2246,7 @@
         "salaryCurrent": 37739521,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2341,8 +2293,7 @@
         "salaryCurrent": 4887720,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2389,8 +2340,7 @@
         "salaryCurrent": 14500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2437,8 +2387,7 @@
         "salaryCurrent": 18080496,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2485,8 +2434,7 @@
         "salaryCurrent": 4002000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2533,8 +2481,7 @@
         "salaryCurrent": 48967380,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2579,8 +2526,7 @@
         "salaryCurrent": 7239130,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2625,8 +2571,7 @@
         "salaryCurrent": 5134000,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2671,8 +2616,7 @@
         "salaryCurrent": 24910714,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2715,8 +2659,7 @@
         "listingDates": [],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2761,8 +2704,7 @@
         "salaryCurrent": 25000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2807,8 +2749,7 @@
         "salaryCurrent": 2296271,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2853,8 +2794,7 @@
         "salaryCurrent": 6332760,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2899,8 +2839,7 @@
         "salaryCurrent": 12370680,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2945,8 +2884,7 @@
         "salaryCurrent": 58456566,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -2991,8 +2929,7 @@
         "salaryCurrent": 48967380,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3037,8 +2974,7 @@
         "salaryCurrent": 41500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3083,8 +3019,7 @@
         "salaryCurrent": 2880960,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3129,8 +3064,7 @@
         "salaryCurrent": 2584539,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3175,8 +3109,7 @@
         "salaryCurrent": 13398000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3221,8 +3154,7 @@
         "salaryCurrent": 0,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3267,8 +3199,7 @@
         "salaryCurrent": 6889320,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3313,8 +3244,7 @@
         "salaryCurrent": 13000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3359,8 +3289,7 @@
         "salaryCurrent": 5429760,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3405,8 +3334,7 @@
         "salaryCurrent": 11990000,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3451,8 +3379,7 @@
         "salaryCurrent": 12500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       },
       {
@@ -3497,8 +3424,7 @@
         "salaryCurrent": 2296271,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Evidence file is schema unmarked — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
         ]
       }
     ],
@@ -3589,20 +3515,6 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
       "nuggets.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3617,12 +3529,33 @@
         "kind": "official-team",
         "team": "POR"
       },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
+      },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
+      },
       "dallasmavs.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Dallas Mavericks",
         "kind": "official-team",
         "team": "DAL"
+      },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
       },
       "samvecenie.bsky.social": {
         "ok": true,
@@ -3638,17 +3571,17 @@
         "kind": "reporter",
         "team": null
       },
-      "howardbeck.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
       "johnhollinger.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "John Hollinger",
+        "kind": "reporter",
+        "team": null
+      },
+      "tomhaberstroh.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tom Haberstroh",
         "kind": "reporter",
         "team": null
       },
@@ -3665,13 +3598,6 @@
         "name": "Jeff McDonald",
         "kind": "reporter",
         "team": "SAS"
-      },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
-        "kind": "reporter",
-        "team": null
       },
       "nbasarah.bsky.social": {
         "ok": true,
