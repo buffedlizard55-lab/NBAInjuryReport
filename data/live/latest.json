@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T17:50:01.710Z",
+  "generated": "2026-09-17T19:20:53.201Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3512,12 +3512,12 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "sixersnba.bsky.social": {
+      "nba.com": {
         "ok": true,
         "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "trailblazers.bsky.social": {
         "ok": true,
@@ -3526,12 +3526,12 @@
         "kind": "official-team",
         "team": "POR"
       },
-      "nba.com": {
+      "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "dallasmavs.bsky.social": {
         "ok": true,
@@ -3547,17 +3547,17 @@
         "kind": "reporter",
         "team": null
       },
-      "mikevorkunov.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Mike Vorkunov",
-        "kind": "reporter",
-        "team": null
-      },
       "howardbeck.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
+      "mikevorkunov.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Mike Vorkunov",
         "kind": "reporter",
         "team": null
       },
@@ -3568,19 +3568,19 @@
         "kind": "reporter",
         "team": null
       },
-      "tomorsborn.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "tomhaberstroh.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Tom Haberstroh",
         "kind": "reporter",
         "team": null
+      },
+      "tomorsborn.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Tom Orsborn",
+        "kind": "reporter",
+        "team": "SAS"
       },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
