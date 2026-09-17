@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-17T19:25:49.077Z",
-  "inputGenerated": "2026-09-17T19:25:47.939Z",
+  "generated": "2026-09-17T20:44:44.982Z",
+  "inputGenerated": "2026-09-17T20:44:43.144Z",
   "inputFresh": true,
   "claims": {
     "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3mqpt2qmdd22q": {
@@ -350,7 +350,8 @@
     "5159925:OKC": "Day-To-Day|Not Specified Back Torso|2026-10-01|GTD",
     "3934673:MIN": "Out|Right Achilles Leg|2027-04-01|OUT",
     "4432171:GSW": "Out|Left Knee Leg|2026-12-01|OUT",
-    "5157066:IND": "Out|Right Knee Leg|2027-01-01|OUT"
+    "5157066:IND": "Out|Right Knee Leg|2027-01-01|OUT",
+    "5105637:PHI": "Day-To-Day|Not Specified Foot Leg|2026-10-01|GTD"
   },
   "history": [
     {
@@ -1239,6 +1240,18 @@
       "sourceUpdatedAt": "2026-02-09T21:43Z",
       "observedAt": "2026-09-17T03:53:14.313Z",
       "url": "https://www.espn.com/nba/team/injuries/_/name/ind",
+      "change": "first observed (not injury onset)"
+    },
+    {
+      "key": "5105637:PHI",
+      "player": "Adem Bona",
+      "playerId": "5105637",
+      "team": "PHI",
+      "status": "Day-To-Day",
+      "reason": "Not Specified Foot Leg",
+      "sourceUpdatedAt": "2026-09-17T20:15Z",
+      "observedAt": "2026-09-17T20:44:44.982Z",
+      "url": "https://www.espn.com/nba/team/injuries/_/name/phi",
       "change": "first observed (not injury onset)"
     }
   ],

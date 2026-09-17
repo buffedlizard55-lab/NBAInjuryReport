@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T19:25:47.939Z",
+  "generated": "2026-09-17T20:44:43.144Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -11,6 +11,51 @@
       "displayName": "2026-27"
     },
     "rows": [
+      {
+        "id": "532619",
+        "player": "Adem Bona",
+        "playerId": "5105637",
+        "position": "C",
+        "team": "PHI",
+        "teamName": "Philadelphia 76ers",
+        "status": "Day-To-Day",
+        "sev": "questionable",
+        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+        "updated": "2026-09-17T20:15Z",
+        "returnDate": "2026-10-01",
+        "fantasyStatus": "GTD",
+        "injuryType": "Foot",
+        "injuryLocation": "Leg",
+        "injurySide": "Not Specified",
+        "bodyPart": "Not Specified Foot Leg",
+        "shortComment": "Bona (foot) will be re-evaluated at the start of training camp, Derek Bodner of AllPHLY.com reports.",
+        "longComment": "Bona suffered a foot sprain this offseason, clouding his ability to participate in camp later this month. It's unclear if his status for Opening Night is in serious doubt, as he does have about a month until the regular season begins. Until Bona is cleared to retake the floor, Dominick Barlow and Ariel Hukporti should handle the backup center reps.",
+        "noteHeadline": null,
+        "noteText": null,
+        "noteDate": null,
+        "noteSource": null,
+        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5105637.png",
+        "playerUrl": "https://www.espn.com/nba/player/_/id/5105637/adem-bona",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/phi",
+        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+        "searchUrl": "https://x.com/search?q=Adem%20Bona%20injury",
+        "fp": "Day-To-Day|Not Specified Foot Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/roster",
+        "salaryCurrent": 2296271,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+        ]
+      },
       {
         "id": "532617",
         "player": "Duop Reath",
@@ -3512,19 +3557,19 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
       "trailblazers.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Portland Trail Blazers — official",
         "kind": "official-team",
         "team": "POR"
+      },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "sixersnba.bsky.social": {
         "ok": true,
@@ -3575,17 +3620,17 @@
         "kind": "reporter",
         "team": null
       },
-      "tomorsborn.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
+      },
+      "tomorsborn.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Tom Orsborn",
         "kind": "reporter",
         "team": "SAS"
       },
