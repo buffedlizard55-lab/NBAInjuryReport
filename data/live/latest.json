@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T05:21:14.323Z",
+  "generated": "2026-09-17T05:17:51.430Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3522,19 +3522,19 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
       "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Philadelphia 76ers — official",
         "kind": "official-team",
         "team": "PHI"
+      },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "trailblazers.bsky.social": {
         "ok": true,
