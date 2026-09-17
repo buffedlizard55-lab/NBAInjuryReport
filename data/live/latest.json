@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T21:27:05.076Z",
+  "generated": "2026-09-17T23:09:13.677Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3564,13 +3564,6 @@
         "kind": "official-league",
         "team": null
       },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
       "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3578,12 +3571,26 @@
         "kind": "official-team",
         "team": "PHI"
       },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
       "dallasmavs.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Dallas Mavericks",
         "kind": "official-team",
         "team": "DAL"
+      },
+      "samvecenie.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Sam Vecenie",
+        "kind": "reporter",
+        "team": null
       },
       "howardbeck.bsky.social": {
         "ok": true,
@@ -3596,13 +3603,6 @@
         "ok": true,
         "count": 0,
         "name": "Mike Vorkunov",
-        "kind": "reporter",
-        "team": null
-      },
-      "samvecenie.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Sam Vecenie",
         "kind": "reporter",
         "team": null
       },
@@ -3620,17 +3620,17 @@
         "kind": "reporter",
         "team": null
       },
-      "tomorsborn.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
+      },
+      "tomorsborn.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Tom Orsborn",
         "kind": "reporter",
         "team": "SAS"
       },
