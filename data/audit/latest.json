@@ -1,48 +1,130 @@
 {
-  "checkedAt": "2026-09-17T03:43:21.691425+00:00",
+  "checkedAt": "2026-09-17T05:08:00.308316+00:00",
+  "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
       "id": "nba-season",
       "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
-      "error": "HTTP Error 404: Not Found",
-      "status": 404
+      "documentedStatuses": [
+        404
+      ],
+      "claim": "Registry: the 2026-27 injury-report landing page does not exist yet, so no official current-season index can be polled. If this ever returns 200 with report links, the official layer becomes automatable \u2014 that single change is why this check fails the job.",
+      "critical": true,
+      "status": 404,
+      "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 1131,
+      "sha256": "468dd8235251967a4e2e95cb4c6d239d96fa026ce77fddf2bdbaa3daf0735d56",
+      "outboundLinks": [
+        "http://official.nba.com/",
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
+      ],
+      "frames": [],
+      "verdict": "DOCUMENTED-BLOCKER",
+      "meaning": "Still blocked exactly as the registry says it is. This is the expected state, not a failure."
     },
     {
       "id": "nba-previous",
       "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
+      "documentedStatuses": [
+        200
+      ],
+      "claim": "Registry: deadline rules text (5 p.m. the day before; 11 a.m.\u20131 p.m. on game day; 1 p.m. for the second night of a back-to-back).",
+      "critical": false,
       "status": 200,
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
-      "sha256": "d4404f103e711e07a1f627035e243f1d8f3ece21a3183c38b21f55c56ee242f9",
-      "reportLinks": [
+      "bytes": 116516,
+      "sha256": "6a62b7b9ab7b1b24f2063c271f2f48373863bbeef40038fb3eeb3c574dbb2121",
+      "probes": {
+        "5 p.m": true,
+        "1 p.m": true,
+        "injury report": true
+      },
+      "probesMissing": [],
+      "outboundLinks": [
+        "http://custom.transaction",
+        "http://gmpg.org/xfn/11",
+        "http://official.nba.com/archive/",
+        "http://official.nba.com/nba-last-two-minute-reports-frequently-asked-questions/",
+        "http://official.nba.com/referee-assignments/",
+        "http://official.nba.com/replay/archive/",
+        "http://ogp.me/ns#",
+        "http://ogp.me/ns/article#",
+        "http://ogp.me/ns/fb#",
+        "http://ogp.me/ns/video#",
+        "http://twitter.com/nbaofficial",
+        "http://www.nba.com",
         "http://www.nba.com/news/referee.html",
+        "https://ak-static.cms.nba.com/wp-content/plugins/video-embed-thumbnail-generator/css/kgvid_styles.css?ver=4.501",
+        "https://ak-static.cms.nba.com/wp-content/plugins/video-embed-thumbnail-generator/video-js/kg-video-js-skin.css?ver=4.501",
+        "https://ak-static.cms.nba.com/wp-content/plugins/video-embed-thumbnail-generator/video-js/video-js.css?ver=4.12.7",
+        "https://ak-static.cms.nba.com/wp-content/themes/nba-official/css/genericons.min.css",
+        "https://ak-static.cms.nba.com/wp-content/themes/nba-official/css/replay-officials.css?ver=1.7.0",
+        "https://ak-static.cms.nba.com/wp-content/themes/nba-official/css/theme.css?ver=1.7.0",
+        "https://ak-static.cms.nba.com/wp-content/themes/nba-official/js/bootstrap.min.js?ver=3.2.0",
+        "https://ak-static.cms.nba.com/wp-content/themes/nba-official/js/fluid-videos.min.js?ver=1.7.0",
+        "https://ak-static.cms.nba.com/wp-content/themes/nba-official/js/nba-official.min.js?ver=1.7.0",
+        "https://ak-static.cms.nba.com/wp-content/themes/nba-official/js/pulse-insights.js",
         "https://ak-static.cms.nba.com/wp-content/uploads/sites/4/2024/06/2023-NBA-Collective-Bargaining-Agreement-Final.pdf",
-        "https://ak-static.cms.nba.com/wp-content/uploads/sites/4/2025/10/Official-2025-26-NBA-Playing-Rules.pdf",
-        "https://ak-static.cms.nba.com/wp-content/uploads/sites/4/2026/03/2026-NBA-Undergraduate-Advisory-Committee-Brochure.pdf"
+        "https://ak-static.cms.nba.com/wp-content/uploads/sites/4/2025/10/Official-2025-26-NBA-Playing-Rules.pdf"
       ],
-      "frames": []
+      "frames": [],
+      "verdict": "OK"
+    },
+    {
+      "id": "nba-pdf-index",
+      "url": "https://ak-static.cms.nba.com/referee/injury/",
+      "documentedStatuses": [
+        500,
+        200,
+        403,
+        404
+      ],
+      "claim": "Registry: the PDF directory is not browsable (HTTP 500), so the newest report cannot be enumerated. A 200 with links is a capability change.",
+      "critical": false,
+      "error": "HTTP Error 503: Service Unavailable",
+      "status": 503,
+      "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
+      "contentType": "text/html",
+      "bytes": 280,
+      "sha256": "c492f93d5fe398ff20028b72faf9cbd5d8349adfef044c2bb4cc309759e52d3c",
+      "outboundLinks": [],
+      "frames": [],
+      "verdict": "ENV-BLOCKED",
+      "meaning": "HTTP 503 from a datacenter IP. The claim under test is about the source and the browser path, which are evidenced elsewhere (the deployed page prints its own transport). Not counted as drift."
     },
     {
       "id": "nba-pdf-sample",
       "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf",
+      "documentedStatuses": [
+        200
+      ],
+      "claim": "Registry: timestamped official PDFs exist and parse (Game Date/Time, Matchup, Team, Player, Status, Reason). The regression fixture for the parser is generated from this response.",
+      "critical": true,
       "status": 200,
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf",
       "contentType": "application/pdf",
-      "sha256": "5b82da285ec1be7122b2d3d12164d799dea7b34200e3ab353c254e2020dc5b4d"
+      "bytes": 103444,
+      "sha256": "5b82da285ec1be7122b2d3d12164d799dea7b34200e3ab353c254e2020dc5b4d",
+      "pdfLines": 494,
+      "pdfHead": "                                         Injury Report: 04/12/26 01:00 PM\n\nGame Date    Game Time    Matchup   Team                  Player Name                  Current Status   Reason\n\n                                                                                                        Injury/Il",
+      "verdict": "OK"
     },
     {
       "id": "espn-injuries",
       "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+      "documentedStatuses": [
+        200,
+        403
+      ],
+      "claim": "Registry: THE primary board \u2014 one block per team with status + date + shortComment + details{type, side, returnDate} + notes. 403 here would mean the board must rely on the CI snapshot or stop.",
+      "critical": true,
       "status": 200,
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
-      "sha256": "5f4fdec49c4bedb877361233cfc9672d901209f52704701721cefc1427f3084b",
-      "keys": [
-        "timestamp",
-        "status",
-        "season",
-        "injuries"
-      ],
+      "bytes": 848875,
+      "sha256": "8cf409d42ded6122c9577ea9a338584833cf8301a5460f51c538d97575562552",
       "teamBlocks": 27,
       "rows": 74,
       "season": {
@@ -50,44 +132,117 @@
         "type": 1,
         "name": "Preseason",
         "displayName": "2026-27"
-      }
+      },
+      "verdict": "OK"
     },
     {
       "id": "espn-teams",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
+      "documentedStatuses": [
+        200
+      ],
+      "claim": "Registry: 30 teams, addressable by abbreviation. Runner saw 403 in an earlier audit \u2014 recorded, not enforced.",
+      "critical": false,
       "error": "HTTP Error 403: Forbidden",
-      "status": 403
+      "status": 403,
+      "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
+      "contentType": "text/html",
+      "bytes": 437,
+      "sha256": "021d37fef2af430bf80398493aae1fb48f446634016b1131d6f84707c0864682",
+      "verdict": "ENV-BLOCKED",
+      "meaning": "HTTP 403 from a datacenter IP. The claim under test is about the source and the browser path, which are evidenced elsewhere (the deployed page prints its own transport). Not counted as drift."
     },
     {
       "id": "espn-scoreboard",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
-      "error": "HTTP Error 403: Forbidden",
-      "status": 403
+      "documentedStatuses": [
+        200,
+        403
+      ],
+      "claim": "Registry: drives live-game detection for in-game alerts. A hard failure here must never be read as \"no games today\".",
+      "critical": true,
+      "status": 403,
+      "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+      "contentType": "text/html",
+      "bytes": 442,
+      "sha256": "be3de1190f32763afaa3e45071ad1b8da77ca7c4d49acecdddf1794a1bec4daf",
+      "verdict": "OK"
+    },
+    {
+      "id": "espn-roster-mia",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
+      "documentedStatuses": [
+        200,
+        403
+      ],
+      "claim": "Registry (espn-roster-athlete-detail): per-athlete position, experience, injuries[]{status,date} and contracts[]{salary,season} \u2014 the only free machine-readable input to the lineup-impact layer.",
+      "critical": false,
+      "status": 403,
+      "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
+      "contentType": "text/html",
+      "bytes": 456,
+      "sha256": "4ada0bdd8c70981190998995652c30cf0b2f55ceb7f305da43d38b9bf9054355",
+      "verdict": "OK"
+    },
+    {
+      "id": "espn-depth-chart",
+      "url": "https://www.espn.com/nba/team/depth/_/name/mia",
+      "documentedStatuses": [
+        200
+      ],
+      "claim": "Registry (espn-depth-chart-page): rotation order is HTML-only (RotoWire-supplied); no JSON equivalent exists, so this page is a manual cross-check link and never a scrape target.",
+      "critical": false,
+      "status": 202,
+      "finalUrl": "https://www.espn.com/nba/team/depth/_/name/mia",
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 0,
+      "verdict": "DRIFT-RECORDED",
+      "meaning": "The source answers differently than the registry states. Recorded only; not a capability change."
+    },
+    {
+      "id": "espn-injuries-page",
+      "url": "https://www.espn.com/nba/injuries",
+      "documentedStatuses": [
+        200
+      ],
+      "claim": "Registry: human injury table with estimated return dates and reporter attributions.",
+      "critical": false,
+      "status": 202,
+      "finalUrl": "https://www.espn.com/nba/injuries",
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 0,
+      "verdict": "DRIFT-RECORDED",
+      "meaning": "The source answers differently than the registry states. Recorded only; not a capability change."
+    },
+    {
+      "id": "espn-teams-mia",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
+      "documentedStatuses": [
+        200,
+        403
+      ],
+      "claim": "Registry: /teams/mia returns Miami Heat \u2014 the reason abbreviations, not numeric ids, are used everywhere.",
+      "critical": false,
+      "status": 403,
+      "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
+      "contentType": "text/html",
+      "bytes": 445,
+      "sha256": "bbf55296e494c28ae698c4a68c8cb82709470075cc2edecd0f84e1155678cb16",
+      "verdict": "OK"
     },
     {
       "id": "bluesky-profile",
       "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
+      "documentedStatuses": [
+        200
+      ],
+      "claim": "Registry: nba.com carries a valid Bluesky verification object and its bio states the 2026-27 opener times.",
+      "critical": false,
       "status": 200,
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
       "contentType": "application/json; charset=utf-8",
-      "sha256": "db147b8a42310371d785af928d9a97af55bbd53da357c6152948a40f359e3c30",
-      "keys": [
-        "did",
-        "handle",
-        "displayName",
-        "avatar",
-        "associated",
-        "labels",
-        "createdAt",
-        "verification",
-        "description",
-        "indexedAt",
-        "banner",
-        "followersCount",
-        "followsCount",
-        "postsCount",
-        "pinnedPost"
-      ],
+      "bytes": 1352,
+      "sha256": "5351cbd6dceb5240b403a9bb83656d140f8b39d9c2093760b27d08406732983a",
       "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
       "verification": {
         "verifications": [
@@ -102,21 +257,299 @@
         ],
         "verifiedStatus": "valid",
         "trustedVerifierStatus": "none"
-      }
+      },
+      "displayName": "NBA",
+      "followers": 122386,
+      "bioSnippet": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! \ud83c\udfc0 3:00pm/et: Celtics/Pistons \ud83c\udfc0 7:00pm/et: 76ers/Knicks \ud83c\udfc0 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
+      "verdict": "OK"
+    },
+    {
+      "id": "bluesky-follows",
+      "url": "https://public.api.bsky.app/xrpc/app.bsky.graph.getFollows?actor=nba.com&limit=50",
+      "documentedStatuses": [
+        200
+      ],
+      "claim": "Registry: the league follows ~6 accounts, so at most 4 of 30 teams have an official Bluesky presence \u2014 the verification ceiling on the social layer.",
+      "critical": false,
+      "status": 200,
+      "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.graph.getFollows?actor=nba.com&limit=50",
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 5246,
+      "sha256": "75797d3fd584b2b1bcad4c9fd09457a35493a033719db7ccff68b95f8bfd0add",
+      "follows": 6,
+      "verifiedFollows": 0,
+      "followsHandles": [
+        "trailblazers.bsky.social",
+        "dallasmavs.bsky.social",
+        "nuggets.bsky.social",
+        "sixersnba.bsky.social",
+        "wnba.com",
+        "bsky.app"
+      ],
+      "verdict": "OK"
+    },
+    {
+      "id": "bluesky-list",
+      "url": "https://public.api.bsky.app/xrpc/app.bsky.graph.getList?actor=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca",
+      "documentedStatuses": [
+        200,
+        400
+      ],
+      "claim": "Registry (bluesky-reporter-list): Howard Beck's curated NBA-writers list, used to build the reporter roster from real data instead of memory.",
+      "critical": false,
+      "status": 400,
+      "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.graph.getList?actor=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca",
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 135,
+      "sha256": "c949e2d3c86c72791ccbb435a941e76246791e96ee8bd79c76a55470f892bd92",
+      "listName": null,
+      "listPurpose": null,
+      "listDesc": null,
+      "listItems": 0,
+      "verdict": "OK"
     },
     {
       "id": "bluesky-search",
       "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=NBA%20injury&limit=1",
-      "error": "HTTP Error 403: Forbidden",
-      "status": 403
+      "documentedStatuses": [
+        403,
+        200
+      ],
+      "claim": "Registry: keyword search is not available without a key (403 observed) \u2014 a documented limitation, deliberately not worked around. A 200 here would mean broader free coverage becomes possible.",
+      "critical": true,
+      "status": 403,
+      "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=NBA%20injury&limit=1",
+      "contentType": "text/html",
+      "bytes": 2334,
+      "sha256": "8609fbf6d25103698c09480062dd212a9f8e8acbc3d320f599bd871cef1a7048",
+      "verdict": "OK"
+    },
+    {
+      "id": "x-docs-pricing",
+      "url": "https://docs.x.com/x-api/getting-started/pricing",
+      "documentedStatuses": [
+        403,
+        200,
+        301,
+        302,
+        307
+      ],
+      "claim": "Registry (x-api): the pricing page challenges automated fetchers, so no price in the registry is confirmed \u2014 and the row now points at docs.x.com, not the xAI documentation it used to link.",
+      "critical": false,
+      "status": 200,
+      "finalUrl": "https://docs.x.com/x-api/getting-started/pricing",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 783723,
+      "sha256": "f445c996fe99391775dc8c4574f5c0aff37e3b7a0d87c16420803547d36f38d1",
+      "verdict": "OK"
     },
     {
       "id": "basketballmonster",
       "url": "https://basketballmonster.com/playernews.aspx",
+      "documentedStatuses": [
+        200
+      ],
+      "claim": "Registry: the reference model \u2014 status tags, X source links, impact ratings, item age. Read for format; never scraped into the pipeline.",
+      "critical": false,
       "status": 200,
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
-      "sha256": "362f7410064a5fcbbbd0718da630ecb2efc404bbebe8cfbbfa6a1e19f523e673"
+      "bytes": 115019,
+      "sha256": "d35b31c02440d2fd7d6d2ff6fd6289e5e7552faa55c732da98a55549a3d0d852",
+      "probes": {
+        "INJURED": true
+      },
+      "probesMissing": [],
+      "outboundLinks": [
+        "http://www.w3.org/2000/svg",
+        "https://analytics.rotomonster.com/script.js",
+        "https://api-docs.sportradar.us/logo/powered-by-sportradar-300w.png",
+        "https://api-docs.sportradar.us/logo/powered-by-sportradar-reversed-300w.png",
+        "https://basketballmonster.com",
+        "https://basketballmonster.com/MessageTopic.aspx?topic=24603",
+        "https://basketballmonster.com/images/bbm-logo.png",
+        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css",
+        "https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js",
+        "https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js",
+        "https://history.basketballmonster.com/",
+        "https://kit.fontawesome.com/c6680a6408.js",
+        "https://schema.org",
+        "https://sportradar.com/",
+        "https://sports.yahoo.com/fantasy/",
+        "https://twitter.com/BaskMonster",
+        "https://twitter.com/IraHeatBeat/status/2093062908603142379",
+        "https://twitter.com/ShamsCharania/status/2093061133267583371",
+        "https://twitter.com/ShamsCharania/status/2093552526029115862",
+        "https://twitter.com/ShamsCharania/status/2095867897146937644",
+        "https://twitter.com/ShamsCharania/status/2098441452304920748",
+        "https://twitter.com/WillGuillory/status/2097327586095349906",
+        "https://x.com/BaskMonster",
+        "https://x.com/JakeLFischer/status/2098520024122028492?s=20"
+      ],
+      "frames": [],
+      "verdict": "OK"
+    },
+    {
+      "id": "covers-injuries",
+      "url": "https://www.covers.com/sport/basketball/nba/injuries",
+      "documentedStatuses": [
+        200,
+        403
+      ],
+      "claim": "Registry: tertiary all-30-team cross-check with source attribution.",
+      "critical": false,
+      "status": 200,
+      "finalUrl": "https://www.covers.com/sport/basketball/nba/injuries",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 374071,
+      "sha256": "e2ea77203a8d50c43dc2d5213ddff91bb5373337ba331bf0a1775e20d70fc82e",
+      "probes": {
+        "injur": true
+      },
+      "probesMissing": [],
+      "outboundLinks": [
+        "https://apps.apple.com/us/app/covers-scores-picks-and-odds/id6749450176",
+        "https://certify.gpwa.org/verify/covers.com",
+        "https://consent.cookiebot.com/uc.js",
+        "https://contests.covers.com",
+        "https://contests.covers.com/consensus/faq",
+        "https://contests.covers.com/consensus/pickleaders/all?orderPickBy=Overall&amp;orderBy=Units",
+        "https://contests.covers.com/consensus/pickleadersbyleagueteam",
+        "https://contests.covers.com/consensus/publicmoney",
+        "https://contests.covers.com/consensus/topconsensus/all",
+        "https://contests.covers.com/consensus/topconsensus/cfl/overall",
+        "https://contests.covers.com/consensus/topconsensus/mlb/overall",
+        "https://contests.covers.com/consensus/topconsensus/nba/overall",
+        "https://contests.covers.com/consensus/topconsensus/ncaab/overall",
+        "https://contests.covers.com/consensus/topconsensus/ncaaf/overall",
+        "https://contests.covers.com/consensus/topconsensus/nfl/overall",
+        "https://contests.covers.com/consensus/topconsensus/nhl/overall",
+        "https://contests.covers.com/consensus/topconsensus/wnba/overall",
+        "https://contests.covers.com/kingofcovers",
+        "https://contests.covers.com/kingofcovers/league/nba",
+        "https://contests.covers.com/mycontests",
+        "https://contests.covers.com/officepools",
+        "https://contests.covers.com/survivor",
+        "https://data.covers.com/cff7fdda0680/launch-490b3d016bbf.min.js",
+        "https://github.com/carhartl/jquery-cookie",
+        "https://headers.covers.com/Scripts/AffScript.js?v=1.1"
+      ],
+      "frames": [
+        "https://www.googletagmanager.com/ns.html?id=GTM-W9GXHN"
+      ],
+      "verdict": "OK"
+    },
+    {
+      "id": "rotoballer-news",
+      "url": "https://www.rotoballer.com/player-news?sport=nba",
+      "documentedStatuses": [
+        200,
+        403
+      ],
+      "claim": "Registry: dated fantasy injury items with per-item source links.",
+      "critical": false,
+      "status": 200,
+      "finalUrl": "https://www.rotoballer.com/player-news?sport=nba",
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 1010494,
+      "sha256": "6925d8be872c92ac662f1fdf0e5333ca3c0f4e6a07aba8fe4545c5c4846b1992",
+      "outboundLinks": [
+        "http://benchsports.com/?ref=rotoballer",
+        "http://custom.transaction",
+        "http://eepurl.com/gfwXen",
+        "http://ogp.me/ns#",
+        "http://www.facebook.com/2008/fbml",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/anthony-gill-returns-to-wizards-on-one-year-deal/1932379&title=Anthony+Gill+Returns+to+Wizards+on+One-Year+Deal",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/brandon-ingram-officially-heads-to-the-clippers/1931790&title=Brandon+Ingram+Officially+Heads+to+the+Clippers",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/cam-whitmore-draws-interest-from-nuggets/1931813&title=Cam+Whitmore+Draws+Interest+From+Nuggets",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/chance-mcmillian-returns-to-warriors-on-training-camp-deal/1932580&title=Chance+McMillian+Returns+to+Warriors+on+Training+Camp+Deal",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/deivon-smith-joins-warriors-on-camp-deal/1932583&title=Deivon+Smith+Joins+Warriors+on+Camp+Deal",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/drew-eubanks-set-to-join-knicks-on-camp-deal/1932382&title=Drew+Eubanks+Set+to+Join+Knicks+on+Camp+Deal",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/gradey-dick-officially-joins-clippers/1931807&title=Gradey+Dick+Officially+Joins+Clippers",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/john-konchar-agrees-to-one-year-deal-with-knicks/1932373&title=John+Konchar+Agrees+to+One-Year+Deal+with+Knicks",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/john-konchar-draws-interest-from-four-east-teams/1931820&title=John+Konchar+Draws+Interest+From+Four+East+Teams",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/knicks-waive-igor-milicic-jr/1932394&title=Knicks+Waive+Igor+Milicic",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/liam-robbins-signs-exhibit-10-deal-with-knicks/1932391&title=Liam+Robbins+Signs+Exhibit+10+Deal+with+Knicks",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/peyton-watson-poised-for-ample-minutes-in-cleveland/1931834&title=Peyton+Watson+Poised+for+Ample+Minutes+in+Cleveland",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/rasheer-fleming-could-see-bigger-role-in-year-2/1932622&title=Rasheer+Fleming+Could+See+Bigger+Role+in+Year+2",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/sean-mcneil-signs-camp-deal-with-cavaliers/1932592&title=Sean+McNeil+Signs+Camp+Deal+with+Cavaliers",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/william-baker-joins-hawks-on-camp-deal/1932609&title=William+Baker+Joins+Hawks+on+Camp+Deal",
+        "http://www.theszn.com/rb",
+        "http://www.w3.org/1999/xhtml",
+        "http://www.w3.org/2000/svg",
+        "http://www.w3.org/2000/svg&quot;",
+        "https://ads.adthrive.com/"
+      ],
+      "frames": [
+        "//www.googletagmanager.com/ns.html?id=GTM-TPNNCP"
+      ],
+      "verdict": "OK"
+    },
+    {
+      "id": "balldontlie-tiers",
+      "url": "https://nba.balldontlie.io/",
+      "documentedStatuses": [
+        200,
+        403
+      ],
+      "claim": "Registry (balldontlie): injuries are a paid tier and the page has no webhooks section \u2014 which is why the earlier webhook claim was marked unconfirmed.",
+      "critical": false,
+      "status": 200,
+      "finalUrl": "https://nba.balldontlie.io/",
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 456971,
+      "sha256": "d70b20e7961770f33f2b7dd59d0c952341d5c97169409f3ef300c0c88ae9f52b",
+      "probes": {
+        "ALL-STAR": true
+      },
+      "probesMissing": [],
+      "verdict": "OK"
+    },
+    {
+      "id": "reporter-move-slater",
+      "url": "https://www.frontofficesports.com/anthony-slater-espn-reporter-nba-bay-area/",
+      "documentedStatuses": [
+        200,
+        403,
+        404
+      ],
+      "claim": "Registry (Anthony Slater): dated evidence for the Athletic\u2192ESPN move that cleared the flag on his row. A 404 means the evidence link rotted, not that the move is wrong \u2014 so it is recorded, not enforced.",
+      "critical": false,
+      "status": 200,
+      "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 243524,
+      "sha256": "9d3b82ca16193801a09879aa00f4051ae60fa10bf4fbc9dfb06990d08ebf5045",
+      "verdict": "OK"
+    },
+    {
+      "id": "reporter-move-buckner",
+      "url": "https://www.sportsmediawatch.com/2026/02/new-york-times-hires-ex-washington-post-sportswriters/",
+      "documentedStatuses": [
+        200,
+        403,
+        404
+      ],
+      "claim": "Registry (Candace Buckner): dated evidence for the Washington Post\u2192Athletic move that corrected her outlet.",
+      "critical": false,
+      "status": 200,
+      "finalUrl": "https://www.sportsmediawatch.com/2026/02/new-york-times-hires-ex-washington-post-sportswriters/",
+      "contentType": "text/html; charset=UTF-8",
+      "bytes": 472520,
+      "sha256": "a8b59dcc85988e9e72b07b5f8c90e5c5b2c65e4b15cadb412b7d6cd208825074",
+      "verdict": "OK"
     }
-  ]
+  ],
+  "summary": {
+    "total": 22,
+    "byVerdict": {
+      "DOCUMENTED-BLOCKER": 1,
+      "OK": 17,
+      "ENV-BLOCKED": 2,
+      "DRIFT-RECORDED": 2
+    },
+    "capabilityDrift": 0,
+    "toolErrors": 0,
+    "note": "CAPABILITY-DRIFT (exit 1) means a source now answers in a way that changes what this product may claim \u2014 typically the official report page becoming live or the PDF index becoming browsable. DRIFT-RECORDED, ENV-BLOCKED and UNREACHABLE-FROM-RUNNER are written here for the reader instead of failing the job: runners and browsers take different paths, and third-party pages redesign on their own schedule. The site always prints which transport served each panel, so a reader can tell the two apart."
+  }
 }
