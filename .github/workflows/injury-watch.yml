@@ -21,7 +21,7 @@ on:
     - cron: "*/10 * * * *"
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, arena/01a0ad73-nbainjuryreport]
     paths:
       - "tools/poll_watch.js"
       - "assets/js/**"

@@ -1,6 +1,7 @@
 # NBA Injury Watch
 
-**Dashboard:** https://buffedlizard55-lab.github.io/NBAInjuryReport/  
+**Dashboard:** https://buffedlizard55-lab.github.io/NBAInjuryReport/
+
 **Directory:** https://buffedlizard55-lab.github.io/NBAInjuryReport/reporters.html
 
 NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster player news](https://basketballmonster.com/playernews.aspx). All NBA players are in scope, not an NFL-style offensive roster subset.
