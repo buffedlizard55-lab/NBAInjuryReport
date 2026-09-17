@@ -29,12 +29,13 @@ Everything below is stated honestly — no claim is made without a verified sour
    (verified 404 on 2026-09-17). One constant: `NBA_OFFICIAL_REPORT_URL` in `assets/js/data.js`, then re-run `tools/build_verified_sources.js`.
 4. **Live-validate the in-game monitor on 2026-10-03** (preseason tip, MIA @ TOR). Opening night is 2026-10-20 (BOS@DET, PHI@NYK, OKC@SAS — confirmed by the official NBA account).
 
-## ⚠️ Known transient state (honest, short-lived)
+## ✅ Resolved during this session (kept as a record, not a to-do)
 
-The snapshot currently committed on `main` was produced by the **pre-fix** poller, so the new self-audit deliberately fails against it
-(13 rows still carry ESPN's own team codes `UTAH/GS/WSH/SA/NY/NO`, and one post is stored twice). The next `injury-watch` run — triggered by
-the push that contains this file — regenerates it with the shared normalisers, and the audit runs **before** the commit, so a bad snapshot
-can no longer be committed. Re-check the Actions tab once; if that run is green, this paragraph is obsolete.
+The pre-fix snapshot DID fail the new self-audit (13 rows with ESPN's own team codes, one duplicated post).
+The push containing the fix regenerated it — verified on the deployed site: `errors = {}`, 74 rows / 27 team
+blocks, **every team code standard** (`GSW NOP NYK SAS UTA WAS`), 8 news items classified, 8 posts (author-only,
+de-duplicated), and `replay_posts --check` passing on the published file. The audit now runs **before** the commit
+step, so a suspect snapshot fails the run instead of reaching the site.
 
 ## ⛔ Hard limitations (blockers, not excuses)
 
