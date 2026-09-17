@@ -26,6 +26,10 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
+/* Writable root is overridable so tests can run the poller end-to-end without dirtying the repo:
+ *   NBA_WATCH_OUT=/tmp/x node --require ./stub.js tools/poll_watch.js
+ * In CI and normal use it is the repository root. */
+const OUT_ROOT = process.env.NBA_WATCH_OUT || ROOT;
 const DRY = process.argv.includes("--dry-run");
 const TIMEOUT_MS = 20000;
 const UA = "NBAInjuryReport-poller (+https://github.com/buffedlizard55-lab/NBAInjuryReport)";
@@ -68,12 +72,42 @@ async function getJson(url) {
  * assets/js/injuries.js and assets/js/social.js (loaded above with DOM stubs) so the archive and
  * the dashboard can never disagree about what a row or a post means. */
 
+/* News classification — the ORDERED severity table lives in data.js (SIGNALS), so the poller and
+ * the dashboard classify headlines with the same rules; only the output shape differs.
+ * Regression note: an earlier refactor of this file accidentally dropped this function, and the
+ * live run reported errors={"news":"normalizeNews is not defined"} instead of silently writing an
+ * empty news array. That is the intended failure mode: report, never fabricate. */
+function classifyHeadline(headline, desc) {
+  const text = String(headline || "") + " " + String(desc || "");
+  for (const s of D.SIGNALS) if (s.re.test(text)) return { sev: s.sev, sevLabel: s.label };
+  return null;
+}
+function normalizeNews(data) {
+  const out = [];
+  for (const a of ((data && data.articles) || [])) {
+    const hit = classifyHeadline(a.headline, a.description);
+    if (!hit) continue;                                  // not an injury story → not stored
+    out.push({
+      id: String(a.id || a.headline),
+      ts: a.published || a.lastModified || null,
+      sev: hit.sev,
+      sevLabel: hit.sevLabel,
+      title: a.headline || "",
+      desc: a.description || "",
+      url: (a.links && a.links.web && a.links.web.href) || null,
+      byline: (a.byline && a.byline) || null
+    });
+  }
+  out.sort((x, y) => new Date(y.ts || 0) - new Date(x.ts || 0));
+  return out;
+}
+
 /* ---------------- history + first-to-report ---------------- */
 function readJsonSafe(p, fallback) {
   try { return JSON.parse(fs.readFileSync(p, "utf8")); } catch (e) { return fallback; }
 }
 function recordHistory(rows, posts, news) {
-  const dir = path.join(ROOT, "data/history");
+  const dir = path.join(OUT_ROOT, "data/history");
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
   const day = new Date().toISOString().slice(0, 10);
   const file = path.join(dir, day + ".jsonl");
@@ -168,7 +202,7 @@ function recordHistory(rows, posts, news) {
 
   const hist = recordHistory(rows, posts, news);
 
-  const liveDir = path.join(ROOT, "data/live");
+  const liveDir = path.join(OUT_ROOT, "data/live");
   if (!DRY) {
     if (!fs.existsSync(liveDir)) fs.mkdirSync(liveDir, { recursive: true });
     fs.writeFileSync(path.join(liveDir, "latest.json"), JSON.stringify(out, null, 2) + "\n");

@@ -123,6 +123,11 @@ check("CI runs the live-data self-audit before committing a snapshot",
 check("posts are de-duplicated by uri (found: one post stored twice)",
   /seenUris/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")) &&
   /deduped/.test(fs.readFileSync(path.join(ROOT, "assets/js/social.js"), "utf8")));
+check("the poller defines every normaliser it calls (a dropped function must not ship)",
+  /function normalizeNews\(/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")) &&
+  /function classifyHeadline\(/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")));
+check("poller news uses the shared ordered severity table (SIGNALS), not its own list",
+  /for \(const s of D\.SIGNALS\)/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")));
 check("the poller refuses to invent data (errors are reported, never filled in)",
   /errors: \{\}/.test(fs.readFileSync(path.join(ROOT, "tools/poll_watch.js"), "utf8")));
 

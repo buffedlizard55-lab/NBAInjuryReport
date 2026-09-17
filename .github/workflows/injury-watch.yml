@@ -45,6 +45,11 @@ jobs:
         with:
           node-version: "20"
 
+      # Fast, offline sanity check of the poller itself (fixtures, no network): catches a broken
+      # function reference before the real run wastes a schedule slot.
+      - name: Poller self-test (offline, fixtures)
+        run: node tools/poll_fixture_test.js
+
       - name: Poll every free source
         run: node tools/poll_watch.js
 

@@ -606,7 +606,7 @@
     {
       "level": "info",
       "title": "First fully-automated collection run verified end-to-end (GitHub Actions)",
-      "detail": "Run 35177148985 (push to main, 2026-09-17T03:10:21Z) completed successfully and committed data/live/latest.json + data/history/2026-09-17.jsonl + firsts.json: 73 structured injury rows across 27 team blocks, 8 classified news items, 34 injury-relevant posts, 13/13 allow-listed accounts reachable, errors = {}. The workflow runs every 10 minutes and needs no key, no account and no manual input. Re-check the Actions tab after any change to tools/poll_watch.js: a broken poller fails loudly (it reports errors and never invents rows)."
+      "detail": "Run 35177148985 (push to main, 2026-09-17T03:10:21Z) completed successfully and committed data/live/latest.json + data/history/2026-09-17.jsonl + firsts.json: 73 structured injury rows across 27 team blocks, 8 classified news items, 34 injury-relevant posts, 13/13 allow-listed accounts reachable, errors = {}. A later refactor of the poller dropped its news classifier, and the next live run reported errors={\"news\":\"normalizeNews is not defined\"} instead of silently writing an empty news array — the intended failure mode. That is now guarded twice: tools/poll_fixture_test.js runs the REAL poller end-to-end against fixtures before the live poll in CI (19 checks: normalisation, classification, author-only filtering, history writers, and the self-audit), and a smoke check asserts the poller defines every normaliser it calls. The workflow runs every 10 minutes and needs no key, no account and no manual input."
     },
     {
       "level": "warn",
