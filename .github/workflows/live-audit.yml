@@ -1,0 +1,25 @@
+name: Public source audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/01a0ad73-nbainjuryreport]
+    paths: [tools/verify_live.py, .github/workflows/live-audit.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y poppler-utils
+      - run: python3 tools/verify_live.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: source-audit
+          include-hidden-files: true
+          path: |
+            data/audit/latest.json
+            .audit/
+          retention-days: 14
