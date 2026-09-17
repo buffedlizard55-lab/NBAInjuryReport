@@ -158,3 +158,29 @@ absence of internal cache keys; browser assertions for the tag, tooltip, legend,
    20 new citation rows carry no handles because profiles cannot be read from the build environment.
 4. `tools/verify_live.py` now fails on unexpected statuses, but runner→source reachability differs from browser→source
    reachability (that is exactly the ESPN 403-vs-200 case above); `UNREACHABLE-FROM-RUNNER` is therefore not reported as a source failure.
+
+## Addendum after the first CI audit run of the rewritten checker (05:08Z)
+
+The committed verdicts (`data/audit/latest.json`) corrected **this tool's own** explanations, and the
+correction matters more than the pass:
+
+| Observation, same runner, minutes apart | What it disproves |
+|---|---|
+| Python audit client → `site.api.espn.com` `/teams`, `/scoreboard`, `/teams/mia/roster`: **403** | "ESPN is blocked from CI." |
+| `tools/collect_context.js` (Node fetch) → the same URLs: **30 rosters, 559 players** written into `data/live/context.json` | "the endpoint is unavailable to servers." |
+| Deployed browser page → `site.web.api.espn.com/…/injuries`: **200, 74 rows** | "the endpoint is unavailable to browsers." |
+| `www.espn.com` human pages → **202, empty body** to the audit client | "the page was removed." |
+| The audit client → `official.nba.com` 2025-26 page: 200; 2026-27 page: **404**; PDF index: **503**; sample PDF: **200, 103 KB, parsed** | the registry's official-layer claims, all confirmed from a third network |
+
+Conclusion written into the registry as a flag: ESPN is **fingerprinting clients, not blocking
+runners or IPs**, so every "unreachable" claim in this project must name the client that observed it.
+The audit therefore classifies 403/406/202/5xx as `ENV-BLOCKED` with an explanation, never as drift,
+and it does **not** spoof browser headers to get a nicer number.
+
+Three defects in the checker itself surfaced the same way and are fixed: probing gzipped bytes as text
+(which produced bogus "expected wording missing" on three pages), calling `app.bsky.graph.getList` with
+`actor=` instead of `user=` (an HTTP 400 that would have been misread as the writers list vanishing),
+and literal-string probes against CMS-rendered markup. A fourth finding is not a bug but a constraint:
+Basketball Monster's `INJURED / NOTE / TRADED` tags are **absent from the raw HTML** (client-rendered),
+which independently confirms the link-out-instead-of-scrape policy — parsing that page without running
+its JavaScript would yield empty rows, and guessing from empty rows is how fabricated data is born.

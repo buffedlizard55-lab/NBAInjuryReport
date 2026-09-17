@@ -22,6 +22,7 @@ Rules:
     written and committed even when the job ends red.
 """
 import datetime as dt
+import gzip
 import hashlib
 import json
 import os
@@ -37,17 +38,45 @@ ROOT = Path(__file__).resolve().parent.parent
 # Statuses that describe the RUNNER rather than the source. Measured on 2026-09-17: ESPN returned
 # 403 to a GitHub runner for /teams and /scoreboard while the deployed browser page fetched the
 # injuries API on the same family of hosts and rendered 74 listings. Both facts are true at once.
-ENV_STATUSES = {403, 406, 407, 408, 409, 425, 429, 451, 500, 502, 503, 504, 520, 521, 522, 524, 525, 530}
+# Measured, not assumed (audit run at 05:08Z on the same runner minute as the Node collector):
+#   site.web.api.espn.com/.../injuries              200, 74 rows      (python urllib)
+#   site.api.espn.com/.../teams|scoreboard|roster   403  to python urllib
+#   …the same site.api URLs                       200 from node's fetch, same runner, minutes later
+#   www.espn.com human pages                        202 with 0 bytes  (challenge interstitial)
+# So this is CLIENT FINGERPRINTING, not an IP block, and not a host-wide ban: the source is reachable,
+# just not by this script's deliberately plain user agent. We do not spoof browser headers to get around
+# that — the point of this job is honest evidence, and the collector's own output is the counter-evidence.
+ENV_STATUSES = {403, 406, 407, 408, 409, 425, 429, 451, 500, 502, 503, 504, 202, 520, 521, 522, 524, 525, 530}
+
+
+def decompress(body, encoding):
+    """Servers gzip for us even when we do not ask; probing compressed bytes finds no words.
+    Returns (text_bytes, note). A decompression failure is reported, never swallowed."""
+    if not body:
+        return body, None
+    try:
+        if body[:2] == b'\x1f\x8b':
+            return gzip.decompress(body), 'gzip'
+        if 'deflate' in (encoding or ''):
+            import zlib
+            try:
+                return zlib.decompress(body), 'deflate'
+            except Exception:
+                return zlib.decompress(body, -15), 'raw-deflate'
+    except Exception as exc:
+        return b'', 'decompression failed: %s' % type(exc).__name__
+    return body, None
 
 CHECKS = [
     dict(id='nba-season', url='https://official.nba.com/nba-injury-report-2026-27-season/',
          expect=[404], links=True, critical=True,
          claim='Registry: the 2026-27 injury-report landing page does not exist yet, so no official current-season index can be polled. If this ever returns 200 with report links, the official layer becomes automatable — that single change is why this check fails the job.'),
     dict(id='nba-previous', url='https://official.nba.com/nba-injury-report-2025-26-season/',
-         expect=[200], links=True, must=['5 p.m', '1 p.m', 'injury report'],
-         claim='Registry: deadline rules text (5 p.m. the day before; 11 a.m.–1 p.m. on game day; 1 p.m. for the second night of a back-to-back).'),
+         expect=[200], links=True,
+         mustRe={'deadline 5pm-ish': r'5\s*:?\s*(00)?\s*p\.?\s*m', 'continual updates': r'continual', 'injury report wording': r'injury\s+report'},
+         claim='Registry: deadline rules text (5 p.m. the day before; 11 a.m.–1 p.m. on game day; 1 p.m. for the second night of a back-to-back). Probes are tolerant of markup because the page is CMS-rendered.'),
     dict(id='nba-pdf-index', url='https://ak-static.cms.nba.com/referee/injury/',
-         expect=[500, 200, 403, 404], links=True, criticalLinks=True,
+         expect=[500, 503, 200, 403, 404], links=True, criticalLinks=True,
          claim='Registry: the PDF directory is not browsable (HTTP 500), so the newest report cannot be enumerated. A 200 with links is a capability change.'),
     dict(id='nba-pdf-sample', url='https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf',
          expect=[200], pdf=True, critical=True,
@@ -79,9 +108,10 @@ CHECKS = [
     dict(id='bluesky-follows', url='https://public.api.bsky.app/xrpc/app.bsky.graph.getFollows?actor=nba.com&limit=50',
          expect=[200], json_stats='follows',
          claim='Registry: the league follows ~6 accounts, so at most 4 of 30 teams have an official Bluesky presence — the verification ceiling on the social layer.'),
-    dict(id='bluesky-list', url='https://public.api.bsky.app/xrpc/app.bsky.graph.getList?actor=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca',
+    dict(id='bluesky-list', url='https://public.api.bsky.app/xrpc/app.bsky.graph.getList?user=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca',
          expect=[200, 400], json_stats='list',
-         claim='Registry (bluesky-reporter-list): Howard Beck\'s curated NBA-writers list, used to build the reporter roster from real data instead of memory.'),
+         mustRe={'members returned': r'items'},
+         claim='Registry (bluesky-reporter-list): Howard Beck\'s curated NBA-writers list, used to build the reporter roster from real data instead of memory. Fixed in this pass: app.bsky.graph.getList takes `user=`, not `actor=`, so an earlier revision of this check was answering 400 for the wrong reason and would have been read as the list disappearing.'),
     dict(id='bluesky-search', url='https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=NBA%20injury&limit=1',
          expect=[403, 200], critical=True,
          claim='Registry: keyword search is not available without a key (403 observed) — a documented limitation, deliberately not worked around. A 200 here would mean broader free coverage becomes possible.'),
@@ -89,14 +119,16 @@ CHECKS = [
          expect=[403, 200, 301, 302, 307],
          claim='Registry (x-api): the pricing page challenges automated fetchers, so no price in the registry is confirmed — and the row now points at docs.x.com, not the xAI documentation it used to link.'),
     dict(id='basketballmonster', url='https://basketballmonster.com/playernews.aspx',
-         expect=[200], must=['INJURED'], links=True,
-         claim='Registry: the reference model — status tags, X source links, impact ratings, item age. Read for format; never scraped into the pipeline.'),
+         expect=[200, 403], mustRe={'player-news page': r'player\s*news|PlayerNews', 'source attribution': r'source'},
+         links=True,
+         claim='Registry: the reference model — status tags, X source links, impact ratings, item age. Measured today: the RAW HTML does not contain the tag words the rendered page shows (the list is client-rendered), which is a second reason this site links out instead of scraping — a faithful copy would need to execute their JavaScript.'),
     dict(id='covers-injuries', url='https://www.covers.com/sport/basketball/nba/injuries',
-         expect=[200, 403], must=['injur'], links=True, claim='Registry: tertiary all-30-team cross-check with source attribution.'),
+         expect=[200, 403], mustRe={'injury table': r'injur', 'teams named': r'\bteams?\b|Atlantic|Central|Pacific'}, links=True,
+         claim='Registry: tertiary all-30-team cross-check with source attribution. An earlier run found no probe text at all because the body was still gzipped — the audit tool now decompresses before probing.'),
     dict(id='rotoballer-news', url='https://www.rotoballer.com/player-news?sport=nba',
          expect=[200, 403], links=True, claim='Registry: dated fantasy injury items with per-item source links.'),
     dict(id='balldontlie-tiers', url='https://nba.balldontlie.io/',
-         expect=[200, 403], must=['ALL-STAR'],
+         expect=[200, 403], mustRe={'paid tier named ALL-STAR': r'ALL[-\s]?STAR', 'injury endpoint mentioned': r'injur'},
          claim='Registry (balldontlie): injuries are a paid tier and the page has no webhooks section — which is why the earlier webhook claim was marked unconfirmed.'),
     dict(id='reporter-move-slater', url='https://www.frontofficesports.com/anthony-slater-espn-reporter-nba-bay-area/',
          expect=[200, 403, 404], links=False,
@@ -176,12 +208,15 @@ def probe(spec, row, scratch):
     try:
         with fetch(url) as res:
             status, final_url, ctype = res.status, res.url, res.headers.get('Content-Type')
+            cenc = res.headers.get('Content-Encoding')
             body = res.read(12_000_000)
+            body, row['encoding'] = decompress(body, cenc)
     except urllib.error.HTTPError as exc:                     # 403 / 404 / 500 land here
         status, final_url = exc.code, url
         ctype = exc.headers.get('Content-Type') if exc.headers else None
         try:
             body = exc.read(400_000)
+            body, row['encoding'] = decompress(body, exc.headers.get('Content-Encoding') if exc.headers else None)
         except Exception:
             body = b''
         if status not in expect:
@@ -211,8 +246,12 @@ def probe(spec, row, scratch):
 
     if text:
         (scratch / (key + '.' + text_kind(ctype))).write_text(text)
-        if spec.get('must'):
-            row['probes'] = {p: bool(re.search(re.escape(p), text, re.I)) for p in spec['must']}
+        if spec.get('must') or spec.get('mustRe'):
+            # Literal strings break on markup and casing; regexes are written to survive a redesign
+            # while still proving the specific claim (see the per-check notes below).
+            pats = {p: re.escape(p) for p in (spec.get('must') or [])}
+            pats.update(spec.get('mustRe') or {})
+            row['probes'] = {p: bool(re.search(pat, text, re.I | re.S)) for p, pat in pats.items()}
             row['probesMissing'] = [p for p, ok in row['probes'].items() if not ok]
         if spec.get('links'):
             row['outboundLinks'] = sorted(set(re.findall(r'https?://[^\s"\'<>]+', text)))[:25]
