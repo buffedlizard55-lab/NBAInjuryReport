@@ -77,3 +77,11 @@ See [NEXT_STEPS.md](NEXT_STEPS.md) for the next-session acceptance checklist.
 ## GitHub permission findings
 
 The session connection can push the fixed branch and create a PR, but workflow dispatch and changing Pages configuration returned `403 Resource not accessible by integration`. These are operation-specific permission limits, not a request for credentials. Live collection is tested via a branch push trigger. The Pages workflow preserves the existing branch-based configuration and requests a rebuild with its scoped workflow token; artifact deployment remains supported if the repository later uses workflow mode. Deployment success must be checked after merge.
+
+## Follow-up live collection and browser checks
+
+[Collector run 35179796453](https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/runs/35179796453) succeeded with 74 injury listings, 13 social observations, and an automatic 74-entry initial injury history. Main snapshot errors were empty. Context collection reached 28 team rosters / 522 roster entries; NOP and UTA returned 400. Their routing was corrected to ESPN's canonical `no` and `utah` codes (not a guessed numeric team ID). Official collection correctly reported no discoverable report links. No current-game role observations were available.
+
+[Chromium run 35179912267](https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/runs/35179912267) passed the fixture-backed browser checks, including actual WebAudio context activation, persisted mute, filtering, diagnostics and mobile overflow. The hidden custom checkbox was replaced by a keyboard-focusable control. Audio activation is not a guarantee of audibility on another device.
+
+A subsequent collector self-audit rejected a new explicit `will not return` OUT classification because the independent replay validator did not yet include that phrase. This failure prevented publication. The replay guard and regression test were updated together; actual social delivery still requires a recent post, one recognized NBA player, identity evidence and enabled filters.

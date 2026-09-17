@@ -23,6 +23,7 @@ check('Freshness rejects old, missing, malformed and future timestamps', () => {
 check('Surgery alone is not an OUT designation', () => assert.equal(SIGNALS.find(s => s.re.test('Player had surgery on his shoulder')).sev, 'mention'));
 check('Negated OUT and doubtful return never become confirmed OUT', () => {
   assert.equal(Social.classifyPost('Player has not been ruled out with an ankle injury').sev, 'mention');
+  assert.equal(Social.classifyPost('Test Player will not return due to an ankle injury').sev, 'out');
   assert.doesNotMatch(Social.classifyPost('Player is doubtful to return after heading to the locker room with an ankle injury').sevLabel, /OUT FOR THE GAME/);
 });
 check('DNP injury is not exit evidence; unknown or available never maps to out', () => {

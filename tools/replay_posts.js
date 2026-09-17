@@ -8,7 +8,7 @@
 "use strict";
 const fs = require("fs"), path = require("path");
 const ROOT = path.join(__dirname, "..");
-const file = process.argv[2] || path.join(ROOT, "data", "social", "latest.json");
+const file = process.argv[2] || path.join(ROOT, "data", "live", "latest.json");
 if (!fs.existsSync(file)) { console.error("no snapshot at " + file + " (run the poller / workflow first)"); process.exit(1); }
 const snap = JSON.parse(fs.readFileSync(file, "utf8"));
 /* load data.js + social.js exactly as the browser does (with DOM stubs) and use the REAL
@@ -32,7 +32,7 @@ for (const p of (snap.posts || [])) {
 }
 const head = s => (s || "").replace(/\s+/g, " ").slice(0, 120);
 console.log(`snapshot: ${snap.generated || "?"}  posts: ${(snap.posts || []).length}  accounts: ${allow.size}`);
-console.log(`\nALERT-WORTHY (${buckets.alert.length})`);
+console.log(`\nCLASSIFICATION CANDIDATES (not delivery decisions) (${buckets.alert.length})`);
 buckets.alert.forEach(({ p, sev }) => console.log(`  [${sev}] ${p.label || ""} @${p.handle} — ${head(p.text)}`));
 console.log(`\nMENTION (${buckets.mention.length})`);
 buckets.mention.slice(0, 10).forEach(p => console.log(`  @${p.handle} — ${head(p.text)}`));
@@ -59,7 +59,7 @@ if (process.argv.includes("--check")) {
     const watch = c.kind === "ingame-watch";
     const vocab = /(injur\w+|hurt|sore\w*|spasms?|sprain\w*|strain\w*|torn|tore|fracture\w*|concussion\w*|illness|sick|surg\w*|procedure|achilles|acl\b|mcl\b|meniscus|hamstring|ankle|knee|calf|groin|wrist|thumb|quad|oblique|ribs?|protocol|walking boot)/i.test(p.text);
     if (!watch && !vocab && c.sev !== "mention") problems.push(`"${String(p.text).slice(0, 50)}…" labelled ${c.sev} without injury vocabulary`);
-    if (c.sev === "out" && !/(ruled out|out for|out tonight|out tomorrow|out vs|will not play|won'?t play|will miss|sidelined|season-?ending|surgery)/i.test(p.text))
+    if (c.sev === "out" && !/(ruled out|out for|out tonight|out tomorrow|out vs|will not return|won'?t return|will not play|won'?t play|will miss|sidelined|season-?ending|surgery)/i.test(p.text))
       problems.push(`"${String(p.text).slice(0, 50)}…" labelled OUT without an explicit out phrase`);
   }
   const seen = new Set();
@@ -67,7 +67,7 @@ if (process.argv.includes("--check")) {
     if (seen.has(p.uri)) problems.push(`duplicate post in snapshot: ${p.uri}`);
     seen.add(p.uri);
   }
-  if (problems.length) { console.error("REPLAY CHECK FAILED:\n  - " + problems.join("\n  - ")); process.exit(1); }
+  if (problems.length) { console.error("::error::REPLAY CHECK FAILED:\n  - " + problems.join("\n  - ")); process.exit(1); }
   console.log(`replay check OK — ${((snap.injuries && snap.injuries.rows) || []).length} rows, ${(snap.posts || []).length} posts, no invariant violations`);
   process.exit(0);
 }
