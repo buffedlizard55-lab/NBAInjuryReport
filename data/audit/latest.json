@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-17T05:25:30.132935+00:00",
+  "checkedAt": "2026-09-17T14:44:11.861168+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -15,7 +15,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 1129,
-      "sha256": "3fc754b28d76b315fe814778e7e5116d47a7b7a400169c1efdbf2bc5a93dfd0f",
+      "sha256": "5af779dc3f3561ade9c697dc23ec3e622d7a321c1e3bc3dda6a20d00fdd53735",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -36,8 +36,8 @@
       "status": 200,
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 116516,
-      "sha256": "16b6424c5cff6601f70c8e6422fb9ff42264ddd58a81a5b3abd454c4ae0d44a4",
+      "bytes": 116517,
+      "sha256": "b1d80fda3c5ebcf103442222cd7c9a49ad32f0f7706f8a44cdfaab0af90b38c2",
       "probes": {
         "deadline 5pm-ish": true,
         "continual updates": true,
@@ -90,8 +90,8 @@
       "status": 503,
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
-      "bytes": 280,
-      "sha256": "4d79e37181e302734458e9cddaf1baeb3c873c14ba2ae629091015e79a6be601",
+      "bytes": 276,
+      "sha256": "43f62334973b0e757ce2336061fc30fb875ade269129bc8a55db6c2aa54c5335",
       "outboundLinks": [],
       "frames": [],
       "verdict": "OK"
@@ -128,7 +128,7 @@
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
       "bytes": 848875,
-      "sha256": "ad04298f25833af499351d0d542cb4f0661fdf0af181a19c1db5daf267db73d7",
+      "sha256": "2e31aca5eaf127b53bc4b53d9441683e0c66abd33095aba964fc11831f2d776a",
       "teamBlocks": 27,
       "rows": 74,
       "season": {
@@ -152,8 +152,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
       "contentType": "text/html",
-      "bytes": 439,
-      "sha256": "6e4f1dca0f3771c3c429f35bf87c58c4693eaacac953f573409b7074b0cf1fc1",
+      "bytes": 437,
+      "sha256": "4caa63abe02111ad8dffaf0116649e70dcd1da2b7b6349a7f887e88959d9c681",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client. The same URL can succeed from Node on the same runner and from a browser on the deployed origin - ESPN is fingerprinting clients, not blocking machines or IPs. The claim under test is about the source and the browser path, evidenced elsewhere; not counted as drift."
     },
@@ -170,8 +170,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "text/html",
-      "bytes": 444,
-      "sha256": "437f2fa5c3c88a586ce11e330edeb85a101ed3070e9ed0ea5cd677b4cb3a7430",
+      "bytes": 442,
+      "sha256": "06e0f31bb7837ff83002f2f35ce47090054c30c3c0e0a7a0b41770ec632f4934",
       "verdict": "OK"
     },
     {
@@ -187,8 +187,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "text/html",
-      "bytes": 458,
-      "sha256": "3e4e15ce1502a080d6d03a8cec269c789f20ec152b4b8dfe47589eb6aea1f358",
+      "bytes": 456,
+      "sha256": "ddf2f373f5dd5f0a7b134f3094dad50030f1f6f440c19e4d3522f038d224650d",
       "verdict": "OK"
     },
     {
@@ -236,8 +236,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "text/html",
-      "bytes": 447,
-      "sha256": "18f34af7bd2e93d9347722705abc109ef22e93aab733163ed5fd6795a7f98de2",
+      "bytes": 445,
+      "sha256": "32fefff6c27c3cd9b1e9a6dbbbe77152fbf3bb4b2f04a83a53c148ba4080f2a8",
       "verdict": "OK"
     },
     {
@@ -253,7 +253,7 @@
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
       "contentType": "application/json; charset=utf-8",
       "bytes": 1352,
-      "sha256": "0e835622ab84bbd5bd7a0bcfb1ffe3bba1b4a17565c2843100dafa97aae3bebd",
+      "sha256": "9d485b1d2b99df0141ff3ad38a2f5bda5c79bda09dd34909675df46e0e221d0a",
       "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
       "verification": {
         "verifications": [
@@ -270,7 +270,7 @@
         "trustedVerifierStatus": "none"
       },
       "displayName": "NBA",
-      "followers": 122390,
+      "followers": 122493,
       "bioSnippet": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! \ud83c\udfc0 3:00pm/et: Celtics/Pistons \ud83c\udfc0 7:00pm/et: 76ers/Knicks \ud83c\udfc0 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
       "verdict": "OK"
     },
@@ -382,8 +382,8 @@
       "status": 200,
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 115019,
-      "sha256": "564091f93ab4351614ee638bf490524a9b97bc7b888d4ab524127c3aa116edba",
+      "bytes": 115498,
+      "sha256": "af6fc2852f5e292dceeeb36daadc5789b8ac163e685c77a67e40bdfadc6a1090",
       "probes": {
         "player-news page": true,
         "source attribution": true,
@@ -484,8 +484,8 @@
       "status": 200,
       "finalUrl": "https://www.rotoballer.com/player-news?sport=nba",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 1010494,
-      "sha256": "6925d8be872c92ac662f1fdf0e5333ca3c0f4e6a07aba8fe4545c5c4846b1992",
+      "bytes": 1008921,
+      "sha256": "490896985de7bc902fc540d502620bba031e47b684e0751bd2421232bda0827f",
       "outboundLinks": [
         "http://benchsports.com/?ref=rotoballer",
         "http://custom.transaction",
@@ -493,17 +493,17 @@
         "http://ogp.me/ns#",
         "http://www.facebook.com/2008/fbml",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/anthony-gill-returns-to-wizards-on-one-year-deal/1932379&title=Anthony+Gill+Returns+to+Wizards+on+One-Year+Deal",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/brandon-ingram-officially-heads-to-the-clippers/1931790&title=Brandon+Ingram+Officially+Heads+to+the+Clippers",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/cam-whitmore-draws-interest-from-nuggets/1931813&title=Cam+Whitmore+Draws+Interest+From+Nuggets",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/bruce-brown-lands-exhibit-9-deal-with-knicks/1933398&title=Bruce+Brown+Lands+Exhibit+9+Deal+with+Knicks",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/chance-mcmillian-returns-to-warriors-on-training-camp-deal/1932580&title=Chance+McMillian+Returns+to+Warriors+on+Training+Camp+Deal",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/deivon-smith-joins-warriors-on-camp-deal/1932583&title=Deivon+Smith+Joins+Warriors+on+Camp+Deal",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/drew-eubanks-set-to-join-knicks-on-camp-deal/1932382&title=Drew+Eubanks+Set+to+Join+Knicks+on+Camp+Deal",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/gradey-dick-officially-joins-clippers/1931807&title=Gradey+Dick+Officially+Joins+Clippers",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/duop-reath-lands-one-year-deal-with-suns/1933446&title=Duop+Reath+Lands+One-Year+Deal+with+Suns",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/elfrid-payton-agrees-to-deal-with-kings/1933425&title=Elfrid+Payton+Agrees+to+Deal+with+Kings",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/john-konchar-agrees-to-one-year-deal-with-knicks/1932373&title=John+Konchar+Agrees+to+One-Year+Deal+with+Knicks",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/john-konchar-draws-interest-from-four-east-teams/1931820&title=John+Konchar+Draws+Interest+From+Four+East+Teams",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/knicks-sign-james-wiseman-to-exhibit-9-deal/1933416&title=Knicks+Sign+James+Wiseman+to+Exhibit+9+Deal",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/knicks-waive-igor-milicic-jr/1932394&title=Knicks+Waive+Igor+Milicic",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/liam-robbins-signs-exhibit-10-deal-with-knicks/1932391&title=Liam+Robbins+Signs+Exhibit+10+Deal+with+Knicks",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/peyton-watson-poised-for-ample-minutes-in-cleveland/1931834&title=Peyton+Watson+Poised+for+Ample+Minutes+in+Cleveland",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/ochai-agbaji-joins-knicks-on-exhibit-9-deal/1933407&title=Ochai+Agbaji+Joins+Knicks+on+Exhibit+9+Deal",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/rasheer-fleming-could-see-bigger-role-in-year-2/1932622&title=Rasheer+Fleming+Could+See+Bigger+Role+in+Year+2",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/sean-mcneil-signs-camp-deal-with-cavaliers/1932592&title=Sean+McNeil+Signs+Camp+Deal+with+Cavaliers",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/william-baker-joins-hawks-on-camp-deal/1932609&title=William+Baker+Joins+Hawks+on+Camp+Deal",
@@ -555,7 +555,7 @@
       "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 243522,
-      "sha256": "42f00af159aa823f5a7241fb72df509d9c559515cf91566e89b23a59f3c9a24f",
+      "sha256": "7ca30217ce9e259f086c7d3018d99d03454d25ff466f78550603b2a57a15f243",
       "verdict": "OK"
     },
     {
@@ -572,8 +572,8 @@
       "status": 200,
       "finalUrl": "https://www.sportsmediawatch.com/2026/02/new-york-times-hires-ex-washington-post-sportswriters/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 472520,
-      "sha256": "a8b59dcc85988e9e72b07b5f8c90e5c5b2c65e4b15cadb412b7d6cd208825074",
+      "bytes": 472439,
+      "sha256": "786d237e94420c14d7310181277687963188ee5a4faf7ad3114a49e1269d8786",
       "verdict": "OK"
     }
   ],

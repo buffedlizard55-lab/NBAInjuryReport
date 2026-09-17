@@ -121,6 +121,28 @@ check('A high-impact starter tag never changes alert eligibility, only its wordi
     const alert = verdict.alerts.find(a => a.uri === 'at://old') || verdict.alerts[0];
     assert.ok(!alert || alert.alertEligible === false, 'a 3-day-old post must not be alert-eligible');
   });
+  check('Identity eligibility: recorded evidence qualifies a reporter; the flagged team account stays silent', () => {
+    const fa = Social.feedAccounts();
+    const mc = fa.find(a => a.handle === 'jmcdonaldsa.bsky.social');   // Spurs beat writer: list membership + bio, NO Bluesky object
+    const nba = fa.find(a => a.handle === 'nba.com');                   // official league: valid verification object
+    const mavs = fa.find(a => a.handle === 'dallasmavs.bsky.social');   // followed by the NBA, NO object, flagged in data.js
+    assert.ok(mc && mc.verified === true && mc.bskyVerified === false, 'evidence-recorded reporter is alert-eligible without a verification object');
+    assert.ok(nba && nba.verified === true && nba.bskyVerified === true, 'verified league account is alert-eligible');
+    assert.ok(mavs && mavs.verified === false && mavs.bskyVerified === false, 'flagged unverified team account must remain silent');
+  });
+  check('checkAlerts: same post, eligible account sounds; account without evidence is visible but silent', () => {
+    sandbox.Intelligence = { resolveText: t => /Test Player/.test(String(t)) ? { player:'Test Player', team:'BOS', playerId:'1' } : null };
+    let n = 0;
+    const fresh = verified => ({ uri: 'at://gate/' + (++n), handle:'rep.bsky.social', name:'Rep', text:'Test Player is out tonight with a knee injury',
+      url:'https://bsky.app/profile/rep.bsky.social/post/gate', createdAt:new Date().toISOString(),
+      sev:'out', sevLabel:'OUT (social report)', verified: verified, bskyVerified:false, inGameWatch:false });
+    const ok = Social.checkAlerts([fresh(true)], false);
+    assert.equal(ok.alerts.length, 1);
+    assert.equal(ok.alerts[0].alertEligible, true, 'recorded identity evidence + one resolved player + fresh post = eligible');
+    const silent = Social.checkAlerts([fresh(false)], false);
+    assert.equal(silent.alerts.length, 1);
+    assert.equal(silent.alerts[0].alertEligible, false, 'no evidence: stays in the feed, never sounds');
+  });
   check('Injury-history cadence ignores stale entries and dedupes dates', () => {
     const d = n => new Date(Date.now() - n*86400000).toISOString().slice(0,10)+'T00:00Z';
     const cad = LineupImpact.listingCadence({ injuryEntries:[{status:'Out',date:d(2)},{status:'Out',date:d(2)},{status:'Day-To-Day',date:d(900)}] });

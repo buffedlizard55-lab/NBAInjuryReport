@@ -16,6 +16,14 @@
  * search. So it polls a verified allow-list (data.js SOCIAL_ACCOUNTS + BSKY_REPORTERS, every
  * handle carrying its own evidence) instead of pretending to search.
  *
+ * IDENTITY MODEL (two fields, one policy): `verified` = recorded identity evidence (alert
+ * eligible) — for reporters that is the curated-list membership + self-declared beat recorded
+ * in data.js, which is the same standard the directory applies to every row; for official
+ * league/team accounts it is Bluesky's verification object (an unverified team account could
+ * be anyone, so it stays silent). `bskyVerified` = the verification object itself, shown as
+ * its own badge in the feed. Confusing the two once silenced beat writers who carried list
+ * evidence but no object (found 2026-09-17, session 4).
+ *
  * TWO BUGS FOUND BY REPLAYING THE FIRST LIVE CI SNAPSHOT (tools/replay_posts.js):
  *   1. getAuthorFeed also returns REPOSTS, whose author is somebody else entirely — five
  *      never-vetted accounts leaked into the layer that way. Only the account's own posts count.
@@ -105,14 +113,38 @@ const Social = (function () {
     } finally { clearTimeout(timer); }
   }
 
-  /* Both registries hold feed-enabled accounts; normalise them to one shape. */
+  /* Both registries hold feed-enabled accounts; normalise them to one shape.
+ *
+ * IDENTITY vs VERIFICATION OBJECT — kept as two separate fields because conflating them once
+ * silenced real alerts: `bskyVerified` means Bluesky's own verification object was present;
+ * `verified` (the alert-eligibility flag) means IDENTITY EVIDENCE IS RECORDED for the account,
+ * per the allow-list policy this project documented on 2026-09-17 ("a named, verified account"):
+ *   - reporters: recorded evidence (curated-list membership + self-declared beat, or an outlet
+ *     verification object) is enough — this is how the directory vets every row;
+ *   - official league/team accounts: the verification object is still REQUIRED, because a team
+ *     account without one (dallasmavs, flagged in data.js) could be anyone — silence is the
+ *     honest state until a second source confirms it runs the club. */
   function feedAccounts() {
     const out = [];
     for (const a of (typeof SOCIAL_ACCOUNTS !== "undefined" ? SOCIAL_ACCOUNTS : [])) {
-      if (a.feed) out.push({ handle: a.handle, name: a.name, kind: a.kind, team: a.team || null, outlet: a.outlet || null, role: a.role || null, verified: !!a.bskyVerified, url: a.url || ("https://bsky.app/profile/" + a.handle) });
+      if (a.feed) {
+        const bsky = !!a.bskyVerified;
+        const evidence = String(a.verified || "");
+        out.push({ handle: a.handle, name: a.name, kind: a.kind, team: a.team || null, outlet: a.outlet || null, role: a.role || null,
+          bskyVerified: bsky, evidence: evidence,
+          verified: (a.kind === "official-league" || a.kind === "official-team") ? bsky : (bsky || !!evidence),
+          url: a.url || ("https://bsky.app/profile/" + a.handle) });
+      }
     }
     for (const r of (typeof BSKY_REPORTERS !== "undefined" ? BSKY_REPORTERS : [])) {
-      if (r.feed !== false) out.push({ handle: r.handle, name: r.name, kind: "reporter", team: r.team || null, outlet: r.outlet || null, role: r.role || null, verified: !!r.bskyVerified, url: r.evidence || ("https://bsky.app/profile/" + r.handle) });
+      if (r.feed !== false) {
+        const bsky = !!r.bskyVerified;
+        const evidence = String(r.verified || "");
+        out.push({ handle: r.handle, name: r.name, kind: "reporter", team: r.team || null, outlet: r.outlet || null, role: r.role || null,
+          bskyVerified: bsky, evidence: evidence,
+          verified: bsky || !!evidence,
+          url: r.evidence || ("https://bsky.app/profile/" + r.handle) });
+      }
     }
     return out;
   }
@@ -141,7 +173,8 @@ const Social = (function () {
         text: text,
         handle: acct.handle,
         name: acct.name || (p.author && p.author.displayName) || acct.handle,
-        verified: !!acct.verified,
+        verified: !!acct.verified,          // identity evidence established at collection time (alert eligibility)
+        bskyVerified: !!acct.bskyVerified,  // Bluesky's own verification object present (stronger, but not the only evidence)
         kind: acct.kind,
         team: acct.team,
         outlet: acct.outlet,
@@ -326,7 +359,9 @@ const Social = (function () {
       return '<div class="post sev-border-' + esc(p.inGameWatch ? "out" : p.sev) + '">' +
         '<div class="post-head"><span class="tag ' + esc(cls) + '">' + esc(p.sevLabel) + '</span>' +
         '<b>' + esc(p.name) + '</b>' +
-        (p.verified ? '<span class="tag ok" title="Bluesky verification or outlet-domain verification">✓</span>' : "") +
+        (p.bskyVerified ? '<span class="tag ok" title="Bluesky verification object (issuer bsky.app or the outlet\'s own domain) present when checked">✓</span>'
+          : p.verified ? '<span class="tag ok" title="Identity evidence recorded (curated-list membership and/or self-declared beat, per the registry row) — eligible for alerts, weaker than a verification object">◐ evidence</span>'
+          : '<span class="tag warn" title="No identity evidence established — shown for review, never alert-eligible">unverified</span>') +
         (p.outlet ? '<span class="muted tiny">' + esc(p.outlet) + '</span>' : "") +
         (p.team ? '<span class="tag team">' + esc(p.team) + '</span>' : "") +
         '<span class="post-when tiny muted">' + esc(ago(p.createdAt)) + '</span></div>' +

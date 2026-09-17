@@ -1,6 +1,33 @@
 # Next-session priorities
 
-## State at the end of session 3 (2026-09-17, ~05:26Z) — read this first
+## State at the end of session 4 (2026-09-17, ~14:50Z) — read this first
+
+Merged to `main`: session-4 pass — full line-by-line re-read of every shipped file, four direct live re-verifications
+(2026-27 official page still 404; 2025-26 rules text verbatim; injuries feed identical schema; nba.com Bluesky verification
+still valid with `followsCount` 6), one real defect fixed, two cosmetic/stale defects fixed.
+
+**The defect that mattered:** social alert eligibility was keyed on the Bluesky *verification object* alone, so four of the eight
+allow-listed reporters (McDonald, Orsborn, Haberstroh, Hollinger) could never sound an alert despite recorded identity evidence.
+Now: reporters qualify on recorded evidence (the same standard the directory uses), official team accounts still require the
+verification object (the flagged `dallasmavs` account stays silent), the feed shows ✓ vs ◐-evidence badges, and the evidence
+ledger stores both fields. Pinned by two new regression groups — 23 total. Also: missing `.tag.ok/.warn/.gtd` CSS added (verified
+posts and unverified posts used to look identical), and the stale "poller never ran on GitHub" text in the registry generator fixed
++ `data/verified_sources.json` regenerated.
+
+Facts a new session can rely on:
+- Everything green on `main`: `Tests` (incl. Chromium suite), `injury-watch`, `Public source audit`, `Deploy dashboard`.
+  The session-4 push re-triggered the runner audit over all 22 checks; read `data/audit/latest.json` first — it is the independent
+  re-verification of the 18 URLs the build sandbox cannot re-fetch.
+- `data/live/context.json` is still schema 2 with empty `roleStats` — **nothing fills until the 2026-10-03 preseason tip.**
+  First acceptance check after tip: `roleStats` gains entries, a starter's OUT alert renders `HIGH IMPACT` + `⚡` prefix, and an
+  in-game exit alert from a monitored account carries the post link (and, since session 4, can come from a reporter with evidence
+  but no verification object).
+- The official report page is expected to exist around the season start (~Oct 2026). The moment
+  `https://official.nba.com/nba-injury-report-2026-27-season/` returns 200 with timestamped PDF links, the runner audit fails with
+  CAPABILITY-DRIFT **by design** — that is the tripwire. Then: parse the first real report (the April 12 2026 fixture proves the
+  parser handles the current layout), confirm every row, and let `Intelligence.officialAlerts` do its job.
+
+## State at the end of session 3 (2026-09-17, ~05:26Z)
 
 Merged to `main`: PR #8 (lineup-impact layer, alert-freshness fix, CI trigger fix, registry re-verification, 20 citation-verified
 reporter rows, rewritten source audit) and PR #9 (three claims the first audit run disproved, corrected in place).
@@ -40,7 +67,7 @@ the post link. Until then the impact layer is structurally tested but empiricall
 - Run an always-on collector with durable storage if seconds-level latency is required. GitHub scheduled jobs and static Pages cannot provide that guarantee.
 - Acceptance: measure median/p95 publication-to-observation-to-alert latency on real events; don't substitute poll interval for measured latency.
 
-## 3. Harden player and reporter identity (partly advanced 2026-09-17: 20 directory rows now carry verbatim injury-feed citations, corrected outlets and cleared flags)
+## 3. Harden player and reporter identity (partly advanced 2026-09-17: 20 directory rows now carry verbatim injury-feed citations, corrected outlets and cleared flags; session 4 made alert eligibility evidence-based for reporters)
 
 - Revalidate each legacy directory row using outlet bios and official outbound account links; flag employment/handle changes and retired/inactive accounts.
 - Pin account DIDs, retain dated verification evidence and stop trusting an account if identity changes. Explicitly separate official team, outlet-verified reporter, community-listed and unverified.
