@@ -30,13 +30,14 @@ NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster pla
 See [AUDIT.md](AUDIT.md) for findings and verification scope, and [data/audit/latest.json](data/audit/latest.json) for independent runner HTTP statuses, timestamps and body hashes. Since the session-7 fix each row also carries an explicit `verified` flag: **OK** is reserved for a response that actually verifies the claim, and a tolerated refusal (HTTP 403 on a JSON endpoint this client is fingerprinted out of) is **ENV-BLOCKED** with `verified=false`. Before that fix four checks that had read nothing printed OK.
 
 - Official 2026–27 injury-report page: **404** (re-read again this session, ~21:00Z, `XID: 74717976`).
+- Post-fix runner audit (`2026-09-17T21:22:35Z`, 22 checks, 0 drift, 0 tool errors): **16 of 22 claims verified by that run**, 6 `ENV-BLOCKED` — four `site.api.espn.com` JSON calls fingerprinted to **403** (`espn-teams`, `espn-scoreboard`, `espn-roster-mia`, `espn-teams-mia`) and two `www.espn.com` HTML pages returning the **202** bot-challenge interstitial. The Node collector and the deployed browser reach all of them.
 - Previous season page: **200**, but no timestamped injury-PDF links observed.
 - Known historical official PDF: **200**, parsed and tested for page breaks and wrapped reasons.
-- ESPN injuries: **200**, 74 rows in 27 team blocks in that audit.
+- ESPN injuries: **200**, 75 rows in 27 team blocks (21:22Z run) — **CLE, DET and LAL returned no block at all**, which the board now names explicitly.
 - ESPN teams and scoreboard: **403** in that runner; access is endpoint/environment-dependent.
 - NBA Bluesky profile: **200**, valid verification object observed.
 - Bluesky `getFollows(nba.com)`: **200**, 6 follows — 4 carry valid verification objects (POR, DEN, PHI, WNBA), DAL does not, `bsky.app` is a *trusted verifier* (not the same thing).
-- Bluesky `getList` with the correct `list=<AT-URI>`: **200**, 150 members. The audit had been requesting an invalid parameter form and printing 400; fixed this session.
+- Bluesky `getList` with the correct `list=<AT-URI>`: **200**, `listItemCount` 150. The audit had been requesting an invalid parameter form and printing 400; fixed this session and confirmed by the runner.
 - Bluesky search: **403 observed**, not a universal conclusion about its API access model.
 - ESPN roster payload: **200**, athletes in a **top-level `athletes[]`** array — the shape `tools/collect_context.js` collects and the shape the audit now reads (it previously read a key that does not exist).
 - Basketball Monster player news: **200**; reference/source links only, not scraped into alerts.

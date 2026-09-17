@@ -334,6 +334,25 @@ stayed green and the sources page printed **OK**.
 | `assets/css/style.css` (three panels) | **The severity colour-coding never rendered.** `wire.js`, `social.js` and `injuries.js` all emit `sev-border-<sev>`, but the stylesheet only defined `.wire-item.sev-<sev>` and `.post.watch`, and `.board-row` had no left border at all. So every wire item showed the default blue edge and every board row showed none — an OUT item looked identical to a "cleared/returning" one at the edge. Additionally `class="good"` / `class="bad"` had no bare rule (only `.btn.good`, `.badge.bad`, `.pill.bad`, `.dot.bad`, `.callout.bad`), so the board's "✖ refresh failed — last-good data, alerts paused" line and the social layer's reachable yes/no column printed in ordinary body colour; `.empty` had no rule either. Same class of defect as the missing `.tag.ok/.warn/.gtd` rules found in session 4 — a class name in markup with no rule is invisible, which is not the same as intentional. | Added bare `.sev-border-*` rules (all six severities) appended after the base rules so they win the specificity tie, a `border-left` declaration for `.board-row`, bare `.good` / `.bad` / `.empty`, plus `.tag.team` and `.tag.ingame-watch`. Seven smoke assertions pin them, and each was **checked against the pre-fix stylesheet to prove it is not vacuous** (0 of 6 severity edges styled before, no bare `.good`/`.bad`/`.empty`). |
 | `sources.html` | The audit panel showed verdict counts only, so four unrun checks looked identical to four verified ones. | Per-row `claim verified` / `claim NOT verified by this run` badge, a `N/M claims verified by this run` counter, the roster read-path, the list member count, and `verifiedFollows` relabelled "with a valid verification object". The verdict glossary explains the change. |
 
+## Independent confirmation from the runner (21:22Z, after this change was pushed)
+
+The `Public source audit` job re-ran on the branch with the fixed tool and committed
+`data/audit/latest.json` (`checkedAt 2026-09-17T21:22:35Z`, 22 checks, `capabilityDrift 0`,
+`toolErrors 0`). Every one of the four defects is confirmed fixed by a machine that is not this
+sandbox:
+
+| Check | Before (19:25Z run, old tool) | After (21:22Z run, fixed tool) |
+|---|---|---|
+| `bluesky-list` | **400** → `OK-PAGE-CHANGED`, `listItems 0`, `listName null` | **200** → `OK`, `verified: true`, `listName` "NBA Writers/Broadcasters/Podcasters/Bloggers", `listItemCount` **150**, `listItems` 5, both probes pass |
+| `bluesky-follows` | `verifiedFollows` **0** | `verifiedFollows` **4**, `unverifiedHandles: ["dallasmavs.bsky.social", "bsky.app"]` — exactly the live read |
+| `espn-scoreboard` / `espn-roster-mia` / `espn-teams-mia` | **403** → `OK` | **403** → `ENV-BLOCKED`, `verified: false` |
+| summary | no verification accounting | `verifiedByThisRun: 16`, `notVerifiedByThisRun: 6`, `byVerdict {OK 13, ENV-BLOCKED 6, DOCUMENTED-BLOCKER 3}` |
+
+The same run's `injury-watch` collected a fresh snapshot (`generated 2026-09-17T21:22:40.303Z`):
+**75 rows in 27 team blocks, `errors {}`, 12 posts, 7 news items** — and **CLE, DET and LAL are
+still the absent blocks**, independently re-collected 38 minutes after the snapshot this session
+started from. `context.json`: 30 rosters, `roleStats` 0, 0 collector errors.
+
 ## Deliberately *not* changed
 
 - `Social.check`'s `if (!res.error) posts = res.posts; accounts = …; error = res.error;` — I suspected the unbraced `if` was
