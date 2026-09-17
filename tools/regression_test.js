@@ -14,7 +14,7 @@ const sandbox = { console, Date, Set, Map, AbortController, AbortSignal, setTime
 };
 sandbox.window = sandbox;
 vm.createContext(sandbox);
-vm.runInContext(['data','alerts','injuries','ingame','social'].map(f => fs.readFileSync('assets/js/' + f + '.js','utf8')).join('\n') + '\nthis.M={AlertEngine,InjuryBoard,InGame,Social,SIGNALS,REPORTERS};', sandbox);
+vm.runInContext(['data','alerts','injuries','ingame','social'].map(f => fs.readFileSync('assets/js/' + f + '.js','utf8')).join('\n') + '\nthis.M={AlertEngine,InjuryBoard,InGame,Social,SIGNALS,REPORTERS,espnAbbr};', sandbox);
 const { AlertEngine, InjuryBoard, InGame, Social, SIGNALS, REPORTERS } = sandbox.M;
 check('Freshness rejects old, missing, malformed and future timestamps', () => {
   for (const t of [null, 'no', '2020-01-01', new Date(Date.now()+3600000).toISOString()]) assert.equal(AlertEngine.isFresh(t), false);
@@ -37,6 +37,7 @@ check('Team and severity filters apply centrally to all producers', () => {
   assert.equal(AlertEngine.fire({sev:'questionable',sevLabel:'Q',title:'wrong team',team:'ATL',ts:now}),false);
   assert.equal(AlertEngine.fire({sev:'questionable',sevLabel:'Q',title:'old',team:'BOS',ts:'2020-01-01'}),false);
 });
+check('Canonical ESPN route codes cover roster failures', () => { assert.equal(sandbox.M.espnAbbr('NOP'),'no'); assert.equal(sandbox.M.espnAbbr('UTA'),'utah'); });
 check('Wrong Shams-to-Hollinger mapping removed', () => assert.notEqual(REPORTERS.find(r=>r.name==='Shams Charania').bsky,'johnhollinger.bsky.social'));
 check('Exact one-player identity matching; multi-player and unknown stay unresolved', () => {
   const players=[{player:'Test Player',playerId:'1'},{player:'Another Player',playerId:'2'}];

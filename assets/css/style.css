@@ -115,7 +115,8 @@ nav.links a:hover, nav.links a.active { color: var(--text); background: var(--ca
 
 /* Toggle switch */
 .switch { position: relative; display: inline-flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
-.switch input { display: none; }
+.switch input { position: absolute; opacity: 0; width: 52px; height: 28px; margin: 0; cursor: pointer; z-index: 1; }
+.switch input:focus-visible + .track { outline: 3px solid var(--warn); outline-offset: 3px; }
 .track { width: 52px; height: 28px; border-radius: 999px; background: #39465f; position: relative; transition: background .2s; flex-shrink: 0; }
 .track::after {
   content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px;

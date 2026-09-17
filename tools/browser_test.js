@@ -54,4 +54,4 @@ const assert = require('assert/strict'), fs = require('fs');
     assert.equal(errors.length,0,errors.join('\n'));
     console.log('Chromium: dashboard + directory, fixture fallback, sound unlock/mute, filters, diagnostics, mobile layout passed');
   } finally { if (browser) await browser.close(); server.kill(); }
-})().catch(e=>{console.error(e);process.exitCode=1;});
+})().catch(e=>{console.error('::error::'+String(e.stack || e).replace(/\n/g,'%0A'));process.exitCode=1;});

@@ -73,3 +73,7 @@ Tests assert 229 parsed rows / 30 team names; no duplicate player/game keys; exa
 10. **Medium:** working-tree retention does not remove old Git objects. Move event storage out of Git for sustainable production collection.
 
 See [NEXT_STEPS.md](NEXT_STEPS.md) for the next-session acceptance checklist.
+
+## GitHub permission findings
+
+The session connection can push the fixed branch and create a PR, but workflow dispatch and changing Pages configuration returned `403 Resource not accessible by integration`. These are operation-specific permission limits, not a request for credentials. Live collection is tested via a branch push trigger. The Pages workflow preserves the existing branch-based configuration and requests a rebuild with its scoped workflow token; artifact deployment remains supported if the repository later uses workflow mode. Deployment success must be checked after merge.

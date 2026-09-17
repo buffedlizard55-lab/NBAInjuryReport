@@ -68,7 +68,7 @@ function standardAbbr(abbr) {
  * Social posts are free-form, so generic body words ("back", "leg", "hand") and the bare word
  * "out" produce embarrassing false positives: the first live poll classified "THE VOICE IS BACK."
  * as an injury mention. Only injury-SPECIFIC language (or in-game exit language) passes here. */
-const SOCIAL_INJURY_GATE_RE = /\b(injur\w+|hurt|sore(ness)?|spasms?|sprain\w*|strain\w*|torn|tore|fracture\w*|concussion\w*|illness|sick|surgery|surgical|procedure|achilles|acl\b|mcl\b|meniscus|hamstring|calf|groin|wrist|thumb|quad|oblique|ribs?|protocol|questionable|doubtful|probable|game-?time decision|gtd|day-?to-?day|ruled out|out (tonight|tomorrow|indefinitely|vs\.?)|out (for|with) (the )?(rest|game|season|year|remainder|a |an |his |her |left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion|quad|oblique)|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|walking boot|injury report|limping|limp\w*|training staff|cleared to (return|play)|return to play|available (tonight|for))/i;
+const SOCIAL_INJURY_GATE_RE = /\b(injur\w+|hurt|sore(ness)?|spasms?|sprain\w*|strain\w*|torn|tore|fracture\w*|concussion\w*|illness|sick|surgery|surgical|procedure|achilles|acl\b|mcl\b|meniscus|hamstring|calf|groin|wrist|thumb|quad|oblique|ribs?|protocol|questionable|doubtful|probable|game-?time decision|gtd|day-?to-?day|ruled out|out (tonight|tomorrow|indefinitely|vs\.?)|out (for|with) (the )?(rest|game|season|year|remainder|a |an |his |her |left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion|quad|oblique)|will not return|won'?t return|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|walking boot|injury report|limping|limp\w*|training staff|cleared to (return|play)|return to play|available (tonight|for))/i;
 
 /* Availability news that is NOT an injury (rest, load management, coach's decision).
  * Real example from the first live poll: "…no Tarris Reed Jr., who is out for rest…".
@@ -125,7 +125,11 @@ const TEAMS = [
   { abbr: "WAS", name: "Wizards", city: "Washington", nba: "wizards", color: "#002B5C" }
 ];
 function teamByAbbr(a) { return TEAMS.find(t => t.abbr === a); }
-function espnTeamInjuriesUrl(abbr) { return "https://www.espn.com/nba/team/injuries/_/name/" + abbr.toLowerCase(); }
+function espnAbbr(abbr) {
+  const standard = String(abbr || "").toUpperCase();
+  return (Object.keys(ESPN_ABBR_FIX).find(k => ESPN_ABBR_FIX[k] === standard) || standard).toLowerCase();
+}
+function espnTeamInjuriesUrl(abbr) { return "https://www.espn.com/nba/team/injuries/_/name/" + espnAbbr(abbr); }
 function espnTeamUrl(abbr, slug) {
   const t = teamByAbbr(abbr);
   return "https://www.espn.com/nba/team/_/name/" + abbr.toLowerCase() + "/" + (slug || (t.city + "-" + t.name)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -243,7 +247,7 @@ const BSKY_REPORTERS = [
  * "We talk Spurs locker room culture" (in-game watch) and a "clean-up procedure" post labelled
  * RETURN. Each rung below requires an explicit phrase, so labels stay explainable and testable. */
 const SOCIAL_SEVERITY = [
-  { sev: "out", re: /(ruled out|officially out|out for (the )?(game|season|year|remainder)|out (tonight|tomorrow|indefinitely|vs\.?)|out with (a|an|his|her|left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion)|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|season-?ending)/i },
+  { sev: "out", re: /(ruled out|officially out|out for (the )?(game|season|year|remainder)|out (tonight|tomorrow|indefinitely|vs\.?)|out with (a|an|his|her|left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion)|will not return|won'?t return|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|season-?ending)/i },
   { sev: "doubtful", re: /\bdoubtful\b/i },
   { sev: "questionable", re: /(questionable|game-?time decision|\bgtd\b|day-?to-?day)/i },
   { sev: "probable", re: /\bprobable\b/i },

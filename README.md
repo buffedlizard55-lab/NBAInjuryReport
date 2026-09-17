@@ -48,7 +48,7 @@ These observations do not certify every legacy reporter link or guarantee later 
 5. Automatic observation ledger and source-linked injury history.
 6. Live-snapshot invariant check, snapshot/history commit and artifact upload.
 
-`pages.yml` deploys the static site on main pushes and after the main collector completes. This avoids relying on a bot commit to trigger legacy Pages builds. Scheduled workflows can be delayed/disabled; **ten-minute scheduling is not a low-latency service guarantee**. Raw daily snapshots are retained in the working tree for seven days; artifacts for 14 days. Git still retains earlier objects—move collection to a database/object store for production.
+`pages.yml` checks the existing Pages mode on main pushes and after the main collector completes: it requests a rebuild for the existing branch-based site, or deploys a Pages artifact when workflow mode is configured. This avoids relying on a bot commit to trigger legacy Pages builds. Scheduled workflows can be delayed/disabled; **ten-minute scheduling is not a low-latency service guarantee**. Raw daily snapshots are retained in the working tree for seven days; artifacts for 14 days. Git still retains earlier objects—move collection to a database/object store for production.
 
 ## Run / test
 

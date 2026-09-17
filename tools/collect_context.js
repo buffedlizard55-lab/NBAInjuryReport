@@ -3,7 +3,7 @@
 // Roster identity and current-game role observations, not medical judgments.
 const fs = require('fs'), path = require('path');
 const ROOT = process.env.NBA_WATCH_OUT || path.join(__dirname, '..');
-const { ENDPOINTS, TEAMS, standardAbbr } = new Function(fs.readFileSync(path.join(__dirname, '../assets/js/data.js'), 'utf8') + ';return {ENDPOINTS,TEAMS,standardAbbr};')();
+const { ENDPOINTS, TEAMS, standardAbbr, espnAbbr } = new Function(fs.readFileSync(path.join(__dirname, '../assets/js/data.js'), 'utf8') + ';return {ENDPOINTS,TEAMS,standardAbbr,espnAbbr};')();
 const dest = path.join(ROOT, 'data/live/context.json');
 const read = p => { try { return JSON.parse(fs.readFileSync(p)); } catch { return {}; } };
 async function json(url) {
@@ -34,7 +34,7 @@ async function main() {
       const team = TEAMS[cursor++];
       const cached = out.rosters[team.abbr];
       if (cached && Date.now() - Date.parse(cached.fetchedAt) < 24 * 3600000) continue;
-      const url = ENDPOINTS.teams + '/' + team.abbr.toLowerCase() + '/roster';
+      const url = ENDPOINTS.teams + '/' + espnAbbr(team.abbr) + '/roster';
       try {
         const d = await json(url);
         if (!Array.isArray(d.athletes) || !d.athletes.length) throw Error('Missing roster athletes');
