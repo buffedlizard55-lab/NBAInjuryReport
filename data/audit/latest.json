@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-17T14:44:11.861168+00:00",
+  "checkedAt": "2026-09-17T14:46:24.587685+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -15,7 +15,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 1129,
-      "sha256": "5af779dc3f3561ade9c697dc23ec3e622d7a321c1e3bc3dda6a20d00fdd53735",
+      "sha256": "9fea84700aed1d17d1e211e1d6a6e99ef61735a1425e48d030b9624206b82bba",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -37,7 +37,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 116517,
-      "sha256": "b1d80fda3c5ebcf103442222cd7c9a49ad32f0f7706f8a44cdfaab0af90b38c2",
+      "sha256": "d03b82e5c0349ee2d14cce5c92ea219d827c48b122ae07ff739e683019b629f7",
       "probes": {
         "deadline 5pm-ish": true,
         "continual updates": true,
@@ -91,7 +91,7 @@
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
       "bytes": 276,
-      "sha256": "43f62334973b0e757ce2336061fc30fb875ade269129bc8a55db6c2aa54c5335",
+      "sha256": "401f83e0d19e83f35e62f4e85dd1275a7f20e2bf6df052b2cea0b10ae1cfd5d1",
       "outboundLinks": [],
       "frames": [],
       "verdict": "OK"
@@ -128,7 +128,7 @@
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
       "bytes": 848875,
-      "sha256": "2e31aca5eaf127b53bc4b53d9441683e0c66abd33095aba964fc11831f2d776a",
+      "sha256": "281c8a8b6055bc02dbd3369a77e451bd274b6049e72b56c66f56d10a0f0395d9",
       "teamBlocks": 27,
       "rows": 74,
       "season": {
@@ -152,8 +152,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
       "contentType": "text/html",
-      "bytes": 437,
-      "sha256": "4caa63abe02111ad8dffaf0116649e70dcd1da2b7b6349a7f887e88959d9c681",
+      "bytes": 439,
+      "sha256": "6df576048e1dd57c3a8ae2e88d95813b48c2e85fe499da02cf28c381f8bd4c83",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client. The same URL can succeed from Node on the same runner and from a browser on the deployed origin - ESPN is fingerprinting clients, not blocking machines or IPs. The claim under test is about the source and the browser path, evidenced elsewhere; not counted as drift."
     },
@@ -170,8 +170,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "text/html",
-      "bytes": 442,
-      "sha256": "06e0f31bb7837ff83002f2f35ce47090054c30c3c0e0a7a0b41770ec632f4934",
+      "bytes": 444,
+      "sha256": "30a8a4553c805499fde248c3e1bfb7bf3aa8dff6a4cd1149c5094995168e1d32",
       "verdict": "OK"
     },
     {
@@ -187,8 +187,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "text/html",
-      "bytes": 456,
-      "sha256": "ddf2f373f5dd5f0a7b134f3094dad50030f1f6f440c19e4d3522f038d224650d",
+      "bytes": 458,
+      "sha256": "8d2bbe1426f8ad438d2a0d412323e336877fe3b25b3166ae72248fe76fe13d64",
       "verdict": "OK"
     },
     {
@@ -236,8 +236,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "text/html",
-      "bytes": 445,
-      "sha256": "32fefff6c27c3cd9b1e9a6dbbbe77152fbf3bb4b2f04a83a53c148ba4080f2a8",
+      "bytes": 447,
+      "sha256": "5d03f893b439ea6245fa3af8d1413c7098e5a10897dc4dac1b65ab1835946e00",
       "verdict": "OK"
     },
     {
@@ -383,7 +383,7 @@
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
       "bytes": 115498,
-      "sha256": "af6fc2852f5e292dceeeb36daadc5789b8ac163e685c77a67e40bdfadc6a1090",
+      "sha256": "768046f30bfafe6b31dca0dc6719dcc658cebda24e46c25777c4afa5afe6e58b",
       "probes": {
         "player-news page": true,
         "source attribution": true,
@@ -554,8 +554,8 @@
       "status": 200,
       "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 243522,
-      "sha256": "7ca30217ce9e259f086c7d3018d99d03454d25ff466f78550603b2a57a15f243",
+      "bytes": 243489,
+      "sha256": "97d9f63d66458120fcfd765e71abf74ad047b02f062943dfbe8ad57582f3930b",
       "verdict": "OK"
     },
     {
