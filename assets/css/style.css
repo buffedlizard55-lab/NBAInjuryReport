@@ -308,3 +308,39 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
+
+/* ===== Session 7: rules for the class names the JS actually emits =====
+ * wire.js, social.js and injuries.js all emit `sev-border-<sev>`, but the rules above only
+ * targeted `.wire-item.sev-<sev>` and `.post.watch`. Consequence, verified by reading both sides
+ * line by line: the severity colour-coding on the live wire, the social feed and the injury board
+ * NEVER rendered — every wire item showed the default blue edge and every board row showed none,
+ * whatever the status. A class name in markup with no rule is invisible, which is not the same as
+ * intentional. Appended last so these win the specificity tie against the base rules above. */
+.board-row.sev-border-out, .board-row.sev-border-doubtful, .board-row.sev-border-questionable,
+.board-row.sev-border-probable, .board-row.sev-border-return, .board-row.sev-border-mention {
+  border-left: 4px solid transparent;
+}
+.sev-border-out { border-left-color: var(--bad); }
+.sev-border-doubtful { border-left-color: #ff8a3d; }
+.sev-border-questionable { border-left-color: var(--warn); }
+.sev-border-probable { border-left-color: var(--info); }
+.sev-border-return { border-left-color: var(--good); }
+.sev-border-mention { border-left-color: #7c6cff; }
+
+/* Bare status words: the board's "✖ refresh failed" line, the social layer's per-account
+ * reachability table and the board's team-coverage line all emit class="good" / class="bad".
+ * Only compound forms (.btn.good, .badge.bad, .pill.bad, .dot.bad, .callout.bad) had rules, so
+ * those words rendered in ordinary body colour — a failed refresh looked like normal text. */
+.good { color: var(--good); }
+.bad { color: var(--bad); }
+
+/* Empty states were unstyled, so "no listings match the current filters" read like body copy. */
+.empty {
+  padding: 12px 14px; border: 1px dashed var(--line); border-radius: 8px;
+  background: var(--card-2); color: var(--muted); font-size: 0.88rem;
+}
+
+/* Team chips inside the wire and the social feed use class="tag team"; .team-chip is the
+ * equivalent styling used by the in-game monitor. In-game exit posts use class="tag ingame-watch". */
+.tag.team { background: #111a2c; color: var(--accent); border: 1px solid var(--line); }
+.tag.ingame-watch { background: rgba(255,138,61,.16); color: #ffb27a; border: 1px solid rgba(255,138,61,.45); }

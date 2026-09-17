@@ -489,6 +489,99 @@ check("depth-chart registry row records the probed-and-rejected machine endpoint
 check("flags cover the CORS resolution and the freshness defect that was fixed",
   M.FLAGS.some(f => /RESOLVED 2026-09-17: browser CORS/.test(f.title)) && M.FLAGS.some(f => /silenced by the social freshness rule/.test(f.title)) &&
   M.FLAGS.some(f => /non-medical by construction/.test(f.title)) && M.FLAGS.some(f => /Verification ceiling on the social layer/.test(f.title)));
+check("the session-7 audit-tooling defects are flagged, with the corrected parameter form",
+  (() => {
+    const f = M.FLAGS.find(x => /FOUR of the runner audit's checks were quietly wrong/.test(x.title));
+    return !!f && /list=<AT-URI>/.test(f.detail) && /verifiedStatus/.test(f.detail) && /athletes\[\].{0,4}at the TOP LEVEL/.test(f.detail) &&
+      /verifiesOn/.test(f.detail) && /HTTP 400 every run/.test(f.detail);
+  })());
+check("the coverage gap in the committed snapshot is flagged for review, naming the absent teams",
+  (() => {
+    const f = M.FLAGS.find(x => /Coverage gap surfaced on the board/.test(x.title));
+    return !!f && /\(CLE\)/.test(f.detail) && /\(DET\)/.test(f.detail) && /\(LAL\)/.test(f.detail) && /coverageGaps/.test(f.detail) &&
+      /omitted block is a statement about the feed/.test(f.detail);
+  })());
+check("the writers-list source row records the corrected getList parameter, not the old wrong one",
+  (() => {
+    const s6 = M.SOURCES.find(x => x.id === "bsky-reporter-list");
+    return !!s6 && /list=<AT-URI>/.test(s6.browser) && /listItemCount 150/.test(s6.verified) &&
+      /getList\?list=at%3A%2F%2F/.test(s6.review);
+  })());
+const VL = fs.readFileSync(path.join(ROOT, "tools/verify_live.py"), "utf8");
+check("the audit's getList check requests the AT-URI form read from the registry (never `user=`)",
+  /registry_list_uri/.test(VL) && !/getList\?user=/.test(VL) && /app\.bsky\.graph\.list/.test(VL));
+check("the audit counts Bluesky verification from a field the API actually returns",
+  /def verified_object/.test(VL) && /verifiedFollows'\] = sum\(1 for f in follows if verified_object\(f\)\)/.test(VL) && /verifiedStatus/.test(VL));
+check("the audit reads ESPN roster athletes from the top level of the payload",
+  /data\.get\('athletes'\)/.test(VL) && /team\.roster\.entries \(fallback/.test(VL));
+check("the audit declares which statuses can verify each claim, and says so per row",
+  /verifiesOn/.test(VL) && /row\['verified'\] = status in verifies/.test(VL) && /verifiedByThisRun/.test(VL));
+check("the audit's own mapping is unit-tested (a check that cannot fail is worse than none)",
+  fs.existsSync(path.join(ROOT, "tools/test_verify_live.py")) &&
+  /classify_verdict/.test(fs.readFileSync(path.join(ROOT, "tools/test_verify_live.py"), "utf8")));
+
+console.log("== injury board: team-coverage gaps (absence is not clearance) ==");
+/* Uses the REAL committed snapshot, not a fixture: on 2026-09-17 ESPN's injuries feed returned 27
+ * team blocks and no block at all for CLE, DET and LAL. A board titled "every team" that silently
+ * omitted them invites the wrong inference, so the gap is now stated explicitly. */
+const SNAP_ROWS = (LATEST.injuries && LATEST.injuries.rows) || [];
+const SNAP_TEAMS = [...new Set(SNAP_ROWS.map(r => r.team).filter(Boolean))];
+const GAPS = M.InjuryBoard.coverageGaps(SNAP_ROWS);
+check("coverage gaps partition the 30-team registry against the snapshot",
+  GAPS.length + SNAP_TEAMS.length === M.TEAMS.length,
+  GAPS.length + " gaps + " + SNAP_TEAMS.length + " present != " + M.TEAMS.length);
+check("no team is reported missing while the snapshot carries its rows",
+  GAPS.every(g => !SNAP_TEAMS.includes(g.abbr)));
+check("every gap names the team and links its own ESPN injuries page",
+  GAPS.every(g => g.name && g.url === M.espnTeamInjuriesUrl(g.abbr)),
+  GAPS.map(g => g.abbr + ":" + g.url).join(" "));
+check("a snapshot covering every team reports no gap",
+  M.InjuryBoard.coverageGaps(M.TEAMS.map(t => ({ team: t.abbr }))).length === 0);
+const covEl = document.getElementById("boardCoverage");
+M.InjuryBoard.renderCoverage(SNAP_ROWS);
+check("the board states the gap, names every absent team and refuses to call it clearance",
+  GAPS.length === 0 || (/coverage gap/.test(covEl.innerHTML) &&
+    GAPS.every(g => covEl.innerHTML.includes(g.abbr)) && /NOT evidence that nobody/.test(covEl.innerHTML)),
+  covEl.innerHTML.slice(0, 240));
+M.InjuryBoard.renderCoverage(M.TEAMS.map(t => ({ team: t.abbr })));
+check("a full-coverage snapshot says so and still denies clearance",
+  covEl.innerHTML.includes("all " + M.TEAMS.length + " teams") && /not clearance/.test(covEl.innerHTML),
+  covEl.innerHTML.slice(0, 200));
+M.InjuryBoard.renderCoverage([]);
+check("an empty snapshot makes no per-team coverage claim at all",
+  /no listings at all/.test(covEl.innerHTML) && !covEl.innerHTML.includes("all " + M.TEAMS.length + " teams"),
+  covEl.innerHTML.slice(0, 200));
+check("index.html carries the #boardCoverage element the module writes to",
+  fs.readFileSync(path.join(ROOT, "index.html"), "utf8").includes('id="boardCoverage"'));
+
+console.log("== CSS: every status class the modules emit actually has a rule ==");
+/* Found 2026-09-17 (session 7): wire.js, social.js and injuries.js all emit `sev-border-<sev>` while
+ * style.css only had `.wire-item.sev-<sev>` / `.post.watch`, so the severity edge never rendered on
+ * any of the three panels; and `class="good"` / `class="bad"` had no bare rule at all (only
+ * `.btn.good`, `.badge.bad` …), so "✖ refresh failed" printed in ordinary body colour. A class name
+ * in markup with no rule is invisible, which is not the same as intentional. */
+/* Comments stripped first: they contain commas and class names, which would otherwise be parsed as
+ * selectors and silently change what this check believes exists. */
+const CSS = fs.readFileSync(path.join(ROOT, "assets/css/style.css"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+const cssTokens = new Set([...CSS.matchAll(/\.([A-Za-z0-9_-]+)/g)].map(m => m[1]));
+/* selectors that match an element carrying ONLY this class (`.btn.good` does not match `.good`) */
+const cssBare = new Set();
+for (const sel of CSS.match(/[^{}]+\{/g) || []) {
+  for (const part of sel.replace("{", "").split(",")) if (/^\.[A-Za-z0-9_-]+$/.test(part.trim())) cssBare.add(part.trim().slice(1));
+}
+const SEVS = ["out", "doubtful", "questionable", "probable", "return", "mention"];
+check("the modules really do emit sev-border-* (so the styling assertions below are not vacuous)",
+  ["wire.js", "social.js", "injuries.js"].every(f => /sev-border-/.test(fs.readFileSync(path.join(ROOT, "assets/js", f), "utf8"))));
+check("every severity edge class is styled", SEVS.every(s => cssBare.has("sev-border-" + s)),
+  SEVS.filter(s => !cssBare.has("sev-border-" + s)).join(","));
+check("the board row declares a left border for the severity edge to colour",
+  /\.board-row\.sev-border-/.test(CSS));
+check("status words .good / .bad have their own rules, not only compound ones",
+  cssBare.has("good") && cssBare.has("bad"));
+check("the empty-state class is styled", cssBare.has("empty"));
+check("in-game watch posts and team chips have tag rules", cssTokens.has("ingame-watch") && cssTokens.has("team"));
+check("severity + impact tag rules survived", SEVS.every(s => cssTokens.has(s)) &&
+  ["ok", "warn", "gtd", "watch", "impact-high", "impact-medium", "impact-low", "impact-unknown"].every(c => cssTokens.has(c)));
 
 console.log("== alert engine ==");
 check("sound defaults to ON", M.AlertEngine.isSoundOn() === true);

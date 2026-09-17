@@ -293,3 +293,96 @@ Dated search evidence (cross-checked in two independent articles each): Chris Ha
 1. **Basketball Monster's countdown moved "34 days" → "33 days" between same-day reads** (~14:00Z vs ~19:00Z). A source-side display quirk (timezone rounding); harmless because our site never copies that counter — recorded so the next reader does not treat it as data drift.
 2. `data/verified_sources.json`'s `counts.reportersByStatus` shifted only via label text this pass; no row was added or removed. The four revalidated rows (Fischer, Haynes, Buckner, Guillory) keep their statuses: evidence was strengthened, identity classes untouched.
 3. The legacy X rows outside these four still rest on first-pass evidence; per-row revalidation continues in the next session (X profiles cannot be fetched from the build environment — revalidation uses dated third-party reports and outlet pages only, quoted).
+
+# Seventh pass — 2026-09-17, session 7 (~21:00Z): the audit tool audited, and the coverage gap named
+
+## Scope
+
+Re-read line by line: `tools/verify_live.py` (every check spec, `json_peek`, the verdict ladder), `tools/poll_watch.js`,
+`tools/collect_context.js`, `tools/build_intelligence.js`, all ten `assets/js` modules, `index.html`, `sources.html`,
+the four workflows, and the committed data contracts (`data/live/latest.json`, `context.json`, `intelligence.json`,
+`official.json`, `data/audit/latest.json`). Ran the whole local surface before changing anything: 165 smoke · 48
+integration · 24 poll fixtures · 26 regression groups · 4 Python · live replay — all green.
+
+The session's premise: a verification script that is quietly wrong is worse than none, and the runner audit is the only
+independent re-reader of the 18 URLs this sandbox cannot reach. So it was read as a source of claims, not as a formality.
+Four of its checks were wrong. Each produced a confident, specific, wrong number in `data/audit/latest.json` while the job
+stayed green and the sources page printed **OK**.
+
+## Live re-verification this session (page-fetch channel, ~20:55–21:05Z)
+
+| Source | Observation (verbatim where quoted) | Consequence |
+|---|---|---|
+| [NBA 2026–27 report](https://official.nba.com/nba-injury-report-2026-27-season/) | **404** — page body `Error 404 / Not Found / NBA \| XID: 74717976` | Official adapter still blocked by a missing page. Time-gated, unchanged. |
+| [Bluesky `getList`, AT-URI form](https://public.api.bsky.app/xrpc/app.bsky.graph.getList?list=at%3A%2F%2Fdid%3Aplc%3Arkpzrwxex34r36ypejhew7ml%2Fapp.bsky.graph.list%2F3llmezwbnrp2d&limit=3) | **200** — `list.name` "NBA Writers/Broadcasters/Podcasters/Bloggers", `listItemCount` **150**, `purpose` `app.bsky.graph.defs#referencelist`, list `indexedAt` 2025-03-30T17:36:52.604Z, creator `howardbeck.bsky.social` (`did:plc:rkpzrwxex34r36ypejhew7ml`) `verifiedStatus: "valid"` (issuer bsky.app), description verbatim "A list of of everyone I'm following who writes, reports, blogs, pods, analyzes or otherwise yammers about the NBA for a living." Sampled items: `kingjosiah54.bsky.social`, `samvecenie.bsky.social` (verified by theathletic.com), `keithfujimoto.bsky.social` | **Settles the question the audit had been failing to ask.** The 150-member count in the registry is real and re-readable; the earlier HTTP 400 was our bad parameter, not the list disappearing. |
+| [Bluesky `getFollows(nba.com)`](https://public.api.bsky.app/xrpc/app.bsky.graph.getFollows?actor=nba.com&limit=50) | **200** — exactly 6 follows: `trailblazers.bsky.social` (valid), `dallasmavs.bsky.social` (**no verification object**, bio "Mavs.com"), `nuggets.bsky.social` (valid), `sixersnba.bsky.social` (valid), `wnba.com` (valid), `bsky.app` (`trustedVerifierStatus: "valid"`, `verifiedStatus: "none"`). Subject `nba.com` itself `verifiedStatus: "valid"`, bio still carries the Oct 20 slate | The 4-of-30 ceiling holds: 4 followed club accounts carry valid objects, 3 of them NBA clubs. A trusted verifier is not a verified account — the counting code now distinguishes them. |
+| [ESPN injuries, `?team=mia`](https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries?team=mia) | **200** — payload `timestamp 2026-09-17T17:01:02Z`, `season {year:2027, name:"Preseason", displayName:"2026-27"}`, row 1 Giannis Antetokounmpo `Day-To-Day` dated 2026-09-02T16:32Z, shortComment about skipping Greece's FIBA window | Primary board stable; same schema the normaliser expects. |
+| [ESPN roster, `/teams/mia/roster`](https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster) | **200** — `timestamp 2026-09-17T21:00:13Z`, athletes carried in a **top-level `athletes[]`** array (no `team.roster.entries` key anywhere in the payload). Bam Adebayo: `position.abbreviation "C"`, `experience.years 9`, `status.abbreviation "Active"`, `injuries [{status:"Day-To-Day", date:"2026-07-28T16:16Z"}]`, `contracts [{salary 49500000 → season 2027}, {37096620 → 2026}, …]` | Proves the audit's roster path was reading a key that does not exist. Also independently confirms what `tools/collect_context.js` collects (30 rosters / 559 entries in the committed snapshot). |
+| Committed snapshot `data/live/latest.json` | `generated 2026-09-17T20:44:43.144Z`, **75 rows in 27 team blocks**, 7 news items, 12 posts, 13/13 allow-listed accounts reachable, `errors {}` | The three absent blocks are **CLE, DET and LAL** — now named on the board instead of implied away. |
+| Committed `data/live/context.json` | schema 2, 30 rosters, 559 roster entries, 54 players with dated injury listings, **0 collector errors**, `roles` 0, `roleStats` 0 | Offseason reality unchanged: lineup impact stays UNKNOWN until the 2026-10-03 tip. |
+| Committed `data/audit/latest.json` (run 19:25:36Z, produced by the *old* tool) | `bluesky-list` **400** → verdict `OK-PAGE-CHANGED`; `espn-scoreboard` **403** → `OK`; `espn-roster-mia` **403** → `OK`; `espn-teams-mia` **403** → `OK`; `bluesky-follows` `verifiedFollows` **0** | The evidence for all four defects below, from the artefact itself. |
+
+## Defects found and fixed
+
+| Area | Finding | Resolution / test |
+|---|---|---|
+| `tools/verify_live.py` — `bluesky-list` check | Requested `?user=howardbeck.bsky.social&list=did:plc:3llmezwbnrp2dfckxyx3lnca`. `user=` is not a parameter of `app.bsky.graph.getList` and a bare DID is not an AT-URI, so the endpoint answered **HTTP 400 on every run**; the verdict printed `OK-PAGE-CHANGED / members returned missing`, which read like "the writers list may have moved". The registry's 150 members therefore rested on a read the audit never repeated. An earlier "fix" (changing `actor=` → `user=`) was itself wrong. | The check now requests `list=<AT-URI>` with the URI read out of `assets/js/data.js` at run time (`registry_list_uri()`), so the audited URL and the published URL cannot drift. Live-verified 200 with 150 members the same day. `json_peek` also read `list.displayName`; the record's field is `list.name`, so `listName` was null even on success — now `name` with `displayName` fallback, plus `listItemCount` and the creator handle. Pinned by `test_the_list_check_uses_the_at_uri_form_and_never_user` and `test_the_list_url_comes_from_the_registry_so_the_two_cannot_drift`. |
+| `tools/verify_live.py` — `verifiedFollows` | Counted `(verification or {}).get('verified')`. Bluesky returns no such field (the real ones are `verification.verifiedStatus` and `verifications[].isValid`), so the count was **0 on every run** while the registry's "4 of the 6 follows carry valid verification objects" claim went unchecked. | New `verified_object()` helper reads `verifiedStatus == 'valid'` or any `verifications[].isValid`, and the row now also lists `unverifiedHandles`. Pinned by three tests, including one that reproduces the measured 4-of-6 from the live payload and one asserting `bsky.app` (a *trusted verifier*) is not counted as verified. |
+| `tools/verify_live.py` — roster `json_peek` | Read `data['team']['roster']['entries']`. ESPN's roster payload carries `athletes[]` at the top level (re-read live this session), so even a 200 would have reported `athletes: 0` — the check could never have corroborated the lineup-impact layer's only machine-readable input. | Reads top-level `athletes[]`, keeps the old path as an explicitly labelled fallback (`athletesPath` says which one was used), so a future shape change is reported rather than silently zero. Pinned by three tests on the live payload shape. |
+| `tools/verify_live.py` — verdict ladder | Printed **OK** whenever `200` was merely *tolerated* by `expect`. On the last committed run `espn-scoreboard`, `espn-roster-mia` and `espn-teams-mia` were all **403** — they had read nothing — and all printed OK; `bluesky-search` printed OK for the 403 that *is* its documented state, with no way to tell the two cases apart. A reader of `sources.html` could not distinguish "verified" from "could not be checked". | Each check now declares `verifiesOn` (the statuses that can verify its claim, default `[200]`) and `blockerVerdict` where the claim *is* the refusal. The ladder moved into a pure, unit-tested `classify_verdict()`; every row carries an explicit `verified` boolean; `OK` is reserved for verified claims; the summary publishes `verifiedByThisRun` / `notVerifiedByThisRun`. The CAPABILITY-DRIFT tripwires are unchanged and still fire (official page going live, PDF index exposing links, keyword search opening up). Pinned by 10 verdict-mapping tests. |
+| `assets/js/injuries.js` + `index.html` | The board is titled "every team" but a snapshot that omits a team block said nothing about it. The committed 2026-09-17 snapshot has **27 of 30 blocks**; CLE, DET and LAL were simply absent from the render. | New `InjuryBoard.coverageGaps(list)` + `#boardCoverage`: names every absent team with a link to that team's own ESPN injuries page, prints `27/30`, and states that "ESPN omitting a team block is NOT evidence that nobody on it is injured". A full-coverage snapshot says so *and* still denies clearance; an empty snapshot makes no per-team claim at all. Rendered before the "no rows match the filter" early-return, so the gap survives filtering. 8 smoke + 3 integration assertions, driven by the real committed snapshot. |
+| `assets/css/style.css` (three panels) | **The severity colour-coding never rendered.** `wire.js`, `social.js` and `injuries.js` all emit `sev-border-<sev>`, but the stylesheet only defined `.wire-item.sev-<sev>` and `.post.watch`, and `.board-row` had no left border at all. So every wire item showed the default blue edge and every board row showed none — an OUT item looked identical to a "cleared/returning" one at the edge. Additionally `class="good"` / `class="bad"` had no bare rule (only `.btn.good`, `.badge.bad`, `.pill.bad`, `.dot.bad`, `.callout.bad`), so the board's "✖ refresh failed — last-good data, alerts paused" line and the social layer's reachable yes/no column printed in ordinary body colour; `.empty` had no rule either. Same class of defect as the missing `.tag.ok/.warn/.gtd` rules found in session 4 — a class name in markup with no rule is invisible, which is not the same as intentional. | Added bare `.sev-border-*` rules (all six severities) appended after the base rules so they win the specificity tie, a `border-left` declaration for `.board-row`, bare `.good` / `.bad` / `.empty`, plus `.tag.team` and `.tag.ingame-watch`. Seven smoke assertions pin them, and each was **checked against the pre-fix stylesheet to prove it is not vacuous** (0 of 6 severity edges styled before, no bare `.good`/`.bad`/`.empty`). |
+| `sources.html` | The audit panel showed verdict counts only, so four unrun checks looked identical to four verified ones. | Per-row `claim verified` / `claim NOT verified by this run` badge, a `N/M claims verified by this run` counter, the roster read-path, the list member count, and `verifiedFollows` relabelled "with a valid verification object". The verdict glossary explains the change. |
+
+## Independent confirmation from the runner (21:22Z, after this change was pushed)
+
+The `Public source audit` job re-ran on the branch with the fixed tool and committed
+`data/audit/latest.json` (`checkedAt 2026-09-17T21:22:35Z`, 22 checks, `capabilityDrift 0`,
+`toolErrors 0`). Every one of the four defects is confirmed fixed by a machine that is not this
+sandbox:
+
+| Check | Before (19:25Z run, old tool) | After (21:22Z run, fixed tool) |
+|---|---|---|
+| `bluesky-list` | **400** → `OK-PAGE-CHANGED`, `listItems 0`, `listName null` | **200** → `OK`, `verified: true`, `listName` "NBA Writers/Broadcasters/Podcasters/Bloggers", `listItemCount` **150**, `listItems` 5, both probes pass |
+| `bluesky-follows` | `verifiedFollows` **0** | `verifiedFollows` **4**, `unverifiedHandles: ["dallasmavs.bsky.social", "bsky.app"]` — exactly the live read |
+| `espn-scoreboard` / `espn-roster-mia` / `espn-teams-mia` | **403** → `OK` | **403** → `ENV-BLOCKED`, `verified: false` |
+| summary | no verification accounting | `verifiedByThisRun: 16`, `notVerifiedByThisRun: 6`, `byVerdict {OK 13, ENV-BLOCKED 6, DOCUMENTED-BLOCKER 3}` |
+
+The same run's `injury-watch` collected a fresh snapshot (`generated 2026-09-17T21:22:40.303Z`):
+**75 rows in 27 team blocks, `errors {}`, 12 posts, 7 news items** — and **CLE, DET and LAL are
+still the absent blocks**, independently re-collected 38 minutes after the snapshot this session
+started from. `context.json`: 30 rosters, `roleStats` 0, 0 collector errors.
+
+## Deliberately *not* changed
+
+- `Social.check`'s `if (!res.error) posts = res.posts; accounts = …; error = res.error;` — I suspected the unbraced `if` was
+  hiding a failed social fetch behind "no injury posts right now". Reproduced it with a harness that fails every fetch: the
+  statement list is sequential, so `error` **is** assigned and the panel does render "✖ social layer unavailable". No defect;
+  no change. Recorded because the shape invites exactly that misreading.
+- Medical severity: still not computed anywhere. No free source re-read this session publishes a clinical grade.
+- `data/audit/latest.json` was **not** regenerated locally. This sandbox has no HTTPS egress; running the audit here would
+  have overwritten committed evidence with 22 `UNREACHABLE-FROM-RUNNER` rows. The runner regenerates it on push.
+
+## Test surface after this pass
+
+`smoke_test.js` **188** (was 165: 8 coverage-gap + 8 audit-contract + 7 CSS-completeness assertions) ·
+`integration_test.js` **52** (was 48) · `poll_fixture_test.js` 24 · `regression_test.js` 26 groups ·
+`python3 -m unittest discover -s tools` **26** (was 4 — new `tools/test_verify_live.py`) · `replay_posts.js --check` on the
+live snapshot: 75 rows / 12 posts, no invariant violations.
+
+## New irregularities flagged for manual review
+
+1. **The runner audit had been wrong about four of its own checks for at least one full day** (the committed 19:25Z run
+   carries all four). Everything downstream that quoted those numbers — `AUDIT.md`'s "22 checks, no drift", the sources-page
+   glossary, the `bluesky-reporter-list` row — has been corrected or re-evidenced this session. Standing lesson, same as the
+   gzip-probe retraction: read the *check*, not just the verdict.
+2. **`nba-pdf-index` status wording**: the registry said the PDF directory "returns HTTP 500"; the committed audit run
+   observed **503** (278-byte error page, no links). Both are non-browsable, so the claim stands, but the row and the flag
+   now quote both statuses instead of one.
+3. **The stylesheet and the markup had drifted apart in three panels.** Nothing broke loudly — the panels rendered, the
+   tests were green, and the missing colours are the kind of thing only a side-by-side read of `class=` strings against
+   selector lists reveals. Every status class the modules emit is now pinned by a smoke assertion, so the next drift fails
+   the build instead of quietly flattening the UI.
+4. **Coverage gap is a live question, not a historical one**: CLE/DET/LAL absent on 2026-09-17 is unsurprising in the
+   offseason, but the same three absent blocks *during* the 2026-10-03+ preseason would mean the primary board is not
+   covering every team. The board now says which case you are looking at, every refresh.

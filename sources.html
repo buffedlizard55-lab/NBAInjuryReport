@@ -34,7 +34,7 @@
       verified, it says so instead of guessing — flags come first, because that is where the risk lives.</p>
     <div class="pill-row" id="srcPills">
       <span class="pill ok">✓ 23 sources on file</span>
-      <span class="pill ok">✓ 32 irregularities flagged</span>
+      <span class="pill ok">✓ 38 irregularities flagged</span>
       <span class="pill warn">0 automated suites green at commit time</span>
       <span class="pill warn">CORS question resolved: browser-direct works from the deployed origin</span>
       <span class="pill warn">Poller + audit run on GitHub's schedule</span>
@@ -51,7 +51,12 @@
       <b>ENV-BLOCKED</b> means only that this script's plain client was refused: ESPN returned 403 here while the Node collector on the same runner read
       the same URLs minutes later, so blockage on one path is never reported as a source failure or a change.
       <b>OK-PAGE-CHANGED</b> means reachable, but the wording a probe looked for moved. Raw responses, hashes and timestamps stay in the
-      <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/workflows/live-audit.yml" target="_blank" rel="noopener">workflow artifact ↗</a>.</p>
+      <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/workflows/live-audit.yml" target="_blank" rel="noopener">workflow artifact ↗</a>.
+      <b>Since the 2026-09-17 session-7 fix every row also carries an explicit <span class="kbd">verified</span> flag</b>: <b>OK</b> is now reserved for
+      a response that actually verifies the claim, and a tolerated refusal (e.g. HTTP 403 on a JSON endpoint this client is fingerprinted out of)
+      is <b>ENV-BLOCKED</b> with <span class="kbd">verified=false</span>. Before that fix four checks that had read nothing printed <b>OK</b>, because the
+      old ladder treated "a status the registry tolerates" as "a status the registry predicted". The counter above states how much of the registry
+      the run really re-read, so a green table can no longer be mistaken for a fully verified one.</p>
     <div id="auditBox" class="muted small">Loading <span class="kbd">data/audit/latest.json</span>…</div>
   </section>
 
@@ -294,7 +299,12 @@
       rows.forEach(r => { counts[r.verdict] = (counts[r.verdict] || 0) + 1; });
       const verdict = (a.summary && a.summary.drift) ? `<span class="badge bad">${a.summary.drift} DRIFT — registry needs rewriting</span>`
         : `<span class="badge ok">no drift</span>`;
-      auditBox.innerHTML = `<p class="small">Run <b>${e(a.checkedAt)}</b> · ${rows.length} checks · ${verdict} ·
+      /* "OK" only ever means the claim was verified. A tolerated 403 on a JSON endpoint is
+       * ENV-BLOCKED with verified=false, so the count below is honest about how much of the
+       * registry this run actually re-read instead of implying every row was checked. */
+      const vcount = (a.summary && a.summary.verifiedByThisRun != null)
+        ? `<span class="badge ${a.summary.verifiedByThisRun === rows.length ? "ok" : "warn"}">${a.summary.verifiedByThisRun}/${rows.length} claims verified by this run</span>` : "";
+      auditBox.innerHTML = `<p class="small">Run <b>${e(a.checkedAt)}</b> · ${rows.length} checks · ${verdict} ${vcount} ·
         ${Object.entries(counts).map(([k, v]) => `<span class="badge ${/DRIFT/.test(k) ? "bad" : /BLOCKER|UNREACHABLE|ENV-BLOCKED|CHANGED/.test(k) ? "warn" : "ok"}">${e(k)}: ${v}</span>`).join(" ")}</p>
         <div class="table-wrap"><table><thead><tr><th>Check</th><th>Observed</th><th>Verdict</th><th>Claim being re-verified</th><th>Evidence</th></tr></thead><tbody>
         ${rows.map(r => `<tr>
@@ -302,9 +312,10 @@
           <td>${r.status == null ? `<span class="badge warn">no route</span>` : `<span class="kbd">${e(String(r.status))}</span>`}
             ${Array.isArray(r.documentedStatuses) ? `<br><span class="tiny muted">documented as ${e(r.documentedStatuses.join("/"))}</span>` : ""}</td>
           <td><span class="badge ${/DRIFT/.test(r.verdict || "") ? "bad" : /BLOCKER|UNREACHABLE|ENV-BLOCKED|CHANGED/.test(r.verdict || "") ? "warn" : "ok"}">${e(r.verdict || "?")}</span>${r.meaning ? `<br><span class="tiny muted">${e(r.meaning)}</span>` : ""}
-            ${(r.probesMissing && r.probesMissing.length) ? `<br><span class="tiny muted">page no longer contains: ${e(r.probesMissing.join(", "))}</span>` : ""}</td>
+            ${(r.probesMissing && r.probesMissing.length) ? `<br><span class="tiny muted">page no longer contains: ${e(r.probesMissing.join(", "))}</span>` : ""}
+            ${r.verified === false ? `<br><span class="badge warn">claim NOT verified by this run</span>` : (r.verified ? `<br><span class="tiny good">claim verified</span>` : "")}</td>
           <td class="tiny muted">${e(r.claim || "")}</td>
-          <td class="tiny muted">${r.sha256 ? `sha256 ${e(String(r.sha256).slice(0, 12))}…<br>` : ""}${r.rows != null ? `rows ${r.rows} in ${r.teamBlocks} blocks<br>` : ""}${r.athletes != null ? `athletes ${r.athletes}, ${r.withInjuryListing} with a dated injury listing<br>` : ""}${r.follows != null ? `${r.follows} follows, ${r.verifiedFollows} verified<br>` : ""}${r.events != null ? `events today: ${r.events}<br>` : ""}${r.pdfLines ? `PDF text lines: ${r.pdfLines}` : ""}</td>
+          <td class="tiny muted">${r.sha256 ? `sha256 ${e(String(r.sha256).slice(0, 12))}…<br>` : ""}${r.rows != null ? `rows ${r.rows} in ${r.teamBlocks} blocks<br>` : ""}${r.athletes != null ? `athletes ${r.athletes}, ${r.withInjuryListing} with a dated injury listing${r.athletesPath ? ` (read from ${e(r.athletesPath)})` : ""}<br>` : ""}${r.follows != null ? `${r.follows} follows, ${r.verifiedFollows} with a valid verification object<br>` : ""}${r.listItemCount != null ? `list "${e(String(r.listName || "?"))}" — ${r.listItemCount} members, ${r.listItems} returned by this page<br>` : ""}${r.events != null ? `events today: ${r.events}<br>` : ""}${r.pdfLines ? `PDF text lines: ${r.pdfLines}` : ""}</td>
         </tr>`).join("")}</tbody></table></div>
         <p class="tiny muted">${e((a.summary && a.summary.note) || "")}</p>`;
     })
