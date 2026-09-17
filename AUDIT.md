@@ -180,7 +180,11 @@ and it does **not** spoof browser headers to get a nicer number.
 Three defects in the checker itself surfaced the same way and are fixed: probing gzipped bytes as text
 (which produced bogus "expected wording missing" on three pages), calling `app.bsky.graph.getList` with
 `actor=` instead of `user=` (an HTTP 400 that would have been misread as the writers list vanishing),
-and literal-string probes against CMS-rendered markup. A fourth finding is not a bug but a constraint:
-Basketball Monster's `INJURED / NOTE / TRADED` tags are **absent from the raw HTML** (client-rendered),
-which independently confirms the link-out-instead-of-scrape policy — parsing that page without running
-its JavaScript would yield empty rows, and guessing from empty rows is how fabricated data is born.
+and literal-string probes against CMS-rendered markup. A fourth item is a **retraction of a claim made earlier in this same pass**: it was written that
+Basketball Monster's `INJURED / NOTE / TRADED` tags are absent from the raw HTML and therefore
+client-rendered. That was read off an audit run that was still decompressing nothing — the probe could
+not have matched, so the absence proved nothing about the page. The claim is withdrawn, the probe
+restored (with decompression in place) for the next run to settle, and the reason for recording the
+withdrawal is the general lesson: a bug in a verification tool produces confident, specific, wrong
+findings faster than anything else in the system. Linking out instead of scraping stays the policy on
+its own merits either way.
