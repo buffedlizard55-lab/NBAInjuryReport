@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sources, Verification Log &amp; Limitations — NBA Injury Alert System</title>
+<meta name="description" content="Line-by-line verified source registry, irregularity flags, methodology, limitations and roadmap for the NBA injury alert system.">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-inner">
+    <div class="brand">🏀 NBA <span>Injury Alert System</span></div>
+    <span class="live-dot"><i></i>VERIFICATION LOG</span>
+    <nav class="links">
+      <a href="index.html">Dashboard</a>
+      <a href="reporters.html">Reporters &amp; Scorecard</a>
+      <a href="sources.html" class="active">Sources &amp; Verification</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="hero">
+    <h1>Sources, verification log &amp; honest limitations</h1>
+    <p>Every data source below was checked line-by-line against live, official pages on <b>2026-09-17</b>.
+      Each row links the evidence so you can re-verify in one click. Flags, methodology, limitations and the roadmap follow.</p>
+  </section>
+
+  <section class="card">
+    <h2>🚩 Irregularity flags <span class="tiny muted">(review these first)</span></h2>
+    <div id="flags"></div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>📚 Verified source registry <span class="tiny muted" id="srcCount"></span></h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Source</th><th>Provides / kind</th><th>Cost</th><th>Latency</th><th>Browser-usable</th><th>Verified (method + date)</th></tr></thead>
+        <tbody id="sourcesTable"></tbody>
+      </table>
+    </div>
+    <p class="tiny muted">Machine-readable copy: <a href="data/verified_sources.json">data/verified_sources.json</a></p>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>🧬 What "reverse-engineering Basketball Monster" means here</h2>
+    <p class="muted small">Basketball Monster's <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">player news</a>
+      has no public API and no CORS access, so it cannot be a live feed input — it is the <b>reference model</b> for the wire format instead:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Basketball Monster field</th><th>This system's equivalent</th><th>Feed input used</th></tr></thead>
+        <tbody>
+          <tr><td>Status tag (INJURED / NOTE / TRADED…)</td><td>Severity tag (OUT / DOUBTFUL / QUESTIONABLE / PROBABLE / RETURN / MENTION)</td><td>ESPN news headline+description keyword classifier</td></tr>
+          <tr><td>Player + team + position</td><td>Headline + auto-detected team chips</td><td>ESPN news + 30-team alias map</td></tr>
+          <tr><td>Impact rating (low → monster)</td><td>Severity ordering + alert toggles</td><td>Configurable; OUT/DOUBTFUL/QUESTIONABLE alert by default</td></tr>
+          <tr><td>Source link (usually the X post)</td><td>ESPN source link + one-click "search X for confirmation"</td><td>ESPN article URL (in-API) + X search deep link</td></tr>
+          <tr><td>Age ("5.4d")</td><td>Published timestamp</td><td>ESPN <span class="kbd">published</span> field</td></tr>
+          <tr><td>Upcoming-games panel</td><td>Live scoreboard + in-game detection</td><td>ESPN scoreboard API (?dates=YYYYMMDD)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="grid two">
+    <section class="card" style="margin-top:16px">
+      <h2>⛔ Limitations (blockers, not excuses)</h2>
+      <ol class="tight small">
+        <li><b>No free programmatic X/IG/FB read access.</b> Real-time social listening and historical back-testing need X API Basic ($200/mo) or higher, or a compliant vendor. Instagram/Facebook offer nothing usable for free.</li>
+        <li><b>ESPN endpoints are unofficial.</b> They work today and are widely used, but ESPN can change/rate-limit them without notice. The app shows feed status and keeps official manual links everywhere.</li>
+        <li><b>Severity is keyword-detected.</b> "Out" in "shootout" style contexts, trade rumors mentioning injuries, etc. can misfire — always confirm via the linked source.</li>
+        <li><b>Offseason = thin signal.</b> No games until 2026-10-03; in-game questionable-to-return tracking only matters Oct → June.</li>
+        <li><b>Scores/alerts live in your browser</b> (localStorage). No server yet, so no cross-device sync, no push when the tab is closed, no shared scorecard.</li>
+        <li><b>NBA CDN endpoints unconfirmed from this network</b> (documented + implemented as fallback, needs a browser-side check).</li>
+      </ol>
+    </section>
+    <section class="card" style="margin-top:16px">
+      <h2>🗺 Roadmap (next sessions)</h2>
+      <ol class="tight small">
+        <li><b>Beat-writer completion:</b> verify one in-arena beat writer per team (outlet bio + handle check) and promote from the expansion pipeline.</li>
+        <li><b>Server poller (GitHub Actions cron or small worker):</b> snapshot ESPN news + scoreboard every 1–2 min, commit JSON history → enables true "first to report" timestamps + shared data.</li>
+        <li><b>Paid social tier (optional):</b> X API Basic filtered stream for the Tier-1/2 handle list → automated social alerts + historical backfill for the scorecard.</li>
+        <li><b>Official PDF watcher:</b> poll official.nba.com season page for new injury-report PDF issues; parse status tables.</li>
+        <li><b>Fantasy relevance layer:</b> roster/depth-chart data (ESPN team endpoints) to weight alerts by rotation role.</li>
+        <li><b>Push alerts:</b> Web Push / email / Discord webhook when the tab is closed.</li>
+      </ol>
+    </section>
+  </div>
+
+  <section class="card" style="margin-top:16px">
+    <h2>🔁 Re-verification checklist (run monthly, and at season start ~2026-10-03)</h2>
+    <ol class="tight small">
+      <li>Open each "Manual review" link in the registry; confirm the page/API still responds.</li>
+      <li>Check for the new <b>2026-27 official.nba.com injury report page</b> (2025-26 URL pattern will likely roll over).</li>
+      <li>Re-confirm any reporter row marked outlet-only / community / flagged (Slater employer, Aldridge handles, Hollinger status).</li>
+      <li>Confirm X embed timelines still render (or replace with link-only cards).</li>
+      <li>Re-check X API and balldontlie pricing before budgeting any paid tier.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <div class="wrap" style="padding:0">
+      Verification performed 2026-09-17 · Evidence links inline · <a href="index.html">← back to dashboard</a>
+    </div>
+  </footer>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/alerts.js"></script>
+<script>
+(function () {
+  const e = AlertEngine.escapeHtml;
+  document.getElementById("flags").innerHTML = FLAGS.map(f => {
+    const cls = f.level === "bad" ? "bad" : f.level === "warn" ? "warn" : "info";
+    const icon = f.level === "bad" ? "🛑" : f.level === "warn" ? "⚠" : "ℹ";
+    return `<div class="callout ${cls}"><b class="t">${icon} ${e(f.title)}</b>${e(f.detail)}</div>`;
+  }).join("");
+  document.getElementById("srcCount").textContent = SOURCES.length + " sources";
+  document.getElementById("sourcesTable").innerHTML = SOURCES.map((s, i) => `<tr>
+    <td>${i + 1}</td>
+    <td><b>${e(s.name)}</b><br><a class="tiny" href="${e(s.review)}" target="_blank" rel="noopener">manual review ↗</a></td>
+    <td class="small">${e(s.kind)}<br><span class="muted tiny">${e(s.note)}</span></td>
+    <td>${s.costFlag ? `<span class="badge bad">${e(s.cost)}</span>` : `<span class="badge ok">${e(s.cost)}</span>`}</td>
+    <td class="small">${e(s.latency)}</td>
+    <td class="small">${e(s.browser)}</td>
+    <td class="tiny muted">${e(s.verified)}</td>
+  </tr>`).join("");
+})();
+</script>
+</body>
+</html>
