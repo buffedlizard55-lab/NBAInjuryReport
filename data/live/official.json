@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-17T03:52:53.324989+00:00",
+  "sourceTier": "official-nba",
+  "rows": [],
+  "flags": [
+    "No timestamped PDF links discovered on the official season pages; no guessed URLs requested"
+  ],
+  "attempts": [
+    {
+      "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+      "ok": false,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
+      "ok": true,
+      "linkedReports": 0
+    }
+  ],
+  "health": "unavailable",
+  "lastGoodRetained": false
+}
