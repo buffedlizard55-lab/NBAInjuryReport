@@ -57,9 +57,10 @@ const InGame = (() => {
             out.push({
               id: "dnp-" + eventId + "-" + ((row.athlete && row.athlete.id) || name),
               kind: "DNP",
-              player: name, team: abbr || "?", reason,
+              player: name, team: standardAbbr(abbr) || "?", reason,
+              alertEligible: false, // DNP is NOT evidence of an in-game exit
               matchup, url: eventUrl(eventId),
-              sev: "out", sevLabel: "OUT — IN-GAME LISTING"
+              sev: "out", sevLabel: "DNP — EXIT NOT ESTABLISHED"
             });
           }
         }
@@ -76,15 +77,15 @@ const InGame = (() => {
           const status = String(inj.status || "").trim();
           const detail = inj.details ? String(inj.details.comment || inj.details.type || inj.details.description || "").trim() : "";
           const text = name + " " + status + " " + detail;
-          if (!status && !detail) continue;
+          if (!/^(out|doubtful|questionable|day-to-day|probable|available)$/i.test(status)) continue;
           if (!INJURY_REASON_RE.test(text) && !/out|doubtful|questionable|day-to-day/i.test(status)) continue;
           out.push({
             id: "inj-" + eventId + "-" + ((inj.athlete && inj.athlete.id) || name) + "-" + status,
             kind: "LISTING",
-            player: name, team: abbr || "?", reason: (status + (detail ? " — " + detail : "")).trim(),
+            player: name, team: standardAbbr(abbr) || "?", alertEligible: false, reason: (status + (detail ? " — " + detail : "")).trim(),
             matchup, url: eventUrl(eventId),
-            sev: /questionable|day-to-day/i.test(status) ? "questionable" : /doubtful/i.test(status) ? "doubtful" : "out",
-            sevLabel: (status || "INJURY LISTING").toUpperCase() + " — IN-GAME"
+            sev: normalizeInjuryStatus(status).sev,
+            sevLabel: (status || "INJURY LISTING").toUpperCase() + " — GAME LISTING (EXIT UNPROVEN)"
           });
         }
       }
@@ -116,7 +117,7 @@ const InGame = (() => {
     if (!box) return;
     if (!live.length) {
       box.innerHTML = `<div class="muted small">🏥 <b>In-game monitor:</b> armed — no live games right now.
-        It activates automatically when a game tips (next: preseason 2026-10-03).
+        It activates automatically when a game tips. DNP listings do not prove an in-game injury.
         <span class="tiny">⚠ Structure verified against completed-game data 2026-09-17; live-game behavior is untested until then
         (<a href="sources.html">verification log</a>).</span></div>`;
       return;
@@ -148,6 +149,7 @@ const InGame = (() => {
     const live = liveEvents(events);
     if (!live.length) { lastFindings = []; render(box, [], [], null); return; }
 
+    const failedGames = [];
     const results = await Promise.all(live.map(async ev => {
       const comp = (ev.competitions || [])[0] || {};
       const cs = (comp.competitors || []);
@@ -155,6 +157,7 @@ const InGame = (() => {
       const home = cs.find(c => c.homeAway === "home") || {};
       const matchup = `${away.team?.abbreviation || "?"} @ ${home.team?.abbreviation || "?"}`;
       const summary = await fetchSummary(ev.id);
+      if (!summary) failedGames.push(ev.id);
       return summary ? extract(summary, ev.id, matchup) : [];
     }));
 
@@ -177,13 +180,13 @@ const InGame = (() => {
       const filters = (typeof App !== "undefined" && App.getFilters) ? App.getFilters() : null;
       for (const f of fresh) {
         const allowed = filters ? !!filters.sevs[f.sev] : true;
-        if (allowed) AlertEngine.fire({ sevLabel: f.sevLabel, title: `${f.player} (${f.team}) — "${f.reason}" [${f.matchup}]`, url: f.url, sev: f.sev });
+        if (allowed && f.alertEligible !== false) AlertEngine.fire({ sevLabel: f.sevLabel, title: `${f.player} (${f.team}) — "${f.reason}" [${f.matchup}]`, url: f.url, sev: f.sev, team: f.team });
         else AlertEngine.log(`(muted by filter: ${f.sevLabel}) ${f.player} (${f.team}) — "${f.reason}"`, f.url);
       }
     }
     if (fresh.length && box) AlertEngine.renderLog();
     lastFindings = findings;
-    render(box, live, findings, findings.length ? "DNP = did not play, reason as stated by ESPN. Always confirm via the linked game page + X search." : null);
+    render(box, live, findings, failedGames.length ? "WARNING: summary unavailable for " + failedGames.join(", ") + "; absence of findings is not clearance." : findings.length ? "DNP = did not play, reason as stated by ESPN. Always confirm via the linked game page + X search." : null);
   }
 
   let lastFindings = [];   // exposed so App can mirror them into the unified wire

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T03:20:38.690Z",
+  "generated": "2026-09-17T03:56:13.301Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -14,7 +14,7 @@
       {
         "id": "532617",
         "player": "Duop Reath",
-        "playerId": null,
+        "playerId": "4066268",
         "position": "C",
         "team": "PHX",
         "teamName": "Phoenix Suns",
@@ -44,7 +44,7 @@
       {
         "id": "532571",
         "player": "Brandon Ingram",
-        "playerId": null,
+        "playerId": "3913176",
         "position": "F",
         "team": "LAC",
         "teamName": "LA Clippers",
@@ -74,7 +74,7 @@
       {
         "id": "532558",
         "player": "Fred VanVleet",
-        "playerId": null,
+        "playerId": "2991230",
         "position": "G",
         "team": "HOU",
         "teamName": "Houston Rockets",
@@ -104,7 +104,7 @@
       {
         "id": "532554",
         "player": "Mark Williams",
-        "playerId": null,
+        "playerId": "4701232",
         "position": "C",
         "team": "PHX",
         "teamName": "Phoenix Suns",
@@ -134,7 +134,7 @@
       {
         "id": "532551",
         "player": "Nate Bittle",
-        "playerId": null,
+        "playerId": "4432586",
         "position": "C",
         "team": "TOR",
         "teamName": "Toronto Raptors",
@@ -164,7 +164,7 @@
       {
         "id": "532549",
         "player": "Jaren Jackson Jr.",
-        "playerId": null,
+        "playerId": "4277961",
         "position": "F",
         "team": "UTA",
         "teamName": "Utah Jazz",
@@ -186,7 +186,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4277961.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4277961/jaren-jackson-jr",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/uta",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/utah",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jaren%20Jackson%20Jr.%20injury",
         "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD"
@@ -194,7 +194,7 @@
       {
         "id": "532548",
         "player": "Kyrie Irving",
-        "playerId": null,
+        "playerId": "6442",
         "position": "G",
         "team": "DAL",
         "teamName": "Dallas Mavericks",
@@ -224,7 +224,7 @@
       {
         "id": "532547",
         "player": "Tyrese Haliburton",
-        "playerId": null,
+        "playerId": "4396993",
         "position": "G",
         "team": "IND",
         "teamName": "Indiana Pacers",
@@ -254,7 +254,7 @@
       {
         "id": "532529",
         "player": "Isaiah Hartenstein",
-        "playerId": null,
+        "playerId": "4222252",
         "position": "C",
         "team": "OKC",
         "teamName": "Oklahoma City Thunder",
@@ -284,7 +284,7 @@
       {
         "id": "532519",
         "player": "Ja Morant",
-        "playerId": null,
+        "playerId": "4279888",
         "position": "G",
         "team": "POR",
         "teamName": "Portland Trail Blazers",
@@ -314,7 +314,7 @@
       {
         "id": "532491",
         "player": "Domantas Sabonis",
-        "playerId": null,
+        "playerId": "3155942",
         "position": "F",
         "team": "SAC",
         "teamName": "Sacramento Kings",
@@ -344,7 +344,7 @@
       {
         "id": "532489",
         "player": "Giannis Antetokounmpo",
-        "playerId": null,
+        "playerId": "3032977",
         "position": "F",
         "team": "MIA",
         "teamName": "Miami Heat",
@@ -374,7 +374,7 @@
       {
         "id": "532487",
         "player": "Franz Wagner",
-        "playerId": null,
+        "playerId": "4566434",
         "position": "F",
         "team": "ORL",
         "teamName": "Orlando Magic",
@@ -404,7 +404,7 @@
       {
         "id": "532401",
         "player": "Jordan Miller",
-        "playerId": null,
+        "playerId": "4396818",
         "position": "G",
         "team": "LAC",
         "teamName": "LA Clippers",
@@ -434,7 +434,7 @@
       {
         "id": "532397",
         "player": "Brandon Miller",
-        "playerId": null,
+        "playerId": "4433287",
         "position": "F",
         "team": "CHA",
         "teamName": "Charlotte Hornets",
@@ -464,7 +464,7 @@
       {
         "id": "532395",
         "player": "Shaedon Sharpe",
-        "playerId": null,
+        "playerId": "4914336",
         "position": "G",
         "team": "POR",
         "teamName": "Portland Trail Blazers",
@@ -494,7 +494,7 @@
       {
         "id": "532392",
         "player": "Jimmy Butler III",
-        "playerId": null,
+        "playerId": "6430",
         "position": "F",
         "team": "GSW",
         "teamName": "Golden State Warriors",
@@ -516,7 +516,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/6430.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/6430/jimmy-butler-iii",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gsw",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gs",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jimmy%20Butler%20III%20injury",
         "fp": "Out|Right Knee Leg|2026-12-01|OUT"
@@ -524,7 +524,7 @@
       {
         "id": "532352",
         "player": "Santi Aldama",
-        "playerId": null,
+        "playerId": "4593125",
         "position": "F",
         "team": "DAL",
         "teamName": "Dallas Mavericks",
@@ -554,7 +554,7 @@
       {
         "id": "532339",
         "player": "Bradley Beal",
-        "playerId": null,
+        "playerId": "6580",
         "position": "G",
         "team": "LAC",
         "teamName": "LA Clippers",
@@ -584,7 +584,7 @@
       {
         "id": "532263",
         "player": "Kevin Durant",
-        "playerId": null,
+        "playerId": "3202",
         "position": "F",
         "team": "HOU",
         "teamName": "Houston Rockets",
@@ -614,7 +614,7 @@
       {
         "id": "532255",
         "player": "Keegan Murray",
-        "playerId": null,
+        "playerId": "4594327",
         "position": "F",
         "team": "SAC",
         "teamName": "Sacramento Kings",
@@ -644,7 +644,7 @@
       {
         "id": "-57028",
         "player": "Jamir Watkins",
-        "playerId": null,
+        "playerId": "4606840",
         "position": "G",
         "team": "WAS",
         "teamName": "Washington Wizards",
@@ -666,7 +666,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4606840.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4606840/jamir-watkins",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/was",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jamir%20Watkins%20injury",
         "fp": "Out|Left Knee Leg|2027-04-01|OUT"
@@ -674,7 +674,7 @@
       {
         "id": "532242",
         "player": "Ajay Mitchell",
-        "playerId": null,
+        "playerId": "4900671",
         "position": "G",
         "team": "OKC",
         "teamName": "Oklahoma City Thunder",
@@ -704,7 +704,7 @@
       {
         "id": "532232",
         "player": "Bam Adebayo",
-        "playerId": null,
+        "playerId": "4066261",
         "position": "C",
         "team": "MIA",
         "teamName": "Miami Heat",
@@ -734,7 +734,7 @@
       {
         "id": "532224",
         "player": "Scotty Pippen Jr.",
-        "playerId": null,
+        "playerId": "4431785",
         "position": "G",
         "team": "MEM",
         "teamName": "Memphis Grizzlies",
@@ -764,7 +764,7 @@
       {
         "id": "532217",
         "player": "Jayson Tatum",
-        "playerId": null,
+        "playerId": "4065648",
         "position": "F",
         "team": "BOS",
         "teamName": "Boston Celtics",
@@ -794,7 +794,7 @@
       {
         "id": "532210",
         "player": "Kentavious Caldwell-Pope",
-        "playerId": null,
+        "playerId": "2581018",
         "position": "G",
         "team": "PHI",
         "teamName": "Philadelphia 76ers",
@@ -824,7 +824,7 @@
       {
         "id": "532193",
         "player": "David Jones Garcia",
-        "playerId": null,
+        "playerId": "4713010",
         "position": "F",
         "team": "SAS",
         "teamName": "San Antonio Spurs",
@@ -846,7 +846,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4713010.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4713010/david-jones-garcia",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sas",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sa",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=David%20Jones%20Garcia%20injury",
         "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD"
@@ -854,7 +854,7 @@
       {
         "id": "532168",
         "player": "Walter Clayton Jr.",
-        "playerId": null,
+        "playerId": "4896372",
         "position": "G",
         "team": "MEM",
         "teamName": "Memphis Grizzlies",
@@ -884,7 +884,7 @@
       {
         "id": "532167",
         "player": "Karim Lopez",
-        "playerId": null,
+        "playerId": "5231919",
         "position": "F",
         "team": "MEM",
         "teamName": "Memphis Grizzlies",
@@ -914,7 +914,7 @@
       {
         "id": "532159",
         "player": "Otega Oweh",
-        "playerId": null,
+        "playerId": "5106270",
         "position": "G",
         "team": "OKC",
         "teamName": "Oklahoma City Thunder",
@@ -944,7 +944,7 @@
       {
         "id": "532155",
         "player": "Trevon Brazile",
-        "playerId": null,
+        "playerId": "4698719",
         "position": "F",
         "team": "DEN",
         "teamName": "Denver Nuggets",
@@ -974,7 +974,7 @@
       {
         "id": "532152",
         "player": "Alijah Martin",
-        "playerId": null,
+        "playerId": "4702656",
         "position": "G",
         "team": "TOR",
         "teamName": "Toronto Raptors",
@@ -1004,7 +1004,7 @@
       {
         "id": "532150",
         "player": "Chucky Hepburn",
-        "playerId": null,
+        "playerId": "4590360",
         "position": "G",
         "team": "TOR",
         "teamName": "Toronto Raptors",
@@ -1034,7 +1034,7 @@
       {
         "id": "532149",
         "player": "Collin Murray-Boyles",
-        "playerId": null,
+        "playerId": "5093267",
         "position": "F",
         "team": "TOR",
         "teamName": "Toronto Raptors",
@@ -1064,7 +1064,7 @@
       {
         "id": "-56348",
         "player": "Jayden Quaintance",
-        "playerId": null,
+        "playerId": "5101845",
         "position": "F",
         "team": "SAS",
         "teamName": "San Antonio Spurs",
@@ -1086,7 +1086,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5101845.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/5101845/jayden-quaintance",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sas",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sa",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jayden%20Quaintance%20injury",
         "fp": "Out|Right Knee Leg|2026-12-01|OUT"
@@ -1094,7 +1094,7 @@
       {
         "id": "532127",
         "player": "CJ Huntley",
-        "playerId": null,
+        "playerId": "4702602",
         "position": "F",
         "team": "PHX",
         "teamName": "Phoenix Suns",
@@ -1124,7 +1124,7 @@
       {
         "id": "-56292",
         "player": "Mouhamed Gueye",
-        "playerId": null,
+        "playerId": "4712863",
         "position": "F",
         "team": "ATL",
         "teamName": "Atlanta Hawks",
@@ -1154,7 +1154,7 @@
       {
         "id": "532102",
         "player": "Keshon Gilbert",
-        "playerId": null,
+        "playerId": "4585618",
         "position": "G",
         "team": "ATL",
         "teamName": "Atlanta Hawks",
@@ -1184,7 +1184,7 @@
       {
         "id": "532101",
         "player": "RayJ Dennis",
-        "playerId": null,
+        "playerId": "4431941",
         "position": "G",
         "team": "ATL",
         "teamName": "Atlanta Hawks",
@@ -1214,7 +1214,7 @@
       {
         "id": "532065",
         "player": "Trevor Keels",
-        "playerId": null,
+        "playerId": "4432645",
         "position": "G",
         "team": "MIA",
         "teamName": "Miami Heat",
@@ -1244,7 +1244,7 @@
       {
         "id": "532062",
         "player": "Mohamed Diawara",
-        "playerId": null,
+        "playerId": "5289900",
         "position": "F",
         "team": "NYK",
         "teamName": "New York Knicks",
@@ -1266,7 +1266,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5289900.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/5289900/mohamed-diawara",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/nyk",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ny",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Mohamed%20Diawara%20injury",
         "fp": "Day-To-Day|Finger Arm|2026-10-01|GTD"
@@ -1274,7 +1274,7 @@
       {
         "id": "532043",
         "player": "Dailyn Swain",
-        "playerId": null,
+        "playerId": "4848625",
         "position": "G",
         "team": "CHI",
         "teamName": "Chicago Bulls",
@@ -1304,7 +1304,7 @@
       {
         "id": "532041",
         "player": "Trey Alexander",
-        "playerId": null,
+        "playerId": "4433268",
         "position": "G",
         "team": "UTA",
         "teamName": "Utah Jazz",
@@ -1326,7 +1326,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4433268.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4433268/trey-alexander",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/uta",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/utah",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Trey%20Alexander%20injury",
         "fp": "Day-To-Day|Left Ribs Torso|2026-10-01|GTD"
@@ -1334,7 +1334,7 @@
       {
         "id": "531919",
         "player": "Ryan Conwell",
-        "playerId": null,
+        "playerId": "5107157",
         "position": "G",
         "team": "MIA",
         "teamName": "Miami Heat",
@@ -1364,7 +1364,7 @@
       {
         "id": "531807",
         "player": "Izaiyah Nelson",
-        "playerId": null,
+        "playerId": "5107251",
         "position": "F",
         "team": "ORL",
         "teamName": "Orlando Magic",
@@ -1394,7 +1394,7 @@
       {
         "id": "531578",
         "player": "Myron Gardner",
-        "playerId": null,
+        "playerId": "4431772",
         "position": "F",
         "team": "MIA",
         "teamName": "Miami Heat",
@@ -1424,7 +1424,7 @@
       {
         "id": "531509",
         "player": "Jalen Brunson",
-        "playerId": null,
+        "playerId": "3934672",
         "position": "G",
         "team": "NYK",
         "teamName": "New York Knicks",
@@ -1446,7 +1446,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3934672.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/3934672/jalen-brunson",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/nyk",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ny",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Jalen%20Brunson%20injury",
         "fp": "Day-To-Day|Left Wrist Arm|2026-10-01|GTD"
@@ -1454,7 +1454,7 @@
       {
         "id": "531329",
         "player": "Thomas Sorber",
-        "playerId": null,
+        "playerId": "5061603",
         "position": "C",
         "team": "OKC",
         "teamName": "Oklahoma City Thunder",
@@ -1484,7 +1484,7 @@
       {
         "id": "531314",
         "player": "Jonathan Isaac",
-        "playerId": null,
+        "playerId": "4065654",
         "position": "F",
         "team": "ORL",
         "teamName": "Orlando Magic",
@@ -1514,7 +1514,7 @@
       {
         "id": "531295",
         "player": "Zach Collins",
-        "playerId": null,
+        "playerId": "4066650",
         "position": "F",
         "team": "CHI",
         "teamName": "Chicago Bulls",
@@ -1544,7 +1544,7 @@
       {
         "id": "-55021",
         "player": "Nolan Traore",
-        "playerId": null,
+        "playerId": "5279130",
         "position": "G",
         "team": "BKN",
         "teamName": "Brooklyn Nets",
@@ -1574,7 +1574,7 @@
       {
         "id": "531183",
         "player": "Zach LaVine",
-        "playerId": null,
+        "playerId": "3064440",
         "position": "G",
         "team": "SAC",
         "teamName": "Sacramento Kings",
@@ -1604,7 +1604,7 @@
       {
         "id": "531146",
         "player": "Dereck Lively II",
-        "playerId": null,
+        "playerId": "4683688",
         "position": "C",
         "team": "DAL",
         "teamName": "Dallas Mavericks",
@@ -1634,7 +1634,7 @@
       {
         "id": "531126",
         "player": "Kevin Porter Jr.",
-        "playerId": null,
+        "playerId": "4397140",
         "position": "G",
         "team": "MIL",
         "teamName": "Milwaukee Bucks",
@@ -1664,7 +1664,7 @@
       {
         "id": "531114",
         "player": "De'Andre Hunter",
-        "playerId": null,
+        "playerId": "4065732",
         "position": "F",
         "team": "SAC",
         "teamName": "Sacramento Kings",
@@ -1694,7 +1694,7 @@
       {
         "id": "531031",
         "player": "Richie Saunders",
-        "playerId": null,
+        "playerId": "5105462",
         "position": "G",
         "team": "MEM",
         "teamName": "Memphis Grizzlies",
@@ -1724,7 +1724,7 @@
       {
         "id": "531013",
         "player": "Josh Giddey",
-        "playerId": null,
+        "playerId": "4871145",
         "position": "G",
         "team": "CHI",
         "teamName": "Chicago Bulls",
@@ -1754,7 +1754,7 @@
       {
         "id": "531011",
         "player": "Jaylen Wells",
-        "playerId": null,
+        "playerId": "5112087",
         "position": "F",
         "team": "MEM",
         "teamName": "Memphis Grizzlies",
@@ -1784,7 +1784,7 @@
       {
         "id": "531008",
         "player": "Zach Edey",
-        "playerId": null,
+        "playerId": "4600663",
         "position": "C",
         "team": "MEM",
         "teamName": "Memphis Grizzlies",
@@ -1814,7 +1814,7 @@
       {
         "id": "530998",
         "player": "Alex Sarr",
-        "playerId": null,
+        "playerId": "5160992",
         "position": "C",
         "team": "WAS",
         "teamName": "Washington Wizards",
@@ -1836,7 +1836,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5160992.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/5160992/alex-sarr",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/was",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Alex%20Sarr%20injury",
         "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD"
@@ -1844,7 +1844,7 @@
       {
         "id": "530997",
         "player": "Anthony Davis",
-        "playerId": null,
+        "playerId": "6583",
         "position": "F",
         "team": "WAS",
         "teamName": "Washington Wizards",
@@ -1866,7 +1866,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/6583.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/6583/anthony-davis",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/was",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Anthony%20Davis%20injury",
         "fp": "Day-To-Day|Left Finger Arm|2026-10-01|GTD"
@@ -1874,7 +1874,7 @@
       {
         "id": "530951",
         "player": "Trae Young",
-        "playerId": null,
+        "playerId": "4277905",
         "position": "G",
         "team": "WAS",
         "teamName": "Washington Wizards",
@@ -1896,7 +1896,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4277905.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4277905/trae-young",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/was",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Trae%20Young%20injury",
         "fp": "Day-To-Day|Right Quadriceps Leg|2026-10-01|GTD"
@@ -1904,7 +1904,7 @@
       {
         "id": "-54297",
         "player": "Jalen Williams",
-        "playerId": null,
+        "playerId": "4593803",
         "position": "G",
         "team": "OKC",
         "teamName": "Oklahoma City Thunder",
@@ -1934,7 +1934,7 @@
       {
         "id": "-54240",
         "player": "Yanic Konan Niederhauser",
-        "playerId": null,
+        "playerId": "5108024",
         "position": "C",
         "team": "LAC",
         "teamName": "LA Clippers",
@@ -1964,7 +1964,7 @@
       {
         "id": "-54220",
         "player": "Bryce McGowens",
-        "playerId": null,
+        "playerId": "4576086",
         "position": "G",
         "team": "NOP",
         "teamName": "New Orleans Pelicans",
@@ -1986,7 +1986,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4576086.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4576086/bryce-mcgowens",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/nop",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/no",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Bryce%20McGowens%20injury",
         "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD"
@@ -1994,7 +1994,7 @@
       {
         "id": "-54208",
         "player": "Damian Lillard",
-        "playerId": null,
+        "playerId": "6606",
         "position": "G",
         "team": "POR",
         "teamName": "Portland Trail Blazers",
@@ -2024,7 +2024,7 @@
       {
         "id": "-54184",
         "player": "PJ Hall",
-        "playerId": null,
+        "playerId": "4701225",
         "position": "C",
         "team": "CHA",
         "teamName": "Charlotte Hornets",
@@ -2054,7 +2054,7 @@
       {
         "id": "-54164",
         "player": "Rob Dillingham",
-        "playerId": null,
+        "playerId": "4684275",
         "position": "G",
         "team": "CHI",
         "teamName": "Chicago Bulls",
@@ -2084,7 +2084,7 @@
       {
         "id": "-54135",
         "player": "Steven Adams",
-        "playerId": null,
+        "playerId": "2991235",
         "position": "C",
         "team": "HOU",
         "teamName": "Houston Rockets",
@@ -2114,7 +2114,7 @@
       {
         "id": "-54122",
         "player": "Nikola Topic",
-        "playerId": null,
+        "playerId": "5159925",
         "position": "G",
         "team": "OKC",
         "teamName": "Oklahoma City Thunder",
@@ -2144,7 +2144,7 @@
       {
         "id": "529971",
         "player": "Donte DiVincenzo",
-        "playerId": null,
+        "playerId": "3934673",
         "position": "G",
         "team": "MIN",
         "teamName": "Minnesota Timberwolves",
@@ -2174,7 +2174,7 @@
       {
         "id": "525487",
         "player": "Moses Moody",
-        "playerId": null,
+        "playerId": "4432171",
         "position": "G",
         "team": "GSW",
         "teamName": "Golden State Warriors",
@@ -2196,7 +2196,7 @@
         "noteSource": null,
         "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4432171.png",
         "playerUrl": "https://www.espn.com/nba/player/_/id/4432171/moses-moody",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gsw",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/gs",
         "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
         "searchUrl": "https://x.com/search?q=Moses%20Moody%20injury",
         "fp": "Out|Left Knee Leg|2026-12-01|OUT"
@@ -2204,7 +2204,7 @@
       {
         "id": "518463",
         "player": "Johnny Furphy",
-        "playerId": null,
+        "playerId": "5157066",
         "position": "G",
         "team": "IND",
         "teamName": "Indiana Pacers",
@@ -2319,26 +2319,19 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
       "nuggets.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Denver Nuggets — official",
         "kind": "official-team",
         "team": "DEN"
+      },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "sixersnba.bsky.social": {
         "ok": true,
@@ -2347,6 +2340,13 @@
         "kind": "official-team",
         "team": "PHI"
       },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
       "dallasmavs.bsky.social": {
         "ok": true,
         "count": 0,
@@ -2354,16 +2354,9 @@
         "kind": "official-team",
         "team": "DAL"
       },
-      "howardbeck.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
       "samvecenie.bsky.social": {
         "ok": true,
-        "count": 1,
+        "count": 3,
         "name": "Sam Vecenie",
         "kind": "reporter",
         "team": null
@@ -2375,12 +2368,33 @@
         "kind": "reporter",
         "team": null
       },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
       "johnhollinger.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "John Hollinger",
         "kind": "reporter",
         "team": null
+      },
+      "tomorsborn.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Tom Orsborn",
+        "kind": "reporter",
+        "team": "SAS"
+      },
+      "jmcdonaldsa.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
       },
       "tomhaberstroh.bsky.social": {
         "ok": true,
@@ -2389,23 +2403,9 @@
         "kind": "reporter",
         "team": null
       },
-      "jmcdonaldsa.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Jeff McDonald",
-        "kind": "reporter",
-        "team": "SAS"
-      },
-      "tomorsborn.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Tom Orsborn",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "nbasarah.bsky.social": {
         "ok": true,
-        "count": 4,
+        "count": 5,
         "name": "Sarah Todd",
         "kind": "reporter",
         "team": "UTA"
@@ -2486,8 +2486,8 @@
       "createdAt": "2026-07-13T03:11:25.244Z",
       "indexedAt": "2026-07-13T03:11:25.567Z",
       "url": "https://bsky.app/profile/nbasarah.bsky.social/post/3mqipt373ns2g",
-      "sev": "questionable",
-      "sevLabel": "⚠ IN-GAME EXIT WATCH (social, unconfirmed)",
+      "sev": "out",
+      "sevLabel": "OUT FOR THE GAME (in-game, social report)",
       "inGameWatch": true,
       "kindLabel": "ingame-watch"
     },
@@ -2516,6 +2516,32 @@
       "sevLabel": "NON-INJURY (rest / roster / decision)",
       "inGameWatch": false,
       "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:fdw3hkjrul22w75bdw5pcsn3/app.bsky.feed.post/3mq36e5ihlc24",
+      "text": "Difficult to predict. Even the slightest of injuries coming out of Thursday’s game would likely lead to him sitting out.",
+      "handle": "tomorsborn.bsky.social",
+      "name": "Tom Orsborn",
+      "verified": false,
+      "kind": "reporter",
+      "team": "SAS",
+      "outlet": "San Antonio Express-News",
+      "role": "Spurs beat writer",
+      "accountUrl": "https://bsky.app/profile/tomorsborn.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/tomorsborn.bsky.social",
+        "team": "SAS",
+        "kind": "reporter",
+        "outlet": "San Antonio Express-News",
+        "name": "Tom Orsborn"
+      },
+      "createdAt": "2026-07-07T17:54:14.122Z",
+      "indexedAt": "2026-07-07T17:54:14.531Z",
+      "url": "https://bsky.app/profile/tomorsborn.bsky.social/post/3mq36e5ihlc24",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
     },
     {
       "uri": "at://did:plc:ar64irgfsivc76wkio5oylob/app.bsky.feed.post/3mpzfatomuk2u",
@@ -2596,6 +2622,58 @@
       "kindLabel": "non-injury"
     },
     {
+      "uri": "at://did:plc:ar64irgfsivc76wkio5oylob/app.bsky.feed.post/3mpk6nevc2s2j",
+      "text": "IMO It’s just really hard to justify upper 30’s for Kessler from a team perspective. I’m interested to hear what offers are like for Duren. We know what Hartenstein just got. And Kessler has been out for a year and has never played on a winning team much less even sniffed the playoffs.",
+      "handle": "nbasarah.bsky.social",
+      "name": "Sarah Todd",
+      "verified": true,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "NBA writer (Utah market)",
+      "role": "Beat writer / columnist",
+      "accountUrl": "https://bsky.app/profile/nbasarah.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/nbasarah.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "NBA writer (Utah market)",
+        "name": "Sarah Todd"
+      },
+      "createdAt": "2026-06-30T23:44:08.319Z",
+      "indexedAt": "2026-06-30T23:44:08.929Z",
+      "url": "https://bsky.app/profile/nbasarah.bsky.social/post/3mpk6nevc2s2j",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3moz7e2suyk2c",
+      "text": "“You can see we had a type.\"\n\nIn Tuesday's NBA draft, the Spurs rolled the dice on an injury plagued center from Kentucky and spent draft capital to nab another bruising big man from Connecticut.\n\nBrian Wright's draft-night manta was clear: Go big or go home.\n\nwww.expressnews.com/sports/spurs...",
+      "handle": "jmcdonaldsa.bsky.social",
+      "name": "Jeff McDonald",
+      "verified": false,
+      "kind": "reporter",
+      "team": "SAS",
+      "outlet": "San Antonio Express-News",
+      "role": "Spurs beat writer",
+      "accountUrl": "https://bsky.app/profile/jmcdonaldsa.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/jmcdonaldsa.bsky.social",
+        "team": "SAS",
+        "kind": "reporter",
+        "outlet": "San Antonio Express-News",
+        "name": "Jeff McDonald"
+      },
+      "createdAt": "2026-06-24T05:41:33.954Z",
+      "indexedAt": "2026-06-24T05:41:37.265Z",
+      "url": "https://bsky.app/profile/jmcdonaldsa.bsky.social/post/3moz7e2suyk2c",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:zwgszo4ivnszs2sitaakccbb/app.bsky.feed.post/3mkh7a2jxck2g",
       "text": "Gonna start the podcast a few minutes early tonight with @motorcityhoops.bsky.social. The weekend that was with the NBA Playoffs.\n\n-Ant/Donte hurt, but Wolves up 3-1\n-Wemby Back! Embiid Back! Different results!\n-Magic-Pistons\n-NYK-ATL\n-More\n\nyoutube.com/live/prsxQ1i...",
       "handle": "samvecenie.bsky.social",
@@ -2616,6 +2694,58 @@
       "createdAt": "2026-04-27T04:10:37.643Z",
       "indexedAt": "2026-04-27T04:10:42.350Z",
       "url": "https://bsky.app/profile/samvecenie.bsky.social/post/3mkh7a2jxck2g",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:zwgszo4ivnszs2sitaakccbb/app.bsky.feed.post/3miu6fkrths2j",
+      "text": "Hello! Going live here momentarily on the show with @motorcityhoops with a packed show!\n\n-UNC hires Michael Malone \n-Chicago fires AKME\n-Cooper Flagg dominance\n-Pistons figuring it out without Cade\n-Lakers injuries\n-East Play-In Race\n\nyoutube.com/live/82RMQ2o...",
+      "handle": "samvecenie.bsky.social",
+      "name": "Sam Vecenie",
+      "verified": true,
+      "kind": "reporter",
+      "team": null,
+      "outlet": "The Athletic",
+      "role": "Senior Writer (NBA / draft) + Game Theory Podcast",
+      "accountUrl": "https://bsky.app/profile/samvecenie.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/samvecenie.bsky.social",
+        "team": null,
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Sam Vecenie"
+      },
+      "createdAt": "2026-04-06T21:10:02.051Z",
+      "indexedAt": "2026-04-06T21:10:06.100Z",
+      "url": "https://bsky.app/profile/samvecenie.bsky.social/post/3miu6fkrths2j",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:zwgszo4ivnszs2sitaakccbb/app.bsky.feed.post/3mewuosx27k2l",
+      "text": "Gonna go live and talk about the All-Star game here with @motorcityhoops.bsky.social  in like five minutes. \n\nAlso, we're doing a new thing called our \"Tank Commanders Sickos Draft.\" \n\nyoutube.com/live/iYK5v8u...",
+      "handle": "samvecenie.bsky.social",
+      "name": "Sam Vecenie",
+      "verified": true,
+      "kind": "reporter",
+      "team": null,
+      "outlet": "The Athletic",
+      "role": "Senior Writer (NBA / draft) + Game Theory Podcast",
+      "accountUrl": "https://bsky.app/profile/samvecenie.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/samvecenie.bsky.social",
+        "team": null,
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Sam Vecenie"
+      },
+      "createdAt": "2026-02-16T01:13:27.887Z",
+      "indexedAt": "2026-02-16T01:13:56.750Z",
+      "url": "https://bsky.app/profile/samvecenie.bsky.social/post/3mewuosx27k2l",
       "sev": "mention",
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,

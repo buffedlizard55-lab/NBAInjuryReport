@@ -113,9 +113,9 @@ function recordHistory(rows, posts, news) {
   const file = path.join(dir, day + ".jsonl");
   const line = JSON.stringify({
     ts: new Date().toISOString(),
-    injuries: rows.map(r => ({ id: r.id, player: r.player, team: r.team, status: r.status, sev: r.sev, fp: r.fp, updated: r.updated })),
-    posts: posts.map(p => ({ uri: p.uri, handle: p.handle, createdAt: p.createdAt, sev: p.sev, inGameWatch: p.inGameWatch, text: p.text.slice(0, 300) })),
-    news: news.map(n => ({ id: n.id, ts: n.ts, sev: n.sev, title: n.title }))
+    injuries: rows.map(r => ({ id: r.id, player: r.player, team: r.team, playerId: r.playerId, status: r.status, sev: r.sev, fp: r.fp, updated: r.updated, url: r.teamUrl, reason: r.bodyPart })),
+    posts: posts.map(p => ({ uri: p.uri, handle: p.handle, createdAt: p.createdAt, sev: p.sev, inGameWatch: p.inGameWatch, text: p.text, url: p.url })),
+    news: news.map(n => ({ id: n.id, ts: n.ts, sev: n.sev, title: n.title, url: n.url }))
   });
   if (!DRY) fs.appendFileSync(file, line + "\n");
 
@@ -152,7 +152,13 @@ function recordHistory(rows, posts, news) {
   const index = readJsonSafe(ipath, { days: {}, lastRun: null });
   index.days[day] = (index.days[day] || 0) + 1;
   index.lastRun = now;
-  index.note = "Appended by tools/poll_watch.js via .github/workflows/injury-watch.yml. Cron is best-effort; gaps are GitHub scheduler delays, not lost data.";
+  index.note = "Appended by tools/poll_watch.js via .github/workflows/injury-watch.yml. Cron is best-effort; gaps can include missed observations and failed source access.";
+  // Bound the working tree. Git history is not a long-term event database.
+  if (!DRY) for (const name of fs.readdirSync(dir)) {
+    if (/^\d{4}-\d{2}-\d{2}\.jsonl$/.test(name) && Date.now() - Date.parse(name.slice(0, 10)) > 7 * 86400000) {
+      fs.unlinkSync(path.join(dir, name)); delete index.days[name.slice(0, 10)];
+    }
+  }
   if (!DRY) fs.writeFileSync(ipath, JSON.stringify(index, null, 2) + "\n");
 
   return { day, firsts: Object.keys(firsts).length };
@@ -166,6 +172,7 @@ function recordHistory(rows, posts, news) {
   /* injuries — shared normaliser (assets/js/injuries.js), same rows the dashboard renders */
   try {
     const payload = await getJson(D.ENDPOINTS.injuries);
+    if (!Array.isArray(payload.injuries)) throw new Error("invalid injuries schema");
     seasonRaw = (payload && payload.season) || null;
     season = (seasonRaw && (seasonRaw.displayName || seasonRaw.name)) || null;
     rows = B.InjuryBoard.normalize(payload);          // identical to the browser path

@@ -1,0 +1,52 @@
+name: Deploy dashboard
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows: [injury-watch]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Detect existing Pages mode
+        id: mode
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: echo "build_type=$(gh api repos/${{ github.repository }}/pages --jq .build_type)" >> "$GITHUB_OUTPUT"
+      - name: Rebuild the existing branch-based Pages site
+        if: steps.mode.outputs.build_type == 'legacy'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST repos/${{ github.repository }}/pages/builds
+      - uses: actions/configure-pages@v5
+        if: steps.mode.outputs.build_type == 'workflow'
+      - name: Stage only public site files
+        if: steps.mode.outputs.build_type == 'workflow'
+        run: |
+          mkdir _site
+          cp *.html .nojekyll _site/
+          cp -r assets data _site/
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.mode.outputs.build_type == 'workflow'
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        if: steps.mode.outputs.build_type == 'workflow'
+        id: deployment

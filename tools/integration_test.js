@@ -21,8 +21,8 @@ function check(name, cond, extra) {
 
 /* ---------------- 1. static wiring check: JS ids vs HTML ids ---------------- */
 const PAGES = {
-  "index.html": ["assets/js/data.js", "assets/js/alerts.js", "assets/js/wire.js", "assets/js/injuries.js", "assets/js/social.js", "assets/js/ingame.js", "assets/js/app.js"],
-  "reporters.html": ["assets/js/data.js", "assets/js/alerts.js", "assets/js/reporters.js"]
+  "index.html": ["assets/js/data.js", "assets/js/alerts.js", "assets/js/wire.js", "assets/js/injuries.js", "assets/js/social.js", "assets/js/ingame.js", "assets/js/intelligence.js", "assets/js/app.js"],
+  "reporters.html": ["assets/js/data.js", "assets/js/alerts.js", "assets/js/intelligence.js", "assets/js/reporters.js"]
 };
 console.log("== wiring: element ids referenced in JS exist in the HTML that loads it ==");
 for (const [page, scripts] of Object.entries(PAGES)) {
@@ -42,7 +42,7 @@ for (const [page, scripts] of Object.entries(PAGES)) {
   const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
   const order = [...html.matchAll(/<script src="assets\/js\/([a-z]+\.js)"><\/script>/g)].map(m => m[1]);
   check("index.html script order is data -> alerts -> wire -> injuries -> social -> ingame -> app",
-    order.join(",") === "data.js,alerts.js,wire.js,injuries.js,social.js,ingame.js,app.js", order.join(","));
+    order.join(",") === "data.js,alerts.js,wire.js,injuries.js,social.js,ingame.js,intelligence.js,app.js", order.join(","));
   check("sources.html loads data.js + alerts.js", /src="assets\/js\/data\.js"/.test(fs.readFileSync(path.join(ROOT, "sources.html"), "utf8")));
   check(".nojekyll present (GitHub Pages doesn't preprocess assets)", fs.existsSync(path.join(ROOT, ".nojekyll")));
 }
@@ -100,7 +100,7 @@ global.fetch = async (url) => {
   requested.push(u);
   const ok = body => ({ ok: true, status: 200, json: async () => body });
   if (u.includes("/nba/injuries")) return blockEspn ? { ok: false, status: 403, json: async () => ({}) } : ok(FIX.injuries);
-  if (u.includes("data/live/latest.json")) return ok({ generated: "2026-09-17T03:10:21Z", injuries: { season: "2026-27", rows: [{ id: "ci-1", player: "CI Snapshot Star", playerId: null, position: "G", team: "BOS", teamName: "Boston Celtics", status: "Out", sev: "out", sevLabel: "OUT", fantasyStatus: null, bodyPart: "Left Knee", returnDate: null, updated: "2026-09-16T12:00:00Z", shortComment: "from the CI snapshot", longComment: "", noteSource: "RotoWire", playerUrl: null, teamUrl: "https://www.espn.com/nba/team/injuries/_/name/bos", officialUrl: "https://official.nba.com/", fp: "Out|Left Knee||" }], blocksRaw: [] }, posts: [], accounts: [] });
+  if (u.includes("data/live/latest.json")) return ok({ generated: new Date().toISOString(), injuries: { season: "2026-27", rows: [{ id: "ci-1", player: "CI Snapshot Star", playerId: null, position: "G", team: "BOS", teamName: "Boston Celtics", status: "Out", sev: "out", sevLabel: "OUT", fantasyStatus: null, bodyPart: "Left Knee", returnDate: null, updated: "2026-09-16T12:00:00Z", shortComment: "from the CI snapshot", longComment: "", noteSource: "RotoWire", playerUrl: null, teamUrl: "https://www.espn.com/nba/team/injuries/_/name/bos", officialUrl: "https://official.nba.com/", fp: "Out|Left Knee||" }], blocksRaw: [] }, posts: [], accounts: [] });
   if (u.includes("/nba/news")) return ok(FIX.news);
   if (u.includes("/scoreboard")) return ok(FIX.scoreboard);
   if (u.includes("public.api.bsky.app")) return ok(FIX.bsky);
@@ -142,12 +142,12 @@ console.log("== runtime: App.init() refresh chain ==");
   check("social status line reports account reachability", /reachable|unreachable|not polled/.test(els.socialStatus.innerHTML));
   check("social detail table lists every allow-listed account", (els.socialDetail.innerHTML.match(/<tr>/g) || []).length >= 5);
 
-  check("scoreboard panel shows the offseason/live-games message", /No games today/.test(els.games.innerHTML));
+  check("scoreboard panel shows the offseason/live-games message", /No games returned/.test(els.games.innerHTML));
   check("in-game monitor rendered an armed state", /In-game monitor/.test(els.ingameBox.innerHTML));
   check("teams table rendered all 30 teams", (els.teamsTable.innerHTML.match(/<tr>/g) || []).length === 30);
   check("filter controls built", /option value="ALL"/.test(els.teamFilter.innerHTML) && /data-sev="out"/.test(els.sevChecks.innerHTML));
   check("alert log rendered without throwing", typeof els.alertLog.innerHTML === "string");
-  check("last-refresh stamp written", /Last refresh:/.test(document.getElementById("lastUpdated").textContent));
+  check("last-refresh stamp written", /Last refresh attempt:/.test(document.getElementById("lastUpdated").textContent));
   check("no alert storm on first load (fixtures seed silently)", !/🚨/.test(els.alertLog.innerHTML), els.alertLog.innerHTML.slice(0, 160));
 
   /* --- scenario 2: ESPN unreachable in the browser -> same-origin CI snapshot must take over --- */

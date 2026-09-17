@@ -11,7 +11,7 @@
 <header class="site-header">
   <div class="nav-inner">
     <div class="brand">🏀 NBA <span>Injury Alert System</span></div>
-    <span class="live-dot"><i></i>LIVE WIRE</span>
+    <span class="live-dot"><i></i>INJURY WATCH</span>
     <nav class="links">
       <a href="index.html" class="active">Dashboard</a>
       <a href="reporters.html">Reporters &amp; Scorecard</a>
@@ -27,12 +27,9 @@
       <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster's player news</a>.
       Every alert carries a link so you can re-verify it in one click. No account, no API key, runs in your browser.</p>
     <div class="pill-row">
-      <span class="pill ok">✓ Structured injury board verified 2026-09-17</span>
-      <span class="pill ok">✓ Free social layer: Bluesky allow-list (no key)</span>
-      <span class="pill ok">✓ Sound + browser alert with test button</span>
-      <span class="pill warn">Official NBA report not yet rolled to 2026-27 (404 verified)</span>
-      <span class="pill warn">In-game monitor armed — untested until 2026-10-03 tip-off</span>
-      <span class="pill">Opening night 2026-10-20</span>
+      <span class="pill">NBA only · all 30 teams in scope</span>
+      <span class="pill">Official evidence / ESPN / social — separately labelled</span>
+      <span class="pill warn">Open-tab alerts · best-effort polling, not guaranteed real time</span>
     </div>
   </section>
 
@@ -46,8 +43,8 @@
   <section class="card" style="margin-top:16px">
     <h2>🔔 Alert center <span class="tiny muted">sound · browser notifications · manual-review links</span></h2>
     <p class="muted small">Fires when a <b>new</b> listing appears or a status <b>changes</b> in any layer — the ESPN structured injury board,
-      ESPN news, a verified Bluesky post, or an in-game absence. Already-seen items never re-alert. Turn sound off (or mute a severity below)
-      when you only want the log.</p>
+      ESPN news, a recent allow-listed Bluesky post naming one recognized NBA player, or an explicit injury report. DNP alone does not trigger an exit alert. Opening the page seeds existing items silently. Old, unresolved and ambiguous signals do not sound. Turn sound off (or mute a severity below)
+      when you only want the log. The tab must remain open; background throttling and source delays can delay alerts.</p>
     <div class="grid two">
       <div>
         <label class="switch">
@@ -82,11 +79,18 @@
     </div>
   </section>
 
+  <section class="card" style="margin-top:16px">
+    <h2>Official NBA evidence <span class="tiny muted">highest-authority layer</span></h2>
+    <div id="officialEvidence" aria-live="polite">Checking the published official-report snapshot…</div>
+    <p class="tiny muted">Unknown is not healthy. ESPN statuses and social posts are not automatically league-confirmed. Injury severity is medical information; starter/rotation importance is a separate lineup-impact estimate.</p>
+  </section>
+
   <!-- ============ INJURY BOARD ============ -->
   <section class="card" style="margin-top:16px">
     <h2>🏥 Injury board — every team <span class="tiny muted" id="boardCount"></span></h2>
     <p class="muted small">Structured feed (not headline guessing): player, status, injury type/side, game-time-decision flag and estimated return,
       straight from ESPN's injuries API. Season: <b id="boardSeason">—</b>. Status line: <span id="boardStatus" class="tiny">loading…</span></p>
+    <div class="tiny muted" id="coverageSummary"></div>
     <div class="board" id="injuryBoard"><div class="muted">Loading injury board…</div></div>
     <p class="tiny muted">Always cross-check the highest-authority source before acting:
       <a href="https://official.nba.com/nba-injury-report-2025-26-season/" target="_blank" rel="noopener">official NBA injury report ↗</a> (2026-27 page not published yet — 404 verified 2026-09-17) ·
@@ -114,10 +118,8 @@
       </label>
       <div class="social-feed" id="socialFeed"><div class="muted small">Loading verified social posts…</div></div>
       <h3 style="margin-top:14px">Account access detail</h3>
-      <div class="table-wrap"><table>
-        <thead><tr><th>Account</th><th>Type</th><th>Identity evidence</th><th>Feed status</th></tr></thead>
-        <tbody id="socialDetail"></tbody>
-      </table></div>
+      <div id="feedDiagnostics" class="tiny" aria-live="polite"></div>
+      <div class="table-wrap" id="socialDetail"></div>
     </section>
 
     <!-- ============ GAMES + IN-GAME ============ -->
@@ -141,10 +143,18 @@
     <div class="wire" id="wire"><div class="muted">Loading wire…</div></div>
   </section>
 
+  <section class="card" style="margin-top:16px">
+    <h2>Player history &amp; lineup context</h2>
+    <p class="muted small">Automatic forward observations, not a complete medical history. Current-game starter/bench flags are sourced from ESPN box scores when available. Rotation role and medical severity remain unknown without sufficient evidence.</p>
+    <label for="historySearch">Find a player or team</label>
+    <input type="search" id="historySearch" placeholder="Player name or team abbreviation" autocomplete="off">
+    <div id="playerHistory"></div>
+  </section>
+
   <!-- ============ X EMBEDS ============ -->
   <section class="card" style="margin-top:16px">
     <h2>🐦 X (Twitter) view <span class="tiny muted">free embeds — best-effort, links always work</span></h2>
-    <p class="muted small">X has no free read API and its embeds are rate-limited, so this panel is for eyeballing only — it never feeds the alerts.
+    <p class="muted small">X reads are not configured and embeds may be rate-limited, so this panel is for eyeballing only — it never feeds the alerts.
       For automated social alerts the project uses the free Bluesky layer above. Every embed has a direct link.</p>
     <div class="grid two">
       <div class="embed-box">
@@ -156,8 +166,7 @@
         <a class="twitter-timeline" data-height="340" data-chrome="noheader nofooter noborders dark" href="https://twitter.com/ShamsCharania?ref_src=twsrc%5Etfw">Loading @ShamsCharania…</a>
       </div>
     </div>
-    <p class="tiny muted">X reads start around $200/month (documented on the <a href="sources.html">verification page</a>) — that is why the automated
-      social layer runs on Bluesky instead of pretending to scrape X.</p>
+    <p class="tiny muted">No authorized X, Instagram or Facebook read connector is configured. Embeds cannot be read by the alert engine. No API price or free entitlement is assumed; <a href="https://docs.x.com/x-api/getting-started/pricing" target="_blank" rel="noopener">review X access terms ↗</a>.</p>
   </section>
 
   <!-- ============ TEAMS ============ -->
@@ -206,6 +215,7 @@
 <script src="assets/js/injuries.js"></script>
 <script src="assets/js/social.js"></script>
 <script src="assets/js/ingame.js"></script>
+<script src="assets/js/intelligence.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

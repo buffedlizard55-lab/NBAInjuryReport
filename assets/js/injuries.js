@@ -69,7 +69,7 @@ const InjuryBoard = (function () {
         const row = {
           id: String(inj.id || ((a.id || a.displayName || "?") + "-" + status)),
           player: a.displayName || "Unknown player",
-          playerId: a.id || null,
+          playerId: a.id || ((card && card.href || "").match(/\/id\/(\d+)/) || [])[1] || null,
           position: (a.position && a.position.abbreviation) || null,
           team: t.abbr,
           teamName: t.name,
@@ -120,6 +120,7 @@ const InjuryBoard = (function () {
   async function fetchBoard() {
     try {
       const data = await fetchWithTimeout(ENDPOINTS.injuries, 15000);
+      if (!Array.isArray(data.injuries)) throw new Error("invalid injuries schema");
       rows = normalize(data);
       season = (data && data.season && (data.season.displayName || data.season.name)) || "";
       fetchedAt = new Date().toISOString();
@@ -129,13 +130,15 @@ const InjuryBoard = (function () {
       try {
         const snap = await fetchWithTimeout(ENDPOINTS.liveSnapshot, 10000);
         if (!snap || !snap.injuries || !Array.isArray(snap.injuries.rows)) throw new Error("snapshot has no rows");
+        if (snap.errors?.injuries) throw new Error("collector: " + snap.errors.injuries);
+        if (!AlertEngine.isFresh(snap.generated)) throw new Error("stale snapshot: " + snap.generated);
         rows = snap.injuries.rows.map(r => Object.assign({}, r, { fp: r.fp || fp(r) }));
         season = (snap.injuries.seasonRaw && snap.injuries.seasonRaw.displayName) || snap.injuries.season || "";
         fetchedAt = snap.generated || null;
         path = "ci-snapshot";
         error = null;
       } catch (e2) {
-        rows = [];
+        // Keep last-good rows and baseline on failure, never interpret failure as recovery.
         error = "ESPN direct: " + e1.message + " · CI snapshot: " + e2.message +
           (String(e2.message).indexOf("404") >= 0 || String(e2.message).indexOf("Failed to fetch") >= 0
             ? " (404 usually means the Actions poller has not published data yet)" : "");
@@ -154,7 +157,7 @@ const InjuryBoard = (function () {
       detail: [extra, row.shortComment || row.longComment,
         row.bodyPart ? "injury: " + row.bodyPart : "",
         row.returnDate ? "est. return " + row.returnDate : ""].filter(Boolean).join(" · "),
-      url: row.teamUrl || row.playerUrl, player: row.player, team: row.team, ts: new Date().toISOString()
+      url: row.teamUrl || row.playerUrl, player: row.player, team: row.team, ts: row.updated || null, alertEligible: AlertEngine.isFresh(row.updated, 24 * 60 * 60 * 1000)
     };
   }
 
@@ -228,7 +231,7 @@ const InjuryBoard = (function () {
     if (seasonEl) seasonEl.textContent = season || "—";
     if (statusEl) {
       statusEl.innerHTML = error
-        ? '<span class="bad">✖ no board data</span> · ' + esc(error)
+        ? '<span class="bad">✖ refresh failed — last-good data, alerts paused</span> · ' + esc(error)
         : 'via <b>' + esc(path || "—") + '</b>' + (fetchedAt ? ' · ' + esc(ago(fetchedAt)) : "");
     }
 
@@ -263,13 +266,13 @@ const InjuryBoard = (function () {
           '<div class="br-meta tiny muted">' +
           (r.bodyPart ? esc(r.bodyPart) + " · " : "") +
           (r.returnDate ? "est. return " + esc(r.returnDate) + " · " : "") +
-          "ESPN: " + esc(r.status) + (r.noteSource ? " · per " + esc(r.noteSource) : "") +
+          "Role: unknown (not inferred from injury) · Medical severity: not assessed · ESPN: " + esc(r.status) + (r.noteSource ? " · per " + esc(r.noteSource) : "") +
           '</div>' +
           (r.shortComment ? '<div class="br-comment">' + esc(r.shortComment) + '</div>' : "") +
           '<div class="br-links tiny">' +
           (r.playerUrl ? '<a href="' + esc(r.playerUrl) + '" target="_blank" rel="noopener">player page</a>' : "") +
           (r.teamUrl ? ' · <a href="' + esc(r.teamUrl) + '" target="_blank" rel="noopener">team injuries</a>' : "") +
-          (r.officialUrl ? ' · <a href="' + esc(r.officialUrl) + '" target="_blank" rel="noopener">official report</a>' : "") +
+          (r.officialUrl ? ' · <a href="' + esc(r.officialUrl) + '" target="_blank" rel="noopener">NBA report index (not row confirmation)</a>' : "") +
           (r.searchUrl ? ' · <a href="' + esc(r.searchUrl) + '" target="_blank" rel="noopener">search reporting</a>' : "") +
           '</div></div>').join("") +
         '</div>';
@@ -280,7 +283,7 @@ const InjuryBoard = (function () {
 
   async function check(isFirstLoad) {
     await fetchBoard();
-    diffAlerts(rows, !!isFirstLoad);   // fires through AlertEngine (see diffAlerts)
+    if (!error) diffAlerts(rows, !!isFirstLoad);   // fires through AlertEngine (see diffAlerts)
     render();
     return rows;
   }

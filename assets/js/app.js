@@ -15,8 +15,10 @@ const App = (() => {
   const DEFAULT_FILTERS = { team: "ALL", sevs: { out: true, doubtful: true, questionable: true, probable: false, return: false, mention: false } };
 
   let pollTimer = null;
+  let refreshing = false;
   let pollIntervalSec = 60;
   let lastGoodNews = null;
+  let newsPrimed = false;
   let newsItems = [];      // kept for the ESPN-news layer only
   let socialMirrored = new Set();
 
@@ -72,6 +74,8 @@ const App = (() => {
   }
 
   function ingestNews(articles, isFirstLoad) {
+    isFirstLoad = isFirstLoad || !newsPrimed;
+    newsPrimed = true;
     const seen = getSeen();
     const fresh = [];
     for (const a of articles) {
@@ -103,7 +107,7 @@ const App = (() => {
     if (!isFirstLoad) {
       const f = getFilters();
       for (const item of fresh) {
-        if (f.sevs[item.sev]) AlertEngine.fire({ sev: item.sev, sevLabel: item.sevLabel, title: item.title, url: item.url });
+        if (f.sevs[item.sev]) AlertEngine.fire({ ...item });
         else AlertEngine.log(`(muted by filter: ${item.sevLabel}) ${item.title}`, item.url);
       }
       AlertEngine.renderLog();
@@ -140,6 +144,7 @@ const App = (() => {
     try {
       const posts = await Social.check(isFirstLoad, force);
       for (const p of posts) {
+        const resolved = typeof Intelligence !== "undefined" ? Intelligence.resolveText(p.text) : null;
         const c = Social.classifyPost(p.text);
         if (!c) continue;
         const key = "social-" + p.uri + "-" + c.sev;
@@ -149,7 +154,7 @@ const App = (() => {
           key, ts: p.createdAt || p.indexedAt || new Date().toISOString(),
           sev: c.sev, sevLabel: c.sevLabel, layer: "social",
           text: `${p.name}${p.verified ? " ✓" : ""} (@${p.handle}): ${p.text.slice(0, 220)}`,
-          url: p.url, extraUrl: p.account && p.account.url, team: (p.account && p.account.team) || null, player: null,
+          url: p.url, extraUrl: p.account && p.account.url, team: resolved?.team || null, player: resolved?.player || null,
           source: p.account && p.account.kind === "reporter" ? (p.account.outlet || "reporter") : (p.account && p.account.kind === "official-team" ? "official team account" : "official league account")
         });
       }
@@ -162,6 +167,11 @@ const App = (() => {
 
   /* ---------- layer 4: in-game ---------- */
   async function runInGame(events, isFirstLoad) {
+    if (!Array.isArray(events)) {
+      const box = document.getElementById("ingameBox");
+      if (box) box.textContent = "In-game monitor unavailable: scoreboard failed. No assertion about live games or player health.";
+      return;
+    }
     try {
       await InGame.check(events || [], isFirstLoad);
       for (const f of (InGame.getFindings ? InGame.getFindings() : [])) {
@@ -231,8 +241,7 @@ const App = (() => {
     const el = document.getElementById("games");
     if (!el) return;
     if (!events.length) {
-      el.innerHTML = `<div class="muted">No games today. Verified schedule: preseason tips <b>2026-10-03</b> (MIA @ TOR per ESPN) and opening night is <b>2026-10-20</b> — BOS@DET, PHI@NYK, OKC@SAS
-        (confirmed 2026-09-17 by the <a href="https://bsky.app/profile/nba.com" target="_blank" rel="noopener">official NBA account</a>). In-game alerts activate automatically once live games appear here.</div>`;
+      el.innerHTML = `<div class="muted">No games returned for today. No live-game coverage can be validated in this refresh. <a href="https://www.nba.com/schedule" target="_blank" rel="noopener">NBA schedule ↗</a></div>`;
       return;
     }
     el.innerHTML = events.map(ev => {
@@ -265,16 +274,21 @@ const App = (() => {
 
   /* ---------- refresh ---------- */
   async function refresh(isFirstLoad, opts) {
+    if (refreshing) return;
+    refreshing = true;
     opts = opts || {};
-    const arts = await fetchNews();
-    if (arts) ingestNews(arts, isFirstLoad);
-    await runBoard(isFirstLoad);
-    await runSocial(isFirstLoad, !!opts.forceSocial);
-    const events = await fetchScoreboard();
-    await runInGame(events || [], isFirstLoad);
-    Wire.render([]);
-    const upd = document.getElementById("lastUpdated");
-    if (upd) upd.textContent = "Last refresh: " + new Date().toLocaleString();
+    try {
+      await Promise.all([
+        fetchNews().then(arts => { if (arts) ingestNews(arts, isFirstLoad); }),
+        runBoard(isFirstLoad),
+        runSocial(isFirstLoad, !!opts.forceSocial),
+        fetchScoreboard().then(events => runInGame(events, isFirstLoad)),
+        typeof Intelligence !== "undefined" ? Intelligence.refresh(isFirstLoad) : Promise.resolve()
+      ]);
+      Wire.render([]);
+      const upd = document.getElementById("lastUpdated");
+      if (upd) upd.textContent = "Last refresh attempt: " + new Date().toLocaleString();
+    } finally { refreshing = false; }
   }
 
   function startPolling() {
@@ -293,7 +307,7 @@ const App = (() => {
       TEAMS.map(t => `<option value="${t.abbr}">${t.abbr} — ${t.city} ${t.name}</option>`).join("");
     sel.value = getFilters().team;
     sel.addEventListener("change", () => {
-      const f = getFilters(); f.team = sel.value; saveFilters(f); Wire.render([]);
+      const f = getFilters(); f.team = sel.value; saveFilters(f); Wire.render([]); InjuryBoard.render(); Social.renderFeed();
     });
   }
   function buildSevChecks() {
@@ -304,7 +318,7 @@ const App = (() => {
     box.innerHTML = defs.map(([k, label]) =>
       `<label><input type="checkbox" data-sev="${k}"${f.sevs[k] ? " checked" : ""}> ${label}</label>`).join("");
     box.querySelectorAll("input").forEach(inp => inp.addEventListener("change", () => {
-      const ff = getFilters(); ff.sevs[inp.dataset.sev] = inp.checked; saveFilters(ff); Wire.render([]);
+      const ff = getFilters(); ff.sevs[inp.dataset.sev] = inp.checked; saveFilters(ff); Wire.render([]); InjuryBoard.render(); Social.renderFeed();
     }));
   }
   function buildTeamsTable() {

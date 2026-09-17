@@ -1,0 +1,32 @@
+name: Tests
+on:
+  pull_request:
+  push:
+    branches: [arena/01a0ad73-nbainjuryreport]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: |
+          node tools/smoke_test.js
+          node tools/integration_test.js
+          node tools/poll_fixture_test.js
+          node tools/regression_test.js
+          python3 -m unittest discover -s tools -p 'test_*.py'
+      - name: Browser interaction tests (fixture transport)
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+          node tools/browser_test.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-review
+          include-hidden-files: true
+          path: .audit/*.png

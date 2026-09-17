@@ -1,0 +1,122 @@
+{
+  "checkedAt": "2026-09-17T03:43:21.691425+00:00",
+  "checks": [
+    {
+      "id": "nba-season",
+      "url": "https://official.nba.com/nba-injury-report-2026-27-season/",
+      "error": "HTTP Error 404: Not Found",
+      "status": 404
+    },
+    {
+      "id": "nba-previous",
+      "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
+      "status": 200,
+      "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+      "contentType": "text/html; charset=UTF-8",
+      "sha256": "d4404f103e711e07a1f627035e243f1d8f3ece21a3183c38b21f55c56ee242f9",
+      "reportLinks": [
+        "http://www.nba.com/news/referee.html",
+        "https://ak-static.cms.nba.com/wp-content/uploads/sites/4/2024/06/2023-NBA-Collective-Bargaining-Agreement-Final.pdf",
+        "https://ak-static.cms.nba.com/wp-content/uploads/sites/4/2025/10/Official-2025-26-NBA-Playing-Rules.pdf",
+        "https://ak-static.cms.nba.com/wp-content/uploads/sites/4/2026/03/2026-NBA-Undergraduate-Advisory-Committee-Brochure.pdf"
+      ],
+      "frames": []
+    },
+    {
+      "id": "nba-pdf-sample",
+      "url": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf",
+      "status": 200,
+      "finalUrl": "https://ak-static.cms.nba.com/referee/injury/Injury-Report_2026-04-12_01_00PM.pdf",
+      "contentType": "application/pdf",
+      "sha256": "5b82da285ec1be7122b2d3d12164d799dea7b34200e3ab353c254e2020dc5b4d"
+    },
+    {
+      "id": "espn-injuries",
+      "url": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+      "status": 200,
+      "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
+      "contentType": "application/json;charset=UTF-8",
+      "sha256": "5f4fdec49c4bedb877361233cfc9672d901209f52704701721cefc1427f3084b",
+      "keys": [
+        "timestamp",
+        "status",
+        "season",
+        "injuries"
+      ],
+      "teamBlocks": 27,
+      "rows": 74,
+      "season": {
+        "year": 2027,
+        "type": 1,
+        "name": "Preseason",
+        "displayName": "2026-27"
+      }
+    },
+    {
+      "id": "espn-teams",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
+      "error": "HTTP Error 403: Forbidden",
+      "status": 403
+    },
+    {
+      "id": "espn-scoreboard",
+      "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+      "error": "HTTP Error 403: Forbidden",
+      "status": 403
+    },
+    {
+      "id": "bluesky-profile",
+      "url": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
+      "status": 200,
+      "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
+      "contentType": "application/json; charset=utf-8",
+      "sha256": "db147b8a42310371d785af928d9a97af55bbd53da357c6152948a40f359e3c30",
+      "keys": [
+        "did",
+        "handle",
+        "displayName",
+        "avatar",
+        "associated",
+        "labels",
+        "createdAt",
+        "verification",
+        "description",
+        "indexedAt",
+        "banner",
+        "followersCount",
+        "followsCount",
+        "postsCount",
+        "pinnedPost"
+      ],
+      "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
+      "verification": {
+        "verifications": [
+          {
+            "issuer": "did:plc:z72i7hdynmk6r22z27h6tvur",
+            "issuerDisplayName": "Bluesky",
+            "issuerHandle": "bsky.app",
+            "uri": "at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.graph.verification/3lndpqcawxk2z",
+            "isValid": true,
+            "createdAt": "2025-04-21T10:44:46.118Z"
+          }
+        ],
+        "verifiedStatus": "valid",
+        "trustedVerifierStatus": "none"
+      }
+    },
+    {
+      "id": "bluesky-search",
+      "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=NBA%20injury&limit=1",
+      "error": "HTTP Error 403: Forbidden",
+      "status": 403
+    },
+    {
+      "id": "basketballmonster",
+      "url": "https://basketballmonster.com/playernews.aspx",
+      "status": 200,
+      "finalUrl": "https://basketballmonster.com/playernews.aspx",
+      "contentType": "text/html; charset=utf-8",
+      "sha256": "362f7410064a5fcbbbd0718da630ecb2efc404bbebe8cfbbfa6a1e19f523e673"
+    }
+  ]
+}
