@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-17T13:49:21.516Z",
+  "generated": "2026-09-17T14:44:19.304Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -3512,6 +3512,13 @@
         "kind": "official-team",
         "team": "DEN"
       },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
       "nba.com": {
         "ok": true,
         "count": 0,
@@ -3525,13 +3532,6 @@
         "name": "Philadelphia 76ers — official",
         "kind": "official-team",
         "team": "PHI"
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
       },
       "dallasmavs.bsky.social": {
         "ok": true,
@@ -3547,6 +3547,13 @@
         "kind": "reporter",
         "team": null
       },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
       "mikevorkunov.bsky.social": {
         "ok": true,
         "count": 0,
@@ -3558,13 +3565,6 @@
         "ok": true,
         "count": 0,
         "name": "John Hollinger",
-        "kind": "reporter",
-        "team": null
-      },
-      "howardbeck.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
         "kind": "reporter",
         "team": null
       },
@@ -3604,7 +3604,8 @@
       "text": "Spurs draft pick Jayden Quaintance underwent a previously scheduled clean-up procedure on his oft-injured right knee Wednesday.\n\nThe team provided no specific timetable for the rookie's return to basketball activities.\n\nwww.expressnews.com/sports/spurs...",
       "handle": "jmcdonaldsa.bsky.social",
       "name": "Jeff McDonald",
-      "verified": false,
+      "verified": true,
+      "bskyVerified": false,
       "kind": "reporter",
       "team": "SAS",
       "outlet": "San Antonio Express-News",
@@ -3631,6 +3632,7 @@
       "handle": "nbasarah.bsky.social",
       "name": "Sarah Todd",
       "verified": true,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "UTA",
       "outlet": "NBA writer (Utah market)",
@@ -3657,6 +3659,7 @@
       "handle": "nbasarah.bsky.social",
       "name": "Sarah Todd",
       "verified": true,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "UTA",
       "outlet": "NBA writer (Utah market)",
@@ -3682,7 +3685,8 @@
       "text": "Spurs will be without Carter Bryant vs. Bucks tonight after Corliss Williamson indicated he may be done playing here in Vegas. \n\nAlso, no Tarris Reed Jr., who is out for rest after notching 5 points and 9 rebounds (4 on offensive end) in the 70-49 win over New York on Saturday.",
       "handle": "tomorsborn.bsky.social",
       "name": "Tom Orsborn",
-      "verified": false,
+      "verified": true,
+      "bskyVerified": false,
       "kind": "reporter",
       "team": "SAS",
       "outlet": "San Antonio Express-News",
@@ -3708,7 +3712,8 @@
       "text": "Difficult to predict. Even the slightest of injuries coming out of Thursday’s game would likely lead to him sitting out.",
       "handle": "tomorsborn.bsky.social",
       "name": "Tom Orsborn",
-      "verified": false,
+      "verified": true,
+      "bskyVerified": false,
       "kind": "reporter",
       "team": "SAS",
       "outlet": "San Antonio Express-News",
@@ -3735,6 +3740,7 @@
       "handle": "nbasarah.bsky.social",
       "name": "Sarah Todd",
       "verified": true,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "UTA",
       "outlet": "NBA writer (Utah market)",
@@ -3761,6 +3767,7 @@
       "handle": "nbasarah.bsky.social",
       "name": "Sarah Todd",
       "verified": true,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "UTA",
       "outlet": "NBA writer (Utah market)",
@@ -3786,7 +3793,8 @@
       "text": "Carter Bryant will play sparingly at Summer League. Jayden Quaintance won't play at all. Tarris Reed Jr. is ready to flash his blue-collar credentials in a Spurs jersey.\n\nThose storylines and more to watch as the Spurs open Summer League today in San Francisco:\n\nwww.expressnews.com/sports/spurs...",
       "handle": "jmcdonaldsa.bsky.social",
       "name": "Jeff McDonald",
-      "verified": false,
+      "verified": true,
+      "bskyVerified": false,
       "kind": "reporter",
       "team": "SAS",
       "outlet": "San Antonio Express-News",
@@ -3812,7 +3820,8 @@
       "text": "“You can see we had a type.\"\n\nIn Tuesday's NBA draft, the Spurs rolled the dice on an injury plagued center from Kentucky and spent draft capital to nab another bruising big man from Connecticut.\n\nBrian Wright's draft-night manta was clear: Go big or go home.\n\nwww.expressnews.com/sports/spurs...",
       "handle": "jmcdonaldsa.bsky.social",
       "name": "Jeff McDonald",
-      "verified": false,
+      "verified": true,
+      "bskyVerified": false,
       "kind": "reporter",
       "team": "SAS",
       "outlet": "San Antonio Express-News",
@@ -3839,6 +3848,7 @@
       "handle": "samvecenie.bsky.social",
       "name": "Sam Vecenie",
       "verified": true,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": null,
       "outlet": "The Athletic",
@@ -3865,6 +3875,7 @@
       "handle": "samvecenie.bsky.social",
       "name": "Sam Vecenie",
       "verified": true,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": null,
       "outlet": "The Athletic",
@@ -3891,6 +3902,7 @@
       "handle": "samvecenie.bsky.social",
       "name": "Sam Vecenie",
       "verified": true,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": null,
       "outlet": "The Athletic",
