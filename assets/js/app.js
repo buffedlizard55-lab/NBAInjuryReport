@@ -87,10 +87,16 @@ const App = (() => {
       if (seen.has(id)) continue;
       seen.add(id);
       const teams = detectTeams(headline, desc);
+      const resolved = (typeof Intelligence !== "undefined" && typeof Intelligence.resolveText === "function") ? Intelligence.resolveText(headline + " " + desc) : null;
+      const ctx = (typeof Intelligence !== "undefined" && typeof Intelligence.impactContext === "function") ? Intelligence.impactContext() : {};
+      const impact = (resolved && typeof LineupImpact !== "undefined")
+        ? LineupImpact.assess({ player: resolved.player, playerId: resolved.playerId, team: resolved.team || teams[0], sev: hit.sev }, ctx)
+        : null;
       const item = {
         id, key: "news-" + id, ts: a.published || a.lastModified || new Date().toISOString(),
         title: headline, desc, byline: a.byline || "ESPN", url: articleUrl(a),
-        sev: hit.sev, sevLabel: hit.sevLabel, teams, team: teams[0] || null, player: null, layer: "espn-news"
+        sev: hit.sev, sevLabel: hit.sevLabel, teams, team: (resolved && resolved.team) || teams[0] || null,
+        player: resolved?.player || null, playerId: resolved?.playerId || null, impact, layer: "espn-news"
       };
       newsItems.push(item);
       /* the wire expects {text, detail} — the news object carries {title, desc}, so map explicitly
@@ -369,7 +375,38 @@ const App = (() => {
     AlertEngine.renderLog();
 
     const testBtn = document.getElementById("testSound");
-    if (testBtn) testBtn.addEventListener("click", () => AlertEngine.testSound());
+    if (testBtn) testBtn.addEventListener("click", () => {
+      const ok = AlertEngine.testSound();
+      testBtn.textContent = ok ? "🔔 Playing chime…" : "⚠ Audio unavailable";
+      setTimeout(() => { testBtn.textContent = "▶ Test sound"; }, 1200);
+    });
+    const bSearch = document.getElementById("boardSearch");
+    if (bSearch) {
+      bSearch.addEventListener("input", () => {
+        if (typeof InjuryBoard !== "undefined" && InjuryBoard.setSearch) {
+          InjuryBoard.setSearch(bSearch.value);
+        }
+      });
+    }
+    const bReset = document.getElementById("boardResetFilter");
+    if (bReset) {
+      bReset.addEventListener("click", () => {
+        if (typeof InjuryBoard !== "undefined" && InjuryBoard.resetFilter) {
+          InjuryBoard.resetFilter();
+        }
+      });
+    }
+    if (typeof document !== "undefined" && document.querySelectorAll) {
+      document.querySelectorAll(".board-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".board-tab").forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          if (typeof InjuryBoard !== "undefined" && InjuryBoard.setStatusFilter) {
+            InjuryBoard.setStatusFilter(tab.dataset.boardStatus);
+          }
+        });
+      });
+    }
     const testFeeds = document.getElementById("testFeeds");
     if (testFeeds) testFeeds.addEventListener("click", async () => {
       testFeeds.disabled = true; testFeeds.textContent = "Testing…";

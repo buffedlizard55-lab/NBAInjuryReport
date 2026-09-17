@@ -102,6 +102,23 @@
       Season: <b id="boardSeason">—</b>. Status line: <span id="boardStatus" class="tiny">loading…</span></p>
     <p class="tiny muted" id="impactLegend">Lineup impact is loading…</p>
     <div class="tiny muted" id="coverageSummary"></div>
+
+    <div class="board-toolbar" id="boardToolbar" style="margin: 12px 0 10px;">
+      <div class="board-search-wrap" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+        <input type="search" id="boardSearch" placeholder="🔍 Search player, team or injury (e.g. Tatum, ankle, GSW)…" autocomplete="off" style="flex:1; min-width:240px;">
+        <button class="btn sm ghost" id="boardResetFilter" type="button">Reset</button>
+      </div>
+      <div class="board-quick-filters" id="boardStatusFilters" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+        <span class="tiny muted" style="font-weight:600">Quick status:</span>
+        <button class="board-tab active" data-board-status="ALL" type="button">All (<span id="countAll">0</span>)</button>
+        <button class="board-tab" data-board-status="out" type="button">🔴 OUT (<span id="countOut">0</span>)</button>
+        <button class="board-tab" data-board-status="doubtful" type="button">🟠 Doubtful (<span id="countDtf">0</span>)</button>
+        <button class="board-tab" data-board-status="questionable" type="button">🟡 Questionable / GTD (<span id="countQst">0</span>)</button>
+        <button class="board-tab" data-board-status="probable" type="button">🟢 Probable (<span id="countPrb">0</span>)</button>
+        <button class="board-tab" data-board-status="return" type="button">🔵 Return / Good (<span id="countRet">0</span>)</button>
+      </div>
+    </div>
+
     <div class="board" id="injuryBoard"><div class="muted">Loading injury board…</div></div>
     <p class="tiny muted">Per-row evidence: <b>lineup impact</b> uses ESPN box scores collected by the poller (games started / minutes) and
       ESPN's per-player injury-listing dates as a recurrence indicator. <b>It is not a medical severity grade and never will be</b> — no free source

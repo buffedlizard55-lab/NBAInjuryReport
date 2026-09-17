@@ -90,7 +90,15 @@
 
   <!-- ============ MAIN DIRECTORY ============ -->
   <section class="card" style="margin-top:16px">
-    <h2>Directory (X layer) <span class="tiny muted" id="repCount"></span></h2>
+    <h2>Directory (Verified, Official &amp; Trusted Reporters) <span class="tiny muted" id="repCount"></span></h2>
+    <div class="cat-tabs" id="repCatTabs" style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+      <button class="cat-tab active" data-cat="ALL" type="button" id="catAll">All Directory (<span id="repTotalCount">56</span>)</button>
+      <button class="cat-tab" data-cat="official" type="button" id="catOfficial">🏛️ Official League &amp; Team</button>
+      <button class="cat-tab" data-cat="insider" type="button" id="catInsider">🌟 Lead Insiders (Tier 1)</button>
+      <button class="cat-tab" data-cat="arena" type="button" id="catArena">🏟️ In-Arena Beat Writers (30 Teams)</button>
+      <button class="cat-tab" data-cat="citation" type="button" id="catCitation">📋 Cited Wire Bylines</button>
+      <button class="cat-tab" data-cat="other" type="button" id="catOther">🔍 Others &amp; Review</button>
+    </div>
     <div class="filterbar">
       <select id="tierFilter" aria-label="Filter by tier">
         <option value="ALL">All tiers</option>
@@ -107,16 +115,35 @@
         <option value="inactive">inactive on X</option>
         <option value="retired">retired</option>
       </select>
+      <select id="inArenaFilter" aria-label="Filter by in-arena coverage">
+        <option value="ALL">All coverage types</option>
+        <option value="in-arena">🏟️ In-arena live coverage only</option>
+        <option value="desk">🏢 National desk / insider</option>
+        <option value="citation">📋 Wire citation</option>
+      </select>
       <input type="text" id="repSearch" placeholder="Search name, outlet, role…" style="max-width:240px">
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Reporter</th><th>Outlet / beat</th><th>Tier</th><th>X</th><th>Bluesky (pollable)</th><th>Verification</th><th>Notes</th><th>Score</th></tr></thead>
+        <thead><tr><th>Reporter</th><th>Outlet / beat</th><th>Tier</th><th>Live in-arena exit</th><th>X</th><th>Bluesky (pollable)</th><th>Verification</th><th>Notes</th><th>Score</th></tr></thead>
         <tbody id="reporterTable"></tbody>
       </table>
     </div>
     <p class="tiny muted">Tier 1 = lead league-wide news-breakers · Tier 2 = national reporters + in-market beat writers (often first in-arena) ·
       Tier 3 = analysts/columnists (context &amp; confirmation, rarely first). "Score" fills in as you log calls below.</p>
+  </section>
+
+  <!-- ============ 30-TEAM IN-ARENA COVERAGE MATRIX ============ -->
+  <section class="card" style="margin-top:16px" id="matrixCard">
+    <h2>🏟️ 30-Team In-Arena Coverage &amp; Live Exit Intelligence Matrix</h2>
+    <p class="muted small">This is the intelligence layer used to verify player injury status the moment in-game events occur. When an offensive player heads to the locker room during ongoing games, in-arena beat writers report it immediately before official league designations.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Team</th><th>City &amp; Franchise</th><th>Primary In-Arena Beat / Reporter</th><th>Outlet &amp; Role</th><th>Live Exit Detection</th><th>Profile / Search</th><th>Official Verification Evidence</th></tr></thead>
+        <tbody id="arenaMatrixTable"></tbody>
+      </table>
+    </div>
+    <p class="tiny muted">In-arena reporters travel with the team or sit courtside, providing the lowest latency reports for locker room exits, limping, and questionable-to-return designations before official press releases.</p>
   </section>
 
   <div class="grid two">

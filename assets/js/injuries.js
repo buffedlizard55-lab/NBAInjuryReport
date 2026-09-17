@@ -248,15 +248,59 @@ const InjuryBoard = (function () {
     return "https://www.espn.com/nba/team/depth/_/name/" + slug;   // verified live 2026-09-17 (human page, RotoWire-supplied)
   }
 
+  let boardSearchQuery = "";
+  let boardStatusFilter = "ALL";
+
+  function setSearch(q) {
+    boardSearchQuery = String(q || "");
+    render();
+  }
+
+  function setStatusFilter(st) {
+    boardStatusFilter = String(st || "ALL");
+    render();
+  }
+
+  function resetFilter() {
+    boardSearchQuery = "";
+    boardStatusFilter = "ALL";
+    const inp = document.getElementById("boardSearch");
+    if (inp) inp.value = "";
+    if (typeof document !== "undefined" && document.querySelectorAll) {
+      document.querySelectorAll(".board-tab").forEach(t => t.classList.toggle("active", t.dataset.boardStatus === "ALL"));
+    }
+    render();
+  }
+
   function render(filters) {
     const box = document.getElementById("injuryBoard");
     if (!box) return;
     const f = filters || (typeof App !== "undefined" && App.getFilters ? App.getFilters() : null);
+
+    const searchInput = document.getElementById("boardSearch");
+    const q = (searchInput && searchInput.value ? searchInput.value : boardSearchQuery).trim().toLowerCase();
+
+    const counts = { ALL: rows.length, out: 0, doubtful: 0, questionable: 0, probable: 0, return: 0 };
+    for (const r of rows) {
+      if (counts[r.sev] !== undefined) counts[r.sev]++;
+    }
+    const cAll = document.getElementById("countAll"); if (cAll) cAll.textContent = counts.ALL;
+    const cOut = document.getElementById("countOut"); if (cOut) cOut.textContent = counts.out;
+    const cDtf = document.getElementById("countDtf"); if (cDtf) cDtf.textContent = counts.doubtful;
+    const cQst = document.getElementById("countQst"); if (cQst) cQst.textContent = counts.questionable;
+    const cPrb = document.getElementById("countPrb"); if (cPrb) cPrb.textContent = counts.probable;
+    const cRet = document.getElementById("countRet"); if (cRet) cRet.textContent = counts.return;
+
     const shown = rows.filter(r => {
       if (f && f.team && f.team !== "ALL" && r.team !== f.team) return false;
-      if (f && f.sevs && typeof f.sevs === "object") {
+      if (boardStatusFilter !== "ALL" && r.sev !== boardStatusFilter) return false;
+      if (boardStatusFilter === "ALL" && f && f.sevs && typeof f.sevs === "object") {
         const want = Object.keys(f.sevs).filter(k => f.sevs[k]);
         if (want.length && want.indexOf(r.sev) < 0) return false;
+      }
+      if (q) {
+        const hay = [r.player, r.team, r.teamName, r.position, r.status, r.bodyPart, r.shortComment].filter(Boolean).join(" ").toLowerCase();
+        if (!hay.includes(q)) return false;
       }
       return true;
     });
@@ -348,7 +392,7 @@ const InjuryBoard = (function () {
     check: check, normalize: normalize, diffAlerts: diffAlerts, render: render,
     fetchBoard: fetchBoard, resetSeen: resetSeen, getRows: () => rows, fp: fp,
     impactFor: impactFor, setImpactContext: setImpactContext, impactShort: impactShort, depthUrl: espnTeamDepthUrl,
-    alertFor: alertFor,
+    alertFor: alertFor, setSearch: setSearch, setStatusFilter: setStatusFilter, resetFilter: resetFilter,
     fingerprint: fp, getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, season: season, count: rows.length })
   };
 })();

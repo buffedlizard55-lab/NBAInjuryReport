@@ -30,6 +30,13 @@ NBA rules page text was also independently opened: it specifies day-before and g
 
 | Area | Finding | Resolution / test |
 |---|---|---|
+| `assets/js/alerts.js:fire` | `item.impact.tier === "high"` compared undefined (`assess` returns `impact.impact`) | Changed to `(item.impact.impact === "high" || item.impact.tier === "high")` so `⚡ HIGH LINEUP IMPACT` alert prefix fires on high-impact starters. Regression test added. |
+| `assets/js/ingame.js:extract` | Live game summary `injuries` section was hardcoded `alertEligible: false` | Enabled `alertEligible: true` for in-game Out, Questionable, Doubtful and exit listings in live games, alerting users when a player gets hurt during ongoing play. DNP stays ineligible. |
+| `assets/js/injuries.js:render` / `index.html` | Board lacked instant search and quick status filter tabs similar to Basketball Monster | Added instant search (`#boardSearch`), reset button (`#boardResetFilter`), and status tabs (`#boardStatusFilters`) with live count badges for All, OUT, Doubtful, Questionable/GTD, Probable, Return. |
+| `assets/js/social.js:checkAlerts` | Social alerts did not attach lineup impact | Attached `LineupImpact.assess` result to social alert objects when player is resolved, surfacing starter impact on breaking posts. |
+| `assets/js/app.js:ingestNews` | ESPN news wire items did not resolve player or attach lineup impact | Added player resolution and `impact` attachment on classified news items. |
+| `assets/js/reporters.js` / `reporters.html` | Subpage lacked unified categorization and complete 30-team in-arena exit tracking matrix | Added Category Tabs (`All`, `Official League & Team`, `Lead Insiders`, `In-Arena Beat Writers`, `Cited Wire Bylines`, `Others & Review`), in-arena exit detection badges, and dedicated 30-Team In-Arena Coverage Matrix card. |
+| `assets/js/alerts.js` / `assets/js/app.js` | Test sound button lacked immediate visual feedback on click | Added visual feedback state (`🔔 Playing chime…` / `⚠ Audio unavailable`) while WebAudio two-note chime plays. |
 | `assets/js/ingame.js:extract` | DNP promoted to “OUT — IN-GAME LISTING”; a DNP player may never have entered | Label DNP explicitly; `alertEligible:false`. No exit assertion without separate evidence. |
 | Same | Unknown/available injury-array status could default to OUT | Recognized status allow-list and shared normalization; generic arrays remain non-alerting exit evidence. |
 | Same | Summary failure rendered as no findings | Failed game IDs displayed as collection warnings. |
