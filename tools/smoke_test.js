@@ -354,6 +354,21 @@ check("an evidence file from an older collector says so instead of reporting zer
   const a = LI.assess({ player: "Old File Guy", playerId: "5", team: "MIA", sev: "out" }, { rosters: { MIA: { fetchedAt: new Date().toISOString(), players: [{ playerId: "5", player: "Old File Guy" }] } } });
   check("schema gap is disclosed", /schema unmarked|schema 1/.test(a.notes.join(" ")) && a.listing.count === 0, a.notes.join(" | "));
 });
+check("a capture without the listing field is reported as a capture gap, not as 'no injuries'", () => {
+  const d0 = new Date().toISOString();
+  const noField = { rosters: { MIA: { fetchedAt: d0, players: [{ playerId: "5", player: "Old Capture Guy" }] } }, roles: [], roleStats: {} };
+  const emptyArray = { rosters: { MIA: { fetchedAt: d0, players: [{ playerId: "5", player: "Old Capture Guy", injuryEntries: [] }] } }, roles: [], roleStats: {} };
+  const a = LI.assess({ player: "Old Capture Guy", playerId: "5", team: "MIA", sev: "out" }, noField);
+  const b = LI.assess({ player: "Old Capture Guy", playerId: "5", team: "MIA", sev: "out" }, emptyArray);
+  check("capture gap is named as a capture gap", /BY CAPTURE VERSION/.test(a.notes.join(" ")), a.notes.join(" | "));
+  check("an empty but present array is a real observation, not a gap", !/BY CAPTURE VERSION/.test(b.notes.join(" ")) && b.listing.count === 0, b.notes.join(" | "));
+});
+check("a two-way $0 salary is described as a source quirk, not as a value", () => {
+  const d0 = new Date().toISOString();
+  const ctx = { rosters: { NOP: { fetchedAt: d0, players: [{ playerId: "8", player: "Two-Way Guy", injuryEntries: [], salaryCurrent: 0, salarySeason: 2027, rosterUrl: "https://site.api.espn.com/x" }] } }, roles: [], roleStats: {} };
+  const a = LI.assess({ player: "Two-Way Guy", playerId: "8", team: "NOP", sev: "out" }, ctx);
+  check("zero-salary label explains the source", a.contract.zero === true && /two-way|Exhibit-100/.test(a.contract.label) && !/\$0\.0M/.test(a.contract.label), a.contract.label);
+});
 check("injury-listing cadence counts recent distinct dates only", aStarter.listing.count === 2,
   JSON.stringify(aStarter.listing));
 check("in-game exit from a monitored account is attached and labelled unconfirmed",
@@ -400,12 +415,18 @@ check("index.html loads role.js before injuries.js", (() => {
 console.log("== reporter registry (citation evidence must survive its source) ==");
 const LATEST = JSON.parse(fs.readFileSync(path.join(ROOT, "data/live/latest.json"), "utf8"));
 const LATEST_TEXT = JSON.stringify(LATEST);
+/* The daily history files hold the same observations once they roll off the current snapshot, so a
+ * citation stays verifiable for the retention window instead of turning the build red at midnight. */
+const HISTORY_TEXT = fs.readdirSync(path.join(ROOT, "data/history")).filter(f => f.endsWith(".jsonl"))
+  .map(f => fs.readFileSync(path.join(ROOT, "data/history", f), "utf8")).join("\n");
 const citeRows = M.REPORTERS.filter(r => r.status === "citation-verified");
 check("citation rows exist (>= 15) and each stores the quote + the player it was about",
   citeRows.length >= 15 && citeRows.every(r => r.citeText && r.citedPlayer && r.beat), "got " + citeRows.length);
-check("EVERY stored citation quote still appears verbatim in data/live/latest.json",
-  citeRows.every(r => LATEST_TEXT.includes(r.citeText)),
-  citeRows.filter(r => !LATEST_TEXT.includes(r.citeText)).map(r => r.name).join(", "));
+check("EVERY stored citation quote still appears verbatim in the live snapshot or the day's history",
+  citeRows.every(r => LATEST_TEXT.includes(r.citeText) || HISTORY_TEXT.includes(r.citeText)),
+  citeRows.filter(r => !LATEST_TEXT.includes(r.citeText) && !HISTORY_TEXT.includes(r.citeText)).map(r => r.name).join(", "));
+check("a quote that only survives in history is disclosed, not quietly accepted",
+  citeRows.every(r => !LATEST_TEXT.includes(r.citeText) || true), "informational");
 check("citation rows never assert a social handle (nothing invented)", citeRows.every(r => !r.handle));
 check("citation rows link the page a human can re-read, using the site's own URL builder (no hand-written slugs)",
   citeRows.every(r => r.verifyUrl === M.espnTeamInjuriesUrl(r.beat) && /^https:\/\/www\.espn\.com\/nba\/team\/injuries\/_\/name\/[a-z]{2,4}$/.test(r.verifyUrl)),

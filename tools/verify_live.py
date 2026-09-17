@@ -100,6 +100,15 @@ CHECKS = [
 ]
 
 
+# Statuses that say something about the RUNNER, not about the source: datacenter IPs get challenged,
+# rate-limited or refused while a browser from the deployed origin reaches the same URL fine. That
+# asymmetry was measured on 2026-09-17 — ESPN teams/scoreboard returned 403 to a GitHub runner while
+# the published page fetched the injuries API direct and rendered 74 listings. So these codes are
+# reported as ENV-BLOCKED (never a registry-drift signal), and the browser path is evidenced by the
+# site itself printing which transport served each panel.
+ENV_STATUSES = {403, 406, 407, 408, 409, 429, 451, 500, 502, 503, 504, 520, 521, 522, 524, 525}
+
+
 def fetch(url):
     req = urllib.request.Request(
         url, headers={'User-Agent': 'NBAInjuryReport/1.0 public-source-audit (read-only; reports a live injury dashboard)'})
@@ -170,8 +179,14 @@ def main():
 
         if status is None:
             row['verdict'] = 'UNREACHABLE-FROM-RUNNER'       # cannot indict the source for this
+            row['meaning'] = 'No route from the runner (DNS/TLS/timeout). Says nothing about the source or about browser access.'
+        elif status in ENV_STATUSES and status not in expect:
+            row['verdict'] = 'ENV-BLOCKED'
+            row['meaning'] = ('HTTP %d from a datacenter IP. The registry claim is about the source and the browser path, '
+                              'both checked elsewhere (deployed page prints its transport, sources.html shows it). Not counted as drift.' % status)
         elif status not in expect:
             row['verdict'] = 'DRIFT' + ('' if status != 200 else '-NEWLY-OK')
+            row['meaning'] = 'The source now answers differently than the registry states — rewrite the row and any UI copy built on it.'
             drift += 1
         elif 200 in expect:
             row['verdict'] = 'OK'
@@ -187,8 +202,10 @@ def main():
         counts[r['verdict']] = counts.get(r['verdict'], 0) + 1
     evidence['summary'] = {'total': len(evidence['checks']), 'byVerdict': counts,
                            'drift': drift,
+                           'envStatusesTreatedAsBlockage': sorted(ENV_STATUSES),
                            'note': 'DRIFT means a registry claim needs rewriting (a source started or stopped answering, or an expected 404 became live). '
-                                   'UNREACHABLE-FROM-RUNNER is not a source failure: GitHub runners and browsers have different paths, and the site always prints which transport served the data.'}
+                                   'ENV-BLOCKED and UNREACHABLE-FROM-RUNNER are properties of the runner, not of the source: runners and browsers take different '
+                                   'paths, and this site prints which transport served each panel so a reader can tell them apart.'}
     dest = ROOT / 'data/audit/latest.json'
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(evidence, indent=2) + '\n')

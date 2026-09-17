@@ -165,7 +165,12 @@ const LineupImpact = (function () {
       out.rosterStatus = rp.rosterStatus || null;
       if (rp.experienceYears != null) out.experienceYears = rp.experienceYears;
       if (rp.playerUrl) out.playerUrl = rp.playerUrl;
-      if (rp.salaryCurrent != null) out.contract = { salary: rp.salaryCurrent, season: rp.salarySeason || null, source: rp.rosterUrl || null };
+      if (rp.salaryCurrent != null) {
+        out.contract = { salary: rp.salaryCurrent, season: rp.salarySeason || null, source: rp.rosterUrl || null };
+        /* ESPN files $0 for two-way/Exhibit-100 deals. Saying "$0.0M" would read like a fact about
+         * the player's worth; it is a quirk of the source, so it is named as one. */
+        if (Number(rp.salaryCurrent) === 0) out.contract.zero = true;
+      }
       if (out.listing.count >= 2) out.notes.push(`Injury-listing cadence: ${out.listing.count} dated listings in the last ${Math.round(CONFIG.listingRecentDays / 30)} months on ESPN's roster feed — a recurrence indicator, not a medical history.`);
     } else {
       out.notes.push("Roster capture is missing, stale (>" + Math.round(CONFIG.rosterFreshMs / 3600000) + "h) or failed for " + row.team + " — no listing cadence or contract context is asserted.");
@@ -199,10 +204,12 @@ const LineupImpact = (function () {
       out.impact = "unknown";
       out.impactLabel = "IMPACT UNKNOWN — no role evidence collected";
     }
-    /* An evidence file written by an older collector cannot support cadence/contract claims.
-     * Say which file version produced the answer instead of quietly reporting zeros. */
-    if (context && context.schema !== 2) {
-      out.notes.push("Evidence file is schema " + (context.schema == null ? "unmarked" : context.schema) + " — written before dated injury listings and contracts were captured, so cadence and salary are absent BY FILE VERSION, not because the player has none. Re-run tools/collect_context.js.");
+    /* Distinguish 'this capture has no listing history at all' (collector not run for this team,
+     * or an older file version) from 'this player has one dated listing'. Only the first is a gap. */
+    const cap = context && context.rosters && context.rosters[row.team];
+    const capPlayers = (cap && cap.players) || [];
+    if (cap && capPlayers.length && !capPlayers.some(p => Array.isArray(p.injuryEntries))) {
+      out.notes.push("This team's roster capture contains no dated injury-listing array at all (file written before that field was collected, or the collector has not run since) — cadence and salary are unavailable BY CAPTURE VERSION, not because the player has none. Re-run tools/collect_context.js.");
     }
 
     if (out.exit && out.impact === "unknown") out.impactLabel += " · in-game exit reported (unconfirmed)";
@@ -212,7 +219,9 @@ const LineupImpact = (function () {
      * used to set the tier, only to explain it, because a two-way can still start a game. */
     if (out.contract && out.contract.salary != null) {
       const seasonLabel = out.contract.season ? ("for the " + out.contract.season + " season") : "season not stated by the source";
-      out.contract.label = "Salary on file with ESPN's roster feed " + seasonLabel + ": " + money(out.contract.salary);
+      out.contract.label = out.contract.zero
+        ? "ESPN's roster feed files " + money(0) + " " + seasonLabel + " — the value two-way and Exhibit-100 contracts carry in this data, not a statement about the player. Contract type is not published by this source."
+        : "Salary on file with ESPN's roster feed " + seasonLabel + ": " + money(out.contract.salary);
     }
     return out;
   }

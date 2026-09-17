@@ -291,13 +291,13 @@
       const verdict = (a.summary && a.summary.drift) ? `<span class="badge bad">${a.summary.drift} DRIFT — registry needs rewriting</span>`
         : `<span class="badge ok">no drift</span>`;
       auditBox.innerHTML = `<p class="small">Run <b>${e(a.checkedAt)}</b> · ${rows.length} checks · ${verdict} ·
-        ${Object.entries(counts).map(([k, v]) => `<span class="badge ${/DRIFT/.test(k) ? "bad" : /BLOCKER|UNREACHABLE|CHANGED/.test(k) ? "warn" : "ok"}">${e(k)}: ${v}</span>`).join(" ")}</p>
+        ${Object.entries(counts).map(([k, v]) => `<span class="badge ${/DRIFT/.test(k) ? "bad" : /BLOCKER|UNREACHABLE|ENV-BLOCKED|CHANGED/.test(k) ? "warn" : "ok"}">${e(k)}: ${v}</span>`).join(" ")}</p>
         <div class="table-wrap"><table><thead><tr><th>Check</th><th>Observed</th><th>Verdict</th><th>Claim being re-verified</th><th>Evidence</th></tr></thead><tbody>
         ${rows.map(r => `<tr>
           <td><b>${e(r.id)}</b><br><a class="tiny" href="${e(r.url)}" target="_blank" rel="noopener">${e(r.url).slice(0, 72)}… ↗</a></td>
           <td>${r.status == null ? `<span class="badge warn">no route</span>` : `<span class="kbd">${e(String(r.status))}</span>`}
             ${Array.isArray(r.documentedStatuses) ? `<br><span class="tiny muted">documented as ${e(r.documentedStatuses.join("/"))}</span>` : ""}</td>
-          <td><span class="badge ${/DRIFT/.test(r.verdict || "") ? "bad" : /BLOCKER|UNREACHABLE|CHANGED/.test(r.verdict || "") ? "warn" : "ok"}">${e(r.verdict || "?")}</span>
+          <td><span class="badge ${/DRIFT/.test(r.verdict || "") ? "bad" : /BLOCKER|UNREACHABLE|ENV-BLOCKED|CHANGED/.test(r.verdict || "") ? "warn" : "ok"}">${e(r.verdict || "?")}</span>${r.meaning ? `<br><span class="tiny muted">${e(r.meaning)}</span>` : ""}
             ${(r.probesMissing && r.probesMissing.length) ? `<br><span class="tiny muted">page no longer contains: ${e(r.probesMissing.join(", "))}</span>` : ""}</td>
           <td class="tiny muted">${e(r.claim || "")}</td>
           <td class="tiny muted">${r.sha256 ? `sha256 ${e(String(r.sha256).slice(0, 12))}…<br>` : ""}${r.rows != null ? `rows ${r.rows} in ${r.teamBlocks} blocks<br>` : ""}${r.athletes != null ? `athletes ${r.athletes}, ${r.withInjuryListing} with a dated injury listing<br>` : ""}${r.follows != null ? `${r.follows} follows, ${r.verifiedFollows} verified<br>` : ""}${r.events != null ? `events today: ${r.events}<br>` : ""}${r.pdfLines ? `PDF text lines: ${r.pdfLines}` : ""}</td>
