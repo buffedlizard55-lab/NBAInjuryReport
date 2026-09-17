@@ -27,9 +27,10 @@
       <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster's player news</a>.
       Every alert carries a link for manual review. No account, no keys, works in your browser.</p>
     <div class="pill-row">
-      <span class="pill ok">✓ ESPN API verified live 2026-09-17</span>
+      <span class="pill ok">✓ ESPN API re-verified live 2026-09-17</span>
+      <span class="pill ok">✓ GitHub Pages deployed &amp; fetching live</span>
       <span class="pill ok">✓ Official NBA report linked</span>
-      <span class="pill warn">Offseason: preseason tips 2026-10-03</span>
+      <span class="pill warn">In-game monitor: armed, untested until 2026-10-03 tip-off</span>
       <span class="pill">Opening night 2026-10-20</span>
     </div>
   </section>
@@ -76,7 +77,8 @@
     <section class="card">
       <h2>📅 Today's games <span class="tiny muted">(live detection for in-game alerts)</span></h2>
       <div id="games"><div class="muted">Loading scoreboard…</div></div>
-      <p class="tiny muted">Source: ESPN scoreboard API · <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">open ESPN scoreboard ↗</a></p>
+      <div class="ingame-box" id="ingameBox"><div class="muted small">🏥 In-game monitor loading…</div></div>
+      <p class="tiny muted" id="gamesSrc">Source: ESPN scoreboard API · <a href="https://www.espn.com/nba/scoreboard" target="_blank" rel="noopener">open ESPN scoreboard ↗</a></p>
     </section>
   </div>
 
@@ -138,7 +140,9 @@
     <div class="wrap" style="padding:0">
       Free sources only · Severity labels are keyword-detected — confirm via linked sources ·
       Data: ESPN (unofficial API) · Not affiliated with the NBA, ESPN, or Basketball Monster ·
-      <a href="sources.html">Verification log</a> · Updated 2026-09-17
+      <a href="sources.html">Verification log</a> ·
+      <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/NEXT_STEPS.md" target="_blank" rel="noopener">Next steps ↗</a> ·
+      Updated 2026-09-17
     </div>
   </footer>
 </div>
@@ -146,6 +150,7 @@
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <script src="assets/js/data.js"></script>
 <script src="assets/js/alerts.js"></script>
+<script src="assets/js/ingame.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>
