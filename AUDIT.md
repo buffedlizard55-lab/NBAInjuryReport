@@ -246,3 +246,50 @@ The remaining 18 registry checks (official PDF index, PDF sample, ESPN teams/sco
 4. **High:** in-game behavior (exit, QTR, return-to-game) is still empirically unexercised — first games tip 2026-10-03; the impact layer's `roleStats` will start filling only then.
 5. **High:** identity verification is now evidence-based for reporters (fixed this pass) but the *legacy X rows* still rest on first-pass evidence; revalidation of every X row remains open.
 6. **Medium–Low:** as itemized in [NEXT_STEPS.md](NEXT_STEPS.md) — Git-as-storage, cross-tab dedupe, QTR outcome scoring, depth-chart corroboration.
+
+---
+
+# Fifth pass — 2026-09-17, session 6 (~19:00Z): the verifier verified, four registry rows re-validated
+
+## Scope
+
+Re-read line by line: all four workflows, `assets/js/data.js`, `alerts.js`, `role.js`, `injuries.js`, `social.js`, `ingame.js`, `app.js`, `intelligence.js`, `wire.js`, `index.html`, `reporters.html`, `tools/poll_watch.js`, `tools/collect_context.js`, `tools/build_intelligence.js`, `tools/collect_official.py`, `tools/build_verified_sources.js`, `tools/replay_posts.js`, `tools/verify_live.py` (header/check table), `tools/smoke_test.js`, and the live data contracts (`data/live/latest.json`, `context.json`, `intelligence.json`, `official.json`, `verified_sources.json`). Full local test surface run before any change (147 smoke · 48 integration · 24 poll-fixture · 26 regression groups · 4 Python · live replay: 74 rows / 12 posts, clean).
+
+## Live re-verification this session (page-fetch channel, ~19:00Z)
+
+| Source | Observation | Consequence |
+|---|---|---|
+| [NBA 2026–27 report](https://official.nba.com/nba-injury-report-2026-27-season/) | **404** (XID 70197203) | Official adapter still blocked by a missing page, not broken. Time-gated until the season page exists. |
+| [NBA 2025–26 report](https://official.nba.com/nba-injury-report-2025-26-season/) | **200**, deadline rules text re-read verbatim (5 p.m. day-before; 11 a.m.–1 p.m. gameday; 8–10 a.m. if tip ≤5 p.m.; 1 p.m. back-to-back; "updated on a continual basis") | Registry row stands. |
+| [ESPN injuries API](https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries) | **200** (payload timestamp 2026-09-17T19:00:08Z); season 2026-27 Preseason; ATL block row 1 still Mouhamed Gueye `Day-To-Day` 2026-07-19 with the Brad Rowland byline | Primary board stable across five same-day reads. |
+| [NBA Bluesky profile](https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com) | **200**; `verification.verifiedStatus: "valid"` (issuer bsky.app); bio still lists the Oct 20 openers; `followersCount 122,544`, `followsCount 6` | The ~4-of-30 official team-account ceiling still holds. |
+| [Bluesky searchPosts](https://public.api.bsky.app/xrpc/app.bsky.feed.searchPosts?q=NBA%20injury&limit=1) | **403** | Keyword search remains unauthenticated — allow-list design stands; no capability drift. |
+| [Basketball Monster](https://basketballmonster.com/playernews.aspx) | **200**; `INJURED` / `NOTE` / `TRADED` status tags ARE present in the server-returned HTML | Settles the probe question left open after the third-pass retraction (the earlier "client-rendered" claim had been made from a broken gzip probe and was withdrawn). Link-out policy stands regardless. BM slate still lists `BOS at DET 2:00pm` vs the NBA bio's `3:00pm/et` — the recorded upstream tip-time conflict is **unchanged**. |
+| [The Stein Line (Substack)](https://marcstein.substack.com/p/the-latest-from-the-nbas-soon-to) | **200** (post dated 2026-04-08); guest-post byline fetched live and quoted verbatim: "Founded by @JakeLFischer, former Yahoo! Sports Senior NBA reporter. Bleacher Report NBA Insider. Contributor to The Stein Line." | **Jake Fischer outlet question RESOLVED by the outlet's own words.** |
+
+Dated search evidence (cross-checked in two independent articles each): Chris Haynes → Amazon Prime NBA insider (Front Office Sports, **2025-09-29**: network confirmed exclusively); Candace Buckner → The Athletic national columnist (Sports Media Watch **2026-02-26** quoting the NYT announcement, plus TheWrap same day; the SMW slug says "new-york-times-…" because NYT owns The Athletic — no contradiction); Will Guillory → The Athletic "Staff Writer, Rockets and Pelicans", Pelicans beat since 2016 (his nytimes.com/athletic author page); Jake Fischer's Yahoo exit (NiemanLab 2025-03-19).
+
+## Defects found and fixed
+
+| Area | Finding | Resolution / test |
+|---|---|---|
+| `tools/smoke_test.js:check()` | **The harness accepted a function object as truthy and never executed it.** Six `check(name, () => { … })` grouping closures in the lineup-impact section were declared but dead — 12 inner assertions had literally never run, while the suite reported 147 passes including "✓ an evidence file from an older collector says so…". A verifier that cannot fail is worse than none. | `check()` now executes closures: thrown exceptions and inner failures are counted honestly (group pass only when every inner assertion passes). Revived immediately: see the next row. |
+| `assets/js/role.js` + both context builders | Fixing the harness exposed a real product gap: the dead assertion expected assessments to **disclose a schema-unmarked context file**, and `role.js` never emitted such a note (nor did `intelligence.js` / `tools/poll_watch.js` even pass a `schema` field through). A pre-schema-2 file's gaps would read as facts about the player. | `assess()` now discloses a schema-unmarked context ("capture gap, not a fact about the player") when a roster capture exists; `schema` is threaded through `Intelligence.rebuildContext` and the poller's `impactContextFor`. Real schema-2 files do not trigger the note; the revived assertion proves it. |
+| `assets/js/data.js` / `reporters.html` | Session-4 follow-ups left one opened question (`Jake Fischer` DISPUTED outlet) and three rows needing dated re-validation (Haynes, Buckner, Guillory). | All four resolved against dated, quoted evidence (above). A smoke assertion now fails if any row re-introduces a silent DISPUTED outlet; reporters.html pills/bullets updated from "1 outlet DISPUTED" to the resolved state; `method` in `tools/build_verified_sources.js` says six passes; registry JSON regenerated (30 teams / 23 sources / 56 reporters / 36 flags). |
+
+## Improvements shipped (from NEXT_STEPS §5 refinements)
+
+1. **Median minutes next to the mean.** The collector now keeps bounded per-game values (`minutesValues`, capped at 60) inside `roleStats`; `role.js` quotes the median and **discloses** a wide mean–median gap ("median 40 vs mean 28.3 — a blowout-heavy or injury-shortened sample") instead of letting a six-game average pretend to be a role. Ready for the 2026-10-03 tip.
+2. **Trade/team-change flag.** `roleStats` keeps the team the sample was collected under; when the listing's team differs, the assessment sets `role.teamChanged`, names both teams, and refuses to silently reassign minutes. Shown on the board as "⚠ sample collected with previous team".
+3. **No-contract-entry is named, not skipped.** A rostered player whose `contracts[]` array is empty previously rendered no contract line at all; now the assessment returns `contract.missing` and the label "ESPN's roster feed filed no contract entry … a two-way, an expired deal or an unpublished one; the source does not say which". The board prints contract labels in every state (previously only when a salary existed).
+4. **Guillory role refined**: Rockets + Pelicans staff writer — a HOU mention in his feed is normal, not a mis-attribution.
+
+## Test surface after this pass
+
+`smoke_test.js` **165** (was 147: 6 dead closures revived + new assertions for the disclosure, median, team-change and contract-missing paths) · `integration_test.js` 48 · `poll_fixture_test.js` 24 · `regression_test.js` 26 groups · Python 4 · `replay_posts.js --check` on the live snapshot: 74 rows / 12 posts, clean. Chromium UI suite runs in CI (its browser download is blocked in this sandbox; no spoofing attempted).
+
+## New irregularities flagged for manual review
+
+1. **Basketball Monster's countdown moved "34 days" → "33 days" between same-day reads** (~14:00Z vs ~19:00Z). A source-side display quirk (timezone rounding); harmless because our site never copies that counter — recorded so the next reader does not treat it as data drift.
+2. `data/verified_sources.json`'s `counts.reportersByStatus` shifted only via label text this pass; no row was added or removed. The four revalidated rows (Fischer, Haynes, Buckner, Guillory) keep their statuses: evidence was strengthened, identity classes untouched.
+3. The legacy X rows outside these four still rest on first-pass evidence; per-row revalidation continues in the next session (X profiles cannot be fetched from the build environment — revalidation uses dated third-party reports and outlet pages only, quoted).

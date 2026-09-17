@@ -67,7 +67,7 @@ function impactContextFor() {
     const ctx = JSON.parse(fs.readFileSync(path.join(dir, "data/live/context.json"), "utf8"));
     let exits = {};
     try { exits = JSON.parse(fs.readFileSync(path.join(dir, "data/live/intelligence.json"), "utf8")).exits || {}; } catch (e) { }
-    return { checkedAt: ctx.checkedAt || null, rosters: ctx.rosters || {}, roles: ctx.roles || [], roleStats: ctx.roleStats || {}, exits };
+    return { checkedAt: ctx.checkedAt || null, schema: ctx.schema != null ? ctx.schema : null, rosters: ctx.rosters || {}, roles: ctx.roles || [], roleStats: ctx.roleStats || {}, exits };
   } catch (e) { return null; }
 }
 

@@ -20,6 +20,18 @@ const path = require("path");
 const ROOT = path.join(__dirname, "..");
 let pass = 0, failCount = 0;
 function check(name, cond, extra) {
+  /* A closure GROUPS related inner assertions. Until 2026-09-17 (session 6) this harness accepted
+   * the function object as truthy and never executed it — six grouping closures in the
+   * lineup-impact section were declared but dead (their inner assertions literally never ran),
+   * including one that expected a "schema unmarked" disclosure role.js never emitted. A verifier
+   * that cannot fail is worse than none: closures now execute, honestly. */
+  if (typeof cond === "function") {
+    const failsBefore = failCount;
+    try { cond(); } catch (e) { failCount++; console.log("  ✗ " + name + "  -> threw: " + e.message); }
+    if (failCount === failsBefore) { pass++; console.log("  ✓ " + name); }
+    else { console.log("  ✗ " + name + "  -> inner assertion(s) failed above"); }
+    return;
+  }
   if (cond) { pass++; console.log("  ✓ " + name); }
   else { failCount++; console.log("  ✗ " + name + (extra ? "  -> " + extra : "")); }
 }
@@ -369,6 +381,23 @@ check("a two-way $0 salary is described as a source quirk, not as a value", () =
   const a = LI.assess({ player: "Two-Way Guy", playerId: "8", team: "NOP", sev: "out" }, ctx);
   check("zero-salary label explains the source", a.contract.zero === true && /two-way|Exhibit-100/.test(a.contract.label) && !/\$0\.0M/.test(a.contract.label), a.contract.label);
 });
+check("median minutes are quoted next to the mean from bounded per-game values (session 6)", () => {
+  const ctxM = { schema: 2, rosters: {}, roles: [], roleStats: { "21": { player: "Swingy Minutes", team: "UTA", games: 6, starts: 6, minutesTotal: 170, minutesGames: 6, minutesValues: [40, 40, 40, 40, 5, 5], sampleUrls: [], updatedAt: nowIso } } };
+  const a = LI.assess({ player: "Swingy Minutes", playerId: "21", team: "UTA", sev: "out" }, ctxM);
+  check("median is computed from per-game values", a.role.medianMinutes === 40, JSON.stringify(a.role.medianMinutes));
+  check("mean 28.3 vs median 40 (blowout/injury-shortened games) is disclosed, not hidden", /swing widely/.test(a.notes.join(" ")), a.notes.join(" | "));
+});
+check("a team change since the sample was collected is flagged, never silently reassigned (session 6)", () => {
+  const ctxT = { schema: 2, rosters: {}, roles: [], roleStats: { "22": { player: "Traded Man", team: "UTA", games: 10, starts: 9, minutesTotal: 320, minutesGames: 10, minutesValues: [30, 32, 34, 31, 30], sampleUrls: [], updatedAt: nowIso } } };
+  const a = LI.assess({ player: "Traded Man", playerId: "22", team: "PHX", sev: "out" }, ctxT);
+  check("role.teamChanged is set and the note names both teams", a.role.teamChanged === true && /UTA/.test(a.notes.join(" ")) && /PHX/.test(a.notes.join(" ")), a.notes.join(" | "));
+  check("no flag when the teams match", !LI.assess({ player: "Traded Man", playerId: "22", team: "UTA", sev: "out" }, ctxT).role.teamChanged);
+});
+check("a rostered player with no contract entry is named, not silently treated as unknown-value (session 6)", () => {
+  const ctxC = { rosters: { BOS: { fetchedAt: nowIso, players: [{ playerId: "23", player: "No Deal Guy", injuryEntries: [], rosterUrl: "https://site.api.espn.com/x" }] } }, roles: [], roleStats: {} };
+  const a = LI.assess({ player: "No Deal Guy", playerId: "23", team: "BOS", sev: "out" }, ctxC);
+  check("contract.missing is set with a source-careful label", a.contract && a.contract.missing === true && /no contract entry/.test(a.contract.label) && /does not say which/.test(a.contract.label), JSON.stringify(a.contract));
+});
 check("injury-listing cadence counts recent distinct dates only", aStarter.listing.count === 2,
   JSON.stringify(aStarter.listing));
 check("in-game exit from a monitored account is attached and labelled unconfirmed",
@@ -405,6 +434,9 @@ const acc0 = CC.accumulateRoleStats({}, [
 check("role aggregation counts each collected game once", acc0.roleStats["1"].games === 2 && acc0.roleStats["1"].starts === 1, JSON.stringify(acc0.roleStats["1"]));
 const acc1 = CC.accumulateRoleStats(acc0, [{ playerId: "1", player: "P1", team: "UTA", eventId: "e1", role: "Starter in this game", minutes: 30, url: "u1", observedAt: nowIso }], nowIso);
 check("re-seeing the same game does not double count", acc1.roleStats["1"].games === 2, JSON.stringify(acc1.roleStats["1"]));
+check("collector keeps bounded per-game minute values for the median (session 6)",
+  JSON.stringify(acc1.roleStats["1"].minutesValues) === "[30,12]" && acc1.roleStats["1"].minutesValues.length <= 60,
+  JSON.stringify(acc1.roleStats["1"].minutesValues));
 const boardRow = M.InjuryBoard.getRows ? null : null;
 check("board rows expose impact through InjuryBoard.impactFor", typeof M.InjuryBoard.impactFor === "function");
 check("index.html loads role.js before injuries.js", (() => {
@@ -437,8 +469,11 @@ check("no reporter row uses an unrendered status", M.REPORTERS.every(r => KNOWN.
 const REP_HTML = fs.readFileSync(path.join(ROOT, "reporters.html"), "utf8");
 check("the directory filter offers every status that exists", KNOWN.filter(st => M.REPORTERS.some(r => r.status === st)).every(st => REP_HTML.includes('value="' + st + '"')));
 check("no reporter status is missing a badge", KNOWN.every(st => fs.readFileSync(path.join(ROOT, "assets/js/reporters.js"), "utf8").includes('case "' + st + '"')));
-check("the outlet-conflict flag stays open rather than being resolved by guesswork",
-  M.REPORTERS.some(r => r.name === "Jake Fischer" && /DISPUTED/.test(r.outlet) && /Stein Line/.test(r.verifyLabel)));
+check("the Fischer outlet question is RESOLVED by the outlet's own byline, quoted verbatim (no DISPUTED text may remain)",
+  M.REPORTERS.some(r => r.name === "Jake Fischer" && !/DISPUTED/.test(r.outlet) && /Stein Line/.test(r.outlet) && /@JakeLFischer/.test(r.verifyLabel)));
+check("no reporter row carries an unresolved DISPUTED outlet silently",
+  M.REPORTERS.every(r => !/DISPUTED/.test(r.outlet)),
+  M.REPORTERS.filter(r => /DISPUTED/.test(r.outlet)).map(r => r.name).join(","));
 check("rows corrected from dated sources say so",
   M.REPORTERS.some(r => r.name === "Candace Buckner" && r.outlet === "The Athletic" && /Sports Media Watch/.test(r.verifyLabel)) &&
   M.REPORTERS.some(r => r.name === "Anthony Slater" && /FLAG CLEARED/.test(r.verifyLabel)) &&

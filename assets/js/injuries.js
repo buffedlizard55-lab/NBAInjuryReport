@@ -359,8 +359,9 @@ const InjuryBoard = (function () {
           (r.bodyPart ? esc(r.bodyPart) + " · " : "") +
           (r.returnDate ? "est. return " + esc(r.returnDate) + " · " : "") +
           "Lineup impact: " + esc(imp ? imp.impactLabel : "not computed") +
-          (imp && imp.role.games ? " · role from " + imp.role.starts + "/" + imp.role.games + " collected box score(s)" + (imp.role.avgMinutes != null ? ", " + imp.role.avgMinutes + " min avg" : "") : "") +
-          (imp && imp.contract && imp.contract.salary != null ? " · " + esc(imp.contract.label) : "") +
+          (imp && imp.role.games ? " · role from " + imp.role.starts + "/" + imp.role.games + " collected box score(s)" + (imp.role.avgMinutes != null ? ", " + imp.role.avgMinutes + " min avg" : "") + (imp.role.medianMinutes != null ? ", median " + imp.role.medianMinutes : "") : "") +
+          (imp && imp.role.teamChanged ? " · ⚠ sample collected with previous team" : "") +
+          (imp && imp.contract && imp.contract.label ? " · " + esc(imp.contract.label) : "") +
           " · Medical severity: not assessed · ESPN: " + esc(r.status) + (r.noteSource ? " · per " + esc(r.noteSource) : "") +
           '</div>' +
           (imp ? '<div class="br-why tiny muted">' + esc(imp.notes[0] || "") + (imp.role.evidence.length ? ' · <a href="' + esc(imp.role.evidence[0]) + '" target="_blank" rel="noopener">box-score evidence ↗</a>' : "") + '</div>' : "") +

@@ -69,7 +69,13 @@ function accumulateRoleStats(prev, freshRows, now) {
     if (s.keys.length > 120) s.keys = s.keys.slice(-120);
     s.games++; s.starts += r.role && /Starter/.test(r.role) ? 1 : 0;
     const mins = Number(r.minutes);
-    if (Number.isFinite(mins)) { s.minutesTotal += mins; s.minutesGames++; }
+    /* Per-game values are kept (bounded, most recent) so role.js can quote a MEDIAN next to the
+     * mean — a blowout-heavy or injury-shortened sample swings the mean while the median barely
+     * moves, and the UI is supposed to say so instead of pretending the average is settled. */
+    if (Number.isFinite(mins)) {
+      s.minutesTotal += mins; s.minutesGames++;
+      s.minutesValues = (s.minutesValues || []).concat([mins]).slice(-60);
+    }
     s.updatedAt = now;
     s.team = r.team || s.team; s.player = r.player || s.player;
     s.sampleUrls = [...new Set([r.url, ...(s.sampleUrls || [])])].slice(0, 5);
