@@ -109,7 +109,7 @@ global.fetch = async (url) => {
 
 /* load the real scripts exactly as index.html does */
 const source = PAGES["index.html"].map(f => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n;\n");
-const M = new Function(source + "\n; return { App, InjuryBoard, Social, Wire, InGame, AlertEngine, TEAMS, REPORTERS };")();
+const M = new Function(source + "\n; return { App, InjuryBoard, Social, Wire, InGame, AlertEngine, TEAMS, REPORTERS, arenaCoverageSummary };")();
 
 console.log("== runtime: App.init() refresh chain ==");
 (async () => {
@@ -161,6 +161,17 @@ console.log("== runtime: App.init() refresh chain ==");
   check("filter controls built", /option value="ALL"/.test(els.teamFilter.innerHTML) && /data-sev="out"/.test(els.sevChecks.innerHTML));
   check("alert log rendered without throwing", typeof els.alertLog.innerHTML === "string");
   check("last-refresh stamp written", /Last refresh attempt:/.test(document.getElementById("lastUpdated").textContent));
+  /* The dashboard now surfaces the second verification layer too. It must render the COMPUTED
+   * numbers and must not round "N of 30 teams have a pollable in-arena writer" up to "30/30". */
+  {
+    const IN = els.inArenaSummary ? els.inArenaSummary.innerHTML : "";
+    const S = M.arenaCoverageSummary();
+    check("dashboard renders the in-arena coverage summary from the same computed model",
+      IN.includes(S.verifiedPollable + "/30") && IN.includes(S.officialOnly + "/30") && IN.includes(String(S.pollableWriters)),
+      IN.replace(/<[^>]+>/g, " ").slice(0, 160));
+    check("dashboard summary names the gap teams instead of implying every team is covered",
+      S.withGaps.length === 0 || S.withGaps.slice(0, 3).every(a => IN.includes(a)));
+  }
   check("no alert storm on first load (fixtures seed silently)", !/🚨/.test(els.alertLog.innerHTML), els.alertLog.innerHTML.slice(0, 160));
 
   /* --- scenario 2: ESPN unreachable in the browser -> same-origin CI snapshot must take over --- */
@@ -175,6 +186,84 @@ console.log("== runtime: App.init() refresh chain ==");
     /coverage gap/.test(els.boardCoverage.innerHTML) && /Atlanta Hawks/.test(els.boardCoverage.innerHTML) &&
     !/Boston Celtics/.test(els.boardCoverage.innerHTML) &&
     els.boardCoverage.innerHTML.replace(/<[^>]+>/g, " ").indexOf("29") >= 0, els.boardCoverage.innerHTML.slice(0, 240));
+
+  /* --- scenario 3: reporters.html boots its own scripts and must render COMPUTED coverage --- *
+   * The verification page is the deliverable a human reads before trusting an alert, so it is
+   * booted here for real (same four scripts the HTML loads) against a stub DOM, and the numbers
+   * it prints are compared against arenaCoverageSummary() instead of being hardcoded — a page that
+   * drifts from the registry must fail this test, not pass it. */
+  console.log("== reporters.html runtime: computed coverage, gaps named, re-verification file handled ==");
+  {
+    const pageEls = {};
+    const prevDoc = global.document;
+    global.document = {
+      getElementById: id => (pageEls[id] = pageEls[id] || fakeEl(id)),
+      querySelectorAll: () => [],
+      createElement: () => fakeEl("tmp"),
+      addEventListener(evt, cb) { if (evt === "DOMContentLoaded") global.__repReady = cb; }
+    };
+    /* the re-verification file does not exist yet in this fixture: the page must SAY so, not
+     * render an empty panel that reads like "0 problems" */
+    global.fetch = async () => ({ ok: false, status: 404, json: async () => ({}) });
+    const repSrc = PAGES["reporters.html"].map(f => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n;\n");
+    const R = new Function(repSrc + "\n; return { Reporters, arenaCoverage, arenaCoverageSummary, TEAMS, BSKY_REPORTERS };")();
+    if (global.__repReady) global.__repReady();
+    await new Promise(r => setTimeout(r, 60));
+
+    const S = R.arenaCoverageSummary();
+    const matrix = pageEls.arenaMatrixTable ? pageEls.arenaMatrixTable.innerHTML : "";
+    const matrixText = matrix.replace(/<[^>]+>/g, " ");
+    const summary = pageEls.coverageSummary ? pageEls.coverageSummary.innerHTML : "";
+    const worklist = pageEls.coverageWorklist ? pageEls.coverageWorklist.innerHTML : "";
+
+    check("reporters page boots the real scripts without throwing and renders the matrix", matrix.length > 2000, String(matrix.length));
+    check("matrix renders exactly one row per team", (matrix.match(/<tr>/g) || []).length === 30, String((matrix.match(/<tr>/g) || []).length));
+    check("matrix never prints the 'no source at all' class (every team has an official channel)", !/NO SOURCE/.test(matrix));
+    check("matrix names the coverage class on every row", (matrix.match(/badge (ok|warn|bad)">[^<]*(verified in-arena writer|bio-verified identity|official channel only)/g) || []).length === 30,
+      String((matrix.match(/official channel only|verified in-arena writer|bio-verified identity/g) || []).length));
+    check("every team links its official club news channel", (matrix.match(/nba\.com\/[a-z]+\/news/g) || []).length === 30,
+      String((matrix.match(/nba\.com\/[a-z]+\/news/g) || []).length));
+    check("every team carries a re-check API link for its polled writer where one exists",
+      R.arenaCoverage().filter(c => c.pollable.length).every(c => c.pollable.every(p => !p.evidenceApi || matrixText.includes("@") )) &&
+      matrixText.includes("re-check API"));
+    check("the identity class of each polled writer is rendered, not summarised away",
+      matrixText.includes("Bluesky-verified") && matrixText.includes("bio states outlet + beat"));
+    check("rows held out of the alert path are shown as held out", /held out of alerts/.test(matrixText));
+    check("the dormant Heat account appears as feed-off, not as coverage", /Anthony Chiang/.test(matrixText) && /feed off/.test(matrixText));
+
+    check("summary numbers are the COMPUTED ones", summary.includes(S.verifiedPollable + "/30") &&
+      summary.includes(S.bioPollable + "/30") && summary.includes(S.officialOnly + "/30"), summary.replace(/<[^>]+>/g, " ").slice(0, 200));
+    check("summary states zero teams with no source at all", new RegExp("^" + S.gap + " teams with no source at all|" + S.gap + " teams with no source at all").test(summary.replace(/<[^>]+>/g, " ")));
+    check("summary reports the pollable-account count rather than claiming 30 verified writers",
+      summary.includes(String(S.pollableWriters)) && summary.includes(String(S.blsSkyVerifiedWriters)) && S.verifiedPollable < 30);
+
+    check("the worklist names every team that is not yet verified in-arena", S.withGaps.every(abbr => worklist.includes(abbr)),
+      S.withGaps.filter(a => !worklist.includes(a)).join(","));
+    check("the worklist states WHY each one falls short", /no pollable in-arena writer account|no Bluesky-verified writer/.test(worklist));
+    /* Absence of the CI evidence file must be DISCLOSED, and the page must say what the displayed
+     * evidence actually is (the dated manual pass) — an unexplained empty panel would read as
+     * "nothing to report", which is the opposite of the truth here. */
+    check("missing re-verification file is disclosed, and the page names what the evidence really is",
+      /No automated re-verification file yet/.test(pageEls.verifyStatus.innerHTML) &&
+      /daily/.test(pageEls.verifyStatus.innerHTML) &&
+      /session-10 manual pass of 2026-09-18/.test(pageEls.verifyStatus.innerHTML),
+      pageEls.verifyStatus.innerHTML.replace(/<[^>]+>/g, " ").slice(0, 200));
+
+    /* now pretend CI has run: problems must surface, and a clean run must not invent any */
+    global.fetch = async () => ({ ok: true, status: 200, json: async () => ({
+      generated: "2026-09-19T09:17:00Z",
+      summary: { checked: 26, ok: 22, bioDrift: 2, dormant: 1, missing: 1, fatal: 1 },
+      rows: [{ handle: "someone.bsky.social", name: "Someone", status: "missing", notes: ["handle did not resolve: not returned by getProfiles"] }],
+      channelSummary: { ok: 29, checked: 30, failed: ["MIA:http403"] }
+    }) });
+    R.Reporters.init();
+    await new Promise(r => setTimeout(r, 60));
+    const vs = pageEls.verifyStatus.innerHTML;
+    check("a CI run renders its counts and names each problem row", /26 handles checked/.test(vs) && /missing/.test(vs) && /someone\.bsky\.social/.test(vs));
+    check("club-channel results are reported separately from identity results", /club channels 29\/30/.test(vs));
+
+    global.document = prevDoc;
+  }
 
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);

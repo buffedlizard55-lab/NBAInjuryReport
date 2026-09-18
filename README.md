@@ -24,7 +24,9 @@ NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster pla
 | History | Automatic, source-linked forward injury-listing changes. First observation is **not injury onset**. Not a complete medical history. Working ledger retains 30 days / up to 10,000 changes. |
 | Social intelligence | Automatic post ledger, one-player exact-name resolution, original text/URL/hash, posted/first-observed times. A narrow game-date-matched official comparison can mark corroboration or conflict for review. **No established accuracy scores or global first-to-report rankings.** In-game claims stay pending without game-specific outcomes. |
 | X / Instagram / Facebook | **No authorized read connector configured.** X embeds and links are manual review only, not alert inputs. Current pricing and access entitlements are not asserted. |
-| Reporter directory | Legacy curated identity evidence plus automatic forward ledger. A verified account is not a verified claim, a tier is not an accuracy score, and an assigned beat does not prove attendance at a game. |
+| Reporter directory / in-arena layer | Now **computed per team** (`arenaCoverage()` in `assets/js/data.js`), not a typed table. Measured 2026-09-18: **10 of 30 teams have a Bluesky-verified in-arena writer whose feed is polled automatically, 7 more have a bio-verified pollable writer, and 13 have no writer account at all** — those 13 are named as gaps on the page, never rendered as covered. 18 pollable accounts, 10 Bluesky-verified. Every row added this session stores the verbatim bio it was verified from, the re-checkable API URL, and the counts observed that day. A verified account is not a verified claim, a tier is not an accuracy score, and an assigned beat does not prove attendance at a game. |
+| Identity re-verification (no manual input) | `tools/verify_reporters.js` re-runs the exact API call each row cites (bio, verification object, newest post) plus all 30 official club channels. A handle that stops resolving or a claimed verification object that disappears **fails the job**; bio drift and dormancy are written to `data/live/reporter_verify.json` and shown on the reporter page. Scheduled daily in `live-audit.yml`. |
+| Official club channels | `nba.com/<slug>/news` for all 30 franchises — free, keyless, first-party. Verified live for CLE on 2026-09-18; the other 29 are labelled "pattern, not re-read this session" in the UI until the verifier checks them. Deliberately **not** an injury feed: club releases cover signings and promotions far more often than injuries, so this layer is corroboration, never the alert trigger. |
 
 ## Reproducible audit, September 17, 2026
 
@@ -56,19 +58,25 @@ These observations do not certify every legacy reporter link or guarantee later 
 5. Automatic observation ledger and source-linked injury history.
 6. Live-snapshot invariant check, snapshot/history commit and artifact upload.
 
+`live-audit.yml` runs daily (`17 9 * * *`, plus manual dispatch) and re-verifies the human layer independently of the collector: every stored reporter identity (bio + verification object + newest post) and all 30 official club channels. It fails only on a broken identity claim, and commits `data/live/reporter_verify.json` — the file the reporter page renders — so a stale "verified" tick cannot survive a day unnoticed.
+
 `pages.yml` checks the existing Pages mode on main pushes and after the main collector completes: it requests a rebuild for the existing branch-based site, or deploys a Pages artifact when workflow mode is configured. This avoids relying on a bot commit to trigger legacy Pages builds. Scheduled workflows can be delayed/disabled; **ten-minute scheduling is not a low-latency service guarantee**. Raw daily snapshots are retained in the working tree for seven days; artifacts for 14 days. Git still retains earlier objects—move collection to a database/object store for production.
 
 ## Run / test
 
 ```sh
 python3 -m http.server 8080 --bind 0.0.0.0
-node tools/smoke_test.js                 # 197 checks
+node tools/smoke_test.js                 # 209 checks (12 new: what the social layer actually polls)
 node tools/impact_test.js                # 80 checks (geo, collector math, impact model v2, wiring)
-node tools/integration_test.js           # 52 checks (boots the real dashboard on fixtures)
+node tools/integration_test.js           # 71 checks (boots the real dashboard AND the reporter page)
+node tools/verify_reporters_test.js      # 37 checks (identity-verification policy, offline)
 node tools/poll_fixture_test.js          # 24 checks (real poller, fixture transports)
 node tools/regression_test.js            # 26 groups
 python3 -m unittest discover -s tools -p 'test_*.py'   # 26 tests, incl. the audit tool itself
 node tools/replay_posts.js data/live/latest.json --check
+node tools/verify_reporters.js        # live identity + club-channel re-verification (needs network)
+                                      # exit 1 iff a handle stops resolving or a claimed
+                                      # verification object disappears; drift/dormancy are recorded
 python3 tools/verify_live.py          # records drift if a source's HTTP behaviour changes
                                       # (needs network: do NOT run it in a sandbox with no egress —
                                       #  it would overwrite committed evidence with UNREACHABLE rows)

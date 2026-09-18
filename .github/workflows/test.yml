@@ -15,11 +15,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      # impact_test.js was missing from this list (found 2026-09-18 while auditing the workflow):
+      # the lineup-impact model — the thing the brief calls the intelligence layer — was only ever
+      # run by hand in the sandbox. A suite that skips the model it ships is not a suite.
       - run: |
           node tools/smoke_test.js
           node tools/integration_test.js
+          node tools/impact_test.js
           node tools/poll_fixture_test.js
           node tools/regression_test.js
+          node tools/verify_reporters_test.js
           python3 -m unittest discover -s tools -p 'test_*.py'
       - name: Browser interaction tests (fixture transport)
         run: |

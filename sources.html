@@ -65,9 +65,45 @@
     <div id="flags"></div>
   </section>
 
+  <!-- REPORTER RE-VERIFICATION (2026-09-18) -->
+  <section class="card" style="margin-top:16px">
+    <h2>🏟️ Identity re-verification — now automatic, not a snapshot</h2>
+    <p class="small muted">The reporter directory used to be a snapshot: a bio was read once, pasted into
+      <span class="kbd">assets/js/data.js</span>, and trusted forever. A handle can be re-registered, a bio can change, an account can go quiet —
+      and a page that keeps printing the old claim is worse than no page. So the same evidence is now re-read on a schedule:</p>
+    <ul class="tight small">
+      <li><span class="kbd">tools/verify_reporters.js</span> re-runs the <b>exact API call each row cites</b>
+        (<span class="kbd">app.bsky.actor.getProfiles?actors=…</span>), re-reads the bio, the verification object and the newest post, and also
+        requests all 30 official club channels. No key, no account, no manual input.</li>
+      <li><b>Red job</b> only when an identity claim breaks: a handle that no longer resolves, or a claimed Bluesky verification object that is
+        gone or invalid. <b>Bio drift and dormancy are written down</b> in <span class="kbd">data/live/reporter_verify.json</span> — a reporter
+        legitimately changing outlets must be visible, not fatal.</li>
+      <li>The file is rendered on <a href="reporters.html#inArenaCoverageCard">the reporter page</a> (counts, plus each problem row). If it has not
+        run yet, the page says so and presents the session-10 manual pass of 2026-09-18 instead — it never shows a blank panel that reads like "no problems".</li>
+      <li>Run locally: <span class="kbd">node tools/verify_reporters_test.js</span> (offline, 37 checks) then
+        <span class="kbd">node tools/verify_reporters.js</span> (needs network). Scheduled daily in
+        <span class="kbd">.github/workflows/live-audit.yml</span>, and on any change to the registry.</li>
+    </ul>
+  </section>
+
   <!-- WHAT CHANGED -->
   <section class="card" style="margin-top:16px">
-    <h2>🆕 What changed on 2026-09-17 (this session)</h2>
+    <h2>🆕 What changed on 2026-09-18 (this session)</h2>
+    <ul class="tight small">
+      <li><b>In-arena coverage is now computed for all 30 teams</b> (<span class="kbd">arenaCoverage()</span> in data.js) instead of being a typed table.
+        Measured state: 10 verified-pollable · 7 bio-pollable · 13 official-channel-only · 0 unexplained gaps · 18 pollable writers (10 Bluesky-verified).
+        The eight teams that had no writer row at all (CLE, DET, MIL, MIN, PHI, POR, SAC, WAS) now have one, each with the verbatim bio it was verified from.</li>
+      <li><b>Three rows/accounts deliberately refused</b>: a dormant Heat account (newest post 2024-12-11), an unconfirmed 76ers handle whose bio names
+        no outlet, and an "Eric Nehm (mirror)" account carrying <span class="kbd">handle.invalid</span>. All are recorded as flags; none can alert.</li>
+      <li><b>Official club channels became a first-class layer</b>: <span class="kbd">nba.com/&lt;slug&gt;/news</span> for every franchise, verified live for CLE
+        and re-checked for all 30 by the verifier. Offered as corroboration, never as the alert trigger.</li>
+      <li><b>Two documented traps</b>: a doppelgänger "Brad Rowland" account, and team-name handles on Bluesky that are squatted by non-club accounts
+        (cavaliers = a Sapporo food blogger, bucks = 39 followers and zero posts). Identity is never inferred from a handle name.</li>
+    </ul>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>🆕 What changed on 2026-09-17</h2>
     <div class="table-wrap">
       <table>
         <thead><tr><th>Finding</th><th>What was verified live</th><th>Evidence link</th></tr></thead>
@@ -254,7 +290,12 @@
       <li>Watch the in-game monitor against a real live game; if ESPN's live summary shape differs from the verified completed-game payload, adjust <span class="kbd">assets/js/ingame.js</span>.</li>
       <li>Re-read each Bluesky account's verification badge (verification objects can be revoked) and re-run <span class="kbd">graph.getList</span> on Howard Beck's list for new writers.</li>
       <li>Re-confirm every row marked outlet-only / community / flagged (Slater's employer, Aldridge's handles, Hollinger's status).</li>
-      <li>Run <span class="kbd">node tools/smoke_test.js</span> — all 90 checks must stay green before shipping changes.</li>
+      <li>Run the suites before shipping: <span class="kbd">node tools/smoke_test.js</span>,
+        <span class="kbd">node tools/verify_reporters_test.js</span>, <span class="kbd">node tools/integration_test.js</span>,
+        <span class="kbd">node tools/impact_test.js</span>. Counts are printed by each run rather than quoted here — a
+        hardcoded "all N checks" line on a verification page is the kind of claim that rots.</li>
+      <li>Re-run <span class="kbd">node tools/verify_reporters.js</span> (or wait for the daily job) and read
+        <span class="kbd">data/live/reporter_verify.json</span> for bio drift, dormancy and club-channel failures.</li>
       <li>Re-check X API and balldontlie pricing before budgeting any paid tier.</li>
     </ol>
   </section>

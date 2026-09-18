@@ -467,7 +467,23 @@ const App = (() => {
     const nowBtn = document.getElementById("refreshNow");
     if (nowBtn) nowBtn.addEventListener("click", () => refresh(false));
 
+    renderInArenaSummary();
     refresh(true).then(() => startPolling());
+  }
+
+  /* The dashboard's one-line view of the second verification layer. Computed from arenaCoverage()
+   * in data.js, so the dashboard and reporters.html can never disagree about who is covered —
+   * and the wording never rounds "13 teams have a pollable writer" up to "all 30 covered". */
+  function renderInArenaSummary() {
+    const el = document.getElementById("inArenaSummary");
+    if (!el || typeof arenaCoverageSummary !== "function") return;
+    const s = arenaCoverageSummary();
+    const esc = AlertEngine.escapeHtml;
+    el.innerHTML = `<span class="pill ok">✓ ${s.verifiedPollable}/30 teams: verified in-arena writer polled</span>
+      <span class="pill warn">◐ ${s.bioPollable}/30: bio-verified only</span>
+      <span class="pill bad">✗ ${s.officialOnly}/30: no writer account — official club channel only</span>
+      <span class="pill">${s.pollableWriters} pollable accounts · ${s.blsSkyVerifiedWriters} Bluesky-verified</span>
+      <span class="tiny muted">Gaps are named per team (${esc(s.withGaps.slice(0, 6).join(", "))}${s.withGaps.length > 6 ? ", …" : ""}).</span>`;
   }
 
   return { init, getFilters, refresh, classify, detectTeams };

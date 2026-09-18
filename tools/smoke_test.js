@@ -71,7 +71,7 @@ const FILES = ["data.js", "role.js", "alerts.js", "wire.js", "injuries.js", "soc
 const source = FILES.map(f => fs.readFileSync(path.join(ROOT, "assets/js", f), "utf8")).join("\n;\n");
 
 const env = new Function(source + `
-  return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC,
+  return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, arenaCoverage, arenaCoverageSummary, nbaTeamNewsUrl, reporterConf,
            SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, INGAME_WATCH_RE, NBA_OFFICIAL_REPORT_URL,
            teamByAbbr, espnTeamInjuriesUrl, normalizeInjuryStatus, xSearchUrl,
            standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE,
@@ -600,6 +600,53 @@ check("the empty-state class is styled", cssBare.has("empty"));
 check("in-game watch posts and team chips have tag rules", cssTokens.has("ingame-watch") && cssTokens.has("team"));
 check("severity + impact tag rules survived", SEVS.every(s => cssTokens.has(s)) &&
   ["ok", "warn", "gtd", "watch", "impact-high", "impact-medium", "impact-low", "impact-unknown"].every(c => cssTokens.has(c)));
+
+/* =====================================================================================
+ * SESSION 10 (2026-09-18) — IN-ARENA VERIFICATION EXPANSION
+ * The functional question here is not "is the registry pretty" but "what does the LIVE social
+ * layer actually poll". These checks run the real Social module against the real registry, so a
+ * row that should be silent (dormant, unconfirmed) fails the build if it ever becomes pollable.
+ * The deeper policy tests live in tools/verify_reporters_test.js.
+ * ===================================================================================== */
+console.log("== in-arena expansion: what the live social layer actually polls ==");
+{
+  const polled = M.Social.feedAccounts().map(a => a.handle);
+  const required = ["jonkrawczynski.bsky.social", "omarisankofa.bsky.social", "kyleneubeck.bsky.social", "highkin.bsky.social",
+    "joshrobbins.bsky.social", "jlewenberg.bsky.social", "lawmurraythenu.bsky.social", "jimowczarski.bsky.social",
+    "jbeede.bsky.social", "jameshamnba.bsky.social", "ejelite1.bsky.social", "btrowland.bsky.social",
+    "scottagness.bsky.social", "irawinderman.bsky.social", "geraldbourguet.bsky.social", "kellyiko.bsky.social"];
+  const absent = required.filter(h => !polled.includes(h));
+  check("all 16 session-10 pollable accounts reach the live allow-list", absent.length === 0, "missing: " + absent.join(", "));
+  check("the dormant Heat account is NOT polled", !polled.includes("anthonychiang.bsky.social"));
+  check("the unconfirmed 76ers handle is NOT polled", !polled.includes("pompeyonsixers.bsky.social"));
+  check("no unconfirmed row can be polled even if someone flips its feed flag", (() => {
+    const prev = M.BSKY_REPORTERS.find(r => r.conf === "unconfirmed");
+    if (!prev) return false;
+    const savedFeed = prev.feed;
+    prev.feed = true;                             // simulate the dangerous edit
+    const stillPolled = M.Social.feedAccounts().some(a => a.handle === prev.handle);
+    prev.feed = savedFeed;
+    return stillPolled === false;
+  })());
+  check("every polled account carries identity evidence in the row that produced it",
+    M.Social.feedAccounts().every(a => a.evidence && a.evidence.length > 30));
+  check("no polled handle is an unresolved 'handle.invalid' or a self-declared mirror",
+    polled.every(h => h !== "handle.invalid" && !/mirror/i.test(h)));
+  check("the 30-team coverage model is exposed to the pages and to this harness",
+    typeof M.arenaCoverage === "function" && typeof M.arenaCoverageSummary === "function");
+  check("coverage names every one of the 30 teams and leaves no unexplained gap",
+    (() => { const cov = M.arenaCoverage(); const s = M.arenaCoverageSummary();
+      return cov.length === 30 && s.teams === 30 && s.gap === 0 && cov.every(c => c.gaps.length >= 0 && c.official.news); })());
+  check("the coverage summary does NOT claim all 30 teams have a verified writer",
+    (() => { const s = M.arenaCoverageSummary(); return s.verifiedPollable + s.bioPollable < 30 && s.officialOnly > 0; })());
+  check("official club news URLs are generated from the team registry, not typed twice",
+    M.nbaTeamNewsUrl("CLE") === "https://www.nba.com/cavaliers/news" && M.nbaTeamNewsUrl("MIA") === "https://www.nba.com/heat/news");
+  check("the reporter re-verification tool exists and states its failure policy",
+    fs.existsSync(path.join(ROOT, "tools/verify_reporters.js")) &&
+    /verification-lost/.test(fs.readFileSync(path.join(ROOT, "tools/verify_reporters.js"), "utf8")));
+  check("a workflow re-runs the reporter verification without human input",
+    /verify_reporters\.js/.test(fs.readFileSync(path.join(ROOT, ".github/workflows/live-audit.yml"), "utf8")));
+}
 
 console.log("== alert engine ==");
 check("sound defaults to ON", M.AlertEngine.isSoundOn() === true);

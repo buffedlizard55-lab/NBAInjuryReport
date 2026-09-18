@@ -134,8 +134,26 @@ check("social: real in-game exit kept and flagged", snap.posts.some(p => p.inGam
 const kept = snap.posts.find(p => /left the game/.test(p.text));
 check("social: the genuine injury post is stored with severity + url",
   !!kept && /bsky\.app/.test(kept.url), JSON.stringify(snap.posts.map(p => p.text.slice(0, 30))));
-check("social: 13 allow-listed accounts were polled", Object.keys(snap.social.accounts).length === 13,
-  String(Object.keys(snap.social.accounts).length));
+/* The polled set is DERIVED, not a magic number. Session 10 grew the allow-list from 13 to 29
+ * (5 official/outlet accounts + 24 feed-enabled reporters), and this check used to hardcode 13 —
+ * so it failed the moment the registry grew, instead of verifying the rule that matters: every
+ * account polled must be one the registry actually allows, and none of the held-out rows
+ * (dormant / unconfirmed / feed:false) may ever appear. Recomputing the expectation from data.js
+ * means a future registry change is checked, not merely counted. */
+const D_registry = (() => {
+  const src = fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8");
+  return new Function(src + "\n; return { BSKY_REPORTERS, SOCIAL_ACCOUNTS, reporterConf };")();
+})();
+const expectedPolled = D_registry.SOCIAL_ACCOUNTS.filter(a => a.feed).map(a => a.handle)
+  .concat(D_registry.BSKY_REPORTERS.filter(r => r.feed !== false && D_registry.reporterConf(r) !== "unconfirmed").map(r => r.handle));
+const polledHandles = Object.keys(snap.social.accounts);
+const heldOut = D_registry.BSKY_REPORTERS.filter(r => r.feed === false || D_registry.reporterConf(r) === "unconfirmed").map(r => r.handle);
+check("social: exactly the allow-listed accounts were polled (derived from the registry)",
+  polledHandles.length === expectedPolled.length && expectedPolled.every(h => polledHandles.includes(h)),
+  "polled " + polledHandles.length + " of " + expectedPolled.length + " expected: " +
+  expectedPolled.filter(h => !polledHandles.includes(h)).join(","));
+check("social: held-out rows (dormant / unconfirmed) were never polled", heldOut.every(h => !polledHandles.includes(h)),
+  heldOut.filter(h => polledHandles.includes(h)).join(","));
 
 const histDir = path.join(tmp, "data/history");
 const day = new Date().toISOString().slice(0, 10);

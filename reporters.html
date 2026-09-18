@@ -34,14 +34,26 @@
     <p class="tiny muted">Counts below are computed from <code>assets/js/data.js</code> at page load, not typed in — if a row is added or a status
       changes, these numbers move with it (a hardcoded count on a verification page is exactly the kind of stale claim this project flags).</p>
     <div class="pill-row" id="reporterPills" data-pills>
-      <span class="pill ok">✓ 25 X handles verified</span>
-      <span class="pill ok">✓ 8 Bluesky reporters verified 2026-09-17</span>
-      <span class="pill ok">✓ 7 official/outlet Bluesky accounts verified</span>
-      <span class="pill ok">✓ 20 reporters added from bylines on the injury feed itself (no handle asserted)</span>
-      <span class="pill warn">4 outlet-verified · X handle unconfirmed (none asserted)</span>
-      <span class="pill bad">1 retired · 1 inactive on X</span>
-      <span class="pill ok">✓ Fischer outlet RESOLVED 2026-09-17 — The Stein Line, quoted from the outlet's own byline</span>
+      <span class="pill">computing counts from the registry…</span>
     </div>
+  </section>
+
+  <!-- ============ IN-ARENA VERIFICATION STATUS (session 10) ============ -->
+  <section class="card board-hero" id="inArenaCoverageCard" style="margin-top:16px">
+    <h2>🏟️ In-arena verification status — computed for all 30 teams <span class="tiny muted">session 10, 2026-09-18</span></h2>
+    <p class="muted small">This is the list the alert system actually uses to verify a player's status the moment it happens.
+      It is <b>computed</b> from the registries in <code>assets/js/data.js</code> by <code>arenaCoverage()</code> — not typed into this page — so a team
+      without a verified writer shows up as a gap instead of borrowing a neighbour's green tick. Three layers are kept apart:
+      <b>identity evidence</b> (a Bluesky verification object, or the account's own bio naming outlet + beat),
+      <b>pollability</b> (whether the account's feed is read automatically, free and keyless), and
+      <b>recency</b> (measured by <code>tools/verify_reporters.js</code>, which re-reads every account and every club channel in CI).</p>
+    <div class="pill-row" id="coverageSummary" data-pills><span class="pill">computing coverage…</span></div>
+    <div class="callout warn" id="coverageWorklist" style="margin-top:10px">Loading the worklist…</div>
+    <div class="tiny muted" id="verifyStatus" style="margin-top:8px">Checking the automated re-verification file…</div>
+    <p class="tiny muted" style="margin-top:8px">Reading the matrix: <span class="badge ok">Bluesky-verified</span> means Bluesky's own verification object
+      (issuer <span class="kbd">bsky.app</span> or the outlet's domain account, e.g. <span class="kbd">theathletic.com</span>) vouched for the account when it was read.
+      <span class="badge warn">bio states outlet + beat</span> means the strongest evidence is the account describing itself — real, but weaker, and labelled as such everywhere.
+      <b>A verified account is still not proof the reporter is in the building</b>, and a beat assignment is a claim about coverage, never a proven location.</p>
   </section>
 
   <div class="callout warn"><b class="t">⚠ Read this before using the list for alerts</b>
@@ -135,15 +147,21 @@
 
   <!-- ============ 30-TEAM IN-ARENA COVERAGE MATRIX ============ -->
   <section class="card" style="margin-top:16px" id="matrixCard">
-    <h2>🏟️ 30-Team In-Arena Coverage &amp; Live Exit Intelligence Matrix</h2>
-    <p class="muted small">This is the intelligence layer used to verify player injury status the moment in-game events occur. When an offensive player heads to the locker room during ongoing games, in-arena beat writers report it immediately before official league designations.</p>
+    <h2>🏟️ 30-Team In-Arena Verification Matrix — every team, including the gaps</h2>
+    <p class="muted small">One row per franchise. Column 2 is who is actually polled for that team, with the identity class and the two links a
+      reviewer needs: the account itself and the <b>re-check API call</b> that returns the evidence (bio, verification object, counts) with
+      no account and no key. Column 3 is the computed coverage class and the measured gaps. Column 4 is the official club channel —
+      a first-class layer added this session, because <code>nba.com/&lt;slug&gt;/news</code> needs no key, cannot be rate-limited by a third party,
+      and is where a reader should look when a wire post is ambiguous.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Team</th><th>City &amp; Franchise</th><th>Primary In-Arena Beat / Reporter</th><th>Outlet &amp; Role</th><th>Live Exit Detection</th><th>Profile / Search</th><th>Official Verification Evidence</th></tr></thead>
+        <thead><tr><th>Team</th><th>Polled in-arena writer(s) &amp; evidence</th><th>Coverage class &amp; gaps</th><th>Official club channel</th><th>Manual review</th></tr></thead>
         <tbody id="arenaMatrixTable"></tbody>
       </table>
     </div>
-    <p class="tiny muted">In-arena reporters travel with the team or sit courtside, providing the lowest latency reports for locker room exits, limping, and questionable-to-return designations before official press releases.</p>
+    <p class="tiny muted">In-arena beat writers travel with the team or sit courtside, so they are usually first to a locker-room trip, a limp, or a
+      questionable-to-return report. <b>Where a team shows "no writer account", that is the honest state:</b> this project would rather print a gap
+      than print a name it cannot back with evidence. Nothing on this page is a medical assessment.</p>
   </section>
 
   <div class="grid two">
@@ -240,13 +258,42 @@
   </div>
 
   <section class="card" style="margin-top:16px">
-    <h2>🔭 Beat-writer expansion (one in-arena writer per team) — honest status</h2>
-    <p class="muted small">The goal is a verified in-arena writer for all 30 clubs. Rows are promoted here only after the same line-by-line
-      check (outlet bio + confirmed handle). Current confirmed pipeline: <b>DAL</b> MacMahon ✓ · <b>LAL</b> McMenamin ✓ ·
-      <b>GSW</b> Slater ✓, Thompson ✓ · <b>MIA</b> Winderman ✓ (Reynolds outlet-only) · <b>CHI</b> K.C. Johnson (outlet-only) ·
-      <b>NYK/BKN</b> Begley ✓ · <b>NOP</b> Guillory ✓ · <b>SAS</b> McDonald + Orsborn ✓ (Bluesky, verified today) ·
-      <b>UTA</b> Sarah Todd ✓ (Bluesky). <b>Remaining teams are NOT covered yet</b> — for those, use the per-team X and Bluesky search links on the
-      <a href="index.html">dashboard</a>. Adding a row without checking it is exactly the failure mode this project is trying to avoid.</p>
+    <h2>🔭 Expansion log — what session 10 actually added, and what it refused to add</h2>
+    <p class="muted small">The goal is a verified in-arena writer for all 30 clubs. Rows are promoted only after the same line-by-line check
+      (handle resolves → bio read verbatim → verification object recorded), which is why the additions below carry their own quotes and re-check URLs.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Outcome</th><th>Teams / accounts</th><th>Evidence basis</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge ok">18 rows added</span></td>
+            <td>MIN, DET, PHI, POR, WAS, TOR, LAC, MIL, ORL, SAC, CLE, ATL, IND, MIA, PHX (+ national)</td>
+            <td>Read live 2026-09-18 via <code>app.bsky.actor.getProfiles</code> (keyless). 10 of the 16 pollable rows carry a VALID Bluesky verification object
+              (issuer <span class="kbd">bsky.app</span> or <span class="kbd">theathletic.com</span>); the rest name outlet + beat in their own bio and are labelled
+              <span class="badge warn">bio states outlet + beat</span>.</td></tr>
+          <tr><td><span class="badge ok">8 gap teams closed</span></td>
+            <td>CLE, DET, MIL, MIN, PHI, POR, SAC, WAS</td>
+            <td>All eight previously had <b>no writer row at all</b>. Each now has at least one evidence row; CLE and MIL are the weakest (see the two rows below).</td></tr>
+          <tr><td><span class="badge warn">1 dormant account listed, not polled</span></td>
+            <td>MIA — Anthony Chiang (Miami Herald)</td>
+            <td>Bio is correct, but <code>getAuthorFeed</code> returned a newest post of <b>2024-12-11</b> with 4 posts total. Stored with <code>feed:false</code>:
+              a dormant account is not coverage.</td></tr>
+          <tr><td><span class="badge bad">1 handle refused</span></td>
+            <td>PHI — <span class="kbd">pompeyonsixers.bsky.social</span></td>
+            <td>Active account with a name that looks like the Inquirer's beat writer, but the bio (<code>"#NBASky Locked on 76ers co-host."</code>) names no outlet and
+              there is no verification object. Kept in the directory as <b>unconfirmed</b> and wired into no alert.</td></tr>
+          <tr><td><span class="badge warn">2 identity traps recorded</span></td>
+            <td>ATL doppelgänger · MIL "mirror"</td>
+            <td>A second <span class="kbd">Brad Rowland</span> account (23 followers, 1 post) exists, and an <span class="kbd">Eric Nehm (mirror)</span> account carries the
+              literal handle <span class="kbd">handle.invalid</span>. Both excluded; both pinned by tests so they cannot return.</td></tr>
+          <tr><td><span class="badge bad">13 teams still official-channel only</span></td>
+            <td>BOS, BKN, CHA, CHI, DAL, DEN, GSW, HOU, LAL, MEM, NOP, NYK, OKC</td>
+            <td>These teams have directory rows (often a verified X handle) but <b>no pollable account this layer can read for free</b> — X has no free read tier.
+              They are listed as gaps in the matrix above; closing them needs either a Bluesky account for a beats writer or an official channel that publishes designations.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tiny muted">Discovery method (repeatable, no key): <code>searchActorsTypeahead?q=&lt;full name&gt;</code> → <code>getProfiles?actors=&lt;handle&gt;</code>.
+      <code>searchStarterPacks</code> was probed and is registered as a discovery aid only — the team packs it returns are fan-built, so membership is never treated as evidence.</p>
   </section>
 
   <footer>
