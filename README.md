@@ -26,7 +26,7 @@ NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster pla
 | X / Instagram / Facebook | **No authorized read connector configured.** X embeds and links are manual review only, not alert inputs. Current pricing and access entitlements are not asserted. |
 | Reporter directory / in-arena layer | Now **computed per team** (`arenaCoverage()` in `assets/js/data.js`), not a typed table. Measured 2026-09-18: **10 of 30 teams have a Bluesky-verified in-arena writer whose feed is polled automatically, 7 more have a bio-verified pollable writer, and 13 have no writer account at all** — those 13 are named as gaps on the page, never rendered as covered. 18 pollable accounts, 10 Bluesky-verified. Every row added this session stores the verbatim bio it was verified from, the re-checkable API URL, and the counts observed that day. A verified account is not a verified claim, a tier is not an accuracy score, and an assigned beat does not prove attendance at a game. |
 | Identity re-verification (no manual input) | `tools/verify_reporters.js` re-runs the exact API call each row cites (bio, verification object, newest post) plus all 30 official club channels. A handle that stops resolving or a claimed verification object that disappears **fails the job**; bio drift and dormancy are written to `data/live/reporter_verify.json` and shown on the reporter page. Scheduled daily in `live-audit.yml`. |
-| Official club channels | `nba.com/<slug>/news` for all 30 franchises — free, keyless, first-party. Verified live for CLE on 2026-09-18; the other 29 are labelled "pattern, not re-read this session" in the UI until the verifier checks them. Deliberately **not** an injury feed: club releases cover signings and promotions far more often than injuries, so this layer is corroboration, never the alert trigger. |
+| Official club channels | `nba.com/<slug>/news` for all 30 franchises — free, keyless, first-party. **Measured 2026-09-18: all 30 answered HTTP 403 to the CI runner**, while CLE's page answered 200 to a browser-shaped client the same day. So this is a **manual-review link**, not a machine-read feed, and the UI says exactly that per row (`NBA_TEAM_NEWS_PROBE`). Deliberately **not** an injury feed either: club releases cover signings and promotions far more often than injuries. Corroboration only, never the alert trigger. |
 
 ## Reproducible audit, September 17, 2026
 
@@ -66,10 +66,11 @@ These observations do not certify every legacy reporter link or guarantee later 
 
 ```sh
 python3 -m http.server 8080 --bind 0.0.0.0
-node tools/smoke_test.js                 # 209 checks (12 new: what the social layer actually polls)
+node tools/smoke_test.js                 # 212 checks (what the social layer actually polls + the OUT-label invariant)
 node tools/impact_test.js                # 80 checks (geo, collector math, impact model v2, wiring)
 node tools/integration_test.js           # 71 checks (boots the real dashboard AND the reporter page)
-node tools/verify_reporters_test.js      # 37 checks (identity-verification policy, offline)
+node tools/poll_fixture_test.js          # 25 checks (poller set DERIVED from the registry, held-out rows never polled)
+node tools/verify_reporters_test.js      # 44 checks (identity-verification policy, offline)
 node tools/poll_fixture_test.js          # 24 checks (real poller, fixture transports)
 node tools/regression_test.js            # 26 groups
 python3 -m unittest discover -s tools -p 'test_*.py'   # 26 tests, incl. the audit tool itself

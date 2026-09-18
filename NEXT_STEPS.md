@@ -31,6 +31,25 @@ fact comes from a free, keyless, publicly re-checkable source.
 6. **Tests**: smoke 209 · integration 71 (now boots the reporter page too) · verify_reporters 37 ·
    impact 80 · poll fixtures 24 · regression 26 groups · Python 26 · replay check.
 
+**The verifier earned its keep on its first live run (2026-09-18T19:21Z / 19:27Z, GitHub runner)**
+
+The job was written to keep the identity layer honest; it found four real problems before the session
+ended, none of which a human had noticed:
+
+1. `theathletic.com`'s OWN Bluesky verification object is now **invalid** (`isValid: false`), while
+   the staff objects it issued are still valid and its `trustedVerifierStatus` is still `valid`. The
+   row that claimed otherwise was written on 2026-09-17 — corrected, with the narrow scope recorded.
+2. **All 30 club `/news` pages answer HTTP 403 to the runner** (200 to a browser-shaped client the
+   same day), so the club layer is a manual-review link, never a machine-read feed.
+3. Measured dormancy: `dallasmavs` newest post 2023-05-05 (1,231 days) *and* no verification object →
+   taken out of collection as well as out of alerts; `trailblazers` 308 days; `clevelandcavaliers`
+   and `basketball-reference` zero posts; reporters `kellyiko` 99 days, `ejelite1` 45.
+4. The collector's self-audit failed on a legitimate post because the audit carried its own
+   hand-copied phrase list; the rule now lives once (`SOCIAL_OUT_LANGUAGE_RE`) and the failure
+   message names each violation instead of being truncated to its first line.
+
+Final state of the job: 34 checked · 27 ok · 0 bio drift · 0 missing · 0 verification-lost · 0 fatal.
+
 **Three identities were refused rather than assumed** — and each refusal is a task for next session:
 a dormant Heat account (newest post 2024-12-11), an unconfirmed 76ers handle whose bio names no outlet,
 and an "Eric Nehm (mirror)" account carrying the literal handle `handle.invalid`. Also recorded: a

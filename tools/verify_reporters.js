@@ -118,14 +118,21 @@ function judge(row, observed, now) {
    * statement about a promise it never made — the honest verdict is about identity alone, and
    * the row's own evidence text already carries the dormancy caveat. */
   const claimsCoverage = row.feed !== false;
-  const dormant = claimsCoverage && days != null && days > DORMANT_DAYS;
+  const noPosts = claimsCoverage && o.feedReadable === true && o.postItems === 0;
+  const recencyUnread = claimsCoverage && o.feedReadable === false;
+  const dormant = claimsCoverage && (noPosts || (days != null && days > DORMANT_DAYS));
   const base = {
     handle: row.handle, name: row.name, team: row.team || null, conf: D.reporterConf(row), feed: row.feed !== false,
     verification: v, bio: String(o.profile.description || "").slice(0, 400),
-    latestPostAt: o.latestPostAt || null, dormantDays: days
+    latestPostAt: o.latestPostAt || null, dormantDays: days,
+    postItems: o.postItems == null ? null : o.postItems,
+    recencyReadable: o.feedReadable !== false
   };
   if (!hasQuote) return Object.assign(base, { status: "no-quote", fatal: false, notes: ["no stored evidenceQuote (pre-2026-09-18 row): bio recorded, drift cannot be judged"] });
   if (present === false) return Object.assign(base, { status: "bio-drift", fatal: false, notes: ["stored quote is no longer present in the live bio — re-read and update the row"] });
+  if (recencyUnread) return Object.assign(base, { status: "recency-unknown", fatal: false,
+    notes: ["identity matches, but the newest post could NOT be read (" + (o.feedError || "author feed unavailable") + ") — recency is NOT established"] });
+  if (noPosts) return Object.assign(base, { status: "dormant", fatal: false, notes: ["quote matches, but the feed is readable and holds ZERO posts — not a news channel"] });
   if (dormant) return Object.assign(base, { status: "dormant", fatal: false, notes: ["quote matches, but newest post is " + days + " days old (>" + DORMANT_DAYS + ")"] });
   return Object.assign(base, { status: "ok", fatal: false,
     notes: claimsCoverage ? [] : ["held out of the alert path (feed:false) — identity re-checked, recency not enforced"] });
@@ -138,6 +145,7 @@ function summarize(rows) {
     checked: rows.length,
     ok: by.ok || 0, bioDrift: by["bio-drift"] || 0, dormant: by.dormant || 0,
     missing: by.missing || 0, verificationLost: by["verification-lost"] || 0, noQuote: by["no-quote"] || 0,
+    recencyUnknown: by["recency-unknown"] || 0,
     fatal: rows.filter(r => r.fatal).length,
     withProblems: rows.filter(r => r.status !== "ok").map(r => (r.handle || r.name) + " (" + r.status + ")")
   };
@@ -179,13 +187,24 @@ async function profilesFor(handles) {
   return { found, errors };
 }
 
-async function latestPostAt(handle) {
+/* Recency read. Returns the newest post date AND whether the feed was readable at all.
+ *
+ * WHY THE OBJECT (2026-09-18): the first version returned null for both "the account has never
+ * posted" and "the request failed", so a failed read looked exactly like a healthy account that
+ * was not dormant — the silent-pass shape this project keeps finding. The caller now records
+ * `feedReadable` and `postItems`, and judge() can say "recency NOT established" instead of
+ * implying a clean bill of health it did not verify. */
+async function latestPost(handle) {
   try {
     const data = await getJson(D.ENDPOINTS.bskyAuthorFeed + encodeURIComponent(handle) + "&limit=1");
-    const item = ((data && data.feed) || [])[0];
+    const items = (data && data.feed) || [];
+    const item = items[0];
     const rec = item && item.post && item.post.record;
-    return (rec && rec.createdAt) || (item && item.post && item.post.indexedAt) || null;
-  } catch (e) { return null; }
+    return {
+      at: (rec && rec.createdAt) || (item && item.post && item.post.indexedAt) || null,
+      items: items.length, readable: true, error: null
+    };
+  } catch (e) { return { at: null, items: null, readable: false, error: e.message }; }
 }
 /* Club-channel probe.
  *
@@ -267,7 +286,11 @@ async function main() {
     const profile = found.get(String(row.handle).toLowerCase()) || null;
     const observed = { profile, error: errors.get(String(row.handle).toLowerCase()) || null };
     if (profile && row.feed !== false) {
-      observed.latestPostAt = await mapLimitedOnce(profile.handle);
+      const rec = await mapLimitedOnce(profile.handle);
+      observed.latestPostAt = rec.at;
+      observed.feedReadable = rec.readable;
+      observed.postItems = rec.items;
+      observed.feedError = rec.error;
     }
     judged.push(judge(row, observed, now));
   }

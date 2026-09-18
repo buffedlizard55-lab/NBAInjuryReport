@@ -14,8 +14,8 @@ const sandbox = { console, Date, Set, Map, AbortController, AbortSignal, setTime
 };
 sandbox.window = sandbox;
 vm.createContext(sandbox);
-vm.runInContext(['data','role','alerts','injuries','ingame','social'].map(f => fs.readFileSync('assets/js/' + f + '.js','utf8')).join('\n') + '\nthis.M={AlertEngine,InjuryBoard,InGame,Social,LineupImpact,SIGNALS,REPORTERS,espnAbbr};', sandbox);
-const { AlertEngine, InjuryBoard, InGame, Social, LineupImpact, SIGNALS, REPORTERS } = sandbox.M;
+vm.runInContext(['data','role','alerts','injuries','ingame','social'].map(f => fs.readFileSync('assets/js/' + f + '.js','utf8')).join('\n') + '\nthis.M={AlertEngine,InjuryBoard,InGame,Social,LineupImpact,SIGNALS,REPORTERS,espnAbbr,SOCIAL_ACCOUNTS,BSKY_REPORTERS};', sandbox);
+const { AlertEngine, InjuryBoard, InGame, Social, LineupImpact, SIGNALS, REPORTERS, SOCIAL_ACCOUNTS } = sandbox.M;
 check('Freshness rejects old, missing, malformed and future timestamps', () => {
   for (const t of [null, 'no', '2020-01-01', new Date(Date.now()+3600000).toISOString()]) assert.equal(AlertEngine.isFresh(t), false);
   assert.equal(AlertEngine.isFresh(now), true);
@@ -121,14 +121,27 @@ check('A high-impact starter tag never changes alert eligibility, only its wordi
     const alert = verdict.alerts.find(a => a.uri === 'at://old') || verdict.alerts[0];
     assert.ok(!alert || alert.alertEligible === false, 'a 3-day-old post must not be alert-eligible');
   });
-  check('Identity eligibility: recorded evidence qualifies a reporter; the flagged team account stays silent', () => {
+  check('Identity eligibility: recorded evidence qualifies a reporter; an unverified team account is never collected', () => {
     const fa = Social.feedAccounts();
     const mc = fa.find(a => a.handle === 'jmcdonaldsa.bsky.social');   // Spurs beat writer: list membership + bio, NO Bluesky object
     const nba = fa.find(a => a.handle === 'nba.com');                   // official league: valid verification object
-    const mavs = fa.find(a => a.handle === 'dallasmavs.bsky.social');   // followed by the NBA, NO object, flagged in data.js
     assert.ok(mc && mc.verified === true && mc.bskyVerified === false, 'evidence-recorded reporter is alert-eligible without a verification object');
     assert.ok(nba && nba.verified === true && nba.bskyVerified === true, 'verified league account is alert-eligible');
-    assert.ok(mavs && mavs.verified === false && mavs.bskyVerified === false, 'flagged unverified team account must remain silent');
+    /* dallasmavs (bio 'Mavs.com', followed by the NBA, NO verification object, newest post 2023-05-05)
+     * was polled-but-silent until 2026-09-18. It is now not collected at all: an unverified handle
+     * that has not posted in 1,231 days cannot contribute anything but risk. The assertion therefore
+     * moved from "collected and silent" to the stronger "never enters the allow-list" — and the
+     * second half proves the silence rule still holds for an unverified account that IS collected. */
+    const mavsRow = (sandbox.M.SOCIAL_ACCOUNTS || []).find(a => a.handle === 'dallasmavs.bsky.social');
+    assert.ok(mavsRow && mavsRow.feed === false, 'flagged unverified team account is held out of collection');
+    assert.ok(!fa.find(a => a.handle === 'dallasmavs.bsky.social'), 'held-out account must not appear in feedAccounts()');
+    const synthetic = { handle: 'fake-unverified.bsky.social', name: 'Fake', kind: 'official-team', team: 'DAL', feed: true,
+      bskyVerified: false, verified: 'FLAGGED unverified-team-account', url: 'https://bsky.app/profile/fake-unverified.bsky.social' };
+    sandbox.M.SOCIAL_ACCOUNTS.push(synthetic);
+    try {
+      const acct = Social.feedAccounts().find(a => a.handle === synthetic.handle);
+      assert.ok(acct && acct.verified === false && acct.bskyVerified === false, 'an unverified official account that IS collected stays silent');
+    } finally { sandbox.M.SOCIAL_ACCOUNTS.pop(); }
   });
   check('checkAlerts: same post, eligible account sounds; account without evidence is visible but silent', () => {
     sandbox.Intelligence = { resolveText: t => /Test Player/.test(String(t)) ? { player:'Test Player', team:'BOS', playerId:'1' } : null };

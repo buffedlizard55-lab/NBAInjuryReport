@@ -221,6 +221,7 @@ const Reporters = (() => {
         el.innerHTML = `<b>Last automated re-verification:</b> ${esc(new Date(v.generated).toLocaleString())} —
           ${esc(String(s.checked))} handles checked · ${esc(String(s.ok))} clean ·
           ${esc(String(s.bioDrift))} bio drift · ${esc(String(s.dormant))} dormant ·
+          ${esc(String(s.recencyUnknown || 0))} recency unreadable ·
           ${esc(String(s.missing))} unresolvable · club channels ${esc(String((v.channelSummary || {}).ok))}/${esc(String((v.channelSummary || {}).checked))} answered.
           ${problems.length ? `<div class="tiny" style="margin-top:6px">${problems.map(p => `<div>⚠ ${esc(p.handle || p.name)} → <b>${esc(p.status)}</b> ${esc((p.notes || [])[0] || "")}</div>`).join("")}</div>` : ""}`;
       })

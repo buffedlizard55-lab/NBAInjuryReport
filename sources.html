@@ -290,6 +290,10 @@
       <li>Watch the in-game monitor against a real live game; if ESPN's live summary shape differs from the verified completed-game payload, adjust <span class="kbd">assets/js/ingame.js</span>.</li>
       <li>Re-read each Bluesky account's verification badge (verification objects can be revoked) and re-run <span class="kbd">graph.getList</span> on Howard Beck's list for new writers.</li>
       <li>Re-confirm every row marked outlet-only / community / flagged (Slater's employer, Aldridge's handles, Hollinger's status).</li>
+      <li>Read <span class="kbd">data/live/reporter_verify.json</span> (written by the daily job): it records, per row, whether the
+        stored quote still appears in the live bio, when the account last posted, and what each club channel answered. Its first real run
+        (2026-09-18T19:21Z) corrected a stale claim about The Athletic's own verification object, measured several dormant accounts, and found that
+        all 30 club pages answer <b>HTTP 403</b> to a runner — which is why the club layer is labelled a manual-review link, not a feed.</li>
       <li>Run the suites before shipping: <span class="kbd">node tools/smoke_test.js</span>,
         <span class="kbd">node tools/verify_reporters_test.js</span>, <span class="kbd">node tools/integration_test.js</span>,
         <span class="kbd">node tools/impact_test.js</span>. Counts are printed by each run rather than quoted here — a

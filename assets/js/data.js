@@ -226,8 +226,12 @@ const SOCIAL_ACCOUNTS = [
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=sixersnba.bsky.social",
     observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-17T14:04:32.265Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/sixersnba.bsky.social" },
-  { handle: "dallasmavs.bsky.social", name: "Dallas Mavericks", kind: "official-team", team: "DAL", feed: true, bskyVerified: false,
-    verified: "2026-09-17 — followed by the official NBA account and bio reads 'Mavs.com', but NO Bluesky verification object was present. FLAGGED as unverified-team-account: treat as club-run only after a second source confirms.",
+  /* feed:false added 2026-09-18 after the automated re-check measured the newest post at
+   * 2023-05-05 (1,231 days) AND confirmed there is still no verification object. An unverified
+   * account that never posts cannot contribute a wire item or an alert, so it is listed with its
+   * evidence and kept out of collection entirely. */
+  { handle: "dallasmavs.bsky.social", name: "Dallas Mavericks", kind: "official-team", team: "DAL", feed: false, bskyVerified: false,
+    verified: "2026-09-18 — RE-MEASURED: newest post 2023-05-05 (1,231 days old) and STILL no Bluesky verification object; bio reads 'Mavs.com' and the official NBA account follows it, but following is not verification. FLAGGED as unverified-team-account and held out of collection (feed:false) as well as out of alerts: an unverified, dormant handle cannot add anything.",
     evidenceQuote: "Mavs.com",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=dallasmavs.bsky.social",
     observed: { checkedAt: "2026-09-18", latestPostAt: "2023-05-05T22:58:05.208Z", verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
@@ -258,7 +262,10 @@ const SOCIAL_ACCOUNTS = [
     observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T05:11:54.272Z", followersCount: 386356, postsCount: 17208, verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/theathletic.com" },
   { handle: "basketball-reference.com", name: "Basketball Reference", kind: "stats", team: null, feed: false, bskyVerified: true,
-    verified: "2026-09-17 — valid Bluesky verification object; publisher of an NBA starter pack",
+    verified: "2026-09-17 — valid Bluesky verification object; publisher of an NBA starter pack. Re-read 2026-09-18 (19:27Z): object still VALID, but the account has ZERO posts, so it is evidence-only and can never appear in the wire.",
+    evidenceQuote: "Basketball stats and history for the NBA, WNBA, European Leagues, ABA, and more.",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=basketball-reference.com",
+    observed: { checkedAt: "2026-09-18", latestPostAt: null, postsCount: 0, verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:27:40Z" },
     url: "https://bsky.app/profile/basketball-reference.com" }
 ];
 

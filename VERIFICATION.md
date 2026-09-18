@@ -128,6 +128,25 @@ The Athletic author pages can be read from this environment (they answer **HTTP 
 | Work performed line by line; links for manual review; no hallucinations | ✅ | Every added row carries the exact bio text, the exact API URL and a dated observation; nothing was inferred, and three identities were **refused** rather than assumed. |
 | Flag irregularities for review | ✅ | 8 new `FLAGS` entries + 6 rows documented in `sources.html` and the expansion log: doppelgänger, mirror account, dormant account, unconfirmed handle, squatted team handles, 403-blocked outlet pages. |
 
+## Pass 2b — what the automated re-verification found once it actually ran
+
+The claim behind this session was "the verifier keeps the identity layer honest". On the first real
+run (GitHub runner, 2026-09-18T19:21Z and 19:27Z) it did — and the findings are the strongest
+evidence in this report, because nobody typed them:
+
+| Finding | Evidence | Action |
+|---|---|---|
+| **A stale claim in this project's own data** | `theathletic.com` was recorded on 2026-09-17 as carrying a valid Bluesky verification object. The API now returns `isValid: false`, `verifiedStatus: 'invalid'` (object issued 2025-04-21). It also still returns `trustedVerifierStatus: 'valid'`, and the objects it issued to staff (Vecenie, Vorkunov, Robbins, Murray) remain valid. | Row corrected (the OUTLET has no valid badge; the STAFF rows stand), the narrow scope written next to the row, and a FLAG records that the automated run — not a human — caught it. |
+| **Club channels are not machine-readable from CI** | All 30 `nba.com/<slug>/news` URLs answered **HTTP 403** to the runner, while the same page answered 200 to a browser-shaped client the same day. | `NBA_TEAM_NEWS_PROBE` records the probe result; the matrix states it per row; the layer is documented as a **manual-review link**, never as a verified feed. The probe now sends ordinary browser Accept headers with an identifying User-Agent, and the per-channel result is stored so a change is visible as data. |
+| **Measured dormancy** | `dallasmavs` newest post 2023-05-05 (1,231 days) and still no verification object · `trailblazers` 308 days · `clevelandcavaliers` and `basketball-reference` zero posts · reporter rows `kellyiko` 99 days, `ejelite1` 45 days, `samvecenie` 73, `tomhaberstroh` 57. | Dormancy is now a number in the evidence file rather than an assumption. `dallasmavs` was additionally taken **out of collection** (`feed:false`), since an unverified, dormant handle cannot add a wire item or an alert. |
+| **A hand-copied rule inside the audit** | The collector run failed with `"#Cavs Craig Porter Jr. suffered a left groin strai…" labelled OUT without an explicit out phrase`. The classifier was right — the audit's own phrase list had drifted from the classifier's. | The OUT-language rule now exists **once**, as `SOCIAL_OUT_LANGUAGE_RE` in `data.js`, and the audit asserts against that constant (its independent checks — injury vocabulary, negation guard, duplicate detection — are unchanged). Smoke tests pin the invariant in both directions, including the real text that failed CI. |
+| **A truncated failure message** | The failure annotation read only `REPLAY CHECK FAILED:`. | The audit now emits one annotation per violation (capped at 40 with a remainder count), so a red run names its own evidence in the UI and via the API. |
+| **A failing read that looked like a pass** | `latestPost` returned `null` both for "never posted" and "request failed". | Now returns readability + item count; the verifier reports `recency-unknown` instead of implying a clean bill of health, and a readable-but-empty feed is reported as dormant with "ZERO posts" in the note. |
+
+After those corrections the same job reports: **34 handles checked · 27 ok · 0 bio drift · 6 dormant
+· 0 unresolvable · 0 verification-lost · 0 fatal**, with club channels at 0/30 answered by the runner
+(recorded, and stated in the UI rather than hidden).
+
 ### Residual limitations (carried forward, not hidden)
 
 1. **13 teams still have no pollable writer account.** X cannot be read for free; closing these

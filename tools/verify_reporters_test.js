@@ -165,5 +165,22 @@ check("the computed summary reports REAL coverage, not full coverage (no silent 
   return s.verifiedPollable < 30 && s.officialOnly > 0 && s.withGaps.length === 30 - s.verifiedPollable;
 })());
 
+/* ---- recency: "could not read the feed" must never look like a clean bill of health -------- */
+{
+  const row = { handle: "d.bsky.social", name: "D", evidenceQuote: "Pistons beat writer", bskyVerified: false, feed: true };
+  const readableEmpty = V.judge(row, { profile: profile("Pistons beat writer"), latestPostAt: null, feedReadable: true, postItems: 0 }, NOW);
+  check("a readable feed with ZERO posts is dormant, not fine",
+    readableEmpty.status === "dormant" && /ZERO posts/.test(readableEmpty.notes[0]), readableEmpty.status);
+  const unreadable = V.judge(row, { profile: profile("Pistons beat writer"), latestPostAt: null, feedReadable: false, feedError: "HTTP 500" }, NOW);
+  check("an UNREADABLE feed is reported as recency-unknown, never as a pass",
+    unreadable.status === "recency-unknown" && /NOT established/.test(unreadable.notes[0]), unreadable.status);
+  const heldOut = V.judge({ handle: "e.bsky.social", name: "E", evidenceQuote: "Pistons beat writer", feed: false },
+    { profile: profile("Pistons beat writer"), feedReadable: false }, NOW);
+  check("a feed:false row is not accused of a recency it never claimed", heldOut.status === "ok", heldOut.status);
+  const summary = V.summarize([readableEmpty, unreadable, heldOut]);
+  check("the summary counts recency-unknown separately from ok and dormant",
+    summary.recencyUnknown === 1 && summary.dormant === 1 && summary.ok === 1, JSON.stringify(summary));
+}
+
 console.log("\n" + pass + " passed, " + fail + " failed");
 process.exit(fail ? 1 : 0);
