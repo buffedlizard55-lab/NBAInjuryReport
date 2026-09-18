@@ -38,6 +38,14 @@ const bos = Geo.coordsFor("Boston"), lax = Geo.coordsFor("Los Angeles");
 check("a mapped city resolves", !!bos && bos.tz === "America/New_York");
 check("an unmapped city returns null rather than an approximation",
   Geo.coordsFor("Boise") === null && Geo.coordsFor("") === null);
+check("the venue names the LIVE 2026-27 feed actually used now resolve (Inglewood/Intuit Dome, Boulder, Ames, Tulsa)",
+  !!Geo.coordsFor("Inglewood", "CA") && !!Geo.coordsFor("Boulder", "CO") && !!Geo.coordsFor("Ames", "IA") && !!Geo.coordsFor("Tulsa", "OK"));
+check("a venue-name resolution carries its weaker provenance instead of looking like feed data",
+  Geo.coordsForVenue("Venetian Arena").venueNameResolved === true && Geo.coordsForVenue("Venetian Arena").city === "Las Vegas" &&
+  Geo.coordsForVenue("Not A Real Arena") === null);
+check("the Clippers' arena city overrides their feed city for the travel-origin fallback only",
+  Geo.homeCoords({ abbr: "LAC", city: "Los Angeles" }).city === "Inglewood" &&
+  Geo.homeCoords({ abbr: "LAL", city: "Los Angeles" }).city === "Los Angeles");
 check("every NBA team home city resolves", ["Atlanta", "Boston", "Brooklyn", "Charlotte", "Chicago", "Cleveland", "Dallas",
   "Denver", "Detroit", "San Francisco", "Houston", "Indianapolis", "Los Angeles", "Memphis", "Miami", "Milwaukee",
   "Minneapolis", "New Orleans", "New York", "Oklahoma City", "Orlando", "Philadelphia", "Phoenix", "Portland",
@@ -63,6 +71,14 @@ check("summer offsets shift with DST (ET -4)", Geo.utcOffsetHours("America/New_Y
 check("rest days: same calendar day is 0 (a back-to-back), skipping two days is 2",
   Geo.restDaysBetween("2026-10-03T23:00:00Z", "2026-10-04T23:00:00Z") === 0 &&
   Geo.restDaysBetween("2026-10-03T23:00:00Z", "2026-10-06T23:00:00Z") === 2);
+check("a venue with an empty address is resolved from its name AND flagged on the row",
+  (() => {
+    const team = { abbr: "LAC", city: "Los Angeles", name: "Clippers" };
+    const pay = { season: { displayName: "2026-27" }, events: [{ id: "V1", date: "2026-10-09T12:00Z", competitions: [{ date: "2026-10-09T12:00Z", venue: { fullName: "Venetian Arena", address: {} }, competitors: [{ homeAway: "away", team: { abbreviation: "LAC" } }, { homeAway: "home", team: { abbreviation: "DAL" } }], status: { type: { state: "pre", completed: false } } }] }] };
+    const s = CC.scheduleFrom(pay, team, "u", "2026-09-18T03:00:00Z");
+    const g = s.games[0];
+    return g.venueNameResolved === true && g.city === "Las Vegas" && s.unresolvedCities.length === 0 && g.travelMiles > 100;
+  })());
 check("a state mismatch is flagged for review instead of silently shifting the lookup",
   !!(Geo.coordsFor("Portland", "ME") || {}).stateMismatch && !(Geo.coordsFor("Portland", "OR") || {}).stateMismatch);
 

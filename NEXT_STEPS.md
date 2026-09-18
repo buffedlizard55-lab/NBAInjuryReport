@@ -9,7 +9,13 @@ two real defects found while reviewing it. Everything below is verified locally:
 no invariant violations.**
 
 1. **`assets/js/geo.js` (new) — the travel half of the model, and it is honest about being a model.**
-   37 city rows cover all 30 NBA home cities (asserted by `tools/impact_test.js`); great-circle distances
+   41 city rows cover all 30 NBA home cities plus long-standing and newly observed venues (asserted by
+   `tools/impact_test.js`). The list is not a guess: the first schema-3 CI run reported four unresolved
+   venue cities, and each was a real city on the published schedule — Inglewood, CA (the Clippers'
+   Intuit Dome, whose feed identity says Los Angeles), Boulder, Ames and Tulsa (neutral pre-season
+   sites) — so each earned a row. A venue whose address arrives EMPTY (observed: "Venetian Arena")
+   is resolved from the venue NAME and marked `venueNameResolved: true` so the weaker provenance
+   reaches the UI. Distances are cross-checked against published values; great-circle distances
    cross-checked against published values (Boston→Los Angeles 2,591 vs ~2,611 mi, Chicago→New York 711 vs
    ~713); IANA time-zone offsets read from the runtime database per game date (winter ET −5 / PT −8 /
    Phoenix −7, summer ET −4), so DST is data, not a hard-coded table; `restDaysBetween` returns 0 for a
@@ -49,7 +55,7 @@ no invariant violations.**
    `app.js` binds the new high-impact sound-test button and the impact filter tabs; new CSS for the
    watchlist, offense/risk tags and model lines; `intelligence.js` hands the model the schedule and
    team-production captures and rewrote the on-page legend to describe the real formula.
-7. **Registry regenerated:** `node tools/build_verified_sources.js` → **25 sources / 43 flags** (two new
+7. **Registry regenerated:** `node tools/build_verified_sources.js` → **25 sources / 44 flags** (two new
    verified sources: the ESPN team-schedule API and the city-coordinate travel model, both with what-it-is /
    what-it-is-NOT wording).
 

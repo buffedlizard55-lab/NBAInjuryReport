@@ -208,7 +208,7 @@ function rosterFrom(payload, team, url, now) {
  * the documented model in assets/js/geo.js. Every derived number carries the city it came from,
  * and an unrecognised city is reported as `unmappedCity` instead of being approximated. */
 function scheduleFrom(payload, team, url, now) {
-  const homeCity = Geo.coordsFor(team.city, null);
+  const homeCity = Geo.homeCoords(team);   // honours the arena-city override (LAC -> Inglewood)
   const events = (payload.events || [])
     .map(ev => {
       const comp = (ev.competitions || [])[0] || {};
@@ -233,7 +233,12 @@ function scheduleFrom(payload, team, url, now) {
   let prev = null;
   let prevCity = null;
   const enriched = events.map(g => {
-    const c = Geo.coordsFor(g.city, g.state);
+    /* The address block is normally complete. A handful of games (observed live 2026-09-18: the
+     * DAL/HOU pre-season games at "Venetian Arena") arrive with a venue name and NO city, so the
+     * venue-name table gets one chance — and the row records that it resolved that way. */
+    let c = Geo.coordsFor(g.city, g.state);
+    let viaVenueName = false;
+    if (!c && g.venue) { const v = Geo.coordsForVenue(g.venue); if (v) { c = v; viaVenueName = true; } }
     /* When the previous venue is unknown the trip is measured from the team's own city — a
      * fallback that is DISCLOSED on the row (`travelFromFallback`) rather than passed off as
      * the real previous stop. */
@@ -244,11 +249,14 @@ function scheduleFrom(payload, team, url, now) {
     const tzGame = c ? Geo.utcOffsetHours(c.tz, g.date) : null;
     const out = {
       ...g,
+      /* a venue-name resolution also fills the city label it resolved (flagged, see below) */
+      ...(viaVenueName ? { city: c.city, state: c.expectedState || g.state || null } : {}),
       restDays: prev ? Geo.restDaysBetween(prev.date, g.date) : null,
       travelMiles: leg.miles, travelHours: leg.hours, travelMode: leg.mode,
       tzShiftHours: (tzHome != null && tzGame != null) ? Math.abs(tzGame - tzHome) : null,
       unmappedCity: c ? null : [g.city, g.state].filter(Boolean).join(', ') || 'unknown venue city'
     };
+    if (viaVenueName) out.venueNameResolved = true;
     if (fromFallback && leg.miles != null) out.travelFromFallback = true;
     if (c && c.stateMismatch) out.stateMismatch = c.stateMismatch;
     prev = g; prevCity = c || prevCity;
@@ -267,8 +275,9 @@ function scheduleFrom(payload, team, url, now) {
     /* id+date pairs so the backfill can pick the MOST RECENT finished games across the league
      * instead of whichever teams happen to sit last in the TEAMS array */
     completedGames: enriched.filter(g => g.completed).map(g => ({ id: g.id, date: g.date })).slice(-40),
-    geoNote: 'Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.',
-    unresolvedCities: [...new Set(enriched.filter(g => g.unmappedCity).map(g => g.unmappedCity))]
+    geoNote: 'Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.',
+    unresolvedCities: [...new Set(enriched.filter(g => g.unmappedCity).map(g => g.unmappedCity))],
+    venueResolvedCount: enriched.filter(g => g.venueNameResolved).length
   };
 }
 

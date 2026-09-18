@@ -31,7 +31,7 @@
       "outlet-only": 4,
       "citation-verified": 20
     },
-    "flags": 43,
+    "flags": 44,
     "socialAccounts": 7,
     "socialAccountsPolled": 5,
     "blueskyReporters": 8,
@@ -549,6 +549,11 @@
     }
   ],
   "flags": [
+    {
+      "level": "info",
+      "title": "The live collection run immediately found four venue cities the coordinate table did not know",
+      "detail": "The first schema-3 CI run (2026-09-18T02:37Z, 30 rosters / 30 schedules / 0 errors) reported unresolved venue cities: Inglewood, CA (the Clippers' Intuit Dome — their feed identity says Los Angeles), plus the neutral pre-season sites Boulder, CO (CU Events Center), Ames, IA (Hilton Coliseum) and Tulsa, OK (BOK Center). All four are real cities on the published schedule, so each earned a coordinate row rather than an approximation. The same run exposed a second case: the DAL/HOU pre-season games at 'Venetian Arena' arrive with a venue NAME and an EMPTY address, so the table now resolves that one by venue name and marks the row venueNameResolved:true so the weaker provenance survives to the UI. Anything still unmatched is reported unresolved."
+    },
     {
       "level": "info",
       "title": "2026-09-18 (session 9): 'high lineup impact' now has a written definition instead of an ad-hoc tag",

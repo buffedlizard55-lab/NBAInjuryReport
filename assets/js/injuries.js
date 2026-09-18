@@ -266,6 +266,10 @@ const InjuryBoard = (function () {
     if (t.restDays != null) bits.push(t.restDays === 0 ? "back-to-back (0 rest days)" : t.restDays + " rest day(s)");
     if (t.miles != null && t.miles > 0) bits.push(t.miles.toLocaleString("en-US") + " mi · ~" + t.hours + " h " + (t.mode || ""));
     if (t.tzShiftHours) bits.push(t.tzShiftHours + " time zone(s) crossed");
+    /* Weaker-provenance disclosures travel with the number: a city resolved from the venue NAME
+     * and a leg measured from the team's own city were not read straight off the feed. */
+    if (t.venueNameResolved) bits.push("city resolved from the venue name (the feed sent no address)");
+    if (t.travelFromFallback) bits.push("leg measured from the team's home city");
     return bits.join(" · ");
   }
   function espnTeamDepthUrl(abbr) {

@@ -447,13 +447,27 @@ is printed on every row, so a 40%-coverage grade cannot masquerade as a complete
   **52/0** · `node tools/poll_fixture_test.js` **24/0** · `node tools/regression_test.js` **26 groups** ·
   `python3 -m unittest discover -s tools` **26 OK** · `node tools/replay_posts.js data/live/latest.json
   --check` **75 rows / 12 posts, no invariant violations**.
-- `node tools/build_verified_sources.js` regenerated: **25 sources / 43 flags** (was 23/39).
+- `node tools/build_verified_sources.js` regenerated: **25 sources / 44 flags** (was 23/39).
 - Live endpoint evidence fetched this session through the page-fetch channel: ESPN `injuries?team=mia`
   (2026-27 preseason; the `?team=` filter works), ESPN `teams/mia/schedule` (season 2026-27 preseason; first
   event `401902644`, 2026-10-03T23:00Z, MIA @ TOR at Videotron Centre, Quebec City) and ESPN
   `summary?event=401811041` (confirms the box-score shape and the real DNP reason strings the in-game
   monitor parses). Shell egress remains restricted, so `context.json` on disk is still **schema 2** until the
   workflow runs the new collector — `role.js` discloses that state on the page rather than guessing.
+
+## Live-run feedback loop (this is how the table got better)
+
+The first schema-3 collection run in CI (`2026-09-18T02:37Z`) produced **30 rosters / 30 schedules /
+0 errors** — and named four venue cities the coordinate table did not know: **Inglewood, CA**, **Boulder, CO**,
+**Ames, IA** and **Tulsa, OK**. Each is a real city on the published schedule (Intuit Dome is the Clippers'
+arena; the other three are neutral pre-season sites), so each earned a coordinate row instead of an
+approximation. The same run exposed a weaker case: the DAL/HOU pre-season games at **"Venetian Arena"**
+carry a venue name and an **empty address**, so `coordsForVenue()` now resolves that city from the venue
+name and every such row carries `venueNameResolved: true` (surfaced in the board's travel line as
+"city resolved from the venue name"). A venue that matches nothing is still reported as unresolved.
+The run also confirmed the downstream contract: committed `latest.json` rows now carry `impactScore`,
+`impactComponents`, `offenseTier`, `travel` and `availabilityRisk` (sample row: an UNKNOWN grade at 0.4
+evidence coverage — stake had no sample, exposure and recurrence did, which is exactly rule R4 in the wild).
 
 ## New irregularities flagged for manual review (session 9)
 

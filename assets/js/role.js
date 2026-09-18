@@ -457,6 +457,8 @@ const LineupImpact = (function () {
         nextGame: next.date, opponent: next.opponent, homeAway: next.homeAway, venue: next.venue, city: next.city,
         restDays: next.restDays, miles: next.travelMiles, hours: next.travelHours, mode: next.travelMode,
         tzShiftHours: next.tzShiftHours, unmappedCity: next.unmappedCity || null,
+        venueNameResolved: next.venueNameResolved === true || null,
+        travelFromFallback: next.travelFromFallback === true || null,
         source: schedule.url || null
       } : null;
       if (!out.exposure) out.notes.push("A schedule capture exists for " + row.team + " but no game falls inside the next-7-days window (or the capture is older than " + Math.round(CONFIG.scheduleFreshMs / 3600000) + "h), so the exposure component is withheld rather than reported as zero load.");

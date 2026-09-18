@@ -79,8 +79,32 @@ const Geo = (function () {
     { city: "Abu Dhabi", state: null, lat: 24.45, lon: 54.38, tz: "Asia/Dubai", team: null },
     { city: "Quebec City", state: "PQ", lat: 46.81, lon: -71.21, tz: "America/Toronto", team: null },
     { city: "Seattle", state: "WA", lat: 47.61, lon: -122.33, tz: "America/Los_Angeles", team: null },
-    { city: "Vancouver", state: "BC", lat: 49.28, lon: -123.12, tz: "America/Vancouver", team: null }
+    { city: "Vancouver", state: "BC", lat: 49.28, lon: -123.12, tz: "America/Vancouver", team: null },
+    /* --- added 2026-09-18 from the LIVE collection run, not from memory: the first schema-3 CI
+     *     run reported these four venue cities as unresolved, which is the table doing its job.
+     *     Inglewood is the Clippers' arena city (Intuit Dome); Boulder/Ames/Tulsa are neutral
+     *     pre-season sites the 2026-27 feed actually uses (CU Events Center, Hilton Coliseum,
+     *     BOK Center). Each is a real city on the schedule, so it earns a row — anything not
+     *     observed and not a long-standing NBA venue still returns null. --- */
+    { city: "Inglewood", state: "CA", lat: 33.96, lon: -118.35, tz: "America/Los_Angeles", team: "LAC" },
+    { city: "Boulder", state: "CO", lat: 40.02, lon: -105.27, tz: "America/Denver", team: null },
+    { city: "Ames", state: "IA", lat: 42.03, lon: -93.63, tz: "America/Chicago", team: null },
+    { city: "Tulsa", state: "OK", lat: 36.15, lon: -95.99, tz: "America/Chicago", team: null }
   ];
+
+  /* Venue-name fallback for games whose venue address arrives EMPTY. Observed live 2026-09-18:
+   * the Dallas/Houston pre-season games at "Venetian Arena" carry venue.fullName but no city or
+   * state at all. The venue name is itself feed data, so the mapping is written here explicitly
+   * (rather than inferred from the name at run time) and every row it resolves is marked
+   * `venueNameResolved: true`, so the weaker provenance survives all the way to the UI. */
+  const VENUE_CITY = [
+    { venue: "venetian arena", city: "Las Vegas", state: "NV", lat: 36.11, lon: -115.17, tz: "America/Los_Angeles" }
+  ];
+
+  /* A club's arena city can differ from the city name in its feed identity — the Clippers play in
+   * Inglewood, not downtown Los Angeles. Used ONLY for the travel-origin fallback (the first away
+   * leg of a capture), never to rewrite what the schedule says. */
+  const TEAM_HOME_CITY = { LAC: "Inglewood" };
 
   /* Documented travel-time model. Every field is an assumption a reader can argue with,
    * which is the point — the UI prints "model" next to the result, never "flight time". */
@@ -99,6 +123,7 @@ const Geo = (function () {
   }
 
   const BY_CITY = new Map(CITIES.map(c => [foldCity(c.city), c]));
+  const BY_VENUE = new Map(VENUE_CITY.map(v => [foldCity(v.venue), v]));
 
   /* null when the city is not in the verified list — callers must record that, not guess. */
   function coordsFor(city, state) {
@@ -111,6 +136,20 @@ const Geo = (function () {
       out.stateMismatch = { feed: String(state).toUpperCase(), table: hit.state };
     }
     return out;
+  }
+
+  /* Venue-name lookup, for the (observed) case where the address block is empty. Returns the
+   * same shape as coordsFor() plus venueNameResolved so the disclosure cannot be lost. */
+  function coordsForVenue(venueName) {
+    const hit = BY_VENUE.get(foldCity(venueName));
+    if (!hit) return null;
+    return { city: hit.city, lat: hit.lat, lon: hit.lon, tz: hit.tz, expectedState: hit.state, venueNameResolved: true, venue: hit.venue };
+  }
+
+  /* Home-city coordinates for a team, honouring the arena-city override where one exists. */
+  function homeCoords(team) {
+    if (!team) return null;
+    return coordsFor(TEAM_HOME_CITY[team.abbr] || team.city, null);
   }
 
   function toRad(d) { return d * Math.PI / 180; }
@@ -164,7 +203,8 @@ const Geo = (function () {
   }
 
   return {
-    CITIES, TRAVEL_MODEL, coordsFor, haversineMiles, estimateTravel, utcOffsetHours,
+    CITIES, VENUE_CITY, TEAM_HOME_CITY, TRAVEL_MODEL,
+    coordsFor, coordsForVenue, homeCoords, haversineMiles, estimateTravel, utcOffsetHours,
     restDaysBetween, foldCity, round
   };
 })();
