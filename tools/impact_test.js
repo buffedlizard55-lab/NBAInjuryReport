@@ -21,6 +21,23 @@ const ROOT = path.join(__dirname, "..");
 const Geo = require(path.join(ROOT, "assets/js/geo.js"));
 const LI = require(path.join(ROOT, "assets/js/role.js"));
 const CC = require(path.join(ROOT, "tools/collect_context.js"));
+const vm = require("vm");
+/* data.js is a plain browser script; run it in a sandbox so the test can assert against the REAL
+ * team registry instead of a copy that could drift from it. */
+function loadData() {
+  const sandbox = { window: {} };
+  vm.createContext(sandbox);
+  /* `const` at the top level of a vm script creates a LEXICAL binding, not a property of the
+   * sandbox object — the first version of this helper read an empty registry and the checks below
+   * passed vacuously. Expose them explicitly, and fail loudly rather than testing nothing. */
+  vm.runInContext(fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8") +
+    ";globalThis.__data = { TEAMS, SOURCES, FLAGS, SIGNALS };", sandbox);
+  const D = sandbox.__data;
+  if (!D || !Array.isArray(D.TEAMS) || D.TEAMS.length !== 30) {
+    throw Error("data.js registry did not load (TEAMS: " + (D && D.TEAMS && D.TEAMS.length) + ")");
+  }
+  return D;
+}
 
 let pass = 0, fail = 0;
 function check(name, cond, extra) {
@@ -46,6 +63,32 @@ check("a venue-name resolution carries its weaker provenance instead of looking 
 check("the Clippers' arena city overrides their feed city for the travel-origin fallback only",
   Geo.homeCoords({ abbr: "LAC", city: "Los Angeles" }).city === "Inglewood" &&
   Geo.homeCoords({ abbr: "LAL", city: "Los Angeles" }).city === "Los Angeles");
+check("EVERY club's home city resolves — a region name in TEAMS.city must never silently null a travel leg",
+  (() => {
+    const D = loadData();
+    const bad = (D.TEAMS || []).filter(t => !Geo.homeCoords(t));
+    if (bad.length) console.log("      unresolved home cities: " + bad.map(t => t.abbr + " (" + t.city + ")").join(", "));
+    return bad.length === 0;
+  })());
+check("the five clubs whose TEAMS.city is a region name are mapped to a real city",
+  (() => {
+    const D = loadData();
+    const regions = (D.TEAMS || []).filter(t => !Geo.coordsFor(t.city, null)).map(t => t.abbr).sort();
+    const mapped = Object.keys(Geo.TEAM_HOME_CITY).sort();
+    if (regions.join(",") !== mapped.join(",")) console.log("      regions: " + regions.join(",") + " | mapped: " + mapped.join(","));
+    return regions.join(",") === mapped.join(",");
+  })());
+check("every club's home city carries a usable IANA time zone (the home half of every time-zone shift)",
+  (() => {
+    const D = loadData();
+    const now = new Date().toISOString();
+    const bad = (D.TEAMS || []).filter(t => {
+      const h = Geo.homeCoords(t);
+      return !h || Geo.utcOffsetHours(h.tz, now) == null;
+    });
+    if (bad.length) console.log("      no time zone: " + bad.map(t => t.abbr).join(", "));
+    return bad.length === 0;
+  })());
 check("every NBA team home city resolves", ["Atlanta", "Boston", "Brooklyn", "Charlotte", "Chicago", "Cleveland", "Dallas",
   "Denver", "Detroit", "San Francisco", "Houston", "Indianapolis", "Los Angeles", "Memphis", "Miami", "Milwaukee",
   "Minneapolis", "New Orleans", "New York", "Oklahoma City", "Orlando", "Philadelphia", "Phoenix", "Portland",
