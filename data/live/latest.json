@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T23:22:49.494Z",
+  "generated": "2026-09-18T23:54:18.155Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -7518,13 +7518,6 @@
         "kind": "official-league",
         "team": null
       },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
       "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7532,24 +7525,17 @@
         "kind": "official-team",
         "team": "PHI"
       },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
       "samvecenie.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Sam Vecenie",
-        "kind": "reporter",
-        "team": null
-      },
-      "howardbeck.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
-      "johnhollinger.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "John Hollinger",
         "kind": "reporter",
         "team": null
       },
@@ -7560,6 +7546,20 @@
         "kind": "reporter",
         "team": null
       },
+      "johnhollinger.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "John Hollinger",
+        "kind": "reporter",
+        "team": null
+      },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
       "tomhaberstroh.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7567,10 +7567,10 @@
         "kind": "reporter",
         "team": null
       },
-      "jmcdonaldsa.bsky.social": {
+      "tomorsborn.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Jeff McDonald",
+        "count": 2,
+        "name": "Tom Orsborn",
         "kind": "reporter",
         "team": "SAS"
       },
@@ -7581,10 +7581,10 @@
         "kind": "reporter",
         "team": "UTA"
       },
-      "tomorsborn.bsky.social": {
+      "jmcdonaldsa.bsky.social": {
         "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
+        "count": 3,
+        "name": "Jeff McDonald",
         "kind": "reporter",
         "team": "SAS"
       },
@@ -7616,12 +7616,12 @@
         "kind": "reporter",
         "team": "POR"
       },
-      "joshrobbins.bsky.social": {
+      "lawmurraythenu.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Josh Robbins",
+        "count": 5,
+        "name": "Law Murray",
         "kind": "reporter",
-        "team": "WAS"
+        "team": "LAC"
       },
       "jlewenberg.bsky.social": {
         "ok": true,
@@ -7630,12 +7630,12 @@
         "kind": "reporter",
         "team": "TOR"
       },
-      "lawmurraythenu.bsky.social": {
+      "joshrobbins.bsky.social": {
         "ok": true,
-        "count": 5,
-        "name": "Law Murray",
+        "count": 0,
+        "name": "Josh Robbins",
         "kind": "reporter",
-        "team": "LAC"
+        "team": "WAS"
       },
       "jimowczarski.bsky.social": {
         "ok": true,
@@ -7643,13 +7643,6 @@
         "name": "Jim Owczarski",
         "kind": "reporter",
         "team": "MIL"
-      },
-      "jameshamnba.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "James Ham",
-        "kind": "reporter",
-        "team": "SAC"
       },
       "jbeede.bsky.social": {
         "ok": true,
@@ -7664,6 +7657,13 @@
         "name": "Ethan Sands",
         "kind": "reporter",
         "team": "CLE"
+      },
+      "jameshamnba.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "James Ham",
+        "kind": "reporter",
+        "team": "SAC"
       },
       "btrowland.bsky.social": {
         "ok": true,
@@ -7707,17 +7707,17 @@
         "kind": "reporter",
         "team": "BOS"
       },
-      "byjayking.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Jay King",
-        "kind": "reporter",
-        "team": "BOS"
-      },
       "noadalzell.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Noa Dalzell",
+        "kind": "reporter",
+        "team": "BOS"
+      },
+      "byjayking.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Jay King",
         "kind": "reporter",
         "team": "BOS"
       },
@@ -7749,19 +7749,19 @@
         "kind": "reporter",
         "team": null
       },
-      "rylanstiles.bsky.social": {
-        "ok": true,
-        "count": 11,
-        "name": "Rylan Stiles",
-        "kind": "reporter",
-        "team": "OKC"
-      },
       "danwoikesports.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Dan Woike",
         "kind": "reporter",
         "team": "LAL"
+      },
+      "rylanstiles.bsky.social": {
+        "ok": true,
+        "count": 11,
+        "name": "Rylan Stiles",
+        "kind": "reporter",
+        "team": "OKC"
       },
       "jxlorenzi.bsky.social": {
         "ok": true,
@@ -7791,6 +7791,13 @@
         "kind": "reporter",
         "team": "MEM"
       },
+      "jledwardsiii.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "James L. Edwards III",
+        "kind": "reporter",
+        "team": "NYK"
+      },
       "drewhilldailym.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7805,26 +7812,12 @@
         "kind": "reporter",
         "team": "DAL"
       },
-      "jledwardsiii.bsky.social": {
+      "byvarunshankar.bsky.social": {
         "ok": true,
-        "count": 2,
-        "name": "James L. Edwards III",
+        "count": 3,
+        "name": "Varun Shankar",
         "kind": "reporter",
-        "team": "NYK"
-      },
-      "busyxb.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Busy — NetsDaily",
-        "kind": "reporter",
-        "team": "BKN"
-      },
-      "olehkosel.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Oleh Kosel",
-        "kind": "reporter",
-        "team": "NOP"
+        "team": "HOU"
       },
       "fearthebrown.bsky.social": {
         "ok": true,
@@ -7833,12 +7826,54 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "byvarunshankar.bsky.social": {
+      "olehkosel.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Oleh Kosel",
+        "kind": "reporter",
+        "team": "NOP"
+      },
+      "busyxb.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Busy — NetsDaily",
+        "kind": "reporter",
+        "team": "BKN"
+      },
+      "montepoole.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Monte Poole",
+        "kind": "reporter",
+        "team": "GSW"
+      },
+      "jasonlloyd.bsky.social": {
         "ok": true,
         "count": 3,
-        "name": "Varun Shankar",
+        "name": "Jason Lloyd",
         "kind": "reporter",
-        "team": "HOU"
+        "team": "CLE"
+      },
+      "bennettdurando.bsky.social": {
+        "ok": true,
+        "count": 5,
+        "name": "Bennett Durando",
+        "kind": "reporter",
+        "team": "DEN"
+      },
+      "grantafseth.bsky.social": {
+        "ok": true,
+        "count": 12,
+        "name": "Grant Afseth",
+        "kind": "reporter",
+        "team": "DAL"
+      },
+      "joevardon.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Joe Vardon",
+        "kind": "reporter",
+        "team": null
       }
     }
   },
@@ -9356,6 +9391,33 @@
       "kindLabel": "ingame-watch"
     },
     {
+      "uri": "at://did:plc:aqjnyuu6yiaputkvnx44kzb4/app.bsky.feed.post/3mmbxz3ak222s",
+      "text": "Worst loss in Cavs’ history? We won’t know until the ECF is over if it’s hyperbole or probable. But this loss to the Knicks was not OK www.nytimes.com/athletic/729...",
+      "handle": "joevardon.bsky.social",
+      "name": "Joe Vardon",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": null,
+      "outlet": "The Athletic",
+      "role": "National NBA writer (SiriusXM NBA Radio host)",
+      "accountUrl": "https://bsky.app/profile/joevardon.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/joevardon.bsky.social",
+        "team": null,
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Joe Vardon"
+      },
+      "createdAt": "2026-05-20T13:08:31.872Z",
+      "indexedAt": "2026-05-20T13:08:34.561Z",
+      "url": "https://bsky.app/profile/joevardon.bsky.social/post/3mmbxz3ak222s",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
+    },
+    {
       "uri": "at://did:plc:rqd2qvueyvp63uoa6gy2pjps/app.bsky.feed.post/3mm3f75fw3a2t",
       "text": "Thunder Injury Report vs. Spurs Game 1 of Western Conference Finals: \nThomas Sorber (ACL) OUT\n\nJDub is back.",
       "handle": "rylanstiles.bsky.social",
@@ -10220,6 +10282,330 @@
       "kindLabel": "designation"
     },
     {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3m2xgc7wzc225",
+      "text": "Dallas Mavericks guard Danté Exum remains out with knee irritation. Jason Kidd explained that the team is taking a \"long-term approach\" to Exum's recovery and \"he's going to be out for a little bit.\"\n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-10-12T00:16:36.385Z",
+      "indexedAt": "2025-10-12T00:16:38.686Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3m2xgc7wzc225",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lwx6wqp4mk22",
+      "text": "The Dallas Wings will be without JJ Quinerly on Friday vs. the Seattle Storm as she continues to be evaluated for a left knee injury.\n\nThe Wings are set to reach 100 player games lost due to injury and national team obligations by end of week. \n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-08-22T00:24:08.595Z",
+      "indexedAt": "2025-08-22T00:24:22.205Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lwx6wqp4mk22",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lwuww4ix7c2k",
+      "text": "The Dallas Wings will be without Li Yueru for the rest of the season with an ACL sprain.\n\nLuisa Geiselsöder: “Li was a big presence down there, so we have to try to find a different way to get that presence. We just have to work harder now.”\n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-08-21T02:55:18.009Z",
+      "indexedAt": "2025-08-21T02:55:20.407Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lwuww4ix7c2k",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lwm2sdmsx22p",
+      "text": "Paige Bueckers is closing in on more Dallas Wings rookie history as they visit the Las Vegas Aces on Sunday.\n\nArike Ogunbowale (knee) has been ruled out.\n\nRead more on the matchup + how to watch:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-08-17T14:10:48.580Z",
+      "indexedAt": "2025-08-17T14:10:59.609Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lwm2sdmsx22p",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lwkojdgmts2l",
+      "text": "Arike Ogunbowale will miss her third straight game Sunday as the Dallas Wings visit the Las Vegas Aces. Li Yueru is questionable to play. \n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-08-17T00:58:21.747Z",
+      "indexedAt": "2025-08-17T00:58:22.910Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lwkojdgmts2l",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lwcvk6hkqs2e",
+      "text": "Maddy Siegrist tied her career-high with 22 points in the Dallas Wings’ win over the Indiana Fever. She's averaging 14.8 points since returning from injury.\n\nSiegrist: “For me, the most important thing was getting the win tonight.\"\n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-08-13T22:42:48.375Z",
+      "indexedAt": "2025-08-13T22:43:05.951Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lwcvk6hkqs2e",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lw7tlb7tbs2l",
+      "text": "Paige Bueckers (back) and Myisha Hines-Allen (left ankle) will be available for Tuesday’s nationally televised Wings-Fever game on ESPN.\n\nArike Ogunbowale (right knee soreness) is now considered questionable.\n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-08-12T17:29:38.123Z",
+      "indexedAt": "2025-08-12T17:29:40.111Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lw7tlb7tbs2l",
+      "sev": "questionable",
+      "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lw6dpupzps2p",
+      "text": "The Dallas Wings list Paige Bueckers (back) and Myisha Hines-Allen (left ankle) as probable vs. the Indiana Fever.\n\nBueckers: “Adrenaline is a hell of a drug — once the game starts, it kind of goes away, and then you feel it the day after.”\n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-08-12T03:13:13.188Z",
+      "indexedAt": "2025-08-12T03:13:27.306Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lw6dpupzps2p",
+      "sev": "probable",
+      "sevLabel": "PROBABLE",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3luxbeoalrs2q",
+      "text": "Paige Bueckers will miss the Dallas Wings' matchup with the Las Vegas Aces on Sunday, her first official absence for rest this season.\n\nChris Koclanes: “Health and safety is the number one priority.”\n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-07-27T14:17:20.012Z",
+      "indexedAt": "2025-07-27T14:17:21.202Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3luxbeoalrs2q",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lut3v4hxks22",
+      "text": "Despite Kyrie Irving beginning the season recovering from ACL surgery, a Dallas Mavericks executive has a bold prediction for how the 2025-26 season will go.\n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-07-25T22:28:30.400Z",
+      "indexedAt": "2025-07-25T22:28:39.811Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lut3v4hxks22",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3lut3jwy3fc22",
+      "text": "Myisha Hines-Allen is out against the Golden State Valkyries with a lower leg injury and was wearing a walking boot at Thursday's practice in San Francisco.   \n\nRead more:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-07-25T22:22:15.538Z",
+      "indexedAt": "2025-07-25T22:22:22.113Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3lut3jwy3fc22",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:nrg5cvz2udbtnbtxpxxipeka/app.bsky.feed.post/3ltxpzrig7k24",
+      "text": "Kyrie Irving is ahead of schedule in his ACL rehab, per Dallas Mavericks general manager Nico Harrison: “He’s going two or three times a day… he’s going to be fine.”\n\nLatest update on Irving's recovery:",
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "role": "Dallas-based NBA reporter",
+      "accountUrl": "https://bsky.app/profile/grantafseth.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/grantafseth.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Hoops Journal / RG.org",
+        "name": "Grant Afseth"
+      },
+      "createdAt": "2025-07-15T01:14:28.814Z",
+      "indexedAt": "2025-07-15T01:14:38.643Z",
+      "url": "https://bsky.app/profile/grantafseth.bsky.social/post/3ltxpzrig7k24",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:yrpzpckptr6bfl7ynduyb4h5/app.bsky.feed.post/3lng2zqrh322x",
       "text": "Joe Mazzulla said Jayson Tatum went through “some stuff” at practice Tuesday and he’s considered “day to day” with the wrist injury. We’ll see if he’s on the injury report later today. #Celtics #Magic",
       "handle": "gwashburnglobe.bsky.social",
@@ -10301,6 +10687,60 @@
       "kindLabel": "mention"
     },
     {
+      "uri": "at://did:plc:tqdjo5gdoxb5cazwxwfpodt7/app.bsky.feed.post/3ldoervqix22w",
+      "text": "Isaac Okoro will miss at least 2 weeks with a sprained AC joint suffered against Brooklyn, according to the Cavs",
+      "handle": "jasonlloyd.bsky.social",
+      "name": "Jason Lloyd",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "CLE",
+      "outlet": "The Athletic",
+      "role": "Cavs / Browns / Guardians writer",
+      "accountUrl": "https://bsky.app/profile/jasonlloyd.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/jasonlloyd.bsky.social",
+        "team": "CLE",
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Jason Lloyd"
+      },
+      "createdAt": "2024-12-19T17:16:09.988Z",
+      "indexedAt": "2024-12-19T17:16:10.253Z",
+      "url": "https://bsky.app/profile/jasonlloyd.bsky.social/post/3ldoervqix22w",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
+      "uri": "at://did:plc:tqdjo5gdoxb5cazwxwfpodt7/app.bsky.feed.post/3ld7vkgjhjs2j",
+      "text": "Cavs say Evan Mobley is out tonight vs Wizards with his sprained ankle.",
+      "handle": "jasonlloyd.bsky.social",
+      "name": "Jason Lloyd",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "CLE",
+      "outlet": "The Athletic",
+      "role": "Cavs / Browns / Guardians writer",
+      "accountUrl": "https://bsky.app/profile/jasonlloyd.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/jasonlloyd.bsky.social",
+        "team": "CLE",
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Jason Lloyd"
+      },
+      "createdAt": "2024-12-13T23:06:16.683Z",
+      "indexedAt": "2024-12-13T23:06:16.956Z",
+      "url": "https://bsky.app/profile/jasonlloyd.bsky.social/post/3ld7vkgjhjs2j",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
       "uri": "at://did:plc:5goy74ed3awtl5fyowo3xtjn/app.bsky.feed.post/3lbkqemfr522t",
       "text": "New Podcast from me!\n\n-Where’s Nikola Jokic?\n-Vlatko Cancar injury\n-Previewing DEN-DAL\n\nwww.youtube.com/live/rmLGLC-...",
       "handle": "ryanblackburn.bsky.social",
@@ -10326,6 +10766,168 @@
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
       "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:oy6hobm74iwspxyuvzzujbuo/app.bsky.feed.post/3lbe6xg4ub224",
+      "text": "Nuggets forward Vlatko Cancar, who returned this summer from left ACL tear, leaves game with sprained left knee www.denverpost.com/2024/11/19/v...",
+      "handle": "bennettdurando.bsky.social",
+      "name": "Bennett Durando",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DEN",
+      "outlet": "The Denver Post",
+      "role": "Nuggets beat writer",
+      "accountUrl": "https://bsky.app/profile/bennettdurando.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/bennettdurando.bsky.social",
+        "team": "DEN",
+        "kind": "reporter",
+        "outlet": "The Denver Post",
+        "name": "Bennett Durando"
+      },
+      "createdAt": "2024-11-20T05:14:51.853Z",
+      "indexedAt": "2024-11-20T05:14:52.983Z",
+      "url": "https://bsky.app/profile/bennettdurando.bsky.social/post/3lbe6xg4ub224",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:oy6hobm74iwspxyuvzzujbuo/app.bsky.feed.post/3lbe54jn7hk24",
+      "text": "Asked Malone if any fear of re-torn ACL for Vlatko Cancar: \"I haven't talked to our medical people. I checked on him at halftime obviously, and he was in good spirits. Wasn't in any pain. But I would hate to be premature w/ any speculation. ... It just felt a little uncomfortable when he came down.\"",
+      "handle": "bennettdurando.bsky.social",
+      "name": "Bennett Durando",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DEN",
+      "outlet": "The Denver Post",
+      "role": "Nuggets beat writer",
+      "accountUrl": "https://bsky.app/profile/bennettdurando.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/bennettdurando.bsky.social",
+        "team": "DEN",
+        "kind": "reporter",
+        "outlet": "The Denver Post",
+        "name": "Bennett Durando"
+      },
+      "createdAt": "2024-11-20T04:41:55.823Z",
+      "indexedAt": "2024-11-20T04:41:55.980Z",
+      "url": "https://bsky.app/profile/bennettdurando.bsky.social/post/3lbe54jn7hk24",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:oy6hobm74iwspxyuvzzujbuo/app.bsky.feed.post/3lbduhdzrwc24",
+      "text": "Vlatko Cancar threw down a vicious dunk and immediately couldn't put weight on his left leg. Asked for a sub, looked like he was holding his knee. He missed all of last season with a torn left ACL.",
+      "handle": "bennettdurando.bsky.social",
+      "name": "Bennett Durando",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DEN",
+      "outlet": "The Denver Post",
+      "role": "Nuggets beat writer",
+      "accountUrl": "https://bsky.app/profile/bennettdurando.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/bennettdurando.bsky.social",
+        "team": "DEN",
+        "kind": "reporter",
+        "outlet": "The Denver Post",
+        "name": "Bennett Durando"
+      },
+      "createdAt": "2024-11-20T02:06:55.366Z",
+      "indexedAt": "2024-11-20T02:06:55.773Z",
+      "url": "https://bsky.app/profile/bennettdurando.bsky.social/post/3lbduhdzrwc24",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:tqdjo5gdoxb5cazwxwfpodt7/app.bsky.feed.post/3lbdkhl2ark2l",
+      "text": "Isaac Okoro, Dean Wade and Caris LeVert  are all out tonight vs Boston. Sam Merrill is available.",
+      "handle": "jasonlloyd.bsky.social",
+      "name": "Jason Lloyd",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "CLE",
+      "outlet": "The Athletic",
+      "role": "Cavs / Browns / Guardians writer",
+      "accountUrl": "https://bsky.app/profile/jasonlloyd.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/jasonlloyd.bsky.social",
+        "team": "CLE",
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Jason Lloyd"
+      },
+      "createdAt": "2024-11-19T23:08:05.302Z",
+      "indexedAt": "2024-11-19T23:08:08.894Z",
+      "url": "https://bsky.app/profile/jasonlloyd.bsky.social/post/3lbdkhl2ark2l",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:oy6hobm74iwspxyuvzzujbuo/app.bsky.feed.post/3lb5x762b7c2g",
+      "text": "Nikola Jokic has been ruled out again for Nuggets’ game in Memphis today.",
+      "handle": "bennettdurando.bsky.social",
+      "name": "Bennett Durando",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DEN",
+      "outlet": "The Denver Post",
+      "role": "Nuggets beat writer",
+      "accountUrl": "https://bsky.app/profile/bennettdurando.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/bennettdurando.bsky.social",
+        "team": "DEN",
+        "kind": "reporter",
+        "outlet": "The Denver Post",
+        "name": "Bennett Durando"
+      },
+      "createdAt": "2024-11-17T17:40:03.449Z",
+      "indexedAt": "2024-11-17T17:40:04.932Z",
+      "url": "https://bsky.app/profile/bennettdurando.bsky.social/post/3lb5x762b7c2g",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:oy6hobm74iwspxyuvzzujbuo/app.bsky.feed.post/3layztqmoas2r",
+      "text": "Nikola Jokic has been ruled out (personal reasons) for the Nuggets’ game in New Orleans tonight.",
+      "handle": "bennettdurando.bsky.social",
+      "name": "Bennett Durando",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DEN",
+      "outlet": "The Denver Post",
+      "role": "Nuggets beat writer",
+      "accountUrl": "https://bsky.app/profile/bennettdurando.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/bennettdurando.bsky.social",
+        "team": "DEN",
+        "kind": "reporter",
+        "outlet": "The Denver Post",
+        "name": "Bennett Durando"
+      },
+      "createdAt": "2024-11-15T18:44:02.808Z",
+      "indexedAt": "2024-11-15T18:44:03.226Z",
+      "url": "https://bsky.app/profile/bennettdurando.bsky.social/post/3layztqmoas2r",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
     }
   ]
 }
