@@ -470,6 +470,14 @@ name and every such row carries `venueNameResolved: true` (surfaced in the board
 Inglewood ×4, plus their mirrored away rows) and 4 by venue name (Venetian Arena → Las Vegas, DAL/HOU home
 and away). The derived numbers reach the committed snapshot on the next collection after the 6-hour
 schedule cache expires; the unit test pins the exact venue names observed live.
+**A second, subtler defect surfaced from the deployed page itself:** after the coordinate fix shipped,
+the live board still printed "venue city NOT in the coordinate table — travel withheld", because the
+6-hour schedule cache was serving rows derived by the OLD table — the cache check could see freshness but
+not *provenance*. Every capture now carries `geoModel = Geo.MODEL_VERSION`, and a capture stamped with an
+older geography is re-collected even if it is seconds old (pinned by `tools/impact_test.js`). This is the
+same defect class as the shape mismatch in the alert layer: cached *derived* data outliving the logic that
+produced it.
+
 The run also confirmed the downstream contract: committed `latest.json` rows now carry `impactScore`,
 `impactComponents`, `offenseTier`, `travel` and `availabilityRisk` (sample row: an UNKNOWN grade at 0.4
 evidence coverage — stake had no sample, exposure and recurrence did, which is exactly rule R4 in the wild).

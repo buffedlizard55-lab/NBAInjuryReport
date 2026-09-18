@@ -137,6 +137,17 @@ const schedulePayload = { season: { displayName: "2026-27" }, events: [
     status: { type: { state: "post", completed: true } } }] }
 ] };
 const sched = CC.scheduleFrom(schedulePayload, MIA, "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule", now);
+check("a schedule capture is stamped with the geography that derived it", sched.geoModel === Geo.MODEL_VERSION);
+check("a cached capture derived by an OLDER geography is re-collected even if it is seconds old",
+  (() => {
+    const now = Date.parse("2026-09-18T03:00:00Z"), SIX = 6 * 3600000;
+    const base = { games: [], fetchedAt: "2026-09-18T02:37:00Z", geoModel: Geo.MODEL_VERSION };
+    return CC.scheduleCacheFresh(base, now, SIX) === true &&
+      CC.scheduleCacheFresh({ ...base, geoModel: Geo.MODEL_VERSION - 1 }, now, SIX) === false &&
+      CC.scheduleCacheFresh({ ...base, fetchedAt: "2026-09-17T19:00:00Z" }, now, SIX) === false &&
+      CC.scheduleCacheFresh({ games: [] }, now, SIX) === false &&
+      CC.scheduleCacheFresh(undefined, now, SIX) === false;
+  })());
 check("the schedule keeps only games with an id and a parsable date, sorted by date",
   sched.games.length === 3 && sched.games[0].id === "P0" && sched.games[2].id === "P2");
 check("a home game is recorded as no travel leg, and a road leg is measured in city-centre miles",

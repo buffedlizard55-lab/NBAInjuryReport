@@ -268,6 +268,9 @@ function scheduleFrom(payload, team, url, now) {
   const recent = enriched.filter(g => Date.parse(g.date) < nowMs - 6 * 3600000).slice(-2);
   return {
     fetchedAt: now, url, team: team.abbr,
+    /* provenance stamp: a cached capture is only reusable while the geography that derived it is
+     * the geography running now (see Geo.MODEL_VERSION) */
+    geoModel: Geo.MODEL_VERSION,
     season: payload.season?.displayName || null,
     homeCity: homeCity ? { city: homeCity.city, lat: homeCity.lat, lon: homeCity.lon } : null,
     games: recent.concat(upcoming),
@@ -279,6 +282,16 @@ function scheduleFrom(payload, team, url, now) {
     unresolvedCities: [...new Set(enriched.filter(g => g.unmappedCity).map(g => g.unmappedCity))],
     venueResolvedCount: enriched.filter(g => g.venueNameResolved).length
   };
+}
+
+/* Is a cached schedule capture reusable? Freshness alone is not enough: the derived rows are only
+ * valid for the geography that produced them, so a capture stamped with an older Geo.MODEL_VERSION
+ * is re-collected even when it is seconds old. Exported so a test pins the rule. */
+function scheduleCacheFresh(cached, nowMs, maxAgeMs) {
+  if (!cached || !Array.isArray(cached.games)) return false;
+  if (cached.geoModel !== Geo.MODEL_VERSION) return false;
+  const age = nowMs - Date.parse(cached.fetchedAt);
+  return Number.isFinite(age) && age >= 0 && age < maxAgeMs;
 }
 
 /* Most recent finished games first, league-wide. Extracted (and exported) so a test can pin the
@@ -324,7 +337,7 @@ async function main() {
     while (cursor < TEAMS.length) {
       const team = TEAMS[cursor++];
       const cached = out.schedules[team.abbr];
-      if (cached && Date.now() - Date.parse(cached.fetchedAt) < SCHEDULE_CACHE_MS && Array.isArray(cached.games)) continue;
+      if (scheduleCacheFresh(cached, Date.now(), SCHEDULE_CACHE_MS)) continue;
       const url = ENDPOINTS.teams + '/' + espnAbbr(team.abbr) + '/schedule';
       try { out.schedules[team.abbr] = scheduleFrom(await json(url), team, url, now); }
       catch (e) { out.errors['schedule-' + team.abbr] = e.message; }
@@ -388,4 +401,4 @@ async function main() {
     Object.keys(out.teamStats).length, 'team production baselines;', Object.keys(out.errors).length, 'errors');
 }
 if (require.main === module) main().catch(e => { console.error(e); process.exitCode = 1; });
-module.exports = { roles, accumulateRoleStats, rosterFrom, scheduleFrom, recentBackfill, parseStatLine, numFromStat };
+module.exports = { roles, accumulateRoleStats, rosterFrom, scheduleFrom, recentBackfill, scheduleCacheFresh, parseStatLine, numFromStat };

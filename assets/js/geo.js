@@ -106,6 +106,14 @@ const Geo = (function () {
    * leg of a capture), never to rewrite what the schedule says. */
   const TEAM_HOME_CITY = { LAC: "Inglewood" };
 
+  /* Bump when the CITY/VENUE tables or the travel model change. tools/collect_context.js stamps
+   * every schedule capture with this, so derived rows (miles, hours, rest, time zones) can never
+   * outlive the logic that produced them. Found the hard way on 2026-09-18: the coordinate fix for
+   * Inglewood/Boulder/Ames/Tulsa plus the venue-name fallback did not reach the deployed board,
+   * because the 6-hour schedule cache was still serving rows derived by the OLD table and the
+   * cache check could only see freshness, not provenance. */
+  const MODEL_VERSION = 2;
+
   /* Documented travel-time model. Every field is an assumption a reader can argue with,
    * which is the point — the UI prints "model" next to the result, never "flight time". */
   const TRAVEL_MODEL = {
@@ -203,7 +211,7 @@ const Geo = (function () {
   }
 
   return {
-    CITIES, VENUE_CITY, TEAM_HOME_CITY, TRAVEL_MODEL,
+    MODEL_VERSION, CITIES, VENUE_CITY, TEAM_HOME_CITY, TRAVEL_MODEL,
     coordsFor, coordsForVenue, homeCoords, haversineMiles, estimateTravel, utcOffsetHours,
     restDaysBetween, foldCity, round
   };
