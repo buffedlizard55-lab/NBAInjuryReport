@@ -73,6 +73,7 @@ const source = FILES.map(f => fs.readFileSync(path.join(ROOT, "assets/js", f), "
 const env = new Function(source + `
   return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, arenaCoverage, arenaCoverageSummary, nbaTeamNewsUrl, reporterConf,
            SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, INGAME_WATCH_RE, NBA_OFFICIAL_REPORT_URL,
+           NBA_OFFICIAL_ACCOUNT_PROBE, ARENA_DORMANT_DAYS, writerRecency,
            teamByAbbr, espnTeamInjuriesUrl, normalizeInjuryStatus, xSearchUrl,
            standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE, SOCIAL_OUT_LANGUAGE_RE,
            AlertEngine, Wire, InjuryBoard, Social, InGame, LineupImpact };
@@ -646,6 +647,44 @@ console.log("== in-arena expansion: what the live social layer actually polls ==
     /verification-lost/.test(fs.readFileSync(path.join(ROOT, "tools/verify_reporters.js"), "utf8")));
   check("a workflow re-runs the reporter verification without human input",
     /verify_reporters\.js/.test(fs.readFileSync(path.join(ROOT, ".github/workflows/live-audit.yml"), "utf8")));
+
+  /* ------------------------------------------------------------------------------------
+   * SESSION 13 (2026-09-18) — activity, moderation labels, and the honest negative results.
+   * The functional question is the same as above: what does the live layer actually poll, and
+   * can the page claim a feed that nobody is posting to?
+   * ------------------------------------------------------------------------------------ */
+  check("the five session-13 writers reach the live allow-list", ["montepoole.bsky.social", "bennettdurando.bsky.social",
+    "grantafseth.bsky.social", "jasonlloyd.bsky.social", "joevardon.bsky.social"].every(h => polled.includes(h)),
+    "missing: " + ["montepoole.bsky.social", "bennettdurando.bsky.social", "grantafseth.bsky.social", "jasonlloyd.bsky.social", "joevardon.bsky.social"].filter(h => !polled.includes(h)).join(","));
+  check("the two REFUSED handles are never polled", ["bstownsend.bsky.social", "jovanbuha.bsky.social"].every(h => !polled.includes(h)));
+  check("no impersonation-labelled handle measured by the probe can reach the allow-list",
+    M.NBA_OFFICIAL_ACCOUNT_PROBE.rows.filter(r => r.verdict === "impersonation-labelled")
+      .every(r => !polled.includes(r.handle)));
+  check("the unverified Suns club account is listed but NOT polled",
+    !polled.includes("sunsphx.bsky.social") && M.SOCIAL_ACCOUNTS.some(a => a.handle === "sunsphx.bsky.social" && a.feed === false));
+  check("the coverage model exposes an activity state per team and per writer",
+    (() => { const cov = M.arenaCoverage();
+      return cov.length === 30 && cov.every(c => typeof c.recency === "string" &&
+        c.pollable.every(p => p.recency && typeof p.recency.state === "string" && typeof p.recency.active === "boolean")); })());
+  check("a writer with no measured newest-post date is never counted as active",
+    (() => { const s = M.arenaCoverageSummary();
+      return s.writersActive + s.writersDormant + s.writersUnmeasured === s.pollableWriters &&
+        M.arenaCoverage().every(c => c.pollable.every(p => p.recency.state !== "active" || p.recency.dormantDays <= M.ARENA_DORMANT_DAYS)); })());
+  check("the registry's own observations already show that DAL/DEN/LAL/CLE have no active writer",
+    ["DAL", "DEN", "LAL", "CLE"].every(a => M.arenaCoverage().find(c => c.abbr === a).recency !== "active"));
+  /* The three paid/closed platforms are registered WITH their cost flag and with wording that says
+   * they are not wired into alerts — a source row that quietly looked like a working feed is how a
+   * verification page ends up promising a capability it does not have. */
+  check("X/Instagram/Facebook are registered as documented blockers, not as working sources",
+    ["instagram-public-pages", "facebook-public-pages", "x-api"].every(id => {
+      const s = M.SOURCES.find(x => x.id === id);
+      return !!s && s.costFlag === true && /NOT wired|no authorized|manual|BLOCKER/i.test(s.kind + " " + (s.note || ""));
+    }), M.SOURCES.filter(x => ["instagram-public-pages", "facebook-public-pages", "x-api"].includes(x.id)).map(x => x.id + ":" + x.kind).join(","));
+  check("the X embed row states plainly that an embed is not a programmable alert input",
+    /NOT programmable alert input/i.test((M.SOURCES.find(x => x.id === "x-embeds") || {}).note || ""));
+  check("the moderation-label rule is stated in the source registry and in the verifier",
+    M.SOURCES.some(s => s.id === "bsky-moderation-labels") &&
+    /impersonation-label/.test(fs.readFileSync(path.join(ROOT, "tools/verify_reporters.js"), "utf8")));
 
   /* ------------------------------------------------------------------------------------
    * The OUT-label invariant, and the reason it exists as a SHARED constant.

@@ -483,6 +483,7 @@ const App = (() => {
       <span class="pill warn">◐ ${s.bioPollable}/30: bio-verified only</span>
       <span class="pill bad">✗ ${s.officialOnly}/30: no writer account — official club channel only</span>
       <span class="pill">${s.pollableWriters} pollable accounts · ${s.blsSkyVerifiedWriters} Bluesky-verified</span>
+      <span class="pill ${s.activeTeams === 30 ? "ok" : "warn"}">⏱ ${s.activeTeams}/30 have a writer who posted within ${s.dormantThresholdDays} days${s.dormantOnlyTeams.length ? " — no active writer: " + esc(s.dormantOnlyTeams.join(", ")) : ""}</span>
       <span class="tiny muted">Gaps are named per team (${esc(s.withGaps.slice(0, 6).join(", "))}${s.withGaps.length > 6 ? ", …" : ""}).</span>`;
   }
 

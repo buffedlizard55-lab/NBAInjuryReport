@@ -94,7 +94,7 @@ console.log("== registry: the 2026-09-18 in-arena expansion ==");
 const sandbox = { window: {} };
 vm.createContext(sandbox);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8") +
-  ";globalThis.__d = { TEAMS, REPORTERS, BSKY_REPORTERS, SOCIAL_ACCOUNTS, arenaCoverage, arenaCoverageSummary, reporterConf, nbaTeamNewsUrl, ARENA_CONF_RANK };", sandbox);
+  ";globalThis.__d = { TEAMS, REPORTERS, BSKY_REPORTERS, SOCIAL_ACCOUNTS, arenaCoverage, arenaCoverageSummary, reporterConf, nbaTeamNewsUrl, ARENA_CONF_RANK, ARENA_DORMANT_DAYS, NBA_OFFICIAL_ACCOUNT_PROBE, writerRecency, arenaDaysSince };", sandbox);
 const D = sandbox.__d;
 
 /* Two groups, deliberately separated:
@@ -105,10 +105,24 @@ const D = sandbox.__d;
  *                not by hand, so they assert the machine-recorded observation instead. */
 const NEW = D.BSKY_REPORTERS.filter(r => r.conf !== undefined);
 const BACKFILLED = D.BSKY_REPORTERS.filter(r => r.conf === undefined);
-/* UPDATED 2026-09-18 session 12: third expansion pass added 7 more pollable rows (MEM 2, DAL 1, BKN 1, NOP 2, HOU 1)
- * Previous 32 (30 pollable + 2 held out) + 7 = 39 total with conf defined (37 pollable + 2 held out).
- * Session breakdown: 18 from session 10 (16 pollable + 2 held out) + 14 from session 11 + 7 from session 12. */
-check("the sessions added 39 evidence rows (37 pollable + 2 held out) — 18 from session 10 + 14 from session 11 + 7 from session 12", NEW.length === 39, "got " + NEW.length);
+/* UPDATED 2026-09-18 session 13.
+ *
+ * WHY THIS CHECK IS WRITTEN AS A SUM AND NOT AS A NUMBER
+ *   It used to read `NEW.length === 39`. Session 13 added 7 rows and the failure message said
+ *   "got 46" — true, and useless: nothing in it told the reader WHY the number moved. The count is
+ *   now derived from the composition the sessions actually documented (18 + 14 + 7 + 7), and the
+ *   session-13 handles are asserted by name, so a row can only be added by also being named here.
+ *   Session breakdown: 18 from session 10 (16 pollable + 2 held out) + 14 from session 11
+ *   + 7 from session 12 + 7 from session 13 (5 pollable + 2 REFUSED) = 46 rows with a conf. */
+const SESSION_13_HANDLES = ["montepoole.bsky.social", "bennettdurando.bsky.social", "grantafseth.bsky.social",
+  "jasonlloyd.bsky.social", "joevardon.bsky.social", "bstownsend.bsky.social", "jovanbuha.bsky.social"];
+const EXPECTED_NEW = 18 + 14 + 7 + SESSION_13_HANDLES.length;
+check("the sessions added " + EXPECTED_NEW + " evidence rows — 18 (s10) + 14 (s11) + 7 (s12) + " + SESSION_13_HANDLES.length + " (s13)",
+  NEW.length === EXPECTED_NEW, "got " + NEW.length);
+check("every session-13 row is present by name, and no unnamed row appeared with it",
+  SESSION_13_HANDLES.every(h => NEW.some(r => r.handle === h)) &&
+    NEW.filter(r => r.handle === "joevardon.bsky.social").length === 1,
+  "missing: " + SESSION_13_HANDLES.filter(h => !NEW.some(r => r.handle === h)).join(","));
 check("every added row carries the exact bio it was verified from", NEW.every(r => r.evidenceQuote && r.evidenceQuote.length > 10));
 check("every added row carries a re-runnable evidence URL on the public API", NEW.every(r => /^https:\/\/public\.api\.bsky\.app\/xrpc\/app\.bsky\.actor\.getProfiles\?actors=/.test(r.evidenceApi || "")));
 check("every added row carries the counts actually observed that day", NEW.every(r => r.observed.postsCount != null && r.observed.profileIndexedAt && r.observed.verificationValid !== undefined));
@@ -228,6 +242,155 @@ global.fetch = async (url, opts) => {
   check("--dry-run leaves the committed evidence file byte-for-byte untouched", before === after,
     before === after ? "" : "file was rewritten by a dry run");
   fs.rmSync(dir, { recursive: true, force: true });
+}
+
+
+/* =====================================================================================
+ * SESSION 13 (2026-09-18) — ACTIVITY IS NOT IDENTITY, AND A MODERATION LABEL OUTRANKS A BIO
+ * -------------------------------------------------------------------------------------
+ * Two claims this file did not previously test, both of which the live reads disproved or
+ * established on 2026-09-18:
+ *   1. "We have a verified writer for this team" said nothing about whether that writer had
+ *      posted recently — 4 teams were covered only by accounts 45–628 days quiet.
+ *   2. Nothing read Bluesky's `labels[]`, so an account the platform labels `impersonation`
+ *      could have been allow-listed as a club.
+ * ===================================================================================== */
+console.log("== session 13: moderation labels ==");
+{
+  const imp = { val: "impersonation", src: "did:plc:ar7c4by46qjdydhdevvrndac", neg: false };
+  check("a Bluesky moderation label is recognised and separated from profile settings",
+    V.profileLabels({ labels: [imp, { val: "!no-unauthenticated" }] }).moderation.join() === "impersonation" &&
+    V.profileLabels({ labels: [{ val: "!no-unauthenticated" }] }).moderation.length === 0);
+  check("a NEGATED label is a removal, not an assertion, and is ignored",
+    V.profileLabels({ labels: [{ val: "impersonation", neg: true }] }).moderation.length === 0);
+  check("a missing labels[] array does not throw and reads as no labels",
+    V.profileLabels({}).all.length === 0 && V.profileLabels(null).moderation.length === 0);
+
+  const clubRow = { handle: "memphisgrizzlies.bsky.social", name: "The Memphis Grizzlies", team: "MEM",
+    feed: true, evidenceQuote: "The Official Bluesky of Your Memphis Grizzlies", bskyVerified: false };
+  const live = V.judge(clubRow, { profile: { description: "The Official Bluesky of Your Memphis Grizzlies", labels: [imp] },
+    latestPostAt: iso(1), feedReadable: true, postItems: 11 }, NOW);
+  check("an impersonation-labelled handle in the alert path FAILS the job even though bio and recency are perfect",
+    live.status === "impersonation-label" && live.fatal === true, live.status);
+  const held = V.judge(Object.assign({}, clubRow, { feed: false }), { profile: { description: "x", labels: [imp] } }, NOW);
+  check("the same label on a row already held out is recorded, not fatal",
+    held.status === "impersonation-label" && held.fatal === false);
+  check("the impersonation verdict outranks bio-drift (identity, not text, is the problem)",
+    V.judge(clubRow, { profile: { description: "totally different bio", labels: [imp] } }, NOW).status === "impersonation-label");
+  check("no allow-listed handle in the registry is one this project measured as impersonation-labelled",
+    ["memphisgrizzlies.bsky.social", "nyknicks.bsky.social", "charlottehornetsbb.bsky.social"]
+      .every(h => !D.BSKY_REPORTERS.concat(D.SOCIAL_ACCOUNTS).some(r => r.handle === h)));
+
+  const priv = V.judge({ handle: "miamiheat.bsky.social", name: "Miami HEAT", team: "MIA", feed: true,
+    evidenceQuote: "HEAT", bskyVerified: false },
+    { profile: { description: "HEAT", labels: [{ val: "!no-unauthenticated" }] }, latestPostAt: iso(2), feedReadable: true, postItems: 4 }, NOW);
+  check("a private profile is reported as unreachable by a keyless poller, not as healthy",
+    priv.status === "profile-private" && priv.fatal === false && priv.privateProfile === true);
+  check("a private profile held out of collection is not double-reported as a reachability problem",
+    V.judge({ handle: "m.bsky.social", name: "M", feed: false, evidenceQuote: "HEAT" },
+      { profile: { description: "HEAT", labels: [{ val: "!no-unauthenticated" }] }, latestPostAt: iso(2), feedReadable: true, postItems: 4 }, NOW).status === "ok");
+}
+
+console.log("== session 13: activity is computed, and CI evidence beats a stale registry date ==");
+{
+  check("the dormancy threshold is defined ONCE and imported by the verifier (no second copy)",
+    typeof D.ARENA_DORMANT_DAYS === "number" && V.DORMANT_DAYS === D.ARENA_DORMANT_DAYS,
+    "data.js " + D.ARENA_DORMANT_DAYS + " vs tool " + V.DORMANT_DAYS);
+  const cov = D.arenaCoverage(null, NOW);
+  check("every pollable writer carries a recency object with a state the UI can render",
+    cov.every(c => c.pollable.every(p => p.recency && ["active", "dormant", "unknown"].includes(p.recency.state))));
+  check("a writer with no measured date is 'unknown' — never silently 'active'",
+    cov.every(c => c.pollable.every(p => p.recency.state !== "unknown" || (p.recency.latestPostAt === null && p.recency.active === false))));
+  check("every team states an activity state, including teams with no writer at all",
+    cov.every(c => ["active", "dormant-only", "dormant-and-unmeasured", "unmeasured", "no-writer"].includes(c.recency)));
+  check("a team whose writers are ALL dormant is named as such, with the quietest age in days",
+    cov.filter(c => c.recency === "dormant-only").every(c => c.quietestWriterDays > D.ARENA_DORMANT_DAYS &&
+      c.gaps.some(g => /DORMANT/.test(g))));
+  check("a team with at least one active writer is never reported as dormant-only",
+    cov.filter(c => c.recency === "active").every(c => c.activeWriters >= 1 && !c.gaps.some(g => /every pollable writer is DORMANT/.test(g))));
+  check("the CI evidence file wins over a stale registry date (fresher measurement of the same API)", (() => {
+    const target = D.BSKY_REPORTERS.find(r => r.team === "DAL" && r.feed !== false && D.reporterConf(r) !== "unconfirmed");
+    if (!target) return false;
+    const fresh = {}; fresh[target.handle.toLowerCase()] = { latestPostAt: iso(1) };
+    const c = D.arenaCoverage(fresh, NOW).find(x => x.abbr === "DAL");
+    const w = c.pollable.find(p => p.handle === target.handle);
+    return w.recency.state === "active" && w.recency.source === "ci" && c.recency === "active";
+  })());
+  check("the registry's own observation is used when the CI file has nothing for that handle", (() => {
+    /* Must be a TEAM writer that is actually in the alert path: a national row (team null) never
+     * appears in any team's pollable list, and the first version of this check picked one and
+     * then crashed on undefined instead of failing with a message. */
+    const target = D.BSKY_REPORTERS.find(r => r.team && r.feed !== false && D.reporterConf(r) !== "unconfirmed" &&
+      r.observed && r.observed.latestPostAt);
+    if (!target) return "no team writer with a stored newest-post date";
+    const w = D.arenaCoverage(null, Date.parse(target.observed.latestPostAt) + 3600000)
+      .flatMap(c => c.pollable).find(p => p.handle === target.handle);
+    if (!w) return "writer " + target.handle + " not rendered for team " + target.team;
+    return (w.recency.source === "registry" && w.recency.state === "active") ||
+      ("state " + w.recency.state + " source " + w.recency.source);
+  })());
+  const s = D.arenaCoverageSummary(null, NOW);
+  check("summary activity arithmetic matches the rows it summarises",
+    s.writersActive + s.writersDormant + s.writersUnmeasured === s.pollableWriters &&
+    s.writersActive === cov.reduce((n, c) => n + c.activeWriters, 0) &&
+    s.dormantThresholdDays === D.ARENA_DORMANT_DAYS);
+  check("the summary names the teams with no active writer instead of hiding them in a count",
+    s.dormantOnlyTeams.every(a => cov.find(c => c.abbr === a).recency.startsWith("dormant")) &&
+    s.activeTeams === cov.filter(c => c.recency === "active").length);
+  check("the session-13 measured dormancy is still visible: DAL/DEN/LAL/CLE have no active writer on registry evidence alone", (() => {
+    const quiet = ["DAL", "DEN", "LAL", "CLE"].filter(a => cov.find(c => c.abbr === a).recency !== "active");
+    return quiet.length === 4;
+  })(), ["DAL", "DEN", "LAL", "CLE"].map(a => a + ":" + cov.find(c => c.abbr === a).recency).join(" "));
+}
+
+console.log("== session 13: refused identities stay refused, and the club probe is internally consistent ==");
+{
+  const refused = D.BSKY_REPORTERS.filter(r => r.identityRefused === true);
+  check("both refused handles are present, pinned feed:false and classed unconfirmed",
+    refused.length === 2 && refused.every(r => r.feed === false && r.conf === "unconfirmed" && r.team),
+    refused.map(r => r.handle).join(","));
+  check("a refused row records WHAT the API returned instead of an invented bio",
+    refused.every(r => (r.evidenceQuote || "").length > 10 && /REFUSED/.test(r.verified)));
+  check("the refused Dallas handle's stored quote is the cybersecurity bio that disqualified it",
+    /Cybersecurity Engineer/.test((refused.find(r => r.handle === "bstownsend.bsky.social") || {}).evidenceQuote || ""));
+  check("a refused row cannot be armed by flipping its feed flag (class gate is independent)",
+    refused.every(r => D.reporterConf(r) === "unconfirmed"));
+  check("every session-13 pollable row stores the newest-post date it measured, or says why it cannot",
+    ["montepoole.bsky.social", "bennettdurando.bsky.social", "grantafseth.bsky.social", "jasonlloyd.bsky.social"]
+      .every(h => { const r = D.BSKY_REPORTERS.find(x => x.handle === h); return !!r.observed.latestPostAt; }));
+
+  const P = D.NBA_OFFICIAL_ACCOUNT_PROBE;
+  /* Two rows came from a typeahead search / a separate same-day request, not the 25-handle batch;
+   * every row records which, so the summary arithmetic can be checked against the batch alone. */
+  const BATCH = "getProfiles 25-handle batch";
+  check("every probed handle records HOW it was read (batch probe vs typeahead vs separate request)",
+    P.rows.every(r => typeof r.via === "string" && r.via.length > 5));
+  check("the club probe names a re-checkable URL and the date it was read",
+    /getProfiles\?actors=/.test(P.probeUrl) && /^\d{4}-\d{2}-\d{2}$/.test(P.checkedAt));
+  check("every probed handle is assigned to a team in the 30-team registry",
+    P.rows.every(r => !!D.TEAMS.find(t => t.abbr === r.team)));
+  check("probe verdicts use the documented vocabulary only",
+    P.rows.every(r => ["absent", "placeholder", "impersonation-labelled", "private-profile", "unverified-candidate", "in-registry"].includes(r.verdict)));
+  check("probe arithmetic adds up: 25 handles probed = 16 resolved + 9 absent",
+    P.rows.filter(r => r.via === BATCH).length === P.summary.handlesProbed &&
+    P.rows.filter(r => r.via === BATCH && r.resolved === true).length === P.summary.resolved &&
+    P.rows.filter(r => r.via === BATCH && r.resolved === false).length === P.summary.absent &&
+    P.summary.handlesProbed === P.summary.resolved + P.summary.absent,
+    "rows " + P.rows.length + " / " + P.rows.filter(r => r.resolved === true).length + " resolved");
+  check("the probe found ZERO verified club accounts and says so instead of implying coverage",
+    P.summary.withValidVerificationObject === 0 &&
+    P.rows.filter(r => r.verification === true).length === 0 && /NOT ONE carries/.test(P.summary.meaning));
+  check("every impersonation-labelled handle the probe found is counted in the summary",
+    P.rows.filter(r => r.verdict === "impersonation-labelled").length === P.summary.impersonationLabelled &&
+    P.summary.impersonationLabelled >= 3);
+  check("the Suns handle the probe earned is registered as an unverified, NOT-polled club channel", (() => {
+    const a = D.SOCIAL_ACCOUNTS.find(x => x.handle === "sunsphx.bsky.social");
+    return !!a && a.team === "PHX" && a.feed === false && a.bskyVerified === false && !!a.evidenceApi &&
+      /The Official Account of the Phoenix Suns/.test(a.evidenceQuote);
+  })());
+  check("the coverage model surfaces the probe result per team for manual review",
+    D.arenaCoverage().filter(c => c.official.probe.length).length >= 20 &&
+    D.arenaCoverage().every(c => c.official.probe.every(p => p.handle && p.verdict)));
 }
 
 console.log("\n" + pass + " passed, " + fail + " failed");

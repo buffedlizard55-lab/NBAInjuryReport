@@ -45,14 +45,19 @@ const STRICT = process.argv.includes("--strict");
 const QUIET = process.argv.includes("--quiet");
 const TIMEOUT_MS = 20000;
 const UA = "NBAInjuryReport-verify_reporters (+https://github.com/buffedlizard55-lab/NBAInjuryReport)";
-const DORMANT_DAYS = 30;         // no post in this window ⇒ reported as dormant, never as coverage
 const BATCH_ACTORS = 25;         // AT-Protocol getProfiles limit
 
 /* ---- registry (single source of truth: assets/js/data.js) --------------------------- */
 const dataSrc = fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8");
 const D = new Function(dataSrc + `
-  return { ENDPOINTS, TEAMS, BSKY_REPORTERS, SOCIAL_ACCOUNTS, reporterConf, nbaTeamNewsUrl, teamByAbbr };
+  return { ENDPOINTS, TEAMS, BSKY_REPORTERS, SOCIAL_ACCOUNTS, reporterConf, nbaTeamNewsUrl, teamByAbbr, ARENA_DORMANT_DAYS };
 `)();
+/* The dormancy threshold lives ONCE — ARENA_DORMANT_DAYS in assets/js/data.js — and this tool
+ * imports it (2026-09-18, session 13). It used to keep its own copy of "30", which is exactly the
+ * duplicated-constant failure this repo has already paid for twice: the coverage page and its own
+ * audit must never disagree about what "active" means. The fallback only exists so a syntax error
+ * in the registry cannot silently redefine the threshold as something else. */
+const DORMANT_DAYS = (typeof D.ARENA_DORMANT_DAYS === "number" && D.ARENA_DORMANT_DAYS > 0) ? D.ARENA_DORMANT_DAYS : 30;
 
 /* =====================================================================================
  * PURE VERDICT LOGIC — exported so tools/verify_reporters_test.js can pin every branch
@@ -70,6 +75,42 @@ function quotePresent(quote, bio) {
   if (!q) return null;                    // nothing to check ⇒ caller reports "no quote on file"
   return norm(bio).includes(q);
 }
+/* =====================================================================================
+ * MODERATION LABELS (added 2026-09-18, session 13) — the identity evidence that outranks a bio
+ * -------------------------------------------------------------------------------------
+ * Measured live while probing 25 candidate club handles: memphisgrizzlies.bsky.social answers
+ * displayName "The Memphis Grizzlies" with the bio "The Official Bluesky of Your Memphis
+ * Grizzlies" AND a Bluesky moderation label `impersonation`. nyknicks.bsky.social and
+ * charlottehornetsbb.bsky.social carry the same label. Nothing in this repo read `labels[]`
+ * before this session, so an account the platform itself calls an impersonator could have been
+ * allow-listed and polled as if it were the club.
+ *
+ * Two labels matter here, and they mean different things:
+ *   impersonation / other moderation verdicts  → the identity claim is unsafe. FATAL if the row is
+ *                                                in the alert path (feed !== false), recorded
+ *                                                otherwise. Never rounded into "ok".
+ *   !no-unauthenticated (a profile setting)    → the account may be perfectly legitimate, but its
+ *                                                posts are NOT readable without authentication, so
+ *                                                a keyless poller can never see them. Recorded as
+ *                                                `profile-private`, which is a statement about
+ *                                                reachability, not about identity.
+ * ===================================================================================== */
+const MODERATION_LABEL_RE = /^(!|com\.|org\.)?(impersonation|spam|nudity|sexual|graphic-media|nsfw|gore|report|account-security|scam)/i;
+function profileLabels(profile) {
+  const list = (profile && Array.isArray(profile.labels)) ? profile.labels : [];
+  const vals = [];
+  for (const l of list) {
+    if (!l || l.neg === true) continue;                  // a negated label is a removal, not an assertion
+    const v = String(l.val || "").trim();
+    if (v) vals.push(v);
+  }
+  return {
+    all: vals,
+    privateProfile: vals.some(v => v === "!no-unauthenticated"),
+    moderation: vals.filter(v => v !== "!no-unauthenticated" && MODERATION_LABEL_RE.test(v))
+  };
+}
+
 /* A valid verification object = at least one entry with isValid true. `trustedVerifierStatus`
  * is NOT the same thing (bsky.app is a trusted verifier regardless), so it is not consulted. */
 function validVerification(profile) {
@@ -98,6 +139,12 @@ function ageDays(iso, now) {
  *   verification-lost    the row claims a verification object and it is gone / invalid
  *   dormant              account resolves and matches, but the newest post is older than DORMANT_DAYS
  *   missing              the handle did not resolve at all
+ *   impersonation-label  Bluesky's OWN moderation labels the account (measured 2026-09-18 on
+ *                        memphisgrizzlies / nyknicks / charlottehornetsbb team-name handles).
+ *                        FATAL while the row is in the alert path — an impersonator must never
+ *                        be polled and attributed to a club.
+ *   profile-private      the profile carries `!no-unauthenticated`, so a keyless poller cannot
+ *                        read its posts at all (identity may be fine; reachability is not).
  */
 function judge(row, observed, now) {
   const o = observed || {};
@@ -106,6 +153,21 @@ function judge(row, observed, now) {
     return { handle: row.handle, name: row.name, status: "missing", fatal: true, notes: ["handle did not resolve: " + (o.error || "not found")] };
   }
   const v = validVerification(o.profile);
+  const labels = profileLabels(o.profile);
+  /* A moderation label outranks every other piece of evidence on the row: the platform is saying
+   * this account is not who it presents as. FATAL while the row is in the alert path — polling an
+   * impersonator and attributing its posts to a named reporter is the worst failure this layer
+   * can produce — and recorded (not fatal) for rows already held out. */
+  if (labels.moderation.length) {
+    const fatal = row.feed !== false;
+    return { handle: row.handle, name: row.name, team: row.team || null, conf: D.reporterConf(row),
+      feed: row.feed !== false, status: "impersonation-label", fatal: fatal, verification: v,
+      labels: labels.all, bio: String(o.profile.description || "").slice(0, 400),
+      latestPostAt: o.latestPostAt || null, dormantDays: null,
+      notes: ["Bluesky moderation labels this account: " + labels.moderation.join(", ") +
+        (fatal ? " — the row is in the alert path, so this FAILS the job until the row is removed or corrected"
+               : " — the row is already held out of collection (feed:false); it must never be armed")] };
+  }
   if (row.bskyVerified === true && !v.valid) {
     return { handle: row.handle, name: row.name, status: "verification-lost", fatal: true, verification: v,
       notes: ["row claims a Bluesky verification object; API now returns " + (v.present ? "an object with no valid entry" : "none")] };
@@ -123,13 +185,20 @@ function judge(row, observed, now) {
   const dormant = claimsCoverage && (noPosts || (days != null && days > DORMANT_DAYS));
   const base = {
     handle: row.handle, name: row.name, team: row.team || null, conf: D.reporterConf(row), feed: row.feed !== false,
-    verification: v, bio: String(o.profile.description || "").slice(0, 400),
+    verification: v, labels: labels.all, privateProfile: labels.privateProfile,
+    bio: String(o.profile.description || "").slice(0, 400),
     latestPostAt: o.latestPostAt || null, dormantDays: days,
     postItems: o.postItems == null ? null : o.postItems,
     recencyReadable: o.feedReadable !== false
   };
   if (!hasQuote) return Object.assign(base, { status: "no-quote", fatal: false, notes: ["no stored evidenceQuote (pre-2026-09-18 row): bio recorded, drift cannot be judged"] });
   if (present === false) return Object.assign(base, { status: "bio-drift", fatal: false, notes: ["stored quote is no longer present in the live bio — re-read and update the row"] });
+  /* `!no-unauthenticated` means the profile holder asked Bluesky not to serve their content to
+   * logged-out clients. Identity still matched the stored quote, but a keyless poller can never
+   * read the posts — which makes the row useless as a live feed. Reported, not fatal: the fix is
+   * to take the row out of collection, and that is a human decision the page must surface. */
+  if (labels.privateProfile && claimsCoverage) return Object.assign(base, { status: "profile-private", fatal: false,
+    notes: ["profile carries '!no-unauthenticated': posts are NOT readable without authentication, so a keyless poller sees nothing — take the row out of collection"] });
   if (recencyUnread) return Object.assign(base, { status: "recency-unknown", fatal: false,
     notes: ["identity matches, but the newest post could NOT be read (" + (o.feedError || "author feed unavailable") + ") — recency is NOT established"] });
   if (noPosts) return Object.assign(base, { status: "dormant", fatal: false, notes: ["quote matches, but the feed is readable and holds ZERO posts — not a news channel"] });
@@ -141,11 +210,25 @@ function judge(row, observed, now) {
 function summarize(rows) {
   const by = {};
   for (const r of rows) by[r.status] = (by[r.status] || 0) + 1;
+  /* ACTIVITY, reported alongside identity (session 13). The old summary counted "dormant" as a
+   * problem row but never said how much of the allow-list is actually alive, which is the number
+   * a reader of the coverage matrix needs. `active` here means: in the alert path AND a newest
+   * post inside DORMANT_DAYS. Anything without a measurable date is `unmeasured`, never `active`. */
+  const inPath = rows.filter(r => r.feed);
+  const active = inPath.filter(r => r.status === "ok");
+  const measured = inPath.filter(r => r.dormantDays != null);
   return {
     checked: rows.length,
     ok: by.ok || 0, bioDrift: by["bio-drift"] || 0, dormant: by.dormant || 0,
     missing: by.missing || 0, verificationLost: by["verification-lost"] || 0, noQuote: by["no-quote"] || 0,
     recencyUnknown: by["recency-unknown"] || 0,
+    impersonationLabel: by["impersonation-label"] || 0, profilePrivate: by["profile-private"] || 0,
+    inAlertPath: inPath.length,
+    activeInAlertPath: active.length,
+    dormantInAlertPath: inPath.filter(r => r.status === "dormant").length,
+    unmeasuredInAlertPath: inPath.length - measured.length,
+    quietestInAlertPath: measured.length ? measured.reduce((m, r) => Math.max(m, r.dormantDays), 0) : null,
+    dormantThresholdDays: DORMANT_DAYS,
     fatal: rows.filter(r => r.fatal).length,
     withProblems: rows.filter(r => r.status !== "ok").map(r => (r.handle || r.name) + " (" + r.status + ")")
   };
@@ -348,7 +431,7 @@ async function mapLimitedOnce(handle) {
   return r[0] || null;
 }
 
-module.exports = { judge, summarize, quotePresent, validVerification, ageDays, chunk, norm, DORMANT_DAYS, latestPost, channelStatus, profilesFor };
+module.exports = { judge, summarize, quotePresent, validVerification, profileLabels, MODERATION_LABEL_RE, ageDays, chunk, norm, DORMANT_DAYS, latestPost, channelStatus, profilesFor };
 
 if (require.main === module) {
   main().catch(e => { console.error("verify_reporters failed: " + e.message); process.exit(1); });

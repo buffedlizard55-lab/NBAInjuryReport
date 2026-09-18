@@ -164,6 +164,37 @@
       than print a name it cannot back with evidence. Nothing on this page is a medical assessment.</p>
   </section>
 
+  <!-- ============ OFFICIAL CLUB BLUESKY ACCOUNT PROBE (session 13) ============ -->
+  <section class="card" style="margin-top:16px" id="clubProbeCard">
+    <h2>🏛️ Official club Bluesky accounts — what a keyless probe actually found</h2>
+    <p class="muted small">The request behind this panel is <i>“add team official Bluesky verification where missing”</i>. Verification cannot be
+      manufactured, only measured, so this table is the measurement: every candidate club handle that was read from
+      <code>app.bsky.actor.getProfiles</code> with no key, what its own profile says, how many followers and posts it has, whether it carries a
+      Bluesky verification object, and whether the platform has labelled it. <b>Nine of the 25 handles do not exist at all</b> and three are labelled
+      <code>impersonation</code> by Bluesky itself — both facts are shown rather than filtered out, because a reader who sees only the finds cannot
+      tell a checked registry from a hopeful one.</p>
+    <div class="tiny muted" id="clubProbeMeta">Loading probe evidence…</div>
+    <div class="table-wrap" style="margin-top:8px">
+      <table>
+        <thead><tr><th>Team</th><th>Handle &amp; display name</th><th>Verdict</th><th>Measured</th><th>Profile text / note</th><th>How it was read</th></tr></thead>
+        <tbody id="clubProbeTable"></tbody>
+      </table>
+    </div>
+    <p class="tiny muted">A display name that says “The Memphis Grizzlies” is not evidence of a club account; Bluesky's own moderation decision
+      outranks it. Only a <b>valid verification object</b> (issuer <code>bsky.app</code> or the outlet/club's own domain account) upgrades an official
+      row to polled, and on 2026-09-18 that was true for four franchises only: POR, DEN, PHI and the league account itself.</p>
+  </section>
+
+  <!-- ============ X / INSTAGRAM / FACEBOOK: links, not feeds ============ -->
+  <section class="card" style="margin-top:16px" id="socialBlockerCard">
+    <h2>🚫 X, Instagram &amp; Facebook — why these are manual-review links and never alert inputs</h2>
+    <p class="muted small">No X API key is available (the paid tiers are not an option for this project) and neither Instagram nor Facebook publishes a
+      keyless read endpoint for a public page. Each finding below is rendered from the same source registry the audit page publishes, so this page
+      cannot drift from it. What this means in practice: a public profile link is offered for a human to open, and the <b>Bluesky allow-list remains the
+      only free, machine-readable social layer</b> in the alert path.</p>
+    <div id="socialBlockers"><span class="tiny muted">Loading the documented blockers…</span></div>
+  </section>
+
   <div class="grid two">
     <section class="card" style="margin-top:16px">
       <h2>📏 Scoring rubric</h2>
