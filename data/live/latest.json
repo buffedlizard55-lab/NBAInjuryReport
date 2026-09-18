@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T02:41:14.831Z",
+  "generated": "2026-09-18T02:45:22.523Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -7503,13 +7503,6 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
       "nuggets.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7517,12 +7510,12 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "sixersnba.bsky.social": {
+      "nba.com": {
         "ok": true,
         "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "trailblazers.bsky.social": {
         "ok": true,
@@ -7530,6 +7523,13 @@
         "name": "Portland Trail Blazers — official",
         "kind": "official-team",
         "team": "POR"
+      },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "dallasmavs.bsky.social": {
         "ok": true,
