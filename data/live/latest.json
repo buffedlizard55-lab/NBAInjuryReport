@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T21:10:29.437Z",
+  "generated": "2026-09-18T22:45:56.623Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -11,6 +11,108 @@
       "displayName": "2026-27"
     },
     "rows": [
+      {
+        "id": "532626",
+        "player": "Jalen Brunson",
+        "playerId": "3934672",
+        "position": "G",
+        "team": "NYK",
+        "teamName": "New York Knicks",
+        "status": "Day-To-Day",
+        "sev": "questionable",
+        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+        "updated": "2026-09-18T21:18Z",
+        "returnDate": "2026-10-01",
+        "fantasyStatus": "GTD",
+        "injuryType": "Wrist",
+        "injuryLocation": "Arm",
+        "injurySide": "Left",
+        "bodyPart": "Left Wrist Arm",
+        "shortComment": "Brunson (wrist) is expected to be ready for training camp, ESPN's Vincent Goodwill reports.",
+        "longComment": "\"Brunson is at about 80 to 85 percent after the wrist surgery that he had in July,\" Goodwill said. \"He'll have no restrictions when training camp begins in a couple of weeks.\" Brunson had surgery back in early July following New York's championship run, but his status for Opening Night was never in any real doubt.",
+        "noteHeadline": null,
+        "noteText": null,
+        "noteDate": null,
+        "noteSource": null,
+        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3934672.png",
+        "playerUrl": "https://www.espn.com/nba/player/_/id/3934672/jalen-brunson",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ny",
+        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+        "searchUrl": "https://x.com/search?q=Jalen%20Brunson%20injury",
+        "fp": "Day-To-Day|Left Wrist Arm|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-07 (73 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "PHI",
+          "homeAway": "away",
+          "venue": "Xfinity Mobile Arena",
+          "city": "Philadelphia",
+          "restDays": null,
+          "miles": 81,
+          "hours": 1.8,
+          "mode": "ground (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-07-07"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/roster",
+        "salaryCurrent": 37739521,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
+        ]
+      },
       {
         "id": "532619",
         "player": "Adem Bona",
@@ -4866,108 +4968,6 @@
         ]
       },
       {
-        "id": "531509",
-        "player": "Jalen Brunson",
-        "playerId": "3934672",
-        "position": "G",
-        "team": "NYK",
-        "teamName": "New York Knicks",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-07-07T15:14Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Wrist",
-        "injuryLocation": "Arm",
-        "injurySide": "Left",
-        "bodyPart": "Left Wrist Arm",
-        "shortComment": "Brunson is set to undergo surgery on his right wrist/forearm area Tuesday and is expected to require at least two months of rehab, Ian Begley of SportsNet New York reports.",
-        "longComment": "Brunson reportedly played through discomfort in this area during the Knicks' Finals run, and he'll undergo surgery before training camp begins in the fall. The superstar point guard is coming off an impressive postseason that culminated in a championship and Finals MVP honors. Over five Finals appearances against the Spurs, he averaged 32.6 points, 4.6 assists, 4.2 rebounds and 2.0 steals in 39.0 minutes per showing.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3934672.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/3934672/jalen-brunson",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/ny",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Jalen%20Brunson%20injury",
-        "fp": "Day-To-Day|Left Wrist Arm|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 20,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 12,
-                "max": 45
-              },
-              {
-                "key": "listingRecency",
-                "label": "newest listing dated 2026-07-07 (73 day(s) ago)",
-                "pts": 0,
-                "max": 15
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-05T23:00Z",
-          "opponent": "PHI",
-          "homeAway": "away",
-          "venue": "Xfinity Mobile Arena",
-          "city": "Philadelphia",
-          "restDays": null,
-          "miles": 81,
-          "hours": 1.8,
-          "mode": "ground (model)",
-          "tzShiftHours": 0,
-          "unmappedCity": null,
-          "venueNameResolved": null,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 1,
-        "listingDates": [
-          "2026-07-07"
-        ],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/roster",
-        "salaryCurrent": 37739521,
-        "salarySeason": 2027,
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
         "id": "531329",
         "player": "Thomas Sorber",
         "playerId": "5061603",
@@ -7499,28 +7499,11 @@
       "desc": "Phoenix Suns center Mark Williams had surgery Thursday to repair a torn labrum in his left shoulder and will miss several months.",
       "url": "https://www.espn.com/nba/story/_/id/49904356/sources-suns-mark-williams-miss-shoulder-surgery",
       "byline": null
-    },
-    {
-      "id": "49880687",
-      "ts": "2026-09-11T10:55:36Z",
-      "sev": "return",
-      "sevLabel": "RETURN / GOOD NEWS",
-      "title": "Indiana Pacers offseason recap, early 2026-27 season preview",
-      "desc": "Will Haliburton's return push the Pacers back to the top of the East? Looking back at the offseason and taking an early look at the 2026-27 season.",
-      "url": "https://www.espn.com/nba/story/_/id/49880687/indiana-pacers-2026-27-season-preview-stats-roster-tyrese-haliburton",
-      "byline": "NBA Insiders"
     }
   ],
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nuggets.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Denver Nuggets — official",
-        "kind": "official-team",
-        "team": "DEN"
-      },
       "nba.com": {
         "ok": true,
         "count": 0,
@@ -7528,19 +7511,26 @@
         "kind": "official-league",
         "team": null
       },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
       "trailblazers.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Portland Trail Blazers — official",
         "kind": "official-team",
         "team": "POR"
+      },
+      "nuggets.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Denver Nuggets — official",
+        "kind": "official-team",
+        "team": "DEN"
+      },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "mikevorkunov.bsky.social": {
         "ok": true,
@@ -7556,17 +7546,17 @@
         "kind": "reporter",
         "team": null
       },
-      "johnhollinger.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "John Hollinger",
-        "kind": "reporter",
-        "team": null
-      },
       "howardbeck.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
+      "johnhollinger.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "John Hollinger",
         "kind": "reporter",
         "team": null
       },
@@ -7598,19 +7588,19 @@
         "kind": "reporter",
         "team": "UTA"
       },
-      "jonkrawczynski.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jon Krawczynski",
-        "kind": "reporter",
-        "team": "MIN"
-      },
       "kyleneubeck.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Kyle Neubeck",
         "kind": "reporter",
         "team": "PHI"
+      },
+      "jonkrawczynski.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Jon Krawczynski",
+        "kind": "reporter",
+        "team": "MIN"
       },
       "highkin.bsky.social": {
         "ok": true,
@@ -7633,19 +7623,19 @@
         "kind": "reporter",
         "team": "LAC"
       },
-      "jlewenberg.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Josh Lewenberg",
-        "kind": "reporter",
-        "team": "TOR"
-      },
       "joshrobbins.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Josh Robbins",
         "kind": "reporter",
         "team": "WAS"
+      },
+      "jlewenberg.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Josh Lewenberg",
+        "kind": "reporter",
+        "team": "TOR"
       },
       "jimowczarski.bsky.social": {
         "ok": true,
@@ -7696,19 +7686,19 @@
         "kind": "reporter",
         "team": "MIA"
       },
-      "geraldbourguet.bsky.social": {
-        "ok": true,
-        "count": 4,
-        "name": "Gerald Bourguet",
-        "kind": "reporter",
-        "team": "PHX"
-      },
       "kellyiko.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Kelly Iko",
         "kind": "reporter",
         "team": null
+      },
+      "geraldbourguet.bsky.social": {
+        "ok": true,
+        "count": 4,
+        "name": "Gerald Bourguet",
+        "kind": "reporter",
+        "team": "PHX"
       },
       "gwashburnglobe.bsky.social": {
         "ok": true,
@@ -7738,19 +7728,19 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "timcato.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tim Cato",
-        "kind": "reporter",
-        "team": "DAL"
-      },
       "ryanblackburn.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Ryan Blackburn",
         "kind": "reporter",
         "team": "DEN"
+      },
+      "danwoikesports.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Dan Woike",
+        "kind": "reporter",
+        "team": "LAL"
       },
       "anthonyvslater.bsky.social": {
         "ok": true,
@@ -7764,33 +7754,12 @@
         "count": 2,
         "name": "Danielle Lerner",
         "kind": "reporter",
-        "team": "HOU"
+        "team": null
       },
       "rylanstiles.bsky.social": {
         "ok": true,
         "count": 11,
         "name": "Rylan Stiles",
-        "kind": "reporter",
-        "team": "OKC"
-      },
-      "danwoikesports.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Dan Woike",
-        "kind": "reporter",
-        "team": "LAL"
-      },
-      "jxlorenzi.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Joel Lorenzi",
-        "kind": "reporter",
-        "team": "OKC"
-      },
-      "andrewschlecht.bsky.social": {
-        "ok": true,
-        "count": 6,
-        "name": "Andrew Schlecht",
         "kind": "reporter",
         "team": "OKC"
       },
@@ -7801,12 +7770,75 @@
         "kind": "reporter",
         "team": "NYK"
       },
+      "jxlorenzi.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Joel Lorenzi",
+        "kind": "reporter",
+        "team": null
+      },
+      "andrewschlecht.bsky.social": {
+        "ok": true,
+        "count": 6,
+        "name": "Andrew Schlecht",
+        "kind": "reporter",
+        "team": "OKC"
+      },
+      "damichaelcole.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Damichael Cole",
+        "kind": "reporter",
+        "team": "MEM"
+      },
+      "christianclark3.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Christian Clark",
+        "kind": "reporter",
+        "team": "DAL"
+      },
       "jledwardsiii.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "James L. Edwards III",
         "kind": "reporter",
         "team": "NYK"
+      },
+      "drewhilldailym.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Drew Hill",
+        "kind": "reporter",
+        "team": "MEM"
+      },
+      "busyxb.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Busy — NetsDaily",
+        "kind": "reporter",
+        "team": "BKN"
+      },
+      "olehkosel.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Oleh Kosel",
+        "kind": "reporter",
+        "team": "NOP"
+      },
+      "fearthebrown.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Shamit Dua",
+        "kind": "reporter",
+        "team": "NOP"
+      },
+      "byvarunshankar.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Varun Shankar",
+        "kind": "reporter",
+        "team": "HOU"
       }
     }
   },
@@ -7925,7 +7957,7 @@
       "handle": "noadalzell.bsky.social",
       "name": "Noa Dalzell",
       "verified": true,
-      "bskyVerified": true,
+      "bskyVerified": false,
       "kind": "reporter",
       "team": "BOS",
       "outlet": "SB Nation / CLNS Media",
@@ -7982,14 +8014,14 @@
       "bskyVerified": false,
       "kind": "reporter",
       "team": "CHI",
-      "outlet": "Forbes / ClutchPoints / Blog a Bull",
+      "outlet": "ClutchPoints / Blog a Bull",
       "role": "Bulls writer",
       "accountUrl": "https://bsky.app/profile/bullsjay.bsky.social",
       "account": {
         "url": "https://bsky.app/profile/bullsjay.bsky.social",
         "team": "CHI",
         "kind": "reporter",
-        "outlet": "Forbes / ClutchPoints / Blog a Bull",
+        "outlet": "ClutchPoints / Blog a Bull",
         "name": "Jason Patt"
       },
       "createdAt": "2026-09-16T16:09:45.005Z",
@@ -8144,14 +8176,14 @@
       "bskyVerified": false,
       "kind": "reporter",
       "team": "CHI",
-      "outlet": "Forbes / ClutchPoints / Blog a Bull",
+      "outlet": "ClutchPoints / Blog a Bull",
       "role": "Bulls writer",
       "accountUrl": "https://bsky.app/profile/bullsjay.bsky.social",
       "account": {
         "url": "https://bsky.app/profile/bullsjay.bsky.social",
         "team": "CHI",
         "kind": "reporter",
-        "outlet": "Forbes / ClutchPoints / Blog a Bull",
+        "outlet": "ClutchPoints / Blog a Bull",
         "name": "Jason Patt"
       },
       "createdAt": "2026-09-13T20:33:29.143Z",
@@ -8244,12 +8276,66 @@
       "kindLabel": "mention"
     },
     {
+      "uri": "at://did:plc:k4fpni725uq2pm75c24wyneu/app.bsky.feed.post/3mvdcuz4yac2n",
+      "text": "A world cup (happening right now!) @blackrosiemedia.com newsletter. In addition to the cup, we're talking Ezi Magbegor's injury, the LA Sparks' new investment, and more. Subscribe and tell a friend to subscribe!\nwbb-roundup.beehiiv.com/p/the-world-...",
+      "handle": "busyxb.bsky.social",
+      "name": "Busy — NetsDaily",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "BKN",
+      "outlet": "NetsDaily",
+      "role": "Brooklyn Nets / NY Liberty writer",
+      "accountUrl": "https://bsky.app/profile/busyxb.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/busyxb.bsky.social",
+        "team": "BKN",
+        "kind": "reporter",
+        "outlet": "NetsDaily",
+        "name": "Busy — NetsDaily"
+      },
+      "createdAt": "2026-09-12T14:42:30.988Z",
+      "indexedAt": "2026-09-12T14:42:32.159Z",
+      "url": "https://bsky.app/profile/busyxb.bsky.social/post/3mvdcuz4yac2n",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:k4fpni725uq2pm75c24wyneu/app.bsky.feed.post/3mvc3ojm4kk2e",
+      "text": "\"doctor said i need to let my injured wrist recover. you understand, right?!\" - sami zayn",
+      "handle": "busyxb.bsky.social",
+      "name": "Busy — NetsDaily",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "BKN",
+      "outlet": "NetsDaily",
+      "role": "Brooklyn Nets / NY Liberty writer",
+      "accountUrl": "https://bsky.app/profile/busyxb.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/busyxb.bsky.social",
+        "team": "BKN",
+        "kind": "reporter",
+        "outlet": "NetsDaily",
+        "name": "Busy — NetsDaily"
+      },
+      "createdAt": "2026-09-12T03:00:57.450Z",
+      "indexedAt": "2026-09-12T03:00:57.771Z",
+      "url": "https://bsky.app/profile/busyxb.bsky.social/post/3mvc3ojm4kk2e",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:jeb5puwe2trbthuqu4qnuctx/app.bsky.feed.post/3mv6ow6hfuk2s",
       "text": "NEW: Ezi Magbegor will miss the remainder of the World Cup and WNBA season.\n\nIt's a devastating blow to both Australia and the Seattle Storm: \nwww.sbnation.com/womens-sport...",
       "handle": "noadalzell.bsky.social",
       "name": "Noa Dalzell",
       "verified": true,
-      "bskyVerified": true,
+      "bskyVerified": false,
       "kind": "reporter",
       "team": "BOS",
       "outlet": "SB Nation / CLNS Media",
@@ -8332,15 +8418,15 @@
       "verified": true,
       "bskyVerified": false,
       "kind": "reporter",
-      "team": "HOU",
-      "outlet": "Houston Chronicle",
-      "role": "Rockets beat writer",
+      "team": null,
+      "outlet": "USA TODAY",
+      "role": "National sports enterprise reporter (ex-Rockets beat)",
       "accountUrl": "https://bsky.app/profile/danielle-lerner.bsky.social",
       "account": {
         "url": "https://bsky.app/profile/danielle-lerner.bsky.social",
-        "team": "HOU",
+        "team": null,
         "kind": "reporter",
-        "outlet": "Houston Chronicle",
+        "outlet": "USA TODAY",
         "name": "Danielle Lerner"
       },
       "createdAt": "2026-09-02T20:49:03.587Z",
@@ -8521,20 +8607,47 @@
       "verified": true,
       "bskyVerified": false,
       "kind": "reporter",
-      "team": "HOU",
-      "outlet": "Houston Chronicle",
-      "role": "Rockets beat writer",
+      "team": null,
+      "outlet": "USA TODAY",
+      "role": "National sports enterprise reporter (ex-Rockets beat)",
       "accountUrl": "https://bsky.app/profile/danielle-lerner.bsky.social",
       "account": {
         "url": "https://bsky.app/profile/danielle-lerner.bsky.social",
-        "team": "HOU",
+        "team": null,
         "kind": "reporter",
-        "outlet": "Houston Chronicle",
+        "outlet": "USA TODAY",
         "name": "Danielle Lerner"
       },
       "createdAt": "2026-08-20T18:32:00.739Z",
       "indexedAt": "2026-08-20T18:32:02.665Z",
       "url": "https://bsky.app/profile/danielle-lerner.bsky.social/post/3mtjuy7f5ps2w",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mtcga56ne22r",
+      "text": "Let's do a quick count: \n\nActive roster: FVV, Reed, Amen, Bruce, Marcus, Bogdan, Tate, Bari, KD, Tari, Crawford, Alpy, Clint and Steven (14)\n\nTwo-ways: Pedulla, Tristen Newton, Quadir Copeland (3)\n\nTBD, probably E9 or 10 contracts: Julian Phillips and Oscar Tshiebwe",
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "HOU",
+      "outlet": "Houston Chronicle",
+      "role": "Rockets beat reporter",
+      "accountUrl": "https://bsky.app/profile/byvarunshankar.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/byvarunshankar.bsky.social",
+        "team": "HOU",
+        "kind": "reporter",
+        "outlet": "Houston Chronicle",
+        "name": "Varun Shankar"
+      },
+      "createdAt": "2026-08-17T19:19:22.569Z",
+      "indexedAt": "2026-08-17T19:19:22.975Z",
+      "url": "https://bsky.app/profile/byvarunshankar.bsky.social/post/3mtcga56ne22r",
       "sev": "mention",
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
@@ -8573,7 +8686,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -8593,6 +8706,33 @@
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
       "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mrdjbyxymc2c",
+      "text": "Jae'Sean Tate back with the Rockets, team announces. \n\nIt is a one-year deal for the veteran minimum, partially guaranteed, per a person with knowledge of the contract. \n\nLongest tenured Rocket returns. HOU roster at 15 players (not all players on gtd deals).",
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "HOU",
+      "outlet": "Houston Chronicle",
+      "role": "Rockets beat reporter",
+      "accountUrl": "https://bsky.app/profile/byvarunshankar.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/byvarunshankar.bsky.social",
+        "team": "HOU",
+        "kind": "reporter",
+        "outlet": "Houston Chronicle",
+        "name": "Varun Shankar"
+      },
+      "createdAt": "2026-07-23T18:56:22.974Z",
+      "indexedAt": "2026-07-23T18:56:23.181Z",
+      "url": "https://bsky.app/profile/byvarunshankar.bsky.social/post/3mrdjbyxymc2c",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
     },
     {
       "uri": "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3mqpt2qmdd22q",
@@ -8757,6 +8897,33 @@
       "kindLabel": "non-injury"
     },
     {
+      "uri": "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mqhrhfvfo22b",
+      "text": "Rockets two-way guard Quadir Copeland already has a nickname for teammate Bruce Thornton.",
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "HOU",
+      "outlet": "Houston Chronicle",
+      "role": "Rockets beat reporter",
+      "accountUrl": "https://bsky.app/profile/byvarunshankar.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/byvarunshankar.bsky.social",
+        "team": "HOU",
+        "kind": "reporter",
+        "outlet": "Houston Chronicle",
+        "name": "Varun Shankar"
+      },
+      "createdAt": "2026-07-12T18:08:01.553Z",
+      "indexedAt": "2026-07-12T18:08:03.867Z",
+      "url": "https://bsky.app/profile/byvarunshankar.bsky.social/post/3mqhrhfvfo22b",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:fdw3hkjrul22w75bdw5pcsn3/app.bsky.feed.post/3mq36e5ihlc24",
       "text": "Difficult to predict. Even the slightest of injuries coming out of Thursday’s game would likely lead to him sitting out.",
       "handle": "tomorsborn.bsky.social",
@@ -8789,7 +8956,7 @@
       "handle": "jledwardsiii.bsky.social",
       "name": "James L. Edwards III",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "NYK",
       "outlet": "The Athletic",
@@ -8816,7 +8983,7 @@
       "handle": "jledwardsiii.bsky.social",
       "name": "James L. Edwards III",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "NYK",
       "outlet": "The Athletic",
@@ -9248,7 +9415,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -9383,7 +9550,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -9410,7 +9577,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -9437,7 +9604,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -9491,7 +9658,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -9518,7 +9685,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -9545,7 +9712,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -9572,7 +9739,7 @@
       "handle": "anthonyvslater.bsky.social",
       "name": "Anthony Slater",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "GSW",
       "outlet": "ESPN",
@@ -9653,7 +9820,7 @@
       "handle": "byjayking.bsky.social",
       "name": "Jay King",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "BOS",
       "outlet": "The Athletic / Still Poddable",
@@ -9788,7 +9955,7 @@
       "handle": "byjayking.bsky.social",
       "name": "Jay King",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "BOS",
       "outlet": "The Athletic / Still Poddable",
@@ -9891,12 +10058,39 @@
       "kindLabel": "mention"
     },
     {
+      "uri": "at://did:plc:3rn7xhow32uvrou7pkurykxq/app.bsky.feed.post/3mdvf4oeovc2c",
+      "text": "Ced Coward with the @dailymemphian.bsky.social on Costco, a foot injury management and the Rising Stars: dailymemphian.com/subscriber/s...",
+      "handle": "drewhilldailym.bsky.social",
+      "name": "Drew Hill",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "MEM",
+      "outlet": "The Daily Memphian",
+      "role": "Grizzlies beat writer",
+      "accountUrl": "https://bsky.app/profile/drewhilldailym.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/drewhilldailym.bsky.social",
+        "team": "MEM",
+        "kind": "reporter",
+        "outlet": "The Daily Memphian",
+        "name": "Drew Hill"
+      },
+      "createdAt": "2026-02-02T17:37:01.609Z",
+      "indexedAt": "2026-02-02T17:37:04.054Z",
+      "url": "https://bsky.app/profile/drewhilldailym.bsky.social/post/3mdvf4oeovc2c",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:squoeb3iezfb2djw36syo3k5/app.bsky.feed.post/3mdswah2das2x",
       "text": "Thunder Nuggets injury report",
       "handle": "andrewschlecht.bsky.social",
       "name": "Andrew Schlecht",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "OKC",
       "outlet": "The Athletic / Down to Dunk",
@@ -9923,7 +10117,7 @@
       "handle": "andrewschlecht.bsky.social",
       "name": "Andrew Schlecht",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "OKC",
       "outlet": "The Athletic / Down to Dunk",
@@ -9950,7 +10144,7 @@
       "handle": "andrewschlecht.bsky.social",
       "name": "Andrew Schlecht",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "OKC",
       "outlet": "The Athletic / Down to Dunk",
@@ -9977,7 +10171,7 @@
       "handle": "andrewschlecht.bsky.social",
       "name": "Andrew Schlecht",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "OKC",
       "outlet": "The Athletic / Down to Dunk",
@@ -10004,7 +10198,7 @@
       "handle": "andrewschlecht.bsky.social",
       "name": "Andrew Schlecht",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "OKC",
       "outlet": "The Athletic / Down to Dunk",
@@ -10031,7 +10225,7 @@
       "handle": "andrewschlecht.bsky.social",
       "name": "Andrew Schlecht",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "OKC",
       "outlet": "The Athletic / Down to Dunk",
@@ -10058,7 +10252,7 @@
       "handle": "gwashburnglobe.bsky.social",
       "name": "Gary Washburn",
       "verified": true,
-      "bskyVerified": false,
+      "bskyVerified": true,
       "kind": "reporter",
       "team": "BOS",
       "outlet": "Boston Globe",
