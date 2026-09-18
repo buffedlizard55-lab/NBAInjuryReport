@@ -1,5 +1,43 @@
 # Next-session priorities
 
+## State at the end of session 8 (2026-09-17, ~23:30Z) — read this first
+
+Shipped on branch `arena/01a0b196-nbainjuryreport`: **the deployed page, audited line by line, with its one
+rendering defect fixed and three stale limitation claims corrected.** This session re-read every module in
+`assets/js/`, every page, the workflows and the committed data files, and — critically — read the LIVE rendered
+output of the deployed GitHub Pages site instead of trusting that the code and the page agree.
+
+1. **Real defect found and fixed: the lineup-impact legend printed `undefined` on the deployed site.**
+   The rendered page showed "needs at least **undefined** collected games". Cause: `assets/js/intelligence.js`
+   interpolated `${c.minGames}` while `LineupImpact.CONFIG` (role.js) only exposes `minGamesForRole`. Fixed by
+   reading the real key, and pinned by a new smoke check that renders the legend template against the actual
+   CONFIG and fails on any missing key or any `undefined` in the output (verified: the new check fails on the
+   pre-fix code, 188/189; passes on the fix, 189/189). Recorded as a session-8 FLAGS entry.
+2. **Three stale limitation claims in sources.html corrected to match verified state.** The "CORS unproven"
+   item now records the resolution (deployed origin fetched both endpoints directly — re-confirmed this session),
+   the "poller has not run yet" item now records that it runs on schedule with the best-effort caveat, and
+   roadmap item 1 is marked done with the standing "keep the evidence current" follow-up. `tools/build_verified_sources.js`
+   and the regenerated `data/verified_sources.json` carry the same corrected wording (flags 38 → 39).
+3. **Live re-verification this session (assistant page-fetch channel, ~23:03–23:15Z):** ESPN injuries API **200**
+   (2026-27 Preseason, per-team blocks, sampled Mouhamed Gueye ATL fractured foot with Brad Rowland byline) ·
+   ESPN news API **200** (top items dated 2026-09-17 22:19–22:43Z, incl. Shams Charania Pelicans/Bey item) ·
+   Bluesky `getProfile?actor=nba.com` **200** (valid verification, 122,589 followers, 6 follows, Oct 20 opener
+   in bio) · deployed page **live** (board 75 listings via espn-direct, coverage gaps CLE/DET/LAL named with
+   per-team links, news OK 50 articles, scoreboard OK 0 events — offseason).
+4. **Everything else re-verified green locally:** 189 smoke · 52 integration · 24 poll fixtures · 26 regression
+   groups · 26 Python tests · replay check 75 rows / 12 posts, no invariant violations. Registry counts
+   recomputed and confirmed: 30 teams · 23 sources · 56 reporters (25 verified-handle, 20 citation-verified,
+   4 outlet-only, 1 retired, 1 inactive) · 8 Bluesky reporters · 7 official/outlet accounts · 39 flags.
+
+Facts a new session can rely on (in addition to session 7's):
+- The deployed page renders correctly except where a future edit reintroduces a bug — the new legend check plus
+  the browser test (`node tools/browser_test.js`) are the guards.
+- `data/verified_sources.json` is regenerated from `assets/js/data.js` by `node tools/build_verified_sources.js`
+  after any registry change (session 8 added a flag and corrected the CORS notes; it was regenerated).
+- The two remaining "human check" items from the old limitations list are DONE (CORS proven on the deployed
+  origin). The genuinely open blockers are unchanged: X/IG/FB free reads, Bluesky keyword search, official
+  2026-27 report page (404 until rollover), live-game validation (first tip 2026-10-03), closed-tab push.
+
 ## State at the end of session 7 (2026-09-17, ~21:30Z) — read this first
 
 Shipped on branch `arena/01a0b126-nbainjuryreport`: **the audit tool audited.** Session 6 fixed the test harness so a dead

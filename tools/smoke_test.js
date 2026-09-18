@@ -312,6 +312,24 @@ check("liveEvents selects only in-progress games", live.length === 1);
 
 console.log("== lineup impact (role.js) — never medical severity, never a guess ==");
 const LI = M.LineupImpact;
+/* Session-8 regression guard (2026-09-17): the deployed page printed
+ * "needs at least undefined collected games" because intelligence.js read `c.minGames`
+ * while LineupImpact.CONFIG only exposes `minGamesForRole`. This check renders the
+ * legend template with the REAL CONFIG and fails if it contains "undefined" or if any
+ * `c.<key>` the template interpolates is missing from CONFIG, so a future key rename
+ * cannot silently print a bare `undefined` to the live page again. */
+check("the impact legend renders without 'undefined' and only uses keys that exist in LineupImpact.CONFIG", () => {
+  const intelSrc = fs.readFileSync(path.join(ROOT, "assets/js/intelligence.js"), "utf8");
+  const m = intelSrc.match(/getElementById\('impactLegend'\)\.innerHTML = `([^`]*)`/);
+  if (!m) throw new Error("impactLegend template not found in intelligence.js");
+  const refs = [...m[1].matchAll(/\$\{[^}]*\bc\.(\w+)/g)].map(x => x[1]);
+  if (!refs.length) throw new Error("no CONFIG references found in the legend template");
+  for (const k of refs) if (!(k in LI.CONFIG)) throw new Error("legend reads c." + k + " but CONFIG only has " + Object.keys(LI.CONFIG).join(","));
+  const renderTemplate = new Function("c", "return `" + m[1] + "`;");
+  const html = renderTemplate(LI.CONFIG);
+  if (/undefined/.test(html)) throw new Error("legend HTML contains 'undefined': " + html);
+  if (!/\b3\b/.test(html)) throw new Error("legend should state the concrete min-games threshold (3), got: " + html);
+});
 const nowIso = new Date().toISOString();
 const daysAgo = n => new Date(Date.now() - n * 86400000).toISOString();
 const ctx = {

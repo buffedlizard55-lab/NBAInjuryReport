@@ -1,8 +1,8 @@
 {
-  "generated": "2026-09-17",
+  "generated": "2026-09-18",
   "project": "NBAInjuryReport — live injury alert notification system (all 30 NBA teams)",
   "live_site": "https://buffedlizard55-lab.github.io/NBAInjuryReport/",
-  "method": "Single source of truth: assets/js/data.js. Each entry verified line-by-line against live official pages/APIs on 2026-09-17 across seven passes (verification channels: assistant page-fetch tool + GitHub Actions runner audit data/audit/latest.json; shell HTTPS egress is blocked in the build environment). See sources.html for evidence links. Session 2 added the structured all-30-team ESPN injuries API and the free Bluesky/AT-Protocol social layer; session 4 re-verified the official/ESPN/Bluesky rows and fixed the social alert-eligibility gate (identity evidence, not only the verification object); session 6 resolved the Jake Fischer outlet question from the outlet's own byline and re-verified the Buckner/Haynes/Guillory rows against dated 2025-2026 reports; session 7 re-read the audit tool itself and fixed four of its checks (getList AT-URI parameter, Bluesky verification field, ESPN roster path, and a verdict ladder that printed OK for checks it could not run), then re-verified the 2026-27 official page (still 404), the ESPN injuries and roster payloads, the NBA account's 6 follows (4 valid verification objects) and Howard Beck's 150-member writers list; all rows carry their exact evidence strings below.",
+  "method": "Single source of truth: assets/js/data.js. Each entry verified line-by-line against live official pages/APIs on 2026-09-17 across seven passes (verification channels: assistant page-fetch tool + GitHub Actions runner audit data/audit/latest.json; shell HTTPS egress is blocked in the build environment). See sources.html for evidence links. Session 2 added the structured all-30-team ESPN injuries API and the free Bluesky/AT-Protocol social layer; session 4 re-verified the official/ESPN/Bluesky rows and fixed the social alert-eligibility gate (identity evidence, not only the verification object); session 6 resolved the Jake Fischer outlet question from the outlet's own byline and re-verified the Buckner/Haynes/Guillory rows against dated 2025-2026 reports; session 7 re-read the audit tool itself and fixed four of its checks (getList AT-URI parameter, Bluesky verification field, ESPN roster path, and a verdict ladder that printed OK for checks it could not run), then re-verified the 2026-27 official page (still 404), the ESPN injuries and roster payloads, the NBA account's 6 follows (4 valid verification objects) and Howard Beck's 150-member writers list; session 8 re-read the LIVE deployed page line by line (board 75 listings via espn-direct, coverage gaps CLE/DET/LAL named, ESPN news OK, scoreboard 0 events) and fixed the one rendering defect found there (legend printed 'undefined' — see the session-8 FLAGS entry); all rows carry their exact evidence strings below.",
   "endpoints": {
     "news": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50",
     "scoreboard": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
@@ -31,7 +31,7 @@
       "outlet-only": 4,
       "citation-verified": 20
     },
-    "flags": 38,
+    "flags": 39,
     "socialAccounts": 7,
     "socialAccountsPolled": 5,
     "blueskyReporters": 8,
@@ -219,7 +219,7 @@
         "verified": "2026-09-17 — valid Bluesky verification object (issuer bsky.app) surfaced by searchActorsTypeahead; beat/outlet field deliberately left generic until re-confirmed"
       }
     ],
-    "cors_note": "Browser cross-origin behaviour could not be verified from the build sandbox. Three transport paths are shipped: browser-direct, same-origin CI snapshot (data/live/latest.json), and an explicitly labelled opt-in public relay. The UI prints which path each account used."
+    "cors_note": "Browser cross-origin behaviour was RESOLVED 2026-09-17 by reading the deployed page itself: the site at buffedlizard55-lab.github.io fetched both site.web.api.espn.com/injuries ('via espn-direct') and public.api.bsky.app (13/13 accounts browser-direct) from the deployed origin, re-verified again in session 8 (2026-09-17 ~23:15Z). Three transport paths remain shipped because a blocking extension, a rate limit or an ESPN policy change can still force the fallback: browser-direct, same-origin CI snapshot (data/live/latest.json), and an explicitly labelled opt-in public relay. The UI prints which path each panel used."
   },
   "official_review_links": {
     "nba_official_injury_report": "https://official.nba.com/nba-injury-report-2025-26-season/",
@@ -714,6 +714,11 @@
       "level": "warn",
       "title": "Session 4 (2026-09-17) fixed: alert eligibility keyed on the Bluesky verification object alone, silencing four of eight allow-listed reporters",
       "detail": "Line-by-line review of assets/js/social.js found checkAlerts() gating sound on `verified === true` while feedAccounts() set `verified` from `bskyVerified` alone. Consequence: Jeff McDonald and Tom Orsborn (Spurs beat writers), Tom Haberstroh and John Hollinger carried RECORDED identity evidence (Howard Beck's 150-member list membership + self-declared beat in the registry — the same standard the reporter directory applies to every row) but could never sound an alert. At the same time the flagged dallasmavs account (followed by the official NBA account but carrying NO verification object, row says 'treat as club-run only after a second source confirms') would have been treated identically to a verified account had it carried an object-less pass. Fix: feedAccounts() now carries two fields — bskyVerified (the verification object, shown as the ✓ badge) and verified (alert eligibility): reporters qualify on recorded evidence, official league/team accounts still REQUIRE the verification object, so the flagged team account stays silent. The feed shows a distinct 'evidence' badge for the weaker class, tools/regression_test.js pins all three cases (eligible reporter / verified league account / silent team account), and the CI poller runs the same function so data/live/latest.json snapshots carry both fields (identityVerifiedAtCollection + bskyVerified in the evidence ledger)."
+    },
+    {
+      "level": "warn",
+      "title": "Session-8 irregularity, found and fixed (2026-09-17): the lineup-impact legend printed 'needs at least undefined collected games' on the deployed site",
+      "detail": "Line-by-line read of the LIVE deployed page (buffedlizard55-lab.github.io, ~23:15Z) showed the legend line rendering a bare 'undefined': assets/js/intelligence.js interpolated ${c.minGames} but LineupImpact.CONFIG (assets/js/role.js) only exposes minGamesForRole, so the threshold read as undefined in every browser. Fixed 2026-09-17 by reading c.minGamesForRole, and pinned by a new smoke check that renders the legend template against the real CONFIG and fails on any missing key or any 'undefined' in the output (the same check fails on the pre-fix code, verified locally). The rest of the deployed page re-read the same day renders correctly: board 75 listings via espn-direct, coverage gaps CLE/DET/LAL named, ESPN news OK (50 articles), scoreboard OK (0 games, offseason)."
     }
   ],
   "scoring_rubric": [
@@ -766,7 +771,7 @@
   "key_limitations": [
     "X API has no usable free read tier (reads start ~$200/mo) — automated X listening and X-based historical scoring remain blocked.",
     "Bluesky's searchPosts endpoint returns HTTP 403 without auth, so the free social layer is a verified allow-list rather than a keyword firehose: a first report from an unlisted account will not be caught.",
-    "Browser CORS for the two newly used endpoints (site.web.api.espn.com/injuries and public.api.bsky.app) could not be verified from the build sandbox; both modules fall back to the same-origin CI snapshot and print which path succeeded.",
+    "Browser CORS for the two cross-origin endpoints (site.web.api.espn.com/injuries and public.api.bsky.app) was verified WORKING from the deployed origin by reading the live GitHub Pages page (2026-09-17, re-confirmed session 8); the fallbacks (same-origin CI snapshot, labelled opt-in relay) remain because browser policies can change.",
     "The official NBA injury-report page has not rolled over to 2026-27 (verified HTTP 404); the site links the last verified page and flags the rollover.",
     "The official injury-PDF index (ak-static.cms.nba.com/referee/injury/) returns HTTP 500, so no directory listing can be polled for new PDFs.",
     "Instagram/Facebook have no free public injury-post APIs.",

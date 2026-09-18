@@ -34,7 +34,7 @@
       verified, it says so instead of guessing — flags come first, because that is where the risk lives.</p>
     <div class="pill-row" id="srcPills">
       <span class="pill ok">✓ 23 sources on file</span>
-      <span class="pill ok">✓ 38 irregularities flagged</span>
+      <span class="pill ok">✓ 39 irregularities flagged</span>
       <span class="pill warn">0 automated suites green at commit time</span>
       <span class="pill warn">CORS question resolved: browser-direct works from the deployed origin</span>
       <span class="pill warn">Poller + audit run on GitHub's schedule</span>
@@ -221,9 +221,9 @@
       <ol class="tight small">
         <li><b>X / Instagram / Facebook have no free read access.</b> Real-time X listening and X-based historical back-testing need the paid API (~$200/mo). IG/FB offer nothing usable. The free social layer therefore runs on Bluesky, which is a real, working, no-key feed — but it is not X.</li>
         <li><b>Bluesky keyword search is not free either.</b> <span class="kbd">searchPosts</span> → HTTP 403 unauthenticated (verified). The layer polls a verified allow-list; a first report from an account not on that list will be missed by this layer.</li>
-        <li><b>Two endpoints still need one human browser check.</b> This sandbox blocks shell HTTPS and reports no response headers, so CORS for <span class="kbd">site.web.api.espn.com</span> and <span class="kbd">public.api.bsky.app</span> is unproven. Both modules fall back to the same-origin CI snapshot and print the path that actually worked; the relay is opt-in and labelled.</li>
+        <li><b>Browser CORS is now proven from the deployed origin itself (2026-09-17, re-confirmed session 8 ~23:15Z).</b> The live GitHub Pages page fetched <span class="kbd">site.web.api.espn.com/injuries</span> ("via espn-direct · just now", 75 listings) and <span class="kbd">public.api.bsky.app</span> (13/13 allow-listed accounts browser-direct). The build sandbox still cannot reproduce this (shell HTTPS blocked), so the evidence is the deployed page plus <code>data/audit/latest.json</code>. Fallbacks stay in place — same-origin CI snapshot, then an opt-in labelled relay — and the UI always prints which path served each panel, because a blocking extension, a rate limit or an ESPN policy change can still force one.</li>
         <li><b>The official NBA report has not rolled to 2026-27</b> (404 verified) and the PDF index returns HTTP 500, so the highest-authority source is currently link-only.</li>
-        <li><b>The poller has not run yet.</b> The workflow is written and dry-run locally, but GitHub has not executed it (and Actions permissions were not readable with the available token). Until it runs, the same-origin snapshot is empty and "first to report" timestamps are not yet evidence-grade.</li>
+        <li><b>The poller is running, but GitHub cron is best-effort.</b> <span class="kbd">injury-watch.yml</span> has been executing on schedule since 2026-09-17 (first end-to-end run committed a real snapshot; latest committed: 75 rows / 27 team blocks, 13/13 accounts, <span class="kbd">errors {}</span>, 2026-09-17). GitHub documents scheduled workflows as best-effort — runs can be delayed under load and are disabled after 60 days of repository inactivity — so the poller is a 10-minute-granularity recorder, not a push channel or a latency guarantee. "First to report" timestamps are only as global as the accounts on the allow-list (see flag about the 4-of-30 team-account ceiling).</li>
         <li><b>ESPN endpoints are unofficial and self-contradicting.</b> They work today; the metadata mismatch between endpoints is documented above. Every alert ships with manual-review links for that reason.</li>
         <li><b>Severity is still classification, not truth.</b> The structured board's status is copied verbatim from ESPN; social posts are classified from wording and an “in-game exit watch” is explicitly unconfirmed.</li>
         <li><b>State is browser-local</b> (localStorage): no cross-device sync, no alerting while the tab is closed, no shared scorecard. The poller's committed history is the only server-side record.</li>
@@ -235,7 +235,7 @@
       <p class="muted small">Full prioritized backlog with effort estimates:
         <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/NEXT_STEPS.md" target="_blank" rel="noopener">NEXT_STEPS.md ↗</a></p>
       <ol class="tight small">
-        <li><b>Confirm the two CORS paths in a real browser</b> and record the result here (one click on “Test feeds” + one page load produces the evidence).</li>
+        <li><b>Keep the CORS evidence current.</b> Both cross-origin paths were confirmed working from the deployed origin on 2026-09-17 (Limitations #3 above). The “Test feeds” diagnostics on the dashboard now produce that evidence in one click — re-run it at season start so any future regression is recorded, not assumed.</li>
         <li><b>Validate the in-game monitor live</b> on 2026-10-03 (first preseason tip) and the poller's 10-minute cadence against a real slate.</li>
         <li><b>Swap in the 2026-27 official injury-report URL</b> the moment it exists (it is 404 today).</li>
         <li><b>Beat-writer completion:</b> one verified in-arena writer per team; SAS and UTA were added on the Bluesky side this session, ~21 teams still have no named in-arena writer.</li>

@@ -104,7 +104,11 @@ const Intelligence = (() => {
     if (typeof InjuryBoard !== 'undefined' && InjuryBoard.render) InjuryBoard.render();   // re-render with impact now that context is in
     if (typeof LineupImpact !== 'undefined' && document.getElementById('impactLegend')) {
       const c = LineupImpact.CONFIG;
-      document.getElementById('impactLegend').innerHTML = `Lineup impact is computed from box scores this project has collected, and is <b>not</b> medical severity: starter = starts in at least <b>${Math.round(c.starterShare * 100)}%</b> of collected games · rotation = <b>${c.rotationMinutes}+</b> minutes per collected game · depth = under <b>${c.benchMinutes}</b> · needs at least <b>${c.minGames}</b> collected games before any role is asserted. No collected games ⇒ <b>unknown</b>, never guessed.`;
+      /* Session-8 regression guard: this template previously read `c.minGames`, but LineupImpact.CONFIG
+       * only exposes `minGamesForRole`, so the deployed legend printed "needs at least undefined collected
+       * games". A smoke check (tools/smoke_test.js, "the impact legend only references existing CONFIG keys")
+       * pins every identifier this template interpolates, so a renamed key cannot render "undefined" again. */
+      document.getElementById('impactLegend').innerHTML = `Lineup impact is computed from box scores this project has collected, and is <b>not</b> medical severity: starter = starts in at least <b>${Math.round(c.starterShare * 100)}%</b> of collected games · rotation = <b>${c.rotationMinutes}+</b> minutes per collected game · depth = under <b>${c.benchMinutes}</b> · needs at least <b>${c.minGamesForRole}</b> collected games before any role is asserted. No collected games ⇒ <b>unknown</b>, never guessed.`;
     }
   }
   document.addEventListener('DOMContentLoaded', () => {
