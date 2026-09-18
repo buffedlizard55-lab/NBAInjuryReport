@@ -465,6 +465,11 @@ approximation. The same run exposed a weaker case: the DAL/HOU pre-season games 
 carry a venue name and an **empty address**, so `coordsForVenue()` now resolves that city from the venue
 name and every such row carries `venueNameResolved: true` (surfaced in the board's travel line as
 "city resolved from the venue name"). A venue that matches nothing is still reported as unresolved.
+**Verified against that same live snapshot:** all **14 of 14** previously unresolved game rows now resolve
+— 10 by city/state (CU Events Center → Boulder, Hilton Coliseum → Ames, BOK Center → Tulsa, Intuit Dome →
+Inglewood ×4, plus their mirrored away rows) and 4 by venue name (Venetian Arena → Las Vegas, DAL/HOU home
+and away). The derived numbers reach the committed snapshot on the next collection after the 6-hour
+schedule cache expires; the unit test pins the exact venue names observed live.
 The run also confirmed the downstream contract: committed `latest.json` rows now carry `impactScore`,
 `impactComponents`, `offenseTier`, `travel` and `availabilityRisk` (sample row: an UNKNOWN grade at 0.4
 evidence coverage — stake had no sample, exposure and recurrence did, which is exactly rule R4 in the wild).
