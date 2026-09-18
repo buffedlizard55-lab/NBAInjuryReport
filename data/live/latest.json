@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T11:09:53.614Z",
+  "generated": "2026-09-18T15:00:51.182Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -7496,16 +7496,6 @@
       "desc": "Will Haliburton's return push the Pacers back to the top of the East? Looking back at the offseason and taking an early look at the 2026-27 season.",
       "url": "https://www.espn.com/nba/story/_/id/49880687/indiana-pacers-2026-27-season-preview-stats-roster-tyrese-haliburton",
       "byline": "NBA Insiders"
-    },
-    {
-      "id": "49826930",
-      "ts": "2026-09-10T15:20:23Z",
-      "sev": "return",
-      "sevLabel": "RETURN / GOOD NEWS",
-      "title": "Detroit Pistons offseason recap, early 2026-27 season preview",
-      "desc": "Will Detroit return to the top of the East? Looking back at the offseason and taking an early look at the 2026-27 season.",
-      "url": "https://www.espn.com/nba/story/_/id/49826930/detroit-pistons-2026-27-season-preview-stats-roster-jalen-duren-cade-cunningham",
-      "byline": "NBA Insiders"
     }
   ],
   "socialPath": "direct",
@@ -7518,19 +7508,19 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
       "nba.com": {
         "ok": true,
         "count": 0,
         "name": "NBA — official league account",
         "kind": "official-league",
         "team": null
+      },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "trailblazers.bsky.social": {
         "ok": true,
