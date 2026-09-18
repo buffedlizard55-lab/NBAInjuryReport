@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-18T02:45:22.282Z",
+  "checkedAt": "2026-09-18T02:48:44.352Z",
   "schema": 3,
   "rosters": {
     "CHA": {
@@ -8391,9 +8391,10 @@
   "errors": {},
   "schedules": {
     "BOS": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bos/schedule",
       "team": "BOS",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Boston",
@@ -8468,13 +8469,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "ATL": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule",
       "team": "ATL",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Atlanta",
@@ -8565,13 +8568,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "BKN": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bkn/schedule",
       "team": "BKN",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Brooklyn",
@@ -8646,13 +8651,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "CHA": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/schedule",
       "team": "CHA",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Charlotte",
@@ -8727,13 +8734,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "CLE": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cle/schedule",
       "team": "CLE",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Cleveland",
@@ -8792,13 +8801,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "CHI": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule",
       "team": "CHI",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Chicago",
@@ -8889,13 +8900,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "DAL": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule",
       "team": "DAL",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Dallas",
@@ -8909,15 +8922,16 @@
           "opponent": "HOU",
           "homeAway": "home",
           "venue": "Venetian Arena",
-          "city": null,
-          "state": null,
+          "city": "Las Vegas",
+          "state": "NV",
           "completed": false,
           "restDays": null,
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
-          "unmappedCity": "unknown venue city"
+          "tzShiftHours": 2,
+          "unmappedCity": null,
+          "venueNameResolved": true
         },
         {
           "id": "401898400",
@@ -8925,15 +8939,16 @@
           "opponent": "HOU",
           "homeAway": "away",
           "venue": "Venetian Arena",
-          "city": null,
-          "state": null,
+          "city": "Las Vegas",
+          "state": "NV",
           "completed": false,
           "restDays": 1,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
-          "tzShiftHours": null,
-          "unmappedCity": "unknown venue city"
+          "travelMiles": 0,
+          "travelHours": 0,
+          "travelMode": "ground (model)",
+          "tzShiftHours": 2,
+          "unmappedCity": null,
+          "venueNameResolved": true
         },
         {
           "id": "401901825",
@@ -8949,8 +8964,7 @@
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
           "tzShiftHours": 0,
-          "unmappedCity": null,
-          "travelFromFallback": true
+          "unmappedCity": null
         },
         {
           "id": "401898408",
@@ -8971,15 +8985,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "unknown venue city"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 2
     },
     "DEN": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/schedule",
       "team": "DEN",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Denver",
@@ -9000,8 +9014,8 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
-          "unmappedCity": "Boulder, CO"
+          "tzShiftHours": 0,
+          "unmappedCity": null
         },
         {
           "id": "401914128",
@@ -9013,7 +9027,7 @@
           "state": "UT",
           "completed": false,
           "restDays": 2,
-          "travelMiles": 371,
+          "travelMiles": 352,
           "travelHours": 2.8,
           "travelMode": "air (model)",
           "tzShiftHours": 0,
@@ -9045,11 +9059,11 @@
           "state": "CA",
           "completed": false,
           "restDays": 2,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
-          "tzShiftHours": null,
-          "unmappedCity": "Inglewood, CA"
+          "travelMiles": 838,
+          "travelHours": 3.9,
+          "travelMode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null
         },
         {
           "id": "401898719",
@@ -9061,25 +9075,24 @@
           "state": "CA",
           "completed": false,
           "restDays": 1,
-          "travelMiles": 830,
-          "travelHours": 3.8,
-          "travelMode": "air (model)",
+          "travelMiles": 9,
+          "travelHours": 0.2,
+          "travelMode": "ground (model)",
           "tzShiftHours": 1,
           "unmappedCity": null
         }
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "Boulder, CO",
-        "Inglewood, CA"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "DET": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/det/schedule",
       "team": "DET",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Detroit",
@@ -9154,13 +9167,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "GSW": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/schedule",
       "team": "GSW",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": null,
       "games": [
@@ -9178,7 +9193,7 @@
           "travelHours": null,
           "travelMode": null,
           "tzShiftHours": null,
-          "unmappedCity": "Inglewood, CA"
+          "unmappedCity": null
         },
         {
           "id": "401898390",
@@ -9194,8 +9209,7 @@
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
           "tzShiftHours": null,
-          "unmappedCity": null,
-          "travelFromFallback": true
+          "unmappedCity": null
         },
         {
           "id": "401914129",
@@ -9264,15 +9278,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "Inglewood, CA"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "HOU": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule",
       "team": "HOU",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Houston",
@@ -9286,15 +9300,16 @@
           "opponent": "DAL",
           "homeAway": "away",
           "venue": "Venetian Arena",
-          "city": null,
-          "state": null,
+          "city": "Las Vegas",
+          "state": "NV",
           "completed": false,
           "restDays": null,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
-          "tzShiftHours": null,
-          "unmappedCity": "unknown venue city"
+          "travelMiles": 1226,
+          "travelHours": 4.7,
+          "travelMode": "air (model)",
+          "tzShiftHours": 2,
+          "unmappedCity": null,
+          "venueNameResolved": true
         },
         {
           "id": "401898400",
@@ -9302,16 +9317,16 @@
           "opponent": "DAL",
           "homeAway": "home",
           "venue": "Venetian Arena",
-          "city": null,
-          "state": null,
+          "city": "Las Vegas",
+          "state": "NV",
           "completed": false,
           "restDays": 1,
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
-          "unmappedCity": "unknown venue city",
-          "travelFromFallback": true
+          "tzShiftHours": 2,
+          "unmappedCity": null,
+          "venueNameResolved": true
         },
         {
           "id": "401908622",
@@ -9332,17 +9347,21 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "unknown venue city"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 2
     },
     "LAC": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule",
       "team": "LAC",
+      "geoModel": 2,
       "season": "2026-27",
-      "homeCity": null,
+      "homeCity": {
+        "city": "Inglewood",
+        "lat": 33.96,
+        "lon": -118.35
+      },
       "games": [
         {
           "id": "401918010",
@@ -9357,8 +9376,8 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
-          "unmappedCity": "Inglewood, CA"
+          "tzShiftHours": 0,
+          "unmappedCity": null
         },
         {
           "id": "401902645",
@@ -9370,10 +9389,10 @@
           "state": "BC",
           "completed": false,
           "restDays": 5,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
-          "tzShiftHours": null,
+          "travelMiles": 1086,
+          "travelHours": 4.4,
+          "travelMode": "air (model)",
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9389,21 +9408,21 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
-          "unmappedCity": "Inglewood, CA"
+          "tzShiftHours": 0,
+          "unmappedCity": null
         }
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "Inglewood, CA"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "LAL": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lal/schedule",
       "team": "LAL",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Los Angeles",
@@ -9494,13 +9513,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "IND": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/schedule",
       "team": "IND",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": null,
       "games": [
@@ -9518,7 +9539,7 @@
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
           "tzShiftHours": null,
-          "unmappedCity": "Ames, IA"
+          "unmappedCity": null
         },
         {
           "id": "401898396",
@@ -9571,15 +9592,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "Ames, IA"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "MIA": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule",
       "team": "MIA",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Miami",
@@ -9670,13 +9691,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "MEM": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule",
       "team": "MEM",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Memphis",
@@ -9751,13 +9774,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "MIL": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mil/schedule",
       "team": "MIL",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Milwaukee",
@@ -9848,13 +9873,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "MIN": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/min/schedule",
       "team": "MIN",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": null,
       "games": [
@@ -9884,11 +9911,11 @@
           "state": "IA",
           "completed": false,
           "restDays": 0,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
+          "travelMiles": 299,
+          "travelHours": 2.7,
+          "travelMode": "air (model)",
           "tzShiftHours": null,
-          "unmappedCity": "Ames, IA"
+          "unmappedCity": null
         },
         {
           "id": "401898397",
@@ -9900,8 +9927,8 @@
           "state": "FL",
           "completed": false,
           "restDays": 3,
-          "travelMiles": 1271,
-          "travelHours": 4.8,
+          "travelMiles": 1359,
+          "travelHours": 5,
           "travelMode": "air (model)",
           "tzShiftHours": null,
           "unmappedCity": null
@@ -9957,15 +9984,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "Ames, IA"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "NOP": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/schedule",
       "team": "NOP",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "New Orleans",
@@ -9983,11 +10010,11 @@
           "state": "OK",
           "completed": false,
           "restDays": null,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
-          "tzShiftHours": null,
-          "unmappedCity": "Tulsa, OK"
+          "travelMiles": 548,
+          "travelHours": 3.2,
+          "travelMode": "air (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null
         },
         {
           "id": "401898393",
@@ -9999,12 +10026,11 @@
           "state": "FL",
           "completed": false,
           "restDays": 0,
-          "travelMiles": 669,
-          "travelHours": 3.5,
+          "travelMiles": 1177,
+          "travelHours": 4.6,
           "travelMode": "air (model)",
           "tzShiftHours": 1,
-          "unmappedCity": null,
-          "travelFromFallback": true
+          "unmappedCity": null
         },
         {
           "id": "401901825",
@@ -10041,15 +10067,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "Tulsa, OK"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "ORL": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule",
       "team": "ORL",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Orlando",
@@ -10124,13 +10150,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "PHI": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/schedule",
       "team": "PHI",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Philadelphia",
@@ -10205,13 +10233,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "NYK": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule",
       "team": "NYK",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "New York",
@@ -10302,13 +10332,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "PHX": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule",
       "team": "PHX",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Phoenix",
@@ -10399,13 +10431,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "OKC": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule",
       "team": "OKC",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Oklahoma City",
@@ -10426,8 +10460,8 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
-          "unmappedCity": "Tulsa, OK"
+          "tzShiftHours": 0,
+          "unmappedCity": null
         },
         {
           "id": "401908620",
@@ -10496,15 +10530,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "Tulsa, OK"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "POR": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule",
       "team": "POR",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Portland",
@@ -10579,13 +10613,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "SAC": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule",
       "team": "SAC",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Sacramento",
@@ -10676,13 +10712,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "SAS": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/schedule",
       "team": "SAS",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "San Antonio",
@@ -10773,13 +10811,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "TOR": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule",
       "team": "TOR",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Toronto",
@@ -10870,13 +10910,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "UTA": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/schedule",
       "team": "UTA",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": null,
       "games": [
@@ -10894,7 +10936,7 @@
           "travelHours": null,
           "travelMode": null,
           "tzShiftHours": null,
-          "unmappedCity": "Boulder, CO"
+          "unmappedCity": null
         },
         {
           "id": "401914128",
@@ -10910,8 +10952,7 @@
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
           "tzShiftHours": null,
-          "unmappedCity": null,
-          "travelFromFallback": true
+          "unmappedCity": null
         },
         {
           "id": "401898721",
@@ -10948,15 +10989,15 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": [
-        "Boulder, CO"
-      ]
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     },
     "WAS": {
-      "fetchedAt": "2026-09-18T02:37:32.828Z",
+      "fetchedAt": "2026-09-18T02:48:44.352Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule",
       "team": "WAS",
+      "geoModel": 2,
       "season": "2026-27",
       "homeCity": {
         "city": "Washington",
@@ -11031,8 +11072,9 @@
       ],
       "completedIds": [],
       "completedGames": [],
-      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data.",
-      "unresolvedCities": []
+      "geoNote": "Distances are city-centroid great-circle miles between consecutive game cities; travel hours use the documented model in assets/js/geo.js. Not flight data. Rows with venueNameResolved:true were resolved from the venue NAME because the feed sent no city; rows with travelFromFallback:true measure the first away leg from the team home city because the previous venue was unknown.",
+      "unresolvedCities": [],
+      "venueResolvedCount": 0
     }
   },
   "teamStats": {},

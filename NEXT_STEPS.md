@@ -15,7 +15,11 @@ no invariant violations.**
    Intuit Dome, whose feed identity says Los Angeles), Boulder, Ames and Tulsa (neutral pre-season
    sites) — so each earned a row. A venue whose address arrives EMPTY (observed: "Venetian Arena")
    is resolved from the venue NAME and marked `venueNameResolved: true` so the weaker provenance
-   reaches the UI. Distances are cross-checked against published values; great-circle distances
+   reaches the UI. Verified against the live snapshot: **14 of 14** previously unresolved rows resolve.
+   Every capture carries `geoModel = Geo.MODEL_VERSION`, so a schedule cached under an older city table
+   is re-collected instead of being served forever — the deployed board kept printing "travel withheld"
+   after the table was fixed, because the 6-hour cache could see age but not provenance. Distances are
+   cross-checked against published values; great-circle distances
    cross-checked against published values (Boston→Los Angeles 2,591 vs ~2,611 mi, Chicago→New York 711 vs
    ~713); IANA time-zone offsets read from the runtime database per game date (winter ET −5 / PT −8 /
    Phoenix −7, summer ET −4), so DST is data, not a hard-coded table; `restDaysBetween` returns 0 for a
