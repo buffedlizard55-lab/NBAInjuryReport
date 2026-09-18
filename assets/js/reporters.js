@@ -159,8 +159,14 @@ const Reporters = (() => {
         ? `<br><span class="tiny muted">directory: ${c.directory.map(d => esc(d.name) + " (" + esc(d.status) + ")").join(", ")}</span>` : "";
       const held = c.graded.length
         ? `<br><span class="tiny muted">held out of alerts: ${c.graded.map(d => esc(d.name) + " — " + esc(d.conf) + (d.feed ? "" : " (feed off)")).join(", ")}</span>` : "";
+      /* The probe result is stated per row, because "there is a URL here" and "a machine read it"
+       * are different claims — and on 2026-09-18 the machine was refused (HTTP 403) for all 30. */
+      const probe = (typeof NBA_TEAM_NEWS_PROBE !== "undefined") ? NBA_TEAM_NEWS_PROBE : null;
       const official = `<a href="${esc(c.official.news)}" target="_blank" rel="noopener">club news (nba.com/${esc(t.nba)}) ↗</a>
-        <br><span class="tiny muted">${c.official.newsChecked ? "re-read live " + esc(c.official.newsChecked) : "URL pattern, not re-read this session"}</span>
+        <br><span class="tiny muted">${c.official.newsChecked
+          ? "re-read live in a browser " + esc(c.official.newsChecked)
+          : (probe ? "pattern URL · runner probe HTTP 403 on " + esc(probe.checkedAt.slice(0, 10)) + " → manual review only"
+                   : "URL pattern, not re-read")}</span>
         ${c.official.bluesky.length ? c.official.bluesky.map(b => `<br><span class="tiny">${b.bskyVerified ? '<span class="badge ok">Bluesky-verified</span>' : '<span class="badge warn">no verification object</span>'} <a class="tiny" href="${esc(b.url)}" target="_blank" rel="noopener">@${esc(b.handle)} ↗</a>${b.feed ? " <span class='tiny muted'>(polled)</span>" : " <span class='tiny muted'>(not polled)</span>"}</span>`).join("") : ""}`;
       const gaps = c.gaps.length
         ? `<ul class="tight tiny muted" style="margin:4px 0 0;padding-left:16px">${c.gaps.map(g => `<li>${esc(g)}</li>`).join("")}</ul>`

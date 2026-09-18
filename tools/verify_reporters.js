@@ -187,14 +187,42 @@ async function latestPostAt(handle) {
     return (rec && rec.createdAt) || (item && item.post && item.post.indexedAt) || null;
   } catch (e) { return null; }
 }
+/* Club-channel probe.
+ *
+ * FIRST RUN (2026-09-18T19:21Z, GitHub runner): all 30 URLs answered **HTTP 403** to this client,
+ * while the same pages answered 200 when read through a browser-shaped HTTP client from a
+ * different network. Two lessons, and the code keeps both:
+ *   1. A 403 from a datacentre IP is a fact about the request, not about the page. It is recorded
+ *      as `http: 403` and the club channel stays a MANUAL-REVIEW link — never rendered as
+ *      "verified live", which is exactly the round-up-into-a-lie failure this project flags.
+ *   2. The request is now shaped like an ordinary browser request (Accept / Accept-Language) while
+ *      keeping an honest identifying User-Agent with the project URL. That is not evasion: the
+ *      tool is reading a public news index, and the site can still refuse. If it refuses, the
+ *      evidence file says so.
+ * `method` and `ua` are stored per channel so a reader can tell a 200 in a browser from a
+ * machine read, and so a later fix (or a new block) is visible as a change rather than folklore.
+ */
+const BROWSERISH_HEADERS = {
+  "user-agent": UA,
+  "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+  "accept-language": "en-US,en;q=0.9",
+  "cache-control": "no-cache"
+};
 async function channelStatus(url) {
   try {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
-    const res = await fetch(url, { headers: { "user-agent": UA }, signal: ctrl.signal, redirect: "follow" });
+    const res = await fetch(url, { headers: BROWSERISH_HEADERS, signal: ctrl.signal, redirect: "follow" });
     clearTimeout(timer);
-    const body = res.ok ? (await res.text()).slice(0, 4000) : "";
-    return { url, http: res.status, ok: res.ok, looksLikeClubNews: /news|media/i.test(body) };
+    let body = "";
+    if (res.ok) { try { body = (await res.text()).slice(0, 6000); } catch (e) { body = ""; } }
+    return {
+      url, http: res.status, ok: res.ok,
+      looksLikeClubNews: /news|media/i.test(body),
+      datedItems: (body.match(/\b\d+\s*(h|hr|hrs|hours?|d|days?|w|weeks?)\b/gi) || []).length,
+      blocked: res.status === 403 || res.status === 401,
+      finalUrl: res.url || url
+    };
   } catch (e) { return { url, http: 0, ok: false, error: e.message }; }
 }
 

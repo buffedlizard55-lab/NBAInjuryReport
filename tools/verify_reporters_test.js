@@ -97,12 +97,26 @@ vm.runInContext(fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8") +
   ";globalThis.__d = { TEAMS, REPORTERS, BSKY_REPORTERS, SOCIAL_ACCOUNTS, arenaCoverage, arenaCoverageSummary, reporterConf, nbaTeamNewsUrl, ARENA_CONF_RANK };", sandbox);
 const D = sandbox.__d;
 
-const NEW = D.BSKY_REPORTERS.filter(r => r.observed && r.observed.checkedAt === "2026-09-18");
+/* Two groups, deliberately separated:
+ *   NEW        — rows ADDED in the 2026-09-18 session (they carry an explicit identity class)
+ *   BACKFILLED — the 8 pre-existing reporter rows, which gained evidenceQuote/evidenceApi from the
+ *                first automated verifier run (tools/verify_reporters.js, 2026-09-18T19:21Z) so
+ *                they are no longer permanently ungradeable. Their counts were read by that run,
+ *                not by hand, so they assert the machine-recorded observation instead. */
+const NEW = D.BSKY_REPORTERS.filter(r => r.conf !== undefined);
+const BACKFILLED = D.BSKY_REPORTERS.filter(r => r.conf === undefined);
 check("the session added 18 evidence rows (16 pollable + 2 held out)", NEW.length === 18, "got " + NEW.length);
-check("every new row carries the exact bio it was verified from", NEW.every(r => r.evidenceQuote && r.evidenceQuote.length > 10));
-check("every new row carries a re-runnable evidence URL on the public API", NEW.every(r => /^https:\/\/public\.api\.bsky\.app\/xrpc\/app\.bsky\.actor\.getProfiles\?actors=/.test(r.evidenceApi || "")));
-check("every new row carries the counts actually observed that day", NEW.every(r => r.observed.postsCount != null && r.observed.profileIndexedAt && r.observed.verificationValid !== undefined));
-check("every new row declares an identity class the code knows", NEW.every(r => D.ARENA_CONF_RANK[r.conf] !== undefined));
+check("every added row carries the exact bio it was verified from", NEW.every(r => r.evidenceQuote && r.evidenceQuote.length > 10));
+check("every added row carries a re-runnable evidence URL on the public API", NEW.every(r => /^https:\/\/public\.api\.bsky\.app\/xrpc\/app\.bsky\.actor\.getProfiles\?actors=/.test(r.evidenceApi || "")));
+check("every added row carries the counts actually observed that day", NEW.every(r => r.observed.postsCount != null && r.observed.profileIndexedAt && r.observed.verificationValid !== undefined));
+check("every added row declares an identity class the code knows", NEW.every(r => D.ARENA_CONF_RANK[r.conf] !== undefined));
+check("the pre-existing rows were BACKFILLED with machine-observed evidence rather than left ungradeable",
+  BACKFILLED.length === 8 && BACKFILLED.every(r => r.evidenceQuote && /actors=/.test(r.evidenceApi || "") && r.observed && r.observed.recheckedBy),
+  "backfilled " + BACKFILLED.length);
+check("a backfilled row's API link cannot point at a different account",
+  BACKFILLED.every(r => String(r.evidenceApi).endsWith("actors=" + r.handle)));
+check("every reporter row in the registry is now gradeable (no silent no-quote rows in BSKY_REPORTERS)",
+  D.BSKY_REPORTERS.every(r => !!r.evidenceQuote));
 check("no row asserts a team that is not in the 30-team registry", D.BSKY_REPORTERS.every(r => r.team == null || !!D.TEAMS.find(t => t.abbr === r.team)));
 /* Over-claiming is the dangerous direction: declaring the strongest class without the object.
  * Under-claiming (an object present but a weaker class written) is merely conservative. */

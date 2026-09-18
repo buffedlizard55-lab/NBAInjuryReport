@@ -204,21 +204,39 @@ const BLUESKY_LIST_SOURCE = {
 const SOCIAL_ACCOUNTS = [
   { handle: "nba.com", name: "NBA — official league account", kind: "official-league", team: null, feed: true, bskyVerified: true,
     verified: "2026-09-17 — Bluesky verification object valid (issuer bsky.app, isValid true); bio states 'The official account for the NBA' and lists the 2026-27 opening-night slate (Oct 20: Celtics/Pistons, 76ers/Knicks, Thunder/Spurs) which matches ESPN's schedule data",
+    evidenceQuote: "The official account for",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=nba.com",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T16:16:42.692Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/nba.com" },
   { handle: "trailblazers.bsky.social", name: "Portland Trail Blazers — official", kind: "official-team", team: "POR", feed: true, bskyVerified: true,
     verified: "2026-09-17 — valid Bluesky verification object + followed by the official NBA account",
+    evidenceQuote: "PNW hoops since 1970.",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=trailblazers.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2025-11-13T22:05:22.015Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/trailblazers.bsky.social" },
   { handle: "nuggets.bsky.social", name: "Denver Nuggets — official", kind: "official-team", team: "DEN", feed: true, bskyVerified: true,
     verified: "2026-09-17 — valid Bluesky verification object + followed by the official NBA account",
+    evidenceQuote: "2023 NBA Champs",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=nuggets.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T18:17:28.462Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/nuggets.bsky.social" },
   { handle: "sixersnba.bsky.social", name: "Philadelphia 76ers — official", kind: "official-team", team: "PHI", feed: true, bskyVerified: true,
     verified: "2026-09-17 — valid Bluesky verification object; bio says 'yes this is our official account … Sixers.com'",
+    evidenceQuote: "yes this is our official account",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=sixersnba.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-17T14:04:32.265Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/sixersnba.bsky.social" },
   { handle: "dallasmavs.bsky.social", name: "Dallas Mavericks", kind: "official-team", team: "DAL", feed: true, bskyVerified: false,
     verified: "2026-09-17 — followed by the official NBA account and bio reads 'Mavs.com', but NO Bluesky verification object was present. FLAGGED as unverified-team-account: treat as club-run only after a second source confirms.",
+    evidenceQuote: "Mavs.com",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=dallasmavs.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2023-05-05T22:58:05.208Z", verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/dallasmavs.bsky.social" },
   { handle: "clevelandcavaliers.bsky.social", name: "Cleveland Cavaliers — handle suggests official, NOT verified", kind: "official-team", team: "CLE", feed: false, bskyVerified: false,
     verified: "2026-09-18 — read live via getProfiles: display name 'Cleveland Cavaliers', bio '🗣️#LetEmKnow', 11,928 followers, 19 posts, profile record last updated 2024-11-25. NO Bluesky verification object is present, and 19 posts across two years is not a news channel. FLAGGED as unverified-team-account and feed:false — listed so a reader can see exactly what exists for CLE, silent until a second source confirms the club runs it.",
+    evidenceQuote: "#LetEmKnow",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=clevelandcavaliers.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: null, verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/clevelandcavaliers.bsky.social" },
   /* NEGATIVE RESULT WORTH KEEPING (2026-09-18): searching the obvious team handles on Bluesky returns
    * unrelated accounts — cavaliers.bsky.social is a Sapporo food blogger, bucks.bsky.social has 39
@@ -226,8 +244,18 @@ const SOCIAL_ACCOUNTS = [
    * account, pistons.bsky.social has 2 followers. None is a club. This is why official team accounts
    * are only ever listed WITH a verification object, and why "the handle looks right" is not evidence. */
   /* Outlet verifier accounts (used as evidence for staff verification, not primary feed inputs) */
-  { handle: "theathletic.com", name: "The Athletic (outlet account, Bluesky verifier)", kind: "outlet", team: null, feed: false, bskyVerified: true,
-    verified: "2026-09-17 — issues valid Bluesky verification objects to its own staff (observed verifying Sam Vecenie and Mike Vorkunov)",
+  /* CHANGED 2026-09-18: this row used to assert "valid Bluesky verification object". The first
+   * automated re-verification run (19:21Z) returned verification {isValid: false, verifiedStatus:
+   * "invalid"} for the outlet's OWN object, so the claim is now written the way the API answers.
+   * Its staff objects are a separate question and were re-checked in the same run: Vecenie's and
+   * Vorkunov's objects issued by theathletic.com are still valid, and Bluesky still reports
+   * trustedVerifierStatus "valid" for the account — i.e. it verifies others without carrying a
+   * valid badge itself. Both facts are recorded; neither is rounded into the other. */
+  { handle: "theathletic.com", name: "The Athletic (outlet account, Bluesky verifier)", kind: "outlet", team: null, feed: false, bskyVerified: false,
+    verified: "2026-09-18 — RE-CHECKED: its own verification object is now INVALID (issued 2025-04-21 by bsky.app, isValid false, verifiedStatus 'invalid') while trustedVerifierStatus remains 'valid'; the staff verifications it issued are still valid on the staff rows (Vecenie, Vorkunov, Robbins, Murray). The 2026-09-17 wording that claimed a valid object for this account was therefore STALE and is corrected here — caught by tools/verify_reporters.js, which is exactly what that job is for.",
+    evidenceQuote: "Get every sports story that matters.",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=theathletic.com",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T05:11:54.272Z", followersCount: 386356, postsCount: 17208, verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/theathletic.com" },
   { handle: "basketball-reference.com", name: "Basketball Reference", kind: "stats", team: null, feed: false, bskyVerified: true,
     verified: "2026-09-17 — valid Bluesky verification object; publisher of an NBA starter pack",
@@ -239,27 +267,51 @@ const SOCIAL_ACCOUNTS = [
 const BSKY_REPORTERS = [
   { name: "Howard Beck", handle: "howardbeck.bsky.social", outlet: "The Ringer", role: "Senior NBA Writer", team: null, feed: true, bskyVerified: true,
     evidence: "https://bsky.app/profile/howardbeck.bsky.social",
+    evidenceQuote: "Senior NBA Writer at TheRinger.com | Co-host, the Real Ones",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=howardbeck.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T15:10:35.452Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — valid Bluesky verification (issuer bsky.app); bio 'Senior NBA Writer at TheRinger.com | Co-host, the Real Ones'; creator of the 150-member NBA writers list" },
   { name: "Sam Vecenie", handle: "samvecenie.bsky.social", outlet: "The Athletic", role: "Senior Writer (NBA / draft) + Game Theory Podcast", team: null, feed: true, bskyVerified: true,
     evidence: "https://bsky.app/profile/samvecenie.bsky.social",
+    evidenceQuote: "Senior Writer at @TheAthletic on the NBA/NBA Draft. Host of the Game Theory Podcast",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=samvecenie.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-07-07T01:57:53.546Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — VALID Bluesky verification issued by theathletic.com (the outlet verifying its own staff); bio names The Athletic" },
   { name: "Mike Vorkunov", handle: "mikevorkunov.bsky.social", outlet: "The Athletic", role: "National NBA reporter", team: null, feed: true, bskyVerified: true,
     evidence: "https://bsky.app/profile/mikevorkunov.bsky.social",
+    evidenceQuote: "National NBA + basketball reporter at The Athletic",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=mikevorkunov.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T14:01:19.579Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — VALID Bluesky verification issued by theathletic.com; creator of the 'A NBA/WNBA/Basketball Starter Pack' list" },
   { name: "John Hollinger", handle: "johnhollinger.bsky.social", outlet: "The Athletic", role: "Senior NBA columnist", team: null, feed: true, bskyVerified: false,
     evidence: "https://bsky.app/profile/johnhollinger.bsky.social",
+    evidenceQuote: "The Athletic NBA columnist",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=johnhollinger.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T03:18:29.996Z", verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — ACTIVE: most recent post indexed 2026-09-17T01:28Z (verified via getAuthorFeed). No Bluesky verification object present; identity corroborated by the X-bio pointer on his directory row. He is inactive on X, so this is his working feed." },
   { name: "Tom Haberstroh", handle: "tomhaberstroh.bsky.social", outlet: "Yahoo Sports / TomTheFinder.com", role: "NBA writer + Trail Blazers analytics insider", team: null, feed: true, bskyVerified: false,
     evidence: "https://bsky.app/profile/tomhaberstroh.bsky.social",
+    evidenceQuote: "Portland Trail Blazers analytics insider",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=tomhaberstroh.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-07-23T02:13:40.726Z", verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — member of Howard Beck's verified NBA writers list; bio names TomTheFinder.com + Yahoo Sports" },
   { name: "Jeff McDonald", handle: "jmcdonaldsa.bsky.social", outlet: "San Antonio Express-News", role: "Spurs beat writer", team: "SAS", feed: true, bskyVerified: false,
     evidence: "https://bsky.app/profile/jmcdonaldsa.bsky.social",
+    evidenceQuote: "Spurs beat writer for the San Antonio Express-News",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jmcdonaldsa.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-08-26T20:48:10.961Z", verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — member of Howard Beck's verified NBA writers list; bio 'Spurs beat writer for the San Antonio Express-News'" },
   { name: "Tom Orsborn", handle: "tomorsborn.bsky.social", outlet: "San Antonio Express-News", role: "Spurs beat writer", team: "SAS", feed: true, bskyVerified: false,
     evidence: "https://bsky.app/profile/tomorsborn.bsky.social",
+    evidenceQuote: "Spurs beat writers",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=tomorsborn.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-17T21:19:48.442Z", verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — member of Howard Beck's verified NBA writers list; bio '11th consecutive season as one of the E-N's Spurs beat writers'" },
   { name: "Sarah Todd", handle: "nbasarah.bsky.social", outlet: "NBA writer (Utah market)", role: "Beat writer / columnist", team: "UTA", feed: true, bskyVerified: true,
     evidence: "https://bsky.app/profile/nbasarah.bsky.social",
+    evidenceQuote: "Utah Jazz Beat Reporter at Deseret News",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=nbasarah.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-17T09:16:33.684Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — valid Bluesky verification object (issuer bsky.app) surfaced by searchActorsTypeahead; beat/outlet field deliberately left generic until re-confirmed" },
 
   /* ==========================================================================================
@@ -472,7 +524,21 @@ function reporterConf(r) {
  * this project has not re-checked are labelled `pattern`, never `verified`. */
 function nbaTeamSiteUrl(abbr) { const t = teamByAbbr(abbr); return t ? ("https://www.nba.com/" + t.nba) : null; }
 function nbaTeamNewsUrl(abbr) { const s = nbaTeamSiteUrl(abbr); return s ? (s + "/news") : null; }
-const NBA_TEAM_NEWS_CHECKED = { CLE: "2026-09-18" };   // teams whose /news page this project re-read live
+const NBA_TEAM_NEWS_CHECKED = { CLE: "2026-09-18" };   // teams whose /news page a human/browser client re-read
+/* WHAT THE AUTOMATED PROBE ACTUALLY SAW (2026-09-18T19:21Z, GitHub runner)
+ *
+ * The same URL pattern answered 200 when read through a browser-shaped client, and **HTTP 403 for
+ * all 30 clubs** from the CI runner (datacentre IP). Both are recorded, because the honest status
+ * of this layer is "a manual-review link that a machine cannot currently read", not "verified
+ * live". If a future run gets 200s, the evidence file changes and this note must be updated with
+ * it — the one thing that must never happen is the page claiming a machine read it did not get. */
+const NBA_TEAM_NEWS_PROBE = {
+  checkedAt: "2026-09-18T19:21:28Z",
+  via: "tools/verify_reporters.js on a GitHub runner",
+  result: "30/30 answered HTTP 403 to that client",
+  browserRead: "CLE /news returned 200 with dated items (3h, 1d) to a browser-shaped client on the same day",
+  meaning: "manual-review link first, machine-readable feed never — club releases announce signings and promotions far more often than injuries"
+};
 
 /* In-arena reporters whose identity this project has read from the public API (pollable layer)
  * or whose outlet page is the evidence (directory layer) — resolved to teams, with gaps named. */
@@ -497,7 +563,8 @@ function arenaCoverage() {
     if (!pollable.length) gaps.push("no pollable in-arena writer account");
     if (!hasVerifiedPollable) gaps.push("no Bluesky-verified writer (in-bowl identity weaker than a verification object)");
     if (!officialBsky.some(a => a.bskyVerified)) gaps.push("no Bluesky-verified official club account");
-    if (!NBA_TEAM_NEWS_CHECKED[t.abbr]) gaps.push("club /news page follows the nba.com slug pattern but has not been re-read this session");
+    if (!NBA_TEAM_NEWS_CHECKED[t.abbr]) gaps.push("club /news page follows the nba.com slug pattern, but the automated probe answered HTTP " +
+      "403 to the CI runner on " + NBA_TEAM_NEWS_PROBE.checkedAt.slice(0, 10) + " — kept as a manual-review link, not a machine-read feed");
 
     return {
       abbr: t.abbr, city: t.city, name: t.name, cls: cls,
@@ -648,6 +715,10 @@ const SOURCES = [
 
 /* Irregularities / requirements flags raised during verification. */
 const FLAGS = [
+  { level: "bad", title: "2026-09-18: the automated re-verifier caught a STALE CLAIM on its FIRST run — The Athletic's own Bluesky verification is invalid", detail: "data.js asserted (2026-09-17) that theathletic.com carries a valid Bluesky verification object and that this is why its staff rows count as the strongest class. tools/verify_reporters.js re-read it at 19:21Z and the API now answers verification {isValid:false, verifiedStatus:'invalid'} (object issued 2025-04-21 by bsky.app). It ALSO answers trustedVerifierStatus:'valid', and the objects it issued to its staff (Vecenie, Vorkunov, Robbins, Murray) are still valid — so the correction is narrow, not a retraction: the OUTLET account has no valid badge, the STAFF rows stand. The row now carries the corrected wording and the job that found this is the reason the claim cannot silently rot again. Nobody was asked; the CI job found it." },
+  { level: "warn", title: "2026-09-18: all 30 official club /news pages answered HTTP 403 to the CI runner — so they are MANUAL-REVIEW links, never a machine-read feed", detail: "nba.com/<slug>/news is stable, first-party and free, and a browser-shaped client read CLE's page successfully on the same day (200, items timestamped 3h/1d). From a GitHub runner IP the whole set answers 403, which is a fact about the request, not about the page. Consequence, written into the UI and the evidence file: the club channel is offered for corroboration and manual review, and the matrix says 'URL pattern, not re-read' or 'HTTP 403 to the runner' instead of implying a live machine read. The probe request now carries ordinary browser Accept headers and keeps an identifying User-Agent, and the per-channel result is stored so a change (a block lifting, or a new one) is visible as data rather than folklore." },
+  { level: "warn", title: "2026-09-18: measured dormancy in the official Bluesky accounts we follow — activity is not assumed anywhere", detail: "Re-measured live in the same run: dallasmavs.bsky.social's newest post is 2023-05-05 (and it carries NO verification object, so it never alerts), trailblazers.bsky.social is 308 days quiet, clevelandcavaliers.bsky.social has zero posts, basketball-reference.com has zero posts. Two reporter rows are also dormant by measurement rather than reputation: kellyiko.bsky.social (newest post 99 days old) and ejelite1.bsky.social / Ethan Sands (45 days). The verifier writes newest-post dates into data/live/reporter_verify.json every run, so 'when did this account last say anything' is a number on the page, not an assumption." },
+  { level: "warn", title: "2026-09-18: a hardcoded count in a test hid a real failure — 13 allow-listed accounts was true until the day it was not", detail: "tools/poll_fixture_test.js asserted '13 allow-listed accounts were polled'. The moment the reporter expansion landed, that number became 29 and the check failed with a message that said nothing about what was actually wrong. The expectation is now DERIVED from data.js (official feed accounts + reporter rows that are neither feed:false nor unconfirmed), and a second check asserts the held-out rows (dormant Heat account, unconfirmed 76ers handle) are never polled. Same reasoning as the coverage matrix: a number typed into a test is a claim that stops being checked the moment it is right once." },
   { level: "bad", title: "2026-09-18 (session 10): EIGHT teams had no in-arena reporter row at all — the gap is now measured, not hidden", detail: "The directory previously listed in-arena coverage for 22 of 30 teams; CLE, DET, MIL, MIN, PHI, POR, SAC and WAS had nothing, so for those clubs the 'verify the moment it happens' promise had no named person behind it. This session read each gap team's beat writers live from the keyless Bluesky public API and added 18 evidence rows: 16 pollable accounts, plus 2 rows deliberately held OUT of the alert path (one dormant account, one unconfirmed handle — both visible in the directory). arenaCoverage() in assets/js/data.js now COMPUTES coverage per team instead of trusting a typed table, reporters.html renders it as a 30-row matrix with the gap text on every row, and tools/smoke_test.js fails if a team has no source of any kind. Measured state after this session (computed, not typed): 30 teams · 10 verified-pollable · 7 bio-pollable · 13 official-channel-only · 0 unexplained gaps · 18 pollable in-arena writers, 10 of them Bluesky-verified. The 13 official-only teams are named in the UI rather than quietly rendered as covered." },
   { level: "warn", title: "Bluesky-verified identity is NOT the same as in-arena attendance — and the UI must never imply it is", detail: "A verification object proves Bluesky (or the outlet's own domain account, e.g. theathletic.com) vouches for the account. It does NOT prove the reporter is in the building tonight, and a beat writer can be at home watching the same broadcast. The directory therefore has three separate fields — identity evidence, pollability, and last observed post — and 'in-arena' is a beat assignment claim, never a proven location. Only the live wire's corroboration (a post that matches an official designation) is evidence about a report." },
   { level: "warn", title: "2026-09-18: two 'Brad Rowland' accounts exist; the wrong one would have poisoned ATL coverage", detail: "app.bsky.actor.searchActorsTypeahead?q=Brad Rowland returned btrowland.bsky.social (12,143 followers, 8,972 posts, bio names 'Locked on Hawks') AND frodorowland.bsky.social (23 followers, 1 post, no bio). Name-matching alone would have a 50% chance of wiring an impersonator or an abandoned duplicate into the alert path. The row uses the account whose bio names the Hawks podcast; the duplicate is excluded and recorded here. Any future ATL row must repeat this check." },
