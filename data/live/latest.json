@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T20:00:54.320Z",
+  "generated": "2026-09-18T21:10:29.437Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -6441,7 +6441,7 @@
         "searchUrl": "https://x.com/search?q=Jalen%20Williams%20injury",
         "fp": "Day-To-Day|Left Hamstring Leg|2026-10-01|GTD",
         "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected · in-game exit reported (unconfirmed)",
         "impactScore": null,
         "impactConfidence": 0.4,
         "impactModelVersion": 2,
@@ -6458,13 +6458,19 @@
             "parts": []
           },
           "recurrence": {
-            "score": 0,
+            "score": 40,
             "parts": [
               {
                 "key": "cadence",
                 "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
                 "pts": 0,
                 "max": 45
+              },
+              {
+                "key": "reportedExit",
+                "label": "in-game exit reported by a monitored account (unconfirmed — not a league designation)",
+                "pts": 30,
+                "max": 30
               }
             ]
           }
@@ -6500,8 +6506,15 @@
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
         "salaryCurrent": 41500000,
         "salarySeason": 2027,
+        "inGameExitReported": {
+          "at": "2026-05-21T02:02:33.541Z",
+          "by": "Rylan Stiles",
+          "url": "https://bsky.app/profile/rylanstiles.bsky.social/post/3mmddb5pz3y2s",
+          "status": "reported-unconfirmed"
+        },
         "impactNotes": [
           "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "An in-game exit was reported by a monitored account (not a league designation) — see the linked post.",
           "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
@@ -7508,19 +7521,19 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
       "nba.com": {
         "ok": true,
         "count": 0,
         "name": "NBA — official league account",
         "kind": "official-league",
         "team": null
+      },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "trailblazers.bsky.social": {
         "ok": true,
@@ -7557,6 +7570,13 @@
         "kind": "reporter",
         "team": null
       },
+      "tomhaberstroh.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tom Haberstroh",
+        "kind": "reporter",
+        "team": null
+      },
       "tomorsborn.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7571,40 +7591,12 @@
         "kind": "reporter",
         "team": "SAS"
       },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
-        "kind": "reporter",
-        "team": null
-      },
       "nbasarah.bsky.social": {
         "ok": true,
         "count": 4,
         "name": "Sarah Todd",
         "kind": "reporter",
         "team": "UTA"
-      },
-      "kyleneubeck.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Kyle Neubeck",
-        "kind": "reporter",
-        "team": "PHI"
-      },
-      "omarisankofa.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Omari Sankofa II",
-        "kind": "reporter",
-        "team": "DET"
-      },
-      "highkin.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Sean Highkin",
-        "kind": "reporter",
-        "team": "POR"
       },
       "jonkrawczynski.bsky.social": {
         "ok": true,
@@ -7613,6 +7605,27 @@
         "kind": "reporter",
         "team": "MIN"
       },
+      "kyleneubeck.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Kyle Neubeck",
+        "kind": "reporter",
+        "team": "PHI"
+      },
+      "highkin.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Sean Highkin",
+        "kind": "reporter",
+        "team": "POR"
+      },
+      "omarisankofa.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Omari Sankofa II",
+        "kind": "reporter",
+        "team": "DET"
+      },
       "lawmurraythenu.bsky.social": {
         "ok": true,
         "count": 6,
@@ -7620,19 +7633,19 @@
         "kind": "reporter",
         "team": "LAC"
       },
-      "joshrobbins.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Josh Robbins",
-        "kind": "reporter",
-        "team": "WAS"
-      },
       "jlewenberg.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Josh Lewenberg",
         "kind": "reporter",
         "team": "TOR"
+      },
+      "joshrobbins.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Josh Robbins",
+        "kind": "reporter",
+        "team": "WAS"
       },
       "jimowczarski.bsky.social": {
         "ok": true,
@@ -7683,19 +7696,19 @@
         "kind": "reporter",
         "team": "MIA"
       },
-      "kellyiko.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Kelly Iko",
-        "kind": "reporter",
-        "team": null
-      },
       "geraldbourguet.bsky.social": {
         "ok": true,
         "count": 4,
         "name": "Gerald Bourguet",
         "kind": "reporter",
         "team": "PHX"
+      },
+      "kellyiko.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Kelly Iko",
+        "kind": "reporter",
+        "team": null
       },
       "gwashburnglobe.bsky.social": {
         "ok": true,
@@ -7725,6 +7738,13 @@
         "kind": "reporter",
         "team": "CHI"
       },
+      "timcato.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tim Cato",
+        "kind": "reporter",
+        "team": "DAL"
+      },
       "ryanblackburn.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7746,12 +7766,12 @@
         "kind": "reporter",
         "team": "HOU"
       },
-      "timcato.bsky.social": {
+      "rylanstiles.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Tim Cato",
+        "count": 11,
+        "name": "Rylan Stiles",
         "kind": "reporter",
-        "team": "DAL"
+        "team": "OKC"
       },
       "danwoikesports.bsky.social": {
         "ok": true,
@@ -7759,13 +7779,6 @@
         "name": "Dan Woike",
         "kind": "reporter",
         "team": "LAL"
-      },
-      "rylanstiles.bsky.social": {
-        "ok": true,
-        "count": 11,
-        "name": "Rylan Stiles",
-        "kind": "reporter",
-        "team": "OKC"
       },
       "jxlorenzi.bsky.social": {
         "ok": true,
