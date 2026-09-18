@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-18T19:47:05.597Z",
+ "generated": "2026-09-18T19:48:51.255Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -319,7 +319,7 @@
     "issuer": "theathletic.com"
    },
    "bio": "#NBASky writer at The Athletic\nIn LA\nFrom Philadelphia\n*under construction*",
-   "latestPostAt": "2026-09-18T17:22:23.194Z",
+   "latestPostAt": "2026-09-18T19:47:05.416Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
