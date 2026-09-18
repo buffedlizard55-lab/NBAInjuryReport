@@ -70,7 +70,7 @@ node tools/smoke_test.js                 # 212 checks (what the social layer act
 node tools/impact_test.js                # 80 checks (geo, collector math, impact model v2, wiring)
 node tools/integration_test.js           # 71 checks (boots the real dashboard AND the reporter page)
 node tools/poll_fixture_test.js          # 25 checks (poller set DERIVED from the registry, held-out rows never polled)
-node tools/verify_reporters_test.js      # 44 checks (identity-verification policy, offline)
+node tools/verify_reporters_test.js      # 47 checks (identity policy + the REAL CLI run offline against a stubbed network)
 node tools/poll_fixture_test.js          # 24 checks (real poller, fixture transports)
 node tools/regression_test.js            # 26 groups
 python3 -m unittest discover -s tools -p 'test_*.py'   # 26 tests, incl. the audit tool itself

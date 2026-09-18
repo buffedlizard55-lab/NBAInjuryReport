@@ -336,13 +336,19 @@ async function main() {
     process.exit(1);
   }
 }
-/* Small helper kept next to mapLimited so the per-account recency calls also respect the limit. */
+/* Small helper kept next to mapLimited so the per-account recency calls also respect the limit.
+ *
+ * This call site is exactly what broke on 2026-09-18: renaming latestPostAt → latestPost left
+ * `latestPostAt(h)` here, which threw a ReferenceError inside main() — so the live job went red
+ * while every unit test stayed green, because the tests only ever called judge() directly and never
+ * the pipeline. tools/verify_reporters_test.js now runs the REAL CLI end-to-end against a stubbed
+ * network, so a dangling reference in this file fails in a test instead of in CI. */
 async function mapLimitedOnce(handle) {
-  const r = await mapLimited([handle], 1, async h => latestPostAt(h));
+  const r = await mapLimited([handle], 1, async h => latestPost(h));
   return r[0] || null;
 }
 
-module.exports = { judge, summarize, quotePresent, validVerification, ageDays, chunk, norm, DORMANT_DAYS };
+module.exports = { judge, summarize, quotePresent, validVerification, ageDays, chunk, norm, DORMANT_DAYS, latestPost, channelStatus, profilesFor };
 
 if (require.main === module) {
   main().catch(e => { console.error("verify_reporters failed: " + e.message); process.exit(1); });

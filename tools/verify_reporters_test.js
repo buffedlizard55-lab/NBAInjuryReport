@@ -182,5 +182,50 @@ check("the computed summary reports REAL coverage, not full coverage (no silent 
     summary.recencyUnknown === 1 && summary.dormant === 1 && summary.ok === 1, JSON.stringify(summary));
 }
 
+/* =====================================================================================
+ * END-TO-END: run the REAL CLI with a stubbed network.
+ *
+ * Why this exists: on 2026-09-18 the live job went red with exit 1 while every unit test passed.
+ * The cause was a single dangling call site inside main() (`latestPostAt` after it had been renamed
+ * to `latestPost`) — code that no unit test touched, so the failure surfaced in production instead
+ * of here. The stub below answers getProfiles / getAuthorFeed / club-channel requests, and the test
+ * asserts exit 0, so anything that throws anywhere in the pipeline fails a build in seconds.
+ * ===================================================================================== */
+console.log("== end to end: the real CLI against a stubbed network ==");
+{
+  const os = require("os");
+  const { spawnSync } = require("child_process");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "vr-stub-"));
+  const stub = path.join(dir, "stub.js");
+  fs.writeFileSync(stub, `
+const NOW = new Date().toISOString();
+global.fetch = async (url, opts) => {
+  const u = String(url);
+  const json = body => ({ ok: true, status: 200, json: async () => body, text: async () => JSON.stringify(body), url: u });
+  if (u.includes("getProfiles")) {
+    const actors = (u.split("actors=").slice(1).join("&actors=")).split("&actors=").map(decodeURIComponent);
+    return json({ profiles: actors.map(h => ({
+      handle: h, description: "bio for " + h,
+      verification: { verifications: [{ isValid: true, issuerHandle: "bsky.app" }] }
+    })) });
+  }
+  if (u.includes("getAuthorFeed")) return json({ feed: [{ post: { record: { createdAt: NOW } } }] });
+  /* club channels: answer like a normal news index */
+  return { ok: true, status: 200, text: async () => "<html>news</html>", json: async () => ({}), url: u };
+};
+`);
+  const evidence = path.join(ROOT, "data/live/reporter_verify.json");
+  const before = fs.existsSync(evidence) ? fs.readFileSync(evidence, "utf8") : null;
+  const res = spawnSync(process.execPath, ["-r", stub, path.join(ROOT, "tools/verify_reporters.js"), "--dry-run"], { encoding: "utf8" });
+  check("the CLI completes end-to-end offline (no dangling reference anywhere in the pipeline)",
+    res.status === 0, "exit " + res.status + " · " + String(res.stderr || "").slice(0, 300));
+  check("it reports verdicts and club-channel results rather than silently doing nothing",
+    /verdicts:/.test(res.stdout || "") && /club channels: 30\/30/.test(res.stdout || ""), String(res.stdout || "").slice(-200));
+  const after = fs.existsSync(evidence) ? fs.readFileSync(evidence, "utf8") : null;
+  check("--dry-run leaves the committed evidence file byte-for-byte untouched", before === after,
+    before === after ? "" : "file was rewritten by a dry run");
+  fs.rmSync(dir, { recursive: true, force: true });
+}
+
 console.log("\n" + pass + " passed, " + fail + " failed");
 process.exit(fail ? 1 : 0);
