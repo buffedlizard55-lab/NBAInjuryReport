@@ -1063,5 +1063,9 @@
    "UTA:http403",
    "WAS:http403"
   ]
+ },
+ "lastAttempt": {
+  "at": "2026-09-18T19:58:12.401Z",
+  "result": "UNREACHABLE: no profile could be read (first error: fetch failed)"
  }
 }

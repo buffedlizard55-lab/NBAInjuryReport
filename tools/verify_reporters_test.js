@@ -105,7 +105,9 @@ const D = sandbox.__d;
  *                not by hand, so they assert the machine-recorded observation instead. */
 const NEW = D.BSKY_REPORTERS.filter(r => r.conf !== undefined);
 const BACKFILLED = D.BSKY_REPORTERS.filter(r => r.conf === undefined);
-check("the session added 18 evidence rows (16 pollable + 2 held out)", NEW.length === 18, "got " + NEW.length);
+/* UPDATED 2026-09-18 session 11: expansion added 14 more pollable rows (BOS 3, CHI 1, DAL 1, DEN 1, GSW 1, HOU 1, LAL 1, OKC 3, NYK 2)
+ * Previous 18 (16 pollable + 2 held out) + 14 = 32 total with conf defined (30 pollable + 2 held out). */
+check("the sessions added 32 evidence rows (30 pollable + 2 held out) — 18 from session 10 + 14 from session 11", NEW.length === 32, "got " + NEW.length);
 check("every added row carries the exact bio it was verified from", NEW.every(r => r.evidenceQuote && r.evidenceQuote.length > 10));
 check("every added row carries a re-runnable evidence URL on the public API", NEW.every(r => /^https:\/\/public\.api\.bsky\.app\/xrpc\/app\.bsky\.actor\.getProfiles\?actors=/.test(r.evidenceApi || "")));
 check("every added row carries the counts actually observed that day", NEW.every(r => r.observed.postsCount != null && r.observed.profileIndexedAt && r.observed.verificationValid !== undefined));
