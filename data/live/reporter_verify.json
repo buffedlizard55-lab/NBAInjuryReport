@@ -1,24 +1,34 @@
 {
- "generated": "2026-09-18T19:48:51.255Z",
+ "generated": "2026-09-18T20:00:06.374Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
- "handlesChecked": 34,
+ "handlesChecked": 48,
  "summary": {
-  "checked": 34,
-  "ok": 29,
-  "bioDrift": 0,
-  "dormant": 5,
+  "checked": 48,
+  "ok": 33,
+  "bioDrift": 7,
+  "dormant": 7,
   "missing": 0,
-  "verificationLost": 0,
+  "verificationLost": 1,
   "noQuote": 0,
   "recencyUnknown": 0,
-  "fatal": 0,
+  "fatal": 1,
   "withProblems": [
    "samvecenie.bsky.social (dormant)",
    "tomhaberstroh.bsky.social (dormant)",
    "ejelite1.bsky.social (dormant)",
    "kellyiko.bsky.social (dormant)",
+   "noadalzell.bsky.social (verification-lost)",
+   "bullsjay.bsky.social (bio-drift)",
+   "timcato.bsky.social (bio-drift)",
+   "ryanblackburn.bsky.social (dormant)",
+   "anthonyvslater.bsky.social (bio-drift)",
+   "danielle-lerner.bsky.social (bio-drift)",
+   "danwoikesports.bsky.social (dormant)",
+   "rylanstiles.bsky.social (bio-drift)",
+   "jxlorenzi.bsky.social (bio-drift)",
+   "andrewschlecht.bsky.social (bio-drift)",
    "trailblazers.bsky.social (dormant)"
   ]
  },
@@ -260,7 +270,7 @@
    },
    "bio": "Trail Blazers + Fire rosegardenreport.com",
    "latestPostAt": "2026-09-16T19:59:46.218Z",
-   "dormantDays": 1,
+   "dormantDays": 2,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -554,6 +564,298 @@
    "notes": [
     "quote matches, but newest post is 99 days old (>30)"
    ]
+  },
+  {
+   "handle": "gwashburnglobe.bsky.social",
+   "name": "Gary Washburn",
+   "team": "BOS",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Boston Globe National NBA writer giving thoughts on the NBA, other sports and various topics. UC Berkeley grad. Masters degree, Univ. of Nebraska.",
+   "latestPostAt": "2026-09-06T18:22:45.219Z",
+   "dormantDays": 12,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "byjayking.bsky.social",
+   "name": "Jay King",
+   "team": "BOS",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "Celtics writer. Host of Still Poddable. NBA sicko.",
+   "latestPostAt": "2026-09-12T12:46:19.769Z",
+   "dormantDays": 6,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "noadalzell.bsky.social",
+   "name": "Noa Dalzell",
+   "status": "verification-lost",
+   "fatal": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "notes": [
+    "row claims a Bluesky verification object; API now returns none"
+   ]
+  },
+  {
+   "handle": "bullsjay.bsky.social",
+   "name": "Jason Patt",
+   "team": "CHI",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast ",
+   "latestPostAt": "2026-09-18T02:12:07.628Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "bio-drift",
+   "fatal": false,
+   "notes": [
+    "stored quote is no longer present in the live bio — re-read and update the row"
+   ]
+  },
+  {
+   "handle": "timcato.bsky.social",
+   "name": "Tim Cato",
+   "team": "DAL",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "didn’t use to have followers here i’m sorry",
+   "latestPostAt": "2026-06-13T08:57:52.586Z",
+   "dormantDays": 97,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "bio-drift",
+   "fatal": false,
+   "notes": [
+    "stored quote is no longer present in the live bio — re-read and update the row"
+   ]
+  },
+  {
+   "handle": "ryanblackburn.bsky.social",
+   "name": "Ryan Blackburn",
+   "team": "DEN",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Denver Nuggets | Mile High Sports | Pickaxe and Roll | Locked On Nuggets | Just trying to make it",
+   "latestPostAt": "2025-06-20T19:19:27.415Z",
+   "dormantDays": 455,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 455 days old (>30)"
+   ]
+  },
+  {
+   "handle": "anthonyvslater.bsky.social",
+   "name": "Anthony Slater",
+   "team": "GSW",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "NBA writer for ESPN",
+   "latestPostAt": "2026-08-14T21:36:29.349Z",
+   "dormantDays": 34,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "bio-drift",
+   "fatal": false,
+   "notes": [
+    "stored quote is no longer present in the live bio — re-read and update the row"
+   ]
+  },
+  {
+   "handle": "danielle-lerner.bsky.social",
+   "name": "Danielle Lerner",
+   "team": "HOU",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "USA TODAY national sports enterprise reporter. California transplant, but the cool kind. 🏳️‍🌈\n\ndlerner@usatodayco.com",
+   "latestPostAt": "2026-09-17T14:22:41.276Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "bio-drift",
+   "fatal": false,
+   "notes": [
+    "stored quote is no longer present in the live bio — re-read and update the row"
+   ]
+  },
+  {
+   "handle": "danwoikesports.bsky.social",
+   "name": "Dan Woike",
+   "team": "LAL",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "Covering the Lakers for The Athletic, listening to Dad Rock a little too loud and eating a little too much pizza",
+   "latestPostAt": "2026-05-12T14:46:07.139Z",
+   "dormantDays": 129,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 129 days old (>30)"
+   ]
+  },
+  {
+   "handle": "rylanstiles.bsky.social",
+   "name": "Rylan Stiles",
+   "team": "OKC",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Locked On Thunder Podcast Host. Thunder on SI Beat Writer. Locked on NBA Saturday night host. OKC Dream Team Co-Host. Elvis Stan.",
+   "latestPostAt": "2026-07-20T00:51:39.978Z",
+   "dormantDays": 60,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "bio-drift",
+   "fatal": false,
+   "notes": [
+    "stored quote is no longer present in the live bio — re-read and update the row"
+   ]
+  },
+  {
+   "handle": "jxlorenzi.bsky.social",
+   "name": "Joel Lorenzi",
+   "team": "OKC",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Chicago-based NBA writer for The Athletic. Joe-L. Past: Thunder for The Oklahoman. Mizzou alum. Out West forever. https://www.nytimes.com/athletic/author/joel-lorenzi/",
+   "latestPostAt": "2026-08-29T19:26:37.066Z",
+   "dormantDays": 20,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "bio-drift",
+   "fatal": false,
+   "notes": [
+    "stored quote is no longer present in the live bio — re-read and update the row"
+   ]
+  },
+  {
+   "handle": "andrewschlecht.bsky.social",
+   "name": "Andrew Schlecht",
+   "team": "OKC",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "Covering the OKC Thunder \nExecutive Producer at The Athletic\nDown to Dunk\nSaturday Slam N Jam\nOKC Dream Team",
+   "latestPostAt": "2026-08-21T18:39:49.219Z",
+   "dormantDays": 28,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "bio-drift",
+   "fatal": false,
+   "notes": [
+    "stored quote is no longer present in the live bio — re-read and update the row"
+   ]
+  },
+  {
+   "handle": "fredkatz.bsky.social",
+   "name": "Fred Katz",
+   "team": "NYK",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Senior NBA Writer for The Athletic | Host of Katz and Shoot, a twice-a-week Knicks and NBA podcast",
+   "latestPostAt": "2026-09-17T16:14:40.433Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "jledwardsiii.bsky.social",
+   "name": "James L. Edwards III",
+   "team": "NYK",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "Senior writer at The Athletic, covering the Knicks. 2021 NSMA sportswriter of year. From Flint, MI. Only reporter on League Fits. PBWA. Sneakerhead. Rap snob.",
+   "latestPostAt": "2026-09-03T12:39:22.259Z",
+   "dormantDays": 15,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
   },
   {
    "handle": "nba.com",
@@ -1063,9 +1365,5 @@
    "UTA:http403",
    "WAS:http403"
   ]
- },
- "lastAttempt": {
-  "at": "2026-09-18T19:58:12.401Z",
-  "result": "UNREACHABLE: no profile could be read (first error: fetch failed)"
  }
 }
