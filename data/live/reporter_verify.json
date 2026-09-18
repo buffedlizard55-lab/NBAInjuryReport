@@ -1,34 +1,32 @@
 {
- "generated": "2026-09-18T20:00:06.374Z",
+ "generated": "2026-09-18T22:45:58.592Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
- "handlesChecked": 48,
+ "handlesChecked": 57,
  "summary": {
-  "checked": 48,
-  "ok": 33,
-  "bioDrift": 7,
-  "dormant": 7,
+  "checked": 57,
+  "ok": 44,
+  "bioDrift": 2,
+  "dormant": 11,
   "missing": 0,
-  "verificationLost": 1,
+  "verificationLost": 0,
   "noQuote": 0,
   "recencyUnknown": 0,
-  "fatal": 1,
+  "fatal": 0,
   "withProblems": [
    "samvecenie.bsky.social (dormant)",
    "tomhaberstroh.bsky.social (dormant)",
+   "nbasarah.bsky.social (bio-drift)",
    "ejelite1.bsky.social (dormant)",
    "kellyiko.bsky.social (dormant)",
-   "noadalzell.bsky.social (verification-lost)",
-   "bullsjay.bsky.social (bio-drift)",
    "timcato.bsky.social (bio-drift)",
    "ryanblackburn.bsky.social (dormant)",
-   "anthonyvslater.bsky.social (bio-drift)",
-   "danielle-lerner.bsky.social (bio-drift)",
+   "anthonyvslater.bsky.social (dormant)",
    "danwoikesports.bsky.social (dormant)",
-   "rylanstiles.bsky.social (bio-drift)",
-   "jxlorenzi.bsky.social (bio-drift)",
-   "andrewschlecht.bsky.social (bio-drift)",
+   "rylanstiles.bsky.social (dormant)",
+   "damichaelcole.bsky.social (dormant)",
+   "christianclark3.bsky.social (dormant)",
    "trailblazers.bsky.social (dormant)"
   ]
  },
@@ -45,7 +43,7 @@
     "issuer": "bsky.app"
    },
    "bio": "Senior NBA Writer at TheRinger.com | Co-host, the Real Ones | #NBASky evangelist\n\nPreviously: SI.com, BleacherReport.com, NYTimes.com, DailyNews.com, VCStar.com, DavisEnterprise.com\n\nhttps://www.theringer.com/authors/howard-beck\nauthory.com/howardbeck",
-   "latestPostAt": "2026-09-18T15:10:35.452Z",
+   "latestPostAt": "2026-09-18T17:05:28.623Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -107,7 +105,7 @@
     "issuer": null
    },
    "bio": "The Athletic NBA columnist\nPER creator  - Former Grizzlies VP Basketball Ops - Former ESPN\nWahoowa - Commanders - Brewers - Timbers - huh?\nAtlanta/a hotel",
-   "latestPostAt": "2026-09-18T03:18:29.996Z",
+   "latestPostAt": "2026-09-18T22:00:23.051Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -150,7 +148,7 @@
    },
    "bio": "Spurs beat writer for the San Antonio Express-News. Live music and dead poets. Refugee from The Bad Place.",
    "latestPostAt": "2026-08-26T20:48:10.961Z",
-   "dormantDays": 22,
+   "dormantDays": 23,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -170,7 +168,7 @@
    },
    "bio": "In my 40th year as a reporter with the San Antonio Express-News and my 11th consecutive season as one of the E-N’s Spurs beat writers. Also do occasional stories on food insecurity issues. Proud San Antonio College alumnus. 🏳️‍🌈ally",
    "latestPostAt": "2026-09-17T21:19:48.442Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -188,14 +186,16 @@
     "valid": true,
     "issuer": "bsky.app"
    },
-   "bio": "Utah Jazz Beat Reporter at Deseret News. Previously 76ers and Warriors. 530. 510.\nTwo-time Utah Sportswriter of the Year.",
-   "latestPostAt": "2026-09-17T09:16:33.684Z",
-   "dormantDays": 1,
+   "bio": "Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors. 530. 510.\nTwo-time Utah Sportswriter of the Year.",
+   "latestPostAt": "2026-09-18T22:40:50.918Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
-   "status": "ok",
+   "status": "bio-drift",
    "fatal": false,
-   "notes": []
+   "notes": [
+    "stored quote is no longer present in the live bio — re-read and update the row"
+   ]
   },
   {
    "handle": "jonkrawczynski.bsky.social",
@@ -229,7 +229,7 @@
     "issuer": "bsky.app"
    },
    "bio": "Pistons beat writer for the Detroit Free Press.\n\nCo-host of The Pistons Pulse podcast w/ \n@MotorCityHoops\n\nMichigan State ‘16. Westsider.",
-   "latestPostAt": "2026-09-18T17:24:06.381Z",
+   "latestPostAt": "2026-09-18T22:37:07.572Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -329,7 +329,7 @@
     "issuer": "theathletic.com"
    },
    "bio": "#NBASky writer at The Athletic\nIn LA\nFrom Philadelphia\n*under construction*",
-   "latestPostAt": "2026-09-18T19:47:05.416Z",
+   "latestPostAt": "2026-09-18T22:31:23.041Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -350,7 +350,7 @@
    },
    "bio": "I cover the #Bucks for the Milwaukee Journal Sentinel. I take my coffee intravenously & my Wu-Tang loud. Black lives matter. he/him/his",
    "latestPostAt": "2026-09-17T20:18:13.186Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -515,7 +515,7 @@
     "issuer": null
    },
    "bio": "Covering the Miami Heat for the South Florida Sun Sentinel",
-   "latestPostAt": "2026-09-18T12:56:26.866Z",
+   "latestPostAt": "2026-09-18T21:17:26.677Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -569,7 +569,7 @@
    "handle": "gwashburnglobe.bsky.social",
    "name": "Gary Washburn",
    "team": "BOS",
-   "conf": "bio-verified",
+   "conf": "bsky-verified",
    "feed": true,
    "verification": {
     "present": true,
@@ -589,7 +589,7 @@
    "handle": "byjayking.bsky.social",
    "name": "Jay King",
    "team": "BOS",
-   "conf": "bio-verified",
+   "conf": "bsky-verified",
    "feed": true,
    "verification": {
     "present": true,
@@ -608,16 +608,22 @@
   {
    "handle": "noadalzell.bsky.social",
    "name": "Noa Dalzell",
-   "status": "verification-lost",
-   "fatal": true,
+   "team": "BOS",
+   "conf": "bio-verified",
+   "feed": true,
    "verification": {
     "present": false,
     "valid": false,
     "issuer": null
    },
-   "notes": [
-    "row claims a Bluesky verification object; API now returns none"
-   ]
+   "bio": "WNBA @sbnation, Celtics @clnsceltics",
+   "latestPostAt": "2026-09-18T19:43:53.784Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
   },
   {
    "handle": "bullsjay.bsky.social",
@@ -635,27 +641,25 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
-   "status": "bio-drift",
+   "status": "ok",
    "fatal": false,
-   "notes": [
-    "stored quote is no longer present in the live bio — re-read and update the row"
-   ]
+   "notes": []
   },
   {
    "handle": "timcato.bsky.social",
    "name": "Tim Cato",
-   "team": "DAL",
-   "conf": "bio-verified",
-   "feed": true,
+   "team": null,
+   "conf": "unconfirmed",
+   "feed": false,
    "verification": {
     "present": false,
     "valid": false,
     "issuer": null
    },
    "bio": "didn’t use to have followers here i’m sorry",
-   "latestPostAt": "2026-06-13T08:57:52.586Z",
-   "dormantDays": 97,
-   "postItems": 1,
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
    "recencyReadable": true,
    "status": "bio-drift",
    "fatal": false,
@@ -689,7 +693,7 @@
    "handle": "anthonyvslater.bsky.social",
    "name": "Anthony Slater",
    "team": "GSW",
-   "conf": "bio-verified",
+   "conf": "bsky-verified",
    "feed": true,
    "verification": {
     "present": true,
@@ -698,19 +702,19 @@
    },
    "bio": "NBA writer for ESPN",
    "latestPostAt": "2026-08-14T21:36:29.349Z",
-   "dormantDays": 34,
+   "dormantDays": 35,
    "postItems": 1,
    "recencyReadable": true,
-   "status": "bio-drift",
+   "status": "dormant",
    "fatal": false,
    "notes": [
-    "stored quote is no longer present in the live bio — re-read and update the row"
+    "quote matches, but newest post is 35 days old (>30)"
    ]
   },
   {
    "handle": "danielle-lerner.bsky.social",
    "name": "Danielle Lerner",
-   "team": "HOU",
+   "team": null,
    "conf": "bio-verified",
    "feed": true,
    "verification": {
@@ -723,17 +727,15 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
-   "status": "bio-drift",
+   "status": "ok",
    "fatal": false,
-   "notes": [
-    "stored quote is no longer present in the live bio — re-read and update the row"
-   ]
+   "notes": []
   },
   {
    "handle": "danwoikesports.bsky.social",
    "name": "Dan Woike",
    "team": "LAL",
-   "conf": "bio-verified",
+   "conf": "bsky-verified",
    "feed": true,
    "verification": {
     "present": true,
@@ -767,16 +769,16 @@
    "dormantDays": 60,
    "postItems": 1,
    "recencyReadable": true,
-   "status": "bio-drift",
+   "status": "dormant",
    "fatal": false,
    "notes": [
-    "stored quote is no longer present in the live bio — re-read and update the row"
+    "quote matches, but newest post is 60 days old (>30)"
    ]
   },
   {
    "handle": "jxlorenzi.bsky.social",
    "name": "Joel Lorenzi",
-   "team": "OKC",
+   "team": null,
    "conf": "bio-verified",
    "feed": true,
    "verification": {
@@ -789,17 +791,15 @@
    "dormantDays": 20,
    "postItems": 1,
    "recencyReadable": true,
-   "status": "bio-drift",
+   "status": "ok",
    "fatal": false,
-   "notes": [
-    "stored quote is no longer present in the live bio — re-read and update the row"
-   ]
+   "notes": []
   },
   {
    "handle": "andrewschlecht.bsky.social",
    "name": "Andrew Schlecht",
    "team": "OKC",
-   "conf": "bio-verified",
+   "conf": "bsky-verified",
    "feed": true,
    "verification": {
     "present": true,
@@ -811,11 +811,9 @@
    "dormantDays": 28,
    "postItems": 1,
    "recencyReadable": true,
-   "status": "bio-drift",
+   "status": "ok",
    "fatal": false,
-   "notes": [
-    "stored quote is no longer present in the live bio — re-read and update the row"
-   ]
+   "notes": []
   },
   {
    "handle": "fredkatz.bsky.social",
@@ -841,7 +839,7 @@
    "handle": "jledwardsiii.bsky.social",
    "name": "James L. Edwards III",
    "team": "NYK",
-   "conf": "bio-verified",
+   "conf": "bsky-verified",
    "feed": true,
    "verification": {
     "present": true,
@@ -851,6 +849,150 @@
    "bio": "Senior writer at The Athletic, covering the Knicks. 2021 NSMA sportswriter of year. From Flint, MI. Only reporter on League Fits. PBWA. Sneakerhead. Rap snob.",
    "latestPostAt": "2026-09-03T12:39:22.259Z",
    "dormantDays": 15,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "drewhilldailym.bsky.social",
+   "name": "Drew Hill",
+   "team": "MEM",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Memphis Grizzlies beat reporter for The Daily Memphian. Occasionally writes columns. Bama grad and Gump 🐘",
+   "latestPostAt": "2026-09-10T19:19:48.672Z",
+   "dormantDays": 8,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "damichaelcole.bsky.social",
+   "name": "Damichael Cole",
+   "team": "MEM",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Memphis Grizzlies beat reporter for The Commercial Appeal\nUTK graduate \nProverbs 3:5-6",
+   "latestPostAt": "2025-02-17T21:02:40.702Z",
+   "dormantDays": 578,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 578 days old (>30)"
+   ]
+  },
+  {
+   "handle": "christianclark3.bsky.social",
+   "name": "Christian Clark",
+   "team": "DAL",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "NBA reporter for The Athletic. Texan back in Texas. It's all in the game.",
+   "latestPostAt": "2024-12-29T05:29:34.431Z",
+   "dormantDays": 628,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 628 days old (>30)"
+   ]
+  },
+  {
+   "handle": "busyxb.bsky.social",
+   "name": "Busy — NetsDaily",
+   "team": "BKN",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com\n \n\nEverything I drop, out of the question\nStop the guessing—it's hot\n\nSubscribe 👉 https://wbb-roundup.beehiiv.com/subscribe",
+   "latestPostAt": "2026-09-17T20:27:54.458Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "fearthebrown.bsky.social",
+   "name": "Shamit Dua",
+   "team": "NOP",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "I cover the Pelicans as a credentialed media member for intheno.net | Ultimate Frisbee Coach | Wannabe Disc Golfer",
+   "latestPostAt": "2026-09-18T15:42:17.168Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "olehkosel.bsky.social",
+   "name": "Oleh Kosel",
+   "team": "NOP",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "New Orleans Pelicans media. Dogs are the greatest. Слава Україні! Fuck Putin! #RussiaIsATerroristState",
+   "latestPostAt": "2026-09-14T13:55:19.152Z",
+   "dormantDays": 4,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "byvarunshankar.bsky.social",
+   "name": "Varun Shankar",
+   "team": "HOU",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "washingtonpost.com"
+   },
+   "bio": "Covering the Rockets for The Houston Chronicle. Retweets aren’t endorsements and don’t represent views of employer. \n\nHe/him\n\nFind my work: linktr.ee/byvarunshankar",
+   "latestPostAt": "2026-09-17T18:10:49.417Z",
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -890,13 +1032,13 @@
    },
    "bio": "PNW hoops since 1970.",
    "latestPostAt": "2025-11-13T22:05:22.015Z",
-   "dormantDays": 308,
+   "dormantDays": 309,
    "postItems": 1,
    "recencyReadable": true,
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 308 days old (>30)"
+    "quote matches, but newest post is 309 days old (>30)"
    ]
   },
   {
@@ -973,6 +1115,50 @@
     "issuer": null
    },
    "bio": "🗣️#LetEmKnow",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+   ]
+  },
+  {
+   "handle": "celticsnba.bsky.social",
+   "name": "Boston Celtics — official (unverified, active)",
+   "team": "BOS",
+   "conf": "bio-verified",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "18x WORLD CHAMPS 🏆\n\n#DifferentHere\n\nnba.com/celtics/",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+   ]
+  },
+  {
+   "handle": "washwizards.bsky.social",
+   "name": "Washington Wizards — official (unverified, active)",
+   "team": "WAS",
+   "conf": "bio-verified",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "For one, for all, #ForTheDistrict",
    "latestPostAt": null,
    "dormantDays": null,
    "postItems": null,
