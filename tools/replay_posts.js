@@ -67,7 +67,16 @@ if (process.argv.includes("--check")) {
     if (seen.has(p.uri)) problems.push(`duplicate post in snapshot: ${p.uri}`);
     seen.add(p.uri);
   }
-  if (problems.length) { console.error("::error::REPLAY CHECK FAILED:\n  - " + problems.join("\n  - ")); process.exit(1); }
+  if (problems.length) {
+    console.error("::error::REPLAY CHECK FAILED — " + problems.length + " invariant violation(s) in " + file);
+    /* ONE ANNOTATION PER VIOLATION. A single multi-line ::error:: is truncated by GitHub to its
+     * first line, so the 2026-09-18 failure reported only "REPLAY CHECK FAILED:" and the offending
+     * post text was invisible unless someone downloaded the raw log (which was unavailable from the
+     * build sandbox). A failing self-audit must name what it caught, in the UI and via the API. */
+    for (const p of problems.slice(0, 40)) console.error("::error::" + String(p).replace(/\s+/g, " ").slice(0, 900));
+    if (problems.length > 40) console.error("::error::…and " + (problems.length - 40) + " more (see the raw log)");
+    process.exit(1);
+  }
   console.log(`replay check OK — ${((snap.injuries && snap.injuries.rows) || []).length} rows, ${(snap.posts || []).length} posts, no invariant violations`);
   process.exit(0);
 }
