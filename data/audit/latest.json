@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-18T19:59:59.656303+00:00",
+  "checkedAt": "2026-09-18T22:43:24.254395+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -19,7 +19,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 1129,
-      "sha256": "d403530783fcb6425bb3980fbddac70bcd1eafb93e066e40410b3cf73368781f",
+      "sha256": "3f7e9ebf2f4d75510f4898097c46ba649902c64d34add16aae73a2aac9f27850",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -45,7 +45,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 116510,
-      "sha256": "2fd251b33df6fc0026200a098182e32afa4e231acb77acb032a1e2cca747f715",
+      "sha256": "9b45e418ac62032d621ef155d8760d2bbf8dd1571d8e6c4d7e402264f8408a2d",
       "probes": {
         "deadline 5pm-ish": true,
         "continual updates": true,
@@ -103,8 +103,8 @@
       "status": 503,
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
-      "bytes": 276,
-      "sha256": "b3d0d21a675daada544d6eed6088289f8a6a6412b5f9b3692eeeb1b8ef8f76ee",
+      "bytes": 278,
+      "sha256": "349f3f80e6a04c113993c801f2caffb18cdb380aead5ac9cd1a6469049403830",
       "outboundLinks": [],
       "frames": [],
       "verdict": "DOCUMENTED-BLOCKER",
@@ -149,8 +149,8 @@
       "status": 200,
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
-      "bytes": 860180,
-      "sha256": "9d3404927a318932b7186366f765c8b5c35e8db246c9c1c82bef5e9e9e0a89fc",
+      "bytes": 859816,
+      "sha256": "d9e04957245ff26df1636a81cff34b211f9e41b6e3c78ccb1583a6f0bf45d837",
       "teamBlocks": 27,
       "rows": 75,
       "season": {
@@ -178,8 +178,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
       "contentType": "text/html",
-      "bytes": 439,
-      "sha256": "5e78482fcdd4d3aa18a2ad98bbbf3677e123e20661b67912dae66702cf4beac2",
+      "bytes": 435,
+      "sha256": "47587e7e039b99787b34b55ae9d3fa4b382ae3aaf5cde4b971503414926bca69",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -200,8 +200,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "text/html",
-      "bytes": 444,
-      "sha256": "9af3f929f69c2a2695af2b7803c7ab9310ae0c6d5af0a79836023f873158fdf4",
+      "bytes": 442,
+      "sha256": "c71616908c087cbccaa8bf7b6943698bf246baee7226c490e961832c5175bf8c",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -222,8 +222,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "text/html",
-      "bytes": 458,
-      "sha256": "76373c2efac85e64ea7da93067a6c5c8b320407749248ec95d7eb68e33adbc12",
+      "bytes": 456,
+      "sha256": "3051cd2dd5328f1e091dade035e46bba8a9064f7df0af92ec330affb413f2ead",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -285,7 +285,7 @@
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "text/html",
       "bytes": 447,
-      "sha256": "14a8486c3a3adf3419d7afa0bebaec6f5c4b72b835261544b1d81eff23587fac",
+      "sha256": "945607899d614266ac1458a1af60d98b961eddbf313f02b2f6f21d6a280b1159",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -306,7 +306,7 @@
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
       "contentType": "application/json; charset=utf-8",
       "bytes": 1352,
-      "sha256": "5f0046abb51ccb42a23a48ae431b1cee36f7a9cf2257313b685f9dcc19d66a0a",
+      "sha256": "bf7160da1074fb38712073a14cc64fdc6076493666cc80677dadc34aaabff34e",
       "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
       "verification": {
         "verifications": [
@@ -323,7 +323,7 @@
         "trustedVerifierStatus": "none"
       },
       "displayName": "NBA",
-      "followers": 122787,
+      "followers": 122813,
       "bioSnippet": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! \ud83c\udfc0 3:00pm/et: Celtics/Pistons \ud83c\udfc0 7:00pm/et: 76ers/Knicks \ud83c\udfc0 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
       "verdict": "OK"
     },
@@ -435,7 +435,7 @@
       "finalUrl": "https://docs.x.com/x-api/getting-started/pricing",
       "contentType": "text/html; charset=utf-8",
       "bytes": 784366,
-      "sha256": "a9c3ee52252f3670c31f6fd816dc77aee04fe3d26c5d76249e4ecdd050d2b5ef",
+      "sha256": "8e26750f56bdacf49110a19a46b3c16e8e537566b347e3ca80e5aed41870eeb3",
       "probes": {
         "pricing content present": true
       },
@@ -459,8 +459,8 @@
       "status": 200,
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 115349,
-      "sha256": "3bad2fa30379fed31b4e7b7fc07182b999292c538b717d8c9f8f8fe820b5ed54",
+      "bytes": 115275,
+      "sha256": "220859282c6e40328aca4562ff918ea1afed061f4cd87ecdbf984d0a438d8b16",
       "probes": {
         "player-news page": true,
         "source attribution": true,
@@ -569,8 +569,8 @@
       "status": 200,
       "finalUrl": "https://www.rotoballer.com/player-news?sport=nba",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 1003031,
-      "sha256": "8013c5f010fb8f0598efbc337c0ee0587573c15184a1f36cbb09f22518ce31c7",
+      "bytes": 1007948,
+      "sha256": "366338e43a07a6f2472bc905e8d9de3346d036114b89e4a110be3b98992c2fe8",
       "outboundLinks": [
         "http://benchsports.com/?ref=rotoballer",
         "http://custom.transaction",
@@ -647,8 +647,8 @@
       "status": 200,
       "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 242471,
-      "sha256": "bae6a45a71fecc080fca22a3634d444d0d8fd960d1315902168b2ed78c362ae2",
+      "bytes": 242475,
+      "sha256": "d55f5d1439e6c0de324745d8341f7483e4d645a1208bd3af11fd8dd32f72d32c",
       "verdict": "OK"
     },
     {
@@ -669,8 +669,8 @@
       "status": 200,
       "finalUrl": "https://www.sportsmediawatch.com/2026/02/new-york-times-hires-ex-washington-post-sportswriters/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 444806,
-      "sha256": "a57d59865c2f69df0d21c6c5bead576a7bc1a94b1b6c53060ae6f4081e78ea3e",
+      "bytes": 365086,
+      "sha256": "ab38962730a46038c3303d444872f9e2b25106e11b74447280a68f5ed2ff55d0",
       "verdict": "OK"
     }
   ],
