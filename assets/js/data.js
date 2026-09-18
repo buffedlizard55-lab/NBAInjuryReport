@@ -597,8 +597,20 @@ function arenaCoverageSummary() {
  * Why: free-form posts produced two real false positives in the first live poll —
  * "We talk Spurs locker room culture" (in-game watch) and a "clean-up procedure" post labelled
  * RETURN. Each rung below requires an explicit phrase, so labels stay explainable and testable. */
+/* Explicit ABSENCE language — the only thing that may justify an OUT label.
+ *
+ * WHY THIS IS A NAMED CONSTANT (2026-09-18): the CI self-audit re-checks every stored post and
+ * fails the run when a post is labelled OUT without explicit out language. It used to carry its
+ * own hand-copied list of phrases, which had drifted from the classifier's: a real post from
+ * Cleveland's beat writer ("… suffered a left groin strain …" and out with it) was labelled OUT by
+ * the classifier and rejected by the audit's shorter list, so the collector run went red on a
+ * post that was correctly labelled. A second opinion is only useful if it checks the DECISION, not
+ * a stale copy of the rule — so the audit now asserts against this exact constant (exported to it
+ * by name) while keeping its independent checks: injury vocabulary, the negation guard, and
+ * duplicate detection. */
+const SOCIAL_OUT_LANGUAGE_RE = /(ruled out|officially out|out for (the )?(game|season|year|remainder)|out (tonight|tomorrow|indefinitely|vs\.?)|out with (a|an|his|her|left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion)|out (of|for) (the )?(lineup|rotation|series)|will not return|won'?t return|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|season-?ending)/i;
 const SOCIAL_SEVERITY = [
-  { sev: "out", re: /(ruled out|officially out|out for (the )?(game|season|year|remainder)|out (tonight|tomorrow|indefinitely|vs\.?)|out with (a|an|his|her|left|right|knee|ankle|hamstring|groin|calf|foot|hand|wrist|shoulder|back|illness|injury|soreness|concussion)|will not return|won'?t return|will not play|won'?t play|will miss|miss(ing)? (the )?(next|rest|start)|side-?lined|season-?ending)/i },
+  { sev: "out", re: SOCIAL_OUT_LANGUAGE_RE },
   { sev: "doubtful", re: /\bdoubtful\b/i },
   { sev: "questionable", re: /(questionable|game-?time decision|\bgtd\b|day-?to-?day)/i },
   { sev: "probable", re: /\bprobable\b/i },

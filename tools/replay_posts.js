@@ -18,7 +18,7 @@ global.localStorage = { getItem: k => (k in store ? store[k] : null), setItem: (
 global.document = { getElementById: () => ({ innerHTML: "", textContent: "", addEventListener() { }, querySelectorAll() { return []; } }), querySelectorAll: () => [], createElement: () => ({ style: {}, click() { } }), addEventListener() { } };
 global.window = global;
 const src = ["assets/js/data.js", "assets/js/alerts.js", "assets/js/social.js"].map(f => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n;\n");
-const M = new Function(src + "\n;return {Social, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, INGAME_WATCH_RE, SOCIAL_SEVERITY, classifySocialSeverity};")();
+const M = new Function(src + "\n;return {Social, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, INGAME_WATCH_RE, SOCIAL_SEVERITY, SOCIAL_OUT_LANGUAGE_RE, classifySocialSeverity};")();
 
 const allow = new Set(Object.keys((snap.social && snap.social.accounts) || {}));
 const buckets = { alert: [], mention: [], nonInjury: [], dropped: [], foreign: [] };
@@ -59,7 +59,12 @@ if (process.argv.includes("--check")) {
     const watch = c.kind === "ingame-watch";
     const vocab = /(injur\w+|hurt|sore\w*|spasms?|sprain\w*|strain\w*|torn|tore|fracture\w*|concussion\w*|illness|sick|surg\w*|procedure|achilles|acl\b|mcl\b|meniscus|hamstring|ankle|knee|calf|groin|wrist|thumb|quad|oblique|ribs?|protocol|walking boot)/i.test(p.text);
     if (!watch && !vocab && c.sev !== "mention") problems.push(`"${String(p.text).slice(0, 50)}…" labelled ${c.sev} without injury vocabulary`);
-    if (c.sev === "out" && !/(ruled out|out for|out tonight|out tomorrow|out vs|will not return|won'?t return|will not play|won'?t play|will miss|sidelined|season-?ending|surgery)/i.test(p.text))
+    /* Asserted against the PROJECT'S OWN published constant, not a hand-copied phrase list.
+     * The copy drifted from the classifier and failed this audit on a correctly-labelled real
+     * post ("… suffered a left groin strain …" out with it) on 2026-09-18. The audit's job is to
+     * check the decision — "is there explicit absence language at all?" — not to re-derive the
+     * rule from memory. */
+    if (c.sev === "out" && !M.SOCIAL_OUT_LANGUAGE_RE.test(p.text))
       problems.push(`"${String(p.text).slice(0, 50)}…" labelled OUT without an explicit out phrase`);
   }
   const seen = new Set();

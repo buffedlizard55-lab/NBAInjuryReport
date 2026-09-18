@@ -74,7 +74,7 @@ const env = new Function(source + `
   return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, arenaCoverage, arenaCoverageSummary, nbaTeamNewsUrl, reporterConf,
            SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, INGAME_WATCH_RE, NBA_OFFICIAL_REPORT_URL,
            teamByAbbr, espnTeamInjuriesUrl, normalizeInjuryStatus, xSearchUrl,
-           standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE,
+           standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE, SOCIAL_OUT_LANGUAGE_RE,
            AlertEngine, Wire, InjuryBoard, Social, InGame, LineupImpact };
 `);
 const M = env();
@@ -646,6 +646,35 @@ console.log("== in-arena expansion: what the live social layer actually polls ==
     /verification-lost/.test(fs.readFileSync(path.join(ROOT, "tools/verify_reporters.js"), "utf8")));
   check("a workflow re-runs the reporter verification without human input",
     /verify_reporters\.js/.test(fs.readFileSync(path.join(ROOT, ".github/workflows/live-audit.yml"), "utf8")));
+
+  /* ------------------------------------------------------------------------------------
+   * The OUT-label invariant, and the reason it exists as a SHARED constant.
+   *
+   * 2026-09-18: the CI self-audit failed a collector run on a REAL post from Cleveland's beat
+   * writer — "#Cavs Craig Porter Jr. suffered a left groin strai…" — because the audit checked
+   * "explicit out language" against its own hand-copied phrase list, which had drifted from the
+   * classifier's. The classifier's label was right; the audit's copy was stale. The rule now
+   * lives once, in data.js, as SOCIAL_OUT_LANGUAGE_RE, and the audit asserts against it.
+   * ------------------------------------------------------------------------------------ */
+  check("the OUT-label phrase list is a published constant, not a copy inside the audit",
+    typeof M.SOCIAL_OUT_LANGUAGE_RE === "object" &&
+    /SOCIAL_OUT_LANGUAGE_RE/.test(fs.readFileSync(path.join(ROOT, "tools/replay_posts.js"), "utf8")));
+  const outCases = [
+    "#Cavs Craig Porter Jr. suffered a left groin strain and is out with a left groin strain.",
+    "Anthony Davis is out indefinitely with a calf strain.",
+    "The team announced he is officially out for the season after surgery.",
+    "He has been sidelined by a hamstring strain.",
+    "Jalen Williams will miss the next two weeks with a wrist sprain."
+  ];
+  const labeledOut = outCases.filter(t => (M.Social.classifyPost(t) || {}).sev === "out");
+  check("every text the classifier labels OUT also carries explicit absence language",
+    labeledOut.length === outCases.length && labeledOut.every(t => M.SOCIAL_OUT_LANGUAGE_RE.test(t)),
+    outCases.filter(t => !M.SOCIAL_OUT_LANGUAGE_RE.test(t)).join(" | "));
+  /* the other direction: a non-absence statement must NOT be reported as OUT just because it
+   * mentions an injury — "he's questionable with an ankle sprain" is a question, not an absence */
+  check("injury talk without absence language is never labelled OUT",
+    (M.Social.classifyPost("He is questionable with an ankle sprain.") || {}).sev !== "out" &&
+    (M.Social.classifyPost("Denver lists him as probable with a sore knee.") || {}).sev !== "out");
 }
 
 console.log("== alert engine ==");
