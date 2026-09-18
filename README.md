@@ -63,7 +63,7 @@ These observations do not certify every legacy reporter link or guarantee later 
 ```sh
 python3 -m http.server 8080 --bind 0.0.0.0
 node tools/smoke_test.js                 # 197 checks
-node tools/impact_test.js                # 75 checks (geo, collector math, impact model v2, wiring)
+node tools/impact_test.js                # 80 checks (geo, collector math, impact model v2, wiring)
 node tools/integration_test.js           # 52 checks (boots the real dashboard on fixtures)
 node tools/poll_fixture_test.js          # 24 checks (real poller, fixture transports)
 node tools/regression_test.js            # 26 groups

@@ -496,6 +496,17 @@ exactly the set whose `TEAMS.city` is not a place, and the helper now throws if 
 load — the first version of that helper read an empty registry and three checks passed **vacuously**,
 which is the exact failure mode this file exists to prevent.
 
+## The cache-provenance rule bit its own author, and now cannot be forgotten
+
+`MODEL_VERSION` was bumped for the city-table fix but **not** for the `TEAM_HOME_CITY` fix, so the
+6-hour cache kept serving time-zone-less rows for five teams for another cycle — the fixed defect
+surviving inside the fix for it. `geo.js` now exposes `tableDigest()`, a deterministic digest of the
+city table, venue table, team-home mapping and travel-model constants; `tools/impact_test.js` hashes
+it and compares against a recorded revision pair (`GEO_EXPECTED_VERSION` / `GEO_EXPECTED_HASH`). Any
+table edit without a version bump now **fails the suite** (verified by negative run: changing one
+coordinate's latitude by 0.01 changes the hash from 2581360607 and fails both checks) instead of
+quietly leaving stale derived data in circulation. `MODEL_VERSION` is 3.
+
 ## New irregularities flagged for manual review (session 9)
 
 1. **"Travel times" cannot be verified to the minute for free.** The model measures city-centre great-circle

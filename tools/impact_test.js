@@ -315,6 +315,24 @@ check("the documented thresholds are all present as named constants (no magic nu
     .every(k => typeof c[k] === "number"), ["weightStake", "weightExposure", "weightRecurrence", "gradeHigh", "gradeMedium"].filter(k => typeof c[k] !== "number").join(","));
 check("the model is versioned", LI.MODEL.version === 2 && LI.MODEL.since === "2026-09-18");
 
+/* Geography guard: derived rows live in a 6-hour cache, so a table edit that does not bump
+ * Geo.MODEL_VERSION keeps stale numbers in circulation (this happened twice: the city-table fix
+ * and then the TEAM_HOME_CITY fix). The digest below fails the suite until it is refreshed, which
+ * is the reminder to bump the version. To update: node -e "…" prints the new hash, see the check. */
+const GEO_EXPECTED_VERSION = 3;
+const GEO_EXPECTED_HASH = 2581360607;
+check("Geo.MODEL_VERSION matches the recorded geography revision",
+  Geo.MODEL_VERSION === GEO_EXPECTED_VERSION,
+  "Geo.MODEL_VERSION is " + Geo.MODEL_VERSION + " but the suite expects " + GEO_EXPECTED_VERSION);
+check("the city/venue/team-home/travel tables are unchanged since that revision was recorded",
+  (() => {
+    const d = Geo.tableDigest();
+    let h = 5381;
+    for (const ch of d) h = ((h * 33) ^ ch.charCodeAt(0)) >>> 0;
+    if (h !== GEO_EXPECTED_HASH) console.log("      geography digest changed: " + h + " (expected " + GEO_EXPECTED_HASH + ") — bump Geo.MODEL_VERSION and update GEO_EXPECTED_HASH");
+    return h === GEO_EXPECTED_HASH;
+  })());
+
 /* ================= 4. the deployed page actually uses all of this ================= */
 console.log("== wiring: the page must show what the model computes ==");
 const idx = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
