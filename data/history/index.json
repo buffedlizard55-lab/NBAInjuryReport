@@ -1,8 +1,8 @@
 {
   "days": {
     "2026-09-17": 23,
-    "2026-09-18": 10
+    "2026-09-18": 11
   },
-  "lastRun": "2026-09-18T06:03:28.763Z",
+  "lastRun": "2026-09-18T11:09:54.787Z",
   "note": "Appended by tools/poll_watch.js via .github/workflows/injury-watch.yml. Cron is best-effort; gaps can include missed observations and failed source access."
 }
