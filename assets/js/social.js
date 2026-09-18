@@ -137,7 +137,14 @@ const Social = (function () {
       }
     }
     for (const r of (typeof BSKY_REPORTERS !== "undefined" ? BSKY_REPORTERS : [])) {
-      if (r.feed !== false) {
+      /* TWO GATES, deliberately separate (2026-09-18):
+       *   feed:false      — the row is held out of collection (dormant account, no live value)
+       *   conf unconfirmed — the handle exists but its identity is NOT established, so nothing it
+       *                      posts may ever be attributed to a named reporter or sound an alert.
+       * The registry stores both explicitly, and tools/verify_reporters_test.js pins the rows that
+       * must carry them, so a future edit cannot quietly arm an unverified account. */
+      const conf = (typeof reporterConf === "function") ? reporterConf(r) : (r.bskyVerified ? "bsky-verified" : "bio-verified");
+      if (r.feed !== false && conf !== "unconfirmed") {
         const bsky = !!r.bskyVerified;
         const evidence = String(r.verified || "");
         out.push({ handle: r.handle, name: r.name, kind: "reporter", team: r.team || null, outlet: r.outlet || null, role: r.role || null,

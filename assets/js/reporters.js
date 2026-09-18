@@ -114,48 +114,123 @@ const Reporters = (() => {
     paintScores();
   }
 
-  /* ---- 30-team in-arena coverage matrix ---- */
+  /* ===================================================================================
+   * IN-ARENA VERIFICATION MATRIX — rendered from arenaCoverage() in data.js (2026-09-18)
+   *
+   * The previous version of this table was assembled on the fly from whatever rows happened to
+   * exist, which produced a green "✓ In-arena live coverage" badge for a team whose only row was
+   * a byline citation — a claim the data did not support. The matrix now renders the COMPUTED
+   * coverage class and prints each row's gaps verbatim, including "no pollable in-arena writer
+   * account", so an uncovered team looks uncovered on the page.
+   * =================================================================================== */
+  const CLS_META = {
+    "verified-pollable": { badge: "ok", label: "✓ verified in-arena writer, polled" },
+    "bio-pollable": { badge: "warn", label: "◐ writer polled · bio-verified identity" },
+    "official-only": { badge: "bad", label: "✗ no writer account · official channel only" },
+    "gap": { badge: "bad", label: "✗ NO SOURCE — must be fixed" }
+  };
+  const CONF_META = {
+    "bsky-verified": { badge: "ok", short: "Bluesky-verified" },
+    "bio-verified": { badge: "warn", short: "bio states outlet + beat" },
+    "outlet-verified": { badge: "info", short: "outlet page" },
+    "unconfirmed": { badge: "bad", short: "UNCONFIRMED" }
+  };
+  function confidenceBadge(conf) {
+    const m = CONF_META[conf] || CONF_META.unconfirmed;
+    return `<span class="badge ${m.badge}">${m.short}</span>`;
+  }
   function renderArenaMatrix() {
     const el = document.getElementById("arenaMatrixTable");
-    if (!el || typeof TEAMS === "undefined") return;
-    const bsky = (typeof BSKY_REPORTERS !== "undefined") ? BSKY_REPORTERS : [];
-    const social = (typeof SOCIAL_ACCOUNTS !== "undefined") ? SOCIAL_ACCOUNTS : [];
+    if (!el || typeof arenaCoverage !== "function") return;
     const esc = AlertEngine.escapeHtml;
+    const cov = arenaCoverage();
 
-    el.innerHTML = TEAMS.map(team => {
-      const reps = REPORTERS.filter(r => r.beat === team.abbr);
-      const bskyReps = bsky.filter(b => b.team === team.abbr);
-      const teamSocial = social.find(s => s.team === team.abbr);
-
-      const primaryRep = reps.find(r => r.status === "verified-handle") || reps.find(r => r.status === "outlet-only") || reps[0] || bskyReps[0] || null;
-      const repName = primaryRep ? primaryRep.name : (teamSocial ? teamSocial.name : "Coverage via team beat wire");
-      const outlet = primaryRep ? primaryRep.outlet : (teamSocial ? "Official team account" : "Local beat / AP wire");
-      const inArenaBadge = (primaryRep && (primaryRep.status === "verified-handle" || primaryRep.status === "outlet-only" || primaryRep.beat)) || bskyReps.length
-        ? `<span class="badge ok">✓ In-arena live coverage</span>`
-        : teamSocial ? `<span class="badge info">🏛️ Official franchise channel</span>`
-        : `<span class="badge warn">📋 Desk / wire monitoring</span>`;
-
-      const profileLink = primaryRep && primaryRep.handle
-        ? `<a href="https://x.com/${esc(primaryRep.handle)}" target="_blank" rel="noopener">@${esc(primaryRep.handle)} ↗</a>`
-        : (bskyReps[0] ? `<a href="https://bsky.app/profile/${esc(bskyReps[0].handle)}" target="_blank" rel="noopener">@${esc(bskyReps[0].handle)} (Bluesky) ↗</a>`
-        : (teamSocial ? `<a href="${esc(teamSocial.url)}" target="_blank" rel="noopener">@${esc(teamSocial.handle)} ↗</a>`
-        : `<a href="${xSearchUrl(team.city + " " + team.name + " injury")}" target="_blank" rel="noopener">Search ${esc(team.abbr)} beat ↗</a>`));
-
-      const verifyEvidence = primaryRep && primaryRep.verifyUrl
-        ? `<a href="${esc(primaryRep.verifyUrl)}" target="_blank" rel="noopener">${esc(primaryRep.verifyLabel || "Verification link ↗")}</a>`
-        : (teamSocial ? `<a href="${esc(teamSocial.url)}" target="_blank" rel="noopener">${esc(teamSocial.verified || "Official team evidence ↗")}</a>`
-        : `<a href="${espnTeamInjuriesUrl(team.abbr)}" target="_blank" rel="noopener">ESPN ${esc(team.abbr)} injuries ↗</a>`);
-
+    el.innerHTML = cov.map(c => {
+      const t = teamByAbbr(c.abbr);
+      const meta = CLS_META[c.cls] || CLS_META.gap;
+      const writers = c.pollable.length
+        ? c.pollable.map(p => `<b>${esc(p.name)}</b><br><span class="tiny muted">${esc(p.outlet)}</span><br>
+             ${confidenceBadge(p.conf)}${p.bskyVerified && p.verifier ? `<span class="tiny muted"> (${esc(p.verifier)})</span>` : ""}<br>
+             <a class="tiny" href="${esc(p.evidence)}" target="_blank" rel="noopener">profile ↗</a>
+             ${p.evidenceApi ? `· <a class="tiny" href="${esc(p.evidenceApi)}" target="_blank" rel="noopener">re-check API ↗</a>` : ""}
+             ${p.evidenceQuote ? `<br><span class="tiny muted cite">“${esc(p.evidenceQuote)}”</span>` : ""}`).join("<hr style='border:0;border-top:1px solid var(--line);margin:6px 0'>")
+        : `<span class="muted small">none polled</span>`;
+      const dirOnly = c.directory.length
+        ? `<br><span class="tiny muted">directory: ${c.directory.map(d => esc(d.name) + " (" + esc(d.status) + ")").join(", ")}</span>` : "";
+      const held = c.graded.length
+        ? `<br><span class="tiny muted">held out of alerts: ${c.graded.map(d => esc(d.name) + " — " + esc(d.conf) + (d.feed ? "" : " (feed off)")).join(", ")}</span>` : "";
+      /* The probe result is stated per row, because "there is a URL here" and "a machine read it"
+       * are different claims — and on 2026-09-18 the machine was refused (HTTP 403) for all 30. */
+      const probe = (typeof NBA_TEAM_NEWS_PROBE !== "undefined") ? NBA_TEAM_NEWS_PROBE : null;
+      const official = `<a href="${esc(c.official.news)}" target="_blank" rel="noopener">club news (nba.com/${esc(t.nba)}) ↗</a>
+        <br><span class="tiny muted">${c.official.newsChecked
+          ? "re-read live in a browser " + esc(c.official.newsChecked)
+          : (probe ? "pattern URL · runner probe HTTP 403 on " + esc(probe.checkedAt.slice(0, 10)) + " → manual review only"
+                   : "URL pattern, not re-read")}</span>
+        ${c.official.bluesky.length ? c.official.bluesky.map(b => `<br><span class="tiny">${b.bskyVerified ? '<span class="badge ok">Bluesky-verified</span>' : '<span class="badge warn">no verification object</span>'} <a class="tiny" href="${esc(b.url)}" target="_blank" rel="noopener">@${esc(b.handle)} ↗</a>${b.feed ? " <span class='tiny muted'>(polled)</span>" : " <span class='tiny muted'>(not polled)</span>"}</span>`).join("") : ""}`;
+      const gaps = c.gaps.length
+        ? `<ul class="tight tiny muted" style="margin:4px 0 0;padding-left:16px">${c.gaps.map(g => `<li>${esc(g)}</li>`).join("")}</ul>`
+        : `<span class="tiny ok-text">no measured gap</span>`;
       return `<tr>
-        <td><b><span class="team-chip">${esc(team.abbr)}</span></b></td>
-        <td><b>${esc(team.city)} ${esc(team.name)}</b></td>
-        <td><b>${esc(repName)}</b>${bskyReps.length && primaryRep && primaryRep.name !== bskyReps[0].name ? `<br><small class="muted">+ ${esc(bskyReps[0].name)} (Bluesky)</small>` : ""}</td>
-        <td>${esc(outlet)}</td>
-        <td>${inArenaBadge}</td>
-        <td>${profileLink}</td>
-        <td class="tiny">${verifyEvidence}</td>
+        <td><b><span class="team-chip">${esc(c.abbr)}</span></b><br><span class="tiny muted">${esc(c.city)} ${esc(c.name)}</span></td>
+        <td>${writers}${dirOnly}${held}</td>
+        <td><span class="badge ${meta.badge}">${meta.label}</span><br>${gaps}</td>
+        <td class="tiny">${official}</td>
+        <td class="tiny"><a href="${esc(espnTeamInjuriesUrl(c.abbr))}" target="_blank" rel="noopener">ESPN injuries ↗</a><br>
+            <a href="${xSearchUrl(c.city + " " + c.name + " injury")}" target="_blank" rel="noopener">X search ↗</a></td>
       </tr>`;
     }).join("");
+  }
+
+  /* ---- headline numbers + the "needs work" list, computed from the same coverage model ---- */
+  function renderCoverage() {
+    const sumEl = document.getElementById("coverageSummary");
+    if (!sumEl || typeof arenaCoverageSummary !== "function") return;
+    const s = arenaCoverageSummary();
+    const esc = AlertEngine.escapeHtml;
+    sumEl.innerHTML = [
+      `<span class="pill ok">✓ ${s.verifiedPollable}/30 teams: verified in-arena writer, polled automatically</span>`,
+      `<span class="pill warn">◐ ${s.bioPollable}/30: writer polled, identity evidence is the account's own bio</span>`,
+      `<span class="pill bad">✗ ${s.officialOnly}/30: no writer account — official club channel + manual review only</span>`,
+      `<span class="pill ${s.gap ? "bad" : "ok"}">${s.gap} teams with no source at all</span>`,
+      `<span class="pill ok">${s.pollableWriters} pollable writer accounts · ${s.blsSkyVerifiedWriters} Bluesky-verified</span>`
+    ].join(" ");
+    const listEl = document.getElementById("coverageWorklist");
+    if (listEl) {
+      const cov = arenaCoverage().filter(c => c.cls !== "verified-pollable");
+      listEl.innerHTML = cov.length
+        ? `<b>Not yet verified in-arena (${cov.length} teams)</b> — each needs an account whose identity evidence is a
+           verification object or an outlet page, before it can be trusted at the moment of an injury:
+           <ul class="tight" style="margin:6px 0 0;padding-left:18px">${cov.map(c =>
+            `<li><span class="team-chip">${esc(c.abbr)}</span> ${esc(c.cls === "bio-pollable" ? "bio-verified writer only" : "official channels only")}
+              — ${esc(c.gaps[0] || "")}${c.directory.length ? ` <span class="tiny muted">(directory row present, not pollable)</span>` : ""}</li>`).join("")}</ul>`
+        : `<span class="ok-text">Every team has a verified, polled in-arena writer.</span>`;
+    }
+  }
+
+  /* ---- what the CI re-verification run observed last (data/live/reporter_verify.json) ---- */
+  function renderVerifyStatus() {
+    const el = document.getElementById("verifyStatus");
+    if (!el) return;
+    const esc = AlertEngine.escapeHtml;
+    fetch("data/live/reporter_verify.json", { cache: "no-store" })
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(v => {
+        const s = v.summary || {};
+        const problems = (v.rows || []).filter(r => r.status !== "ok");
+        el.innerHTML = `<b>Last automated re-verification:</b> ${esc(new Date(v.generated).toLocaleString())} —
+          ${esc(String(s.checked))} handles checked · ${esc(String(s.ok))} clean ·
+          ${esc(String(s.bioDrift))} bio drift · ${esc(String(s.dormant))} dormant ·
+          ${esc(String(s.recencyUnknown || 0))} recency unreadable ·
+          ${esc(String(s.missing))} unresolvable · club channels ${esc(String((v.channelSummary || {}).ok))}/${esc(String((v.channelSummary || {}).checked))} answered.
+          ${problems.length ? `<div class="tiny" style="margin-top:6px">${problems.map(p => `<div>⚠ ${esc(p.handle || p.name)} → <b>${esc(p.status)}</b> ${esc((p.notes || [])[0] || "")}</div>`).join("")}</div>` : ""}`;
+      })
+      .catch(e => {
+        el.innerHTML = `<span class="muted">No automated re-verification file yet (${esc(e.message)}). The daily
+          <span class="kbd">live-audit.yml</span> job (09:17 UTC) writes <span class="kbd">data/live/reporter_verify.json</span>; until it has run,
+          the evidence above is the <b>session-10 manual pass of 2026-09-18</b>, whose per-row quotes are stored in
+          <span class="kbd">assets/js/data.js</span>.</span>`;
+      });
   }
 
   /* ---- Bluesky allow-list table (the pollable layer) ---- */
@@ -325,7 +400,9 @@ const Reporters = (() => {
     renderBsky();
     renderPills();
     renderRubric();
+    renderCoverage();
     renderArenaMatrix();
+    renderVerifyStatus();
     buildForm();
     paintScores();
     const t = document.getElementById("tierFilter");

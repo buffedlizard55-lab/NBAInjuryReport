@@ -71,10 +71,10 @@ const FILES = ["data.js", "role.js", "alerts.js", "wire.js", "injuries.js", "soc
 const source = FILES.map(f => fs.readFileSync(path.join(ROOT, "assets/js", f), "utf8")).join("\n;\n");
 
 const env = new Function(source + `
-  return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC,
+  return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, arenaCoverage, arenaCoverageSummary, nbaTeamNewsUrl, reporterConf,
            SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, INGAME_WATCH_RE, NBA_OFFICIAL_REPORT_URL,
            teamByAbbr, espnTeamInjuriesUrl, normalizeInjuryStatus, xSearchUrl,
-           standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE,
+           standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE, SOCIAL_OUT_LANGUAGE_RE,
            AlertEngine, Wire, InjuryBoard, Social, InGame, LineupImpact };
 `);
 const M = env();
@@ -600,6 +600,82 @@ check("the empty-state class is styled", cssBare.has("empty"));
 check("in-game watch posts and team chips have tag rules", cssTokens.has("ingame-watch") && cssTokens.has("team"));
 check("severity + impact tag rules survived", SEVS.every(s => cssTokens.has(s)) &&
   ["ok", "warn", "gtd", "watch", "impact-high", "impact-medium", "impact-low", "impact-unknown"].every(c => cssTokens.has(c)));
+
+/* =====================================================================================
+ * SESSION 10 (2026-09-18) — IN-ARENA VERIFICATION EXPANSION
+ * The functional question here is not "is the registry pretty" but "what does the LIVE social
+ * layer actually poll". These checks run the real Social module against the real registry, so a
+ * row that should be silent (dormant, unconfirmed) fails the build if it ever becomes pollable.
+ * The deeper policy tests live in tools/verify_reporters_test.js.
+ * ===================================================================================== */
+console.log("== in-arena expansion: what the live social layer actually polls ==");
+{
+  const polled = M.Social.feedAccounts().map(a => a.handle);
+  const required = ["jonkrawczynski.bsky.social", "omarisankofa.bsky.social", "kyleneubeck.bsky.social", "highkin.bsky.social",
+    "joshrobbins.bsky.social", "jlewenberg.bsky.social", "lawmurraythenu.bsky.social", "jimowczarski.bsky.social",
+    "jbeede.bsky.social", "jameshamnba.bsky.social", "ejelite1.bsky.social", "btrowland.bsky.social",
+    "scottagness.bsky.social", "irawinderman.bsky.social", "geraldbourguet.bsky.social", "kellyiko.bsky.social"];
+  const absent = required.filter(h => !polled.includes(h));
+  check("all 16 session-10 pollable accounts reach the live allow-list", absent.length === 0, "missing: " + absent.join(", "));
+  check("the dormant Heat account is NOT polled", !polled.includes("anthonychiang.bsky.social"));
+  check("the unconfirmed 76ers handle is NOT polled", !polled.includes("pompeyonsixers.bsky.social"));
+  check("no unconfirmed row can be polled even if someone flips its feed flag", (() => {
+    const prev = M.BSKY_REPORTERS.find(r => r.conf === "unconfirmed");
+    if (!prev) return false;
+    const savedFeed = prev.feed;
+    prev.feed = true;                             // simulate the dangerous edit
+    const stillPolled = M.Social.feedAccounts().some(a => a.handle === prev.handle);
+    prev.feed = savedFeed;
+    return stillPolled === false;
+  })());
+  check("every polled account carries identity evidence in the row that produced it",
+    M.Social.feedAccounts().every(a => a.evidence && a.evidence.length > 30));
+  check("no polled handle is an unresolved 'handle.invalid' or a self-declared mirror",
+    polled.every(h => h !== "handle.invalid" && !/mirror/i.test(h)));
+  check("the 30-team coverage model is exposed to the pages and to this harness",
+    typeof M.arenaCoverage === "function" && typeof M.arenaCoverageSummary === "function");
+  check("coverage names every one of the 30 teams and leaves no unexplained gap",
+    (() => { const cov = M.arenaCoverage(); const s = M.arenaCoverageSummary();
+      return cov.length === 30 && s.teams === 30 && s.gap === 0 && cov.every(c => c.gaps.length >= 0 && c.official.news); })());
+  check("the coverage summary does NOT claim all 30 teams have a verified writer",
+    (() => { const s = M.arenaCoverageSummary(); return s.verifiedPollable + s.bioPollable < 30 && s.officialOnly > 0; })());
+  check("official club news URLs are generated from the team registry, not typed twice",
+    M.nbaTeamNewsUrl("CLE") === "https://www.nba.com/cavaliers/news" && M.nbaTeamNewsUrl("MIA") === "https://www.nba.com/heat/news");
+  check("the reporter re-verification tool exists and states its failure policy",
+    fs.existsSync(path.join(ROOT, "tools/verify_reporters.js")) &&
+    /verification-lost/.test(fs.readFileSync(path.join(ROOT, "tools/verify_reporters.js"), "utf8")));
+  check("a workflow re-runs the reporter verification without human input",
+    /verify_reporters\.js/.test(fs.readFileSync(path.join(ROOT, ".github/workflows/live-audit.yml"), "utf8")));
+
+  /* ------------------------------------------------------------------------------------
+   * The OUT-label invariant, and the reason it exists as a SHARED constant.
+   *
+   * 2026-09-18: the CI self-audit failed a collector run on a REAL post from Cleveland's beat
+   * writer — "#Cavs Craig Porter Jr. suffered a left groin strai…" — because the audit checked
+   * "explicit out language" against its own hand-copied phrase list, which had drifted from the
+   * classifier's. The classifier's label was right; the audit's copy was stale. The rule now
+   * lives once, in data.js, as SOCIAL_OUT_LANGUAGE_RE, and the audit asserts against it.
+   * ------------------------------------------------------------------------------------ */
+  check("the OUT-label phrase list is a published constant, not a copy inside the audit",
+    typeof M.SOCIAL_OUT_LANGUAGE_RE === "object" &&
+    /SOCIAL_OUT_LANGUAGE_RE/.test(fs.readFileSync(path.join(ROOT, "tools/replay_posts.js"), "utf8")));
+  const outCases = [
+    "#Cavs Craig Porter Jr. suffered a left groin strain and is out with a left groin strain.",
+    "Anthony Davis is out indefinitely with a calf strain.",
+    "The team announced he is officially out for the season after surgery.",
+    "He has been sidelined by a hamstring strain.",
+    "Jalen Williams will miss the next two weeks with a wrist sprain."
+  ];
+  const labeledOut = outCases.filter(t => (M.Social.classifyPost(t) || {}).sev === "out");
+  check("every text the classifier labels OUT also carries explicit absence language",
+    labeledOut.length === outCases.length && labeledOut.every(t => M.SOCIAL_OUT_LANGUAGE_RE.test(t)),
+    outCases.filter(t => !M.SOCIAL_OUT_LANGUAGE_RE.test(t)).join(" | "));
+  /* the other direction: a non-absence statement must NOT be reported as OUT just because it
+   * mentions an injury — "he's questionable with an ankle sprain" is a question, not an absence */
+  check("injury talk without absence language is never labelled OUT",
+    (M.Social.classifyPost("He is questionable with an ankle sprain.") || {}).sev !== "out" &&
+    (M.Social.classifyPost("Denver lists him as probable with a sore knee.") || {}).sev !== "out");
+}
 
 console.log("== alert engine ==");
 check("sound defaults to ON", M.AlertEngine.isSoundOn() === true);

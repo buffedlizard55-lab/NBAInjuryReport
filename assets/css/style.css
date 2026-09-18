@@ -362,3 +362,16 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
  * equivalent styling used by the in-game monitor. In-game exit posts use class="tag ingame-watch". */
 .tag.team { background: #111a2c; color: var(--accent); border: 1px solid var(--line); }
 .tag.ingame-watch { background: rgba(255,138,61,.16); color: #ffb27a; border: 1px solid rgba(255,138,61,.45); }
+
+/* ===================================================================================
+ * 2026-09-18 (session 10) — styles for the in-arena verification matrix.
+ * The matrix shows each polled writer's VERBATIM evidence quote, because a reviewer must
+ * be able to compare the stored text with the live bio without leaving the page. Italic,
+ * slightly indented, and visually distinct from the surrounding cell so a quote can never
+ * be mistaken for this project's own wording.
+ * =================================================================================== */
+.cite { font-style: italic; opacity: 0.92; }
+.ok-text { color: var(--good); }
+/* The matrix packs several lines per cell; keep them from touching on narrow screens. */
+#arenaMatrixTable td { vertical-align: top; }
+#arenaMatrixTable .badge { white-space: nowrap; }

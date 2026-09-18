@@ -1,5 +1,83 @@
 # Next-session priorities
 
+## State at the end of session 10 (2026-09-18) — read this first
+
+Branch `arena/01a0b5ed-nbainjuryreport` → merged to `main`. This session's task was **expand in-arena
+reporter verification** under the standing constraint that **no X API key is available**, so every added
+fact comes from a free, keyless, publicly re-checkable source.
+
+**What shipped**
+
+1. **`BSKY_REPORTERS` 8 → 26 rows.** 18 evidence rows added, each storing the verbatim bio it was verified
+   from (`evidenceQuote`), the re-checkable API URL (`evidenceApi`), the identity class (`conf`), the
+   verifier domain when a Bluesky verification object existed, and the counts observed that day.
+   10 rows are **Bluesky-verified** (valid object; issuer `bsky.app` or the outlet's own domain, e.g.
+   `theathletic.com`), 6 are **bio-verified** (account states outlet + beat), 2 are **held out of the
+   alert path** (dormant account; unconfirmed handle).
+2. **Coverage is computed, not typed.** `arenaCoverage()` / `arenaCoverageSummary()` in `assets/js/data.js`.
+   Measured: 30 teams · **10 verified-pollable · 7 bio-pollable · 13 official-channel-only · 0 unexplained
+   gaps · 18 pollable writers (10 Bluesky-verified)**. The 13 official-only teams are named as gaps in the
+   UI: BOS, BKN, CHA, CHI, DAL, DEN, GSW, HOU, LAL, MEM, NOP, NYK, OKC.
+3. **Eight previously-empty teams now have rows** (CLE, DET, MIL, MIN, PHI, POR, SAC, WAS). The old matrix
+   had printed a green "✓ In-arena live coverage" badge for teams whose only row was a byline citation.
+4. **Official club channels are a first-class layer**: `nba.com/<slug>/news` for all 30, generated from the
+   team registry. Verified live for CLE; the other 29 are labelled "pattern, not re-read this session"
+   until the verifier checks them.
+5. **`tools/verify_reporters.js`** re-runs the exact API call each row cites (bio + verification object +
+   newest post) plus all 30 club channels. **Fatal**: a handle that stops resolving, or a claimed
+   verification object that disappears. **Recorded, not fatal**: bio drift and dormancy, in
+   `data/live/reporter_verify.json`. Daily in `live-audit.yml`; `tools/verify_reporters_test.js` pins every
+   verdict branch offline (37 checks).
+6. **Tests**: smoke 209 · integration 71 (now boots the reporter page too) · verify_reporters 37 ·
+   impact 80 · poll fixtures 24 · regression 26 groups · Python 26 · replay check.
+
+**The verifier earned its keep on its first live run (2026-09-18T19:21Z / 19:27Z, GitHub runner)**
+
+The job was written to keep the identity layer honest; it found four real problems before the session
+ended, none of which a human had noticed:
+
+1. `theathletic.com`'s OWN Bluesky verification object is now **invalid** (`isValid: false`), while
+   the staff objects it issued are still valid and its `trustedVerifierStatus` is still `valid`. The
+   row that claimed otherwise was written on 2026-09-17 — corrected, with the narrow scope recorded.
+2. **All 30 club `/news` pages answer HTTP 403 to the runner** (200 to a browser-shaped client the
+   same day), so the club layer is a manual-review link, never a machine-read feed.
+3. Measured dormancy: `dallasmavs` newest post 2023-05-05 (1,231 days) *and* no verification object →
+   taken out of collection as well as out of alerts; `trailblazers` 308 days; `clevelandcavaliers`
+   and `basketball-reference` zero posts; reporters `kellyiko` 99 days, `ejelite1` 45.
+4. The collector's self-audit failed on a legitimate post because the audit carried its own
+   hand-copied phrase list; the rule now lives once (`SOCIAL_OUT_LANGUAGE_RE`) and the failure
+   message names each violation instead of being truncated to its first line.
+
+Final state of the job: 34 checked · 27 ok · 0 bio drift · 0 missing · 0 verification-lost · 0 fatal.
+
+**Three identities were refused rather than assumed** — and each refusal is a task for next session:
+a dormant Heat account (newest post 2024-12-11), an unconfirmed 76ers handle whose bio names no outlet,
+and an "Eric Nehm (mirror)" account carrying the literal handle `handle.invalid`. Also recorded: a
+doppelgänger "Brad Rowland" account, and team-name handles on Bluesky squatted by non-club accounts
+(`cavaliers.bsky.social` is a Sapporo food blogger).
+
+**Next session, in priority order**
+
+1. **Close the 13 official-channel-only teams.** The method that worked here, per team: exact-name
+   `searchActorsTypeahead` → `getProfiles` → require outlet+beat in the bio or a verification object.
+   Confirmed absent this session (do not re-probe): Dave McMenamin, Ian Begley, Marcus Thompson, Tony Jones,
+   Eric Nehm, Casey Holdahl, Kane Pitman, Brenden Nunes, Duane Rankin, Chris Fedor. Next candidates by
+   outlet: Jay King (BOS), Erik Slater (BKN), Roderick Boone (CHA), K.C. Johnson (CHI), Ryan Blackburn /
+   Vinny Benedetto (DEN), Dalton Johnson / Monte Poole (GSW), Lachard Binkley (HOU), Mike Trudell /
+   Dan Woike (LAL), Drew Hill (MEM), Christian Clark (NOP), Fred Katz (NYK), Clemente Almanza (OKC).
+2. **Verify the 29 unread club channels** — the first `live-audit.yml` run does this automatically; check
+   the artifact for 403/JS-only pages and decide whether they need per-site handling or a labelled
+   "no first-party channel read" state.
+3. **Run the identity verifier for real and read the drift report.** Expect `no-quote` on the 8 legacy
+   rows: backfill their quotes from the same API so the whole registry becomes uniformly re-checkable.
+4. **Start the forward accuracy ledger properly.** With 18 writers across 17 teams, the first games
+   (preseason 2026-10-03, opening night 2026-10-20) finally produce measurable "who reported it first"
+   evidence. Until then every score is `not established`, and the page says so.
+5. **In-arena attendance evidence** remains unproven for every row: a beat assignment is a claim. A real
+   test would compare a reporter's post timestamp against the arena's own play-by-play for the same game.
+6. **Official NBA injury report** for 2026-27 is still 404 (`data/live/official.json: health unavailable`).
+   Re-check at season start; that page is the only free source that can confirm a designation officially.
+
 ## State at the end of session 9 (2026-09-18) — read this first
 
 Branch `arena/01a0b254-nbainjuryreport`. This session built the **lineup-impact intelligence layer v2**

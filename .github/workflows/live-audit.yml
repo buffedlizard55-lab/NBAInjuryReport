@@ -1,9 +1,13 @@
 name: Public source audit
 on:
   workflow_dispatch:
+  # Daily re-verification of the reporter layer: a bio, a handle or a club channel can rot at any
+  # time, so this is the only way the "verified" ticks on reporters.html stay true without a human.
+  schedule:
+    - cron: "17 9 * * *"
   push:
     branches: [main, "arena/**"]
-    paths: [tools/verify_live.py, tools/collect_official.py, assets/js/data.js, .github/workflows/live-audit.yml]
+    paths: [tools/verify_live.py, tools/collect_official.py, tools/verify_reporters.js, assets/js/data.js, .github/workflows/live-audit.yml]
 permissions:
   contents: write
 jobs:
@@ -58,3 +62,60 @@ jobs:
             data/audit/latest.json
             .audit/
           retention-days: 14
+
+  # ---------------------------------------------------------------------------------------------
+  # Reporter / in-arena identity re-verification (added 2026-09-18, session 10).
+  # Separate job on purpose: a flaky club web page must never be able to hide an audit finding,
+  # and an identity failure must never be buried inside the PDF audit's output.
+  # Exit 1 (red job) only when a handle stops resolving or a claimed Bluesky verification object
+  # disappears; bio drift and dormancy are written to data/live/reporter_verify.json for review.
+  # ---------------------------------------------------------------------------------------------
+  reporters:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Offline tests for the verification logic (no network)
+        run: node tools/verify_reporters_test.js
+      - name: Re-verify every stored identity + club channel (live, keyless)
+        run: node tools/verify_reporters.js
+      - name: Persist the evidence next to the data it verifies
+        if: always()
+        run: |
+          # If the tool could not reach the API at all it deliberately leaves any previous evidence
+          # file untouched — and on a first-ever run that means no file exists. `git add` on a
+          # missing path fails the step, so absence is handled explicitly instead of turning an
+          # environment problem into a red build with a confusing message.
+          if [ ! -f data/live/reporter_verify.json ]; then
+            echo "::warning::no reporter-verification evidence file was produced this run (network unreachable?)"
+            exit 0
+          fi
+          git config user.name "reporter-audit bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/live/reporter_verify.json
+          if git diff --cached --quiet; then
+            echo "no reporter-verification changes to commit"
+            exit 0
+          fi
+          git commit -m "reporter-verify: re-check identity evidence ($(date -u +%Y-%m-%dT%H:%MZ))"
+          PUSH_OK=0
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then PUSH_OK=1; break; fi
+            echo "push attempt $attempt rejected (another job committed first) - rebasing and retrying"
+            git fetch origin "$GITHUB_REF_NAME" || true
+            git rebase "origin/$GITHUB_REF_NAME" || { git rebase --abort; echo "rebase not clean; stopping"; break; }
+            sleep $((attempt * 5))
+          done
+          if [ "$PUSH_OK" != 1 ]; then
+            echo "::warning::reporter-verification evidence not committed to $GITHUB_REF_NAME this run; it remains in the workflow artifact."
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reporter-verification
+          include-hidden-files: true
+          path: data/live/reporter_verify.json
+          retention-days: 30

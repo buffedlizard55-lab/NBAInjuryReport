@@ -1,0 +1,1067 @@
+{
+ "generated": "2026-09-18T19:47:05.597Z",
+ "tool": "tools/verify_reporters.js",
+ "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
+ "dormantThresholdDays": 30,
+ "handlesChecked": 34,
+ "summary": {
+  "checked": 34,
+  "ok": 29,
+  "bioDrift": 0,
+  "dormant": 5,
+  "missing": 0,
+  "verificationLost": 0,
+  "noQuote": 0,
+  "recencyUnknown": 0,
+  "fatal": 0,
+  "withProblems": [
+   "samvecenie.bsky.social (dormant)",
+   "tomhaberstroh.bsky.social (dormant)",
+   "ejelite1.bsky.social (dormant)",
+   "kellyiko.bsky.social (dormant)",
+   "trailblazers.bsky.social (dormant)"
+  ]
+ },
+ "rows": [
+  {
+   "handle": "howardbeck.bsky.social",
+   "name": "Howard Beck",
+   "team": null,
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Senior NBA Writer at TheRinger.com | Co-host, the Real Ones | #NBASky evangelist\n\nPreviously: SI.com, BleacherReport.com, NYTimes.com, DailyNews.com, VCStar.com, DavisEnterprise.com\n\nhttps://www.theringer.com/authors/howard-beck\nauthory.com/howardbeck",
+   "latestPostAt": "2026-09-18T15:10:35.452Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "samvecenie.bsky.social",
+   "name": "Sam Vecenie",
+   "team": null,
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "I write about basketball. And watch movies. Senior Writer at \n@TheAthletic on the NBA/NBA Draft. Host of the Game Theory Podcast. Email: sam.vecenie@gmail.com",
+   "latestPostAt": "2026-07-07T01:57:53.546Z",
+   "dormantDays": 73,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 73 days old (>30)"
+   ]
+  },
+  {
+   "handle": "mikevorkunov.bsky.social",
+   "name": "Mike Vorkunov",
+   "team": null,
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "National NBA + basketball reporter at The Athletic — a self-indulgent way to say I write about basketball.\n\nCo-founder @30newsletter.bsky.social\n\nHost @businessdecisionmv.bsky.social \nWatch: www.youtube.com/@MikeVorkunov22\n\nEmail: mvorkunov@theathletic.com",
+   "latestPostAt": "2026-09-18T14:01:19.579Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "johnhollinger.bsky.social",
+   "name": "John Hollinger",
+   "team": null,
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "The Athletic NBA columnist\nPER creator  - Former Grizzlies VP Basketball Ops - Former ESPN\nWahoowa - Commanders - Brewers - Timbers - huh?\nAtlanta/a hotel",
+   "latestPostAt": "2026-09-18T03:18:29.996Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "tomhaberstroh.bsky.social",
+   "name": "Tom Haberstroh",
+   "team": null,
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "✍️ http://TomTheFinder.com substack and Yahoo Sports | 📺 Portland Trail Blazers analytics insider | 🍽️ Pack Your Knives and Count the Dings | 💪🏼 Hoops4ALS",
+   "latestPostAt": "2026-07-23T02:13:40.726Z",
+   "dormantDays": 57,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 57 days old (>30)"
+   ]
+  },
+  {
+   "handle": "jmcdonaldsa.bsky.social",
+   "name": "Jeff McDonald",
+   "team": "SAS",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Spurs beat writer for the San Antonio Express-News. Live music and dead poets. Refugee from The Bad Place.",
+   "latestPostAt": "2026-08-26T20:48:10.961Z",
+   "dormantDays": 22,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "tomorsborn.bsky.social",
+   "name": "Tom Orsborn",
+   "team": "SAS",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "In my 40th year as a reporter with the San Antonio Express-News and my 11th consecutive season as one of the E-N’s Spurs beat writers. Also do occasional stories on food insecurity issues. Proud San Antonio College alumnus. 🏳️‍🌈ally",
+   "latestPostAt": "2026-09-17T21:19:48.442Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "nbasarah.bsky.social",
+   "name": "Sarah Todd",
+   "team": "UTA",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Utah Jazz Beat Reporter at Deseret News. Previously 76ers and Warriors. 530. 510.\nTwo-time Utah Sportswriter of the Year.",
+   "latestPostAt": "2026-09-17T09:16:33.684Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "jonkrawczynski.bsky.social",
+   "name": "Jon Krawczynski",
+   "team": "MIN",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Timberwolves/NBA writer for The Athletic. Also covering Vikings and other Minnesota sports stories of note. 2024 People Sexiest Man Alive. \n\nPodcast: The Jon Krawczynski Show on TalkNorth Podcast Network.",
+   "latestPostAt": "2026-09-10T18:38:45.031Z",
+   "dormantDays": 8,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "omarisankofa.bsky.social",
+   "name": "Omari Sankofa II",
+   "team": "DET",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Pistons beat writer for the Detroit Free Press.\n\nCo-host of The Pistons Pulse podcast w/ \n@MotorCityHoops\n\nMichigan State ‘16. Westsider.",
+   "latestPostAt": "2026-09-18T17:24:06.381Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "kyleneubeck.bsky.social",
+   "name": "Kyle Neubeck",
+   "team": "PHI",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Covering the Sixers for PHLY.\n\nStories at: https://allphly.com/author/kyle/\n\nPodcast at: https://link.chtbl.com/PHLYSixers\n\nOtherwise Philly, video games, rap music, and Liverpool.",
+   "latestPostAt": "2026-09-18T18:55:26.076Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "highkin.bsky.social",
+   "name": "Sean Highkin",
+   "team": "POR",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Trail Blazers + Fire rosegardenreport.com",
+   "latestPostAt": "2026-09-16T19:59:46.218Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "joshrobbins.bsky.social",
+   "name": "Josh Robbins",
+   "team": "WAS",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "Senior Writer for The Athletic. I cover the Washington Wizards and the NBA.",
+   "latestPostAt": "2026-08-20T03:17:18.137Z",
+   "dormantDays": 29,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "jlewenberg.bsky.social",
+   "name": "Josh Lewenberg",
+   "team": "TOR",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Toronto Raptors NBA Beat Reporter @ TSN",
+   "latestPostAt": "2026-09-17T15:21:48.294Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "lawmurraythenu.bsky.social",
+   "name": "Law Murray",
+   "team": "LAC",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "bio": "#NBASky writer at The Athletic\nIn LA\nFrom Philadelphia\n*under construction*",
+   "latestPostAt": "2026-09-18T17:22:23.194Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "jimowczarski.bsky.social",
+   "name": "Jim Owczarski",
+   "team": "MIL",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "I cover the #Bucks for the Milwaukee Journal Sentinel. I take my coffee intravenously & my Wu-Tang loud. Black lives matter. he/him/his",
+   "latestPostAt": "2026-09-17T20:18:13.186Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "jbeede.bsky.social",
+   "name": "Jason Beede",
+   "team": "ORL",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Orlando #Magic beat reporter for @orlandosentinel.com.\n#NBASky. PBWA member. UCF alum. Key West native. jbeede@orlandosentinel.com\n\nwww.orlandosentinel.com/sports/nba/orlando-magic/",
+   "latestPostAt": "2026-09-18T14:55:15.385Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "jameshamnba.bsky.social",
+   "name": "James Ham",
+   "team": "SAC",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Kings Insider for ESPN 1320, The Kings Beat and Locked On Kings. Long time beat writer, podcaster and radio personality covering the NBA's Sacramento Kings.",
+   "latestPostAt": "2026-09-18T03:37:40.780Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "ejelite1.bsky.social",
+   "name": "Ethan Sands",
+   "team": "CLE",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Cavs Beat Reporter and Wine and Gold Talk podcast host for Cleveland.com l Ohio U & SJI alum l past: MLB, USA Today Sports, The LA Times l ΚΑΨ♦️#LackOfWorries🎈",
+   "latestPostAt": "2026-08-04T14:53:08.206Z",
+   "dormantDays": 45,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 45 days old (>30)"
+   ]
+  },
+  {
+   "handle": "anthonychiang.bsky.social",
+   "name": "Anthony Chiang",
+   "team": "MIA",
+   "conf": "bio-verified",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Miami Heat reporter for the Miami Herald. Made in Dade. Cuban-American. Cuban coffee connoisseur. UF grad. achiang@miamiherald.com",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+   ]
+  },
+  {
+   "handle": "pompeyonsixers.bsky.social",
+   "name": "Keith Pompey",
+   "team": "PHI",
+   "conf": "unconfirmed",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "#NBASky Locked on 76ers co-host.",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+   ]
+  },
+  {
+   "handle": "btrowland.bsky.social",
+   "name": "Brad Rowland",
+   "team": "ATL",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "I write and talk about sports. \n\nPodcast Host: Locked on Hawks, Hammer Territory\n\nWriter: Patreon, FanSided, USBWA, Freelance\n\nFormer: DIME, SportsLine, Peachtree Hoops, CBS Sports, Bleacher Report, Battery Power\n\nPatreon.com/BTRowland\n\nlockedonhawks.com",
+   "latestPostAt": "2026-09-18T03:17:33.120Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "scottagness.bsky.social",
+   "name": "Scott Agness",
+   "team": "IND",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Indiana Pacers, Fever beat writer: Fieldhouse Files | Podcast Host l Play-by-play announcer | fieldhousefiles@gmail.com",
+   "latestPostAt": "2026-09-17T00:23:39.203Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "irawinderman.bsky.social",
+   "name": "Ira Winderman",
+   "team": "MIA",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Covering the Miami Heat for the South Florida Sun Sentinel",
+   "latestPostAt": "2026-09-18T12:56:26.866Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "geraldbourguet.bsky.social",
+   "name": "Gerald Bourguet",
+   "team": "PHX",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "@sunsafterdark.bsky.social writer, reporter & podcaster | ABQ native | Former Phoenician | 12-year vet on the Suns beat",
+   "latestPostAt": "2026-09-18T18:45:43.259Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "kellyiko.bsky.social",
+   "name": "Kelly Iko",
+   "team": null,
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "National NBA reporter for Yahoo Sports",
+   "latestPostAt": "2026-06-11T13:05:15.436Z",
+   "dormantDays": 99,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 99 days old (>30)"
+   ]
+  },
+  {
+   "handle": "nba.com",
+   "name": "NBA — official league account",
+   "team": null,
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! 🏀 3:00pm/et: Celtics/Pistons 🏀 7:00pm/et: 76ers/Knicks 🏀 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
+   "latestPostAt": "2026-09-18T15:58:28.672Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "trailblazers.bsky.social",
+   "name": "Portland Trail Blazers — official",
+   "team": "POR",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "PNW hoops since 1970.",
+   "latestPostAt": "2025-11-13T22:05:22.015Z",
+   "dormantDays": 308,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 308 days old (>30)"
+   ]
+  },
+  {
+   "handle": "nuggets.bsky.social",
+   "name": "Denver Nuggets — official",
+   "team": "DEN",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "2023 NBA Champs ⚒\nlinktr.ee/denvernuggets",
+   "latestPostAt": "2026-09-18T18:17:28.462Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "sixersnba.bsky.social",
+   "name": "Philadelphia 76ers — official",
+   "team": "PHI",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "yes this is our official account \n\nSixers.com",
+   "latestPostAt": "2026-09-17T14:04:32.265Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "dallasmavs.bsky.social",
+   "name": "Dallas Mavericks",
+   "team": "DAL",
+   "conf": "bio-verified",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "Mavs.com",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+   ]
+  },
+  {
+   "handle": "clevelandcavaliers.bsky.social",
+   "name": "Cleveland Cavaliers — handle suggests official, NOT verified",
+   "team": "CLE",
+   "conf": "bio-verified",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "bio": "🗣️#LetEmKnow",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+   ]
+  },
+  {
+   "handle": "theathletic.com",
+   "name": "The Athletic (outlet account, Bluesky verifier)",
+   "team": null,
+   "conf": "bio-verified",
+   "feed": false,
+   "verification": {
+    "present": true,
+    "valid": false,
+    "issuer": "bsky.app"
+   },
+   "bio": "Get every sports story that matters.",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+   ]
+  },
+  {
+   "handle": "basketball-reference.com",
+   "name": "Basketball Reference",
+   "team": null,
+   "conf": "bsky-verified",
+   "feed": false,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "bio": "Basketball stats and history for the NBA, WNBA, European Leagues, ABA, and more.\n\n🔗 https://www.basketball-reference.com/",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+   ]
+  }
+ ],
+ "channels": [
+  {
+   "abbr": "ATL",
+   "url": "https://www.nba.com/hawks/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/hawks/news"
+  },
+  {
+   "abbr": "BOS",
+   "url": "https://www.nba.com/celtics/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/celtics/news"
+  },
+  {
+   "abbr": "BKN",
+   "url": "https://www.nba.com/nets/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/nets/news"
+  },
+  {
+   "abbr": "CHA",
+   "url": "https://www.nba.com/hornets/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/hornets/news"
+  },
+  {
+   "abbr": "CHI",
+   "url": "https://www.nba.com/bulls/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/bulls/news"
+  },
+  {
+   "abbr": "CLE",
+   "url": "https://www.nba.com/cavaliers/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/cavaliers/news"
+  },
+  {
+   "abbr": "DAL",
+   "url": "https://www.nba.com/mavericks/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/mavericks/news"
+  },
+  {
+   "abbr": "DEN",
+   "url": "https://www.nba.com/nuggets/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/nuggets/news"
+  },
+  {
+   "abbr": "DET",
+   "url": "https://www.nba.com/pistons/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/pistons/news"
+  },
+  {
+   "abbr": "GSW",
+   "url": "https://www.nba.com/warriors/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/warriors/news"
+  },
+  {
+   "abbr": "HOU",
+   "url": "https://www.nba.com/rockets/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/rockets/news"
+  },
+  {
+   "abbr": "IND",
+   "url": "https://www.nba.com/pacers/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/pacers/news"
+  },
+  {
+   "abbr": "LAC",
+   "url": "https://www.nba.com/clippers/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/clippers/news"
+  },
+  {
+   "abbr": "LAL",
+   "url": "https://www.nba.com/lakers/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/lakers/news"
+  },
+  {
+   "abbr": "MEM",
+   "url": "https://www.nba.com/grizzlies/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/grizzlies/news"
+  },
+  {
+   "abbr": "MIA",
+   "url": "https://www.nba.com/heat/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/heat/news"
+  },
+  {
+   "abbr": "MIL",
+   "url": "https://www.nba.com/bucks/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/bucks/news"
+  },
+  {
+   "abbr": "MIN",
+   "url": "https://www.nba.com/timberwolves/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/timberwolves/news"
+  },
+  {
+   "abbr": "NOP",
+   "url": "https://www.nba.com/pelicans/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/pelicans/news"
+  },
+  {
+   "abbr": "NYK",
+   "url": "https://www.nba.com/knicks/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/knicks/news"
+  },
+  {
+   "abbr": "OKC",
+   "url": "https://www.nba.com/thunder/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/thunder/news"
+  },
+  {
+   "abbr": "ORL",
+   "url": "https://www.nba.com/magic/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/magic/news"
+  },
+  {
+   "abbr": "PHI",
+   "url": "https://www.nba.com/sixers/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/sixers/news"
+  },
+  {
+   "abbr": "PHX",
+   "url": "https://www.nba.com/suns/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/suns/news"
+  },
+  {
+   "abbr": "POR",
+   "url": "https://www.nba.com/blazers/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/blazers/news"
+  },
+  {
+   "abbr": "SAC",
+   "url": "https://www.nba.com/kings/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/kings/news"
+  },
+  {
+   "abbr": "SAS",
+   "url": "https://www.nba.com/spurs/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/spurs/news"
+  },
+  {
+   "abbr": "TOR",
+   "url": "https://www.nba.com/raptors/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/raptors/news"
+  },
+  {
+   "abbr": "UTA",
+   "url": "https://www.nba.com/jazz/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/jazz/news"
+  },
+  {
+   "abbr": "WAS",
+   "url": "https://www.nba.com/wizards/news",
+   "http": 403,
+   "ok": false,
+   "looksLikeClubNews": false,
+   "datedItems": 0,
+   "blocked": true,
+   "finalUrl": "https://www.nba.com/wizards/news"
+  }
+ ],
+ "channelSummary": {
+  "checked": 30,
+  "ok": 0,
+  "failed": [
+   "ATL:http403",
+   "BOS:http403",
+   "BKN:http403",
+   "CHA:http403",
+   "CHI:http403",
+   "CLE:http403",
+   "DAL:http403",
+   "DEN:http403",
+   "DET:http403",
+   "GSW:http403",
+   "HOU:http403",
+   "IND:http403",
+   "LAC:http403",
+   "LAL:http403",
+   "MEM:http403",
+   "MIA:http403",
+   "MIL:http403",
+   "MIN:http403",
+   "NOP:http403",
+   "NYK:http403",
+   "OKC:http403",
+   "ORL:http403",
+   "PHI:http403",
+   "PHX:http403",
+   "POR:http403",
+   "SAC:http403",
+   "SAS:http403",
+   "TOR:http403",
+   "UTA:http403",
+   "WAS:http403"
+  ]
+ }
+}
