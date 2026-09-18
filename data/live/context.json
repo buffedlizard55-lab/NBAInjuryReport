@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-18T03:01:50.345Z",
+  "checkedAt": "2026-09-18T03:07:15.074Z",
   "schema": 3,
   "rosters": {
     "CHA": {
@@ -8391,10 +8391,10 @@
   "errors": {},
   "schedules": {
     "BOS": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bos/schedule",
       "team": "BOS",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Boston",
@@ -8474,10 +8474,10 @@
       "venueResolvedCount": 0
     },
     "ATL": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule",
       "team": "ATL",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Atlanta",
@@ -8573,10 +8573,10 @@
       "venueResolvedCount": 0
     },
     "BKN": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bkn/schedule",
       "team": "BKN",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Brooklyn",
@@ -8656,10 +8656,10 @@
       "venueResolvedCount": 0
     },
     "CHA": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/schedule",
       "team": "CHA",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Charlotte",
@@ -8739,10 +8739,10 @@
       "venueResolvedCount": 0
     },
     "CLE": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cle/schedule",
       "team": "CLE",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Cleveland",
@@ -8806,10 +8806,10 @@
       "venueResolvedCount": 0
     },
     "CHI": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule",
       "team": "CHI",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Chicago",
@@ -8905,10 +8905,10 @@
       "venueResolvedCount": 0
     },
     "DAL": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule",
       "team": "DAL",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Dallas",
@@ -8990,10 +8990,10 @@
       "venueResolvedCount": 2
     },
     "DEN": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/schedule",
       "team": "DEN",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Denver",
@@ -9089,10 +9089,10 @@
       "venueResolvedCount": 0
     },
     "DET": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/det/schedule",
       "team": "DET",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Detroit",
@@ -9172,12 +9172,16 @@
       "venueResolvedCount": 0
     },
     "GSW": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/schedule",
       "team": "GSW",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
-      "homeCity": null,
+      "homeCity": {
+        "city": "San Francisco",
+        "lat": 37.78,
+        "lon": -122.42
+      },
       "games": [
         {
           "id": "401918010",
@@ -9189,10 +9193,10 @@
           "state": "CA",
           "completed": false,
           "restDays": null,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
-          "tzShiftHours": null,
+          "travelMiles": 349,
+          "travelHours": 2.8,
+          "travelMode": "air (model)",
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9208,7 +9212,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9224,7 +9228,7 @@
           "travelMiles": 535,
           "travelHours": 3.2,
           "travelMode": "air (model)",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9240,7 +9244,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9256,7 +9260,7 @@
           "travelMiles": 417,
           "travelHours": 2.9,
           "travelMode": "air (model)",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9272,7 +9276,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         }
       ],
@@ -9283,10 +9287,10 @@
       "venueResolvedCount": 0
     },
     "HOU": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule",
       "team": "HOU",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Houston",
@@ -9352,10 +9356,10 @@
       "venueResolvedCount": 2
     },
     "LAC": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule",
       "team": "LAC",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Inglewood",
@@ -9419,10 +9423,10 @@
       "venueResolvedCount": 0
     },
     "LAL": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lal/schedule",
       "team": "LAL",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Los Angeles",
@@ -9518,12 +9522,16 @@
       "venueResolvedCount": 0
     },
     "IND": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/schedule",
       "team": "IND",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
-      "homeCity": null,
+      "homeCity": {
+        "city": "Indianapolis",
+        "lat": 39.77,
+        "lon": -86.16
+      },
       "games": [
         {
           "id": "401914123",
@@ -9538,7 +9546,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 1,
           "unmappedCity": null
         },
         {
@@ -9554,7 +9562,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9570,7 +9578,7 @@
           "travelMiles": 688,
           "travelHours": 3.5,
           "travelMode": "air (model)",
-          "tzShiftHours": null,
+          "tzShiftHours": 1,
           "unmappedCity": null
         },
         {
@@ -9586,7 +9594,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         }
       ],
@@ -9597,10 +9605,10 @@
       "venueResolvedCount": 0
     },
     "MIA": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule",
       "team": "MIA",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Miami",
@@ -9696,10 +9704,10 @@
       "venueResolvedCount": 0
     },
     "MEM": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule",
       "team": "MEM",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Memphis",
@@ -9779,10 +9787,10 @@
       "venueResolvedCount": 0
     },
     "MIL": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mil/schedule",
       "team": "MIL",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Milwaukee",
@@ -9878,12 +9886,16 @@
       "venueResolvedCount": 0
     },
     "MIN": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/min/schedule",
       "team": "MIN",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
-      "homeCity": null,
+      "homeCity": {
+        "city": "Minneapolis",
+        "lat": 44.98,
+        "lon": -93.27
+      },
       "games": [
         {
           "id": "401914102",
@@ -9895,10 +9907,10 @@
           "state": "WI",
           "completed": false,
           "restDays": null,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
-          "tzShiftHours": null,
+          "travelMiles": 298,
+          "travelHours": 2.7,
+          "travelMode": "air (model)",
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9914,7 +9926,7 @@
           "travelMiles": 299,
           "travelHours": 2.7,
           "travelMode": "air (model)",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9930,7 +9942,7 @@
           "travelMiles": 1359,
           "travelHours": 5,
           "travelMode": "air (model)",
-          "tzShiftHours": null,
+          "tzShiftHours": 1,
           "unmappedCity": null
         },
         {
@@ -9946,7 +9958,7 @@
           "travelMiles": 1092,
           "travelHours": 4.4,
           "travelMode": "air (model)",
-          "tzShiftHours": null,
+          "tzShiftHours": 1,
           "unmappedCity": null
         },
         {
@@ -9962,7 +9974,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -9978,7 +9990,7 @@
           "travelMiles": 355,
           "travelHours": 2.8,
           "travelMode": "air (model)",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         }
       ],
@@ -9989,10 +10001,10 @@
       "venueResolvedCount": 0
     },
     "NOP": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/schedule",
       "team": "NOP",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "New Orleans",
@@ -10072,10 +10084,10 @@
       "venueResolvedCount": 0
     },
     "ORL": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule",
       "team": "ORL",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Orlando",
@@ -10155,10 +10167,10 @@
       "venueResolvedCount": 0
     },
     "PHI": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/schedule",
       "team": "PHI",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Philadelphia",
@@ -10238,10 +10250,10 @@
       "venueResolvedCount": 0
     },
     "NYK": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule",
       "team": "NYK",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "New York",
@@ -10337,10 +10349,10 @@
       "venueResolvedCount": 0
     },
     "PHX": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule",
       "team": "PHX",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Phoenix",
@@ -10436,10 +10448,10 @@
       "venueResolvedCount": 0
     },
     "OKC": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule",
       "team": "OKC",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Oklahoma City",
@@ -10535,10 +10547,10 @@
       "venueResolvedCount": 0
     },
     "POR": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule",
       "team": "POR",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Portland",
@@ -10618,10 +10630,10 @@
       "venueResolvedCount": 0
     },
     "SAC": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule",
       "team": "SAC",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Sacramento",
@@ -10717,10 +10729,10 @@
       "venueResolvedCount": 0
     },
     "SAS": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/schedule",
       "team": "SAS",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "San Antonio",
@@ -10816,10 +10828,10 @@
       "venueResolvedCount": 0
     },
     "TOR": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule",
       "team": "TOR",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Toronto",
@@ -10915,12 +10927,16 @@
       "venueResolvedCount": 0
     },
     "UTA": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/schedule",
       "team": "UTA",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
-      "homeCity": null,
+      "homeCity": {
+        "city": "Salt Lake City",
+        "lat": 40.76,
+        "lon": -111.89
+      },
       "games": [
         {
           "id": "401914127",
@@ -10932,10 +10948,10 @@
           "state": "CO",
           "completed": false,
           "restDays": null,
-          "travelMiles": null,
-          "travelHours": null,
-          "travelMode": null,
-          "tzShiftHours": null,
+          "travelMiles": 352,
+          "travelHours": 2.8,
+          "travelMode": "air (model)",
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -10951,7 +10967,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -10967,7 +10983,7 @@
           "travelMiles": 0,
           "travelHours": 0,
           "travelMode": "home game — no travel leg",
-          "tzShiftHours": null,
+          "tzShiftHours": 0,
           "unmappedCity": null
         },
         {
@@ -10983,7 +10999,7 @@
           "travelMiles": 505,
           "travelHours": 3.1,
           "travelMode": "air (model)",
-          "tzShiftHours": null,
+          "tzShiftHours": 1,
           "unmappedCity": null
         }
       ],
@@ -10994,10 +11010,10 @@
       "venueResolvedCount": 0
     },
     "WAS": {
-      "fetchedAt": "2026-09-18T02:48:44.352Z",
+      "fetchedAt": "2026-09-18T03:07:15.074Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule",
       "team": "WAS",
-      "geoModel": 2,
+      "geoModel": 3,
       "season": "2026-27",
       "homeCity": {
         "city": "Washington",

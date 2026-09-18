@@ -122,7 +122,23 @@ const Geo = (function () {
    * Inglewood/Boulder/Ames/Tulsa plus the venue-name fallback did not reach the deployed board,
    * because the 6-hour schedule cache was still serving rows derived by the OLD table and the
    * cache check could only see freshness, not provenance. */
-  const MODEL_VERSION = 2;
+  const MODEL_VERSION = 3;
+
+  /* Deterministic digest of everything that can change a derived number: the city table, the
+   * venue table, the team-home mapping and the travel-model constants. tools/impact_test.js hashes
+   * it and compares against a recorded value, so editing a table without bumping MODEL_VERSION
+   * FAILS the suite instead of leaving stale derived rows in the cache. (Learned the hard way:
+   * MODEL_VERSION was bumped for the city-table fix but not for the TEAM_HOME_CITY fix, and the
+   * 6-hour cache then served time-zone-less rows for five teams for another cycle.) */
+  function tableDigest() {
+    const n = v => (typeof v === "number" ? String(v) : String(v == null ? "" : v));
+    return [
+      CITIES.map(c => [c.city, c.state, n(c.lat), n(c.lon), c.tz].join("~")).join(";"),
+      VENUE_CITY.map(v => [v.venue, v.city, n(v.lat), n(v.lon), v.tz].join("~")).join(";"),
+      Object.keys(TEAM_HOME_CITY).sort().map(k => k + ">" + TEAM_HOME_CITY[k]).join(";"),
+      [n(TRAVEL_MODEL.cruiseMph), n(TRAVEL_MODEL.airportOverheadHours), n(TRAVEL_MODEL.groundThresholdMiles), n(TRAVEL_MODEL.groundMph)].join("~")
+    ].join("::");
+  }
 
   /* Documented travel-time model. Every field is an assumption a reader can argue with,
    * which is the point — the UI prints "model" next to the result, never "flight time". */
@@ -221,7 +237,7 @@ const Geo = (function () {
   }
 
   return {
-    MODEL_VERSION, CITIES, VENUE_CITY, TEAM_HOME_CITY, TRAVEL_MODEL,
+    MODEL_VERSION, tableDigest, CITIES, VENUE_CITY, TEAM_HOME_CITY, TRAVEL_MODEL,
     coordsFor, coordsForVenue, homeCoords, haversineMiles, estimateTravel, utcOffsetHours,
     restDaysBetween, foldCity, round
   };
