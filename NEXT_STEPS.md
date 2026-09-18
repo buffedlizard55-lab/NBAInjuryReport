@@ -1,5 +1,86 @@
 # Next-session priorities
 
+## State at the end of session 9 (2026-09-18) — read this first
+
+Branch `arena/01a0b254-nbainjuryreport`. This session built the **lineup-impact intelligence layer v2**
+(the thing the brief calls "an intelligence layer that defines what a high lineup impact is") and closed
+two real defects found while reviewing it. Everything below is verified locally: **197 smoke · 69 impact ·
+52 integration · 24 poll fixtures · 26 regression groups · 26 Python tests · replay check 75 rows / 12 posts,
+no invariant violations.**
+
+1. **`assets/js/geo.js` (new) — the travel half of the model, and it is honest about being a model.**
+   41 city rows cover all 30 NBA home cities plus long-standing and newly observed venues (asserted by
+   `tools/impact_test.js`). The list is not a guess: the first schema-3 CI run reported four unresolved
+   venue cities, and each was a real city on the published schedule — Inglewood, CA (the Clippers'
+   Intuit Dome, whose feed identity says Los Angeles), Boulder, Ames and Tulsa (neutral pre-season
+   sites) — so each earned a row. A venue whose address arrives EMPTY (observed: "Venetian Arena")
+   is resolved from the venue NAME and marked `venueNameResolved: true` so the weaker provenance
+   reaches the UI. Distances are cross-checked against published values; great-circle distances
+   cross-checked against published values (Boston→Los Angeles 2,591 vs ~2,611 mi, Chicago→New York 711 vs
+   ~713); IANA time-zone offsets read from the runtime database per game date (winter ET −5 / PT −8 /
+   Phoenix −7, summer ET −4), so DST is data, not a hard-coded table; `restDaysBetween` returns 0 for a
+   back-to-back. Travel time uses a documented model (450 mph cruise + 2.0 h airport overhead; ground under
+   250 mi at 45 mph) and every surfaced number says "city-to-city" or "model". An unknown venue city yields
+   `unmappedCity`, never an approximation.
+2. **`tools/collect_context.js` → schema 3.** Adds a per-team schedule capture (next 7 games plus the last 2,
+   with venue city/state, rest days, city-to-city miles, hours and time-zone shift) plus per-player
+   production aggregates (points/assists/rebounds/on-court +/− over the games this project actually fetched,
+   keyed by stat NAME so a reordered ESPN key list cannot shift columns) and per-team scoring baselines.
+   Box-score rows are deduped by event id and the backfill now orders candidates by each game's own date.
+3. **`assets/js/role.js` — impact model v2.** `score = 0.6·STAKE + 0.2·EXPOSURE + 0.2·RECURRENCE`,
+   renormalised over whichever components have evidence, with the coverage fraction printed. STAKE: minutes,
+   start share, the player's share of his team's own collected scoring, assists, and a ±8-point bounded
+   on-court +/−. EXPOSURE: games in the next 7 days, back-to-backs, road games, travel miles, time zones.
+   RECURRENCE: dated ESPN roster listings and reported in-game exits. Grades HIGH ≥ 65, MEDIUM ≥ 40, else LOW,
+   plus R1–R4 (R4: no stake evidence ⇒ UNKNOWN even on a 4-in-6 road trip — schedule load alone can never
+   produce HIGH). Game-time decisions additionally get a separate **availability-risk** reading.
+4. **Two real defects found and fixed while verifying (both pinned by tests):**
+   a. *Alert escalation read only one impact shape.* `AlertEngine.impactGrade`/`offenseTier` understood the
+      social layer's full assessment but not the board's flattened clone, a bare grade string, or a flattened
+      archive row; and the **official NBA layer and the in-game monitor were firing without any impact
+      attached at all**. An official "Out" for a starter, or an in-game listing for a top option, arrived with
+      the ordinary chime. Fixed in `assets/js/alerts.js` (all four shapes), `injuries.js` (grade/offenseTier/
+      score on board alerts), `intelligence.js` (official designations) and `ingame.js` (game listings, never
+      DNP rows). `tools/smoke_test.js` now pins every shape, `tools/impact_test.js` pins the producer wiring.
+   b. *The box-score backfill was biased.* `collect_context.js` built an unused ordering map from one
+      arbitrary team and then took the last 12 candidate ids in TEAMS order — so the "most recent games"
+      sample favoured whichever teams sat last in the list. Extracted to a tested `recentBackfill()` that
+      sorts by each game's published date.
+5. **New permanent test surface: `tools/impact_test.js` (69 checks)** — geo distances/time zones/rest/model,
+   keyed stat parsing, per-event dedupe, team baselines, schedule→travel chain, the whole grade matrix
+   (incl. R1–R4 and both cross-checks on the same player: Out vs Questionable), plus a wiring audit asserting
+   **every `getElementById` in the shipped modules resolves to an id in `index.html`** and that the board
+   renders before the alert center and wire.
+6. **Board-first layout + live UI wiring finished.** `renderImpactWatch()` is now called from `render()`;
+   `app.js` binds the new high-impact sound-test button and the impact filter tabs; new CSS for the
+   watchlist, offense/risk tags and model lines; `intelligence.js` hands the model the schedule and
+   team-production captures and rewrote the on-page legend to describe the real formula.
+7. **Registry regenerated:** `node tools/build_verified_sources.js` → **25 sources / 44 flags** (two new
+   verified sources: the ESPN team-schedule API and the city-coordinate travel model, both with what-it-is /
+   what-it-is-NOT wording).
+
+Facts a new session can rely on (in addition to session 8's):
+- The impact model is **lineup impact, never medical severity** — that phrase appears on the board, the
+  legend and every factor label, and `tools/impact_test.js` fails if a result starts claiming a medical grade.
+- `data/live/context.json` on disk is still **schema 2** until `injury-watch.yml` runs the new collector;
+  `role.js` discloses that in a note ("schema 2 … components dropped and disclosed"), so a schema-2 file
+  degrades to v1 behaviour instead of guessing. First CI run after merge upgrades it to 3.
+- `assets/js/geo.js` is only loaded by Node tooling, deliberately: the browser reads the collector's derived
+  numbers from `context.json` instead of recomputing geography per page load.
+
+### Still open after session 9 (unchanged blockers)
+- **X / Instagram / Facebook live reads** — no authorized free connector; embeds + search links remain manual
+  review only and never feed alerts (documented in `sources.html`, `AUDIT.md`, FLAGS).
+- **Bluesky keyword search** is 403 unauthenticated; the layer works per-account from an allow-list.
+- **Official 2026-27 injury-report page** was 404 on 2026-09-17; the collector tries current then prior
+  season and never guesses PDF URLs.
+- **Live-game validation** cannot happen before the first tip (2026-10-03, Heat @ Raptors per the schedule
+  capture). In-game latency, exit detection and the QTR path remain fixture-verified only.
+- **Closed-tab push** does not exist (browser open-tab alerts only), and GitHub scheduled runs are
+  best-effort — ten-minute polling is not a low-latency guarantee.
+- **Real geographic precision** would need arena coordinates and charter data, neither of which is free;
+  the model is city-centroid by design and labelled as such.
+
 ## State at the end of session 8 (2026-09-17, ~23:30Z) — read this first
 
 Shipped on branch `arena/01a0b196-nbainjuryreport`: **the deployed page, audited line by line, with its one

@@ -378,7 +378,15 @@ const App = (() => {
     if (testBtn) testBtn.addEventListener("click", () => {
       const ok = AlertEngine.testSound();
       testBtn.textContent = ok ? "🔔 Playing chime…" : "⚠ Audio unavailable";
-      setTimeout(() => { testBtn.textContent = "▶ Test sound"; }, 1200);
+      setTimeout(() => { testBtn.textContent = "▶ Test sound"; }, 1400);
+    });
+    /* The high-impact voice is a SEPARATE button on purpose: a user must be able to hear exactly
+     * what a ⚡HIGH LINEUP IMPACT absence sounds like before trusting the alert. */
+    const hiBtn = document.getElementById("testHighImpactSound");
+    if (hiBtn) hiBtn.addEventListener("click", () => {
+      const ok = AlertEngine.testHighImpactSound();
+      hiBtn.textContent = ok ? "🔔⚡ Playing high-impact chime…" : "⚠ Audio unavailable";
+      setTimeout(() => { hiBtn.textContent = "▶⚡ Test high-impact sound"; }, 1400);
     });
     const bSearch = document.getElementById("boardSearch");
     if (bSearch) {
@@ -397,12 +405,23 @@ const App = (() => {
       });
     }
     if (typeof document !== "undefined" && document.querySelectorAll) {
-      document.querySelectorAll(".board-tab").forEach(tab => {
+      document.querySelectorAll(".board-tab[data-board-status]").forEach(tab => {
         tab.addEventListener("click", () => {
-          document.querySelectorAll(".board-tab").forEach(t => t.classList.remove("active"));
+          document.querySelectorAll(".board-tab[data-board-status]").forEach(t => t.classList.remove("active"));
           tab.classList.add("active");
           if (typeof InjuryBoard !== "undefined" && InjuryBoard.setStatusFilter) {
             InjuryBoard.setStatusFilter(tab.dataset.boardStatus);
+          }
+        });
+      });
+      /* Lineup-impact filter: independent of the status filter, so "everyone OUT" and
+       * "everything HIGH impact" can be read separately. */
+      document.querySelectorAll(".impact-tab[data-impact-filter]").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".impact-tab[data-impact-filter]").forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          if (typeof InjuryBoard !== "undefined" && InjuryBoard.setImpactFilter) {
+            InjuryBoard.setImpactFilter(tab.dataset.impactFilter);
           }
         });
       });

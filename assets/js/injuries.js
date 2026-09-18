@@ -176,7 +176,10 @@ const InjuryBoard = (function () {
     const impact = impactFor(row);
     return {
       kind: kind, sev: row.sev, sevLabel: row.sevLabel, title: title,
-      impact: impact ? { tier: impact.impact, label: impact.impactLabel } : null,
+      /* The full assessment travels with the alert so the alarm voice can escalate on a HIGH
+       * grade and the log can name the offense tier — a missed field here is a silent downgrade
+       * of a star's absence to the ordinary chime. */
+      impact: impact ? { tier: impact.impact, grade: impact.impact, label: impact.impactLabel, offenseTier: impact.offenseTier, score: impact.score } : null,
       detail: [extra, typeof LineupImpact !== "undefined" ? LineupImpact.summaryText(impact) : null, row.shortComment || row.longComment,
         row.bodyPart ? "injury: " + row.bodyPart : "",
         row.returnDate ? "est. return " + row.returnDate : ""].filter(Boolean).join(" · "),
@@ -241,7 +244,33 @@ const InjuryBoard = (function () {
     if (!imp) return "";
     if (imp.impact === "unknown") return "IMPACT: UNKNOWN";
     const role = imp.role.tier === "starter" ? "starter" : imp.role.tier === "rotation" ? "rotation" : imp.role.tier === "bench" ? "depth" : "role?";
-    return imp.impact.toUpperCase() + " IMPACT · " + role;
+    const score = imp.score != null ? " " + imp.score : "";
+    const off = imp.offenseTier === "primary" ? " · top option" : imp.offenseTier === "secondary" ? " · 2nd option" : "";
+    return imp.impact.toUpperCase() + " IMPACT" + score + " · " + role + off;
+  }
+  /* One compact line per factor so a reader can see WHY the grade landed where it did, with the
+   * component it came from. Everything here is a collected observation or a labelled model value. */
+  function factorsLine(imp) {
+    if (!imp || !imp.factors || !imp.factors.length) return "";
+    const byComp = { stake: [], exposure: [], recurrence: [] };
+    for (const f of imp.factors) (byComp[f.component] = byComp[f.component] || []).push(f.key + " " + f.pts + "/" + f.max);
+    return ["stake", "exposure", "recurrence"].filter(c => byComp[c] && byComp[c].length)
+      .map(c => c + ": " + byComp[c].join(", ")).join(" · ");
+  }
+  function travelLine(imp) {
+    if (!imp || !imp.travel) return "";
+    const t = imp.travel;
+    const bits = [];
+    if (t.opponent) bits.push((t.homeAway === "away" ? "next at " : "next vs ") + t.opponent);
+    if (t.city) bits.push(t.unmappedCity ? "venue city NOT in the coordinate table — travel withheld" : t.city);
+    if (t.restDays != null) bits.push(t.restDays === 0 ? "back-to-back (0 rest days)" : t.restDays + " rest day(s)");
+    if (t.miles != null && t.miles > 0) bits.push(t.miles.toLocaleString("en-US") + " mi · ~" + t.hours + " h " + (t.mode || ""));
+    if (t.tzShiftHours) bits.push(t.tzShiftHours + " time zone(s) crossed");
+    /* Weaker-provenance disclosures travel with the number: a city resolved from the venue NAME
+     * and a leg measured from the team's own city were not read straight off the feed. */
+    if (t.venueNameResolved) bits.push("city resolved from the venue name (the feed sent no address)");
+    if (t.travelFromFallback) bits.push("leg measured from the team's home city");
+    return bits.join(" · ");
   }
   function espnTeamDepthUrl(abbr) {
     const slug = (typeof espnAbbr === "function") ? espnAbbr(abbr) : String(abbr).toLowerCase();
@@ -288,6 +317,7 @@ const InjuryBoard = (function () {
 
   let boardSearchQuery = "";
   let boardStatusFilter = "ALL";
+  let boardImpactFilter = "ALL";
 
   function setSearch(q) {
     boardSearchQuery = String(q || "");
@@ -299,15 +329,68 @@ const InjuryBoard = (function () {
     render();
   }
 
+  /* Lineup-impact filter: the fastest way to answer "what actually hurts a team tonight?". */
+  function setImpactFilter(x) {
+    boardImpactFilter = String(x || "ALL");
+    render();
+  }
+
+  function countsByImpact(list) {
+    const c = { ALL: (list || rows).length, high: 0, medium: 0, low: 0, unknown: 0 };
+    for (const r of (list || rows)) {
+      const g = (impactFor(r) || {}).impact || "unknown";
+      if (c[g] !== undefined) c[g]++;
+    }
+    return c;
+  }
+
   function resetFilter() {
     boardSearchQuery = "";
     boardStatusFilter = "ALL";
+    boardImpactFilter = "ALL";
     const inp = document.getElementById("boardSearch");
     if (inp) inp.value = "";
     if (typeof document !== "undefined" && document.querySelectorAll) {
       document.querySelectorAll(".board-tab").forEach(t => t.classList.toggle("active", t.dataset.boardStatus === "ALL"));
+      document.querySelectorAll(".impact-tab").forEach(t => t.classList.toggle("active", t.dataset.impactFilter === "ALL"));
     }
     render();
+  }
+
+  /* The watchlist answers the only question that matters in a hurry: which of tonight's
+   * listings actually change a team? It is a view over the same graded rows — no separate
+   * scoring, no extra assumptions — and it says plainly when the evidence is thin. */
+  function renderImpactWatch() {
+    const el = document.getElementById("impactWatch");
+    if (!el) return;
+    if (error && !rows.length) {
+      el.innerHTML = '<div class="muted small">No board snapshot right now, so no high-impact claim is made.</div>';
+      return;
+    }
+    const graded = rows.map(r => ({ r, imp: impactFor(r) })).filter(x => x.imp && x.imp.score != null);
+    const top = graded.filter(x => x.imp.impact === "high" || x.imp.impact === "medium")
+      .sort((a, b) => b.imp.score - a.imp.score).slice(0, 8);
+    const countEl = document.getElementById("impactWatchCount");
+    if (countEl) countEl.textContent = graded.filter(x => x.imp.impact === "high").length + " high · " + graded.length + " graded";
+    if (!top.length) {
+      el.innerHTML = '<div class="muted small">No listing currently meets the HIGH or MEDIUM threshold on collected evidence' +
+        (rows.length ? " (" + rows.length + " listing(s) are graded LOW or UNKNOWN)." : ".") + ' ' +
+        'That is a statement about this snapshot, not about player health.</div>';
+      return;
+    }
+    el.innerHTML = top.map(({ r, imp }) => '<div class="watch-item sev-border-' + esc(r.sev) + '">' +
+      '<div class="wi-top"><span class="tag impact-' + esc(imp.impact) + '">' + esc(imp.impact.toUpperCase()) + ' ' + esc(imp.score) + '</span>' +
+      '<b>' + esc(r.player) + '</b> <span class="team-chip">' + esc(r.team) + '</span>' +
+      '<span class="tag ' + esc(r.sev) + '">' + esc(r.sevLabel) + '</span>' +
+      (imp.offenseTier === "primary" ? '<span class="tag offense">TOP OFFENSIVE OPTION</span>' : imp.offenseTier === "secondary" ? '<span class="tag offense">2ND OPTION</span>' : "") +
+      (imp.exit ? '<span class="tag watch">IN-GAME EXIT (reported)</span>' : "") +
+      '</div>' +
+      '<div class="wi-why tiny">' + esc(imp.impactLabel) + '</div>' +
+      (imp.factors.length ? '<div class="wi-factors tiny muted">' + esc(imp.factors.slice(0, 6).map(f => f.label).join(" · ")) + '</div>' : "") +
+      '<div class="wi-links tiny">' + (r.teamUrl ? '<a href="' + esc(r.teamUrl) + '" target="_blank" rel="noopener">team injuries ↗</a> · ' : "") +
+      (r.playerUrl ? '<a href="' + esc(r.playerUrl) + '" target="_blank" rel="noopener">player page ↗</a> · ' : "") +
+      (imp.role.evidence.length ? '<a href="' + esc(imp.role.evidence[0]) + '" target="_blank" rel="noopener">box-score evidence ↗</a>' : '<span class="muted">no box-score sample collected yet</span>') +
+      '</div></div>').join("");
   }
 
   function render(filters) {
@@ -322,6 +405,11 @@ const InjuryBoard = (function () {
     for (const r of rows) {
       if (counts[r.sev] !== undefined) counts[r.sev]++;
     }
+    const impCounts = countsByImpact(rows);
+    for (const [id, key] of [["countImpactAll", "ALL"], ["countImpactHigh", "high"], ["countImpactMed", "medium"], ["countImpactLow", "low"], ["countImpactUnknown", "unknown"]]) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = impCounts[key];
+    }
     const cAll = document.getElementById("countAll"); if (cAll) cAll.textContent = counts.ALL;
     const cOut = document.getElementById("countOut"); if (cOut) cOut.textContent = counts.out;
     const cDtf = document.getElementById("countDtf"); if (cDtf) cDtf.textContent = counts.doubtful;
@@ -331,6 +419,7 @@ const InjuryBoard = (function () {
 
     const shown = rows.filter(r => {
       if (f && f.team && f.team !== "ALL" && r.team !== f.team) return false;
+      if (boardImpactFilter !== "ALL" && ((impactFor(r) || {}).impact || "unknown") !== boardImpactFilter) return false;
       if (boardStatusFilter !== "ALL" && r.sev !== boardStatusFilter) return false;
       if (boardStatusFilter === "ALL" && f && f.sevs && typeof f.sevs === "object") {
         const want = Object.keys(f.sevs).filter(k => f.sevs[k]);
@@ -356,6 +445,7 @@ const InjuryBoard = (function () {
     /* Rendered BEFORE the "nothing matches" early return so a coverage gap is still stated when the
      * current filter hides every row. */
     renderCoverage();
+    renderImpactWatch();
 
     if (!shown.length) {
       box.innerHTML = error
@@ -366,7 +456,12 @@ const InjuryBoard = (function () {
 
     const byTeam = {};
     for (const r of shown) (byTeam[r.team] = byTeam[r.team] || []).push(r);
+    /* Highest-impact teams first: the whole point of the board is to answer "who is in trouble
+     * tonight" before "who has a sore ankle". Impact score order, then severity, then recency. */
     const teams = Object.keys(byTeam).sort((a, b) => {
+      const bestA = Math.max.apply(null, byTeam[a].map(r => (impactFor(r) || {}).score ?? -1));
+      const bestB = Math.max.apply(null, byTeam[b].map(r => (impactFor(r) || {}).score ?? -1));
+      if (bestA !== bestB) return bestB - bestA;
       const wa = Math.min.apply(null, byTeam[a].map(r => SEV_ORDER[r.sev] ?? 9));
       const wb = Math.min.apply(null, byTeam[b].map(r => SEV_ORDER[r.sev] ?? 9));
       return wa - wb || a.localeCompare(b);
@@ -374,7 +469,8 @@ const InjuryBoard = (function () {
 
     box.innerHTML = teams.map(team => {
       const list = byTeam[team].slice().sort((x, y) =>
-        (SEV_ORDER[x.sev] ?? 9) - (SEV_ORDER[y.sev] ?? 9) || IMPACT_ORDER[(impactFor(x) || {}).impact] - IMPACT_ORDER[(impactFor(y) || {}).impact]
+        ((impactFor(y) || {}).score ?? -1) - ((impactFor(x) || {}).score ?? -1)
+        || (SEV_ORDER[x.sev] ?? 9) - (SEV_ORDER[y.sev] ?? 9)
         || new Date(y.updated || 0) - new Date(x.updated || 0));
       return '<div class="board-team">' +
         '<div class="board-team-head"><b class="abbr">' + esc(team) + '</b>' +
@@ -405,6 +501,23 @@ const InjuryBoard = (function () {
           (imp && imp.contract && imp.contract.label ? " · " + esc(imp.contract.label) : "") +
           " · Medical severity: not assessed · ESPN: " + esc(r.status) + (r.noteSource ? " · per " + esc(r.noteSource) : "") +
           '</div>' +
+          (imp && imp.factors && imp.factors.length ? '<div class="br-model tiny">' +
+            '<span class="muted">Impact model v' + esc((imp.model && imp.model.version) || 2) + ':</span> ' + esc(factorsLine(imp)) +
+            (imp.confidence != null ? ' <span class="muted">· evidence coverage ' + Math.round(imp.confidence * 100) + '%</span>' : '') +
+            '</div>' : '') +
+          (imp && imp.production ? '<div class="br-prod tiny muted">Collected production: ' + esc(
+            [imp.production.ppg != null ? imp.production.ppg + " ppg" : null,
+             imp.production.apg != null ? imp.production.apg + " apg" : null,
+             imp.production.rpg != null ? imp.production.rpg + " rpg" : null,
+             imp.production.avgPlusMinus != null ? (imp.production.avgPlusMinus >= 0 ? "+" : "") + imp.production.avgPlusMinus + " on-court +/-" : null]
+              .filter(Boolean).join(", ")) +
+            ' over ' + esc(imp.production.games) + ' collected game(s)' +
+            (imp.production.teamPpg != null ? ' · team scored ' + esc(imp.production.teamPpg) + ' ppg in the same games' : '') +
+            (imp.production.source ? ' · <a href="' + esc(imp.production.source) + '" target="_blank" rel="noopener">box-score source ↗</a>' : '') +
+            '</div>' : '') +
+          (imp && imp.travel ? '<div class="br-travel tiny muted">Schedule/travel: ' + esc(travelLine(imp)) +
+            (imp.travel.source ? ' · <a href="' + esc(imp.travel.source) + '" target="_blank" rel="noopener">schedule source ↗</a>' : '') + '</div>' : '') +
+          (imp && imp.availabilityRisk ? '<div class="br-risk tiny"><span class="tag risk-' + esc(imp.availabilityRisk.level) + '">AVAILABILITY RISK: ' + esc(imp.availabilityRisk.level.toUpperCase()) + '</span> <span class="muted">' + esc(imp.availabilityRisk.label) + '</span></div>' : '') +
           (imp ? '<div class="br-why tiny muted">' + esc(imp.notes[0] || "") + (imp.role.evidence.length ? ' · <a href="' + esc(imp.role.evidence[0]) + '" target="_blank" rel="noopener">box-score evidence ↗</a>' : "") + '</div>' : "") +
           (r.shortComment ? '<div class="br-comment">' + esc(r.shortComment) + '</div>' : "") +
           listing +
@@ -434,8 +547,10 @@ const InjuryBoard = (function () {
     check: check, normalize: normalize, diffAlerts: diffAlerts, render: render,
     fetchBoard: fetchBoard, resetSeen: resetSeen, getRows: () => rows, fp: fp,
     impactFor: impactFor, setImpactContext: setImpactContext, impactShort: impactShort, depthUrl: espnTeamDepthUrl,
-    coverageGaps: coverageGaps, renderCoverage: renderCoverage,
-    alertFor: alertFor, setSearch: setSearch, setStatusFilter: setStatusFilter, resetFilter: resetFilter,
+    coverageGaps: coverageGaps, renderCoverage: renderCoverage, countsByImpact: countsByImpact, factorsLine: factorsLine,
+    renderImpactWatch: renderImpactWatch,
+    travelLine: travelLine, getImpactFilter: () => boardImpactFilter,
+    alertFor: alertFor, setSearch: setSearch, setStatusFilter: setStatusFilter, setImpactFilter: setImpactFilter, resetFilter: resetFilter,
     fingerprint: fp, getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, season: season, count: rows.length })
   };
 })();

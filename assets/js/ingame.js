@@ -57,7 +57,7 @@ const InGame = (() => {
             out.push({
               id: "dnp-" + eventId + "-" + ((row.athlete && row.athlete.id) || name),
               kind: "DNP",
-              player: name, team: standardAbbr(abbr) || "?", reason,
+              player: name, playerId: (row.athlete && row.athlete.id) || null, team: standardAbbr(abbr) || "?", reason,
               alertEligible: false, // DNP is NOT evidence of an in-game exit
               matchup, url: eventUrl(eventId),
               sev: "out", sevLabel: "DNP — EXIT NOT ESTABLISHED"
@@ -82,7 +82,7 @@ const InGame = (() => {
           out.push({
             id: "inj-" + eventId + "-" + ((inj.athlete && inj.athlete.id) || name) + "-" + status,
             kind: "LISTING",
-            player: name, team: standardAbbr(abbr) || "?", alertEligible: /^(out|doubtful|questionable|day-to-day)$/i.test(status) || /return|remainder|locker/i.test(text), reason: (status + (detail ? " — " + detail : "")).trim(),
+            player: name, playerId: (inj.athlete && inj.athlete.id) || null, team: standardAbbr(abbr) || "?", alertEligible: /^(out|doubtful|questionable|day-to-day)$/i.test(status) || /return|remainder|locker/i.test(text), reason: (status + (detail ? " — " + detail : "")).trim(),
             matchup, url: eventUrl(eventId),
             sev: normalizeInjuryStatus(status).sev,
             sevLabel: (status || "INJURY LISTING").toUpperCase() + " — GAME LISTING (EXIT UNPROVEN)"
@@ -180,7 +180,16 @@ const InGame = (() => {
       const filters = (typeof App !== "undefined" && App.getFilters) ? App.getFilters() : null;
       for (const f of fresh) {
         const allowed = filters ? !!filters.sevs[f.sev] : true;
-        if (allowed && f.alertEligible !== false) AlertEngine.fire({ sevLabel: f.sevLabel, title: `${f.player} (${f.team}) — "${f.reason}" [${f.matchup}]`, url: f.url, sev: f.sev, team: f.team });
+        /* An in-game listing for a starter is exactly the event this project exists to catch, so
+         * the impact model is consulted here too. DNP rows (alertEligible === false) still never
+         * fire, and never reach this line. */
+        const imp = (f.alertEligible !== false && typeof LineupImpact !== "undefined")
+          ? LineupImpact.assess({ player: f.player, playerId: f.playerId, team: f.team, sev: f.sev || "mention" },
+            (typeof Intelligence !== "undefined" && Intelligence.impactContext) ? Intelligence.impactContext() : null)
+          : null;
+        if (allowed && f.alertEligible !== false) AlertEngine.fire({ sevLabel: f.sevLabel, title: `${f.player} (${f.team}) — "${f.reason}" [${f.matchup}]`,
+          impact: imp ? { tier: imp.impact, grade: imp.impact, label: imp.impactLabel, offenseTier: imp.offenseTier, score: imp.score } : null,
+          url: f.url, sev: f.sev, team: f.team });
         else AlertEngine.log(`(muted by filter: ${f.sevLabel}) ${f.player} (${f.team}) — "${f.reason}"`, f.url);
       }
     }

@@ -67,7 +67,7 @@ function impactContextFor() {
     const ctx = JSON.parse(fs.readFileSync(path.join(dir, "data/live/context.json"), "utf8"));
     let exits = {};
     try { exits = JSON.parse(fs.readFileSync(path.join(dir, "data/live/intelligence.json"), "utf8")).exits || {}; } catch (e) { }
-    return { checkedAt: ctx.checkedAt || null, schema: ctx.schema != null ? ctx.schema : null, rosters: ctx.rosters || {}, roles: ctx.roles || [], roleStats: ctx.roleStats || {}, exits };
+    return { checkedAt: ctx.checkedAt || null, schema: ctx.schema != null ? ctx.schema : null, rosters: ctx.rosters || {}, roles: ctx.roles || [], roleStats: ctx.roleStats || {}, schedules: ctx.schedules || {}, teamStats: ctx.teamStats || {}, exits };
   } catch (e) { return null; }
 }
 
@@ -80,6 +80,19 @@ function annotateImpacts(rows) {
     if (a) {
       r.impact = a.impact;                       // high | medium | low | unknown
       r.impactLabel = a.impactLabel;
+      /* model v2 — the score and the components it came from, so the committed archive is
+       * auditable without re-running the browser module */
+      r.impactScore = a.score; r.impactConfidence = a.confidence; r.impactModelVersion = a.model && a.model.version;
+      r.impactRules = a.rules || [];
+      r.impactComponents = {
+        stake: a.stake && { score: a.stake.score, parts: a.stake.parts },
+        exposure: a.exposure && { score: a.exposure.score, parts: a.exposure.parts },
+        recurrence: a.recurrence && { score: a.recurrence.score, parts: a.recurrence.parts }
+      };
+      r.offenseTier = a.offenseTier || null;
+      if (a.production) r.production = a.production;
+      if (a.travel) r.travel = a.travel;
+      if (a.availabilityRisk) r.availabilityRisk = { score: a.availabilityRisk.score, level: a.availabilityRisk.level };
       r.roleTier = a.role.tier;
       r.roleGames = a.role.games; r.roleStarts = a.role.starts; r.roleAvgMinutes = a.role.avgMinutes;
       r.roleEvidence = a.role.evidence || [];

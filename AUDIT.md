@@ -386,3 +386,105 @@ live snapshot: 75 rows / 12 posts, no invariant violations.
 4. **Coverage gap is a live question, not a historical one**: CLE/DET/LAL absent on 2026-09-17 is unsurprising in the
    offseason, but the same three absent blocks *during* the 2026-10-03+ preseason would mean the primary board is not
    covering every team. The board now says which case you are looking at, every refresh.
+
+---
+
+# Session 9 pass — the lineup-impact intelligence layer, 2026-09-18
+
+## What this pass added (and what it refused to add)
+
+The brief asks for an intelligence layer that defines "high lineup impact" from minutes, offensive
+production, on-court +/−, team schedule and travel — not from availability text. Model v2 implements
+exactly that, from **collected** evidence only, and refuses the parts no free source can support.
+
+| Component | Weight | Evidence used | Refused |
+|---|---|---|---|
+| STAKE | 60% | Box scores this project fetched: minutes, start share, player's share of his own team's collected scoring, assists, on-court +/− (bounded ±8) | No league-average substitution, no salary/tier assumptions, no "star" label from reputation |
+| EXPOSURE | 20% | Published schedule: games next 7 days, back-to-backs, road games, city-to-city miles, time-zone shifts | No flight plans, charters, traffic, private terminals — unavailable free, so never claimed |
+| RECURRENCE | 20% | Dated ESPN roster injury listings, reported in-game exits (unconfirmed) | No medical history, no severity inference from listing wording |
+
+Grades: **HIGH ≥ 65, MEDIUM ≥ 40, else LOW**, plus R1 (starter + Out/Doubtful = HIGH), R2 (rotation +
+Out/Doubtful ≥ MEDIUM), R3 (depth caps at LOW) and **R4 (no stake evidence ⇒ UNKNOWN, even on a 4-in-6
+road trip)**. Missing components are dropped and the remaining weights renormalised; the coverage fraction
+is printed on every row, so a 40%-coverage grade cannot masquerade as a complete one.
+
+## Defects found and fixed in this pass
+
+| Area | Finding | Resolution / test |
+|---|---|---|
+| `assets/js/alerts.js` | `impactGrade`/`offenseTier` understood only the social layer's full assessment object. The board's flattened clone (`{tier}`), a bare grade string and a flattened archive row all read as **no impact**, so a HIGH absence got the ordinary chime | Readers now accept all four shapes; `tools/smoke_test.js` pins each one, including that MEDIUM/LOW never escalate and a missing object does not throw |
+| `assets/js/intelligence.js` | The **official NBA designation layer** fired alerts with no impact attached, so an official Out for a starter sounded identical to a bench listing | Official rows now run `LineupImpact.assess` before firing, and the log line carries the impact label |
+| `assets/js/ingame.js` | In-game game listings fired with no impact attached; findings also lacked the player id the lookup keys on | Impact attached for listings only (DNP rows stay ineligible and never reach the call); `playerId` now carried on both extraction paths |
+| `assets/js/injuries.js` | Board alerts passed only `{tier, label}`, dropping grade/offense tier/score | Alert payload now carries grade, offenseTier and score |
+| `tools/collect_context.js` | The box-score backfill built an unused ordering map from one arbitrary team and then took the last 12 candidate ids in TEAMS order — the "most recent games" sample was biased toward whichever teams sat last in the list | Extracted to a tested `recentBackfill()` that sorts by each finished game's own published date, dedupes, and sorts an unparsable date last |
+| `tools/smoke_test.js` | No coverage at all for the schedule/exposure path, the availability-risk path or the four alert shapes (which is why a/g slipped through) | 8 new checks for the alert shapes; the schedule/model path is covered by the new `tools/impact_test.js` |
+
+## New permanent test surface: `tools/impact_test.js` (69 checks)
+
+1. **geo.js** — all 30 home cities resolve; unmapped city returns null (never an approximation); distances
+   cross-checked against published values; ground vs air mode at the 250-mile line; time-zone offsets read
+   from the runtime database in winter **and** summer (DST); `restDaysBetween` 0 = back-to-back; a state
+   mismatch is flagged for review.
+2. **collect_context.js** — keyed stat parsing (a reordered key list cannot silently shift columns);
+   per-event dedupe (re-reading the same game cannot inflate games, starts or the team baseline); a new
+   event accumulates; the event ledger is bounded at 1,500; the schedule chain keeps only parsable games,
+   names unresolved venues, records rest days and home games as no-travel, and the backfill ordering.
+3. **role.js** — HIGH for a 34.6 mpg / 9-of-10-starts / 24.6 ppg top option listed Out; the offense share is
+   measured against the same collected games; on-court +/− is bounded and labelled noisy; exposure reads the
+   schedule (4 games in 7 days, 2 back-to-backs); recurrence counts dated listings; a 27.5 mpg sixth man is
+   graded on production, not start count; the same player as a game-time decision gets a separate
+   availability-risk reading; a 4.5 mpg depth player is LOW by R3; no sample at all is UNKNOWN by R4;
+   a stale sample withholds the stake; `gradeOf` renormalises weights (stake alone at 100 = HIGH at 0.6
+   coverage); the model is versioned.
+4. **Wiring** — the board is the first card after the status bar; the watchlist, both sound tests and all
+   five impact tabs exist; the board renders factors/production/travel/availability risk; every
+   `getElementById` in the shipped modules resolves to an id in `index.html`; the official and in-game
+   producers assess impact; CI runs the suite before collecting.
+
+## Verification status of this pass
+
+- `node tools/smoke_test.js` **197/0** · `node tools/impact_test.js` **69/0** · `node tools/integration_test.js`
+  **52/0** · `node tools/poll_fixture_test.js` **24/0** · `node tools/regression_test.js` **26 groups** ·
+  `python3 -m unittest discover -s tools` **26 OK** · `node tools/replay_posts.js data/live/latest.json
+  --check` **75 rows / 12 posts, no invariant violations**.
+- `node tools/build_verified_sources.js` regenerated: **25 sources / 44 flags** (was 23/39).
+- Live endpoint evidence fetched this session through the page-fetch channel: ESPN `injuries?team=mia`
+  (2026-27 preseason; the `?team=` filter works), ESPN `teams/mia/schedule` (season 2026-27 preseason; first
+  event `401902644`, 2026-10-03T23:00Z, MIA @ TOR at Videotron Centre, Quebec City) and ESPN
+  `summary?event=401811041` (confirms the box-score shape and the real DNP reason strings the in-game
+  monitor parses). Shell egress remains restricted, so `context.json` on disk is still **schema 2** until the
+  workflow runs the new collector — `role.js` discloses that state on the page rather than guessing.
+
+## Live-run feedback loop (this is how the table got better)
+
+The first schema-3 collection run in CI (`2026-09-18T02:37Z`) produced **30 rosters / 30 schedules /
+0 errors** — and named four venue cities the coordinate table did not know: **Inglewood, CA**, **Boulder, CO**,
+**Ames, IA** and **Tulsa, OK**. Each is a real city on the published schedule (Intuit Dome is the Clippers'
+arena; the other three are neutral pre-season sites), so each earned a coordinate row instead of an
+approximation. The same run exposed a weaker case: the DAL/HOU pre-season games at **"Venetian Arena"**
+carry a venue name and an **empty address**, so `coordsForVenue()` now resolves that city from the venue
+name and every such row carries `venueNameResolved: true` (surfaced in the board's travel line as
+"city resolved from the venue name"). A venue that matches nothing is still reported as unresolved.
+**Verified against that same live snapshot:** all **14 of 14** previously unresolved game rows now resolve
+— 10 by city/state (CU Events Center → Boulder, Hilton Coliseum → Ames, BOK Center → Tulsa, Intuit Dome →
+Inglewood ×4, plus their mirrored away rows) and 4 by venue name (Venetian Arena → Las Vegas, DAL/HOU home
+and away). The derived numbers reach the committed snapshot on the next collection after the 6-hour
+schedule cache expires; the unit test pins the exact venue names observed live.
+The run also confirmed the downstream contract: committed `latest.json` rows now carry `impactScore`,
+`impactComponents`, `offenseTier`, `travel` and `availabilityRisk` (sample row: an UNKNOWN grade at 0.4
+evidence coverage — stake had no sample, exposure and recurrence did, which is exactly rule R4 in the wild).
+
+## New irregularities flagged for manual review (session 9)
+
+1. **"Travel times" cannot be verified to the minute for free.** The model measures city-centre great-circle
+   miles between consecutive game cities and applies a stated speed/overhead. It is accurate for *relative*
+   load (a Denver→LA→Phoenix trip vs two home games) and wrong for any specific flight claim. If the intent
+   was "exact travel time", that requires a paid data source and is flagged, not silently approximated.
+2. **A player with no collected box score stays UNKNOWN even on the heaviest road trip** (rule R4). This is
+   deliberate — schedule load alone says nothing about who the player is to the team — but it means a
+   brand-new signing or two-way player is invisible to the top of the board until a game is collected.
+3. **The alert escalation defect was a *shape* mismatch, not a logic error**, which is the failure mode to
+   watch in this codebase: three producers, three different impact shapes, one reader that understood one of
+   them. Any new producer must be added to the smoke list of shapes.
+4. **Two sources were added to the registry this pass** (ESPN team-schedule API, the city-coordinate travel
+   model) with explicit what-it-is / what-it-is-NOT wording; both are in `data/verified_sources.json`.

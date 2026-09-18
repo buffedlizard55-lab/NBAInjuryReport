@@ -285,7 +285,25 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 .tag.impact-low { background: rgba(61,220,132,.12); color: #8ff0b6; border: 1px solid rgba(61,220,132,.3); }
 .tag.impact-unknown { background: rgba(148,163,184,.14); color: #b6c2d6; border: 1px dashed rgba(148,163,184,.5); }
 .tag.watch { background: rgba(255,138,61,.16); color: #ffb27a; border: 1px solid rgba(255,138,61,.45); }
+.tag.offense { background: rgba(124,108,255,.16); color: #c3b7ff; border: 1px solid rgba(124,108,255,.45); }
+.tag.risk-high { background: rgba(255,93,93,.14); color: #ffa8a8; border: 1px solid rgba(255,93,93,.4); }
+.tag.risk-medium { background: rgba(255,190,61,.13); color: #ffd97a; border: 1px solid rgba(255,190,61,.35); }
+.tag.risk-low { background: rgba(61,220,132,.12); color: #8ff0b6; border: 1px solid rgba(61,220,132,.3); }
 .br-why { margin-top: 3px; color: var(--muted); }
+.br-model { margin-top: 3px; color: var(--muted); }
+.br-prod, .br-travel, .br-risk { margin-top: 3px; }
+
+/* ===== Board-first layout: the impact watchlist is the first thing a reader sees ===== */
+.board-hero { border-color: rgba(255,93,93,.35); }
+.impact-watch { display: flex; flex-direction: column; gap: 8px; margin: 8px 0 12px; }
+.watch-item {
+  border: 1px solid var(--line); border-left: 4px solid var(--accent);
+  background: var(--card-2); border-radius: 8px; padding: 9px 12px;
+}
+.watch-item .wi-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 3px; }
+.watch-item .wi-why { color: var(--text); }
+.watch-item .wi-factors { margin-top: 2px; }
+.watch-item .wi-links { margin-top: 4px; }
 .br-history { margin-top: 5px; padding: 6px 8px; border: 1px dashed var(--line); border-radius: 7px; color: var(--muted); }
 .board-team-head a { margin-left: auto; }
 
