@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T01:17:39.178Z",
+  "generated": "2026-09-18T02:37:33.871Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -42,6 +42,52 @@
         "fp": "Day-To-Day|Not Specified Foot Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "NYK",
+          "homeAway": "home",
+          "venue": "Xfinity Mobile Arena",
+          "city": "Philadelphia",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -53,7 +99,8 @@
         "salaryCurrent": 2296271,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -87,6 +134,58 @@
         "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 45,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-17 (1 day(s) ago)",
+                "pts": 15,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "DET",
+          "homeAway": "away",
+          "venue": "Little Caesars Arena",
+          "city": "Detroit",
+          "restDays": null,
+          "miles": 1687,
+          "hours": 5.7,
+          "mode": "air (model)",
+          "tzShiftHours": 3,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -100,7 +199,8 @@
         "salaryCurrent": 2221677,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -134,6 +234,58 @@
         "fp": "Day-To-Day|Right Heel Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 45,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-14 (4 day(s) ago)",
+                "pts": 15,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "GSW",
+          "homeAway": "home",
+          "venue": "Intuit Dome",
+          "city": "Inglewood",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Inglewood, CA",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -147,7 +299,8 @@
         "salaryCurrent": 40000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -181,6 +334,58 @@
         "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 45,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-11 (7 day(s) ago)",
+                "pts": 15,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T12:00Z",
+          "opponent": "DAL",
+          "homeAway": "away",
+          "venue": "Venetian Arena",
+          "city": null,
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": "unknown venue city",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -194,7 +399,8 @@
         "salaryCurrent": 25000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -228,6 +434,54 @@
         "fp": "Out|Left Shoulder Arm|2027-02-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 45,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-11 (7 day(s) ago)",
+                "pts": 15,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "DET",
+          "homeAway": "away",
+          "venue": "Little Caesars Arena",
+          "city": "Detroit",
+          "restDays": null,
+          "miles": 1687,
+          "hours": 5.7,
+          "mode": "air (model)",
+          "tzShiftHours": 3,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -241,7 +495,8 @@
         "salaryCurrent": 6276531,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -275,6 +530,58 @@
         "fp": "Day-To-Day|Right Lower Leg Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-10 (8 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "MIA",
+          "homeAway": "home",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -286,7 +593,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -320,6 +628,58 @@
         "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-10 (8 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "DEN",
+          "homeAway": "away",
+          "venue": "CU Events Center",
+          "city": "Boulder",
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": "Boulder, CO",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -333,7 +693,8 @@
         "salaryCurrent": 49000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -367,6 +728,58 @@
         "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-10 (8 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T12:00Z",
+          "opponent": "HOU",
+          "homeAway": "home",
+          "venue": "Venetian Arena",
+          "city": null,
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "unknown venue city",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -380,7 +793,8 @@
         "salaryCurrent": 39416562,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -414,6 +828,58 @@
         "fp": "Day-To-Day|Right Achilles Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-09 (9 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T23:00Z",
+          "opponent": "MIN",
+          "homeAway": "home",
+          "venue": "Hilton Coliseum",
+          "city": "Ames",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Ames, IA",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -427,7 +893,8 @@
         "salaryCurrent": 48924624,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -461,6 +928,58 @@
         "fp": "Day-To-Day|Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-07 (11 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T00:00Z",
+          "opponent": "NOP",
+          "homeAway": "home",
+          "venue": "BOK Center",
+          "city": "Tulsa",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Tulsa, OK",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -474,7 +993,8 @@
         "salaryCurrent": 28500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -508,6 +1028,58 @@
         "fp": "Day-To-Day|Left Elbow Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-04 (14 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T02:00Z",
+          "opponent": "GSW",
+          "homeAway": "home",
+          "venue": "Moda Center",
+          "city": "Portland",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -521,7 +1093,8 @@
         "salaryCurrent": 42166510,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -555,6 +1128,58 @@
         "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-02 (16 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T02:00Z",
+          "opponent": "LAL",
+          "homeAway": "home",
+          "venue": "Golden 1 Center",
+          "city": "Sacramento",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -568,7 +1193,8 @@
         "salaryCurrent": 45472000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -602,6 +1228,58 @@
         "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-02 (16 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "TOR",
+          "homeAway": "away",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 1536,
+          "hours": 5.4,
+          "mode": "air (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -615,7 +1293,8 @@
         "salaryCurrent": 58456566,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -649,6 +1328,58 @@
         "fp": "Day-To-Day|Right Calf Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-02 (16 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T00:00Z",
+          "opponent": "MEM",
+          "homeAway": "away",
+          "venue": "FedExForum",
+          "city": "Memphis",
+          "restDays": null,
+          "miles": 683,
+          "hours": 3.5,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -662,7 +1393,8 @@
         "salaryCurrent": 41754690,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -696,6 +1428,54 @@
         "fp": "Out|Shoulder Arm|2027-03-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-08-26 (23 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "GSW",
+          "homeAway": "home",
+          "venue": "Intuit Dome",
+          "city": "Inglewood",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Inglewood, CA",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -709,7 +1489,8 @@
         "salaryCurrent": 2497812,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -743,6 +1524,58 @@
         "fp": "Day-To-Day|Left Shoulder Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-08-25 (24 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T23:00Z",
+          "opponent": "BKN",
+          "homeAway": "home",
+          "venue": "Spectrum Center",
+          "city": "Charlotte",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -756,7 +1589,8 @@
         "salaryCurrent": 15104625,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -790,6 +1624,54 @@
         "fp": "Out|Right Knee Leg|2027-03-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-08-24 (25 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T02:00Z",
+          "opponent": "GSW",
+          "homeAway": "home",
+          "venue": "Moda Center",
+          "city": "Portland",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -803,7 +1685,8 @@
         "salaryCurrent": 20089286,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -837,6 +1720,54 @@
         "fp": "Out|Right Knee Leg|2026-12-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-08-24 (25 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "LAC",
+          "homeAway": "away",
+          "venue": "Intuit Dome",
+          "city": "Inglewood",
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": "Inglewood, CA",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -850,7 +1781,8 @@
         "salaryCurrent": 56832773,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -884,6 +1816,58 @@
         "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-08-19 (30 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T12:00Z",
+          "opponent": "HOU",
+          "homeAway": "home",
+          "venue": "Venetian Arena",
+          "city": null,
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "unknown venue city",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -897,7 +1881,8 @@
         "salaryCurrent": 17007043,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -931,6 +1916,58 @@
         "fp": "Day-To-Day|Left Hip Torso|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-08-14 (35 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "GSW",
+          "homeAway": "home",
+          "venue": "Intuit Dome",
+          "city": "Inglewood",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Inglewood, CA",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -944,7 +1981,8 @@
         "salaryCurrent": 5621700,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -978,6 +2016,58 @@
         "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-08-05 (44 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T12:00Z",
+          "opponent": "DAL",
+          "homeAway": "away",
+          "venue": "Venetian Arena",
+          "city": null,
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": "unknown venue city",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -991,7 +2081,8 @@
         "salaryCurrent": 43902439,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1025,6 +2116,58 @@
         "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-31 (49 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T02:00Z",
+          "opponent": "LAL",
+          "homeAway": "home",
+          "venue": "Golden 1 Center",
+          "city": "Sacramento",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1038,7 +2181,8 @@
         "salaryCurrent": 24137931,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1072,6 +2216,54 @@
         "fp": "Out|Left Knee Leg|2027-04-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-30 (50 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T23:30Z",
+          "opponent": "NYK",
+          "homeAway": "away",
+          "venue": "Madison Square Garden",
+          "city": "New York",
+          "restDays": null,
+          "miles": 203,
+          "hours": 4.5,
+          "mode": "ground (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1085,7 +2277,8 @@
         "salaryCurrent": 2150917,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1119,6 +2312,58 @@
         "fp": "Day-To-Day|Right Calf Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-30 (50 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T00:00Z",
+          "opponent": "NOP",
+          "homeAway": "home",
+          "venue": "BOK Center",
+          "city": "Tulsa",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Tulsa, OK",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1132,7 +2377,8 @@
         "salaryCurrent": 2850000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1166,6 +2412,58 @@
         "fp": "Day-To-Day|Not Specified Back Torso|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-28 (52 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "TOR",
+          "homeAway": "away",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 1536,
+          "hours": 5.4,
+          "mode": "air (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1179,7 +2477,8 @@
         "salaryCurrent": 49500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1213,6 +2512,58 @@
         "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-27 (53 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "ATL",
+          "homeAway": "away",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 337,
+          "hours": 2.7,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1226,7 +2577,8 @@
         "salaryCurrent": 2461462,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1260,6 +2612,58 @@
         "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-27 (53 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T23:00Z",
+          "opponent": "CLE",
+          "homeAway": "away",
+          "venue": "Rocket Arena",
+          "city": "Cleveland",
+          "restDays": null,
+          "miles": 549,
+          "hours": 3.2,
+          "mode": "air (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bos/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1273,7 +2677,8 @@
         "salaryCurrent": 58456566,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1307,6 +2712,58 @@
         "fp": "Day-To-Day|Right Finger Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-25 (55 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "NYK",
+          "homeAway": "home",
+          "venue": "Xfinity Mobile Arena",
+          "city": "Philadelphia",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1320,7 +2777,8 @@
         "salaryCurrent": 21621500,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1354,6 +2812,58 @@
         "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-22 (58 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T00:00Z",
+          "opponent": "ATL",
+          "homeAway": "home",
+          "venue": "Frost Bank Center",
+          "city": "San Antonio",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1367,7 +2877,8 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1401,6 +2912,58 @@
         "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-20 (60 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "ATL",
+          "homeAway": "away",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 337,
+          "hours": 2.7,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1414,7 +2977,8 @@
         "salaryCurrent": 4190520,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1448,6 +3012,58 @@
         "fp": "Day-To-Day|Undisclosed Other|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-20 (60 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "ATL",
+          "homeAway": "away",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 337,
+          "hours": 2.7,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1459,7 +3075,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1493,6 +3110,58 @@
         "fp": "Day-To-Day|Left Lower Leg Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-19 (61 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T00:00Z",
+          "opponent": "NOP",
+          "homeAway": "home",
+          "venue": "BOK Center",
+          "city": "Tulsa",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Tulsa, OK",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1504,7 +3173,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1538,6 +3208,58 @@
         "fp": "Day-To-Day|Undisclosed Other|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-19 (61 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "UTA",
+          "homeAway": "home",
+          "venue": "CU Events Center",
+          "city": "Boulder",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Boulder, CO",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1549,7 +3271,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1583,6 +3306,58 @@
         "fp": "Day-To-Day|Not Specified Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-19 (61 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "MIA",
+          "homeAway": "home",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1596,7 +3371,8 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1630,6 +3406,58 @@
         "fp": "Day-To-Day|Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-19 (61 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "MIA",
+          "homeAway": "home",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1643,7 +3471,8 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1677,6 +3506,58 @@
         "fp": "Day-To-Day|Finger Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-19 (61 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "MIA",
+          "homeAway": "home",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1690,7 +3571,8 @@
         "salaryCurrent": 6649560,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1724,6 +3606,54 @@
         "fp": "Out|Right Knee Leg|2026-12-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-19 (61 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T00:00Z",
+          "opponent": "ATL",
+          "homeAway": "home",
+          "venue": "Frost Bank Center",
+          "city": "San Antonio",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1735,7 +3665,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1769,6 +3700,58 @@
         "fp": "Day-To-Day|Not Specified Hamstring Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-19 (61 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "DET",
+          "homeAway": "away",
+          "venue": "Little Caesars Arena",
+          "city": "Detroit",
+          "restDays": null,
+          "miles": 1687,
+          "hours": 5.7,
+          "mode": "air (model)",
+          "tzShiftHours": 3,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1782,7 +3765,8 @@
         "salaryCurrent": 0,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1816,6 +3800,58 @@
         "fp": "Day-To-Day|Left Foot Leg|2026-10-15|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-19 (61 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "MEM",
+          "homeAway": "home",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1829,7 +3865,8 @@
         "salaryCurrent": 2406205,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1863,6 +3900,58 @@
         "fp": "Day-To-Day|Hip Torso|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-18 (62 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "MEM",
+          "homeAway": "home",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1874,7 +3963,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1908,6 +3998,58 @@
         "fp": "Day-To-Day|Right Achilles Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-18 (62 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "MEM",
+          "homeAway": "home",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1921,7 +4063,8 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -1955,6 +4098,58 @@
         "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-18 (62 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "TOR",
+          "homeAway": "away",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 1536,
+          "hours": 5.4,
+          "mode": "air (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -1968,7 +4163,8 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2002,6 +4198,58 @@
         "fp": "Day-To-Day|Finger Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-18 (62 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "PHI",
+          "homeAway": "away",
+          "venue": "Xfinity Mobile Arena",
+          "city": "Philadelphia",
+          "restDays": null,
+          "miles": 81,
+          "hours": 1.8,
+          "mode": "ground (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2015,7 +4263,8 @@
         "salaryCurrent": 1272870,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2049,6 +4298,58 @@
         "fp": "Day-To-Day|Wrist Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-17 (63 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T00:00Z",
+          "opponent": "PHX",
+          "homeAway": "home",
+          "venue": "United Center",
+          "city": "Chicago",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2060,7 +4361,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2094,6 +4396,58 @@
         "fp": "Day-To-Day|Left Ribs Torso|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-17 (63 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "DEN",
+          "homeAway": "away",
+          "venue": "CU Events Center",
+          "city": "Boulder",
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": "Boulder, CO",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2107,7 +4461,8 @@
         "salaryCurrent": 0,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2141,6 +4496,58 @@
         "fp": "Day-To-Day|Not Specified Hip Torso|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-15 (65 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "TOR",
+          "homeAway": "away",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 1536,
+          "hours": 5.4,
+          "mode": "air (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2152,7 +4559,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2186,6 +4594,58 @@
         "fp": "Day-To-Day|Left Ankle Leg|2026-11-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-13 (67 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T00:00Z",
+          "opponent": "MEM",
+          "homeAway": "away",
+          "venue": "FedExForum",
+          "city": "Memphis",
+          "restDays": null,
+          "miles": 683,
+          "hours": 3.5,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2197,7 +4657,8 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2231,6 +4692,58 @@
         "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-08 (72 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-03T23:00Z",
+          "opponent": "TOR",
+          "homeAway": "away",
+          "venue": "Videotron Centre",
+          "city": "Quebec City",
+          "restDays": null,
+          "miles": 1536,
+          "hours": 5.4,
+          "mode": "air (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2244,7 +4757,8 @@
         "salaryCurrent": 2150917,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2278,6 +4792,58 @@
         "fp": "Day-To-Day|Left Wrist Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-07 (73 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "PHI",
+          "homeAway": "away",
+          "venue": "Xfinity Mobile Arena",
+          "city": "Philadelphia",
+          "restDays": null,
+          "miles": 81,
+          "hours": 1.8,
+          "mode": "ground (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2291,7 +4857,8 @@
         "salaryCurrent": 37739521,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2325,6 +4892,58 @@
         "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-01 (79 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T00:00Z",
+          "opponent": "NOP",
+          "homeAway": "home",
+          "venue": "BOK Center",
+          "city": "Tulsa",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Tulsa, OK",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2338,7 +4957,8 @@
         "salaryCurrent": 4887720,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2372,6 +4992,58 @@
         "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-01 (79 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T00:00Z",
+          "opponent": "MEM",
+          "homeAway": "away",
+          "venue": "FedExForum",
+          "city": "Memphis",
+          "restDays": null,
+          "miles": 683,
+          "hours": 3.5,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2385,7 +5057,8 @@
         "salaryCurrent": 14500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2419,6 +5092,58 @@
         "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-07-01 (79 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T00:00Z",
+          "opponent": "PHX",
+          "homeAway": "home",
+          "venue": "United Center",
+          "city": "Chicago",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2432,7 +5157,8 @@
         "salaryCurrent": 18080496,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2466,6 +5192,58 @@
         "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-06-30 (80 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T23:00Z",
+          "opponent": "CHA",
+          "homeAway": "away",
+          "venue": "Spectrum Center",
+          "city": "Charlotte",
+          "restDays": null,
+          "miles": 532,
+          "hours": 3.2,
+          "mode": "air (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bkn/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2479,7 +5257,8 @@
         "salaryCurrent": 4002000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2513,6 +5292,58 @@
         "fp": "Day-To-Day|Right Hand Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 20,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-06-29 (81 day(s) ago)",
+                "pts": 0,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T02:00Z",
+          "opponent": "LAL",
+          "homeAway": "home",
+          "venue": "Golden 1 Center",
+          "city": "Sacramento",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2526,7 +5357,8 @@
         "salaryCurrent": 48967380,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2560,6 +5392,52 @@
         "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T12:00Z",
+          "opponent": "HOU",
+          "homeAway": "home",
+          "venue": "Venetian Arena",
+          "city": null,
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "unknown venue city",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2571,7 +5449,8 @@
         "salaryCurrent": 7239130,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2605,6 +5484,52 @@
         "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T00:00Z",
+          "opponent": "MIN",
+          "homeAway": "home",
+          "venue": "Fiserv Forum",
+          "city": "Milwaukee",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mil/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2616,7 +5541,8 @@
         "salaryCurrent": 5134000,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2650,6 +5576,52 @@
         "fp": "Day-To-Day|Left Eye Head|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T02:00Z",
+          "opponent": "LAL",
+          "homeAway": "home",
+          "venue": "Golden 1 Center",
+          "city": "Sacramento",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2661,7 +5633,8 @@
         "salaryCurrent": 24910714,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2695,6 +5668,48 @@
         "fp": "Out|Right Knee Leg|2026-12-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "ATL",
+          "homeAway": "away",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 337,
+          "hours": 2.7,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2704,7 +5719,8 @@
         "listingDates": [],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2738,6 +5754,52 @@
         "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T00:00Z",
+          "opponent": "PHX",
+          "homeAway": "home",
+          "venue": "United Center",
+          "city": "Chicago",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2749,7 +5811,8 @@
         "salaryCurrent": 25000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2783,6 +5846,52 @@
         "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "ATL",
+          "homeAway": "away",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 337,
+          "hours": 2.7,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2794,7 +5903,8 @@
         "salaryCurrent": 2296271,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2828,6 +5938,52 @@
         "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "ATL",
+          "homeAway": "away",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 337,
+          "hours": 2.7,
+          "mode": "air (model)",
+          "tzShiftHours": 1,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2839,7 +5995,8 @@
         "salaryCurrent": 6332760,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2873,6 +6030,52 @@
         "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T23:30Z",
+          "opponent": "NYK",
+          "homeAway": "away",
+          "venue": "Madison Square Garden",
+          "city": "New York",
+          "restDays": null,
+          "miles": 203,
+          "hours": 4.5,
+          "mode": "ground (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2884,7 +6087,8 @@
         "salaryCurrent": 12370680,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2918,6 +6122,52 @@
         "fp": "Day-To-Day|Left Finger Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T23:30Z",
+          "opponent": "NYK",
+          "homeAway": "away",
+          "venue": "Madison Square Garden",
+          "city": "New York",
+          "restDays": null,
+          "miles": 203,
+          "hours": 4.5,
+          "mode": "ground (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2929,7 +6179,8 @@
         "salaryCurrent": 58456566,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -2963,6 +6214,52 @@
         "fp": "Day-To-Day|Right Quadriceps Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T23:30Z",
+          "opponent": "NYK",
+          "homeAway": "away",
+          "venue": "Madison Square Garden",
+          "city": "New York",
+          "restDays": null,
+          "miles": 203,
+          "hours": 4.5,
+          "mode": "ground (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -2974,7 +6271,8 @@
         "salaryCurrent": 48967380,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3008,6 +6306,52 @@
         "fp": "Day-To-Day|Left Hamstring Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T00:00Z",
+          "opponent": "NOP",
+          "homeAway": "home",
+          "venue": "BOK Center",
+          "city": "Tulsa",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Tulsa, OK",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3019,7 +6363,8 @@
         "salaryCurrent": 41500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3053,6 +6398,52 @@
         "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "GSW",
+          "homeAway": "home",
+          "venue": "Intuit Dome",
+          "city": "Inglewood",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Inglewood, CA",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3064,7 +6455,8 @@
         "salaryCurrent": 2880960,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3098,6 +6490,52 @@
         "fp": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T00:00Z",
+          "opponent": "OKC",
+          "homeAway": "away",
+          "venue": "BOK Center",
+          "city": "Tulsa",
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": "Tulsa, OK",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3109,7 +6547,8 @@
         "salaryCurrent": 2584539,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3143,6 +6582,52 @@
         "fp": "Day-To-Day|Left Achilles Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T02:00Z",
+          "opponent": "GSW",
+          "homeAway": "home",
+          "venue": "Moda Center",
+          "city": "Portland",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3154,7 +6639,8 @@
         "salaryCurrent": 13398000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3188,6 +6674,52 @@
         "fp": "Day-To-Day|Right Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T23:00Z",
+          "opponent": "BKN",
+          "homeAway": "home",
+          "venue": "Spectrum Center",
+          "city": "Charlotte",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3199,7 +6731,8 @@
         "salaryCurrent": 0,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3233,6 +6766,52 @@
         "fp": "Day-To-Day|Right Wrist Arm|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T00:00Z",
+          "opponent": "PHX",
+          "homeAway": "home",
+          "venue": "United Center",
+          "city": "Chicago",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3244,7 +6823,8 @@
         "salaryCurrent": 6889320,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3278,6 +6858,52 @@
         "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T12:00Z",
+          "opponent": "DAL",
+          "homeAway": "away",
+          "venue": "Venetian Arena",
+          "city": null,
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": "unknown venue city",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3289,7 +6915,8 @@
         "salaryCurrent": 13000000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3323,6 +6950,52 @@
         "fp": "Day-To-Day|Not Specified Back Torso|2026-10-01|GTD",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T00:00Z",
+          "opponent": "NOP",
+          "homeAway": "home",
+          "venue": "BOK Center",
+          "city": "Tulsa",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Tulsa, OK",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3334,7 +7007,8 @@
         "salaryCurrent": 5429760,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3368,6 +7042,48 @@
         "fp": "Out|Right Achilles Leg|2027-04-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-06T00:00Z",
+          "opponent": "MIL",
+          "homeAway": "away",
+          "venue": "Fiserv Forum",
+          "city": "Milwaukee",
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/min/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3379,7 +7095,8 @@
         "salaryCurrent": 11990000,
         "salarySeason": 2026,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3413,6 +7130,48 @@
         "fp": "Out|Left Knee Leg|2026-12-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "LAC",
+          "homeAway": "away",
+          "venue": "Intuit Dome",
+          "city": "Inglewood",
+          "restDays": null,
+          "miles": null,
+          "hours": null,
+          "mode": null,
+          "tzShiftHours": null,
+          "unmappedCity": "Inglewood, CA",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3424,7 +7183,8 @@
         "salaryCurrent": 12500000,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
       {
@@ -3458,6 +7218,48 @@
         "fp": "Out|Right Knee Leg|2027-01-01|OUT",
         "impact": "unknown",
         "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T23:00Z",
+          "opponent": "MIN",
+          "homeAway": "home",
+          "venue": "Hilton Coliseum",
+          "city": "Ames",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": null,
+          "unmappedCity": "Ames, IA",
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/schedule"
+        },
         "roleTier": "unknown",
         "roleGames": 0,
         "roleStarts": 0,
@@ -3469,7 +7271,8 @@
         "salaryCurrent": 2296271,
         "salarySeason": 2027,
         "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'."
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       }
     ],
@@ -3564,19 +7367,19 @@
         "kind": "official-team",
         "team": "POR"
       },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
       "nba.com": {
         "ok": true,
         "count": 0,
         "name": "NBA — official league account",
         "kind": "official-league",
         "team": null
+      },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "dallasmavs.bsky.social": {
         "ok": true,
@@ -3592,17 +7395,17 @@
         "kind": "reporter",
         "team": null
       },
-      "howardbeck.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
       "mikevorkunov.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Mike Vorkunov",
+        "kind": "reporter",
+        "team": null
+      },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
         "kind": "reporter",
         "team": null
       },
@@ -3620,17 +7423,17 @@
         "kind": "reporter",
         "team": null
       },
-      "jmcdonaldsa.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Jeff McDonald",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "tomorsborn.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Tom Orsborn",
+        "kind": "reporter",
+        "team": "SAS"
+      },
+      "jmcdonaldsa.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Jeff McDonald",
         "kind": "reporter",
         "team": "SAS"
       },
