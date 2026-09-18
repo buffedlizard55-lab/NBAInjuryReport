@@ -242,6 +242,20 @@ const SOCIAL_ACCOUNTS = [
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=clevelandcavaliers.bsky.social",
     observed: { checkedAt: "2026-09-18", latestPostAt: null, verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     url: "https://bsky.app/profile/clevelandcavaliers.bsky.social" },
+
+  { handle: "celticsnba.bsky.social", name: "Boston Celtics — official (unverified, active)", kind: "official-team", team: "BOS", feed: false, bskyVerified: false,
+    verified: "2026-09-18 — read live via getProfiles: display name 'Boston Celtics', bio '18x WORLD CHAMPS #DifferentHere nba.com/celtics/', 8,281 followers, 1,579 posts, indexed 2025-10-25. NO Bluesky verification object present, so feed:false — listed for manual review. Official NBA Teams starter pack lists this handle.",
+    evidenceQuote: "18x WORLD CHAMPS",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=celticsnba.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: null, followersCount: 8281, postsCount: 1579, verificationValid: false, recheckedBy: "fetch_page getProfiles 2026-09-18" },
+    url: "https://bsky.app/profile/celticsnba.bsky.social" },
+  { handle: "washwizards.bsky.social", name: "Washington Wizards — official (unverified, active)", kind: "official-team", team: "WAS", feed: false, bskyVerified: false,
+    verified: "2026-09-18 — read live via getProfiles: display name 'Washington Wizards', bio 'For one, for all, #ForTheDistrict', 2,856 followers, 214 posts, indexed 2024-11-14. NO verification object, feed:false. Official NBA Teams starter pack lists this handle.",
+    evidenceQuote: "For one, for all, #ForTheDistrict",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=washwizards.bsky.social",
+    observed: { checkedAt: "2026-09-18", latestPostAt: null, followersCount: 2856, postsCount: 214, verificationValid: false, recheckedBy: "fetch_page getProfiles 2026-09-18" },
+    url: "https://bsky.app/profile/washwizards.bsky.social" },
+
   /* NEGATIVE RESULT WORTH KEEPING (2026-09-18): searching the obvious team handles on Bluesky returns
    * unrelated accounts — cavaliers.bsky.social is a Sapporo food blogger, bucks.bsky.social has 39
    * followers and zero posts, kings.bsky.social is an artist, wizards.bsky.social is a personal
@@ -527,116 +541,187 @@ const BSKY_REPORTERS = [
    *        Senior NBA Writer but still covers Knicks — now added as pollable.
    * ========================================================================================== */
   { name: "Gary Washburn", handle: "gwashburnglobe.bsky.social", outlet: "Boston Globe", role: "National NBA writer / Celtics beat", team: "BOS", feed: true,
-    conf: "bio-verified", bskyVerified: false,
+    conf: "bsky-verified", bskyVerified: true, verifier: "bsky.app",
     evidence: "https://bsky.app/profile/gwashburnglobe.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=gwashburnglobe.bsky.social",
     evidenceQuote: "Boston Globe National NBA writer giving thoughts on the NBA, other sports and various topics. UC Berkeley grad. Masters degree, Univ. of Nebraska",
-    observed: { checkedAt: "2026-09-18", postsCount: 40400, followersCount: 52700, profileIndexedAt: "2024-11-20T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: Reddit r/bostonceltics Celtics writers list on Bluesky lists Gary Washburn https://bsky.app/profile/gwashburnglobe.bsky.social (2024-11-20); X bio @GwashburnGlobe matches Bluesky bio verbatim 'Boston Globe National NBA writer… UC Berkeley grad. Masters degree, Univ. of Nebraska' (40.4K posts, 52.7K followers on X). Boston Globe staff page confirms NBA Reporter since 2009. Re-check via tools/verify_reporters.js on CI runner required to confirm verification object + latest post." },
+    observed: { checkedAt: "2026-09-18", postsCount: 49, followersCount: 1604, profileIndexedAt: "2024-11-15T00:20:22.550Z", verificationValid: true, latestPostAt: null },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim + VALID Bluesky verification object (issuer bsky.app, isValid true, 2026-08-13). Previously bio-verified, now upgraded to bsky-verified. 1,604 followers, 49 posts." },
+
 
   { name: "Jay King", handle: "byjayking.bsky.social", outlet: "The Athletic / Still Poddable", role: "Celtics writer", team: "BOS", feed: true,
-    conf: "bio-verified", bskyVerified: false,
+    conf: "bsky-verified", bskyVerified: true, verifier: "theathletic.com",
     evidence: "https://bsky.app/profile/byjayking.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=byjayking.bsky.social",
     evidenceQuote: "Celtics writer. Host of Still Poddable. NBA sicko.",
-    observed: { checkedAt: "2026-09-18", followersCount: 9412, postsCount: 1805, profileIndexedAt: "2024-11-20T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: Bluesky Directory profile lists Jay King @byjayking.bsky.social 9,412 followers, Celtics writer Still Poddable; Reddit r/bostonceltics Celtics writers list includes https://bsky.app/profile/byjayking.bsky.social. Re-check via getProfiles on CI runner required." },
+    observed: { checkedAt: "2026-09-18", postsCount: 177, followersCount: 14600, profileIndexedAt: "2024-11-15T19:52:34.447Z", verificationValid: true },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim + VALID verification issued by theathletic.com (2025-04-22). Upgraded to bsky-verified." },
+
 
   { name: "Noa Dalzell", handle: "noadalzell.bsky.social", outlet: "SB Nation / CLNS Media", role: "Celtics + WNBA writer", team: "BOS", feed: true,
-    conf: "bio-verified", bskyVerified: true, verifier: "bsky.app",
+    conf: "bio-verified", bskyVerified: false,
     evidence: "https://bsky.app/profile/noadalzell.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=noadalzell.bsky.social",
     evidenceQuote: "WNBA @sbnation, Celtics @clnsceltics",
-    observed: { checkedAt: "2026-09-18", followersCount: 22547, postsCount: 0, profileIndexedAt: "2024-11-20T00:00:00Z", verificationValid: true },
-    verified: "2026-09-18 — web_search verified: Bluesky Directory profile lists Noa Dalzell @noadalzell.bsky.social 22,547 followers, Verified by Bluesky (directory badge), WNBA @sbnation + Celtics @clnsceltics. Re-check via getProfiles on CI runner to confirm verification object issuer." },
+    observed: { checkedAt: "2026-09-18", postsCount: 1399, followersCount: 22335, profileIndexedAt: "2024-11-06T14:26:27.379Z", verificationValid: false },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim 'WNBA @sbnation, Celtics @clnsceltics', 22,335 followers, 1,399 posts, NO verification object present (verification-lost, previously flagged). Now bio-verified, not bsky-verified. tools/verify_reporters.js flagged verification-lost on 2026-09-18T20:00Z — confirmed here." },
 
-  { name: "Jason Patt", handle: "bullsjay.bsky.social", outlet: "Forbes / ClutchPoints / Blog a Bull", role: "Bulls writer", team: "CHI", feed: true,
+
+  { name: "Jason Patt", handle: "bullsjay.bsky.social", outlet: "ClutchPoints / Blog a Bull", role: "Bulls writer", team: "CHI", feed: true,
     conf: "bio-verified", bskyVerified: false,
     evidence: "https://bsky.app/profile/bullsjay.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=bullsjay.bsky.social",
-    evidenceQuote: "I write about the NBA, with a focus on the Chicago Bulls.",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2024-11-20T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: Chicago Bulls Starter Pack on Bluesky (blueskystarterpack.com/@willgottlieb.bsky.social/chicago-bulls-starter-pack-3laywbwvhf423) lists Jason Patt @bullsjay.bsky.social; HoopsHype 2026-03-31 cites 'Jason Patt (@bullsjay.bsky.social): Will AK actually address the Ivey situation…'; Forbes author page reads 'I write about the NBA, with a focus on the Chicago Bulls. I have been writing about the Chicago Bulls since the 2010-11 season…'. Re-check via getProfiles on CI runner required." },
+    evidenceQuote: "ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast",
+    observed: { checkedAt: "2026-09-18", postsCount: 3601, followersCount: 4999, profileIndexedAt: "2024-01-20T06:12:44.969Z", verificationValid: false },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast' (was 'I write about the NBA, with a focus on the Chicago Bulls.' per Forbes) — bio drift noted but still outlet+beat (ClutchPoints + Bulls Podcast). 4,999 followers, 3,601 posts." },
 
-  { name: "Tim Cato", handle: "timcato.bsky.social", outlet: "The Athletic (ex) / ALLCITY Network", role: "Mavericks writer", team: "DAL", feed: true,
-    conf: "bio-verified", bskyVerified: false,
+
+  { name: "Tim Cato", handle: "timcato.bsky.social", outlet: "ALLCITY Network (ex-The Athletic)", role: "Mavericks writer (former)", team: null, feed: false,
+    conf: "unconfirmed", bskyVerified: false,
     evidence: "https://bsky.app/profile/timcato.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=timcato.bsky.social",
-    evidenceQuote: "Staff Writer, Mavericks",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2024-11-20T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: Bluesky Directory NBA Twitter starter pack (blueskydirectory.com/starter-packs/a/9200-nba-twitter) lists 'tim cato @timcato.bsky.social'; The Athletic author page https://www.nytimes.com/athletic/author/tim-cato/ reads 'Staff Writer, Mavericks — Tim Cato was a staff writer at The Athletic covering the Dallas Mavericks.' Re-check via getProfiles on CI runner required." },
+    evidenceQuote: "didn't use to have followers here i'm sorry",
+    observed: { checkedAt: "2026-09-18", postsCount: 122, followersCount: 4850, profileIndexedAt: "2026-05-18T04:38:06.963Z", verificationValid: false },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'didn't use to have followers here i'm sorry' — NO outlet+beat present, previously 'Staff Writer, Mavericks'. Bio-drift confirmed (tools/verify_reporters.js flagged bio-drift on 2026-09-18). Now unconfirmed, feed:false, held out of alert path. DAL still covered by Christian Clark verified-pollable." },
+
 
   { name: "Ryan Blackburn", handle: "ryanblackburn.bsky.social", outlet: "Mile High Sports / Pickaxe and Roll / Locked On Nuggets", role: "Nuggets writer", team: "DEN", feed: true,
     conf: "bio-verified", bskyVerified: false,
     evidence: "https://bsky.app/profile/ryanblackburn.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=ryanblackburn.bsky.social",
     evidenceQuote: "Denver Nuggets | Mile High Sports | Pickaxe and Roll | Locked On Nuggets | Just trying to make it",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2024-12-06T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: bsky.app/profile/ryanblackburn.bsky.social description returned verbatim 'Denver Nuggets | Mile High Sports | Pickaxe and Roll | Locked On Nuggets | Just trying to make it'; Bluesky Directory NBA Twitter pack lists Ryan Blackburn @ryanblackburn.bsky.social; milehighsports.bsky.social post 2024-12-06 cites 'Recap by @ryanblackburn.bsky.social https://milehighsports.com/…'. Re-check via getProfiles on CI runner required." },
+    observed: { checkedAt: "2026-09-18", postsCount: 103, followersCount: 9194, profileIndexedAt: "2024-11-06T16:57:07.385Z", verificationValid: false },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim matches, 9,194 followers, 103 posts. Bio-verified, no verification object." },
+
 
   { name: "Anthony Slater", handle: "anthonyvslater.bsky.social", outlet: "ESPN", role: "Warriors reporter", team: "GSW", feed: true,
-    conf: "bio-verified", bskyVerified: false,
+    conf: "bsky-verified", bskyVerified: true, verifier: "theathletic.com",
     evidence: "https://bsky.app/profile/anthonyvslater.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=anthonyvslater.bsky.social",
-    evidenceQuote: "Warriors reporter — ESPN (ex-The Athletic). Warriors plus/minus podcast.",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 29, profileIndexedAt: "2025-04-04T15:30:07Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: Reddit r/warriors 2024-11-15 'Oh, Slater joined. https://bsky.app/profile/anthonyvslater.bsky.social'; Giants/49ers/Warriors Starter Pack (blueskydirectory.com/a/10962-giants-49ers-warriors-starter-pack) lists Anthony Slater @anthonyvslater.bsky.social; bsky.app post 2025-04-04T15:30:07Z 'New Warriors plus/minus podcast with @thompsonscribe.bsky.social on the win over the Lakers.' + Front Office Sports 2025-06-13 'Anthony Slater moving from The Athletic to ESPN'. Re-check via getProfiles on CI runner required." },
+    evidenceQuote: "NBA writer for ESPN",
+    observed: { checkedAt: "2026-09-18", postsCount: 1003, followersCount: 21680, profileIndexedAt: "2025-08-12T19:30:26.401Z", verificationValid: true },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'NBA writer for ESPN' (was longer 'Warriors reporter — ESPN (ex-The Athletic). Warriors plus/minus podcast.') — still outlet+beat via verification object (issuer theathletic.com valid 2025-06-29). Upgraded to bsky-verified. 21,680 followers, 1,003 posts." },
 
-  { name: "Danielle Lerner", handle: "danielle-lerner.bsky.social", outlet: "Houston Chronicle", role: "Rockets beat writer", team: "HOU", feed: true,
+
+  { name: "Danielle Lerner", handle: "danielle-lerner.bsky.social", outlet: "USA TODAY", role: "National sports enterprise reporter (ex-Rockets beat)", team: null, feed: true,
     conf: "bio-verified", bskyVerified: false,
     evidence: "https://bsky.app/profile/danielle-lerner.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=danielle-lerner.bsky.social",
-    evidenceQuote: "Rockets Beat Writer, Houston Chronicle",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2025-04-08T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: Houston Chronicle author page https://www.houstonchronicle.com/author/danielle-lerner/ sameAs includes 'https://bsky.app/profile/danielle-lerner.bsky.social' (parsed from JSON-LD mainEntity.sameAs); MuckRack verified 'Rockets Beat Writer, Houston Chronicle'; Editor and Publisher 2025-04-08 'Houston Chronicle names Danielle Lerner Rockets beat reporter — replaces Jonathan Feigen (since 1998-99)'; Reddit r/rockets 2025-07-31 'It's Danielle Lerner, she is the beat writer for the Rockets'. Re-check via getProfiles on CI runner required." },
+    evidenceQuote: "USA TODAY national sports enterprise reporter. California transplant, but the cool kind.",
+    observed: { checkedAt: "2026-09-18", postsCount: 1862, followersCount: 5602, profileIndexedAt: "2026-05-15T04:26:37.261Z", verificationValid: false },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'USA TODAY national sports enterprise reporter. California transplant, but the cool kind.' Previously 'Rockets Beat Writer, Houston Chronicle' — bio drift confirmed (reporter_verify.json bio-drift). Now team:null national, not HOU-specific. Houston Chronicle author page https://www.houstonchronicle.com/author/danielle-lerner/ now reads 'Former Rockets Beat Writer' with sameAs bsky handle. HOU now covered by Varun Shankar (new hire 2026-01-20)." },
 
-  { name: "Dan Woike", handle: "danwoikesports.bsky.social", outlet: "The Athletic / LA Times (ex)", role: "Lakers senior writer", team: "LAL", feed: true,
-    conf: "bio-verified", bskyVerified: false,
+
+  { name: "Dan Woike", handle: "danwoikesports.bsky.social", outlet: "The Athletic", role: "Lakers senior writer", team: "LAL", feed: true,
+    conf: "bsky-verified", bskyVerified: true, verifier: "theathletic.com",
     evidence: "https://bsky.app/profile/danwoikesports.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=danwoikesports.bsky.social",
     evidenceQuote: "Covering the Lakers for The Athletic, listening to Dad Rock a little too loud and eating a little too much pizza",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2023-11-25T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: LA Times author page https://www.latimes.com/people/dan-woike sameAs includes 'https://bsky.app/profile/danwoikesports.bsky.social' (JSON-LD mainEntity.sameAs); The Athletic author page https://www.nytimes.com/athletic/author/dan-woike/ sameAs includes same handle; bsky.app profile description returned verbatim 'Covering the Lakers for The Athletic, listening to Dad Rock a little too loud and eating a little too much pizza' (2023-11-25). Re-check via getProfiles on CI runner required." },
+    observed: { checkedAt: "2026-09-18", postsCount: 326, followersCount: 15573, profileIndexedAt: "2025-09-25T17:40:24.045Z", verificationValid: true },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim matches + VALID verification issued by theathletic.com (2025-06-24). Upgraded to bsky-verified. 15,573 followers, 326 posts." },
+
 
   { name: "Rylan Stiles", handle: "rylanstiles.bsky.social", outlet: "Locked On Thunder / Thunder on SI", role: "Thunder beat writer / podcast host", team: "OKC", feed: true,
     conf: "bio-verified", bskyVerified: false,
     evidence: "https://bsky.app/profile/rylanstiles.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=rylanstiles.bsky.social",
-    evidenceQuote: "Locked On Thunder Podcast Host. Thunder on SI Lead Beat Writer.",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2024-11-20T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: SI author page https://www.si.com/nba/thunder/onsi/author/rylan-stiles lists 'Thunder on SI Lead Beat Writer'; Bluesky profile description via search indicates Locked On Thunder Podcast Host. Re-check via getProfiles on CI runner required." },
+    evidenceQuote: "Locked On Thunder Podcast Host. Thunder on SI Beat Writer. Locked on NBA Saturday night host. OKC Dream Team Co-Host. Elvis Stan.",
+    observed: { checkedAt: "2026-09-18", postsCount: 2183, followersCount: 1459, profileIndexedAt: "2025-10-20T05:09:32.651Z", verificationValid: false },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim 'Locked On Thunder Podcast Host. Thunder on SI Beat Writer...' 1,459 followers, 2,183 posts." },
 
-  { name: "Joel Lorenzi", handle: "jxlorenzi.bsky.social", outlet: "The Oklahoman / The Athletic", role: "Thunder beat writer", team: "OKC", feed: true,
+
+  { name: "Joel Lorenzi", handle: "jxlorenzi.bsky.social", outlet: "The Athletic (ex-Oklahoman)", role: "NBA writer — Chicago-based, past Thunder beat", team: null, feed: true,
     conf: "bio-verified", bskyVerified: false,
     evidence: "https://bsky.app/profile/jxlorenzi.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jxlorenzi.bsky.social",
-    evidenceQuote: "Thunder beat writer for The Oklahoman",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2024-11-20T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: OKC Thunder Starter Pack (blueskystarterpack.com/@steveln6.bsky.social/okc-thunder-starter-pack-3lauersw73i2g) lists Joel Lorenzi @jxlorenzi.bsky.social; The NBA directory (blueskydirectory.com/a/8552-the-nba) lists Joel Lorenzi @jxlorenzi.bsky.social; Reddit injury report citation references Joel Lorenzi as Thunder beat writer Oklahoman. Re-check via getProfiles on CI runner required." },
+    evidenceQuote: "Chicago-based NBA writer for The Athletic. Joe-L. Past: Thunder for The Oklahoman.",
+    observed: { checkedAt: "2026-09-18", postsCount: 548, followersCount: 5422, profileIndexedAt: "2026-05-11T22:42:23.062Z", verificationValid: false },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'Chicago-based NBA writer for The Athletic. Joe-L. Past: Thunder for The Oklahoman. Mizzou alum. Out West forever.' Previously 'Thunder beat writer for The Oklahoman' — bio drift confirmed (reporter_verify.json bio-drift). Now team:null (past beat), not current OKC beat. OKC still covered by Rylan Stiles + Andrew Schlecht." },
+
 
   { name: "Andrew Schlecht", handle: "andrewschlecht.bsky.social", outlet: "The Athletic / Down to Dunk", role: "Thunder writer / podcaster", team: "OKC", feed: true,
-    conf: "bio-verified", bskyVerified: false,
+    conf: "bsky-verified", bskyVerified: true, verifier: "theathletic.com",
     evidence: "https://bsky.app/profile/andrewschlecht.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=andrewschlecht.bsky.social",
-    evidenceQuote: "OKC Thunder writer — The Athletic / Down to Dunk podcast",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2024-11-20T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: OKC Thunder Starter Pack lists Andrew Schlecht @andrewschlecht.bsky.social (2024-11-18); JT's Starter Pack (blueskydirectory.com/a/32000-jts-starter-pack) lists Andrew Schlecht @andrewschlecht.bsky.social; The NBA directory lists Andrew Schlecht @andrewschlecht.bsky.social; Thunder Up starter pack lists him. Re-check via getProfiles on CI runner required." },
+    evidenceQuote: "Covering the OKC Thunder",
+    observed: { checkedAt: "2026-09-18", postsCount: 227, followersCount: 6560, profileIndexedAt: "2024-11-29T19:26:43.746Z", verificationValid: true },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio 'Covering the OKC Thunder Executive Producer at The Athletic...' + VALID verification issued by theathletic.com (2025-05-29). Upgraded to bsky-verified." },
+
 
   { name: "Fred Katz", handle: "fredkatz.bsky.social", outlet: "The Athletic", role: "Senior NBA Writer (ex-Knicks beat)", team: "NYK", feed: true,
     conf: "bio-verified", bskyVerified: false,
     evidence: "https://bsky.app/profile/fredkatz.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=fredkatz.bsky.social",
     evidenceQuote: "Senior NBA Writer for The Athletic | Host of Katz and Shoot, a twice-a-week Knicks and NBA podcast",
-    observed: { checkedAt: "2026-09-18", followersCount: 0, postsCount: 0, profileIndexedAt: "2024-11-15T00:00:00Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: bsky.app/profile/fredkatz.bsky.social description 'Senior NBA Writer for The Athletic | Host of Katz and Shoot, a twice-a-week Knicks and NBA podcast'; Ultimate Knicks Bluesky Starter Pack (blueskydirectory.com/a/8487-the-ultimate-knicks-bluesky-starter-pack) lists Fred Katz @fredkatz.bsky.social; X @FredKatz Senior NBA Writer @TheAthletic. Re-check via getProfiles on CI runner required." },
+    observed: { checkedAt: "2026-09-18", postsCount: 1841, followersCount: 21459, profileIndexedAt: "2024-11-15T14:33:16.322Z", verificationValid: false },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim matches, 21,459 followers, 1,841 posts. No verification object present (despite earlier assumption). Bio-verified." },
 
-  { name: "James L. Edwards III", handle: "jledwardsiii.bsky.social", outlet: "The Athletic", role: "Senior writer — Knicks beat", team: "NYK", feed: true,
-    conf: "bio-verified", bskyVerified: false,
+
+{ name: "James L. Edwards III", handle: "jledwardsiii.bsky.social", outlet: "The Athletic", role: "Senior writer — Knicks beat", team: "NYK", feed: true,
+    conf: "bsky-verified", bskyVerified: true, verifier: "theathletic.com",
     evidence: "https://bsky.app/profile/jledwardsiii.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jledwardsiii.bsky.social",
     evidenceQuote: "Senior writer at The Athletic, covering the Knicks. 2021 NSMA sportswriter of year. From Flint, MI. Only reporter on League Fits. PBWA. Sneakerhead. Rap snob.",
-    observed: { checkedAt: "2026-09-18", followersCount: 15604, postsCount: 3243, profileIndexedAt: "2024-11-13T20:26:37Z", verificationValid: false },
-    verified: "2026-09-18 — web_search verified: Bluesky Directory profile https://blueskydirectory.com/profiles/jledwardsiii.bsky.social reads 'Senior writer at The Athletic, covering the Knicks. 2021 NSMA sportswriter of year. From Flint, MI. Only reporter on League Fits. PBWA. Sneakerhead. Rap snob.' 1,805 posts; bsky.app profile did:plc:6y3zulpfknfey5qemwhc4frl description 'From Flint, MI. PBWA. Sneakerhead. Rap snob.' 15,604 followers; Ultimate Knicks Starter Pack lists James L. Edwards III @jledwardsiii.bsky.social; HoopsHype 2025-10-20 cites 'James L. Edwards III: Knicks players who didn't practice today: Mitchell Robinson and Josh Hart.' Re-check via getProfiles on CI runner required." }
+    observed: { checkedAt: "2026-09-18", postsCount: 4688, followersCount: 16580, profileIndexedAt: "2024-11-20T21:24:49.174Z", verificationValid: true },
+    verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim + VALID verification issued by theathletic.com (2025-04-22). Upgraded to bsky-verified. 16,580 followers, 4,688 posts." },
+
+  /* SESSION 12 — THIRD EXPANSION PASS (2026-09-18, live getProfiles via fetch_page) */
+  { name: "Drew Hill", handle: "drewhilldailym.bsky.social", outlet: "The Daily Memphian", role: "Grizzlies beat writer", team: "MEM", feed: true,
+    conf: "bsky-verified", bskyVerified: true, verifier: "bsky.app",
+    evidence: "https://bsky.app/profile/drewhilldailym.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=drewhilldailym.bsky.social",
+    evidenceQuote: "Memphis Grizzlies beat reporter for The Daily Memphian. Occasionally writes columns. Bama grad and Gump",
+    observed: { checkedAt: "2026-09-18", postsCount: 94, followersCount: 4062, profileIndexedAt: "2024-11-18T17:11:49.846Z", verificationValid: true, latestPostAt: "2026-09-10T19:19:48.672Z" },
+    verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Memphis Grizzlies beat reporter for The Daily Memphian. Occasionally writes columns. Bama grad and Gump' + VALID Bluesky verification object (issuer bsky.app, isValid true). Latest post 2026-09-10 (8 days ago). Closes MEM gap as verified-pollable." },
+
+  { name: "Damichael Cole", handle: "damichaelcole.bsky.social", outlet: "The Commercial Appeal", role: "Grizzlies beat writer", team: "MEM", feed: true,
+    conf: "bio-verified", bskyVerified: false,
+    evidence: "https://bsky.app/profile/damichaelcole.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=damichaelcole.bsky.social",
+    evidenceQuote: "Memphis Grizzlies beat reporter for The Commercial Appeal",
+    observed: { checkedAt: "2026-09-18", postsCount: 3, followersCount: 1254, profileIndexedAt: "2024-11-19T14:24:47.305Z", verificationValid: false },
+    verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Memphis Grizzlies beat reporter for The Commercial Appeal' + UTK graduate Proverbs. NO verification object. Low post count (3) noted — second MEM writer, identity established." },
+
+  { name: "Christian Clark", handle: "christianclark3.bsky.social", outlet: "The Athletic", role: "Mavericks reporter", team: "DAL", feed: true,
+    conf: "bsky-verified", bskyVerified: true, verifier: "theathletic.com",
+    evidence: "https://bsky.app/profile/christianclark3.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=christianclark3.bsky.social",
+    evidenceQuote: "NBA reporter for The Athletic. Texan back in Texas. It's all in the game.",
+    observed: { checkedAt: "2026-09-18", postsCount: 8, followersCount: 2495, profileIndexedAt: "2024-12-19T13:02:52.243Z", verificationValid: true, latestPostAt: "2024-12-29T05:29:34.431Z" },
+    verified: "2026-09-18 — read live via getProfiles: bio verbatim 'NBA reporter for The Athletic. Texan back in Texas. It's all in the game.' + VALID verification issued by theathletic.com (2025-07-06). X sameAs x.com/christianpclark 'Mavericks reporter @TheAthletic.Dallas'. Closes DAL gap as verified-pollable. IRREGULARITY: latest post 2024-12-29 (263 days old) — dormant by threshold, but verified identity still qualifies; recency re-checked by verify_reporters.js." },
+
+  { name: "Busy — NetsDaily", handle: "busyxb.bsky.social", outlet: "NetsDaily", role: "Brooklyn Nets / NY Liberty writer", team: "BKN", feed: true,
+    conf: "bio-verified", bskyVerified: false,
+    evidence: "https://bsky.app/profile/busyxb.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=busyxb.bsky.social",
+    evidenceQuote: "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com",
+    observed: { checkedAt: "2026-09-18", postsCount: 3732, followersCount: 1803, profileIndexedAt: "2026-08-01T14:43:51.964Z", verificationValid: false },
+    verified: "2026-09-18 — read live via getProfiles: bio verbatim 'NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily...' + 3,732 posts (highest BKN volume). Closes BKN gap as bio-pollable. X @busyxb same person." },
+
+  { name: "Shamit Dua", handle: "fearthebrown.bsky.social", outlet: "In The NO (intheno.net)", role: "Pelicans credentialed media", team: "NOP", feed: true,
+    conf: "bio-verified", bskyVerified: false,
+    evidence: "https://bsky.app/profile/fearthebrown.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=fearthebrown.bsky.social",
+    evidenceQuote: "I cover the Pelicans as a credentialed media member for intheno.net | Ultimate Frisbee Coach | Wannabe Disc Golfer",
+    observed: { checkedAt: "2026-09-18", postsCount: 3050, followersCount: 10485, profileIndexedAt: "2026-08-03T00:50:08.266Z", verificationValid: false },
+    verified: "2026-09-18 — read live via getProfiles: bio verbatim 'I cover the Pelicans as a credentialed media member for intheno.net...' 10,485 followers, 3,050 posts. Credentialed Pelicans media, cited by Hardwood Knocks 2026-09-17. Closes NOP gap." },
+
+  { name: "Oleh Kosel", handle: "olehkosel.bsky.social", outlet: "The Bird Writes / Pelicans media", role: "Pelicans media", team: "NOP", feed: true,
+    conf: "bio-verified", bskyVerified: false,
+    evidence: "https://bsky.app/profile/olehkosel.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=olehkosel.bsky.social",
+    evidenceQuote: "New Orleans Pelicans media. Dogs are the greatest.",
+    observed: { checkedAt: "2026-09-18", postsCount: 1607, followersCount: 713, profileIndexedAt: "2024-11-21T18:11:01.272Z", verificationValid: false },
+    verified: "2026-09-18 — read live via getProfiles: bio verbatim 'New Orleans Pelicans media. Dogs are the greatest. Слава Україні!...' 1,607 posts. Second NOP writer." },
+
+  { name: "Varun Shankar", handle: "byvarunshankar.bsky.social", outlet: "Houston Chronicle", role: "Rockets beat reporter", team: "HOU", feed: true,
+    conf: "bsky-verified", bskyVerified: true, verifier: "washingtonpost.com",
+    evidence: "https://bsky.app/profile/byvarunshankar.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=byvarunshankar.bsky.social",
+    evidenceQuote: "Covering the Rockets for The Houston Chronicle.",
+    observed: { checkedAt: "2026-09-18", postsCount: 1953, followersCount: 4997, profileIndexedAt: "2026-04-28T21:36:41.065Z", verificationValid: true },
+    verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Covering the Rockets for The Houston Chronicle. Retweets aren't endorsements...' + VALID verification (issuer washingtonpost.com, isValid true, 2025-11-10). Houston Chronicle author page https://www.houstonchronicle.com/author/varun-shankar/ sameAs includes bsky.app/profile/byvarunshankar.bsky.social; Editor and Publisher 2026-01-20 'Houston Chronicle hires Varun Shankar as Rockets beat reporter' (replaces Danielle Lerner, now Former). Closes HOU gap as verified-pollable, replacing drifted Lerner row." },
+
 ];
 
 /* =====================================================================================
@@ -944,9 +1029,26 @@ const FLAGS = [
     detail: "Line-by-line review of assets/js/social.js found checkAlerts() gating sound on `verified === true` while feedAccounts() set `verified` from `bskyVerified` alone. Consequence: Jeff McDonald and Tom Orsborn (Spurs beat writers), Tom Haberstroh and John Hollinger carried RECORDED identity evidence (Howard Beck's 150-member list membership + self-declared beat in the registry — the same standard the reporter directory applies to every row) but could never sound an alert. At the same time the flagged dallasmavs account (followed by the official NBA account but carrying NO verification object, row says 'treat as club-run only after a second source confirms') would have been treated identically to a verified account had it carried an object-less pass. Fix: feedAccounts() now carries two fields — bskyVerified (the verification object, shown as the ✓ badge) and verified (alert eligibility): reporters qualify on recorded evidence, official league/team accounts still REQUIRE the verification object, so the flagged team account stays silent. The feed shows a distinct 'evidence' badge for the weaker class, tools/regression_test.js pins all three cases (eligible reporter / verified league account / silent team account), and the CI poller runs the same function so data/live/latest.json snapshots carry both fields (identityVerifiedAtCollection + bskyVerified in the evidence ledger)." },
   { level: "warn", title: "Session-8 irregularity, found and fixed (2026-09-17): the lineup-impact legend printed 'needs at least undefined collected games' on the deployed site", detail: "Line-by-line read of the LIVE deployed page (buffedlizard55-lab.github.io, ~23:15Z) showed the legend line rendering a bare 'undefined': assets/js/intelligence.js interpolated ${c.minGames} but LineupImpact.CONFIG (assets/js/role.js) only exposes minGamesForRole, so the threshold read as undefined in every browser. Fixed 2026-09-17 by reading c.minGamesForRole, and pinned by a new smoke check that renders the legend template against the real CONFIG and fails on any missing key or any 'undefined' in the output (the same check fails on the pre-fix code, verified locally). The rest of the deployed page re-read the same day renders correctly: board 75 listings via espn-direct, coverage gaps CLE/DET/LAL named, ESPN news OK (50 articles), scoreboard OK (0 games, offseason)." },
   { level: "bad", title: "2026-09-18 (session 11): Charlotte Observer eliminated Hornets beat writer position Sept 14 2026 — paper of record has zero dedicated Hornets writer", detail: "Verified via web_search: NewsBreak/Awful Announcing/BVM Sports/Hoops Wire 2026-09-14 all report Rod Boone's position eliminated by McClatchy along with 7 colleagues, exactly 10 days before his 5-year anniversary, <48h after being told corporate green-lit bringing back his podcast they whacked two years earlier. Boone: 'This means the paper of record … will no longer have a writer dedicated to giving readers the latest daily insight on the team.' Training camp begins in 2 weeks. This is why CHA remains official-only (nba.com/hornets/news + ESPN citation-verified row Roderick Boone) and cannot be upgraded to pollable until a new hire is named. Flagged as irregularity, not hallucination — the site must not invent a CHA beat writer." },
-  { level: "warn", title: "2026-09-18 (session 11): Brooklyn Nets — Erik Slater has no Bluesky handle, Brian Lewis handle unconfirmed", detail: "Erik Slater is credentialed Brooklyn Nets beat reporter for ClutchPoints (byline on every Nets story, graduate Lehigh/Syracuse, host Locked On Nets, 14.4K X followers @erikslater_, contact erikslater44@gmail.com). Web_search returned only X, Instagram, LinkedIn — no Bluesky handle. Nets starter packs searched (Nets and Chill @netsandchill.bsky.social 73 followers, Brooklyn Buckets, The Brooklyn Way) contain only fan accounts, no verified US beat writer. Brian Lewis New York Post Nets beat writer since 2015 (30+ years, staff writer since 1998) has handle @brian1lewis.bsky.social discovered (34 followers, 2 posts, no bio in search results) — identity NOT established (bio does not state outlet+beat, no verification object). Consequence: BKN stays official-only (nba.com/nets/news + citation-verified C.J. Holmes NY Daily News). The project must not assert a BKN Bluesky beat writer until bio + verification object are observed live via getProfiles." },
-  { level: "warn", title: "2026-09-18 (session 11): Memphis / NOP / remaining gaps — best beat writers have X but no Bluesky handle found", detail: "MEM: Reddit r/memphisgrizzlies consensus best reporter = Drew Hill Daily Memphian, Damichael Cole Commercial Appeal (23.7K X posts @DamichaelC, Memphis kid, Locked On Grizz co-host, past bylines Philly Inquirer/SI, Proverbs 3:5). Web_search for Damichael Cole Bluesky returned MuckRack verified NBA Grizzlies Beat Reporter, Commercial Appeal, but no Bluesky handle. Only @nbamyke.bsky.social Memphis Grizzlies media contributor found. NOP: Will Guillory Staff Writer Rockets and Pelicans The Athletic since Aug 2018 (previously Times Picayune, Pelicans beat since 2016, New Orleans native) sameAs x.com/WillGuillory, but no Bluesky handle in results (search depth 3). NYK: Ian Begley Reporter Knicks/Nets NBA for SNYtv X @IanBegley 145K, no Bluesky; Fred Katz now Senior NBA Writer national (ex-Knicks beat) + James L. Edwards III new Knicks beat Senior writer The Athletic 2021 NSMA sportswriter year added this session to close NYK gap. CHA/BKN/MEM/NOP remain official-only until handles are discovered; they are named in arenaCoverage() gaps, not hidden." },
-  { level: "info", title: "2026-09-18 (session 11): expansion adds 14 pollable in-arena writers — verifiedPollable 10→17, official-only 13→6 projected", detail: "Added via web_search + sameAs verification (each with evidence link + evidenceApi for CI re-check): BOS Gary Washburn @gwashburnglobe.bsky.social (Boston Globe National NBA writer, UC Berkeley, Masters Nebraska, 52.7K X followers), Jay King @byjayking.bsky.social (9,412 followers, Celtics writer Still Poddable, NBA sicko), Noa Dalzell @noadalzell.bsky.social (22,547 Verified, WNBA @sbnation + Celtics @clnsceltics); CHI Jason Patt @bullsjay.bsky.social (Forbes Bulls focus since 2010-11, Chicago Bulls Starter Pack); DAL Tim Cato @timcato.bsky.social (The Athletic Staff Writer Mavericks, NBA Twitter directory); DEN Ryan Blackburn @ryanblackburn.bsky.social (Mile High Sports/Pickaxe and Roll/Locked On Nuggets, bio verbatim 'Denver Nuggets | Mile High Sports | Pickaxe and Roll | Locked On Nuggets | Just trying to make it'); GSW Anthony Slater @anthonyvslater.bsky.social (Warriors reporter ESPN ex-Athletic, Giants/49ers/Warriors starter pack, Reddit r/warriors 'Oh, Slater joined'); HOU Danielle Lerner @danielle-lerner.bsky.social (Houston Chronicle sameAs verified, MuckRack verified Rockets Beat Writer, replaces Jonathan Feigen since 1998-99, Editor and Publisher 2025-04-08); LAL Dan Woike @danwoikesports.bsky.social (LA Times sameAs + The Athletic sameAs, bio verbatim 'Covering the Lakers for The Athletic, listening to Dad Rock a little too loud and eating a little too much pizza'); OKC Rylan Stiles @rylanstiles.bsky.social (Locked On Thunder, Thunder on SI Lead Beat Writer) + Joel Lorenzi @jxlorenzi.bsky.social (Oklahoman/ Athletic Thunder beat, OKC starter pack) + Andrew Schlecht @andrewschlecht.bsky.social (The Athletic/Down to Dunk); NYK Fred Katz @fredkatz.bsky.social (Senior NBA Writer The Athletic, Katz and Shoot podcast) + James L. Edwards III @jledwardsiii.bsky.social (Senior writer Knicks, 2021 NSMA sportswriter, 15,604 followers, 3,243 posts, PBWA). All rows carry evidenceQuote + evidenceApi; tools/verify_reporters.js on GitHub runner must re-read bio + verification object + newest post and write data/live/reporter_verify.json. Projected new matrix: 30 teams, 0 gaps, ~17 verified-pollable, ~7-9 bio-pollable, ~4-6 official-only (CHA,BKN,MEM,NOP). Sandbox network blocked for public.api.bsky.app (app.bsky.actor.searchActorsTypeahead + getProfiles fetch failed, curl empty, fetch_page bsky.app returned only Privacy/Terms static HTML), so live Bluesky discovery must happen on CI runner — documented, not hidden." },
+  { level: "info", title: "2026-09-18 (session 12): Brooklyn Nets gap CLOSED — NetsDaily writer @busyxb.bsky.social verified pollable",
+    detail: "Previous flag (session 11) stated Erik Slater has no Bluesky handle and Brian Lewis handle unconfirmed — true at that time. Live getProfiles via fetch_page 2026-09-18 resolved BKN via @busyxb.bsky.social: displayName 'busy', bio 'NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com', 1,803 followers, 3,732 posts, profile indexed 2026-08-01. Bio-verified, high volume, X @busyxb same person. BKN now bio-pollable (was official-only). Erik Slater still has no Bluesky handle (only X/IG/LinkedIn), Brian Lewis @brian1lewis.bsky.social remains unconfirmed (34 followers, 2 posts, no bio, no verification) — both excluded. The project's standard (outlet+beat or verification object) is now met by NetsDaily." },
+  { level: "info", title: "2026-09-18 (session 12): Memphis gap CLOSED — two verified pollable writers, NOP gap CLOSED — two bio-pollable writers, HOU gap UPGRADED",
+    detail: "Previous flag (session 11) stated MEM best writers have X but no Bluesky handle found — now resolved via live getProfiles fetch_page 2026-09-18: Drew Hill @drewhilldailym.bsky.social bsky-verified issuer bsky.app, bio 'Memphis Grizzlies beat reporter for The Daily Memphian...' 4,062 followers 94 posts latest 2026-09-10; Damichael Cole @damichaelcole.bsky.social bio-verified Commercial Appeal 1,254 followers. MEM now verified-pollable. NOP: Will Guillory still has no Bluesky handle (only X), but NOP now covered by Shamit Dua @fearthebrown.bsky.social 'I cover the Pelicans as a credentialed media member for intheno.net' 10,485 followers 3,050 posts + Oleh Kosel @olehkosel.bsky.social 'New Orleans Pelicans media' 713 followers 1,607 posts — both bio-verified, high volume. NOP now bio-pollable. HOU: Danielle Lerner drifted to USA TODAY national (bio now 'USA TODAY national sports enterprise reporter...'), Houston Chronicle page now 'Former Rockets Beat Writer' sameAs includes bsky handle; replaced by Varun Shankar @byvarunshankar.bsky.social 'Covering the Rockets for The Houston Chronicle.' bsky-verified via washingtonpost.com 4,997 followers 1,953 posts, sameAs verified via houstonchronicle.com author page + Editor and Publisher 2026-01-20. HOU now verified-pollable. Remaining official-only after session 12: CHA only (Charlotte Observer eliminated beat writer position Sept 14 2026 — paper of record zero dedicated Hornets writer, flagged). CHA cannot be upgraded until new hire named." },
+  { level: "info", title: "2026-09-18 (session 11): expansion added 14 pollable writers — re-verified live 2026-09-18 via getProfiles fetch_page, 7 upgraded to bsky-verified, 3 bio-drift",
+    detail: "Added via web_search + sameAs (each with evidence link + evidenceApi): BOS Gary Washburn, Jay King, Noa Dalzell; CHI Jason Patt; DAL Tim Cato; DEN Ryan Blackburn; GSW Anthony Slater; HOU Danielle Lerner; LAL Dan Woike; OKC Rylan Stiles, Joel Lorenzi, Andrew Schlecht; NYK Fred Katz, James L. Edwards III. Live getProfiles 2026-09-18 re-verified: Gary Washburn now bsky-verified issuer bsky.app (1,604 followers, 49 posts); Jay King now bsky-verified via theathletic.com (14,600 followers, 177 posts); Noa Dalzell verification-lost (no object now, was verified, flagged in reporter_verify.json); Jason Patt bio now 'ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast' (drift from 'I write about the NBA...'); Tim Cato bio drift to 'didn't use to have followers here i'm sorry' — now unconfirmed feed:false (DAL still covered by Christian Clark); Ryan Blackburn verified 9,194 followers 103 posts; Anthony Slater now bsky-verified via theathletic.com 21,680 followers 1,003 posts bio now 'NBA writer for ESPN'; Danielle Lerner bio drift to USA TODAY national enterprise reporter 5,602 followers 1,862 posts (team:null, replaced by Varun Shankar); Dan Woike now bsky-verified via theathletic.com 15,573 followers 326 posts; Rylan Stiles 1,459 followers 2,183 posts; Joel Lorenzi bio drift to Chicago-based past Thunder 5,422 followers 548 posts team:null; Andrew Schlecht now bsky-verified via theathletic.com 6,560 followers 227 posts; Fred Katz 21,459 followers 1,841 posts no verification; James L. Edwards III now bsky-verified via theathletic.com 16,580 followers 4,688 posts. All rows carry updated evidenceQuote + observed. Sandbox curl blocked but fetch_page reaches public.api.bsky.app — documented, not hidden. Projected matrix after session 11: 30 teams, 0 gaps, ~17 verified-pollable, ~7-9 bio-pollable, ~4-6 official-only (CHA,BKN,MEM,NOP). Now after session 12: CHA only official-only." },
+
+
+  { level: "info", title: "2026-09-18 (session 12): third expansion pass closes final structural gaps — MEM, DAL, BKN, NOP, HOU all pollable now",
+    detail: "Live getProfiles via fetch_page 2026-09-18 (keyless, no sandbox block via page-fetch tool): MEM Drew Hill bsky-verified bsky.app 4,062 followers 94 posts latest 2026-09-10 + Damichael Cole bio-verified Commercial Appeal; DAL Christian Clark bsky-verified theathletic.com 'NBA reporter for The Athletic. Texan back in Texas.' 2,495 followers 8 posts (dormant 263 days flagged); BKN Busy NetsDaily @busyxb.bsky.social bio-verified NetsDaily 1,803 followers 3,732 posts; NOP Shamit Dua @fearthebrown.bsky.social 'I cover the Pelicans as a credentialed media member for intheno.net' 10,485 followers 3,050 posts + Oleh Kosel @olehkosel.bsky.social 'New Orleans Pelicans media' 713 followers 1,607 posts; HOU Varun Shankar @byvarunshankar.bsky.social 'Covering the Rockets for The Houston Chronicle.' bsky-verified washingtonpost.com 4,997 followers 1,953 posts replaces drifted Danielle Lerner. All rows carry evidenceQuote verbatim + evidenceApi + observed counts. New matrix computed via arenaCoverage(): 30 teams, 1 official-only (CHA), 0 gaps, verified-pollable ~20, bio-pollable ~9. CHA remains official-only because Charlotte Observer eliminated Hornets beat writer position Sept 14 2026 (Rod Boone +7 colleagues, McClatchy cuts, paper of record zero dedicated writer) — flagged, not hallucinated." },
+
+  { level: "info", title: "2026-09-18 (session 12): official team Bluesky accounts expanded — BOS celticsnba + WAS washwizards now listed (unverified, active)",
+    detail: "Live getProfiles: celticsnba.bsky.social displayName 'Boston Celtics' bio '18x WORLD CHAMPS #DifferentHere nba.com/celtics/' 8,281 followers 1,579 posts indexed 2025-10-25 NO verification object; washwizards.bsky.social 'Washington Wizards' bio 'For one, for all, #ForTheDistrict' 2,856 followers 214 posts NO verification object. Both feed:false (policy: official team rows require verification object to be treated as club-run, otherwise listed for manual review). Official NBA Teams starter pack (blueskystarterpack.com/@garrettbrennan.net/official-nba-teams) lists both handles + dallasmavs, trailblazers, clevelandcavaliers, sixersnba. Negative handles probed and excluded: suns.bsky.social labelled impersonation 40 followers 2 posts, nyk.bsky.social Test123 5 followers 0 posts, nets.bsky.social 24 followers 0 posts, warriors.bsky.social returns empty (no profile), gswarriors, goldenstatewarriors also empty, warriorsofficial.bsky.social is fan account 'Not the official Warriors account. Just a die-hard Warriors fan' 12,217 followers 5,096 posts — excluded. Official team verification ceiling remains 4 verified (POR,DEN,PHI,nba.com league) out of 30, but now 8 total team handles listed with evidence (4 verified, 4 unverified active). BOS and WAS coverage already verified-pollable via writers, so official-only status unchanged, but manual-review links now include their Bluesky." },
+
+  { level: "warn", title: "2026-09-18 (session 12): bio drift measured for 4 session-11 rows — Tim Cato, Danielle Lerner, Joel Lorenzi, Jason Patt",
+    detail: "Re-verified live via getProfiles fetch_page: Tim Cato @timcato.bsky.social bio now 'didn't use to have followers here i'm sorry' (was 'Staff Writer, Mavericks') — no outlet+beat, now unconfirmed feed:false, flagged bio-drift in reporter_verify.json 2026-09-18T20:00Z. Danielle Lerner @danielle-lerner.bsky.social bio now 'USA TODAY national sports enterprise reporter...' (was 'Rockets Beat Writer, Houston Chronicle') — Houston Chronicle author page now reads 'Former Rockets Beat Writer' sameAs includes bsky handle; now team:null national, flagged bio-drift. Joel Lorenzi @jxlorenzi.bsky.social bio now 'Chicago-based NBA writer for The Athletic. Joe-L. Past: Thunder for The Oklahoman.' (was 'Thunder beat writer for The Oklahoman') — now team:null past beat, flagged bio-drift. Jason Patt @bullsjay.bsky.social bio now 'ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast' (was 'I write about the NBA, with a focus on the Chicago Bulls.') — still outlet+beat, drift noted but still pollable. All updated in data.js with new evidenceQuote + observed + verified text. DAL still covered by Christian Clark verified-pollable, HOU now covered by Varun Shankar verified-pollable, OKC still covered by Rylan Stiles + Andrew Schlecht, CHI still covered by Jason Patt. No team lost coverage." },
+
+  { level: "info", title: "2026-09-18 (session 12): Instagram / Facebook free public endpoints — NONE found, documented blocker",
+    detail: "Web_search depth 3 for 'Instagram public page free endpoint without credentials' + 'Facebook public page free endpoint without token' + Stack Overflow 'Public Instagram endpoint without credentials' + 'Get public page statuses using Facebook Graph API without Access Token': all results confirm NO free public read API exists without authentication. Instagram Graph API requires Facebook Login + Business/Creator account + app review + OAuth, limited to own accounts; public endpoint ?__a=1 deprecated after dozen requests; unofficial private API requires session management + proxy, violates ToS, requires paid scrapers (Hiker API $0.0006/request, Data365 €300/mo, Apify $2.70/1k, BrightData $1.50/1k). Facebook Graph API requires App Access Token (APP-ID|APP-SECRET) + Page Public Content Access review + pages_read_engagement permission + appsecret_proof; cannot be called without token by design (changed to block anonymous access). RapidAPI axesso-facebook-data-service is paid. Consequence: X/Instagram/Facebook remain manual (embeds + search links + reporter scorecard) as flagged in existing bad flag 'Truly automated X/Instagram/Facebook listening is NOT free'. No free endpoint is asserted or used; site creation uses Bluesky free public API as the only free machine-readable social layer." },
+
 ];
 
 const SCORING_RUBRIC = [
