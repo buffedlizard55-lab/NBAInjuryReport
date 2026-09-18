@@ -63,6 +63,15 @@ no invariant violations.**
    verified sources: the ESPN team-schedule API and the city-coordinate travel model, both with what-it-is /
    what-it-is-NOT wording).
 
+**Third defect, found by reading the live snapshot after the merge:** five clubs are stored by region
+name in `data.js` (`GSW` "Golden State", `IND` "Indiana", `LAC` "LA", `MIN` "Minnesota", `UTA` "Utah").
+That is right for identity and URLs and wrong as a location, so the travel-origin fallback returned null
+and **every time-zone shift for those five teams was silently dropped** (live 02:52Z snapshot: all
+Golden State `tzShiftHours` null). `Geo.TEAM_HOME_CITY` now supplies the real city for geography only,
+and `tools/impact_test.js` asserts every one of the 30 clubs' home cities resolves with a time zone —
+loading the real registry from `data.js` rather than a copy. (The first version of that test helper read
+an empty VM registry and passed vacuously; it now throws instead.)
+
 Facts a new session can rely on (in addition to session 8's):
 - The impact model is **lineup impact, never medical severity** — that phrase appears on the board, the
   legend and every factor label, and `tools/impact_test.js` fails if a result starts claiming a medical grade.

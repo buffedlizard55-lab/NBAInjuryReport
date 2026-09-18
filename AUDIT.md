@@ -482,6 +482,20 @@ The run also confirmed the downstream contract: committed `latest.json` rows now
 `impactComponents`, `offenseTier`, `travel` and `availabilityRisk` (sample row: an UNKNOWN grade at 0.4
 evidence coverage — stake had no sample, exposure and recurrence did, which is exactly rule R4 in the wild).
 
+## Third catch, same session: five clubs' "city" is a region name
+
+`data.js` stores five clubs by region (`GSW` "Golden State", `IND` "Indiana", `LAC` "LA", `MIN`
+"Minnesota", `UTA` "Utah"), which is correct for identity and URLs but is **not a place**. The
+travel-origin fallback looked those up, got `null`, and silently dropped both the first away leg's
+miles/hours **and every time-zone shift for those five teams** — visible in the live 02:52Z snapshot
+as `tzShiftHours: null` on every Golden State game. `Geo.TEAM_HOME_CITY` now maps the five regions to
+real cities (San Francisco, Indianapolis, Inglewood, Minneapolis, Salt Lake City), used for geography
+only. `tools/impact_test.js` loads the real 30-team registry from `data.js` inside a VM and asserts
+that **every** club's home city resolves and carries a usable time zone, that the mapped set is
+exactly the set whose `TEAMS.city` is not a place, and the helper now throws if the registry fails to
+load — the first version of that helper read an empty registry and three checks passed **vacuously**,
+which is the exact failure mode this file exists to prevent.
+
 ## New irregularities flagged for manual review (session 9)
 
 1. **"Travel times" cannot be verified to the minute for free.** The model measures city-centre great-circle

@@ -101,10 +101,20 @@ const Geo = (function () {
     { venue: "venetian arena", city: "Las Vegas", state: "NV", lat: 36.11, lon: -115.17, tz: "America/Los_Angeles" }
   ];
 
-  /* A club's arena city can differ from the city name in its feed identity — the Clippers play in
-   * Inglewood, not downtown Los Angeles. Used ONLY for the travel-origin fallback (the first away
-   * leg of a capture), never to rewrite what the schedule says. */
-  const TEAM_HOME_CITY = { LAC: "Inglewood" };
+  /* A club's home city can differ from the region name this project uses as its "city" for URL
+   * building and display. Five clubs use a REGION there (data.js TEAMS.city), and because the
+   * travel-origin fallback needs a real point, an unmapped region silently nulled the first away
+   * leg's miles/hours AND every time-zone shift for that team's games. Found in the live 02:52Z
+   * snapshot (2026-09-18, GSW: every tzShiftHours null). This table is the mapping. It is used ONLY
+   * for geography — the travel-origin fallback and the home time zone — never to rewrite anything
+   * the schedule payload says or any URL. */
+  const TEAM_HOME_CITY = {
+    GSW: "San Francisco",   // TEAMS.city "Golden State"
+    IND: "Indianapolis",    // TEAMS.city "Indiana"
+    LAC: "Inglewood",       // TEAMS.city "LA"; the Clippers play at Intuit Dome in Inglewood
+    MIN: "Minneapolis",     // TEAMS.city "Minnesota"
+    UTA: "Salt Lake City"   // TEAMS.city "Utah"
+  };
 
   /* Bump when the CITY/VENUE tables or the travel model change. tools/collect_context.js stamps
    * every schedule capture with this, so derived rows (miles, hours, rest, time zones) can never
