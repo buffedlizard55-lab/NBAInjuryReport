@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NBA Injury Alert System — Live Injury Wire, Alerts &amp; Verified Sources</title>
-<meta name="description" content="Free, live NBA injury alert dashboard for all 30 teams: structured injury board, chat-style wire, sound + browser alerts, verified Bluesky reporter layer, in-game monitor, and official manual-review links.">
+<title>NBA Injury Alert System — Live Injury Board, Lineup Impact &amp; Alerts</title>
+<meta name="description" content="Free, live NBA injury alert dashboard for all 30 teams: structured injury board with a documented lineup-impact model (minutes, offensive production, on-court +/-, schedule and travel), chat-style wire, sound + browser alerts, verified social layer, in-game monitor and official manual-review links.">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -13,7 +13,7 @@
     <div class="brand">🏀 NBA <span>Injury Alert System</span></div>
     <span class="live-dot"><i></i>INJURY WATCH</span>
     <nav class="links">
-      <a href="index.html" class="active">Dashboard</a>
+      <a href="index.html" class="active">Injury board</a>
       <a href="reporters.html">Reporters &amp; Scorecard</a>
       <a href="sources.html">Sources &amp; Verification</a>
     </nav>
@@ -22,13 +22,13 @@
 
 <div class="wrap">
   <section class="hero">
-    <h1>Live NBA injury wire &amp; alert dashboard — all 30 teams</h1>
+    <h1>Live NBA injury board &amp; alert system — all 30 teams</h1>
     <p>Structured injury board + chat-style wire + sound alerts, modeled on
       <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster's player news</a>.
       Every alert carries a link so you can re-verify it in one click. No account, no API key, runs in your browser.</p>
     <div class="pill-row">
       <span class="pill">NBA only · all 30 teams in scope</span>
-      <span class="pill">Official evidence / ESPN / social — separately labelled</span>
+      <span class="pill">Official / ESPN / social layers — separately labelled</span>
       <span class="pill warn">Open-tab alerts · best-effort polling, not guaranteed real time</span>
     </div>
   </section>
@@ -39,6 +39,61 @@
     <span style="margin-left:auto" id="lastUpdated">Last refresh: —</span>
   </div>
 
+  <!-- ==================================================================
+       INJURY BOARD FIRST — this is the product. Everything else supports it.
+       ================================================================== -->
+  <section class="card board-hero" id="injuryBoardCard" style="margin-top:16px">
+    <h2>🏥 INJURY BOARD — every team <span class="tiny muted" id="boardCount"></span></h2>
+    <p class="muted small">The main screen. Live listings for all 30 teams with a <b>lineup-impact grade</b> computed from box scores this
+      project actually collected — <b>minutes, offensive production (share of the team's scoring), assists share and on-court +/−</b> —
+      combined with the <b>published schedule and travel load</b> (games in the next 7 days, back-to-backs, road trips, time zones crossed)
+      and the player's own <b>injury-listing history</b>. Every grade is explainable: each row prints its factors and its evidence coverage.
+      Season: <b id="boardSeason">—</b>. Status line: <span id="boardStatus" class="tiny">loading…</span></p>
+    <p class="tiny muted" id="impactLegend">Lineup impact is loading…</p>
+    <p class="tiny muted" id="boardModelNote">Model v2 · <b>lineup impact is not medical severity</b> — no free source reviewed on 2026-09-18 publishes a medical grade, so none is claimed. Travel numbers are city-to-city great-circle estimates from a documented model, never flight data.</p>
+
+    <h3 style="margin-top:14px">⚡ High lineup impact right now <span class="tiny muted" id="impactWatchCount"></span></h3>
+    <div id="impactWatch" class="impact-watch" aria-live="polite"><div class="muted small">Loading the high-impact watchlist…</div></div>
+
+    <div class="tiny muted" id="coverageSummary"></div>
+    <div class="tiny" id="boardCoverage" aria-live="polite"></div>
+
+    <div class="board-toolbar" id="boardToolbar" style="margin: 12px 0 10px;">
+      <div class="board-search-wrap" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
+        <input type="search" id="boardSearch" placeholder="🔍 Search player, team or injury (e.g. Tatum, ankle, GSW)…" autocomplete="off" style="flex:1; min-width:240px;">
+        <button class="btn sm ghost" id="boardResetFilter" type="button">Reset</button>
+      </div>
+      <div class="board-quick-filters" id="boardImpactFilters" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-bottom:6px;">
+        <span class="tiny muted" style="font-weight:600">Lineup impact:</span>
+        <button class="board-tab impact-tab active" data-impact-filter="ALL" type="button">All (<span id="countImpactAll">0</span>)</button>
+        <button class="board-tab impact-tab" data-impact-filter="high" type="button">⚡ HIGH (<span id="countImpactHigh">0</span>)</button>
+        <button class="board-tab impact-tab" data-impact-filter="medium" type="button">Medium (<span id="countImpactMed">0</span>)</button>
+        <button class="board-tab impact-tab" data-impact-filter="low" type="button">Low (<span id="countImpactLow">0</span>)</button>
+        <button class="board-tab impact-tab" data-impact-filter="unknown" type="button">Unknown (<span id="countImpactUnknown">0</span>)</button>
+      </div>
+      <div class="board-quick-filters" id="boardStatusFilters" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+        <span class="tiny muted" style="font-weight:600">Quick status:</span>
+        <button class="board-tab active" data-board-status="ALL" type="button">All (<span id="countAll">0</span>)</button>
+        <button class="board-tab" data-board-status="out" type="button">🔴 OUT (<span id="countOut">0</span>)</button>
+        <button class="board-tab" data-board-status="doubtful" type="button">🟠 Doubtful (<span id="countDtf">0</span>)</button>
+        <button class="board-tab" data-board-status="questionable" type="button">🟡 Questionable / GTD (<span id="countQst">0</span>)</button>
+        <button class="board-tab" data-board-status="probable" type="button">🟢 Probable (<span id="countPrb">0</span>)</button>
+        <button class="board-tab" data-board-status="return" type="button">🔵 Return / Good (<span id="countRet">0</span>)</button>
+      </div>
+    </div>
+
+    <div class="board" id="injuryBoard"><div class="muted">Loading injury board…</div></div>
+    <p class="tiny muted">Per-row evidence: the impact model reads ESPN box scores collected by the poller (games started, minutes, points,
+      assists, on-court +/−) plus the published schedule (dates, venues, rest days) and the player's dated injury listings.
+      <b>It is never a medical severity grade.</b> A player with no collected box score is labelled <b>unknown</b>, not guessed.
+      Cross-check a role claim on the team's <a href="https://www.espn.com/nba/team/depth/_/name/mia" target="_blank" rel="noopener">ESPN depth chart ↗</a>
+      (human page only — no public JSON API exists for it, verified 2026-09-17, so it is never scraped automatically).</p>
+    <p class="tiny muted">Always cross-check the highest-authority source before acting:
+      <a href="https://official.nba.com/nba-injury-report-2025-26-season/" target="_blank" rel="noopener">official NBA injury report ↗</a> (2026-27 page not published yet — 404 verified 2026-09-17) ·
+      <a href="https://www.espn.com/nba/injuries" target="_blank" rel="noopener">ESPN injuries ↗</a> ·
+      <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster ↗</a></p>
+  </section>
+
   <!-- ============ ALERT CENTER ============ -->
   <section class="card" style="margin-top:16px">
     <h2>🔔 Alert center <span class="tiny muted">sound · browser notifications · manual-review links</span></h2>
@@ -47,7 +102,8 @@
       account posts exit or “questionable to return” language about a recognized player, an <b>unconfirmed</b> alert fires with the post link —
       that is the fastest signal a player hurt on a play is not coming back, and it does not wait for the official designation. ESPN's per-game DNP
       reasons are shown in the in-game monitor below but never sound, because a DNP row cannot prove an in-game exit. Every listing alert is tagged
-      <b>⚡ HIGH LINEUP IMPACT</b> when the player's collected box scores show a starter going out. DNP alone does not trigger an exit alert.
+      <b>⚡ HIGH LINEUP IMPACT</b> when the impact model grades it high, and plays a distinct rising chime so the two voices are distinguishable
+      without looking at the screen. DNP alone does not trigger an exit alert.
       Opening the page seeds existing items silently. Unresolved and ambiguous signals do not sound. Turn sound off (or mute a severity below)
       when you only want the log. The tab must remain open; background throttling and source delays can delay alerts.</p>
     <p class="tiny muted">Freshness has two meanings here and they are kept apart: a <i>social</i> alert must be from a post published in the last
@@ -63,6 +119,7 @@
         </label>
         <div class="btn-row">
           <button class="btn" id="testSound">▶ Test sound</button>
+          <button class="btn ghost" id="testHighImpactSound">▶⚡ Test high-impact sound</button>
           <button class="btn ghost" id="notifBtn">Enable browser notifications</button>
         </div>
         <div class="btn-row">
@@ -78,8 +135,9 @@
           <button class="btn sm ghost" id="resetSeen">Reset seen history</button>
           <button class="btn sm danger" id="clearLog">Clear log</button>
         </div>
-        <p class="tiny muted" style="margin-top:10px">The chime is a soft two-note bell (E5→A5, WebAudio — no file download). If your browser blocks
-          autoplay until you interact with the page, press <b>Test sound</b> once; after that it plays on its own.</p>
+        <p class="tiny muted" style="margin-top:10px">Both chimes are pure WebAudio (soft E5→A5 bell for an ordinary listing; A5→C#6→E6 for a
+          HIGH LINEUP IMPACT absence) — no file download, so nothing can fail to load. If your browser blocks autoplay until you interact with the
+          page, press <b>Test sound</b> once; after that it plays on its own.</p>
       </div>
       <div>
         <h3>Alert log <span class="tiny muted">newest first</span></h3>
@@ -94,42 +152,16 @@
     <p class="tiny muted">Unknown is not healthy. ESPN statuses and social posts are not automatically league-confirmed. Injury severity is medical information; starter/rotation importance is a separate lineup-impact estimate.</p>
   </section>
 
-  <!-- ============ INJURY BOARD ============ -->
+  <!-- ============ WIRE ============ -->
   <section class="card" style="margin-top:16px">
-    <h2>🏥 Injury board — every team <span class="tiny muted" id="boardCount"></span></h2>
-    <p class="muted small">Structured feed (not headline guessing): player, status, injury type/side, game-time-decision flag and estimated return,
-      straight from ESPN's injuries API — plus a <b>lineup-impact</b> tag computed only from box scores this project has actually collected.
-      Season: <b id="boardSeason">—</b>. Status line: <span id="boardStatus" class="tiny">loading…</span></p>
-    <p class="tiny muted" id="impactLegend">Lineup impact is loading…</p>
-    <div class="tiny muted" id="coverageSummary"></div>
-    <div class="tiny" id="boardCoverage" aria-live="polite"></div>
-
-    <div class="board-toolbar" id="boardToolbar" style="margin: 12px 0 10px;">
-      <div class="board-search-wrap" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
-        <input type="search" id="boardSearch" placeholder="🔍 Search player, team or injury (e.g. Tatum, ankle, GSW)…" autocomplete="off" style="flex:1; min-width:240px;">
-        <button class="btn sm ghost" id="boardResetFilter" type="button">Reset</button>
-      </div>
-      <div class="board-quick-filters" id="boardStatusFilters" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
-        <span class="tiny muted" style="font-weight:600">Quick status:</span>
-        <button class="board-tab active" data-board-status="ALL" type="button">All (<span id="countAll">0</span>)</button>
-        <button class="board-tab" data-board-status="out" type="button">🔴 OUT (<span id="countOut">0</span>)</button>
-        <button class="board-tab" data-board-status="doubtful" type="button">🟠 Doubtful (<span id="countDtf">0</span>)</button>
-        <button class="board-tab" data-board-status="questionable" type="button">🟡 Questionable / GTD (<span id="countQst">0</span>)</button>
-        <button class="board-tab" data-board-status="probable" type="button">🟢 Probable (<span id="countPrb">0</span>)</button>
-        <button class="board-tab" data-board-status="return" type="button">🔵 Return / Good (<span id="countRet">0</span>)</button>
-      </div>
+    <h2>💬 Live injury wire <span class="tiny muted" id="wireCount"></span></h2>
+    <p class="muted small">One chat-style stream, newest first, merged from every layer. Severity is classified from the source's own words —
+      always confirm via the linked source before acting.</p>
+    <div class="filterbar">
+      <select id="teamFilter" aria-label="Filter by team"></select>
+      <div class="checks" id="sevChecks"></div>
     </div>
-
-    <div class="board" id="injuryBoard"><div class="muted">Loading injury board…</div></div>
-    <p class="tiny muted">Per-row evidence: <b>lineup impact</b> uses ESPN box scores collected by the poller (games started / minutes) and
-      ESPN's per-player injury-listing dates as a recurrence indicator. <b>It is not a medical severity grade and never will be</b> — no free source
-      reviewed on 2026-09-17 publishes one. A player with no collected box score is labelled <b>unknown</b>, not guessed.
-      Cross-check a role claim on the team's <a href="https://www.espn.com/nba/team/depth/_/name/mia" target="_blank" rel="noopener">ESPN depth chart ↗</a>
-      (human page only — no public JSON API exists for it, verified 2026-09-17, so it is never scraped automatically).</p>
-    <p class="tiny muted">Always cross-check the highest-authority source before acting:
-      <a href="https://official.nba.com/nba-injury-report-2025-26-season/" target="_blank" rel="noopener">official NBA injury report ↗</a> (2026-27 page not published yet — 404 verified 2026-09-17) ·
-      <a href="https://www.espn.com/nba/injuries" target="_blank" rel="noopener">ESPN injuries ↗</a> ·
-      <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster ↗</a></p>
+    <div class="wire" id="wire"><div class="muted">Loading wire…</div></div>
   </section>
 
   <div class="grid two">
@@ -168,21 +200,9 @@
     </section>
   </div>
 
-  <!-- ============ WIRE ============ -->
-  <section class="card" style="margin-top:16px">
-    <h2>💬 Live injury wire <span class="tiny muted" id="wireCount"></span></h2>
-    <p class="muted small">One chat-style stream, newest first, merged from every layer. Severity is classified from the source's own words —
-      always confirm via the linked source before acting.</p>
-    <div class="filterbar">
-      <select id="teamFilter" aria-label="Filter by team"></select>
-      <div class="checks" id="sevChecks"></div>
-    </div>
-    <div class="wire" id="wire"><div class="muted">Loading wire…</div></div>
-  </section>
-
   <section class="card" style="margin-top:16px">
     <h2>Player history &amp; lineup context</h2>
-    <p class="muted small">Automatic forward observations, not a complete medical history. Current-game starter/bench flags are sourced from ESPN box scores when available. Rotation role and medical severity remain unknown without sufficient evidence.</p>
+    <p class="muted small">Automatic forward observations, not a complete medical history. Current-game starter/bench flags are sourced from ESPN box scores when available. Rotation role, production, schedule load and medical severity remain unknown without sufficient evidence.</p>
     <label for="historySearch">Find a player or team</label>
     <input type="search" id="historySearch" placeholder="Player name or team abbreviation" autocomplete="off">
     <div id="playerHistory"></div>
@@ -192,7 +212,9 @@
   <section class="card" style="margin-top:16px">
     <h2>🐦 X (Twitter) view <span class="tiny muted">free embeds — best-effort, links always work</span></h2>
     <p class="muted small">X reads are not configured and embeds may be rate-limited, so this panel is for eyeballing only — it never feeds the alerts.
-      For automated social alerts the project uses the free Bluesky layer above. Every embed has a direct link.</p>
+      For automated social alerts the project uses the free Bluesky layer above. Every embed has a direct link.
+      Instagram and Facebook have no free public read APIs at all, so they are manual-review links only — the full access analysis is on
+      <a href="sources.html">Sources &amp; Verification</a>.</p>
     <div class="grid two">
       <div class="embed-box">
         <b class="small">NBA on ESPN</b> <a class="tiny" href="https://x.com/ESPNNBA" target="_blank" rel="noopener">@ESPNNBA ↗</a>
@@ -240,7 +262,7 @@
       Data: ESPN (unofficial API) + Bluesky public API · Not affiliated with the NBA, ESPN, or Basketball Monster ·
       <a href="sources.html">Verification log</a> ·
       <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/blob/main/NEXT_STEPS.md" target="_blank" rel="noopener">Next steps ↗</a> ·
-      Updated 2026-09-17
+      Impact model v2 · Updated 2026-09-18
     </div>
   </footer>
 </div>

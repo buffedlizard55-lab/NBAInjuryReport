@@ -608,6 +608,21 @@ check("sound toggle persists OFF", M.AlertEngine.isSoundOn() === false && localS
 M.AlertEngine.setSoundOn(true);
 check("escapeHtml neutralises tags", M.AlertEngine.escapeHtml("<b>&\"'</b>") === "&lt;b&gt;&amp;&quot;&#39;&lt;/b&gt;");
 
+/* Session-9 defect class: high-impact escalation reads item.impact, and each producer passes a
+ * DIFFERENT shape. When the reader only understood one shape, a starter's confirmed absence got
+ * the ordinary chime — a silent downgrade that no test could see. Every real shape is pinned here. */
+console.log("== alert escalation: every impact shape a producer can pass ==");
+const IG = M.AlertEngine.impactGrade, OT = M.AlertEngine.offenseTier, IS = M.AlertEngine.impactScore;
+check("full LineupImpact assessment (social layer) escalates", IG({ impact: { grade: "high", score: 88 } }) === "high");
+check("board's flattened clone (injuries.js: tier/grade) escalates", IG({ impact: { tier: "high", grade: "high", score: 88 } }) === "high");
+check("a bare grade string (archived rows) escalates", IG({ impact: "high" }) === "high");
+check("a flattened record (poll_watch output) escalates", IG({ grade: "high" }) === "high");
+check("MEDIUM and LOW never escalate", IG({ impact: { grade: "medium" } }) !== "high" && IG({ impact: { tier: "low" } }) !== "high" && IG({ impact: "unknown" }) !== "high");
+check("a missing impact object does not throw and does not escalate", IG({}) === null && IG(null) === null);
+check("offense tier is read from the assessment AND from a flattened row",
+  OT({ impact: { offenseTier: "primary" } }) === "primary" && OT({ impact: { tier: "high" }, offenseTier: "secondary" }) === "secondary");
+check("impact score is read from either shape", IS({ impact: { score: 88 } }) === 88 && IS({ score: 62 }) === 62 && IS({}) === null);
+
 console.log("== poller + workflow presence ==");
 check("tools/poll_watch.js exists", fs.existsSync(path.join(ROOT, "tools/poll_watch.js")));
 check("injury-watch workflow exists", fs.existsSync(path.join(ROOT, ".github/workflows/injury-watch.yml")));

@@ -19,25 +19,24 @@ const AlertEngine = (() => {
     return audioCtx;
   }
 
-  /* Pleasant two-tone chime: soft sine bell at E5 -> A5 with gentle decay,
-   * plus a faint octave shimmer. ~1.1s total. */
-  function playChime() {
+  /* Two voices, both pure WebAudio (no file download, nothing to fail offline):
+   *   standard  — soft two-note bell E5 -> A5 with a faint octave shimmer (~1.1 s)
+   *   high      — the same bell plus a rising A5 -> C#6 -> E6 arpeggio, so an ordinary listing and
+   *               a HIGH LINEUP IMPACT absence are audibly different without being alarming.
+   * Both are deliberately gentle: an injury alert can arrive twenty times a night and a harsh
+   * klaxon would just get muted. */
+  function playNotes(notes) {
     try {
       const ac = ctx();
       if (!ac) return false;
       const t0 = ac.currentTime;
-      const notes = [
-        { f: 659.25, t: 0.00, d: 0.55, g: 0.22 },  // E5
-        { f: 880.00, t: 0.16, d: 0.70, g: 0.20 },  // A5
-        { f: 1318.5, t: 0.16, d: 0.45, g: 0.05 }   // E6 shimmer
-      ];
       for (const n of notes) {
         const osc = ac.createOscillator();
         const gain = ac.createGain();
-        osc.type = "sine";
+        osc.type = n.type || "sine";
         osc.frequency.value = n.f;
         gain.gain.setValueAtTime(0.0001, t0 + n.t);
-        gain.gain.exponentialRampToValueAtTime(n.g, t0 + n.t + 0.03);
+        gain.gain.exponentialRampToValueAtTime(n.g, t0 + n.t + (n.attack || 0.03));
         gain.gain.exponentialRampToValueAtTime(0.0001, t0 + n.t + n.d);
         osc.connect(gain).connect(ac.destination);
         osc.start(t0 + n.t);
@@ -50,9 +49,35 @@ const AlertEngine = (() => {
     }
   }
 
+  function playChime() {
+    return playNotes([
+      { f: 659.25, t: 0.00, d: 0.55, g: 0.22 },  // E5
+      { f: 880.00, t: 0.16, d: 0.70, g: 0.20 },  // A5
+      { f: 1318.5, t: 0.16, d: 0.45, g: 0.05 }   // E6 shimmer
+    ]);
+  }
+
+  /* High-impact voice: a slightly slower, resolving three-note figure (A5 -> C#6 -> E6). */
+  function playHighImpactChime() {
+    const ok = playNotes([
+      { f: 880.00, t: 0.00, d: 0.40, g: 0.20 },  // A5
+      { f: 1108.7, t: 0.18, d: 0.45, g: 0.19 },  // C#6
+      { f: 1318.5, t: 0.36, d: 0.85, g: 0.22 },  // E6
+      { f: 1760.0, t: 0.36, d: 0.60, g: 0.05 }   // A6 shimmer
+    ]);
+    return ok;
+  }
+
   function testSound() {
     const ok = playChime();
-    log("🔔 Sound test played" + (ok ? "" : " (audio unavailable in this browser)"), null);
+    log("🔔 Sound test played (standard alert voice)" + (ok ? "" : " (audio unavailable in this browser)"), null);
+    renderLog();
+    return ok;
+  }
+
+  function testHighImpactSound() {
+    const ok = playHighImpactChime();
+    log("🔔⚡ Sound test played (HIGH LINEUP IMPACT voice)" + (ok ? "" : " (audio unavailable in this browser)"), null);
     renderLog();
     return ok;
   }
@@ -121,6 +146,33 @@ const AlertEngine = (() => {
    *     with the report date; the NBA PDF is published hours before tip). Judging those by `ts`
    *     suppressed genuine OUT designations. Items that carry `observedAt` are judged on it.
    */
+  /* High lineup impact is a claim by the impact model (assets/js/role.js, model v2): the item
+   * carries either a full assessment (`impact.impact` / `impact.grade`) or the flattened board
+   * shape (`impact.tier`). Both are read here so no producer can silently lose its escalation. */
+  /* Impact readers accept EVERY shape the producers actually use, because a missed read here is
+   * a high-impact absence announced with the ordinary chime (or not announced as high at all):
+   *   - a full LineupImpact assessment            -> im.grade        (social layer)
+   *   - the board's flattened clone               -> im.tier         (injuries.js)
+   *   - a bare grade string                       -> im === "high"  (archived rows)
+   *   - a flattened record with top-level fields  -> item.grade     (tools/poll_watch.js output)
+   */
+  function impactGrade(item) {
+    const im = item && item.impact;
+    if (!im) return (item && typeof item.grade === "string") ? item.grade : null;
+    if (typeof im === "string") return im;
+    return im.grade || im.impact || im.tier || (item && item.grade) || null;
+  }
+  function offenseTier(item) {
+    const im = item && item.impact;
+    if (im && typeof im === "object" && im.offenseTier) return im.offenseTier;
+    return (item && item.offenseTier) || null;
+  }
+  function impactScore(item) {
+    const im = item && item.impact;
+    if (im && typeof im === "object" && typeof im.score === "number") return im.score;
+    return (item && typeof item.score === "number") ? item.score : null;
+  }
+
   function fire(item) {
     // One policy for ALL producers. A filter never silently drops the audit log.
     const filters = typeof App !== "undefined" && App.getFilters ? App.getFilters() : null;
@@ -129,7 +181,11 @@ const AlertEngine = (() => {
     const judged = item.observedAt || item.ts;
     const maxAge = item.maxAgeMs || 30 * 60 * 1000;
     const fresh = !judged || isFresh(judged, maxAge);
-    const impact = item.impact && (item.impact.impact === "high" || item.impact.tier === "high" || (item.impact.role && item.impact.role.tier === "starter" && (item.sev === "out" || item.sev === "doubtful"))) ? "⚡ HIGH LINEUP IMPACT " : "";
+    const high = impactGrade(item) === "high";
+    const off = offenseTier(item);
+    const score = impactScore(item);
+    const offenseBit = off === "primary" ? "[PRIMARY OFFENSIVE OPTION] " : off === "secondary" ? "[2nd OPTION] " : "";
+    const impact = high ? "⚡ HIGH LINEUP IMPACT" + (score == null ? "" : " " + score + "/100") + " " + offenseBit : "";
     const label = `${impact}[${item.sevLabel}] ${item.title}`;
     const ageNote = item.observedAt && item.ts && item.ts !== item.observedAt
       ? ` (source timestamp ${item.ts}; observed ${item.observedAt})` : "";
@@ -138,8 +194,14 @@ const AlertEngine = (() => {
     }
     log("🚨 " + label + ageNote, item.url);
     renderLog();
-    if (soundOn && Date.now() - lastChimeAt > 1500) { playChime(); lastChimeAt = Date.now(); }
-    notify("NBA Injury Alert — " + item.sevLabel, [item.title, item.detail].filter(Boolean).join(" — "), item.url);
+    if (soundOn && Date.now() - lastChimeAt > 1500) {
+      /* HIGH LINEUP IMPACT gets its own voice so the room can tell the two apart without
+       * looking at the screen; both are governed by the same ON/OFF switch. */
+      if (high) playHighImpactChime(); else playChime();
+      lastChimeAt = Date.now();
+    }
+    notify((high ? "⚡ HIGH LINEUP IMPACT — " : "") + "NBA Injury Alert — " + item.sevLabel,
+      [item.title, item.detail].filter(Boolean).join(" — "), item.url);
     return true;
   }
 
@@ -152,5 +214,5 @@ const AlertEngine = (() => {
     return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
-  return { isFresh, playChime, testSound, setSoundOn, isSoundOn, notifPermission, requestNotifPermission, notify, log, clearLog, renderLog, getLog, fire, escapeHtml };
+  return { isFresh, playChime, playHighImpactChime, testSound, testHighImpactSound, setSoundOn, isSoundOn, notifPermission, requestNotifPermission, notify, log, clearLog, renderLog, getLog, fire, impactGrade, offenseTier, impactScore, escapeHtml };
 })();

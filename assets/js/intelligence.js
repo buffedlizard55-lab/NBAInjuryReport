@@ -22,6 +22,10 @@ const Intelligence = (() => {
       rosters: context.rosters || {},
       roles: context.roles || [],
       roleStats: context.roleStats || {},
+      /* schema 3 additions — the schedule/travel and team-production halves of the impact model.
+       * Absent (older capture) they simply produce no component, and role.js says so. */
+      schedules: context.schedules || {},
+      teamStats: context.teamStats || {},
       exits: ledger.exits || {},
       source: { context: 'data/live/context.json', exits: 'data/live/intelligence.json' }
     };
@@ -82,8 +86,15 @@ const Intelligence = (() => {
       map[key] = r.status;
       const team = TEAMS.find(t => t.city + ' ' + t.name === r.teamName);
       if (!first && saved && saved[key] !== r.status && /^(Out|Questionable|Doubtful)$/.test(r.status) && /Injury\/Illness/i.test(r.reason)) {
+        /* The official league report is the most authoritative designation this system sees, so
+         * it gets the SAME lineup-impact assessment as the board: an official Out for a starter
+         * must not arrive with the ordinary chime just because it came from the PDF layer. */
+        const imp = (typeof LineupImpact !== 'undefined')
+          ? LineupImpact.assess({ player: r.player, playerId: r.playerId, team: team?.abbr, sev: sevFromStatus(r.status) }, impactContext())
+          : null;
         AlertEngine.fire({ sev: r.status.toLowerCase(), sevLabel: r.status.toUpperCase() + ' (NBA official)', title: r.player + ': ' + r.status,
-          detail: r.reason + ' · ' + r.gameDate + ' ' + r.matchup, url: r.url, team: team?.abbr,
+          impact: imp ? { tier: imp.impact, grade: imp.impact, label: imp.impactLabel, offenseTier: imp.offenseTier, score: imp.score } : null,
+          detail: [r.reason, imp && imp.impact !== 'unknown' ? imp.impactLabel : null, r.gameDate + ' ' + r.matchup].filter(Boolean).join(' · '), url: r.url, team: team?.abbr,
           ts: official.reportAt, observedAt: new Date().toISOString(), maxAgeMs: 12 * 3600000 });
       }
       if (typeof Wire !== 'undefined') Wire.push({ key: 'official-' + key, layer: 'official-nba', sev: r.status.toLowerCase(), sevLabel: r.status.toUpperCase(),
@@ -108,7 +119,12 @@ const Intelligence = (() => {
        * only exposes `minGamesForRole`, so the deployed legend printed "needs at least undefined collected
        * games". A smoke check (tools/smoke_test.js, "the impact legend only references existing CONFIG keys")
        * pins every identifier this template interpolates, so a renamed key cannot render "undefined" again. */
-      document.getElementById('impactLegend').innerHTML = `Lineup impact is computed from box scores this project has collected, and is <b>not</b> medical severity: starter = starts in at least <b>${Math.round(c.starterShare * 100)}%</b> of collected games · rotation = <b>${c.rotationMinutes}+</b> minutes per collected game · depth = under <b>${c.benchMinutes}</b> · needs at least <b>${c.minGamesForRole}</b> collected games before any role is asserted. No collected games ⇒ <b>unknown</b>, never guessed.`;
+      document.getElementById('impactLegend').innerHTML = `Lineup impact — <b>not</b> medical severity.
+        Score = <b>stake ${Math.round(c.weightStake * 100)}%</b> (minutes, starts, share of the team's collected scoring, assists, on-court +/-, bounded to ±${c.plusMinusCap})
+        + <b>exposure ${Math.round(c.weightExposure * 100)}%</b> (games in the next 7 days, back-to-backs, road games, city-to-city miles, time zones)
+        + <b>recurrence ${Math.round(c.weightRecurrence * 100)}%</b> (dated injury listings, reported in-game exits), renormalised over whichever parts have evidence.
+        HIGH ≥ <b>${c.gradeHigh}</b>, MEDIUM ≥ <b>${c.gradeMedium}</b>. Starter = starts in at least <b>${Math.round(c.starterShare * 100)}%</b> of collected games · rotation = <b>${c.rotationMinutes}+</b> minutes per collected game · depth = under <b>${c.benchMinutes}</b> · needs at least <b>${c.minGamesForRole}</b> collected games before any season role is asserted.
+        No collected box score ⇒ <b>unknown</b>, never guessed. Suggested returns that change a team's starters are what “high lineup impact” means here.`;
     }
   }
   document.addEventListener('DOMContentLoaded', () => {

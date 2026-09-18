@@ -14,12 +14,13 @@ NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster pla
 | Team coverage gaps | Every refresh names the teams the current snapshot says **nothing** about (2026-09-17 snapshot: 27 of 30 blocks — CLE, DET and LAL absent), each linked to that team's own ESPN injuries page. An omitted block is never reported as a healthy roster; a full 30/30 snapshot still says it is not clearance. |
 | Live-style wire | Browser polling of ESPN news, injuries, allow-listed Bluesky author feeds and game summaries. Default 60 seconds; configurable 30–300 seconds. Source publication delays and browser throttling are additional. |
 | Severity colour-coding | Wire, social feed and injury-board rows carry a severity edge (out → return), pinned by tests that compare the emitted class names against the stylesheet — this pairing had drifted apart and the colours were not rendering at all until 2026-09-17. |
-| Sound / notifications | Pleasant WebAudio bell, on/off toggle, sound test, opt-in browser notifications and source-linked alert log. **Keep the tab open.** Browser audio requires a gesture; press Test sound. No closed-tab push delivery. |
+| Sound / notifications | Pleasant WebAudio bell with a **separate high-impact voice** (rising A5→C#6→E6 figure) so a `⚡ HIGH LINEUP IMPACT` absence is distinguishable by ear; on/off toggle, two sound tests, opt-in browser notifications and source-linked alert log. **Keep the tab open.** Browser audio requires a gesture; press a Test button. No closed-tab push delivery. |
 | Alert safeguards | First successful observations seed silently. Failed/stale snapshots cannot clear the injury baseline. Team/severity filters apply centrally. Old posts, unknown-player social signals and unverified-identity posts do not sound. Bursts coalesce sound, not log entries. |
 | In-game signals | Recent social exit/QTR language is a **reported, unconfirmed signal**, not a league designation. DNP and generic game injury arrays do **not** establish an in-game exit and do not sound. Actual live-game exit latency has not been validated. |
 | Official NBA adapter | Season-page link discovery → linked PDF → layout parser → health flags. Never guesses timestamped URLs. Real historical PDF regression fixture: 229 rows across 30 teams. **No live report discovered in this audit**; automatic official confirmation remains blocked until an official page exposes report links. |
 | Player identity/context | Daily best-effort all-team ESPN roster collection; explicit starter/bench observations during current games. Unknown if absent, stale or blocked. No inferred medical severity, no unsupported season-long rotation classification. |
-| Lineup impact (not medical severity) | `assets/js/role.js` grades each listing HIGH/MEDIUM/LOW/UNKNOWN from **collected** evidence only: box-score starts/minutes (≥3 games, ≥60% starts for a starter), the current game's lineup card, injury-listing cadence from dated ESPN roster entries, and reported in-game exits from the ledger. Offseason reality: no 2026-27 games have been collected yet, so most rows read IMPACT UNKNOWN — by design, never guessed. |
+| Lineup impact (not medical severity) | `assets/js/role.js` **model v2** (2026-09-18) grades each listing HIGH ≥ 65 / MEDIUM ≥ 40 / LOW / UNKNOWN as a weighted score over three **collected-evidence** components: **STAKE 60%** (avg minutes, start share, the player's share of the team's own collected scoring, assists, bounded on-court +/−) · **EXPOSURE 20%** (games in the next 7 days, back-to-backs, road games, city-to-city travel miles and time zones from the published schedule) · **RECURRENCE 20%** (dated ESPN roster listings plus reported in-game exits). Missing components are dropped and the remainder renormalised, with the coverage fraction printed on every row. Four documented rules: R1 starter + Out/Doubtful = HIGH · R2 rotation + Out/Doubtful ≥ MEDIUM · R3 depth caps at LOW · R4 no stake evidence = UNKNOWN **even on a heavy road trip**. Offseason reality: no 2026-27 games have been collected yet, so most rows read UNKNOWN — by design, never guessed. |
+| Travel model (not flight data) | `assets/js/geo.js` — 37 city rows covering all 30 NBA home cities, great-circle distances cross-checked against published values (BOS→LAX 2,591 vs ~2,611 mi), IANA time-zone offsets read per game date, rest days from the schedule, and a documented time model (450 mph + 2.0 h overhead; ground under 250 mi at 45 mph). An unknown venue city is reported as unresolved, never approximated. No free source publishes charter or private-terminal logistics, and none is claimed. |
 | History | Automatic, source-linked forward injury-listing changes. First observation is **not injury onset**. Not a complete medical history. Working ledger retains 30 days / up to 10,000 changes. |
 | Social intelligence | Automatic post ledger, one-player exact-name resolution, original text/URL/hash, posted/first-observed times. A narrow game-date-matched official comparison can mark corroboration or conflict for review. **No established accuracy scores or global first-to-report rankings.** In-game claims stay pending without game-specific outcomes. |
 | X / Instagram / Facebook | **No authorized read connector configured.** X embeds and links are manual review only, not alert inputs. Current pricing and access entitlements are not asserted. |
@@ -50,7 +51,7 @@ These observations do not certify every legacy reporter link or guarantee later 
 
 1. Offline logic, integration, poller, regression and official-PDF tests.
 2. Official report discovery and PDF parsing (`poppler-utils`).
-3. Roster/current-game role collection (`tools/collect_context.js`) — dated injury listings, contracts, starter/minutes samples deduped per game; feeds the lineup-impact layer.
+3. Roster + schedule + current-game collection (`tools/collect_context.js`) — dated injury listings, contracts, live/next-7/last-2 games with venues, rest days, city-to-city travel and time-zone shifts, and box-score minutes/points/assists/on-court +/− deduped per game (schema 3); feeds both halves of the lineup-impact model.
 4. ESPN and Bluesky snapshot collection using shared browser classifiers.
 5. Automatic observation ledger and source-linked injury history.
 6. Live-snapshot invariant check, snapshot/history commit and artifact upload.
@@ -61,7 +62,8 @@ These observations do not certify every legacy reporter link or guarantee later 
 
 ```sh
 python3 -m http.server 8080 --bind 0.0.0.0
-node tools/smoke_test.js                 # 189 checks
+node tools/smoke_test.js                 # 197 checks
+node tools/impact_test.js                # 69 checks (geo, collector math, impact model v2, wiring)
 node tools/integration_test.js           # 52 checks (boots the real dashboard on fixtures)
 node tools/poll_fixture_test.js          # 24 checks (real poller, fixture transports)
 node tools/regression_test.js            # 26 groups
