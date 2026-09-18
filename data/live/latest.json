@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-18T02:37:33.871Z",
+  "generated": "2026-09-18T02:41:14.831Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -82,6 +82,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/schedule"
         },
         "availabilityRisk": {
@@ -180,6 +182,8 @@
           "mode": "air (model)",
           "tzShiftHours": 3,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule"
         },
         "availabilityRisk": {
@@ -280,6 +284,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Inglewood, CA",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
         },
         "availabilityRisk": {
@@ -380,6 +386,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": "unknown venue city",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
         },
         "availabilityRisk": {
@@ -480,6 +488,8 @@
           "mode": "air (model)",
           "tzShiftHours": 3,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule"
         },
         "roleTier": "unknown",
@@ -576,6 +586,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule"
         },
         "availabilityRisk": {
@@ -674,6 +686,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": "Boulder, CO",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/schedule"
         },
         "availabilityRisk": {
@@ -774,6 +788,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "unknown venue city",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule"
         },
         "availabilityRisk": {
@@ -874,6 +890,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Ames, IA",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/schedule"
         },
         "availabilityRisk": {
@@ -974,6 +992,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Tulsa, OK",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
@@ -1074,6 +1094,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule"
         },
         "availabilityRisk": {
@@ -1174,6 +1196,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
         },
         "availabilityRisk": {
@@ -1274,6 +1298,8 @@
           "mode": "air (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
         },
         "availabilityRisk": {
@@ -1374,6 +1400,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule"
         },
         "availabilityRisk": {
@@ -1474,6 +1502,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Inglewood, CA",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
         },
         "roleTier": "unknown",
@@ -1570,6 +1600,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/schedule"
         },
         "availabilityRisk": {
@@ -1670,6 +1702,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule"
         },
         "roleTier": "unknown",
@@ -1766,6 +1800,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": "Inglewood, CA",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/schedule"
         },
         "roleTier": "unknown",
@@ -1862,6 +1898,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "unknown venue city",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule"
         },
         "availabilityRisk": {
@@ -1962,6 +2000,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Inglewood, CA",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
         },
         "availabilityRisk": {
@@ -2062,6 +2102,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": "unknown venue city",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
         },
         "availabilityRisk": {
@@ -2162,6 +2204,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
         },
         "availabilityRisk": {
@@ -2262,6 +2306,8 @@
           "mode": "ground (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
         },
         "roleTier": "unknown",
@@ -2358,6 +2404,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Tulsa, OK",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
@@ -2458,6 +2506,8 @@
           "mode": "air (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
         },
         "availabilityRisk": {
@@ -2558,6 +2608,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
         },
         "availabilityRisk": {
@@ -2658,6 +2710,8 @@
           "mode": "air (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bos/schedule"
         },
         "availabilityRisk": {
@@ -2758,6 +2812,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/schedule"
         },
         "availabilityRisk": {
@@ -2858,6 +2914,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/schedule"
         },
         "availabilityRisk": {
@@ -2958,6 +3016,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
         },
         "availabilityRisk": {
@@ -3058,6 +3118,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
         },
         "availabilityRisk": {
@@ -3156,6 +3218,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Tulsa, OK",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
@@ -3254,6 +3318,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Boulder, CO",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/schedule"
         },
         "availabilityRisk": {
@@ -3352,6 +3418,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule"
         },
         "availabilityRisk": {
@@ -3452,6 +3520,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule"
         },
         "availabilityRisk": {
@@ -3552,6 +3622,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule"
         },
         "availabilityRisk": {
@@ -3652,6 +3724,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/schedule"
         },
         "roleTier": "unknown",
@@ -3746,6 +3820,8 @@
           "mode": "air (model)",
           "tzShiftHours": 3,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule"
         },
         "availabilityRisk": {
@@ -3846,6 +3922,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule"
         },
         "availabilityRisk": {
@@ -3946,6 +4024,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule"
         },
         "availabilityRisk": {
@@ -4044,6 +4124,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule"
         },
         "availabilityRisk": {
@@ -4144,6 +4226,8 @@
           "mode": "air (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
         },
         "availabilityRisk": {
@@ -4244,6 +4328,8 @@
           "mode": "ground (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule"
         },
         "availabilityRisk": {
@@ -4344,6 +4430,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule"
         },
         "availabilityRisk": {
@@ -4442,6 +4530,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": "Boulder, CO",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/schedule"
         },
         "availabilityRisk": {
@@ -4542,6 +4632,8 @@
           "mode": "air (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
         },
         "availabilityRisk": {
@@ -4640,6 +4732,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule"
         },
         "availabilityRisk": {
@@ -4738,6 +4832,8 @@
           "mode": "air (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule"
         },
         "availabilityRisk": {
@@ -4838,6 +4934,8 @@
           "mode": "ground (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule"
         },
         "availabilityRisk": {
@@ -4938,6 +5036,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Tulsa, OK",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
@@ -5038,6 +5138,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule"
         },
         "availabilityRisk": {
@@ -5138,6 +5240,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule"
         },
         "availabilityRisk": {
@@ -5238,6 +5342,8 @@
           "mode": "air (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bkn/schedule"
         },
         "availabilityRisk": {
@@ -5338,6 +5444,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
         },
         "availabilityRisk": {
@@ -5432,6 +5540,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "unknown venue city",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule"
         },
         "availabilityRisk": {
@@ -5524,6 +5634,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mil/schedule"
         },
         "availabilityRisk": {
@@ -5616,6 +5728,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
         },
         "availabilityRisk": {
@@ -5708,6 +5822,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
         },
         "roleTier": "unknown",
@@ -5794,6 +5910,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule"
         },
         "availabilityRisk": {
@@ -5886,6 +6004,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
         },
         "availabilityRisk": {
@@ -5978,6 +6098,8 @@
           "mode": "air (model)",
           "tzShiftHours": 1,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule"
         },
         "availabilityRisk": {
@@ -6070,6 +6192,8 @@
           "mode": "ground (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
         },
         "availabilityRisk": {
@@ -6162,6 +6286,8 @@
           "mode": "ground (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
         },
         "availabilityRisk": {
@@ -6254,6 +6380,8 @@
           "mode": "ground (model)",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
         },
         "availabilityRisk": {
@@ -6346,6 +6474,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Tulsa, OK",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
@@ -6438,6 +6568,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Inglewood, CA",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
         },
         "availabilityRisk": {
@@ -6530,6 +6662,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": "Tulsa, OK",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/schedule"
         },
         "availabilityRisk": {
@@ -6622,6 +6756,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule"
         },
         "availabilityRisk": {
@@ -6714,6 +6850,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/schedule"
         },
         "availabilityRisk": {
@@ -6806,6 +6944,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": 0,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule"
         },
         "availabilityRisk": {
@@ -6898,6 +7038,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": "unknown venue city",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
         },
         "availabilityRisk": {
@@ -6990,6 +7132,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Tulsa, OK",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
@@ -7082,6 +7226,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/min/schedule"
         },
         "roleTier": "unknown",
@@ -7170,6 +7316,8 @@
           "mode": null,
           "tzShiftHours": null,
           "unmappedCity": "Inglewood, CA",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/schedule"
         },
         "roleTier": "unknown",
@@ -7258,6 +7406,8 @@
           "mode": "home game — no travel leg",
           "tzShiftHours": null,
           "unmappedCity": "Ames, IA",
+          "venueNameResolved": null,
+          "travelFromFallback": null,
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/schedule"
         },
         "roleTier": "unknown",
@@ -7353,20 +7503,6 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nuggets.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Denver Nuggets — official",
-        "kind": "official-team",
-        "team": "DEN"
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
       "nba.com": {
         "ok": true,
         "count": 0,
@@ -7374,12 +7510,26 @@
         "kind": "official-league",
         "team": null
       },
+      "nuggets.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Denver Nuggets — official",
+        "kind": "official-team",
+        "team": "DEN"
+      },
       "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Philadelphia 76ers — official",
         "kind": "official-team",
         "team": "PHI"
+      },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
       },
       "dallasmavs.bsky.social": {
         "ok": true,
@@ -7423,17 +7573,17 @@
         "kind": "reporter",
         "team": null
       },
-      "tomorsborn.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
+      },
+      "tomorsborn.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Tom Orsborn",
         "kind": "reporter",
         "team": "SAS"
       },
