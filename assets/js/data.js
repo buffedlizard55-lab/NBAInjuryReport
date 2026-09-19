@@ -932,7 +932,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/busyxb.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=busyxb.bsky.social",
     evidenceQuote: "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com",
-    observed: { latestPostAt: "2026-09-19T17:06:50.127Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 3732, followersCount: 1803, profileIndexedAt: "2026-08-01T14:43:51.964Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-19T19:10:30.033Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 3732, followersCount: 1803, profileIndexedAt: "2026-08-01T14:43:51.964Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily...' + 3,732 posts (highest BKN volume). Closes BKN gap as bio-pollable. X @busyxb same person." },
 
   { name: "Shamit Dua", handle: "fearthebrown.bsky.social", outlet: "In The NO (intheno.net)", role: "Pelicans credentialed media", team: "NOP", feed: true,
