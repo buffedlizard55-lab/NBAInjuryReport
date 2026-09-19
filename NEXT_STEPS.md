@@ -33,8 +33,8 @@
   reporter verifier 171, Python 26 — all passed. `git diff --check` clean.
 - Current-source re-reads and transport failures: [session evidence](data/audit/review-2026-09-19.md).
   NBA page still displays 404. No guessed PDF filename. No X key or scraping adapter added.
-- Browser execution requires GitHub CI because Chromium download is blocked in this sandbox.
-  PR tests must succeed before merge; a fixture pass does not establish live injury latency.
+- Browser execution passed in [GitHub CI run 35464863848](https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/runs/35464863848), including the synthetic-alert assertions.
+  Local Chromium download was TLS-blocked. A fixture pass does not establish live injury latency.
 
 ### Next session — acceptance gates, not promises
 1. Monitor the official season page for actual linked reports; exercise discovery, parser
