@@ -1,5 +1,118 @@
 # Next-session priorities
 
+## State at the end of session 17 (2026-09-19) — read this first
+
+Session 17 was a **self-consistency** pass: it went looking for places where the project states the
+same fact twice with no way to notice the copies diverging — the recurring failure mode here
+(session 7's severity-colour drift, session 7's `athletes[]` key, session 9's alert-shape mismatch,
+session 14's duplicate `latestPostAt`). It found one on committed data, by running the shipped
+suite and reading the failure instead of the code. Standing constraints unchanged: **no X API key**,
+every claim re-checkable from a free keyless source, an omitted ESPN block is never clearance.
+
+**What shipped**
+
+1. **The age arithmetic could go negative — fixed in both copies.** `arenaDaysSince()`
+   (`assets/js/data.js`) and `ageDays()` (`tools/verify_reporters.js`) both computed
+   `floor((now - t) / day)` with no zero floor. A newest post can legitimately be **newer than the
+   reference clock**: `live-audit.yml` measured Michael Grange at 2026-09-19T18:28:52Z and found a
+   post stamped **2026-09-19T14:24:17.055Z**, later than the 12:00Z clock a pinned check uses. That
+   returned `-1`, and `writerRecency()` renders its label straight to the page — reporters.html
+   would have printed **"-1 days since newest post"**. The inversion matters more than the
+   cosmetics: the further future-dated a row, the *smaller* the number, and every consumer reads
+   smaller as more recent. Both copies now floor at 0; `writerRecency()` also exposes
+   `aheadOfClock` and says so in the label. The stored date was independently re-read keylessly
+   this session (`app.bsky.feed.getAuthorFeed?actor=michaelgrangenba.bsky.social&limit=1` →
+   `record.createdAt 2026-09-19T14:24:17.055Z`, a Sportsnet link indexed 14:24:19.362Z) so the fix
+   corrects the arithmetic, not the evidence.
+2. **The registry stored activity twice and nothing compared them — now it does.**
+   `observed.latestPostAt` is machine-written by `tools/backfill_registry_recency.js`; the
+   `ACTIVITY:` sentence inside `verified` is hand-written. The backfill deliberately touches only
+   machine fields, so prose is *guaranteed* to go stale whenever a writer posts. Grange shipped
+   that way: stored date "today" (pill read **ACTIVE**) against prose "39 days → **DORMANT**". Both
+   true of different moments, both printed, and every test passed because the verdict was `ok`.
+   `detectProseActivity()` now compares the **ACTIVE/DORMANT verdict** rather than the day count (a
+   count written on 09-19 is just older by 09-25; that is not drift), emits warn-level
+   `prose-drift` which **still counts as live coverage**, and renders a `prose ≠ measurement` badge
+   with both numbers — closing the session-15 *verifier-drift UI* leftover. The panel also prints
+   **every** note now; it used to print `notes[0]` only.
+3. **Auto-rewriting the prose was considered and refused.** The `ACTIVITY` clauses carry
+   parentheticals describing *what the post was* — "(a book-research post, not basketball)",
+   "(an Emmys post, not basketball — activity is measured, not judged)". Rewriting the date while
+   keeping those produces confidently wrong prose; regenerating them means inventing a description
+   of a post nobody read. So: machine fields stay auto-backfilled, contradictions get flagged for
+   re-read, and Grange's sentence was corrected by hand **from the post actually read this
+   session**, keeping the 39-day reading as dated `HISTORY:` instead of deleting it.
+4. **Two CSS classes emitted into markup with no rule — one pre-existing and unnoticed.** Adding
+   the `prose ≠ measurement` badge meant emitting `<b class="warn">`, and bare `.warn` had no rule
+   (only `.good` and `.bad` did, from session 7). That is the session-7 bug recurring, because the
+   old test pinned a **hand-picked pair** and so could not notice a third class. The audit is now
+   generalised to every `class="…"` the modules emit, which immediately surfaced a pre-existing
+   orphan: **`post-head`**, emitted by `social.js` on every social-feed card since the feed was
+   built with no selector anywhere, so each card's severity tag, name, verification tag, outlet and
+   team chip ran together with no gap. Fixed by mirroring `.watch-item .wi-top`. Seven other
+   single-token classes have no *bare* rule but are legitimately styled by descendant selectors, so
+   the assertion is "appears in the stylesheet", not "has a bare rule". Verified by negative run:
+   removing the new `.post .post-head` rule fails exactly one check, naming `post-head (social.js)`.
+   The first version of that check had a regex one backslash short (`\?` = a literal question
+   mark), examined 0 classes and passed — its own anti-vacuity guard is what caught it, and both
+   are kept.
+5. **Docs numbers recomputed rather than restated.** The README's "46 active / 19 dormant" was
+   already stale against committed data; the registry + CI evidence now evaluate to **47 active /
+   18 dormant** at either clock (verified identical before and after this session's change, so the
+   clamp moved nothing — the CI measurement of Grange did).
+
+**Live re-reads this session (page-fetch channel, ~18:50–19:05Z; shell egress still blocked —
+`curl` to `site.api.espn.com` gives `SSL_ERROR_SYSCALL`)**
+
+- Official 2026-27 injury-report page still **404**, new XID **72640245**. No PDF filename guessed.
+- Official **2025-26** page **200** and states the league's reporting deadlines (5 p.m. local the
+  day before; 1 p.m. local for the second night of a back-to-back; game-day report 11 a.m.–1 p.m.
+  local, 8–10 a.m. for tips at or before 5 p.m.) — still **no timestamped PDF links**.
+- ESPN injuries JSON **200**, `timestamp 2026-09-19T18:50:34Z`, season `2026-27` Preseason; the
+  sampled Gueye row still carries `date=2026-07-19T00:14Z` against a current status — the exact
+  shape session 16's `alertEligible` fix guards.
+- ESPN injuries HTML **200**: **27 blocks, 75 rows, CLE / DET / LAL still absent** (the dropdown
+  lists all 30, so the gap is in the data).
+- Basketball Monster **200**: "The regular season begins in 31 days"; 10/20 at 2:00pm BOS at DET /
+  6:00pm PHI at NYK / 8:30pm OKC at SAS. Format evidence only — Adem Bona PHI *Questionable, foot
+  sprain*; Mark Williams PHO *Injured, left shoulder*. **Not scraped into alerts.**
+- `app.bsky.actor.getAuthorFeed` returns **`MethodNotImplemented`** — it is not a method. The feed
+  method is `app.bsky.feed.getAuthorFeed`. Recorded so nobody misreads it as blocked access.
+
+**Test surface:** `verify_reporters_test` **118 passed / 1 failed → 141 passed / 0 failed**;
+`smoke_test` **234 → 237**; `integration_test` **91 → 94**; everything else unchanged (impact 80,
+poll fixture 25, regression 27 groups, python 26). `replay_posts --check` (75 rows / 137 posts, no
+invariant violations) and `backfill_registry_recency --check` both clean. Full-suite run recorded
+in AUDIT.md, session 17. `tools/browser_test.js` could **not** be run this session: the Chromium
+binary cannot be downloaded in this sandbox (`npx playwright install chromium` → download failure),
+so the real-browser pass is unverified and the stubbed-DOM `integration_test` is what covers the
+rendering changes.
+
+**What is still open, and why**
+
+1. **Official adapter still blocked** until `official.nba.com/nba-injury-report-2026-27-season/`
+   stops 404 (XID 72640245). Never guess a PDF filename.
+2. **Impact stays UNKNOWN** until box scores exist (`roleStats` empty). First measurement window is
+   preseason tip **2026-10-03**, then opening night **2026-10-20**.
+3. **In-game QTR/exit latency is fixture-tested only** until that 3 Oct tip.
+4. **The prose duplication itself is unfixed — only detectable.** The durable fix is to stop
+   restating the measurement in prose: render the pill, and keep only the *interpretation* in the
+   sentence. That is an 83-row registry edit and was not attempted this session.
+5. **`prose-drift` is warn-level**, so CI will not fail on it. Deliberate (a stale sentence is not a
+   broken identity claim, and failing the daily job on prose trains people to ignore the job), but
+   it means a contradiction can sit on the page until someone reads the panel.
+6. **Two `ageDays` implementations remain.** They clamp identically and a test asserts it; the
+   honest fix is one shared module loaded by browser and Node, the argument already accepted for
+   `ARENA_DORMANT_DAYS`.
+7. **Reporter-layer leftovers from session 15** otherwise unchanged: beat-change watch is detected
+   and now fully rendered, but thin teams, the `rodboone` bio, the CHA/UTA identity ceiling,
+   26/30 clubs unverified on Bluesky and X/IG/FB manual-only all stand.
+8. **CLE/DET/LAL omitted from ESPN** is still a feed fact, re-read twice this session. **DET is now
+   the sharpest case**: it returns no injury block at all while Basketball Monster already
+   schedules DET in the 10/20 opener. If DET is still empty once games are live, that is a
+   source-coverage problem, not an offseason artefact.
+
+
 ## State at the end of session 16 (2026-09-19) — read this first
 
 Session 16 was the **injury-board product**, not another reporter sweep. Training camp opens

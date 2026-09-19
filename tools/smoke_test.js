@@ -641,6 +641,46 @@ check("the board row declares a left border for the severity edge to colour",
   /\.board-row\.sev-border-/.test(CSS));
 check("status words .good / .bad have their own rules, not only compound ones",
   cssBare.has("good") && cssBare.has("bad"));
+/* Session 17 generalisation of the check above. Pinning two hand-picked words is how `post-head`
+ * survived: social.js has emitted `class="post-head"` on every social-feed card since the feed was
+ * built and no selector for it ever existed, so each card's severity tag, reporter name,
+ * verification tag, outlet and team chip ran together with no gap — while the in-game monitor's
+ * equivalent header (`.watch-item .wi-top`) was styled all along. This session added a third bare
+ * status word (`class="warn"` in the verify panel) with no rule either.
+ *
+ * The assertion is "appears in the stylesheet as a class selector", NOT "has a bare rule": seven
+ * legitimately-styled single-token classes are styled by descendant selectors
+ * (`.watch-item .wi-top`, `.board-team-head .abbr`, `ol.tight li`, …), so demanding the bare form
+ * would report styling that exists. What must never happen is a class emitted into markup that the
+ * stylesheet has never heard of, because that renders as invisible-by-omission rather than by
+ * design — the exact distinction the session-7 note above draws. */
+{
+  const emitted = new Map();
+  for (const f of fs.readdirSync(path.join(ROOT, "assets/js"))) {
+    if (!/\.js$/.test(f)) continue;
+    const src = fs.readFileSync(path.join(ROOT, "assets/js", f), "utf8");
+    /* Single-token class attributes only: `class="tag team"` is a compound pair styled by
+     * `.tag.team`, and splitting it would report two classes that were never used alone.
+     * Deliberately a plain pattern — the codebase has 278 `class="…"` occurrences and ZERO
+     * escaped `class=\"…\"` ones, and an optional-backslash form of this regex was written
+     * with one backslash too few on its first attempt, where `\?` silently means a literal
+     * question mark and the audit passed with 0 classes examined. The anti-vacuity check below
+     * is what caught that; keep both. */
+    for (const m of src.matchAll(/class="([A-Za-z][A-Za-z0-9_-]*)"/g)) {
+      if (!emitted.has(m[1])) emitted.set(m[1], new Set());
+      emitted.get(m[1]).add(f);
+    }
+  }
+  check("the modules really do emit single-token class attributes (audit is not vacuous)",
+    emitted.size > 20, "found " + emitted.size);
+  const orphan = [...emitted.keys()].filter(c => !cssTokens.has(c));
+  check("every single-token class the modules emit exists somewhere in the stylesheet",
+    orphan.length === 0,
+    orphan.map(c => c + " (" + [...emitted.get(c)].join(",") + ")").join("; "));
+  check("all three bare status words have their own rule, not only compound ones",
+    ["good", "bad", "warn"].every(c => cssBare.has(c)),
+    ["good", "bad", "warn"].filter(c => !cssBare.has(c)).join(","));
+}
 check("the empty-state class is styled", cssBare.has("empty"));
 check("the 30-chip strip and empty franchise card have rules",
   cssTokens.has("team-strip-chip") && cssTokens.has("board-team-empty") && cssTokens.has("season-clock"));
