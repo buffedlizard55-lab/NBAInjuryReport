@@ -37,7 +37,7 @@ NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster pla
 
 See [AUDIT.md](AUDIT.md) for findings and verification scope, and [data/audit/latest.json](data/audit/latest.json) for independent runner HTTP statuses, timestamps and body hashes. Since the session-7 fix each row also carries an explicit `verified` flag: **OK** is reserved for a response that actually verifies the claim, and a tolerated refusal (HTTP 403 on a JSON endpoint this client is fingerprinted out of) is **ENV-BLOCKED** with `verified=false`. Before that fix four checks that had read nothing printed OK.
 
-- Official 2026–27 injury-report page: **404** (re-read 2026-09-19 ~18:50Z, `XID: 72640245`; earlier XIDs 71103381 / 44289229 / 74717976). Still no PDF link, and no filename has been guessed.
+- Official 2026–27 injury-report page: **404** (re-read 2026-09-19 ~21:51Z, `XID: 79058498`; earlier XIDs 71103381 / 44289229 / 74717976 / 72640245). Still no PDF link, and no filename has been guessed.
 - Post-fix runner audit (`2026-09-17T21:22:35Z`, 22 checks, 0 drift, 0 tool errors): **16 of 22 claims verified by that run**, 6 `ENV-BLOCKED` — four `site.api.espn.com` JSON calls fingerprinted to **403** (`espn-teams`, `espn-scoreboard`, `espn-roster-mia`, `espn-teams-mia`) and two `www.espn.com` HTML pages returning the **202** bot-challenge interstitial. The Node collector and the deployed browser reach all of them.
 - Previous season page: **200**, but no timestamped injury-PDF links observed.
 - Known historical official PDF: **200**, parsed and tested for page breaks and wrapped reasons.

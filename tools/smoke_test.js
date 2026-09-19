@@ -100,8 +100,8 @@ check("flags present (>= 20)", M.FLAGS.length >= 20, "got " + M.FLAGS.length);
 check("flag levels are valid", M.FLAGS.every(f => ["bad", "warn", "info"].includes(f.level)));
 check("session-16 board-alert defect is flagged (source-date eligibility)",
   M.FLAGS.some(f => /board alerts keyed eligibility on ESPN's listing DATE/.test(f.title)));
-check("session-16 official 2026-27 404 re-read is flagged with the new XID",
-  M.FLAGS.some(f => /XID 71103381/.test(f.detail)));
+check("session-20 official 2026-27 404 re-read is flagged with the new XID",
+  M.FLAGS.some(f => /XID:?\s*79058498/.test(f.detail)));
 check("season calendar has four dated gates and names its sources",
   M.NBA_SEASON_CALENDAR.events.length === 4 &&
   M.NBA_SEASON_CALENDAR.events.every(e => /^\d{4}-\d{2}-\d{2}$/.test(e.at) && (e.sourceIds || []).length) &&
