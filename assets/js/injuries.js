@@ -185,7 +185,14 @@ const InjuryBoard = (function () {
         row.returnDate ? "est. return " + row.returnDate : ""].filter(Boolean).join(" · "),
       url: row.teamUrl || row.playerUrl, reviewUrl: row.playerUrl, player: row.player, team: row.team,
       ts: row.updated || null, observedAt: new Date().toISOString(), maxAgeMs: 24 * 60 * 60 * 1000,
-      alertEligible: AlertEngine.isFresh(row.updated, 24 * 60 * 60 * 1000)
+      /* Session 16 (2026-09-19): eligibility used to be isFresh(row.updated, 24h). ESPN's `date`
+       * on the current board is often the original comment date (sampled live 2026-09-19:
+       * Gueye ATL 2026-07-19T00:14Z). A NEW listing or a STATUS CHANGE observed today would
+       * then be silent-dropped even though observedAt is now — the 6-hour freshness fix in
+       * fire() never ran, because alertEligible === false short-circuits it. Training camp
+       * opens 2026-09-22; those stamps will still be old. The CHANGE is the event; fire()
+       * judges freshness via observedAt + maxAgeMs. Social posts stay bound to post time. */
+      alertEligible: true
     };
   }
 
@@ -288,6 +295,41 @@ const InjuryBoard = (function () {
     const present = new Set(snapshot.map(r => r && r.team).filter(Boolean));
     return TEAMS.filter(t => !present.has(t.abbr))
       .map(t => ({ abbr: t.abbr, name: t.city + " " + t.name, url: espnTeamInjuriesUrl(t.abbr), nbaUrl: nbaTeamUrl(t.abbr) }));
+  }
+
+  /* 30-chip strip: the board is titled "every team". A coverage line that names three absences
+   * is easy to skip; a chip per franchise with its listing count is not. Empty chips are a
+   * statement about THIS snapshot, never clearance — the title attribute and the empty-team
+   * card both say so. Counts are from the unfiltered snapshot so a status filter cannot hide
+   * a missing block. */
+  function teamCounts(list) {
+    const snapshot = Array.isArray(list) ? list : rows;
+    const counts = {};
+    for (const r of snapshot) if (r && r.team) counts[r.team] = (counts[r.team] || 0) + 1;
+    return counts;
+  }
+  function renderTeamStrip(list) {
+    const el = document.getElementById("boardTeamStrip");
+    if (!el) return;
+    if (typeof TEAMS === "undefined" || !Array.isArray(TEAMS)) { el.innerHTML = ""; return; }
+    const snapshot = Array.isArray(list) ? list : rows;
+    if (error) {
+      el.innerHTML = '<span class="muted tiny">Refresh failed — team strip withheld rather than implied complete.</span>';
+      return;
+    }
+    const counts = teamCounts(snapshot);
+    const f = (typeof App !== "undefined" && App.getFilters) ? App.getFilters() : null;
+    const active = (f && f.team && f.team !== "ALL") ? f.team : "";
+    el.innerHTML = TEAMS.map(t => {
+      const n = counts[t.abbr] || 0;
+      const cls = n ? "has-listings" : "no-listings";
+      const on = active === t.abbr ? " on" : "";
+      const title = n
+        ? (t.city + " " + t.name + " — " + n + " listing(s) in this snapshot")
+        : (t.city + " " + t.name + " — no listing in this snapshot. That is NOT clearance; open the ESPN page.");
+      return '<button type="button" class="team-strip-chip ' + cls + on + '" data-team="' + esc(t.abbr) + '" title="' + esc(title) + '">' +
+        esc(t.abbr) + '<span>' + (n || "—") + '</span></button>';
+    }).join("");
   }
 
   function renderCoverage(list) {
@@ -456,11 +498,16 @@ const InjuryBoard = (function () {
         : 'via <b>' + esc(path || "—") + '</b>' + (fetchedAt ? ' · ' + esc(ago(fetchedAt)) : "");
     }
     /* Rendered BEFORE the "nothing matches" early return so a coverage gap is still stated when the
-     * current filter hides every row. */
+     * current filter hides every row. The 30-chip strip is the same: a filter must not hide the
+     * fact that CLE/DET/LAL returned no block. */
     renderCoverage();
+    renderTeamStrip();
     renderImpactWatch();
 
-    if (!shown.length) {
+    const unfilteredGrid = !q && boardStatusFilter === "ALL" && boardImpactFilter === "ALL" &&
+      !(f && f.team && f.team !== "ALL");
+
+    if (!shown.length && !(boardView === "teams" && unfilteredGrid && !error && typeof TEAMS !== "undefined")) {
       box.innerHTML = error
         ? '<div class="empty">No structured board available. Tried the ESPN injuries endpoint directly, then the same-origin CI snapshot.<br><span class="tiny muted">' + esc(error) + '</span></div>'
         : '<div class="empty">No listings match the current filters' + (rows.length ? " (" + rows.length + " exist)" : "") + '.</div>';
@@ -533,19 +580,45 @@ const InjuryBoard = (function () {
 
     const byTeam = {};
     for (const r of shown) (byTeam[r.team] = byTeam[r.team] || []).push(r);
-    /* Highest-impact teams first: the whole point of the board is to answer "who is in trouble
-     * tonight" before "who has a sore ankle". Impact score order, then severity, then recency. */
-    const teams = Object.keys(byTeam).sort((a, b) => {
-      const bestA = Math.max.apply(null, byTeam[a].map(r => (impactFor(r) || {}).score ?? -1));
-      const bestB = Math.max.apply(null, byTeam[b].map(r => (impactFor(r) || {}).score ?? -1));
+    /* Highest-impact teams first. Session 16: when no search/status/impact/team filter is
+     * narrowing the view, EVERY franchise is rendered — including the ones ESPN omitted
+     * (CLE/DET/LAL on 2026-09-17 and still on 2026-09-19). An empty card is labelled
+     * "no listing in this snapshot — not clearance". unfilteredGrid is computed above. */
+    const teamOrder = [];
+    if (typeof TEAMS !== "undefined" && unfilteredGrid) {
+      for (const t of TEAMS) teamOrder.push(t.abbr);
+    } else {
+      for (const abbr of Object.keys(byTeam)) teamOrder.push(abbr);
+    }
+    teamOrder.sort((a, b) => {
+      const listA = byTeam[a] || [], listB = byTeam[b] || [];
+      if (!listA.length && listB.length) return 1;
+      if (listA.length && !listB.length) return -1;
+      const bestA = listA.length ? Math.max.apply(null, listA.map(r => (impactFor(r) || {}).score ?? -1)) : -2;
+      const bestB = listB.length ? Math.max.apply(null, listB.map(r => (impactFor(r) || {}).score ?? -1)) : -2;
       if (bestA !== bestB) return bestB - bestA;
-      const wa = Math.min.apply(null, byTeam[a].map(r => SEV_ORDER[r.sev] ?? 9));
-      const wb = Math.min.apply(null, byTeam[b].map(r => SEV_ORDER[r.sev] ?? 9));
+      const wa = listA.length ? Math.min.apply(null, listA.map(r => SEV_ORDER[r.sev] ?? 9)) : 99;
+      const wb = listB.length ? Math.min.apply(null, listB.map(r => SEV_ORDER[r.sev] ?? 9)) : 99;
       return wa - wb || a.localeCompare(b);
     });
 
-    box.innerHTML = teams.map(team => {
-      const list = byTeam[team].slice().sort((x, y) =>
+    box.innerHTML = teamOrder.map(team => {
+      const raw = byTeam[team] || [];
+      if (!raw.length) {
+        const t = (typeof teamByAbbr === "function") ? teamByAbbr(team) : null;
+        const name = t ? (t.city + " " + t.name) : team;
+        const espnUrl = (typeof espnTeamInjuriesUrl === "function") ? espnTeamInjuriesUrl(team) : "https://www.espn.com/nba/injuries";
+        const nbaUrl = (typeof nbaTeamUrl === "function") ? nbaTeamUrl(team) : "https://www.nba.com/";
+        return '<div class="board-team board-team-empty">' +
+          '<div class="board-team-head"><b class="abbr">' + esc(team) + '</b>' +
+          '<span class="muted tiny">' + esc(name) + ' · 0 listings in this snapshot</span>' +
+          '<a class="tiny" href="' + esc(espnUrl) + '" target="_blank" rel="noopener">ESPN injuries ↗</a></div>' +
+          '<div class="empty">ESPN returned no injury block for <b>' + esc(team) + '</b> in this snapshot. ' +
+          'That is a statement about the feed, not clearance — confirm on the ' +
+          '<a href="' + esc(espnUrl) + '" target="_blank" rel="noopener">ESPN team injuries page ↗</a> or ' +
+          '<a href="' + esc(nbaUrl) + '" target="_blank" rel="noopener">NBA.com ↗</a>.</div></div>';
+      }
+      const list = raw.slice().sort((x, y) =>
         ((impactFor(y) || {}).score ?? -1) - ((impactFor(x) || {}).score ?? -1)
         || (SEV_ORDER[x.sev] ?? 9) - (SEV_ORDER[y.sev] ?? 9)
         || new Date(y.updated || 0) - new Date(x.updated || 0));
@@ -624,7 +697,7 @@ const InjuryBoard = (function () {
     check: check, normalize: normalize, diffAlerts: diffAlerts, render: render,
     fetchBoard: fetchBoard, resetSeen: resetSeen, getRows: () => rows, fp: fp,
     impactFor: impactFor, setImpactContext: setImpactContext, impactShort: impactShort, depthUrl: espnTeamDepthUrl,
-    coverageGaps: coverageGaps, renderCoverage: renderCoverage, countsByImpact: countsByImpact, factorsLine: factorsLine,
+    coverageGaps: coverageGaps, renderCoverage: renderCoverage, renderTeamStrip: renderTeamStrip, countsByImpact: countsByImpact, factorsLine: factorsLine,
     renderImpactWatch: renderImpactWatch,
     travelLine: travelLine, getImpactFilter: () => boardImpactFilter,
     alertFor: alertFor, setSearch: setSearch, setStatusFilter: setStatusFilter, setImpactFilter: setImpactFilter, setView: setView, getView: getView, resetFilter: resetFilter,

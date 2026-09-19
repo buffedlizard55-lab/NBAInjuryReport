@@ -1,5 +1,63 @@
 # Next-session priorities
 
+## State at the end of session 16 (2026-09-19) — read this first
+
+Session 16 was the **injury-board product**, not another reporter sweep. Training camp opens
+2026-09-22 (overseas) / 2026-09-29 (rest of league); the board is about to start moving for
+real. The standing constraints still apply: **no X API key**, every claim re-checkable from a
+free public source, an omitted ESPN block is never clearance.
+
+**What shipped**
+
+1. **Board alerts no longer silent-drop on ESPN's listing DATE.** `InjuryBoard.alertFor` used
+   to set `alertEligible: AlertEngine.isFresh(row.updated, 24h)`. `fire()` already judges board
+   items by `observedAt` (the 6-hour freshness fix), but a false `alertEligible` short-circuits
+   that test. ESPN's injuries API, re-read 2026-09-19T18:13:01Z, still stamps most rows with the
+   original comment date (sampled live: Mouhamed Gueye ATL `date=2026-07-19T00:14Z`). A NEW
+   listing or a STATUS CHANGE observed today on a July-stamped row would have been silent-dropped
+   even though `observedAt` is now. Fixed: board change alerts are eligible; freshness is judged
+   only by `observedAt` + `maxAgeMs`. Social posts stay bound to post time. Pinned by
+   `tools/regression_test.js` with a **40-day-old** source stamp (the previous 6h case was still
+   inside the old 24h window and could not catch this).
+2. **All 30 teams are on the board, including the empty ones.** ESPN HTML + JSON still omit
+   CLE, DET and LAL (27/30, same three as 2026-09-17). The coverage line named them; the
+   team-grid view did not render them at all. The board now paints a 30-chip strip on every view
+   (empty chips are warn-coloured and titled "NOT clearance") and, in the unfiltered team-grid,
+   an empty card per omitted franchise with ESPN + NBA.com review links.
+3. **Season clock from dated public pages**, not from "today feels like camp".
+   `NBA_SEASON_CALENDAR` / `seasonClock()` in `assets/js/data.js`. Opening night 2026-10-20
+   tripleheader cited from ESPN's schedule story (3pm / 7pm / 9:30pm ET) and the official NBA
+   Bluesky bio. Basketball Monster, re-read the same day, lists the same three games at 2:00pm /
+   6:00pm / 8:30pm and "The regular season begins in 31 days." Both tip-time claims are stored;
+   neither is picked. Camp dates cite Olympics.com / NBC key-dates roundups and say they are
+   **not** a first-party NBA.com HTML page this session.
+4. **Dashboard reporter evidence ledger.** `#autoScorecard` existed only on `reporters.html`.
+   `intelligence.js` looked it up with single quotes, so the `getElementById` wiring audit
+   (double quotes only) never noticed. The dashboard now has the container, and those lookups
+   use double quotes so a missing id fails the suite.
+
+**Live re-reads this session (assistant page-fetch, 2026-09-19)**
+
+- Official 2026-27 injury-report page still **404**, new XID **71103381**.
+- ESPN injuries HTML title "NBA Injury Status - 2026-27 Season" and JSON timestamp
+  2026-09-19T18:13:01Z, season `{year:2027, type:1, name:'Preseason', displayName:'2026-27'}`.
+- Basketball Monster playernews.aspx 200; status tags present; Bona Q / Mark Williams INJURED
+  copied as format evidence, **not** scraped into alerts.
+- ESPN NBA RSS is general news, not an injury feed — not wired.
+
+**What is still open, and why**
+
+1. **Official adapter still blocked** until
+   `official.nba.com/nba-injury-report-2026-27-season/` stops 404. Never guess a PDF filename.
+2. **Impact stays UNKNOWN** until box scores exist (`roleStats` empty). First measurement window
+   is preseason tip 2026-10-03, then opening night 2026-10-20.
+3. **In-game QTR/exit latency is fixture-tested only** until that 3 Oct tip.
+4. **Reporter-layer leftovers from session 15** are unchanged: verifier-drift UI, beat-change
+   watch, thin teams, `rodboone` bio, CHA/UTA identity ceiling, 26/30 clubs unverified on
+   Bluesky, X/IG/FB manual-only.
+5. **CLE/DET/LAL omitted from ESPN** is still a feed fact. Re-check at camp: if they are still
+   missing *while games are live*, that is a source-coverage problem, not an offseason artefact.
+
 ## State at the end of session 15 (2026-09-19) — read this first
 
 Session 15 worked the brief's **"next candidates"** list: Mike Vorkunov's NBA starter pack as a corpus for the

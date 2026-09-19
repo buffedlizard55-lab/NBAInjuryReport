@@ -11,7 +11,8 @@ NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster pla
 | Capability | Implementation / boundary |
 |---|---|
 | Injury board | Public ESPN structured injuries endpoint, with source timestamps, status, reason, estimated return and review links. ESPN is **not official NBA confirmation**. Missing listings do not mean healthy players. |
-| Team coverage gaps | Every refresh names the teams the current snapshot says **nothing** about (2026-09-17 snapshot: 27 of 30 blocks — CLE, DET and LAL absent), each linked to that team's own ESPN injuries page. An omitted block is never reported as a healthy roster; a full 30/30 snapshot still says it is not clearance. |
+| Team coverage gaps | Every refresh names the teams the current snapshot says **nothing** about (re-read 2026-09-19: still 27 of 30 — CLE, DET and LAL absent), each linked to that team's own ESPN injuries page. A 30-chip strip and, in the unfiltered team-grid, empty franchise cards make the same three visible instead of only naming them in a coverage line. An omitted block is never reported as a healthy roster. |
+| Season clock | Dated public pages, not a guess: overseas camp 2026-09-22, rest of league 2026-09-29, preseason 2026-10-03, opening night 2026-10-20. ESPN/NBA list the opener at 3pm / 7pm / 9:30pm ET; Basketball Monster lists 2:00pm / 6:00pm / 8:30pm — both claims are shown. |
 | Live-style wire | Browser polling of ESPN news, injuries, allow-listed Bluesky author feeds and game summaries. Default 60 seconds; configurable 30–300 seconds. Source publication delays and browser throttling are additional. |
 | Severity colour-coding | Wire, social feed and injury-board rows carry a severity edge (out → return), pinned by tests that compare the emitted class names against the stylesheet — this pairing had drifted apart and the colours were not rendering at all until 2026-09-17. |
 | Sound / notifications | Pleasant WebAudio bell with a **separate high-impact voice** (rising A5→C#6→E6 figure) so a `⚡ HIGH LINEUP IMPACT` absence is distinguishable by ear; on/off toggle, two sound tests, opt-in browser notifications and source-linked alert log. **Keep the tab open.** Browser audio requires a gesture; press a Test button. No closed-tab push delivery. |
@@ -34,7 +35,7 @@ NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster pla
 
 See [AUDIT.md](AUDIT.md) for findings and verification scope, and [data/audit/latest.json](data/audit/latest.json) for independent runner HTTP statuses, timestamps and body hashes. Since the session-7 fix each row also carries an explicit `verified` flag: **OK** is reserved for a response that actually verifies the claim, and a tolerated refusal (HTTP 403 on a JSON endpoint this client is fingerprinted out of) is **ENV-BLOCKED** with `verified=false`. Before that fix four checks that had read nothing printed OK.
 
-- Official 2026–27 injury-report page: **404** (re-read again this session, ~21:00Z, `XID: 74717976`).
+- Official 2026–27 injury-report page: **404** (re-read 2026-09-19, `XID: 71103381`; earlier XIDs 44289229 / 74717976).
 - Post-fix runner audit (`2026-09-17T21:22:35Z`, 22 checks, 0 drift, 0 tool errors): **16 of 22 claims verified by that run**, 6 `ENV-BLOCKED` — four `site.api.espn.com` JSON calls fingerprinted to **403** (`espn-teams`, `espn-scoreboard`, `espn-roster-mia`, `espn-teams-mia`) and two `www.espn.com` HTML pages returning the **202** bot-challenge interstitial. The Node collector and the deployed browser reach all of them.
 - Previous season page: **200**, but no timestamped injury-PDF links observed.
 - Known historical official PDF: **200**, parsed and tested for page breaks and wrapped reasons.
@@ -68,12 +69,12 @@ These observations do not certify every legacy reporter link or guarantee later 
 
 ```sh
 python3 -m http.server 8080 --bind 0.0.0.0
-node tools/smoke_test.js                 # 224 checks (what the social layer actually polls + the OUT-label invariant)
-node tools/impact_test.js                # 80 checks (geo, collector math, impact model v2, wiring)
-node tools/integration_test.js           # 86 checks (boots the real dashboard AND the reporter page; pins the board as the second section)
-node tools/poll_fixture_test.js          # 25 checks (poller set DERIVED from the registry, held-out rows never polled; real poller, fixture transports)
-node tools/verify_reporters_test.js      # 109 checks (identity policy + the REAL CLI run offline against a stubbed network)
-node tools/regression_test.js            # 26 groups (includes the registry-recency backfill's own behavioural tests)
+node tools/smoke_test.js                 # board strip + season clock + social allow-list + OUT-label invariant
+node tools/impact_test.js                # geo, collector math, impact model v2, wiring (every getElementById must exist)
+node tools/integration_test.js           # boots the real dashboard AND the reporter page; pins the board as the second section
+node tools/poll_fixture_test.js          # poller set DERIVED from the registry, held-out rows never polled; real poller, fixture transports
+node tools/verify_reporters_test.js      # identity policy + the REAL CLI run offline against a stubbed network
+node tools/regression_test.js            # includes the 40-day ESPN stamp that used to silent-drop board alerts
 python3 -m unittest discover -s tools -p 'test_*.py'   # 26 tests, incl. the audit tool itself
 node tools/replay_posts.js data/live/latest.json --check
 node tools/verify_reporters.js        # live identity + club-channel re-verification (needs network)
