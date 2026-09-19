@@ -502,7 +502,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/nbasarah.bsky.social",
     evidenceQuote: "Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors.",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=nbasarah.bsky.social",
-    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-19T02:48:43.330Z", latestPostAtSource: "data/live/reporter_verify.json", postsCount: 1698, followersCount: 14772, profileIndexedAt: "2026-09-18T22:30:23.552Z",
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-19T12:00:12.277Z", latestPostAtSource: "data/live/reporter_verify.json", postsCount: 1698, followersCount: 14772, profileIndexedAt: "2026-09-18T22:30:23.552Z",
       verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T23:54:11Z (bio-drift) + live getProfiles re-read" },
     verified: "2026-09-18 — RE-READ live via getProfiles after the daily re-verification reported bio-drift. Bio verbatim: 'Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors. 530. 510. Two-time Utah Sportswriter of the Year.' + VALID Bluesky verification object (issuer bsky.app, created 2025-10-31). 14,772 followers, 1,698 posts, newest post 2026-09-18T22:55:22Z ⇒ ACTIVE. BEAT CHANGE: the row was UTA/Deseret News; the bio now names the Timberwolves and calls the Jazz a previous beat, so the team moved to MIN. CONSEQUENCE, stated plainly: UTA now has NO in-arena writer account in this registry and drops to official-channel-only." },
 
@@ -655,7 +655,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/irawinderman.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=irawinderman.bsky.social",
     evidenceQuote: "Covering the Miami Heat for the South Florida Sun Sentinel",
-    observed: { latestPostAt: "2026-09-18T21:17:26.677Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2150, followersCount: 21479, profileIndexedAt: "2024-11-06T21:21:00.282Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-19T12:35:41.021Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2150, followersCount: 21479, profileIndexedAt: "2024-11-06T21:21:00.282Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Covering the Miami Heat for the South Florida Sun Sentinel'. NO verification object. This is the SAME person the directory already carries as an X-handle row (verified-handle), now with a pollable account, so MIA moves from directory-only to pollable in-arena coverage." },
 
   { name: "Gerald Bourguet", handle: "geraldbourguet.bsky.social", outlet: "Suns After Dark", role: "Suns beat writer / reporter / podcaster", team: "PHX", feed: true,

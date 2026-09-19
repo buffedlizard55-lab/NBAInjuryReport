@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-19T04:52:40.063Z",
+ "generated": "2026-09-19T13:09:15.808Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -253,7 +253,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors. 530. 510.\nTwo-time Utah Sportswriter of the Year.",
-   "latestPostAt": "2026-09-19T02:48:43.330Z",
+   "latestPostAt": "2026-09-19T12:00:12.277Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -675,7 +675,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Covering the Miami Heat for the South Florida Sun Sentinel",
-   "latestPostAt": "2026-09-18T21:17:26.677Z",
+   "latestPostAt": "2026-09-19T12:35:41.021Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -730,14 +730,14 @@
    "privateProfile": false,
    "bio": "National NBA reporter for Yahoo Sports",
    "latestPostAt": "2026-06-11T13:05:15.436Z",
-   "dormantDays": 99,
+   "dormantDays": 100,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 99 days old (>30)"
+    "quote matches, but newest post is 100 days old (>30)"
    ]
   },
   {
@@ -784,7 +784,7 @@
    "privateProfile": false,
    "bio": "Celtics writer. Host of Still Poddable. NBA sicko.",
    "latestPostAt": "2026-09-12T12:46:19.769Z",
-   "dormantDays": 6,
+   "dormantDays": 7,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1106,7 +1106,7 @@
    "privateProfile": false,
    "bio": "Senior writer at The Athletic, covering the Knicks. 2021 NSMA sportswriter of year. From Flint, MI. Only reporter on League Fits. PBWA. Sneakerhead. Rap snob.",
    "latestPostAt": "2026-09-03T12:39:22.259Z",
-   "dormantDays": 15,
+   "dormantDays": 16,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1186,14 +1186,14 @@
    "privateProfile": false,
    "bio": "NBA reporter for The Athletic. Texan back in Texas. It's all in the game.",
    "latestPostAt": "2024-12-29T05:29:34.431Z",
-   "dormantDays": 628,
+   "dormantDays": 629,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 628 days old (>30)"
+    "quote matches, but newest post is 629 days old (>30)"
    ]
   },
   {
@@ -2034,7 +2034,7 @@
    "privateProfile": false,
    "bio": "Sports columnist for The Times-Picayune | The New Orleans Advocate. We'll talk Saints, Pelicans and all the other hot topics in the 504 and beyond.\nMississippi made, Louisiana paid.\n#39194ever ",
    "latestPostAt": "2026-09-18T13:07:21.430Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2244,14 +2244,14 @@
    "privateProfile": false,
    "bio": "Knicks writer and NBA columnist for @newsdaysports. I’ve done this for a long time at a lot of papers. Opinions are my own - no one else would claim them.",
    "latestPostAt": "2025-10-02T11:05:42.443Z",
-   "dormantDays": 351,
+   "dormantDays": 352,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 351 days old (>30)"
+    "quote matches, but newest post is 352 days old (>30)"
    ]
   },
   {
