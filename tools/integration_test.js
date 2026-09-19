@@ -262,6 +262,55 @@ console.log("== runtime: App.init() refresh chain ==");
     check("a CI run renders its counts and names each problem row", /26 handles checked/.test(vs) && /missing/.test(vs) && /someone\.bsky\.social/.test(vs));
     check("club-channel results are reported separately from identity results", /club channels 29\/30/.test(vs));
 
+    /* ------------------------------------------------------------------------------------
+     * SESSION 13 — the panels added for the official-account probe, the documented X/IG/FB
+     * blockers, and the activity numbers. These are booted for real against the stub DOM:
+     * a panel that renders nothing, or renders a number the registry does not support, fails here
+     * rather than on the deployed page.
+     * ------------------------------------------------------------------------------------ */
+    const clubRows = pageEls.clubProbeTable ? pageEls.clubProbeTable.innerHTML : "";
+    const clubMeta = pageEls.clubProbeMeta ? pageEls.clubProbeMeta.innerHTML : "";
+    const blockers = pageEls.socialBlockers ? pageEls.socialBlockers.innerHTML : "";
+    check("the official club probe table renders one row per probed handle",
+      (clubRows.match(/<tr>/g) || []).length === 27, String((clubRows.match(/<tr>/g) || []).length));
+    check("the probe table shows the misses too — handles that do not exist, not just the finds",
+      /no such handle/.test(clubRows) && /handle does not exist/.test(clubRows));
+    check("the probe table surfaces Bluesky's own impersonation labels",
+      /impersonation/.test(clubRows) && /memphisgrizzlies\.bsky\.social/.test(clubRows) && /nyknicks\.bsky\.social/.test(clubRows));
+    check("the probe meta line states the measured totals and links the re-runnable API call",
+      /25<\/b> candidate handles probed|<b>25<\/b>/.test(clubMeta) && /getProfiles/.test(clubMeta) && /re-run the probe/.test(clubMeta),
+      clubMeta.replace(/<[^>]+>/g, " ").slice(0, 200));
+    check("the probe meta states plainly that ZERO probed club accounts carry a verification object",
+      /<b class="bad">0<\/b> with a valid/.test(clubMeta), clubMeta.replace(/<[^>]+>/g, " ").slice(0, 240));
+    check("X, Instagram and Facebook are each named as manual-review only, with evidence links",
+      /Instagram/.test(blockers) && /Facebook/.test(blockers) && (blockers.match(/evidence ↗/g) || []).length >= 3,
+      blockers.replace(/<[^>]+>/g, " ").slice(0, 160));
+
+    /* A CI file that measures dormancy must change what the matrix prints — that is the whole
+     * point of session 13. Fixture: every DAL writer last posted 600 days ago. */
+    const dalHandles = R.arenaCoverage().find(c => c.abbr === "DAL").pollable.map(p => p.handle);
+    global.fetch = async () => ({ ok: true, status: 200, json: async () => ({
+      generated: "2026-09-19T09:17:00Z",
+      summary: { checked: 50, ok: 30, dormant: 15, activeInAlertPath: 30, inAlertPath: 45, dormantInAlertPath: 15,
+        unmeasuredInAlertPath: 0, quietestInAlertPath: 628, dormantThresholdDays: 30 },
+      rows: dalHandles.map(h => ({ handle: h, status: "dormant", latestPostAt: "2024-12-01T00:00:00Z", dormantDays: 600, notes: ["fixture"] })),
+      channelSummary: { ok: 0, checked: 30, failed: [] }
+    }) });
+    R.Reporters.init();
+    await new Promise(r => setTimeout(r, 60));
+    const matrix2 = (pageEls.arenaMatrixTable.innerHTML || "").replace(/<[^>]+>/g, " ");
+    /* The page computes the age itself from the CI date (the file's own `dormantDays` is not
+     * trusted), so the expected number is derived here the same way rather than typed. */
+    const expectedDays = Math.floor((Date.now() - Date.parse("2024-12-01T00:00:00Z")) / 86400000);
+    check("a CI measurement of dormancy is fed back into the matrix (not left on the registry date)",
+      /ALL writers dormant/.test(matrix2) && matrix2.includes(expectedDays + " days since newest post"),
+      "expected " + expectedDays + "d · " + matrix2.replace(/\s+/g, " ").slice(0, 200));
+    check("the verify panel reports the activity line from the CI summary, including the quietest account",
+      /activity:/.test(pageEls.verifyStatus.innerHTML) && /628 days/.test(pageEls.verifyStatus.innerHTML));
+    check("the coverage summary counts teams with a recent writer separately from teams with a verified one",
+      /teams have a writer who posted within 30 days/.test(pageEls.coverageSummary.innerHTML) &&
+      /DORMANT/.test(pageEls.coverageSummary.innerHTML));
+
     global.document = prevDoc;
   }
 

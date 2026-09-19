@@ -129,6 +129,21 @@ const Reporters = (() => {
     "official-only": { badge: "bad", label: "✗ no writer account · official channel only" },
     "gap": { badge: "bad", label: "✗ NO SOURCE — must be fixed" }
   };
+  /* ACTIVITY (session 13, 2026-09-18). Identity (`CLS_META` / `CONF_META`) says who an account is;
+   * these badges say when it last said anything — the difference between "we have a verified writer
+   * for Dallas" and "that writer last posted 628 days ago". Rendered from arenaCoverage().recency,
+   * which is computed, so a page cannot claim an active feed it did not measure. */
+  const REC_META = {
+    "active":                  { badge: "ok",   label: "⏱ active" },
+    "dormant-only":            { badge: "bad",  label: "⏱ ALL writers dormant" },
+    "dormant-and-unmeasured":  { badge: "bad",  label: "⏱ no active writer (some unmeasured)" },
+    "unmeasured":              { badge: "dim",  label: "⏱ activity not measured" },
+    "no-writer":               { badge: "bad",  label: "⏱ no writer account to measure" }
+  };
+  /* Newest-post dates measured by tools/verify_reporters.js (data/live/reporter_verify.json).
+   * Loaded before the matrix renders; when the file is missing the registry's own observations are
+   * used and the page says which it is showing — never a silent blend of the two. */
+  let RECENCY = null;
   const CONF_META = {
     "bsky-verified": { badge: "ok", short: "Bluesky-verified" },
     "bio-verified": { badge: "warn", short: "bio states outlet + beat" },
@@ -143,7 +158,7 @@ const Reporters = (() => {
     const el = document.getElementById("arenaMatrixTable");
     if (!el || typeof arenaCoverage !== "function") return;
     const esc = AlertEngine.escapeHtml;
-    const cov = arenaCoverage();
+    const cov = arenaCoverage(RECENCY);
 
     el.innerHTML = cov.map(c => {
       const t = teamByAbbr(c.abbr);
@@ -153,6 +168,7 @@ const Reporters = (() => {
              ${confidenceBadge(p.conf)}${p.bskyVerified && p.verifier ? `<span class="tiny muted"> (${esc(p.verifier)})</span>` : ""}<br>
              <a class="tiny" href="${esc(p.evidence)}" target="_blank" rel="noopener">profile ↗</a>
              ${p.evidenceApi ? `· <a class="tiny" href="${esc(p.evidenceApi)}" target="_blank" rel="noopener">re-check API ↗</a>` : ""}
+             <br><span class="tiny ${p.recency && p.recency.state === "active" ? "ok-text" : "muted"}">${p.recency ? "⏱ " + esc(p.recency.label) : ""}</span>
              ${p.evidenceQuote ? `<br><span class="tiny muted cite">“${esc(p.evidenceQuote)}”</span>` : ""}`).join("<hr style='border:0;border-top:1px solid var(--line);margin:6px 0'>")
         : `<span class="muted small">none polled</span>`;
       const dirOnly = c.directory.length
@@ -162,11 +178,25 @@ const Reporters = (() => {
       /* The probe result is stated per row, because "there is a URL here" and "a machine read it"
        * are different claims — and on 2026-09-18 the machine was refused (HTTP 403) for all 30. */
       const probe = (typeof NBA_TEAM_NEWS_PROBE !== "undefined") ? NBA_TEAM_NEWS_PROBE : null;
+      /* What the 25-handle club probe found for this franchise: the honest answer to "is there an
+       * official Bluesky account?" is usually "no verified one, and here is every handle that
+       * looks like one and why it is not accepted". */
+      const clubProbeHtml = (c.official.probe || []).map(pr => {
+        const tag = pr.verdict === "impersonation-labelled" ? '<span class="badge bad">Bluesky-labelled impersonation</span>'
+          : pr.verdict === "absent" ? '<span class="badge dim">no such handle</span>'
+            : pr.verdict === "private-profile" ? '<span class="badge warn">private profile — unreadable keylessly</span>'
+              : pr.verdict === "placeholder" ? '<span class="badge dim">placeholder, not a club</span>'
+                : pr.verification ? '<span class="badge ok">verified</span>' : '<span class="badge warn">no verification object</span>';
+        const counts = (pr.followers != null || pr.posts != null)
+          ? ` <span class="tiny muted">${pr.followers == null ? "?" : pr.followers.toLocaleString()} followers · ${pr.posts == null ? "?" : pr.posts.toLocaleString()} posts</span>` : "";
+        return `<div class="tiny">${tag} <code>@${esc(pr.handle)}</code>${counts}${pr.moderationLabel ? ` <span class="tiny muted">(label: ${esc(pr.moderationLabel)})</span>` : ""}</div>`;
+      }).join("");
       const official = `<a href="${esc(c.official.news)}" target="_blank" rel="noopener">club news (nba.com/${esc(t.nba)}) ↗</a>
         <br><span class="tiny muted">${c.official.newsChecked
           ? "re-read live in a browser " + esc(c.official.newsChecked)
           : (probe ? "pattern URL · runner probe HTTP 403 on " + esc(probe.checkedAt.slice(0, 10)) + " → manual review only"
                    : "URL pattern, not re-read")}</span>
+        ${clubProbeHtml}
         ${c.official.bluesky.length ? c.official.bluesky.map(b => `<br><span class="tiny">${b.bskyVerified ? '<span class="badge ok">Bluesky-verified</span>' : '<span class="badge warn">no verification object</span>'} <a class="tiny" href="${esc(b.url)}" target="_blank" rel="noopener">@${esc(b.handle)} ↗</a>${b.feed ? " <span class='tiny muted'>(polled)</span>" : " <span class='tiny muted'>(not polled)</span>"}</span>`).join("") : ""}`;
       const gaps = c.gaps.length
         ? `<ul class="tight tiny muted" style="margin:4px 0 0;padding-left:16px">${c.gaps.map(g => `<li>${esc(g)}</li>`).join("")}</ul>`
@@ -174,7 +204,10 @@ const Reporters = (() => {
       return `<tr>
         <td><b><span class="team-chip">${esc(c.abbr)}</span></b><br><span class="tiny muted">${esc(c.city)} ${esc(c.name)}</span></td>
         <td>${writers}${dirOnly}${held}</td>
-        <td><span class="badge ${meta.badge}">${meta.label}</span><br>${gaps}</td>
+        <td><span class="badge ${meta.badge}">${meta.label}</span>
+            ${(REC_META[c.recency] ? `<br><span class="badge ${REC_META[c.recency].badge}">${REC_META[c.recency].label}</span>` : "")}
+            ${c.quietestWriterDays != null ? `<br><span class="tiny muted">quietest writer: ${c.quietestWriterDays} days</span>` : ""}
+            <br>${gaps}</td>
         <td class="tiny">${official}</td>
         <td class="tiny"><a href="${esc(espnTeamInjuriesUrl(c.abbr))}" target="_blank" rel="noopener">ESPN injuries ↗</a><br>
             <a href="${xSearchUrl(c.city + " " + c.name + " injury")}" target="_blank" rel="noopener">X search ↗</a></td>
@@ -186,25 +219,42 @@ const Reporters = (() => {
   function renderCoverage() {
     const sumEl = document.getElementById("coverageSummary");
     if (!sumEl || typeof arenaCoverageSummary !== "function") return;
-    const s = arenaCoverageSummary();
+    const s = arenaCoverageSummary(RECENCY);
     const esc = AlertEngine.escapeHtml;
     sumEl.innerHTML = [
       `<span class="pill ok">✓ ${s.verifiedPollable}/30 teams: verified in-arena writer, polled automatically</span>`,
       `<span class="pill warn">◐ ${s.bioPollable}/30: writer polled, identity evidence is the account's own bio</span>`,
       `<span class="pill bad">✗ ${s.officialOnly}/30: no writer account — official club channel + manual review only</span>`,
       `<span class="pill ${s.gap ? "bad" : "ok"}">${s.gap} teams with no source at all</span>`,
-      `<span class="pill ok">${s.pollableWriters} pollable writer accounts · ${s.blsSkyVerifiedWriters} Bluesky-verified</span>`
+      `<span class="pill ok">${s.pollableWriters} pollable writer accounts · ${s.blsSkyVerifiedWriters} Bluesky-verified</span>`,
+      /* ACTIVITY — the second question, asked separately (session 13). A team can be
+       * identity-verified and still have nobody posting. */
+      `<span class="pill ${s.activeTeams === 30 ? "ok" : "warn"}">⏱ ${s.activeTeams}/30 teams have a writer who posted within ${s.dormantThresholdDays} days</span>`,
+      `<span class="pill ${s.writersDormant ? "bad" : "ok"}">${s.writersDormant} of ${s.pollableWriters} writers are DORMANT · ${s.writersUnmeasured} unmeasured</span>`,
+      `<span class="pill ${RECENCY ? "ok" : "dim"}">${RECENCY ? "activity from the CI re-verification file" : "activity from registry observations (CI file not loaded)"}</span>`
     ].join(" ");
     const listEl = document.getElementById("coverageWorklist");
     if (listEl) {
-      const cov = arenaCoverage().filter(c => c.cls !== "verified-pollable");
-      listEl.innerHTML = cov.length
-        ? `<b>Not yet verified in-arena (${cov.length} teams)</b> — each needs an account whose identity evidence is a
-           verification object or an outlet page, before it can be trusted at the moment of an injury:
-           <ul class="tight" style="margin:6px 0 0;padding-left:18px">${cov.map(c =>
-            `<li><span class="team-chip">${esc(c.abbr)}</span> ${esc(c.cls === "bio-pollable" ? "bio-verified writer only" : "official channels only")}
-              — ${esc(c.gaps[0] || "")}${c.directory.length ? ` <span class="tiny muted">(directory row present, not pollable)</span>` : ""}</li>`).join("")}</ul>`
-        : `<span class="ok-text">Every team has a verified, polled in-arena writer.</span>`;
+      const cov = arenaCoverage(RECENCY);
+      const identity = cov.filter(c => c.cls !== "verified-pollable");
+      /* The list session 12 did not have: teams whose writer EXISTS but has gone quiet. These read
+       * as covered on identity alone, which is precisely the claim this page exists to check. */
+      const quiet = cov.filter(c => c.recency === "dormant-only" || c.recency === "dormant-and-unmeasured" || c.recency === "unmeasured");
+      listEl.innerHTML =
+        (identity.length
+          ? `<b>Not yet verified in-arena (${identity.length} teams)</b> — each needs an account whose identity evidence is a
+             verification object or an outlet page, before it can be trusted at the moment of an injury:
+             <ul class="tight" style="margin:6px 0 0;padding-left:18px">${identity.map(c =>
+              `<li><span class="team-chip">${esc(c.abbr)}</span> ${esc(c.cls === "bio-pollable" ? "bio-verified writer only" : "official channels only")}
+                — ${esc(c.gaps[0] || "")}${c.directory.length ? ` <span class="tiny muted">(directory row present, not pollable)</span>` : ""}</li>`).join("")}</ul>`
+          : `<span class="ok-text">Every team has a verified, polled in-arena writer.</span>`) +
+        (quiet.length
+          ? `<div style="margin-top:10px"><b>⏱ Named writer, no recent activity (${quiet.length} teams)</b> — the account exists and its
+             identity is evidenced, but nothing has been posted inside ${esc(String(s.dormantThresholdDays))} days, so it cannot
+             corroborate an injury right now. Measured, not estimated:
+             <ul class="tight" style="margin:6px 0 0;padding-left:18px">${quiet.map(c =>
+              `<li><span class="team-chip">${esc(c.abbr)}</span> ${esc(c.pollable.map(p => p.name + " (" + (p.recency.dormantDays == null ? "unmeasured" : p.recency.dormantDays + " days") + ")").join(", "))}</li>`).join("")}</ul></div>`
+          : `<div class="tiny ok-text" style="margin-top:10px">Every team's polled writer has posted inside ${esc(String(s.dormantThresholdDays))} days.</div>`);
     }
   }
 
@@ -218,11 +268,29 @@ const Reporters = (() => {
       .then(v => {
         const s = v.summary || {};
         const problems = (v.rows || []).filter(r => r.status !== "ok");
+        /* Feed the measured newest-post dates back into the coverage model BEFORE repainting, so the
+         * matrix shows the CI measurement rather than the date stored when a row was written.
+         * (Session 13: the file had the truth for 11 dormant accounts while the matrix printed
+         * coverage, because nothing ever connected the two.) */
+        RECENCY = {};
+        for (const r of (v.rows || [])) {
+          if (r && r.handle) RECENCY[String(r.handle).toLowerCase()] = { latestPostAt: r.latestPostAt || null, status: r.status };
+        }
+        renderCoverage();
+        renderArenaMatrix();
         el.innerHTML = `<b>Last automated re-verification:</b> ${esc(new Date(v.generated).toLocaleString())} —
           ${esc(String(s.checked))} handles checked · ${esc(String(s.ok))} clean ·
           ${esc(String(s.bioDrift))} bio drift · ${esc(String(s.dormant))} dormant ·
           ${esc(String(s.recencyUnknown || 0))} recency unreadable ·
           ${esc(String(s.missing))} unresolvable · club channels ${esc(String((v.channelSummary || {}).ok))}/${esc(String((v.channelSummary || {}).checked))} answered.
+          <div class="tiny" style="margin-top:4px">⏱ activity: <b>${esc(String(s.activeInAlertPath == null ? "?" : s.activeInAlertPath))}</b> of
+            ${esc(String(s.inAlertPath == null ? "?" : s.inAlertPath))} allow-listed accounts posted within
+            ${esc(String(s.dormantThresholdDays == null ? "?" : s.dormantThresholdDays))} days ·
+            ${esc(String(s.dormantInAlertPath == null ? "?" : s.dormantInAlertPath))} dormant ·
+            ${esc(String(s.unmeasuredInAlertPath == null ? "?" : s.unmeasuredInAlertPath))} with no readable date
+            ${s.quietestInAlertPath == null ? "" : `· quietest ${esc(String(s.quietestInAlertPath))} days`}
+            ${s.impersonationLabel ? `· <b class="bad">${esc(String(s.impersonationLabel))} impersonation-labelled</b>` : ""}
+            ${s.profilePrivate ? `· ${esc(String(s.profilePrivate))} private profile(s)` : ""}</div>
           ${problems.length ? `<div class="tiny" style="margin-top:6px">${problems.map(p => `<div>⚠ ${esc(p.handle || p.name)} → <b>${esc(p.status)}</b> ${esc((p.notes || [])[0] || "")}</div>`).join("")}</div>` : ""}`;
       })
       .catch(e => {
@@ -394,6 +462,67 @@ const Reporters = (() => {
     }
   }
 
+  /* ===================================================================================
+   * OFFICIAL CLUB BLUESKY PROBE (session 13) — the honest answer to "is there an official
+   * club account we can verify?". 25 candidate handles were read with one keyless getProfiles
+   * request; 16 resolved and NOT ONE carried a verification object, three carry Bluesky's own
+   * `impersonation` label, and nine do not exist at all. Every row is rendered with its verdict
+   * so a reader can see the misses, not just the finds.
+   * =================================================================================== */
+  function renderClubProbe() {
+    const el = document.getElementById("clubProbeTable");
+    if (!el || typeof NBA_OFFICIAL_ACCOUNT_PROBE === "undefined") return;
+    const esc = AlertEngine.escapeHtml;
+    const P = NBA_OFFICIAL_ACCOUNT_PROBE;
+    const VERDICT = {
+      "absent": ["dim", "no such handle"],
+      "placeholder": ["dim", "placeholder — no club claim"],
+      "impersonation-labelled": ["bad", "Bluesky-labelled impersonation"],
+      "private-profile": ["warn", "private profile — unreadable keylessly"],
+      "unverified-candidate": ["warn", "claims the club · no verification object"],
+      "in-registry": ["info", "listed in the registry"]
+    };
+    el.innerHTML = P.rows.map(r => {
+      const v = VERDICT[r.verdict] || ["dim", r.verdict];
+      return `<tr>
+        <td><span class="team-chip">${esc(r.team)}</span></td>
+        <td><a href="https://bsky.app/profile/${esc(r.handle)}" target="_blank" rel="noopener">@${esc(r.handle)} ↗</a>
+            <br><span class="tiny muted">${r.displayName ? esc(r.displayName) : "(no display name)"}</span></td>
+        <td><span class="badge ${v[0]}">${esc(v[1])}</span>${r.moderationLabel ? `<br><span class="tiny muted">label: ${esc(r.moderationLabel)}</span>` : ""}</td>
+        <td class="tiny">${r.followers == null ? "—" : esc(r.followers.toLocaleString())} followers<br>${r.posts == null ? "—" : esc(r.posts.toLocaleString())} posts</td>
+        <td class="tiny muted">${r.bio ? `“${esc(r.bio)}”` : (r.resolved ? "(no bio returned)" : "handle does not exist — getProfiles returned an empty profiles array")}${r.note ? `<br>${esc(r.note)}` : ""}</td>
+        <td class="tiny">${esc(r.via || "")}</td>
+      </tr>`;
+    }).join("");
+    const meta = document.getElementById("clubProbeMeta");
+    if (meta) meta.innerHTML = `Read ${esc(P.checkedAt)} via <span class="kbd">app.bsky.actor.getProfiles</span> (keyless, batched).
+      <b>${esc(String(P.summary.handlesProbed))}</b> candidate handles probed · <b>${esc(String(P.summary.resolved))}</b> resolved ·
+      <b>${esc(String(P.summary.absent))}</b> do not exist · <b class="bad">${esc(String(P.summary.withValidVerificationObject))}</b> with a valid
+      verification object · <b class="bad">${esc(String(P.summary.impersonationLabelled))}</b> labelled impersonation by Bluesky.
+      <a href="${esc(P.probeUrl)}" target="_blank" rel="noopener">re-run the probe ↗</a> ·
+      <a href="${esc(P.leagueFollows.url)}" target="_blank" rel="noopener">league follows (${esc(String(P.leagueFollows.count))}) ↗</a> ·
+      <a href="${esc(P.starterPack.url)}" target="_blank" rel="noopener">third-party starter pack (${esc(String(P.starterPack.listItemCount))} items) ↗</a>
+      <div class="tiny muted" style="margin-top:4px">${esc(P.summary.meaning)}</div>`;
+  }
+
+  /* ===================================================================================
+   * INSTAGRAM / FACEBOOK — why they are links and not feeds. Rendered from the SOURCES registry
+   * so the wording on this page cannot drift from the wording the source audit publishes.
+   * =================================================================================== */
+  function renderSocialBlockers() {
+    const el = document.getElementById("socialBlockers");
+    if (!el || typeof SOURCES === "undefined") return;
+    const esc = AlertEngine.escapeHtml;
+    const rows = SOURCES.filter(s => s.id === "instagram-public-pages" || s.id === "facebook-public-pages" || s.id === "x-api");
+    if (!rows.length) return;
+    el.innerHTML = rows.map(s => `<div class="callout warn" style="margin-bottom:8px">
+      <b>${esc(s.name)}</b>
+      <div class="tiny" style="margin-top:4px">${esc(s.verified || "")}</div>
+      <div class="tiny muted" style="margin-top:4px">${esc(s.note || "")}</div>
+      <div class="tiny" style="margin-top:4px"><a href="${esc(s.review || s.url)}" target="_blank" rel="noopener">evidence ↗</a></div>
+    </div>`).join("");
+  }
+
   function init() {
     const filter = { tier: "ALL", status: "ALL", inArena: "ALL", q: "" };
     renderTable(filter);
@@ -402,6 +531,8 @@ const Reporters = (() => {
     renderRubric();
     renderCoverage();
     renderArenaMatrix();
+    renderClubProbe();
+    renderSocialBlockers();
     renderVerifyStatus();
     buildForm();
     paintScores();

@@ -1,5 +1,95 @@
 # Next-session priorities
 
+## State at the end of session 13 (2026-09-18) — read this first
+
+Sessions 11–12 expanded the registry (recorded in the `FLAGS` log in `assets/js/data.js`); this session was
+**official club Bluesky verification + writer activity + the Instagram/Facebook read question**, still under the
+standing constraint that **no X API key is available** and everything must be re-checkable by a free, keyless call.
+
+**What shipped**
+
+1. **The official-club question was answered by measurement, not by hope.** One keyless
+   `app.bsky.actor.getProfiles` request probed **25 candidate club handles** (`NBA_OFFICIAL_ACCOUNT_PROBE`):
+   **16 resolved, 9 do not exist at all** (`hawksnba`, `hornetsnba`, `chicagobulls`, `detroitspistons`,
+   `warriorsnba`, `lakersnba`, `minnesotatimberwolves`, `neworleanspelicans`, `sanantoniospurs`),
+   **0 carry a valid Bluesky verification object**, and **3 carry Bluesky's own `impersonation` moderation
+   label** (`memphisgrizzlies`, `nyknicks`, `charlottehornetsbb`; a fourth, `dallas-maverick-s`, surfaced via
+   `searchActorsTypeahead`). Fan placeholders with 0 posts (`brooklynnets`, `orlandomagic`, `houstonrockets`,
+   `indianapacers`, `torontoraptors`) and unverified-but-active accounts (`okcthunder`, `sacramentokings`,
+   `miamiheat`, whose profile carries `!no-unauthenticated`) are recorded with their verdicts, and the whole
+   table — misses included — is rendered on `reporters.html` with the re-runnable probe URL.
+2. **Five new writer rows, two refusals.** `BSKY_REPORTERS` 49 → **54**: `montepoole` (GSW, bio-verified,
+   **active** — newest indexed item 2026-09-03, a repost), `bennettdurando` (DEN), `grantafseth` (DAL),
+   `jasonlloyd` (CLE), `joevardon` (national, The Athletic). `bstownsend.bsky.social` and
+   `jovanbuha.bsky.social` were read, did not support the identity, and are stored as
+   `identityRefused: true, feed: false` with the text the API actually returned — never re-assumed.
+3. **Identity is not activity — now computed.** `ARENA_DORMANT_DAYS` (30), `arenaDaysSince`,
+   `writerRecency`, and a `recency` state on every team and every pollable writer in `arenaCoverage()`.
+   A writer with no measured newest-post date is `unknown`, never silently `active`; a team whose writers
+   are all quiet reads `dormant-only`. `data/live/reporter_verify.json` (daily CI) is fed back into the page
+   so the matrix prints the CI measurement rather than the date a row happened to be written.
+4. **The verifier reads moderation labels.** `profileLabels()` separates `!no-unauthenticated` (a profile
+   setting) from moderation verdicts; new verdicts `impersonation-label` (fatal when the row is in the alert
+   path) and `profile-private` (non-fatal, but it says the account cannot be read keylessly). The dormant
+   threshold is imported from `data.js`, so there is exactly one definition.
+5. **Instagram/Facebook: closed, with dated evidence.** Tokenless oEmbed was removed **2020-10-24**; the
+   Instagram Basic Display API errors on **all** requests since **2024-12-04**; the Instagram API with
+   Facebook Login requires an IG business/creator account linked to a Facebook Page; the Graph API requires an
+   App Access Token plus the reviewable **Page Public Content Access** feature (and `appsecret_proof` since
+   v5.0). Both are registered as `Blocked / not wired` sources and rendered as manual-review links only.
+6. **One official row earned its place:** `sunsphx.bsky.social` (PHX) — 14,027 followers / 4,142 following,
+   bio "The Official Account of the Phoenix Suns", **no verification object** ⇒ `bskyVerified: false`,
+   `feed: false`, listed for manual review, never polled.
+
+**Measured coverage after the change** (`arenaCoverageSummary()`, registry evidence only):
+30 teams · **17 verified-pollable · 11 bio-pollable · 2 official-channel-only (CHA, UTA) · 0 unexplained gaps** ·
+**40 pollable writers, 19 Bluesky-verified**. Activity: **5 teams have a writer who posted inside 30 days**
+(GSW Monte Poole 16d · MEM Drew Hill 8d · MIN Sarah Todd 0d · PHX Gerald Bourguet 0d · SAS Jeff McDonald 23d +
+Tom Orsborn 1d), **CLE / DAL / DEN have no active writer**, and **30 of 40 writers have no registry-stored
+date** — printed as *unmeasured*. The daily CI file measures the whole allow-list and is the measurement of
+record: the 2026-09-19T00:07Z run checked **65 handles — 50 clean, 15 dormant, 0 bio-drift, 0 missing,
+0 verification-lost, 0 impersonation-labelled, 0 unreadable, 0 fatal — 38 of the 53 accounts in the alert
+path active, quietest 638 days.**
+
+**What the first CI run of the new verifier found (and what was wrong with it)**
+
+1. **A beat change, caught with no human input.** `nbasarah.bsky.social` was flagged `bio-drift`; the live
+   re-read showed the bio now names the **Timberwolves / Minnesota Star Tribune** ("Previously Jazz, 76ers and
+   Warriors"), with a valid `bsky.app` object. The row moved to MIN and **UTA lost its only in-arena writer** —
+   reported as a coverage loss, because inventing a replacement is not an option.
+2. **`profile-private` was inferred, not measured — fixed.** It reported PHX's Gerald Bourguet unreachable
+   from the `!no-unauthenticated` label alone, while a keyless `getAuthorFeed` on that handle returned two
+   posts the same day (newest `2026-09-18T18:45:43Z`). The verdict now requires the keyless read to have
+   actually failed; a labelled-but-readable row stays pollable with the label recorded as a standing risk.
+3. **A drift verdict that fired on punctuation — fixed.** `timcato.bsky.social` read `bio-drift` while its bio
+   still said the same thing; the only difference was curly apostrophes. Quote comparison now folds
+   typographic apostrophes, quotes, dashes and narrow spaces.
+4. **A refused row that could never stop drifting — fixed.** `jovanbuha.bsky.social` stores a note about the
+   *absence* of a bio, so "quote not in bio" was true by construction. Refused rows are exempt, and the useful
+   inverse check replaced it: if a bio **appears**, the row flips to drift so the identity can be re-examined.
+
+**Tests:** smoke 222 · verify_reporters 89 · integration 80 · impact 80 · poll_fixture 25 · regression 26 groups.
+
+**Still open / blocking**
+
+- **CHA has no writer account at all** — the Charlotte Observer eliminated its Hornets beat on 2026-09-14
+  (McClatchy cuts). A replacement in-arena identity has to be found from a live read, not invented.
+- **UTA and CHA have no writer account at all**; **DAL, DEN, LAL, CLE are covered by dormant writers only**
+  on the freshest CI measurement. Either find an
+  active alternative or keep them explicitly labelled dormant — never quietly "covered".
+- ~~Two CI rows still read bio-drift~~ **RESOLVED this session by live re-read:** `nbasarah.bsky.social` was a
+  genuine beat change (row moved to MIN, UTA now gap-listed) and `timcato.bsky.social` was a verifier defect
+  (curly apostrophes). The next CI run should report `bioDrift: 0`; if it does not, read the row before
+  believing either number. **Confirmed: the 2026-09-19T00:07Z run reports `bioDrift: 0` and
+  `profilePrivate: 0`.**
+- **No verified club Bluesky account exists for 26 of 30 franchises.** Until a club verifies one, club
+  corroboration on Bluesky is unavailable by construction; `nba.com/<slug>/news` returns 403 to CI for all 30.
+- **Unread candidates** worth a live read next session: `daltonjohnson.bsky.social` (NBCS Bay Area, posted
+  2026-09-02), `bontahill.bsky.social`.
+- Confirmed absent on Bluesky (do not re-probe): Dave McMenamin, Ian Begley, Marcus Thompson, Tony Jones,
+  Eric Nehm, Casey Holdahl, Kane Pitman, Brenden Nunes, Duane Rankin, Chris Fedor.
+- No live-game validation is possible before the first 2026-27 tip; `roleStats` stays empty until games exist.
+
 ## State at the end of session 10 (2026-09-18) — read this first
 
 Branch `arena/01a0b5ed-nbainjuryreport` → merged to `main`. This session's task was **expand in-arena
