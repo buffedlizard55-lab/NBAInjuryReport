@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-19T14:47:40.882Z",
-  "inputGenerated": "2026-09-19T14:47:32.659Z",
+  "generated": "2026-09-19T17:30:11.877Z",
+  "inputGenerated": "2026-09-19T17:30:03.954Z",
   "inputFresh": true,
   "claims": {
     "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3mqpt2qmdd22q": {
@@ -2630,6 +2630,25 @@
       "bskyVerified": false,
       "outcome": "pending",
       "note": "Awaiting game-scoped official evidence; no score from silence."
+    },
+    "at://did:plc:paf4vetn26bu7uggsie3vyrc/app.bsky.feed.post/3mvv74hejzc2b": {
+      "uri": "at://did:plc:paf4vetn26bu7uggsie3vyrc/app.bsky.feed.post/3mvv74hejzc2b",
+      "handle": "lawmurraythenu.bsky.social",
+      "name": "Law Murray",
+      "text": "Day 19 -- Houston Rockets\n\nVanVleet's return from injury should give the Rockets a chance to put their best players in a better position to succeed, but other breakthroughs are needed too.\n\nSmart replaces Okogie\nBogdanovic replaces Holiday\nCrawford promoted, Finney-Smith out\nyoutu.be/jbam85sJJ58?...",
+      "url": "https://bsky.app/profile/lawmurraythenu.bsky.social/post/3mvv74hejzc2b",
+      "textSha256": "c49c72d5b1895811c2ce14418c82bd9efa34482215fc124ff7d78c26b92f3cee",
+      "postedAt": "2026-09-19T17:23:01.121Z",
+      "firstObservedAt": "2026-09-19T17:30:11.877Z",
+      "player": null,
+      "playerId": null,
+      "team": null,
+      "status": null,
+      "inGameWatch": false,
+      "identityVerifiedAtCollection": true,
+      "bskyVerified": true,
+      "outcome": "pending",
+      "note": "Player unresolved or multiple players; not auto-scored."
     }
   },
   "scores": [
@@ -2681,10 +2700,10 @@
     {
       "handle": "lawmurraythenu.bsky.social",
       "name": "Law Murray",
-      "observed": 6,
+      "observed": 7,
       "corroborated": 0,
       "conflicts": 0,
-      "pending": 6,
+      "pending": 7,
       "accuracy": null
     },
     {
