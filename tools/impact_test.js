@@ -298,6 +298,43 @@ const stale = LI.assess({ player: "Old Sample", playerId: "8", team: "UTA", sev:
   { schema: 3, roleStats: { "8": { player: "Old Sample", team: "UTA", games: 10, starts: 10, minutesTotal: 340, minutesGames: 10, updatedAt: iso(Date.now() - 90 * 86400000), sampleUrls: [] } } });
 check("a stale sample withholds the stake instead of quoting last season's role", stale.impact === "unknown" && stale.role.staleSample === true);
 
+// A role-only stale fixture missed a production backdoor: old points/+/- still scored STAKE.
+for (const stamp of [undefined, null, "", "not-a-date", iso(Date.now() - 90 * 86400000), iso(Date.now() + 86400000)]) {
+  const old = { ...baseCtx.roleStats["1"], updatedAt: stamp };
+  const result = LI.assess({ player: "Star Wing", playerId: "1", team: "UTA", sev: "out" },
+    { ...baseCtx, roleStats: { "1": old } });
+  check("undated/stale/future production cannot resurrect impact: " + stamp,
+    result.impact === "unknown" && result.score === null && result.stake.parts.length === 0 && result.production === null);
+}
+for (const minutes of [null, "", "  ", false, undefined]) {
+  const result = LI.assess({ player: "Demo", playerId: "7", team: "UTA", sev: "out" },
+    { roles: [{ playerId: "7", team: "UTA", role: "Starter in this game", minutes, observedAt: now }] });
+  check("missing minutes stay unknown rather than zero: " + JSON.stringify(minutes),
+    result.role.avgMinutes === null && result.stake.parts.some(p => p.key === "lineupCard"));
+}
+const datedListings = LI.listingCadence({ injuryEntries: [
+  { date: iso(Date.now() + 86400000), status: "Out" },
+  { date: now, status: "Out" }, { date: "bad", status: "Out" }
+] });
+check("future-dated listings do not count as past injury recurrence", datedListings.count === 1);
+
+const refreshedStarter = LI.assess({ playerId: "1", team: "UTA", sev: "out" }, {
+  roleStats: { "1": { ...baseCtx.roleStats["1"], updatedAt: "invalid" } },
+  roles: [{ playerId: "1", team: "UTA", role: "Starter in this game", observedAt: now }]
+});
+check("fresh lineup evidence survives an unusable older aggregate without importing its production",
+  refreshedStarter.impact === "high" && refreshedStarter.role.games === 1 && refreshedStarter.production === null);
+const staleTeam = LI.assess({ playerId: "1", team: "UTA", sev: "out" }, {
+  ...baseCtx, teamStats: { UTA: { ...baseCtx.teamStats.UTA, updatedAt: "invalid" } }
+});
+check("unknown-age team production is never used as a scoring-share denominator",
+  !staleTeam.stake.parts.some(p => p.key === "offenseShare") && staleTeam.production.teamPpg === null);
+for (const minutes of [null, "", "  ", false, undefined]) {
+  const collected = CC.accumulateRoleStats({}, [{ ...rowsA[0], minutes }], now);
+  check("collector never persists missing minutes as a zero-minute game: " + JSON.stringify(minutes),
+    collected.roleStats["1"].minutesGames === 0 && !collected.roleStats["1"].minutesValues);
+}
+
 const noWeights = LI.gradeOf({ stake: null, exposure: null, recurrence: null }, "out", "unknown");
 check("gradeOf with no components is unknown with confidence 0 — silence is not LOW",
   noWeights.grade === "unknown" && noWeights.confidence === 0 && noWeights.rules.length === 0);

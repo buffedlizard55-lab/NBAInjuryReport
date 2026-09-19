@@ -49,6 +49,14 @@ const assert = require('assert/strict'), fs = require('fs');
     await page.waitForFunction(() => window.__audio.some(a => a.state === 'running'));
     await page.locator('#soundToggle').uncheck();
     assert.equal(await page.evaluate(() => localStorage.getItem('nba-alerts-sound-on')), 'off');
+    // Synthetic delivery must be unmistakable in the UI and must not contaminate the wire.
+    const wireBefore = await page.evaluate(() => typeof Wire !== 'undefined' ? document.getElementById('wire').innerText : null);
+    for (let i = 0; i < 2; i++) {
+      await page.locator('#testLiveAlertBtn').click();
+      assert.match(await page.locator('#alertLog').innerText(), /TEST ONLY/);
+      assert.equal(await page.locator('#alertLog a').count(), 0, 'synthetic evidence has no review URL');
+    }
+    assert.equal(await page.evaluate(() => document.getElementById('wire').innerText), wireBefore);
     await page.locator('#teamFilter').selectOption('BOS');
     await page.locator('#historySearch').fill('fixture');
     assert.match(await page.locator('#playerHistory').innerText(), /No forward history/);
