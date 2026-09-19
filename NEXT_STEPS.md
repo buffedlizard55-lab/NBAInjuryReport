@@ -1,5 +1,77 @@
 # Next-session priorities
 
+## State at the end of session 14 (2026-09-19) — read this first
+
+Session 14 was **the reporter/verification layer**: the brief's open items were *run the audit, backfill the
+registry so the page is right before the first CI run, resolve BKN / MEM / NOP writers, verify club accounts
+where missing, and either read CHA / UTA / DAL / DEN / LAL / CLE or leave them explicitly gap-listed* — all
+under the standing constraints that **no X API key exists** and every claim must be re-checkable by a free,
+keyless call.
+
+**What shipped**
+
+1. **The "unmeasured" hole is closed at both ends.** New tool `tools/backfill_registry_recency.js` copies the
+   measured newest-post date out of `data/live/reporter_verify.json` into each registry row's `observed`
+   block, with provenance; `.github/workflows/live-audit.yml` now runs it after the live re-verification and
+   then runs `--check`, which **fails the job** if the registry is behind the CI measurement. 49 of 67
+   registry rows store a measured date; the 18 that do not are rows held out of collection (`feed:false`) or
+   refused identities — no date is invented for them. The page now prints **identical activity numbers from
+   the registry alone and from the CI evidence file** (34 active · 16 dormant · 0 unmeasured).
+2. **Every pollable writer is measured.** Six `getAuthorFeed?limit=1` reads (plus four earlier in the
+   session) closed the last unread rows: `joelrushnba` (DEN) ACTIVE 2 days · `andyblarsen` (UTA) 31 days ·
+   `saltcityhoops` (UTA) 53 days · `nickvanexit` (DAL) 45 days · `mfollowill` (DAL) 120 days · `nolajake`
+   (NOP) 458 days · `lakerssbn` (LAL) 318 days · `chrisherrington` (MEM) 5 days. Two of those newest items
+   are not basketball at all and one is another user's post returned as a repost; each row records that,
+   because the measurement is a fact about the **feed**, not proof that the writer still covers the team.
+3. **A real defect was found by running the new tool for real.** The backfill's first version only replaced
+   *quoted* dates, so a row storing the pre-measurement shape `latestPostAt: null` kept the null as a second,
+   winning key — Boston's Gary Washburn still evaluated to null while every check in the repo passed. Fixed
+   three ways (null-aware literal, duplicate-key repair, and a post-edit proof that asserts the **evaluated**
+   value of every row it touched equals the planned date), with regression tests and a registry-wide
+   invariant. See the session-14 FLAGS entry on `sources.html`.
+4. **The nine named gap teams were read live, not assumed.** Ten new graded rows (`dannycunningham` CLE,
+   `mfollowill` / `nickvanexit` DAL, `joelrushnba` DEN, `bgeisinger` CHA, `chrisherrington` / `nolajake` NOP,
+   `saltcityhoops` / `andyblarsen` UTA, `lakerssbn` LAL) and three **refusals** kept visible
+   (`miketrudell` — no bio at all; `david-locke` — motto bio, 2,553 posts; `erikslaterphoto` — an Alaska
+   photographer returned by a Brooklyn search). A name match is still not an identity.
+5. **A second official-club sweep.** Six more candidate handles read: four self-evident placeholders
+   (`charlottehornets` 1 follower / 0 posts, `dallasmavericks` 0/0, `denvernuggets` 1/7, `losangeleslakers`
+   2/0), three more `impersonation`-labelled handles (`cavs.com`, `dallas-maverick-s`, `memphisgrizzlies`) —
+   and **exactly one real find**: `nuggets.bsky.social`, valid Bluesky verification created 2025-07-08.
+6. **Corrections recorded rather than edited away.** The LAL blog row shipped earlier the same day claiming
+   it would give the club "a feed that is not a year old"; its own measurement (318 days) disproved that, so
+   the sentence was replaced and the correction written into the row.
+
+**Measured coverage after session 14** (`arenaCoverageSummary()`, and identical with the CI evidence map):
+30 teams · **18 verified-pollable · 12 bio-pollable · 0 official-only · 0 unexplained gaps** · **50 pollable
+writers, 20 Bluesky-verified** · activity **34 active / 16 dormant / 0 unmeasured**, **27 teams with an active
+writer**, **dormant-only: DAL, LAL, UTA**, no team unmeasured. The 12 teams short of a Bluesky-verified writer
+(ATL, BKN, CHA, CHI, DEN, IND, MIA, NOP, ORL, SAC, SAS, UTA) are named as gaps on the page. The daily CI file
+remains the measurement of record: **65 handles checked, 30 club channels HTTP 403, 0 fatal, 0 unreachable.**
+
+**What is still open, and why (a limitation is not a to-do unless a free path exists)**
+
+1. **Club corroboration is manual for 26 of 30 franchises.** No verified club Bluesky account exists to
+   poll, and `nba.com/<slug>/news` answers HTTP 403 to a datacentre IP for all 30 — a fact about the request,
+   not the page. Nothing keyless fixes that; the site links the page and says "manual review".
+2. **In-arena identity has a ceiling.** CHA's paper of record eliminated its Hornets beat on 2026-09-14, so
+   the club's only supported identity is a podcast analyst; UTA lost its writer to MIN and both remaining
+   rows measure dormant; BKN has exactly one supported account (`Busy — NetsDaily`) and one refusal. A bio
+   is not a credential, and this project will not upgrade one into the other.
+3. **Live latency is still unvalidated** — no 2026-27 games have been collected, so in-game exit timing is a
+   designed behaviour, not a measured one. Next real measurement window is the first regular-season game.
+4. **The impact model reads UNKNOWN off-season** (no 2026-27 minutes/starter evidence to grade). That is the
+   documented R4 rule, not a bug: no stake evidence ⇒ UNKNOWN even on a heavy road trip.
+5. **The official NBA adapter stays blocked** until `official.nba.com/nba-injury-report-2026-27-season/`
+   stops returning 404 (last checked 2026-09-17).
+6. **X / Instagram / Facebook remain manual-review links**, with dated platform evidence for why no keyless
+   read path exists (tokenless oEmbed removed 2020-10-24; IG Basic Display broken since 2024-12-04; Graph API
+   needs App Review).
+7. **Next candidates if the reporter work continues:** Mike Vorkunov's NBA/WNBA starter pack as a corpus for
+   BKN / MEM / NOP depth, a per-season "beat change" watch (session 13's Sarah Todd finding is the pattern to
+   automate further), and re-running the club-handle probe periodically in case a franchise finally issues a
+   verification object.
+
 ## State at the end of session 13 (2026-09-18) — read this first
 
 Sessions 11–12 expanded the registry (recorded in the `FLAGS` log in `assets/js/data.js`); this session was

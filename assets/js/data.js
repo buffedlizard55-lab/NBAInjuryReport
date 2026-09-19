@@ -356,14 +356,14 @@ const NBA_OFFICIAL_ACCOUNT_PROBE = {
     { handle: "chicagobulls.bsky.social", via: "getProfiles 25-handle batch", team: "CHI", resolved: false, verdict: "absent" },
     { handle: "celticsnba.bsky.social", via: "getProfiles 25-handle batch", team: "BOS", resolved: true, verdict: "in-registry", displayName: "Boston Celtics", bio: "18x WORLD CHAMPS 🏆 #DifferentHere nba.com/celtics/", followers: 8281, posts: 1579, verification: false },
     { handle: "clevelandcavaliers.bsky.social", via: "getProfiles 25-handle batch", team: "CLE", resolved: true, verdict: "in-registry", displayName: "Cleveland Cavaliers", bio: "🗣️#LetEmKnow", followers: 11928, posts: 19, verification: false },
-    { handle: "dallasmavs.bsky.social", via: "getProfiles (separate same-day request, not part of the 25-handle batch)", team: "DAL", resolved: true, verdict: "in-registry", displayName: "Dallas Mavericks", bio: "Mavs.com", followers: 24516, posts: 2, verification: false, note: "the account the brief flags as unverified: re-read live 2026-09-18 and STILL no verification object, 2 posts total, profile record last indexed 2024-01-20. There is no Bluesky-verified Mavericks account to switch to (searchActorsTypeahead?q=Dallas Mavericks returns one impersonation-labelled account and fan handles), so the flag stays and the row stays out of collection." },
+    { handle: "dallasmavs.bsky.social", via: "getProfiles (separate same-day request, not part of the 25-handle batch)", team: "DAL", resolved: true, verdict: "in-registry", displayName: "Dallas Mavericks", bio: "Mavs.com", followers: 24516, posts: 2, verification: false, reRead: { at: "2026-09-19", followers: 24516, posts: 2, verification: false }, note: "the account the brief flags as unverified: re-read live 2026-09-18 and STILL no verification object, 2 posts total, profile record last indexed 2024-01-20. RE-READ AGAIN 2026-09-19 in the batched sweep (reRead above): unchanged — 24,516 followers, 2 posts, bio \"Mavs.com\", no verification object. There is no Bluesky-verified Mavericks account to switch to (searchActorsTypeahead?q=Dallas Mavericks returns one impersonation-labelled account and fan handles), so the flag stands on two dated measurements and the row stays out of collection." },
     { handle: "detroitpistons.bsky.social", via: "getProfiles 25-handle batch", team: "DET", resolved: false, verdict: "absent" },
     { handle: "warriorsnba.bsky.social", via: "getProfiles 25-handle batch", team: "GSW", resolved: false, verdict: "absent" },
     { handle: "houstonrockets.bsky.social", via: "getProfiles 25-handle batch", team: "HOU", resolved: true, verdict: "placeholder", displayName: null, bio: null, followers: 17, posts: 0, verification: false },
     { handle: "indianapacers.bsky.social", via: "getProfiles 25-handle batch", team: "IND", resolved: true, verdict: "placeholder", displayName: null, bio: null, followers: 7, posts: 0, verification: false },
     { handle: "laclippers.bsky.social", via: "getProfiles 25-handle batch", team: "LAC", resolved: true, verdict: "unverified-candidate", displayName: "LA Clippers", bio: "#ClipperNation | 📲 TEXT us at +1 (213) 577-1833", followers: 364, posts: 0, verification: false, note: "bio reads like a club campaign and zero posts exist to check it against; not polled, not asserted" },
     { handle: "lakersnba.bsky.social", via: "getProfiles 25-handle batch", team: "LAL", resolved: false, verdict: "absent" },
-    { handle: "memphisgrizzlies.bsky.social", via: "getProfiles 25-handle batch", team: "MEM", resolved: true, verdict: "impersonation-labelled", displayName: "The Memphis Grizzlies", bio: "The Official Bluesky of Your Memphis Grizzlies", followers: 55, posts: 11, verification: false, moderationLabel: "impersonation" },
+    { handle: "memphisgrizzlies.bsky.social", via: "getProfiles 25-handle batch", team: "MEM", resolved: true, verdict: "impersonation-labelled", displayName: "The Memphis Grizzlies", bio: "The Official Bluesky of Your Memphis Grizzlies", followers: 55, posts: 11, verification: false, moderationLabel: "impersonation", reRead: { at: "2026-09-19", followers: 55, posts: 11, verification: false, moderationLabel: "impersonation", appliedAt: "2023-11-16" }, note: "RE-READ 2026-09-19: Bluesky\u2019s moderation label is still present (applied 2023-11-16). An account whose bio says \"The Official Bluesky of Your Memphis Grizzlies\" while the platform labels it an impersonation is exactly the case the allow-list rule exists for \u2014 it stays out of every alert path." },
     { handle: "miamiheat.bsky.social", via: "getProfiles 25-handle batch", team: "MIA", resolved: true, verdict: "private-profile", displayName: "Miami HEAT", bio: null, followers: 3091, posts: 4, verification: false, moderationLabel: "!no-unauthenticated", note: "the profile label means its posts are not readable without authentication, so this account could not feed a keyless poller even if it were the club" },
     { handle: "minnesotatimberwolves.bsky.social", via: "getProfiles 25-handle batch", team: "MIN", resolved: false, verdict: "absent" },
     { handle: "neworleanspelicans.bsky.social", via: "getProfiles 25-handle batch", team: "NOP", resolved: false, verdict: "absent" },
@@ -375,15 +375,49 @@ const NBA_OFFICIAL_ACCOUNT_PROBE = {
     { handle: "torontoraptors.bsky.social", via: "getProfiles 25-handle batch", team: "TOR", resolved: true, verdict: "placeholder", displayName: null, bio: null, followers: 3, posts: 0, verification: false },
     { handle: "utahjazz.bsky.social", via: "getProfiles 25-handle batch", team: "UTA", resolved: true, verdict: "unverified-candidate", displayName: "Utah Jazz", bio: "Salt Lake's premier basketball team since 1979 | #TakeNote", followers: 43, posts: 0, verification: false },
     { handle: "sunsphx.bsky.social", via: "getProfiles 25-handle batch", team: "PHX", resolved: true, verdict: "in-registry", displayName: "Phoenix Suns", bio: "The Official Account of the Phoenix Suns. #SunsUp", followers: 14027, posts: 4142, verification: false, note: "added to SOCIAL_ACCOUNTS this session as an unverified, not-polled club channel" },
-    { handle: "washwizards.bsky.social", via: "getProfiles 25-handle batch", team: "WAS", resolved: true, verdict: "in-registry", displayName: "Washington Wizards", bio: "For one, for all, #ForTheDistrict", followers: 2856, posts: 214, verification: false }
+    { handle: "washwizards.bsky.social", via: "getProfiles 25-handle batch", team: "WAS", resolved: true, verdict: "in-registry", displayName: "Washington Wizards", bio: "For one, for all, #ForTheDistrict", followers: 2856, posts: 214, verification: false },
+
+    /* =====================================================================================
+     * SESSION 14 (2026-09-19) — the second sweep, and the reason it is a separate block
+     * -------------------------------------------------------------------------------------
+     * The 25-handle batch above probed the handles a human would guess. Session 14 instead
+     * searched the network (searchActors per club name) and read the NEW handles it found in ONE
+     * batched getProfiles request — including a re-read of two already-registered club accounts,
+     * so "still unverified" becomes a second dated measurement instead of a single snapshot.
+     *
+     * RESULT, unchanged for the clubs that matter: the Mavericks account that the brief flags is
+     * still unverified on a SECOND dated read (24,516 followers, 2 posts, bio "Mavs.com", no
+     * verification object), the Nets' writer-shaped handles do not answer as the writers, and the
+     * newly-found club-name handles are squats. The sweep's one positive is a RE-CONFIRMATION:
+     * nuggets.bsky.social carries a VALID Bluesky verification object (issuer bsky.app, created
+     * 2025-07-08) — which is why DEN is one of the only four clubs with a machine-readable
+     * official feed.
+     * ===================================================================================== */
+    { handle: "cavs.com", via: "searchActors sweep + batched getProfiles (8 handles, 2026-09-19)", team: "CLE", resolved: true, verdict: "impersonation-labelled", displayName: "Cleveland Cavaliers", bio: "#LetEmKnow 🗣️", followers: 137, posts: 0, verification: false, moderationLabel: "impersonation", note: "the club's own DOMAIN as a handle, and Bluesky's moderation labels it an impersonation (applied 2025-04-24). This is the fourth impersonation-labelled club-name handle found by this project; it must never be polled or armed." },
+    { handle: "charlottehornets.bsky.social", via: "searchActors sweep + batched getProfiles (8 handles, 2026-09-19)", team: "CHA", resolved: true, verdict: "placeholder", displayName: null, bio: null, followers: 1, posts: 0, verification: false, note: "empty displayName, no bio, 1 follower, 0 posts — a squatted handle, not a club channel" },
+    { handle: "dallasmavericks.bsky.social", via: "searchActors sweep + batched getProfiles (8 handles, 2026-09-19)", team: "DAL", resolved: true, verdict: "placeholder", displayName: null, bio: null, followers: 0, posts: 0, verification: false, note: "0 followers, 0 posts, no bio — the empty squatted twin of dallasmavs.bsky.social" },
+    { handle: "denvernuggets.bsky.social", via: "searchActors sweep + batched getProfiles (8 handles, 2026-09-19)", team: "DEN", resolved: true, verdict: "placeholder", displayName: null, bio: null, followers: 1, posts: 7, verification: false, note: "1 follower, 7 posts, no bio — a handle squat, NOT the club (the club's verified account is nuggets.bsky.social)" },
+    { handle: "losangeleslakers.bsky.social", via: "searchActors sweep + batched getProfiles (8 handles, 2026-09-19)", team: "LAL", resolved: true, verdict: "placeholder", displayName: null, bio: null, followers: 2, posts: 0, verification: false, note: "2 followers, 0 posts, no bio" },
+    { handle: "nuggets.bsky.social", via: "searchActors q=Denver Nuggets (2026-09-19)", team: "DEN", resolved: true, verdict: "in-registry", displayName: "Denver Nuggets", bio: "2023 NBA Champs ⚒\nlinktr.ee/denvernuggets", followers: null, posts: null, verification: true, note: "RE-CONFIRMED the only club handle found by a search-based sweep that carries a VALID Bluesky verification object (issuer bsky.app, created 2025-07-08T00:30:10Z) and is already in SOCIAL_ACCOUNTS as polled. Follower/post counts were not part of this read and are therefore null rather than guessed." },
+    { handle: "dallas-maverick-s.bsky.social", via: "searchActorsTypeahead q=Dallas Mavericks (recorded 2026-09-19)", team: "DAL", resolved: true, verdict: "impersonation-labelled", displayName: "Dallas Mavericks", bio: "The Dallas Mavericks are a bold, high-scoring NBA squad known for their flair…", followers: null, posts: null, verification: false, moderationLabel: "impersonation", note: "surfaced by the typeahead during the 2026-09-19 sweep with moderation label 'impersonation' applied 2025-09-12; counts were not read in this sweep and are null rather than guessed" }
   ],
   summary: {
     handlesProbed: 25,
     resolved: 16,
     absent: 9,
     withValidVerificationObject: 0,
-    impersonationLabelled: 3,
-    meaning: "Of 25 candidate club handles probed on 2026-09-18, NOT ONE carries a Bluesky verification object. Together with the four already-registered club accounts (POR/DEN/PHI verified, BOS/CLE/DAL/WAS not) and the league's own 6 follows, the measured conclusion is: 4 of 30 franchises have a Bluesky-verified official account, and for the other 26 the official channel is nba.com/<slug>/news — which the CI probe measured at HTTP 403. That is the honest state of the 'official Bluesky verification' the brief asks for; it cannot be manufactured, only reported."
+    impersonationLabelled: 5,
+    sweep: {
+      when: "2026-09-19",
+      method: "searchActors (one query per club name) → new handles read in ONE batched getProfiles request (8 actors), plus a re-read of two already-registered club handles",
+      newHandlesRead: 6,
+      reReads: 2,
+      placeholders: ["charlottehornets.bsky.social", "dallasmavericks.bsky.social", "denvernuggets.bsky.social", "losangeleslakers.bsky.social"],
+      impersonationFound: ["cavs.com", "memphisgrizzlies.bsky.social", "dallas-maverick-s.bsky.social"],
+      verifiedConfirmed: ["nuggets.bsky.social"],
+      meaning: "Searching the network for club accounts found no new club channel and four more squatted handles, and it re-confirmed on a second dated read that dallasmavs.bsky.social still carries NO verification object and that nuggets.bsky.social still does. The count of verified club accounts is therefore unchanged: 4 of 30 franchises (POR, DEN, PHI and the league account), and for the other 26 the official channel stays nba.com/<slug>/news, which the CI probe measured at HTTP 403."
+    },
+    meaning: "Of 25 candidate club handles probed on 2026-09-18, NOT ONE carries a Bluesky verification object. Together with the four already-registered club accounts (POR/DEN/PHI verified, BOS/CLE/DAL/WAS not) and the league's own 6 follows, the measured conclusion is: 4 of 30 franchises have a Bluesky-verified official account, and for the other 26 the official channel is nba.com/<slug>/news — which the CI probe measured at HTTP 403. That is the honest state of the 'official Bluesky verification' the brief asks for; it cannot be manufactured, only reported. The 2026-09-19 sweep above re-read the newly-found name-shaped handles and changed none of this."
   }
 };
 
@@ -394,7 +428,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/howardbeck.bsky.social",
     evidenceQuote: "Senior NBA Writer at TheRinger.com | Co-host, the Real Ones",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=howardbeck.bsky.social",
-    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T15:10:35.452Z", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T17:05:28.623Z", latestPostAtSource: "data/live/reporter_verify.json", verificationValid: true, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — valid Bluesky verification (issuer bsky.app); bio 'Senior NBA Writer at TheRinger.com | Co-host, the Real Ones'; creator of the 150-member NBA writers list" },
   { name: "Sam Vecenie", handle: "samvecenie.bsky.social", outlet: "The Athletic", role: "Senior Writer (NBA / draft) + Game Theory Podcast", team: null, feed: true, bskyVerified: true,
     evidence: "https://bsky.app/profile/samvecenie.bsky.social",
@@ -412,7 +446,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/johnhollinger.bsky.social",
     evidenceQuote: "The Athletic NBA columnist",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=johnhollinger.bsky.social",
-    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T03:18:29.996Z", verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
+    observed: { checkedAt: "2026-09-18", latestPostAt: "2026-09-18T22:00:23.051Z", latestPostAtSource: "data/live/reporter_verify.json", verificationValid: false, recheckedBy: "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z" },
     verified: "2026-09-17 — ACTIVE: most recent post indexed 2026-09-17T01:28Z (verified via getAuthorFeed). No Bluesky verification object present; identity corroborated by the X-bio pointer on his directory row. He is inactive on X, so this is his working feed." },
   { name: "Tom Haberstroh", handle: "tomhaberstroh.bsky.social", outlet: "Yahoo Sports / TomTheFinder.com", role: "NBA writer + Trail Blazers analytics insider", team: null, feed: true, bskyVerified: false,
     evidence: "https://bsky.app/profile/tomhaberstroh.bsky.social",
@@ -474,7 +508,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/jonkrawczynski.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jonkrawczynski.bsky.social",
     evidenceQuote: "Timberwolves/NBA writer for The Athletic.",
-    observed: { checkedAt: "2026-09-18", postsCount: 2866, followersCount: 35617, profileIndexedAt: "2026-07-29T19:37:11.172Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-18T23:03:07.586Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2866, followersCount: 35617, profileIndexedAt: "2026-07-29T19:37:11.172Z", verificationValid: true },
     verified: "2026-09-18 — read live via app.bsky.actor.getProfiles: bio reads verbatim 'Timberwolves/NBA writer for The Athletic…', and Bluesky's own verification object is present and VALID (issuer bsky.app, isValid true). Closes the MIN in-arena gap." },
 
   { name: "Omari Sankofa II", handle: "omarisankofa.bsky.social", outlet: "Detroit Free Press", role: "Pistons beat writer", team: "DET", feed: true,
@@ -482,7 +516,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/omarisankofa.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=omarisankofa.bsky.social",
     evidenceQuote: "Pistons beat writer for the Detroit Free Press.",
-    observed: { checkedAt: "2026-09-18", postsCount: 8137, followersCount: 11175, profileIndexedAt: "2026-06-30T02:07:42.922Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-18T23:19:52.125Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 8137, followersCount: 11175, profileIndexedAt: "2026-06-30T02:07:42.922Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Pistons beat writer for the Detroit Free Press.' + VALID Bluesky verification object (issuer bsky.app). Highest-volume beat account added this session (8,137 posts). Closes the DET in-arena gap." },
 
   { name: "Kyle Neubeck", handle: "kyleneubeck.bsky.social", outlet: "PHLY Sports", role: "Sixers beat writer", team: "PHI", feed: true,
@@ -490,7 +524,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/kyleneubeck.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=kyleneubeck.bsky.social",
     evidenceQuote: "Covering the Sixers for PHLY.",
-    observed: { checkedAt: "2026-09-18", postsCount: 2081, followersCount: 20859, profileIndexedAt: "2026-06-22T05:06:05.869Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-18T18:55:26.076Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2081, followersCount: 20859, profileIndexedAt: "2026-06-22T05:06:05.869Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Covering the Sixers for PHLY.' + VALID Bluesky verification object (issuer bsky.app). Closes the PHI in-arena gap (PHI previously had no writer row at all)." },
 
   { name: "Sean Highkin", handle: "highkin.bsky.social", outlet: "The Rose Garden Report (rosegardenreport.com)", role: "Trail Blazers writer", team: "POR", feed: true,
@@ -498,7 +532,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/highkin.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=highkin.bsky.social",
     evidenceQuote: "Trail Blazers + Fire rosegardenreport.com",
-    observed: { checkedAt: "2026-09-18", postsCount: 1569, followersCount: 16810, profileIndexedAt: "2026-06-25T04:00:53.771Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-16T19:59:46.218Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1569, followersCount: 16810, profileIndexedAt: "2026-06-25T04:00:53.771Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Trail Blazers + Fire rosegardenreport.com' + VALID Bluesky verification object (issuer bsky.app). Closes the POR in-arena gap." },
 
   { name: "Josh Robbins", handle: "joshrobbins.bsky.social", outlet: "The Athletic", role: "Senior Writer — Washington Wizards", team: "WAS", feed: true,
@@ -506,7 +540,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/joshrobbins.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=joshrobbins.bsky.social",
     evidenceQuote: "Senior Writer for The Athletic. I cover the Washington Wizards and the NBA.",
-    observed: { checkedAt: "2026-09-18", postsCount: 1215, followersCount: 11748, profileIndexedAt: "2026-06-23T15:32:49.662Z", verificationValid: true },
+    observed: { latestPostAt: "2026-08-20T03:17:18.137Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1215, followersCount: 11748, profileIndexedAt: "2026-06-23T15:32:49.662Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Senior Writer for The Athletic. I cover the Washington Wizards and the NBA.' + VALID Bluesky verification object issued by the OUTLET'S OWN domain account (theathletic.com). Closes the WAS in-arena gap." },
 
   { name: "Josh Lewenberg", handle: "jlewenberg.bsky.social", outlet: "TSN", role: "Toronto Raptors beat reporter", team: "TOR", feed: true,
@@ -514,7 +548,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/jlewenberg.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jlewenberg.bsky.social",
     evidenceQuote: "Toronto Raptors NBA Beat Reporter @ TSN",
-    observed: { checkedAt: "2026-09-18", postsCount: 4072, followersCount: 4722, profileIndexedAt: "2026-07-10T03:43:47.861Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-17T15:21:48.294Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 4072, followersCount: 4722, profileIndexedAt: "2026-07-10T03:43:47.861Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Toronto Raptors NBA Beat Reporter @ TSN' + VALID Bluesky verification object (issuer bsky.app). Upgrades TOR from byline-citation rows to a pollable in-arena account." },
 
   { name: "Law Murray", handle: "lawmurraythenu.bsky.social", outlet: "The Athletic", role: "NBA writer (LA Clippers)", team: "LAC", feed: true,
@@ -522,7 +556,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/lawmurraythenu.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=lawmurraythenu.bsky.social",
     evidenceQuote: "#NBASky writer at The Athletic",
-    observed: { checkedAt: "2026-09-18", postsCount: 16801, followersCount: 45518, profileIndexedAt: "2026-09-01T20:03:05.596Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-18T22:58:02.878Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 16801, followersCount: 45518, profileIndexedAt: "2026-09-01T20:03:05.596Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim '#NBASky writer at The Athletic / In LA' + VALID Bluesky verification object issued by theathletic.com. Highest-volume account in this batch (16,801 posts). Upgrades LAC from byline-citation to a pollable account." },
 
   { name: "Jim Owczarski", handle: "jimowczarski.bsky.social", outlet: "Milwaukee Journal Sentinel", role: "Bucks beat writer", team: "MIL", feed: true,
@@ -530,7 +564,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/jimowczarski.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jimowczarski.bsky.social",
     evidenceQuote: "I cover the #Bucks for the Milwaukee Journal Sentinel.",
-    observed: { checkedAt: "2026-09-18", postsCount: 13074, followersCount: 31492, profileIndexedAt: "2026-06-24T11:49:57.966Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-17T20:18:13.186Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 13074, followersCount: 31492, profileIndexedAt: "2026-06-24T11:49:57.966Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'I cover the #Bucks for the Milwaukee Journal Sentinel.' + VALID Bluesky verification object (issuer bsky.app). Closes the MIL in-arena gap WITHOUT depending on The Athletic, whose author pages answer HTTP 403 to this client (see FLAGS)." },
 
   { name: "Jason Beede", handle: "jbeede.bsky.social", outlet: "Orlando Sentinel", role: "Magic beat reporter", team: "ORL", feed: true,
@@ -538,7 +572,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/jbeede.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jbeede.bsky.social",
     evidenceQuote: "Orlando #Magic beat reporter for @orlandosentinel.com.",
-    observed: { checkedAt: "2026-09-18", postsCount: 2412, followersCount: 3270, profileIndexedAt: "2026-07-13T03:25:56.464Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-18T14:55:15.385Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2412, followersCount: 3270, profileIndexedAt: "2026-07-13T03:25:56.464Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Orlando #Magic beat reporter for @orlandosentinel.com.' NO Bluesky verification object was present. Listed as bio-verified (self-described outlet + beat), the same standard the directory applies to its other beat rows. Upgrades ORL from byline-citation to a pollable account." },
 
   { name: "James Ham", handle: "jameshamnba.bsky.social", outlet: "ESPN 1320 / The Kings Beat / Locked On Kings", role: "Kings insider (beat writer, podcaster)", team: "SAC", feed: true,
@@ -546,7 +580,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/jameshamnba.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jameshamnba.bsky.social",
     evidenceQuote: "Kings Insider for ESPN 1320, The Kings Beat and Locked On Kings.",
-    observed: { checkedAt: "2026-09-18", postsCount: 2471, followersCount: 8124, profileIndexedAt: "2026-04-24T06:28:56.641Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-18T03:37:40.780Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2471, followersCount: 8124, profileIndexedAt: "2026-04-24T06:28:56.641Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Kings Insider for ESPN 1320, The Kings Beat and Locked On Kings. Long time beat writer, podcaster and radio personality covering the NBA's Sacramento Kings.' NO Bluesky verification object present. Closes the SAC in-arena gap." },
 
   { name: "Ethan Sands", handle: "ejelite1.bsky.social", outlet: "cleveland.com", role: "Cavs beat reporter", team: "CLE", feed: true,
@@ -554,7 +588,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/ejelite1.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=ejelite1.bsky.social",
     evidenceQuote: "Cavs Beat Reporter and Wine and Gold Talk podcast host for Cleveland.com",
-    observed: { checkedAt: "2026-09-18", postsCount: 583, followersCount: 770, profileIndexedAt: "2025-02-21T07:24:10.245Z", verificationValid: false },
+    observed: { latestPostAt: "2026-08-04T14:53:08.206Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 583, followersCount: 770, profileIndexedAt: "2025-02-21T07:24:10.245Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Cavs Beat Reporter and Wine and Gold Talk podcast host for Cleveland.com…'. NO verification object. IRREGULARITY FLAGGED: this is the stalest profile record in the directory (last profile update 2025-02-21) and cleveland.com's Cavs beat changed hands over 2025-26, so RECENCY IS UNRESOLVED — the row is polled only because the alert gate also drops posts that are not fresh; tools/verify_reporters.js must observe a recent post before this row is treated as active. The other CLE candidate, Chris Fedor, has no Bluesky account discoverable by exact-name typeahead." },
 
   { name: "Anthony Chiang", handle: "anthonychiang.bsky.social", outlet: "Miami Herald", role: "Heat reporter", team: "MIA", feed: false,
@@ -579,7 +613,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/btrowland.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=btrowland.bsky.social",
     evidenceQuote: "Podcast Host: Locked on Hawks, Hammer Territory",
-    observed: { checkedAt: "2026-09-18", postsCount: 8972, followersCount: 12143, profileIndexedAt: "2025-12-23T16:07:37.625Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-18T03:17:33.120Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 8972, followersCount: 12143, profileIndexedAt: "2025-12-23T16:07:37.625Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'I write and talk about sports. Podcast Host: Locked on Hawks, Hammer Territory. Writer: Patreon, FanSided, USBWA, Freelance…'. NO verification object. AMBIGUITY FLAGGED: a second account with the same display name exists ('frodorowland.bsky.social', 23 followers, 1 post, no bio) — the row uses the 12,143-follower, 8,972-post account whose bio names the Hawks podcast, and the doppelgänger is excluded. Upgrades ATL from byline-citation to a pollable in-arena account." },
 
   { name: "Scott Agness", handle: "scottagness.bsky.social", outlet: "Fieldhouse Files", role: "Indiana Pacers beat writer", team: "IND", feed: true,
@@ -587,7 +621,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/scottagness.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=scottagness.bsky.social",
     evidenceQuote: "Indiana Pacers, Fever beat writer: Fieldhouse Files",
-    observed: { checkedAt: "2026-09-18", postsCount: 2863, followersCount: 3324, profileIndexedAt: "2025-01-29T19:09:52.545Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-19T00:10:22.001Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2863, followersCount: 3324, profileIndexedAt: "2025-01-29T19:09:52.545Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Indiana Pacers, Fever beat writer: Fieldhouse Files | Podcast Host | Play-by-play announcer'. NO verification object. Upgrades IND from byline-citation to a pollable in-arena account." },
 
   { name: "Ira Winderman", handle: "irawinderman.bsky.social", outlet: "South Florida Sun Sentinel", role: "Miami Heat beat writer", team: "MIA", feed: true,
@@ -595,7 +629,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/irawinderman.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=irawinderman.bsky.social",
     evidenceQuote: "Covering the Miami Heat for the South Florida Sun Sentinel",
-    observed: { checkedAt: "2026-09-18", postsCount: 2150, followersCount: 21479, profileIndexedAt: "2024-11-06T21:21:00.282Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-18T21:17:26.677Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2150, followersCount: 21479, profileIndexedAt: "2024-11-06T21:21:00.282Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Covering the Miami Heat for the South Florida Sun Sentinel'. NO verification object. This is the SAME person the directory already carries as an X-handle row (verified-handle), now with a pollable account, so MIA moves from directory-only to pollable in-arena coverage." },
 
   { name: "Gerald Bourguet", handle: "geraldbourguet.bsky.social", outlet: "Suns After Dark", role: "Suns beat writer / reporter / podcaster", team: "PHX", feed: true,
@@ -613,7 +647,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/kellyiko.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=kellyiko.bsky.social",
     evidenceQuote: "National NBA reporter for Yahoo Sports",
-    observed: { checkedAt: "2026-09-18", postsCount: 46, followersCount: 7918, profileIndexedAt: "2025-09-24T19:55:03.446Z", verificationValid: true },
+    observed: { latestPostAt: "2026-06-11T13:05:15.436Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 46, followersCount: 7918, profileIndexedAt: "2025-09-24T19:55:03.446Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'National NBA reporter for Yahoo Sports' + VALID Bluesky verification object (issuer bsky.app). team:null IS DELIBERATE — the bio claims national coverage, not the Rockets beat, so no team is asserted. Low post count (46) noted: coverage benefit is national news-breaks, not a guaranteed per-game presence." },
 
   /* ==========================================================================================
@@ -658,7 +692,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/gwashburnglobe.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=gwashburnglobe.bsky.social",
     evidenceQuote: "Boston Globe National NBA writer giving thoughts on the NBA, other sports and various topics. UC Berkeley grad. Masters degree, Univ. of Nebraska",
-    observed: { checkedAt: "2026-09-18", postsCount: 49, followersCount: 1604, profileIndexedAt: "2024-11-15T00:20:22.550Z", verificationValid: true, latestPostAt: null },
+    observed: { latestPostAt: "2026-09-06T18:22:45.219Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 49, followersCount: 1604, profileIndexedAt: "2024-11-15T00:20:22.550Z", verificationValid: true },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim + VALID Bluesky verification object (issuer bsky.app, isValid true, 2026-08-13). Previously bio-verified, now upgraded to bsky-verified. 1,604 followers, 49 posts." },
 
 
@@ -667,7 +701,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/byjayking.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=byjayking.bsky.social",
     evidenceQuote: "Celtics writer. Host of Still Poddable. NBA sicko.",
-    observed: { checkedAt: "2026-09-18", postsCount: 177, followersCount: 14600, profileIndexedAt: "2024-11-15T19:52:34.447Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-12T12:46:19.769Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 177, followersCount: 14600, profileIndexedAt: "2024-11-15T19:52:34.447Z", verificationValid: true },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim + VALID verification issued by theathletic.com (2025-04-22). Upgraded to bsky-verified." },
 
 
@@ -676,7 +710,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/noadalzell.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=noadalzell.bsky.social",
     evidenceQuote: "WNBA @sbnation, Celtics @clnsceltics",
-    observed: { checkedAt: "2026-09-18", postsCount: 1399, followersCount: 22335, profileIndexedAt: "2024-11-06T14:26:27.379Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-18T19:43:53.784Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1399, followersCount: 22335, profileIndexedAt: "2024-11-06T14:26:27.379Z", verificationValid: false },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim 'WNBA @sbnation, Celtics @clnsceltics', 22,335 followers, 1,399 posts, NO verification object present (verification-lost, previously flagged). Now bio-verified, not bsky-verified. tools/verify_reporters.js flagged verification-lost on 2026-09-18T20:00Z — confirmed here." },
 
 
@@ -685,7 +719,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/bullsjay.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=bullsjay.bsky.social",
     evidenceQuote: "ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast",
-    observed: { checkedAt: "2026-09-18", postsCount: 3601, followersCount: 4999, profileIndexedAt: "2024-01-20T06:12:44.969Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-18T02:12:07.628Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 3601, followersCount: 4999, profileIndexedAt: "2024-01-20T06:12:44.969Z", verificationValid: false },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast' (was 'I write about the NBA, with a focus on the Chicago Bulls.' per Forbes) — bio drift noted but still outlet+beat (ClutchPoints + Bulls Podcast). 4,999 followers, 3,601 posts." },
 
 
@@ -703,7 +737,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/ryanblackburn.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=ryanblackburn.bsky.social",
     evidenceQuote: "Denver Nuggets | Mile High Sports | Pickaxe and Roll | Locked On Nuggets | Just trying to make it",
-    observed: { checkedAt: "2026-09-18", postsCount: 103, followersCount: 9194, profileIndexedAt: "2024-11-06T16:57:07.385Z", verificationValid: false },
+    observed: { latestPostAt: "2025-06-20T19:19:27.415Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 103, followersCount: 9194, profileIndexedAt: "2024-11-06T16:57:07.385Z", verificationValid: false },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim matches, 9,194 followers, 103 posts. Bio-verified, no verification object." },
 
 
@@ -712,7 +746,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/anthonyvslater.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=anthonyvslater.bsky.social",
     evidenceQuote: "NBA writer for ESPN",
-    observed: { checkedAt: "2026-09-18", postsCount: 1003, followersCount: 21680, profileIndexedAt: "2025-08-12T19:30:26.401Z", verificationValid: true },
+    observed: { latestPostAt: "2026-08-14T21:36:29.349Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1003, followersCount: 21680, profileIndexedAt: "2025-08-12T19:30:26.401Z", verificationValid: true },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'NBA writer for ESPN' (was longer 'Warriors reporter — ESPN (ex-The Athletic). Warriors plus/minus podcast.') — still outlet+beat via verification object (issuer theathletic.com valid 2025-06-29). Upgraded to bsky-verified. 21,680 followers, 1,003 posts." },
 
 
@@ -721,7 +755,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/danielle-lerner.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=danielle-lerner.bsky.social",
     evidenceQuote: "USA TODAY national sports enterprise reporter. California transplant, but the cool kind.",
-    observed: { checkedAt: "2026-09-18", postsCount: 1862, followersCount: 5602, profileIndexedAt: "2026-05-15T04:26:37.261Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-17T14:22:41.276Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1862, followersCount: 5602, profileIndexedAt: "2026-05-15T04:26:37.261Z", verificationValid: false },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'USA TODAY national sports enterprise reporter. California transplant, but the cool kind.' Previously 'Rockets Beat Writer, Houston Chronicle' — bio drift confirmed (reporter_verify.json bio-drift). Now team:null national, not HOU-specific. Houston Chronicle author page https://www.houstonchronicle.com/author/danielle-lerner/ now reads 'Former Rockets Beat Writer' with sameAs bsky handle. HOU now covered by Varun Shankar (new hire 2026-01-20)." },
 
 
@@ -730,7 +764,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/danwoikesports.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=danwoikesports.bsky.social",
     evidenceQuote: "Covering the Lakers for The Athletic, listening to Dad Rock a little too loud and eating a little too much pizza",
-    observed: { checkedAt: "2026-09-18", postsCount: 326, followersCount: 15573, profileIndexedAt: "2025-09-25T17:40:24.045Z", verificationValid: true },
+    observed: { latestPostAt: "2026-05-12T14:46:07.139Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 326, followersCount: 15573, profileIndexedAt: "2025-09-25T17:40:24.045Z", verificationValid: true },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim matches + VALID verification issued by theathletic.com (2025-06-24). Upgraded to bsky-verified. 15,573 followers, 326 posts." },
 
 
@@ -739,7 +773,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/rylanstiles.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=rylanstiles.bsky.social",
     evidenceQuote: "Locked On Thunder Podcast Host. Thunder on SI Beat Writer. Locked on NBA Saturday night host. OKC Dream Team Co-Host. Elvis Stan.",
-    observed: { checkedAt: "2026-09-18", postsCount: 2183, followersCount: 1459, profileIndexedAt: "2025-10-20T05:09:32.651Z", verificationValid: false },
+    observed: { latestPostAt: "2026-07-20T00:51:39.978Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2183, followersCount: 1459, profileIndexedAt: "2025-10-20T05:09:32.651Z", verificationValid: false },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim 'Locked On Thunder Podcast Host. Thunder on SI Beat Writer...' 1,459 followers, 2,183 posts." },
 
 
@@ -748,7 +782,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/jxlorenzi.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jxlorenzi.bsky.social",
     evidenceQuote: "Chicago-based NBA writer for The Athletic. Joe-L. Past: Thunder for The Oklahoman.",
-    observed: { checkedAt: "2026-09-18", postsCount: 548, followersCount: 5422, profileIndexedAt: "2026-05-11T22:42:23.062Z", verificationValid: false },
+    observed: { latestPostAt: "2026-08-29T19:26:37.066Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 548, followersCount: 5422, profileIndexedAt: "2026-05-11T22:42:23.062Z", verificationValid: false },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio now 'Chicago-based NBA writer for The Athletic. Joe-L. Past: Thunder for The Oklahoman. Mizzou alum. Out West forever.' Previously 'Thunder beat writer for The Oklahoman' — bio drift confirmed (reporter_verify.json bio-drift). Now team:null (past beat), not current OKC beat. OKC still covered by Rylan Stiles + Andrew Schlecht." },
 
 
@@ -757,7 +791,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/andrewschlecht.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=andrewschlecht.bsky.social",
     evidenceQuote: "Covering the OKC Thunder",
-    observed: { checkedAt: "2026-09-18", postsCount: 227, followersCount: 6560, profileIndexedAt: "2024-11-29T19:26:43.746Z", verificationValid: true },
+    observed: { latestPostAt: "2026-08-21T18:39:49.219Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 227, followersCount: 6560, profileIndexedAt: "2024-11-29T19:26:43.746Z", verificationValid: true },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio 'Covering the OKC Thunder Executive Producer at The Athletic...' + VALID verification issued by theathletic.com (2025-05-29). Upgraded to bsky-verified." },
 
 
@@ -766,7 +800,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/fredkatz.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=fredkatz.bsky.social",
     evidenceQuote: "Senior NBA Writer for The Athletic | Host of Katz and Shoot, a twice-a-week Knicks and NBA podcast",
-    observed: { checkedAt: "2026-09-18", postsCount: 1841, followersCount: 21459, profileIndexedAt: "2024-11-15T14:33:16.322Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-17T16:14:40.433Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1841, followersCount: 21459, profileIndexedAt: "2024-11-15T14:33:16.322Z", verificationValid: false },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim matches, 21,459 followers, 1,841 posts. No verification object present (despite earlier assumption). Bio-verified." },
 
 
@@ -775,7 +809,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/jledwardsiii.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jledwardsiii.bsky.social",
     evidenceQuote: "Senior writer at The Athletic, covering the Knicks. 2021 NSMA sportswriter of year. From Flint, MI. Only reporter on League Fits. PBWA. Sneakerhead. Rap snob.",
-    observed: { checkedAt: "2026-09-18", postsCount: 4688, followersCount: 16580, profileIndexedAt: "2024-11-20T21:24:49.174Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-03T12:39:22.259Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 4688, followersCount: 16580, profileIndexedAt: "2024-11-20T21:24:49.174Z", verificationValid: true },
     verified: "2026-09-18 — RE-VERIFIED live via getProfiles: bio verbatim + VALID verification issued by theathletic.com (2025-04-22). Upgraded to bsky-verified. 16,580 followers, 4,688 posts." },
 
   /* SESSION 12 — THIRD EXPANSION PASS (2026-09-18, live getProfiles via fetch_page) */
@@ -792,7 +826,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/damichaelcole.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=damichaelcole.bsky.social",
     evidenceQuote: "Memphis Grizzlies beat reporter for The Commercial Appeal",
-    observed: { checkedAt: "2026-09-18", postsCount: 3, followersCount: 1254, profileIndexedAt: "2024-11-19T14:24:47.305Z", verificationValid: false },
+    observed: { latestPostAt: "2025-02-17T21:02:40.702Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 3, followersCount: 1254, profileIndexedAt: "2024-11-19T14:24:47.305Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Memphis Grizzlies beat reporter for The Commercial Appeal' + UTK graduate Proverbs. NO verification object. Low post count (3) noted — second MEM writer, identity established." },
 
   { name: "Christian Clark", handle: "christianclark3.bsky.social", outlet: "The Athletic", role: "Mavericks reporter", team: "DAL", feed: true,
@@ -808,7 +842,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/busyxb.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=busyxb.bsky.social",
     evidenceQuote: "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com",
-    observed: { checkedAt: "2026-09-18", postsCount: 3732, followersCount: 1803, profileIndexedAt: "2026-08-01T14:43:51.964Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-17T20:27:54.458Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 3732, followersCount: 1803, profileIndexedAt: "2026-08-01T14:43:51.964Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily...' + 3,732 posts (highest BKN volume). Closes BKN gap as bio-pollable. X @busyxb same person." },
 
   { name: "Shamit Dua", handle: "fearthebrown.bsky.social", outlet: "In The NO (intheno.net)", role: "Pelicans credentialed media", team: "NOP", feed: true,
@@ -816,7 +850,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/fearthebrown.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=fearthebrown.bsky.social",
     evidenceQuote: "I cover the Pelicans as a credentialed media member for intheno.net | Ultimate Frisbee Coach | Wannabe Disc Golfer",
-    observed: { checkedAt: "2026-09-18", postsCount: 3050, followersCount: 10485, profileIndexedAt: "2026-08-03T00:50:08.266Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-18T15:42:17.168Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 3050, followersCount: 10485, profileIndexedAt: "2026-08-03T00:50:08.266Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'I cover the Pelicans as a credentialed media member for intheno.net...' 10,485 followers, 3,050 posts. Credentialed Pelicans media, cited by Hardwood Knocks 2026-09-17. Closes NOP gap." },
 
   { name: "Oleh Kosel", handle: "olehkosel.bsky.social", outlet: "The Bird Writes / Pelicans media", role: "Pelicans media", team: "NOP", feed: true,
@@ -824,7 +858,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/olehkosel.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=olehkosel.bsky.social",
     evidenceQuote: "New Orleans Pelicans media. Dogs are the greatest.",
-    observed: { checkedAt: "2026-09-18", postsCount: 1607, followersCount: 713, profileIndexedAt: "2024-11-21T18:11:01.272Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-14T13:55:19.152Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1607, followersCount: 713, profileIndexedAt: "2024-11-21T18:11:01.272Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'New Orleans Pelicans media. Dogs are the greatest. Слава Україні!...' 1,607 posts. Second NOP writer." },
 
   { name: "Varun Shankar", handle: "byvarunshankar.bsky.social", outlet: "Houston Chronicle", role: "Rockets beat reporter", team: "HOU", feed: true,
@@ -832,7 +866,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/byvarunshankar.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=byvarunshankar.bsky.social",
     evidenceQuote: "Covering the Rockets for The Houston Chronicle.",
-    observed: { checkedAt: "2026-09-18", postsCount: 1953, followersCount: 4997, profileIndexedAt: "2026-04-28T21:36:41.065Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-17T18:10:49.417Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1953, followersCount: 4997, profileIndexedAt: "2026-04-28T21:36:41.065Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Covering the Rockets for The Houston Chronicle. Retweets aren't endorsements...' + VALID verification (issuer washingtonpost.com, isValid true, 2025-11-10). Houston Chronicle author page https://www.houstonchronicle.com/author/varun-shankar/ sameAs includes bsky.app/profile/byvarunshankar.bsky.social; Editor and Publisher 2026-01-20 'Houston Chronicle hires Varun Shankar as Rockets beat reporter' (replaces Danielle Lerner, now Former). Closes HOU gap as verified-pollable, replacing drifted Lerner row." },
 
   /* ==========================================================================================
@@ -917,6 +951,137 @@ const BSKY_REPORTERS = [
     observed: { checkedAt: "2026-09-18", postsCount: 1, followersCount: 1462, profileIndexedAt: "2024-11-15T18:16:09.331Z", verificationValid: false, bioEmpty: true },
     verified: "2026-09-18 — REFUSED. getProfiles returned this handle with an EMPTY description and no displayName (1,462 followers, 1 post, no verification object). A plausible handle with a following is not evidence of who owns it, so the Lakers writer is NOT asserted here: feed:false, conf:unconfirmed, never alerts." },
 
+  /* ==========================================================================================
+   * SESSION 14 (2026-09-19) — the nine named gap teams, read live rather than assumed
+   * ------------------------------------------------------------------------------------------
+   * The previous session left CHA and UTA with NO writer account at all and DAL / DEN / LAL /
+   * CLE covered by dormant accounts only. That is a state to fix by reading, not by hoping:
+   * every row below came from a live keyless `app.bsky.actor.searchActors` sweep + a batched
+   * `app.bsky.actor.getProfiles` read of the whole candidate set in ONE request
+   * (…/getProfiles?actors=… x13, 2026-09-19). Each row stores the verbatim bio substring, the
+   * re-runnable API URL, and the counts that request returned.
+   *
+   * WHAT THESE ROWS ARE, AND ARE NOT
+   *   - `mfollowill` (DAL) is a television play-by-play voice: he is IN the building every night,
+   *     which is exactly the in-arena case — but he calls games, he does not report injuries, so
+   *     the row says so instead of implying a beat reporter.
+   *   - `dannycunningham` (CLE) is the one row in this session carrying a VALID Bluesky
+   *     verification object (issuer bsky.app, created 2025-10-05), and his newest own post was
+   *     18 days old when read — CLE therefore moves from "dormant-only" to a verified, live feed.
+   *   - `andyblarsen` (UTA) is graded `outlet-verified`, NOT bio-verified: his bio states the
+   *     OUTLET (The Salt Lake Tribune) and says the Jazz beat is FORMER. A row that quietly
+   *     upgraded that to a current beat would be an over-claim.
+   *   - `lakerssbn` / `saltcityhoops` are outlet accounts (SB Nation's Lakers blog; the Jazz blog
+   *     that writes for the Tribune). They are publications, not people in the arena.
+   *   - `nolajake` / `nickvanexit` / `bgeisinger` are podcast hosts who cover the team daily.
+   *     Credentialing is NOT established by a bio and is not claimed here.
+   *
+   * SESSION 14 CONTINUED (2026-09-19) — six getAuthorFeed?limit=1 reads, one per unmeasured row,
+   * because "unmeasured" is not a status a coverage page can leave standing for the teams the
+   * session brief names. Results: joelrushnba (DEN) ACTIVE at 2 days; andyblarsen (UTA) 31 days;
+   * saltcityhoops (UTA) 53 days; nickvanexit (DAL) 45 days; mfollowill (DAL) 120 days; nolajake
+   * (NOP) 458 days. DEN therefore leaves the dormant-only list, and DAL / UTA join it — labelled
+   * as such, never quietly rendered as covered. Two of the six newest items are not basketball at
+   * all (an MLS quote post, a Tribune news investigation) and one is another user's post returned
+   * as a repost; each row records that, because the measurement is a fact about the FEED, not
+   * proof that the writer still covers the team.
+   * ========================================================================================== */
+  { name: "Danny Cunningham", handle: "dannycunningham.bsky.social", outlet: "The Inside Shot / Locked On Cavs", role: "Cleveland Cavaliers beat writer", team: "CLE", feed: true, bskyVerified: true,
+    conf: "bsky-verified", verifier: "bsky.app",
+    evidence: "https://bsky.app/profile/dannycunningham.bsky.social",
+    evidenceQuote: "On the Cleveland Cavaliers beat at The Inside Shot and the Locked On Cavs Podcast.",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=dannycunningham.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-01T18:50:49.607Z", latestPostAtSource: "getAuthorFeed?actor=dannycunningham.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 3629, followersCount: 10017, profileIndexedAt: "2024-11-12T21:20:29.914Z", verificationValid: true },
+    verified: "2026-09-19 — read live via getProfiles + getAuthorFeed. Bio verbatim 'On the Cleveland Cavaliers beat at The Inside Shot and the Locked On Cavs Podcast.' 10,017 followers, 3,629 posts. VALID Bluesky verification object (issuer bsky.app, created 2025-10-05T17:10:39Z). Newest own post 2026-09-01T18:50:49Z (a Cavs broadcast-rights item: 'DAZN … multi-year deal … 15 games free') = 18 days, so this row is ACTIVE — it replaces CLE's previous state, where every pollable writer was dormant." },
+  { name: "Mark Followill", handle: "mfollowill.bsky.social", outlet: "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock", role: "Mavericks television play-by-play — in the arena, not an injury reporter", team: "DAL", feed: true, bskyVerified: false,
+    conf: "bio-verified",
+    evidence: "https://bsky.app/profile/mfollowill.bsky.social",
+    evidenceQuote: "Television Play-by-play Dallas Mavericks, NBA on NBC/Peacock, Big Ten Network.",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=mfollowill.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-05-22T17:11:08.555Z", latestPostAtSource: "getAuthorFeed?actor=mfollowill.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 698, followersCount: 5202, profileIndexedAt: "2025-11-30T20:03:31.424Z", verificationValid: false },
+    verified: "2026-09-19 — read live via getProfiles. Bio verbatim 'Television Play-by-play Dallas Mavericks, NBA on NBC/Peacock, Big Ten Network. 15 Lone Star Emmy Awards. 2018 NSMA Texas Sportcaster of the Year…'. 5,202 followers, 698 posts, no verification object. IN-ARENA BY ROLE: he is at every Mavericks home and road game. He is NOT an injury reporter — the row is listed for presence, and an alert from it still has to clear the same injury vocabulary gate as every other account. ACTIVITY (getAuthorFeed?limit=1, read 2026-09-19): the newest item is 2026-05-22T17:11:08Z — 120 days — so the row is DORMANT, and the item is a quote post about MLS/FC Dallas rather than Mavericks coverage. His in-arena role stands; his Bluesky feed cannot corroborate an injury today." },
+  { name: "Nick Angstadt", handle: "nickvanexit.bsky.social", outlet: "Locked On Mavs (podcast network)", role: "Mavericks podcast host / Locked On NBA channel manager", team: "DAL", feed: true, bskyVerified: false,
+    conf: "bio-verified",
+    evidence: "https://bsky.app/profile/nickvanexit.bsky.social",
+    evidenceQuote: "Dallas Mavericks on Locked On Mavs Podcast",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=nickvanexit.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-08-05T17:25:52.371Z", latestPostAtSource: "getAuthorFeed?actor=nickvanexit.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 613, followersCount: 4235, profileIndexedAt: "2024-11-15T17:39:42.741Z", verificationValid: false },
+    verified: "2026-09-19 — read live via getProfiles. Bio verbatim 'Dallas Mavericks on Locked On Mavs Podcast | NBA Channel Manager for Locked On Podcast Network…'. 4,235 followers, 613 posts, no verification object. Credentialing is not established by this bio and is not claimed. ACTIVITY (getAuthorFeed?limit=1, read 2026-09-19): newest post 2026-08-05T17:25:52Z — 45 days — DORMANT." },
+  { name: "Joel Rush", handle: "joelrushnba.bsky.social", outlet: "Forbes (contributor)", role: "Denver Nuggets writer", team: "DEN", feed: true, bskyVerified: false,
+    conf: "bio-verified",
+    evidence: "https://bsky.app/profile/joelrushnba.bsky.social",
+    evidenceQuote: "Denver #Nuggets writer for Forbes.",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=joelrushnba.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-17T15:37:12.880Z", latestPostAtSource: "getAuthorFeed?actor=joelrushnba.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 3614, followersCount: 9804, profileIndexedAt: "2026-04-18T16:41:52.851Z", verificationValid: false },
+    verified: "2026-09-19 — read live via getProfiles. Bio verbatim 'Denver #Nuggets writer for Forbes. … My Forbes pieces: https://www.forbes.com/sites/joelrush/'. 9,804 followers, 3,614 posts, no verification object. DEN's previous two rows (Bennett Durando, Ryan Blackburn) both measure dormant, so this is the team's most recently active writer — whether it actually posts inside 30 days is measured by the verifier, not assumed here. ACTIVITY (getAuthorFeed?limit=1, read 2026-09-19): the top item is his OWN Nuggets-offseason post returned as a repost by the account (record.createdAt 2026-09-17T15:37:12Z, indexed 2026-09-18T16:14:01Z) = 2 days, so this row is ACTIVE and DEN is no longer dormant-only. The date stored is the post record's own createdAt — the same rule tools/verify_reporters.js applies — so a repost can never date a row forward." },
+  { name: "Brian Geisinger", handle: "bgeisinger.bsky.social", outlet: "Buzz Beat (Charlotte Hornets podcast) / briangeisinger.substack.com", role: "Hornets analyst & podcast host", team: "CHA", feed: true, bskyVerified: false,
+    conf: "bio-verified",
+    evidence: "https://bsky.app/profile/bgeisinger.bsky.social",
+    evidenceQuote: "Buzz Beat - Charlotte Hornets podcast",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=bgeisinger.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-16T14:02:39.971Z", latestPostAtSource: "getAuthorFeed?actor=bgeisinger.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 553, followersCount: 1325, profileIndexedAt: "2025-08-13T17:41:28.601Z", verificationValid: false },
+    verified: "2026-09-19 — read live via searchActors (q=Charlotte Hornets / q=Hornets podcast) then getProfiles. Bio verbatim 'basketball analyst/dork, art museum loiterer, look up at the trees … college hoops: https://briangeisinger.substack.com/ Buzz Beat - Charlotte Hornets podcast: https://shorturl.at/sajhV'. 1,325 followers, 553 posts, no verification object. Newest feed item 2026-09-16T14:02:39Z — a REPOST of an unrelated New York Times item, which is why the row records the date of the item the API returned and not a claim that he wrote it. IRREGULARITY FOR REVIEW: this is the only CHA identity this sweep could support. The Charlotte Observer eliminated its Hornets beat on 2026-09-14, so the paper of record has no dedicated writer to replace; a podcast analyst is coverage, not a credentialed beat, and the row says so." },
+  { name: "Chris Herrington", handle: "chrisherrington.bsky.social", outlet: "The Daily Memphian", role: "Grizzlies / NBA writer", team: "MEM", feed: true, bskyVerified: false,
+    conf: "bio-verified",
+    evidence: "https://bsky.app/profile/chrisherrington.bsky.social",
+    evidenceQuote: "Writer at The Daily Memphian. Memphisotan. Somewhere along Johnny Cash's Big River. Memphis Grizzlies/NBA",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=chrisherrington.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-14T21:30:34.319Z", latestPostAtSource: "getAuthorFeed?actor=chrisherrington.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 1835, followersCount: 4097, profileIndexedAt: "2025-11-17T14:59:56.552Z", verificationValid: false },
+    verified: "2026-09-19 — found by the outlet sweep (searchActors q=Memphis Grizzlies) and read live via getProfiles. Bio verbatim 'Writer at The Daily Memphian. Memphisotan. Somewhere along Johnny Cash's Big River. Memphis Grizzlies/NBA, movies, music, etc.' 4,097 followers, 1,835 posts, no verification object. Same outlet as the existing MEM row (Drew Hill, The Daily Memphian), which is the corroboration: the paper's Grizzlies desk posts on Bluesky. ACTIVITY (getAuthorFeed?limit=1, read 2026-09-19): newest post 2026-09-14T21:30:34Z — 5 days — ACTIVE, but the item itself is a one-line REPLY about a film, not basketball. Active feed and injury coverage are different claims: this row establishes only that the account posts, and it still has to clear the injury-vocabulary gate before anything from it can alert." },
+  { name: "Jake Madison", handle: "nolajake.bsky.social", outlet: "Locked On Pelicans", role: "Pelicans podcast host", team: "NOP", feed: true, bskyVerified: false,
+    conf: "bio-verified",
+    evidence: "https://bsky.app/profile/nolajake.bsky.social",
+    evidenceQuote: "Host of Locked On Pelicans, the daily podcast covering the New Orleans Pelicans.",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=nolajake.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2025-06-17T18:10:36.407Z", latestPostAtSource: "getAuthorFeed?actor=nolajake.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 16, followersCount: 640, profileIndexedAt: "2024-11-15T20:14:00.837Z", verificationValid: false },
+    verified: "2026-09-19 — found by the outlet sweep (searchActors q=New Orleans Pelicans) and read live via getProfiles. Bio verbatim 'Host of Locked On Pelicans, the daily podcast covering the New Orleans Pelicans. Also co-host of Locked on NBA on Wednesdays. I am secretly Jose Calderon.' 640 followers, 16 posts, no verification object. A podcast feed can go quiet; the verifier measures it rather than assuming it. ACTIVITY (getAuthorFeed?limit=1, read 2026-09-19): the only item the API returns is a REPOST of another user's post (record.createdAt 2025-06-17T18:10:36Z) = 458 days — DORMANT. NOP's live writer coverage therefore rests on fearthebrown and olehkosel, not on this row." },
+  { name: "Salt City Hoops", handle: "saltcityhoops.bsky.social", outlet: "Salt City Hoops (ESPN TrueHoop) / Salt Lake Tribune", role: "Utah Jazz coverage (publication account — not a person in the building)", team: "UTA", feed: true, bskyVerified: false,
+    conf: "bio-verified",
+    evidence: "https://bsky.app/profile/saltcityhoops.bsky.social",
+    evidenceQuote: "Covering the Utah Jazz since 2007 • ESPN TrueHoop Network • Basketball stories for the Salt Lake Tribune",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=saltcityhoops.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-07-28T14:13:21.843Z", latestPostAtSource: "getAuthorFeed?actor=saltcityhoops.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 22, followersCount: 281, profileIndexedAt: "2024-10-23T06:53:32.508Z", verificationValid: false },
+    verified: "2026-09-19 — found by reading the public 'Utah Jazz/NBA Media' list (at://did:plc:wotzm2tugydbfasrhdb7reuz/app.bsky.graph.list/3lar3py3nv32w, 18 members) live, then getProfiles. Bio verbatim 'Covering the Utah Jazz since 2007 • ESPN TrueHoop Network • Basketball stories for the Salt Lake Tribune'. 281 followers, 22 posts, no verification object. This is a publication account, not a reporter's own feed: 22 posts is a small sample and the verifier will say so. ACTIVITY (getAuthorFeed?limit=1, read 2026-09-19): the newest item is a REPOST of jazzmanmark.com's post (record.createdAt 2026-07-28T14:13:21Z, repost indexed 2026-07-28T14:15:36Z) = 53 days — DORMANT." },
+  { name: "Andy Larsen", handle: "andyblarsen.bsky.social", outlet: "The Salt Lake Tribune", role: "Tribune data columnist — Jazz beat is FORMER per his own bio; beat NOT asserted", team: "UTA", feed: true, bskyVerified: false,
+    conf: "outlet-verified",
+    evidence: "https://bsky.app/profile/andyblarsen.bsky.social",
+    evidenceQuote: "Data columnist for The Salt Lake Tribune — I write about the intersection of numbers & the world. Formerly Jazz beat writer.",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=andyblarsen.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-08-18T20:20:32.049057Z", latestPostAtSource: "getAuthorFeed?actor=andyblarsen.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 1240, followersCount: 13666, profileIndexedAt: "2026-02-16T20:57:07.145Z", verificationValid: false },
+    verified: "2026-09-19 — read live via getProfiles after searchActors q='Jazz beat writer'. Bio verbatim 'Data columnist for The Salt Lake Tribune — I write about the intersection of numbers & the world. Formerly Jazz beat writer. Opinions are mine, not the Trib's.' 13,666 followers, 1,240 posts, no verification object. GRADED outlet-verified ON PURPOSE: the outlet is established by the account's own bio, the BEAT IS EXPLICITLY FORMER, so this row must never be rendered as a current in-arena beat writer — that is why it is not classed bio-verified. UTA is the club the previous session lost its only writer for (nbasarah moved to MIN). ACTIVITY (getAuthorFeed?limit=1, read 2026-09-19): newest post 2026-08-18T20:20:32Z = 31 days — DORMANT, and the post is a Tribune investigation into ICE arrests, i.e. not basketball. Both UTA rows are now measured and both are dormant, so UTA is listed as DORMANT-ONLY by its own numbers rather than left as an open question." },
+  { name: "Silver Screen and Roll", handle: "lakerssbn.bsky.social", outlet: "SB Nation — Los Angeles Lakers blog", role: "Lakers blog (publication account — not a credentialed individual)", team: "LAL", feed: true, bskyVerified: false,
+    conf: "bio-verified",
+    evidence: "https://bsky.app/profile/lakerssbn.bsky.social",
+    evidenceQuote: "The SB Nation Los Angeles Lakers blog!",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=lakerssbn.bsky.social",
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2025-11-05T18:43:10.372Z", latestPostAtSource: "getAuthorFeed?actor=lakerssbn.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)", postsCount: 80, followersCount: 2591, profileIndexedAt: "2024-11-20T06:21:56.870Z", verificationValid: false },
+    verified: "2026-09-19 — read live via searchActors (q=Los Angeles Lakers) then getProfiles. Bio verbatim 'The SB Nation Los Angeles Lakers blog!' 2,591 followers, 80 posts, no verification object. LAL's only other pollable row (Dan Woike, The Athletic) measures dormant, so this row exists to give the club a feed that is not a year old — it is a publication account, not a person in the building, and it is labelled that way. ACTIVITY (getAuthorFeed?limit=1, read 2026-09-19): the newest item is a REPOST of alexregla.bsky.social's analysis post (record.createdAt 2025-11-05T18:43:10Z, repost indexed 2025-11-06T01:56:57Z) = 318 days — DORMANT. CORRECTION RECORDED: this row shipped earlier today with the sentence 'a feed that is not a year old'; the measurement says the opposite, so that sentence is replaced rather than left standing, and LAL stays dormant-only on its own numbers." },
+
+  /* Refused on the same day, with the evidence that refused them (see the 2026-09-18 refusals
+   * above for the policy). Both were plausible name matches for an in-arena reporter; neither
+   * profile supports the identity, so neither can ever sound an alert. */
+  { name: "Mike Trudell (handle REFUSED)", handle: "miketrudell.bsky.social", outlet: "not established — the profile carries NO bio at all", role: "not established", team: "LAL", feed: false,
+    identityRefused: true, conf: "unconfirmed", bskyVerified: false,
+    evidence: "https://bsky.app/profile/miketrudell.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=miketrudell.bsky.social",
+    evidenceQuote: "(the API returned NO description and NO displayName for this handle — the absence is the evidence)",
+    observed: { checkedAt: "2026-09-19", postsCount: 5, followersCount: 2922, profileIndexedAt: "2024-11-15T08:54:53.434Z", verificationValid: false, bioEmpty: true },
+    verified: "2026-09-19 — REFUSED. searchActorsTypeahead?q=Mike Trudell returned this handle first (the Lakers' long-time reporter/broadcaster of that name), but getProfiles returned NO description and no displayName: 2,922 followers, 5 posts, no verification object. A name in a typeahead is not an identity, so the row is feed:false, conf:unconfirmed and can never alert. If a bio appears, the verifier flips this row to bio-drift for re-examination." },
+  { name: "Erik Slater (handle REFUSED)", handle: "erikslaterphoto.bsky.social", outlet: "not established — the profile is a photographer based in Seward, Alaska", role: "not established", team: "BKN", feed: false,
+    identityRefused: true, conf: "unconfirmed", bskyVerified: false,
+    evidence: "https://bsky.app/profile/erikslaterphoto.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=erikslaterphoto.bsky.social",
+    evidenceQuote: "Based in Seward, Alaska. Analog, digital.",
+    observed: { checkedAt: "2026-09-19", postsCount: 17, followersCount: 17, profileIndexedAt: "2024-12-05T10:13:01.946Z", verificationValid: false },
+    verified: "2026-09-19 — REFUSED. This was the Brooklyn search's only reporter-shaped hit: typeahead?q=Erik Slater returned it first, and the Nets writer of that name is a real ClutchPoints/Nets writer. The live bio, however, reads 'Based in Seward, Alaska. Analog, digital. Gear - Sony A7riv … Hasselblad 500cm', 17 followers, 17 posts: an Alaska photographer, not the Brooklyn beat. Recorded so a future sweep does not re-discover it and re-assert it; feed:false, conf:unconfirmed, never alerts. BKN therefore has exactly ONE registered identity (Busy — NetsDaily) and no verified club account." },
+  { name: "David Locke (handle REFUSED)", handle: "david-locke.bsky.social", outlet: "not established — the bio is a personal motto, not an outlet", role: "not established", team: "UTA", feed: false,
+    identityRefused: true, conf: "unconfirmed", bskyVerified: false,
+    evidence: "https://bsky.app/profile/david-locke.bsky.social",
+    evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=david-locke.bsky.social&actors=davidlocke.bsky.social",
+    evidenceQuote: "Reject imposed obligations, expectations, and roles.",
+    observed: { checkedAt: "2026-09-19", postsCount: 2553, followersCount: 239, profileIndexedAt: "2026-04-29T12:16:16.459Z", verificationValid: false },
+    verified: "2026-09-19 — REFUSED. Two handles carry the name (measured in ONE getProfiles request): david-locke.bsky.social — 239 followers, 2,553 posts, bio 'Reject imposed obligations, expectations, and roles.' (no outlet, no team, no basketball) — and davidlocke.bsky.social — 49 followers, 0 posts. The Utah Jazz radio play-by-play voice of that name is NOT established as either account, so the row is feed:false, conf:unconfirmed and can never alert." },
+
 ];
 
 /* =====================================================================================
@@ -937,7 +1102,12 @@ const BSKY_REPORTERS = [
  *   bsky-verified   a Bluesky verification object is present and valid (bsky.app or the outlet's
  *                   own domain, e.g. theathletic.com)                    ← strongest
  *   bio-verified    the account's own bio states outlet AND beat (self-described identity)
- *   outlet-verified the outlet/team page establishes the person (directory rows, no handle)
+ *   outlet-verified the outlet is established by the account's own bio (or an outlet page), but
+ *                   the BEAT IS NOT ASSERTED — used when a bio names a past beat (session 14:
+ *                   `andyblarsen` — "Formerly Jazz beat writer") or when a row is carried from an
+ *                   outlet citation without a handle. Ranked with bio-verified for POLLING, and
+ *                   its `role` text must say which of the two it is; never rendered as a current
+ *                   in-arena beat writer.
  *   unconfirmed     handle exists, identity is NOT established            ← can never alert
  * A row without `conf` (all pre-2026-09-18 rows) is graded by the evidence recorded in it:
  * `bskyVerified` → bsky-verified, otherwise bio-verified, which is the same standard the
@@ -947,7 +1117,7 @@ const ARENA_CONF_RANK = { "bsky-verified": 3, "bio-verified": 2, "outlet-verifie
 const ARENA_CONF_LABEL = {
   "bsky-verified": "Bluesky-verified identity",
   "bio-verified": "bio states outlet + beat",
-  "outlet-verified": "outlet page (no handle asserted)",
+  "outlet-verified": "outlet established · beat NOT asserted",
   "unconfirmed": "UNCONFIRMED — never alerts"
 };
 function reporterConf(r) {
@@ -1255,6 +1425,11 @@ const SOURCES = [
 
 /* Irregularities / requirements flags raised during verification. */
 const FLAGS = [
+  { level: "warn", title: "2026-09-19 (session 14): the new registry-recency backfill shipped a duplicate-key bug that every existing check passed — found on its first real run and fixed, with the regression added", detail: "tools/backfill_registry_recency.js exists so a clone or a fork build can print measured recency before any CI evidence file is present, and the first real run reported success — 35 rows brought up to date, the file re-evaluated, every identity field unchanged, --check clean. It was still wrong. Rows written by sessions 13-14 carry the shape `latestPostAt: null` (checked, not yet measured). The tool only replaced QUOTED dates, so on those rows it prepended `latestPostAt: '...'` and LEFT the null behind — and JavaScript keeps the LAST duplicate key. Boston's Gary Washburn therefore still evaluated to null: the row looked measured in the diff and printed *unmeasured* in exactly the environment the tool exists for. A follow-up audit of the whole registry found the damage was one row; it is repaired. Three changes: the literal pattern accepts an unquoted null; a row with two keys is repaired (or refused with a warning if its stored date is newer than the evidence) instead of added to; and the post-edit proof now asserts the EVALUATED value of every row it touched equals the date it planned, because 'did this row change?' is a weaker question than 'does this row now hold what I meant to write?'. tools/verify_reporters_test.js pins it: the null shape, the duplicate shape, and an invariant that no committed row carries a duplicate key and that every row the evidence measures evaluates to that exact date." },
+  { level: "info", title: "2026-09-19 (session 14): 'unmeasured' is closed at both ends — the page now reads the same with or without the CI evidence file", detail: "Two changes, one per end of the hole the brief named (30 of 40 writers with no stored newest-post date). (1) tools/backfill_registry_recency.js copies the measured date from data/live/reporter_verify.json into each registry row's `observed` block with its provenance, `.github/workflows/live-audit.yml` runs it after the live re-verification and then runs --check, which fails the job if the registry is behind; 49 of 67 rows now store a measured date, and the 18 without one are rows held out of collection (feed:false) or refused identities — no date is invented for them. (2) Six getAuthorFeed?limit=1 reads measured the rows that had never been read. Measured result: 50 pollable writers — 34 active, 16 dormant, 0 unmeasured; 27 teams with an active writer; DAL, LAL and UTA dormant-only and labelled; CLE (Danny Cunningham, 17 days) and DEN (Joel Rush, 2 days) leave the dormant list on measurement. The page prints identical activity numbers from the registry alone and from the CI evidence file, which was the point." },
+  { level: "warn", title: "2026-09-19 (session 14): a second official-club sweep changed the answer for ONE franchise and confirmed the rest are still unverified — 26 of 30 have no verified club Bluesky account", detail: "Six more candidate handles read keylessly: four are self-evident placeholders (charlottehornets 1 follower / 0 posts, dallasmavericks 0/0, denvernuggets 1/7, losangeleslakers 2/0 — none is rendered as a club channel), three carry Bluesky's own impersonation label (cavs.com, dallas-maverick-s, memphisgrizzlies — the last despite a bio claiming to be 'Official Bluesky of Your Memphis Grizzlies'), and exactly ONE verified club channel was found: nuggets.bsky.social, valid Bluesky verification created 2025-07-08, which DEN now carries. That makes 4 of 30 franchises with a verified club account (DEN, PHI, POR, plus the league account) and 26 without. The alternative first-party channel, nba.com/<slug>/news, still answers HTTP 403 to the CI runner for all 30 — so it stays a manual-review link with the status recorded, never a machine-read feed. dallasmavs.bsky.social remains unverified on two separate dated reads and is flagged for review rather than promoted." },
+  { level: "bad", title: "2026-09-19 (session 14): CHA and UTA are GAP-LISTED, not covered — both were read, and the reading is why", detail: "Charlotte: the Charlotte Observer eliminated its Hornets beat on 2026-09-14, so the paper of record has no dedicated writer to find. A team search + podcast search returned exactly one supportable CHA identity, bgeisinger.bsky.social — a Buzz Beat analyst whose newest feed item is a REPOST of an unrelated New York Times story. He is registered as coverage, labelled a podcast analyst, and CHARLOTTE REMAINS SHORT OF A CREDENTIALED BEAT WRITER. Utah: after Sarah Todd's move to Minnesota (session 13), both UTA rows were measured — andyblarsen.bsky.social 31 days (a Tribune ICE-arrests investigation, not basketball; his own bio says the Jazz beat is FORMER, so the row is graded outlet-verified and must never render as a current beat) and saltcityhoops.bsky.social 53 days (a repost of another account's post). Searches for further Jazz writers returned nothing new. UTA therefore reads DORMANT-ONLY on its own numbers. Three more candidate handles were REFUSED rather than asserted: miketrudell (no bio at all), david-locke (a motto bio, 2,553 posts, no Jazz role), erikslaterphoto (an Alaska photographer, 17 followers — the only reporter-shaped hit a Brooklyn search returned). A name match is still not an identity." },
+  { level: "info", title: "2026-09-19 (session 14): a claim shipped earlier the same day was contradicted by its own measurement and corrected in place", detail: "The Silver Screen and Roll row (lakerssbn.bsky.social, LAL) was written before its feed had been read and said the row existed to give the club 'a feed that is not a year old'. The measurement says the opposite: the newest item is a repost whose underlying post dates to 2025-11-05 — 318 days — so LAL stays dormant-only. The sentence was replaced with the measurement and the correction is written into the row rather than quietly deleted, for the same reason the coverage matrix prints dormant accounts instead of dropping them: a page that only ever shows the flattering version of its own record is not evidence." },
   { level: "bad", title: "2026-09-18 (session 13, CI re-run 23:54Z): a beat change caught automatically — Sarah Todd left the Jazz, and UTA lost its only in-arena writer", detail: "The daily re-verification flagged nbasarah.bsky.social as bio-drift. Re-read live via getProfiles: the bio now reads verbatim 'Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors. 530. 510. Two-time Utah Sportswriter of the Year.' with a VALID bsky.app verification object (created 2025-10-31), 14,772 followers, 1,698 posts and a newest post of 2026-09-18T22:55:22Z. So the row moved with the evidence: outlet Minnesota Star Tribune, team MIN, graded bsky-verified. The consequence is reported rather than smoothed over — UTA now has NO in-arena writer account in this registry and drops to official-channel-only (17 verified-pollable · 11 bio-pollable · 2 official-only · 0 unexplained gaps). Finding a replacement Jazz writer is the open item; inventing one is not an option." },
   { level: "warn", title: "2026-09-18 (session 13, CI re-run 23:54Z): two verifier defects found by reading its OWN output, both of which produced a wrong verdict", detail: "(1) The profile-private verdict concluded 'posts are NOT readable without authentication' from the `!no-unauthenticated` LABEL ALONE. It reported geraldbourguet.bsky.social (PHX) that way while a keyless app.bsky.feed.getAuthorFeed?actor=geraldbourguet.bsky.social returned two posts the same day (newest 2026-09-18T18:45:43Z, one of them a Suns injury/starters post). The label is the holder's REQUEST; only the read is evidence. The verdict now requires the keyless read to have actually failed, and a labelled-but-readable row is recorded as readable with the label kept as a standing risk — if the holder switches it off, the next daily run catches it. (2) timcato.bsky.social was reported as bio-drift while its bio still read 'didn\u2019t use to have followers here i\u2019m sorry' — the only difference was curly apostrophes (U+2019) against the straight ones in the stored quote. Quote comparison now folds typographic apostrophes, quotes, dashes and narrow spaces, because a drift verdict that fires on punctuation hides the drift that matters. (3) A REFUSED row (jovanbuha.bsky.social) stores a note about the ABSENCE of a bio, so 'quote missing from bio' was true by construction and read as drift forever; refused rows are now exempt, and the meaningful inverse check is made instead: if a bio APPEARS, the row flips to drift so the identity can be re-examined." },
   { level: "bad", title: "2026-09-18 (session 13): the coverage matrix was printing coverage for writers who had not posted in up to 628 days — IDENTITY and ACTIVITY are now separate columns", detail: "The CI evidence file (data/live/reporter_verify.json, 2026-09-18T22:48Z) measured 11 of the allow-listed accounts with no post inside 30 days, and four of them were the ONLY writer for their team: DAL Christian Clark 628 days, DEN Ryan Blackburn 455 days, LAL Dan Woike 129 days, CLE Ethan Sands 45 days. arenaCoverage() still counted each of those as coverage, so the matrix printed '✓ verified in-arena writer, polled' next to accounts that had said nothing for a year or more. Fixed by splitting the claim in two: `cls` (who the account is) and `recency` (when it last said anything), with a per-team state of active / dormant-only / dormant-and-unmeasured / unmeasured / no-writer, and a gap line naming the quietest writer's age in days. tools/verify_reporters.js now reads the SAME threshold (ARENA_DORMANT_DAYS = 30) out of data.js instead of keeping its own copy, so the page and the audit cannot disagree about what dormant means. Measured after this session: 30 teams · 18 verified-pollable · 11 bio-pollable · 1 official-only (CHA) · 0 gaps · 36 pollable writers · 19 Bluesky-verified — and, separately, how many of those writers actually posted this month." },

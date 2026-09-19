@@ -7,7 +7,7 @@ on:
     - cron: "17 9 * * *"
   push:
     branches: [main, "arena/**"]
-    paths: [tools/verify_live.py, tools/collect_official.py, tools/verify_reporters.js, assets/js/data.js, .github/workflows/live-audit.yml]
+    paths: [tools/verify_live.py, tools/collect_official.py, tools/verify_reporters.js, tools/backfill_registry_recency.js, assets/js/data.js, .github/workflows/live-audit.yml]
 permissions:
   contents: write
 jobs:
@@ -82,6 +82,16 @@ jobs:
         run: node tools/verify_reporters_test.js
       - name: Re-verify every stored identity + club channel (live, keyless)
         run: node tools/verify_reporters.js
+      # reporters.html reads the CI evidence first and the registry second, so a clone (or a fork's
+      # first Pages build, or any checkout where data/live/reporter_verify.json is missing) printed
+      # *unmeasured* for writers the project had already measured. This copies today's measured date
+      # into each registry row, which makes the page correct with no evidence file at all. It is
+      # idempotent, it never invents a date, and it refuses to overwrite a date newer than the
+      # evidence — a fresh read is not drift.
+      - name: Store the measured newest-post dates back into the registry
+        run: node tools/backfill_registry_recency.js
+      - name: Fails only if the registry is still behind the measurement of record
+        run: node tools/backfill_registry_recency.js --check
       - name: Persist the evidence next to the data it verifies
         if: always()
         run: |
@@ -95,12 +105,15 @@ jobs:
           fi
           git config user.name "reporter-audit bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/live/reporter_verify.json
+          # data.js is included because the backfill step above writes the measured date there; a
+          # date written but not committed would be lost on the next runner and the page would keep
+          # printing *unmeasured* in every environment without an evidence file.
+          git add data/live/reporter_verify.json assets/js/data.js
           if git diff --cached --quiet; then
             echo "no reporter-verification changes to commit"
             exit 0
           fi
-          git commit -m "reporter-verify: re-check identity evidence ($(date -u +%Y-%m-%dT%H:%MZ))"
+          git commit -m "reporter-verify: re-check identity evidence + store measured recency ($(date -u +%Y-%m-%dT%H:%MZ))"
           PUSH_OK=0
           for attempt in 1 2 3; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then PUSH_OK=1; break; fi

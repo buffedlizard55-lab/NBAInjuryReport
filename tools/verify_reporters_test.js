@@ -116,27 +116,50 @@ const BACKFILLED = D.BSKY_REPORTERS.filter(r => r.conf === undefined);
  *   + 7 from session 12 + 7 from session 13 (5 pollable + 2 REFUSED) = 46 rows with a conf. */
 const SESSION_13_HANDLES = ["montepoole.bsky.social", "bennettdurando.bsky.social", "grantafseth.bsky.social",
   "jasonlloyd.bsky.social", "joevardon.bsky.social", "bstownsend.bsky.social", "jovanbuha.bsky.social"];
-const EXPECTED_NEW = 18 + 14 + 7 + SESSION_13_HANDLES.length;
+/* SESSION 14 (2026-09-19) — the nine named gap teams, read live. 10 pollable rows (CLE beat,
+ * DAL TV play-by-play + podcast, DEN writer, CHA analyst, MEM writer, NOP podcast, UTA publication
+ * + outlet-graded Tribune columnist, LAL blog) and 3 REFUSED handles whose profiles disqualify the
+ * name match (Lakers broadcaster-shaped handle with no bio, the Alaska photographer returned for
+ * the Nets writer, and two Utah play-by-play name matches with no Jazz identity). Every one is
+ * named here, so adding a row without naming it fails. */
+const SESSION_14_HANDLES = ["dannycunningham.bsky.social", "mfollowill.bsky.social", "nickvanexit.bsky.social",
+  "joelrushnba.bsky.social", "bgeisinger.bsky.social", "chrisherrington.bsky.social", "nolajake.bsky.social",
+  "saltcityhoops.bsky.social", "andyblarsen.bsky.social", "lakerssbn.bsky.social",
+  "miketrudell.bsky.social", "erikslaterphoto.bsky.social", "david-locke.bsky.social"];
+const EXPECTED_NEW = 18 + 14 + 7 + SESSION_13_HANDLES.length + SESSION_14_HANDLES.length;
 /* +1 RE-GRADED original: nbasarah.bsky.social is not a session row at all. It is one of the
  * pre-existing backfilled rows, and it gained a grade on 2026-09-18 when the daily re-verification
  * reported bio-drift and the live re-read showed a beat change (Jazz → Timberwolves) plus a valid
  * bsky.app verification object. Naming it here, instead of moving the number, keeps the ledger of
  * "rows this project graded from its own reads" auditable. */
 const REGRADED = ["nbasarah.bsky.social"];
-check("the sessions added " + EXPECTED_NEW + " evidence rows — 18 (s10) + 14 (s11) + 7 (s12) + " + SESSION_13_HANDLES.length + " (s13) — plus " + REGRADED.length + " re-graded original",
+check("the sessions added " + EXPECTED_NEW + " evidence rows — 18 (s10) + 14 (s11) + 7 (s12) + " +
+  SESSION_13_HANDLES.length + " (s13) + " + SESSION_14_HANDLES.length + " (s14) — plus " +
+  REGRADED.length + " re-graded original",
   NEW.length === EXPECTED_NEW + REGRADED.length, "got " + NEW.length + " (expected " + (EXPECTED_NEW + REGRADED.length) + ")");
 check("the re-graded row is the one the re-verification caught, and its grade rests on a live read",
   REGRADED.every(h => {
     const r = D.BSKY_REPORTERS.find(x => x.handle === h);
     return r && r.conf === "bsky-verified" && r.verifier === "bsky.app" && /RE-READ live via getProfiles/.test(r.verified || "");
   }), REGRADED.join(","));
-check("the beat change is recorded as a COVERAGE LOSS for the team it left, not silently reassigned",
+/* UPDATED 2026-09-19 (session 14). This check used to assert `uta.pollable.length === 0`, which
+ * was true only while nobody had found a Utah account. Session 14 found two evidenced ones
+ * (Salt City Hoops' publication feed and Tribune columnist Andy Larsen), so the count is no longer
+ * the invariant that matters. What must NOT change is the thing this check was written for: the
+ * beat change is a COVERAGE LOSS, the replacement rows are honestly graded, and UTA still carries
+ * the "no Bluesky-verified writer" gap rather than being rendered as verified coverage. */
+check("the beat change is recorded as a COVERAGE LOSS for the team it left, and the replacement rows are graded honestly",
   (() => {
-    const uta = D.arenaCoverage().find(c => c.abbr === "UTA");
-    const min = D.arenaCoverage().find(c => c.abbr === "MIN");
-    return uta.pollable.length === 0 && uta.cls !== "verified-pollable" &&
-      min.pollable.some(p => p.handle === "nbasarah.bsky.social") &&
-      D.arenaCoverageSummary().withGaps.includes("UTA");
+    const cov = D.arenaCoverage();
+    const uta = cov.find(c => c.abbr === "UTA");
+    const min = cov.find(c => c.abbr === "MIN");
+    const larsen = D.BSKY_REPORTERS.find(r => r.handle === "andyblarsen.bsky.social");
+    return min.pollable.some(p => p.handle === "nbasarah.bsky.social") &&
+      uta.cls !== "verified-pollable" &&
+      D.arenaCoverageSummary().withGaps.includes("UTA") &&
+      uta.gaps.some(g => /no Bluesky-verified writer/.test(g)) &&
+      uta.pollable.length > 0 && uta.recency !== "active" &&
+      larsen.conf === "outlet-verified" && /FORMER/.test(larsen.role) && !/current beat writer/.test(larsen.role);
   })(), "UTA cls=" + D.arenaCoverage().find(c => c.abbr === "UTA").cls);
 check("every session-13 row is present by name, and no unnamed row appeared with it",
   SESSION_13_HANDLES.every(h => NEW.some(r => r.handle === h)) &&
@@ -200,9 +223,14 @@ check("summary arithmetic matches the rows it summarises", (() => {
   const s = D.arenaCoverageSummary();
   return s.teams === 30 && s.verifiedPollable + s.bioPollable + s.officialOnly + s.gap === 30 && s.pollableWriters === cov.reduce((n, c) => n + c.pollable.length, 0);
 })());
+/* UPDATED 2026-09-19 (session 14): `s.officialOnly > 0` used to hold because CHA and UTA had no
+ * writer account at all. Session 14 found evidenced accounts for both, so that clause would now be
+ * a demand for an uncovered team. The claim being protected — the page never reports 30/30 at the
+ * strongest class, and the classes account for every team — is asserted directly instead. */
 check("the computed summary reports REAL coverage, not full coverage (no silent claim of 30/30 writers)", (() => {
   const s = D.arenaCoverageSummary();
-  return s.verifiedPollable < 30 && s.officialOnly > 0 && s.withGaps.length === 30 - s.verifiedPollable;
+  return s.verifiedPollable < 30 && s.withGaps.length === 30 - s.verifiedPollable &&
+    s.verifiedPollable + s.bioPollable + s.officialOnly + s.gap === 30;
 })());
 
 /* ---- recency: "could not read the feed" must never look like a clean bill of health -------- */
@@ -393,17 +421,48 @@ console.log("== session 13: activity is computed, and CI evidence beats a stale 
   check("the summary names the teams with no active writer instead of hiding them in a count",
     s.dormantOnlyTeams.every(a => cov.find(c => c.abbr === a).recency.startsWith("dormant")) &&
     s.activeTeams === cov.filter(c => c.recency === "active").length);
-  check("the session-13 measured dormancy is still visible: DAL/DEN/LAL/CLE have no active writer on registry evidence alone", (() => {
-    const quiet = ["DAL", "DEN", "LAL", "CLE"].filter(a => cov.find(c => c.abbr === a).recency !== "active");
-    return quiet.length === 4;
+  /* UPDATED 2026-09-19 (session 14). Session 13's measurement was that all four of DAL/DEN/LAL/CLE
+   * had no ACTIVE writer. Session 14 added an evidenced account to each, and exactly one of them —
+   * CLE, via Danny Cunningham's own 2026-09-01 post — now measures active on registry evidence
+   * alone. Asserting "all four are still inactive" would now be asserting a defect; asserting
+   * "all four are now active" would be inventing coverage the other rows do not have. So the check
+   * pins the transition, one team at a time, and requires the three that are NOT active to say so. */
+  /* UPDATED AGAIN 2026-09-19 (same session, later): the six getAuthorFeed reads landed, and DEN's
+   * Joel Rush posted 2 days ago — so DEN is active TOO. The check keeps its shape (name the state
+   * of each of the four teams the brief called dormant-only, and require the two that are still
+   * dormant to say so) instead of being rewritten into a weaker statement. */
+  check("dormancy is visible where it remains: CLE and DEN active, DAL and LAL dormant-only", (() => {
+    const state = a => cov.find(c => c.abbr === a).recency;
+    return state("CLE") === "active" && state("DEN") === "active" &&
+      ["DAL", "LAL"].every(a => state(a) === "dormant-only") &&
+      ["DAL", "DEN", "LAL", "CLE"].every(a => cov.find(c => c.abbr === a).pollable.length > 0);
   })(), ["DAL", "DEN", "LAL", "CLE"].map(a => a + ":" + cov.find(c => c.abbr === a).recency).join(" "));
+  /* UPDATED 2026-09-19 (same session, later). The rule this check exists for is unchanged and is
+   * the reason it is worth keeping: a row may only carry a newest-post date if a keyless read
+   * produced one, and every one of those dates must name the read that produced it. What changed is
+   * the measurement — all ten reader rows were read, so the "unmeasured otherwise" half now belongs
+   * to the REFUSED rows, which must stay undated forever. */
+  check("every session-14 reader row carries a feed-read date WITH its provenance, and refused rows carry none", (() => {
+    const rows = SESSION_14_HANDLES.map(h => D.BSKY_REPORTERS.find(r => r.handle === h));
+    const readers = rows.filter(r => r.feed !== false);
+    const refused = rows.filter(r => r.feed === false);
+    const provenance = r => String((r.observed || {}).latestPostAtSource || "");
+    return readers.length + refused.length === rows.length && readers.length > 0 &&
+      readers.every(r => r.observed && r.observed.latestPostAt && /getAuthorFeed\?actor=/.test(provenance(r))) &&
+      refused.every(r => r.identityRefused === true && !(r.observed || {}).latestPostAt) &&
+      rows.every(r => r.observed && r.observed.checkedAt === "2026-09-19" && r.observed.followersCount != null);
+  })(), SESSION_14_HANDLES.map(h => { const r = D.BSKY_REPORTERS.find(x => x.handle === h) || {}; return h + ":" + ((r.observed || {}).latestPostAt || (r.feed === false ? "(refused)" : "(NONE)")); }).join(" "));
 }
 
 console.log("== session 13: refused identities stay refused, and the club probe is internally consistent ==");
 {
   const refused = D.BSKY_REPORTERS.filter(r => r.identityRefused === true);
-  check("both refused handles are present, pinned feed:false and classed unconfirmed",
-    refused.length === 2 && refused.every(r => r.feed === false && r.conf === "unconfirmed" && r.team),
+  /* 2 until 2026-09-19; 5 now. Session 14 refused three more handles — a Lakers-broadcaster name
+   * with an empty profile, an Alaska photographer returned for a Nets writer, and two Utah
+   * play-by-play name matches with no Jazz identity. The count is pinned so a refused row can
+   * neither be dropped quietly nor added without naming it here. */
+  check("every refused handle is present, pinned feed:false and classed unconfirmed",
+    refused.length === 5 && refused.every(r => r.feed === false && r.conf === "unconfirmed" && r.team),
     refused.map(r => r.handle).join(","));
   check("a refused row records WHAT the API returned instead of an invented bio",
     refused.every(r => (r.evidenceQuote || "").length > 10 && /REFUSED/.test(r.verified)));
@@ -433,9 +492,34 @@ console.log("== session 13: refused identities stay refused, and the club probe 
     P.rows.filter(r => r.via === BATCH && r.resolved === false).length === P.summary.absent &&
     P.summary.handlesProbed === P.summary.resolved + P.summary.absent,
     "rows " + P.rows.length + " / " + P.rows.filter(r => r.resolved === true).length + " resolved");
-  check("the probe found ZERO verified club accounts and says so instead of implying coverage",
+  /* UPDATED 2026-09-19 (session 14). The claim "NOT ONE of the 25 guessed club handles carries a
+   * verification object" is about the BATCH and stays true. Session 14 added a second sweep whose
+   * rows include one handle that DOES carry a valid object — nuggets.bsky.social — because the
+   * point of a sweep is also to re-confirm what is already registered. So the zero-claim is scoped
+   * to the batch rows, and the sweep's one verified handle is asserted by name and row. */
+  check("the 25-handle batch found ZERO verified club accounts and the probe says so instead of implying coverage",
     P.summary.withValidVerificationObject === 0 &&
-    P.rows.filter(r => r.verification === true).length === 0 && /NOT ONE carries/.test(P.summary.meaning));
+    P.rows.filter(r => r.via === "getProfiles 25-handle batch" && r.verification === true).length === 0 &&
+    /NOT ONE carries/.test(P.summary.meaning));
+  check("the session-14 sweep re-confirmed exactly one verified club handle (DEN) and found none new",
+    (() => {
+      const verified = P.rows.filter(r => r.verification === true);
+      const sw = P.summary.sweep;
+      return verified.length === 1 && verified[0].handle === "nuggets.bsky.social" &&
+        verified[0].team === "DEN" && /VALID Bluesky verification object/.test(verified[0].note || "") &&
+        !!sw && sw.when === "2026-09-19" && sw.placeholders.length === 4 && sw.newHandlesRead === 6 &&
+        sw.impersonationFound.length === 3 && sw.verifiedConfirmed.length === 1 &&
+        /no new club channel/.test(sw.meaning);
+    })(), JSON.stringify((P.summary.sweep || {}).verifiedConfirmed));
+  check("every placeholder the sweep read is recorded with the counts that disqualified it",
+    P.summary.sweep.placeholders.every(h => {
+      const r = P.rows.find(x => x.handle === h);
+      return !!r && r.verdict === "placeholder" && r.posts != null && r.posts <= 10 &&
+        r.followers != null && r.followers <= 2 && r.verification === false && !!r.note;
+    }), P.summary.sweep.placeholders.join(","));
+  check("a sweep row that could not read counts says null instead of guessing them",
+    P.rows.filter(r => /typeahead|searchActors q=/.test(r.via))
+      .every(r => (r.followers == null && r.posts == null) || (r.followers != null && r.posts != null)));
   check("every impersonation-labelled handle the probe found is counted in the summary",
     P.rows.filter(r => r.verdict === "impersonation-labelled").length === P.summary.impersonationLabelled &&
     P.summary.impersonationLabelled >= 3);
@@ -447,6 +531,146 @@ console.log("== session 13: refused identities stay refused, and the club probe 
   check("the coverage model surfaces the probe result per team for manual review",
     D.arenaCoverage().filter(c => c.official.probe.length).length >= 20 &&
     D.arenaCoverage().every(c => c.official.probe.every(p => p.handle && p.verdict)));
+}
+
+/* =====================================================================================
+ * SESSION 14 (2026-09-19) — the registry recency backfill.
+ *
+ * The brief's complaint was concrete: "30 of 40 writers have no registry-stored newest-post date
+ * (printed unmeasured); the daily CI file covers the rest — worth backfilling the registry so the
+ * page is right even before the first CI run." A tool that rewrites a 250 kB JavaScript registry
+ * is exactly the kind of thing that must be tested against a REAL copy, not asserted to work: the
+ * checks below run the actual CLI in a scratch directory and compare the rewritten file against
+ * the original with every date field stripped, so "it only touched the dates" is proven rather than
+ * claimed. Nothing is written inside the repository.
+ * ===================================================================================== */
+console.log("== session 14: the registry recency backfill ==");
+{
+  const cp = require("child_process");
+  const os = require("os");
+  const tool = path.join(ROOT, "tools/backfill_registry_recency.js");
+  const workflow = fs.readFileSync(path.join(ROOT, ".github/workflows/live-audit.yml"), "utf8");
+  const run = (args, out) => cp.spawnSync(process.execPath, [tool].concat(args),
+    { encoding: "utf8", env: Object.assign({}, process.env, out ? { NBA_WATCH_OUT: out } : {}) });
+
+  check("the backfill tool exists and live-audit.yml runs it without human input",
+    fs.existsSync(tool) && /backfill_registry_recency\.js/.test(workflow));
+  const sync = run(["--check"]);
+  check("the committed registry is in sync with the committed measurement of record (--check exits 0)",
+    sync.status === 0, (sync.stdout || "").split("\n").slice(-2).join(" "));
+
+  /* --- scratch copy: a stale date MUST be detected, then repaired, and nothing else may move --- */
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "nba-backfill-"));
+  fs.mkdirSync(path.join(tmp, "assets/js"), { recursive: true });
+  fs.mkdirSync(path.join(tmp, "data/live"), { recursive: true });
+  const original = fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8");
+  const evidenceFile = JSON.parse(fs.readFileSync(path.join(ROOT, "data/live/reporter_verify.json"), "utf8"));
+  /* The fixture has to use a handle the EVIDENCE FILE actually carries — a session-14 row that no CI
+   * run has measured yet is deliberately left alone by the tool, so writing the test against one of
+   * those would have asserted the opposite of the policy. howardbeck.bsky.social is in both. */
+  const hb = D.BSKY_REPORTERS.find(r => r.handle === "howardbeck.bsky.social");
+  const hbEvidence = evidenceFile.rows.find(r => r.handle === "howardbeck.bsky.social");
+  const staleDate = "2020-01-01T00:00:00.000Z";
+  const stale = original.replace('latestPostAt: "' + hb.observed.latestPostAt + '"', 'latestPostAt: "' + staleDate + '"');
+  check("the fixture really is stale (the scratch copy is not identical to the shipped registry)",
+    stale !== original && stale.includes(staleDate) && !!hbEvidence && hbEvidence.latestPostAt !== staleDate, "evidence for howardbeck: " + (hbEvidence || {}).latestPostAt);
+  fs.writeFileSync(path.join(tmp, "assets/js/data.js"), stale);
+  fs.copyFileSync(path.join(ROOT, "data/live/reporter_verify.json"), path.join(tmp, "data/live/reporter_verify.json"));
+
+  const detect = run(["--check"], tmp);
+  check("a registry that is behind the CI measurement FAILS --check instead of passing quietly",
+    detect.status === 1 && /BEHIND/.test(detect.stderr || ""), "exit " + detect.status);
+
+  const write = run([], tmp);
+  const rewritten = fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8");
+  /* Normalising a whole file cannot just blank the two fields: the tool also INSERTS them
+   * (a row with no observed block gets one; a row with a date but no source gets a source). So the
+   * normaliser deletes each owned key together with the comma that separated it, iterating until
+   * stable, and only then the two files may be compared character for character. */
+  const strip = src => {
+    let t = src.replace(/latestPostAtSource: "[^"]*"/g, "\u0000").replace(/latestPostAt: "[^"]*"/g, "\u0000");
+    let prev;
+    do { prev = t; t = t.replace(/,\s*\u0000/g, "").replace(/\u0000,\s*/g, "").replace(/\{\s*\u0000\s*,?/g, "{ "); } while (t !== prev);
+    return t.split("\u0000").join("");
+  };
+  check("the tool repairs the stale date to the MEASURED one and exits cleanly",
+    write.status === 0 && rewritten.includes('latestPostAt: "' + hbEvidence.latestPostAt + '"') &&
+    !rewritten.includes('latestPostAt: "' + staleDate + '"'), "exit " + write.status);
+  check("the rewritten registry differs from the original ONLY in the date fields it owns",
+    strip(rewritten) === strip(original));
+  check("a second run is a no-op (idempotent, so CI cannot commit forever)",
+    run(["--check"], tmp).status === 0 && fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8") === rewritten);
+
+  /* --- the shape that broke the first version: `latestPostAt: null`, and duplicate keys -------- */
+  /* Fixtures are built by swapping the OBSERVED BLOCK of one row, so nothing else about the file
+   * changes and any difference afterwards is attributable to the tool alone. */
+  const hbIdx = original.indexOf('handle: "howardbeck.bsky.social"');
+  check("the fixture row is present in the registry", hbIdx > 0);
+  const obsStart = original.indexOf("observed: {", hbIdx);
+  const obsEnd = original.indexOf("}", obsStart);
+  const swapObserved = body => original.slice(0, obsStart) + "observed: { " + body + " }" + original.slice(obsEnd + 1);
+
+  const nullShape = swapObserved('checkedAt: "2026-09-18", latestPostAt: null, verificationValid: true');
+  fs.writeFileSync(path.join(tmp, "assets/js/data.js"), nullShape);
+  const nullRun = run([], tmp);
+  const nullOut = fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8");
+  const nullRow = vm.runInNewContext(nullOut + "\n;BSKY_REPORTERS.find(r => r.handle === 'howardbeck.bsky.social').observed", {});
+  check("an unquoted `latestPostAt: null` is REPLACED, not shadowed by a second key",
+    nullRun.status === 0 && nullRow.latestPostAt === hbEvidence.latestPostAt && nullRow.latestPostAtSource === "data/live/reporter_verify.json",
+    "evaluated: " + JSON.stringify(nullRow));
+
+  const dupeShape = swapObserved('checkedAt: "2026-09-18", latestPostAt: null, verificationValid: true, latestPostAt: "2026-01-01T00:00:00.000Z"');
+  fs.writeFileSync(path.join(tmp, "assets/js/data.js"), dupeShape);
+  const dupeRun = run([], tmp);
+  const dupeOut = fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8");
+  const dupeRow = vm.runInNewContext(dupeOut + "\n;BSKY_REPORTERS.find(r => r.handle === 'howardbeck.bsky.social').observed", {});
+  check("a row with two latestPostAt keys is repaired to exactly one key holding the measured date",
+    dupeRun.status === 0 && (dupeOut.match(/latestPostAt:/g) || []).length === (original.match(/latestPostAt:/g) || []).length &&
+    dupeRow.latestPostAt === hbEvidence.latestPostAt && /duplicate key repaired/.test(dupeRun.stdout || ""),
+    "evaluated: " + JSON.stringify(dupeRow));
+
+  /* The shipped registry itself: no row may carry a duplicate key, and every measured row must
+   * EVALUATE to the measured date. Version 1 of the tool passed every check in this file while
+   * storing Boston's Gary Washburn as `null` this way. */
+  /* Scoped to the REGISTRY ARRAY on purpose: the FLAGS prose further down the same file discusses this
+   * very bug and quotes the key names, and a whole-file grep would fire on the explanation. */
+  const regStart = original.indexOf("const BSKY_REPORTERS = [");
+  const regEnd = original.indexOf("\n];", regStart);
+  const regText = original.slice(regStart, regEnd);
+  const dupLines = regText.split("\n").filter(l => (l.match(/latestPostAt:/g) || []).length > 1 || (l.match(/latestPostAtSource:/g) || []).length > 1);
+  check("no committed registry row carries a duplicate latestPostAt / latestPostAtSource key",
+    dupLines.length === 0 && regStart > 0 && regEnd > regStart, dupLines[0]);
+  const shadowed = D.BSKY_REPORTERS.filter(r => {
+    const want = (evidenceFile.rows.find(x => x.handle === r.handle) || {}).latestPostAt;
+    return want && !(r.observed && r.observed.latestPostAt === want);
+  });
+  check("every registry row the evidence measures EVALUATES to that exact date (no key shadowing)",
+    shadowed.length === 0, shadowed.map(r => r.handle + "=" + JSON.stringify(r.observed && r.observed.latestPostAt)).join(", "));
+
+  /* --- a NEWER registry date is a fresh read, not drift: it must be kept --------------------- */
+  /* Base the bump on the REPAIRED file: every other row is current by then, so if the tool
+   * rewrote an ahead-of-evidence row the file would have to change. */
+  const ahead = rewritten.split('latestPostAt: "' + hbEvidence.latestPostAt + '"')
+    .join('latestPostAt: "2030-01-01T00:00:00.000Z"');
+  check("the ahead-of-evidence fixture really is ahead", ahead !== rewritten && ahead.includes("2030-01-01T00:00:00.000Z"));
+  fs.writeFileSync(path.join(tmp, "assets/js/data.js"), ahead);
+  const aheadRun = run([], tmp);
+  check("a registry date NEWER than the CI evidence is kept, not overwritten",
+    aheadRun.status === 0 && fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8") === ahead &&
+    /registry ahead of CI \(kept\)/.test(aheadRun.stdout || ""), "exit " + aheadRun.status);
+
+  /* --- the tool must refuse to write when it cannot prove it is safe ------------------------- */
+  /* A registry that does not evaluate must never be overwritten: the failure mode this guards
+   * against is a half-parsed file being rewritten from a broken read. */
+  fs.writeFileSync(path.join(tmp, "assets/js/data.js"), original.replace("const BSKY_REPORTERS = [", "const BSKY_REPORTERS = [ { name: \"broken\""));
+  const beforeBad = fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8");
+  const badRun = run([], tmp);
+  check("a registry that does not evaluate aborts the run and is left byte-for-byte untouched",
+    badRun.status === 1 && fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8") === beforeBad,
+    "exit " + badRun.status);
+  check("the tool never writes into the repository when its output root is redirected",
+    fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8") === original);
+  fs.rmSync(tmp, { recursive: true, force: true });
 }
 
 console.log("\n" + pass + " passed, " + fail + " failed");
