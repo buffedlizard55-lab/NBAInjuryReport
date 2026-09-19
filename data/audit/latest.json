@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-19T04:52:38.217962+00:00",
+  "checkedAt": "2026-09-19T04:53:20.561131+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -19,7 +19,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 1129,
-      "sha256": "a0aa77a36471d039202a6714ba01e6f823f75e0bc54c219e8269733882861941",
+      "sha256": "779c4b5fdbb1fa08a8d9170b6a569e32a25b4c882127e0cc1a681307fa35606b",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -45,7 +45,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 116514,
-      "sha256": "bf1cb07cc5f964a22a9ba9c0f2cc9a26ebdb91916a2705e52ae097cbfa89db09",
+      "sha256": "babdf018b830f3a3750f4b26aa915d60f9954eaa8dd309a61b92dba52b23ee6d",
       "probes": {
         "deadline 5pm-ish": true,
         "continual updates": true,
@@ -104,7 +104,7 @@
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
       "bytes": 280,
-      "sha256": "9cfa4f02f5dccaf01834b4b9775944b0b6296e36fe1cd00f1cd9f58048f92c74",
+      "sha256": "baf7971b26daf41daa5f87ca09d161da9adef7446f526bfb0b06d622ab9b028f",
       "outboundLinks": [],
       "frames": [],
       "verdict": "DOCUMENTED-BLOCKER",
@@ -150,7 +150,7 @@
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
       "bytes": 859816,
-      "sha256": "f6792cff779ad0901c0a3f2f18ef88ea4108fc5a5b50b5140ca9ec10bf7fc9dc",
+      "sha256": "63c9bd1acbd6a07bf75d8b307ef2f57c86341030222e17bfbf11505cebd8f693",
       "teamBlocks": 27,
       "rows": 75,
       "season": {
@@ -179,7 +179,7 @@
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
       "contentType": "text/html",
       "bytes": 439,
-      "sha256": "398cc17fcfd02e10d4c3b90e1ddff789e099d842776852925db88c3d9de8ab31",
+      "sha256": "acec8331824f02402284c87f89e019f88a1c91f703133eef7646d16b46d5176c",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -200,8 +200,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "text/html",
-      "bytes": 442,
-      "sha256": "7163c621917fa853a866c32438c779ca6ed4f6bade2c0b4485cef6032a0be8fb",
+      "bytes": 444,
+      "sha256": "91b1382daebde24b6be74172c001f33729be8171ff21d16fdc9bcb8f6f9b0026",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -222,8 +222,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "text/html",
-      "bytes": 456,
-      "sha256": "a18c6841ec525220e0ce0a7cebec830410e09b3be3d589b2438de58c0dee99df",
+      "bytes": 458,
+      "sha256": "92ced5296c9317be3cfb698889c549aaab4034c7ca71e2c4a5994e9c175f73bc",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -284,8 +284,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "text/html",
-      "bytes": 445,
-      "sha256": "373bf62baf3a6b1fac4a5c7f46f187c26cb22fed41fcfbafba0e7fdb0fd96373",
+      "bytes": 447,
+      "sha256": "4bce5fb576cbeaff3f92cd69083d51a72ee3262e05a7e81404d899a217709d63",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -460,7 +460,7 @@
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
       "bytes": 115272,
-      "sha256": "dddc06d6979bfdb94b04407a049aa2ff75840d159f119bb9ac40c055aa7e5754",
+      "sha256": "adb71e581f7e834863cfe7e3d5ec19f5250046335c45d1495c5514f4b0597562",
       "probes": {
         "player-news page": true,
         "source attribution": true,
@@ -569,8 +569,8 @@
       "status": 200,
       "finalUrl": "https://www.rotoballer.com/player-news?sport=nba",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 1009295,
-      "sha256": "5b3f3429246d51ee687cfb89d5454493de1c80bd09bc9bf8a1f6710014853b10",
+      "bytes": 1009296,
+      "sha256": "6d21523ec2e2514d05dd2830159813cb01e82cedc2edaf3a5eedddd5a45ca239",
       "outboundLinks": [
         "http://benchsports.com/?ref=rotoballer",
         "http://custom.transaction",
@@ -647,8 +647,8 @@
       "status": 200,
       "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 242442,
-      "sha256": "402da8ee819a6e9f19566d56b4c07f6a96e00e41962442b5d78270a466c1dfaa",
+      "bytes": 242438,
+      "sha256": "8ffceec24cd80217a2e1d167fcdbee5a573f644f526efd72d95c8883af76a749",
       "verdict": "OK"
     },
     {
