@@ -51,9 +51,20 @@ const Intelligence = (() => {
     }
     renderHistory();
     const scores = document.getElementById("autoScorecard");
-    if (scores) scores.innerHTML = `<p class="muted small">Collected ${esc(ledger.generated || 'not yet')}. Accuracy: <b>not established</b>. These are evidence counts, not reliability ratings or global first-to-report rankings. Pending includes unresolved players, multi-player text and in-game return claims.</p>
-      <div class="table-wrap"><table><thead><tr><th>Reporter</th><th>Observed</th><th>Corroborated</th><th>Conflicts to review</th><th>Pending</th></tr></thead><tbody>${(ledger.scores || []).map(s => `<tr><td>${link('https://bsky.app/profile/' + s.handle, s.name || s.handle)}</td><td>${s.observed}</td><td>${s.corroborated}</td><td>${s.conflicts}</td><td>${s.pending}</td></tr>`).join('') || '<tr><td colspan="5">No automated observations published yet.</td></tr>'}</tbody></table></div>
-      <details><summary>Recent claim evidence (latest 50)</summary>${Object.values(ledger.claims || {}).sort((a,b) => Date.parse(b.firstObservedAt)-Date.parse(a.firstObservedAt)).slice(0,50).map(c => `<article class="post"><b>${esc(c.name)} · ${esc(c.outcome)}</b><p>${esc(c.text)}</p><small>${esc(c.player || 'Player unresolved')} · posted ${esc(c.postedAt)} · first observed ${esc(c.firstObservedAt)}<br>${link(c.url, 'Original post')} ${c.evidence ? ' · ' + link(c.evidence.url, 'Official comparison') : ''}</small></article>`).join('')}</details>
+    const outcomeLabel = o => ({
+      'corroborated': '✅ corroborated — official NBA report',
+      'conflict-review': '⚠ conflict vs official report — review',
+      'board-agreement': '☑ ESPN-board agreement (unofficial)',
+      'board-conflict-review': '⚠ ESPN-board conflict — review',
+      'pending': '⏳ pending'
+    })[o] || esc(String(o));
+    if (scores) scores.innerHTML = `<p class="muted small">Collected ${esc(ledger.generated || 'not yet')}. Accuracy: <b>not established</b> — the forward score below counts agreement, nothing more. <b>Forward score, not an accuracy rating:</b>
+      3 pts when a later official NBA report carries the same status for the same game · 1 pt when the ESPN structured board later lists the same status
+      (both timestamps must postdate the post, within 72 h). Conflicts are flagged for review and <b>never subtracted</b> — a later status change is not proof
+      a reporter was wrong. Pending includes unresolved players, multi-player text, in-game claims and reports no later evidence answered. No historical
+      scorecard or global first-to-report ranking is claimed.</p>
+      <div class="table-wrap"><table><thead><tr><th>Reporter</th><th>Observed</th><th>Official corroboration</th><th>ESPN-board agreement</th><th>Conflicts to review</th><th>Pending</th><th>Forward score</th></tr></thead><tbody>${(ledger.scores || []).map(s => `<tr><td>${link('https://bsky.app/profile/' + s.handle, s.name || s.handle)}</td><td>${s.observed}</td><td>${s.corroborated}</td><td>${s.boardAgree ?? 0}</td><td>${(s.conflicts ?? 0) + (s.boardConflicts ?? 0)}</td><td>${s.pending}</td><td><b>${(s.forwardScore ?? 0)} pts</b>${s.agreementRate != null ? `<br><small class="muted">agreement ${s.agreementRate}% of ${s.resolved} resolved</small>` : '<br><small class="muted">nothing resolved yet</small>'}</td></tr>`).join('') || '<tr><td colspan="7">No automated observations published yet.</td></tr>'}</tbody></table></div>
+      <details><summary>Recent claim evidence (latest 50)</summary>${Object.values(ledger.claims || {}).sort((a,b) => Date.parse(b.firstObservedAt)-Date.parse(a.firstObservedAt)).slice(0,50).map(c => `<article class="post"><b>${esc(c.name)} · ${outcomeLabel(c.outcome)}</b><p>${esc(c.text)}</p><small>${esc(c.player || 'Player unresolved')} · posted ${esc(c.postedAt)} · first observed ${esc(c.firstObservedAt)}<br>${link(c.url, 'Original post')} ${c.evidence ? ' · ' + link(c.evidence.url, c.evidence.layer === 'official-pdf' ? 'Official comparison' : c.evidence.layer === 'espn-board' ? 'ESPN-board comparison' : 'Comparison evidence') + ' <span class="tiny muted">(' + esc(c.evidence.status || '') + (c.evidence.supersedes ? ', supersedes ' + esc(c.evidence.supersedes) : '') + ')</span>' : ''}</small></article>`).join('')}</details>
       <a href="data/live/intelligence.json">Download automated evidence ledger ↗</a>`;
   }
   function renderHistory() {

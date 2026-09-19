@@ -31,6 +31,67 @@ function reconcile(claim, official) {
     status: row.status, url: row.url, reportAt: official.reportAt, gameDate: row.gameDate,
     note: 'Later official designation, not proof of predictive accuracy. Status can legitimately change.' };
 }
+/* ============================================================================
+ * SECOND RECONCILIATION LANE — the ESPN structured injury board.
+ * The official NBA PDF is published on game days only (and was 404 for the whole
+ * 2026-27 audit window), so a ledger that only reconciles against it can never
+ * resolve anything between seasons. The board lane compares a resolved one-player
+ * claim (Out / Questionable / Doubtful) with the FIRST ESPN board observation for
+ * that player that provably postdates the post:
+ *   - our own sighting time must be after the post (we only saw it afterwards), AND
+ *   - ESPN's own status stamp, when present, must also be after the post
+ *     (guards a stale stamp: e.g. a listing stamped 2026-02-09 first observed
+ *     2026-09-17 must not "resolve" a post from September — verified on the
+ *     committed 2026-09-19 history ledger),
+ *   - within 72 hours of the post (a listing older than that no longer speaks to it).
+ * Exact same-status agreement => 'board-agreement'; a different mappable status =>
+ * 'board-conflict-review'. Unmappable statuses (Probable etc.) and SILENCE are not
+ * evidence either way — the claim stays pending. Agreement with ESPN is NOT official
+ * confirmation and NOT accuracy: the official-PDF lane stays higher authority and
+ * overrides a board outcome the moment it matures.
+ * ========================================================================== */
+const BOARD_WINDOW_MS = 3 * 86400000;
+function boardStatus(status) {
+  const s = String(status || '').toLowerCase();
+  // ESPN's out-vocabulary observed on the board: "Out", "Out For Season", "Out Indefinitely".
+  if (/^out\b/.test(s) || s.includes('indefinitely')) return 'Out';
+  if (s.includes('doubtful')) return 'Doubtful';
+  if (s.includes('day-to-day') || s.includes('questionable')) return 'Questionable';
+  return null; // probable/available/anything else never answers an Out/Questionable/Doubtful claim
+}
+function reconcileBoard(claim, observations) {
+  if (!claim || !claim.player || !claim.status || claim.inGameWatch || claim.outcome !== 'pending') return null;
+  const postedAt = Date.parse(claim.postedAt);
+  if (!Number.isFinite(postedAt)) return null;
+  const matches = [];
+  for (const o of observations || []) {
+    if (claim.playerId && o.playerId ? String(o.playerId) !== String(claim.playerId) : fold(o.player) !== fold(claim.player)) continue;
+    if (claim.team && o.team && claim.team !== o.team) continue;
+    const st = boardStatus(o.status);
+    if (!st) continue;
+    const seen = Date.parse(o.observedAt);
+    const stamped = o.sourceAt ? Date.parse(o.sourceAt) : null;
+    /* Two postdate guards, both required:
+     *  - we only SAW the listing after the post (a sighting that precedes the post while its stamp
+     *    moved later is a stamp-bump ambiguity: the text we captured may predate the new stamp), and
+     *  - ESPN's own status stamp, when present, must also be after the post (the Furphy guard: a
+     *    stale stamp must not "resolve" a fresh report). */
+    if (!Number.isFinite(seen) || seen < postedAt) continue;
+    if (stamped != null && Number.isFinite(stamped) && stamped < postedAt) continue;
+    /* The 72-hour window judges the EVIDENCE time (ESPN's stamp, else our sighting), not our
+     * sighting alone — a poller gap cannot erase evidence that was genuinely public in time. */
+    const evidenceAt = stamped != null && Number.isFinite(stamped) ? stamped : seen;
+    if (evidenceAt < postedAt || evidenceAt - postedAt > BOARD_WINDOW_MS) continue;
+    matches.push({ st, seen, evidenceAt, url: o.url, sourceAt: o.sourceAt || null });
+  }
+  if (!matches.length) return null;
+  matches.sort((a, b) => a.evidenceAt - b.evidenceAt || a.seen - b.seen);
+  const first = matches[0];
+  return { outcome: first.st === claim.status ? 'board-agreement' : 'board-conflict-review',
+    layer: 'espn-board', status: first.st, url: first.url,
+    observedAt: new Date(first.seen).toISOString(), sourceAt: first.sourceAt,
+    note: 'ESPN structured-board comparison (secondary layer, not official confirmation). Status can legitimately change; a disagreement is for review, not a wrong-report penalty.' };
+}
 function build(snapshot, official, context, prior = {}, now = new Date().toISOString()) {
   const fresh = Date.parse(now) - Date.parse(snapshot.generated);
   const valid = Number.isFinite(fresh) && fresh >= -60000 && fresh < 20 * 60000;
@@ -51,10 +112,32 @@ function build(snapshot, official, context, prior = {}, now = new Date().toISOSt
       identityVerifiedAtCollection: post.verified === true, bskyVerified: post.bskyVerified === true, outcome: 'pending',
       note: player ? 'Awaiting game-scoped official evidence; no score from silence.' : 'Player unresolved or multiple players; not auto-scored.' };
   }
+  /* Board-lane observation universe: the current snapshot's listings (sighted at the snapshot's own
+   * generation time) plus every history entry (a listing change we sighted earlier). Both carry the
+   * two timestamps reconcileBoard requires. Bounded to the same 30-day working set as the history. */
+  const boardObs = [];
+  if (valid && !snapshot.errors?.injuries) for (const row of rows) {
+    boardObs.push({ player: row.player, playerId: row.playerId, team: row.team, status: row.status,
+      sourceAt: row.updated || null, observedAt: snapshot.generated, url: row.teamUrl || null });
+  }
+  for (const h of (prior.history || []).filter(h => Number.isFinite(Date.parse(h.observedAt)) && Date.parse(now) - Date.parse(h.observedAt) < 30 * 86400000)) {
+    boardObs.push({ player: h.player, playerId: h.playerId, team: h.team, status: h.status,
+      sourceAt: h.sourceUpdatedAt || null, observedAt: h.observedAt || null, url: h.url || null });
+  }
   for (const claim of Object.values(claims)) {
-    if (claim.outcome === 'pending' && claim.identityVerifiedAtCollection) {
+    if (!claim.identityVerifiedAtCollection) continue; // unverified-identity posts are never auto-adjudicated
+    if (claim.outcome === 'pending') {
       const evidence = reconcile(claim, official);
+      if (evidence) { claim.evidence = { ...evidence, layer: 'official-pdf' }; claim.outcome = evidence.outcome; }
+    }
+    if (claim.outcome === 'pending') {
+      const evidence = reconcileBoard(claim, boardObs);
       if (evidence) { claim.evidence = evidence; claim.outcome = evidence.outcome; }
+    } else if (claim.outcome === 'board-agreement' || claim.outcome === 'board-conflict-review') {
+      /* Authority order: a maturing official designation overrides the board layer, never the other
+       * way round. The superseded board read is kept on the record, not erased. */
+      const evidence = reconcile(claim, official);
+      if (evidence) { claim.supersededBoardOutcome = claim.outcome; claim.evidence = { ...evidence, layer: 'official-pdf', supersedes: claim.outcome }; claim.outcome = evidence.outcome; }
     }
   }
   // Bounded public working set; per-run raw history is separately retained for 30 days.
@@ -71,8 +154,20 @@ function build(snapshot, official, context, prior = {}, now = new Date().toISOSt
   }
   const scores = {};
   for (const c of Object.values(claims)) {
-    const s = scores[c.handle] ||= { handle: c.handle, name: c.name, observed: 0, corroborated: 0, conflicts: 0, pending: 0, accuracy: null };
-    s.observed++; s[c.outcome === 'corroborated' ? 'corroborated' : c.outcome === 'conflict-review' ? 'conflicts' : 'pending']++;
+    const s = scores[c.handle] ||= { handle: c.handle, name: c.name, observed: 0, corroborated: 0, conflicts: 0, boardAgree: 0, boardConflicts: 0, pending: 0, resolved: 0, forwardScore: 0, agreementRate: null, accuracy: null };
+    s.observed++;
+    if (c.outcome === 'corroborated') s.corroborated++;
+    else if (c.outcome === 'conflict-review') s.conflicts++;
+    else if (c.outcome === 'board-agreement') s.boardAgree++;
+    else if (c.outcome === 'board-conflict-review') s.boardConflicts++;
+    else s.pending++;
+    const resolved = s.corroborated + s.conflicts + s.boardAgree + s.boardConflicts;
+    /* Forward score — agreement counting, not an accuracy rating: official corroboration 3 pts,
+     * ESPN-board agreement 1 pt. Conflicts are shown for review and NEVER subtracted, because a
+     * later status change is not proof the reporter was wrong. `accuracy` stays null on purpose. */
+    s.resolved = resolved;
+    s.forwardScore = s.corroborated * 3 + s.boardAgree;
+    s.agreementRate = resolved ? Math.round(100 * (s.corroborated + s.boardAgree) / resolved) : null;
   }
   /* In-game exit signals per player, for the lineup-impact layer. A post is REPORTED evidence,
    * never a league designation, and only an exactly resolved player is attached. */
@@ -83,9 +178,10 @@ function build(snapshot, official, context, prior = {}, now = new Date().toISOSt
     const at = Date.parse(c.postedAt || c.firstObservedAt || 0) || 0;
     if (!exits[key] || at > (exits[key].at || 0)) exits[key] = { player: c.player, playerId: c.playerId || null, team: c.team || null, name: c.name, handle: c.handle, postedAt: c.postedAt, url: c.url, text: String(c.text || '').slice(0, 240), at, status: 'reported-unconfirmed' };
   }
-  return { generated: now, inputGenerated: snapshot.generated, inputFresh: valid, claims, scores: Object.values(scores), baseline, history: history.slice(-10000), exits,
+  return { generated: now, inputGenerated: snapshot.generated, inputFresh: valid, claims, scores: Object.values(scores).sort((a, b) => b.forwardScore - a.forwardScore || b.observed - a.observed || String(a.handle).localeCompare(String(b.handle))), baseline, history: history.slice(-10000), exits,
     exitNote: 'exits maps a player to the most recent monitored-post in-game exit signal. Unconfirmed by design: a social post is not an official designation.',
-    note: 'Automatic evidence ledger. No historical accuracy or global first-to-report score is asserted. Conflicts require review, not a wrong-report penalty.' };
+    scoringNote: 'Forward score = 3 pts per official-NBA-report corroboration + 1 pt per ESPN-board agreement in the same status bucket (Out; Questionable — ESPN "Day-To-Day" counts here; Doubtful), over posts collected from 2026-09-17 onward. Conflicts are flagged for review, never subtracted. Pending includes unresolved players, multi-player text, in-game claims and reports no later evidence answered. Agreement is NOT accuracy; this is not a historical scorecard or a global first-to-report ranking.',
+    note: 'Automatic evidence ledger. Two reconciliation lanes, official first: the NBA game-day PDF (highest authority) then the ESPN structured board (secondary, not official). No historical accuracy or global first-to-report score is asserted. Conflicts require review, not a wrong-report penalty.' };
 }
 if (require.main === module) {
   const data = build(read('data/live/latest.json'), read('data/live/official.json'), read('data/live/context.json'), read('data/live/intelligence.json'));
@@ -93,4 +189,4 @@ if (require.main === module) {
   fs.writeFileSync(path.join(ROOT, 'data/live/intelligence.json'), JSON.stringify(data, null, 2) + '\n');
   console.log('intelligence:', Object.keys(data.claims).length, 'observations;', data.history.length, 'history entries');
 }
-module.exports = { identify, claimStatus, reconcile, build };
+module.exports = { identify, claimStatus, reconcile, reconcileBoard, boardStatus, BOARD_WINDOW_MS, build };
