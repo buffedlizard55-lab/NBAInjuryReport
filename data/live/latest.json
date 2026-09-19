@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-19T04:53:42.640Z",
+  "generated": "2026-09-19T06:31:15.677Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -58,7 +58,7 @@
             "parts": []
           },
           "recurrence": {
-            "score": 20,
+            "score": 45,
             "parts": [
               {
                 "key": "cadence",
@@ -68,8 +68,8 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-07 (74 day(s) ago)",
-                "pts": 0,
+                "label": "newest listing dated 2026-09-18 (1 day(s) ago)",
+                "pts": 15,
                 "max": 15
               }
             ]
@@ -103,7 +103,7 @@
         "roleEvidence": [],
         "listingCount": 1,
         "listingDates": [
-          "2026-07-07"
+          "2026-09-18"
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/roster",
         "salaryCurrent": 37739521,
@@ -7504,6 +7504,20 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
+      },
       "nuggets.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7517,20 +7531,6 @@
         "name": "Philadelphia 76ers — official",
         "kind": "official-team",
         "team": "PHI"
-      },
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
       },
       "samvecenie.bsky.social": {
         "ok": true,
@@ -7560,6 +7560,13 @@
         "kind": "reporter",
         "team": null
       },
+      "jmcdonaldsa.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
+      },
       "tomhaberstroh.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7574,13 +7581,6 @@
         "kind": "reporter",
         "team": "SAS"
       },
-      "jmcdonaldsa.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Jeff McDonald",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "nbasarah.bsky.social": {
         "ok": true,
         "count": 4,
@@ -7588,19 +7588,19 @@
         "kind": "reporter",
         "team": "MIN"
       },
-      "omarisankofa.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Omari Sankofa II",
-        "kind": "reporter",
-        "team": "DET"
-      },
       "kyleneubeck.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Kyle Neubeck",
         "kind": "reporter",
         "team": "PHI"
+      },
+      "omarisankofa.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Omari Sankofa II",
+        "kind": "reporter",
+        "team": "DET"
       },
       "jonkrawczynski.bsky.social": {
         "ok": true,
@@ -7623,19 +7623,19 @@
         "kind": "reporter",
         "team": "WAS"
       },
-      "jlewenberg.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Josh Lewenberg",
-        "kind": "reporter",
-        "team": "TOR"
-      },
       "lawmurraythenu.bsky.social": {
         "ok": true,
         "count": 5,
         "name": "Law Murray",
         "kind": "reporter",
         "team": "LAC"
+      },
+      "jlewenberg.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Josh Lewenberg",
+        "kind": "reporter",
+        "team": "TOR"
       },
       "jimowczarski.bsky.social": {
         "ok": true,
@@ -7749,19 +7749,19 @@
         "kind": "reporter",
         "team": null
       },
-      "danwoikesports.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Dan Woike",
-        "kind": "reporter",
-        "team": "LAL"
-      },
       "rylanstiles.bsky.social": {
         "ok": true,
         "count": 11,
         "name": "Rylan Stiles",
         "kind": "reporter",
         "team": "OKC"
+      },
+      "danwoikesports.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Dan Woike",
+        "kind": "reporter",
+        "team": "LAL"
       },
       "jxlorenzi.bsky.social": {
         "ok": true,
@@ -7770,19 +7770,19 @@
         "kind": "reporter",
         "team": null
       },
-      "fredkatz.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Fred Katz",
-        "kind": "reporter",
-        "team": "NYK"
-      },
       "andrewschlecht.bsky.social": {
         "ok": true,
         "count": 6,
         "name": "Andrew Schlecht",
         "kind": "reporter",
         "team": "OKC"
+      },
+      "fredkatz.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Fred Katz",
+        "kind": "reporter",
+        "team": "NYK"
       },
       "jledwardsiii.bsky.social": {
         "ok": true,
@@ -7840,12 +7840,12 @@
         "kind": "reporter",
         "team": "HOU"
       },
-      "jasonlloyd.bsky.social": {
+      "montepoole.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Jason Lloyd",
+        "count": 0,
+        "name": "Monte Poole",
         "kind": "reporter",
-        "team": "CLE"
+        "team": "GSW"
       },
       "bennettdurando.bsky.social": {
         "ok": true,
@@ -7854,12 +7854,12 @@
         "kind": "reporter",
         "team": "DEN"
       },
-      "montepoole.bsky.social": {
+      "jasonlloyd.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Monte Poole",
+        "count": 3,
+        "name": "Jason Lloyd",
         "kind": "reporter",
-        "team": "GSW"
+        "team": "CLE"
       },
       "grantafseth.bsky.social": {
         "ok": true,
@@ -7867,20 +7867,6 @@
         "name": "Grant Afseth",
         "kind": "reporter",
         "team": "DAL"
-      },
-      "nickvanexit.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Nick Angstadt",
-        "kind": "reporter",
-        "team": "DAL"
-      },
-      "dannycunningham.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Danny Cunningham",
-        "kind": "reporter",
-        "team": "CLE"
       },
       "joevardon.bsky.social": {
         "ok": true,
@@ -7896,6 +7882,34 @@
         "kind": "reporter",
         "team": "DAL"
       },
+      "dannycunningham.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Danny Cunningham",
+        "kind": "reporter",
+        "team": "CLE"
+      },
+      "nickvanexit.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Nick Angstadt",
+        "kind": "reporter",
+        "team": "DAL"
+      },
+      "joelrushnba.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Joel Rush",
+        "kind": "reporter",
+        "team": "DEN"
+      },
+      "bgeisinger.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Brian Geisinger",
+        "kind": "reporter",
+        "team": "CHA"
+      },
       "nolajake.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7909,20 +7923,6 @@
         "name": "Chris Herrington",
         "kind": "reporter",
         "team": "MEM"
-      },
-      "bgeisinger.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Brian Geisinger",
-        "kind": "reporter",
-        "team": "CHA"
-      },
-      "joelrushnba.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Joel Rush",
-        "kind": "reporter",
-        "team": "DEN"
       },
       "saltcityhoops.bsky.social": {
         "ok": true,
@@ -7938,19 +7938,19 @@
         "kind": "reporter",
         "team": "UTA"
       },
-      "codytaylornba.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Cody Taylor",
-        "kind": "reporter",
-        "team": "ORL"
-      },
       "lakerssbn.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Silver Screen and Roll",
         "kind": "reporter",
         "team": "LAL"
+      },
+      "codytaylornba.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Cody Taylor",
+        "kind": "reporter",
+        "team": "ORL"
       },
       "hunterpatterson.bsky.social": {
         "ok": true,
@@ -7980,13 +7980,6 @@
         "kind": "reporter",
         "team": "PHI"
       },
-      "rodwalkernola.bsky.social": {
-        "ok": true,
-        "count": 4,
-        "name": "Rod Walker",
-        "kind": "reporter",
-        "team": "NOP"
-      },
       "lucaskaplan.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7994,12 +7987,12 @@
         "kind": "reporter",
         "team": "BKN"
       },
-      "juliapoe.bsky.social": {
+      "rodwalkernola.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Julia Poe",
+        "count": 4,
+        "name": "Rod Walker",
         "kind": "reporter",
-        "team": "CHI"
+        "team": "NOP"
       },
       "masonginsberg.bsky.social": {
         "ok": true,
@@ -8008,12 +8001,12 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "caitlinmaycooper.bsky.social": {
+      "juliapoe.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Caitlin Cooper",
+        "name": "Julia Poe",
         "kind": "reporter",
-        "team": "IND"
+        "team": "CHI"
       },
       "willgottlieb.bsky.social": {
         "ok": true,
@@ -8022,12 +8015,12 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "chasedcsports.bsky.social": {
+      "caitlinmaycooper.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Chase Hughes",
+        "name": "Caitlin Cooper",
         "kind": "reporter",
-        "team": "WAS"
+        "team": "IND"
       },
       "britishbuzz.bsky.social": {
         "ok": true,
@@ -8035,6 +8028,13 @@
         "name": "James Plowright",
         "kind": "reporter",
         "team": "CHA"
+      },
+      "chasedcsports.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Chase Hughes",
+        "kind": "reporter",
+        "team": "WAS"
       },
       "millerjryan.bsky.social": {
         "ok": true,
