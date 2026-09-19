@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-19T00:21:58.681Z",
+  "generated": "2026-09-19T00:56:36.345Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -7518,6 +7518,13 @@
         "kind": "official-league",
         "team": null
       },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
       "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7525,12 +7532,19 @@
         "kind": "official-team",
         "team": "PHI"
       },
-      "trailblazers.bsky.social": {
+      "johnhollinger.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
+        "name": "John Hollinger",
+        "kind": "reporter",
+        "team": null
+      },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
       },
       "samvecenie.bsky.social": {
         "ok": true,
@@ -7546,26 +7560,12 @@
         "kind": "reporter",
         "team": null
       },
-      "howardbeck.bsky.social": {
+      "jmcdonaldsa.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Howard Beck",
+        "count": 3,
+        "name": "Jeff McDonald",
         "kind": "reporter",
-        "team": null
-      },
-      "johnhollinger.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "John Hollinger",
-        "kind": "reporter",
-        "team": null
-      },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
-        "kind": "reporter",
-        "team": null
+        "team": "SAS"
       },
       "tomorsborn.bsky.social": {
         "ok": true,
@@ -7574,12 +7574,12 @@
         "kind": "reporter",
         "team": "SAS"
       },
-      "jmcdonaldsa.bsky.social": {
+      "tomhaberstroh.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Jeff McDonald",
+        "count": 0,
+        "name": "Tom Haberstroh",
         "kind": "reporter",
-        "team": "SAS"
+        "team": null
       },
       "nbasarah.bsky.social": {
         "ok": true,
@@ -7602,19 +7602,19 @@
         "kind": "reporter",
         "team": "PHI"
       },
+      "highkin.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Sean Highkin",
+        "kind": "reporter",
+        "team": "POR"
+      },
       "jonkrawczynski.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Jon Krawczynski",
         "kind": "reporter",
         "team": "MIN"
-      },
-      "highkin.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Sean Highkin",
-        "kind": "reporter",
-        "team": "POR"
       },
       "joshrobbins.bsky.social": {
         "ok": true,
@@ -7623,19 +7623,19 @@
         "kind": "reporter",
         "team": "WAS"
       },
-      "lawmurraythenu.bsky.social": {
-        "ok": true,
-        "count": 5,
-        "name": "Law Murray",
-        "kind": "reporter",
-        "team": "LAC"
-      },
       "jlewenberg.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Josh Lewenberg",
         "kind": "reporter",
         "team": "TOR"
+      },
+      "lawmurraythenu.bsky.social": {
+        "ok": true,
+        "count": 5,
+        "name": "Law Murray",
+        "kind": "reporter",
+        "team": "LAC"
       },
       "jimowczarski.bsky.social": {
         "ok": true,
@@ -7763,6 +7763,13 @@
         "kind": "reporter",
         "team": "OKC"
       },
+      "andrewschlecht.bsky.social": {
+        "ok": true,
+        "count": 6,
+        "name": "Andrew Schlecht",
+        "kind": "reporter",
+        "team": "OKC"
+      },
       "jxlorenzi.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7777,26 +7784,12 @@
         "kind": "reporter",
         "team": "NYK"
       },
-      "andrewschlecht.bsky.social": {
-        "ok": true,
-        "count": 6,
-        "name": "Andrew Schlecht",
-        "kind": "reporter",
-        "team": "OKC"
-      },
       "jledwardsiii.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "James L. Edwards III",
         "kind": "reporter",
         "team": "NYK"
-      },
-      "drewhilldailym.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Drew Hill",
-        "kind": "reporter",
-        "team": "MEM"
       },
       "damichaelcole.bsky.social": {
         "ok": true,
@@ -7812,6 +7805,13 @@
         "kind": "reporter",
         "team": "DAL"
       },
+      "drewhilldailym.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Drew Hill",
+        "kind": "reporter",
+        "team": "MEM"
+      },
       "busyxb.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7819,17 +7819,17 @@
         "kind": "reporter",
         "team": "BKN"
       },
-      "fearthebrown.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Shamit Dua",
-        "kind": "reporter",
-        "team": "NOP"
-      },
       "olehkosel.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Oleh Kosel",
+        "kind": "reporter",
+        "team": "NOP"
+      },
+      "fearthebrown.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Shamit Dua",
         "kind": "reporter",
         "team": "NOP"
       },
@@ -7840,12 +7840,12 @@
         "kind": "reporter",
         "team": "HOU"
       },
-      "montepoole.bsky.social": {
+      "bennettdurando.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Monte Poole",
+        "count": 5,
+        "name": "Bennett Durando",
         "kind": "reporter",
-        "team": "GSW"
+        "team": "DEN"
       },
       "jasonlloyd.bsky.social": {
         "ok": true,
@@ -7854,12 +7854,12 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "bennettdurando.bsky.social": {
+      "montepoole.bsky.social": {
         "ok": true,
-        "count": 5,
-        "name": "Bennett Durando",
+        "count": 0,
+        "name": "Monte Poole",
         "kind": "reporter",
-        "team": "DEN"
+        "team": "GSW"
       },
       "grantafseth.bsky.social": {
         "ok": true,
@@ -7874,6 +7874,76 @@
         "name": "Joe Vardon",
         "kind": "reporter",
         "team": null
+      },
+      "dannycunningham.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Danny Cunningham",
+        "kind": "reporter",
+        "team": "CLE"
+      },
+      "mfollowill.bsky.social": {
+        "ok": true,
+        "count": 4,
+        "name": "Mark Followill",
+        "kind": "reporter",
+        "team": "DAL"
+      },
+      "nickvanexit.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Nick Angstadt",
+        "kind": "reporter",
+        "team": "DAL"
+      },
+      "joelrushnba.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Joel Rush",
+        "kind": "reporter",
+        "team": "DEN"
+      },
+      "nolajake.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Jake Madison",
+        "kind": "reporter",
+        "team": "NOP"
+      },
+      "bgeisinger.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Brian Geisinger",
+        "kind": "reporter",
+        "team": "CHA"
+      },
+      "chrisherrington.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Chris Herrington",
+        "kind": "reporter",
+        "team": "MEM"
+      },
+      "andyblarsen.bsky.social": {
+        "ok": true,
+        "count": 5,
+        "name": "Andy Larsen",
+        "kind": "reporter",
+        "team": "UTA"
+      },
+      "saltcityhoops.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Salt City Hoops",
+        "kind": "reporter",
+        "team": "UTA"
+      },
+      "lakerssbn.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Silver Screen and Roll",
+        "kind": "reporter",
+        "team": "LAL"
       }
     }
   },
@@ -8581,33 +8651,6 @@
       "kindLabel": "mention"
     },
     {
-      "uri": "at://did:plc:t2fqrxpw2yko4xlifv7y6hsi/app.bsky.feed.post/3mtuazuoqbc2h",
-      "text": "Story on Shaedon Sharpe's unfortunate knee injury and what it means for him and the Blazers moving forward: www.rosegardenreport.com/shaedon-shar...",
-      "handle": "highkin.bsky.social",
-      "name": "Sean Highkin",
-      "verified": true,
-      "bskyVerified": true,
-      "kind": "reporter",
-      "team": "POR",
-      "outlet": "The Rose Garden Report (rosegardenreport.com)",
-      "role": "Trail Blazers writer",
-      "accountUrl": "https://bsky.app/profile/highkin.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/highkin.bsky.social",
-        "team": "POR",
-        "kind": "reporter",
-        "outlet": "The Rose Garden Report (rosegardenreport.com)",
-        "name": "Sean Highkin"
-      },
-      "createdAt": "2026-08-24T21:34:18.913Z",
-      "indexedAt": "2026-08-24T21:34:20.378Z",
-      "url": "https://bsky.app/profile/highkin.bsky.social/post/3mtuazuoqbc2h",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
-    },
-    {
       "uri": "at://did:plc:dfd7vm55wtu76azcjrmav4xz/app.bsky.feed.post/3mtjuy7f5ps2w",
       "text": "\"Here we go.\" \n\nCarlos Alcaraz will return from a four-month injury absence to defend his U.S. Open title later this month, adding intrigue to an already packed men's single field:\n\nwww.usatoday.com/story/sports...",
       "handle": "danielle-lerner.bsky.social",
@@ -8629,6 +8672,33 @@
       "createdAt": "2026-08-20T18:32:00.739Z",
       "indexedAt": "2026-08-20T18:32:02.665Z",
       "url": "https://bsky.app/profile/danielle-lerner.bsky.social/post/3mtjuy7f5ps2w",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:u4fkp34f7xgikmvw27pdlft6/app.bsky.feed.post/3mtf24g7rfr2o",
+      "text": "After chaos in Minnesota, Tom Homan said ICE's priority would be criminals and public safety threats.\n\nBut a Tribune investigation found that, at least in SW Utah, arrests & deportations have been more widespread.\n\nMore here: https://www.sltrib.com/news/2026/08/17/ice-arrests-quadruple-st-george/",
+      "handle": "andyblarsen.bsky.social",
+      "name": "Andy Larsen",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "The Salt Lake Tribune",
+      "role": "Tribune data columnist — Jazz beat is FORMER per his own bio; beat NOT asserted",
+      "accountUrl": "https://bsky.app/profile/andyblarsen.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/andyblarsen.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "The Salt Lake Tribune",
+        "name": "Andy Larsen"
+      },
+      "createdAt": "2026-08-18T20:20:32.049057Z",
+      "indexedAt": "2026-08-18T20:20:36.073Z",
+      "url": "https://bsky.app/profile/andyblarsen.bsky.social/post/3mtf24g7rfr2o",
       "sev": "mention",
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
@@ -8687,6 +8757,60 @@
       "sevLabel": "NON-INJURY (rest / roster / decision)",
       "inGameWatch": false,
       "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:nlq6uv3pja3zg5y2cjfzl57c/app.bsky.feed.post/3msz7gmptyc2a",
+      "text": "Nikola Jokic has a very real (and I'd argue probable) chance to lead this all-time NBA playoffs triple-double list by the time he retires, and if so it's hard to see anyone except possibly Luka even whiffing that for a very long time.",
+      "handle": "joelrushnba.bsky.social",
+      "name": "Joel Rush",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DEN",
+      "outlet": "Forbes (contributor)",
+      "role": "Denver Nuggets writer",
+      "accountUrl": "https://bsky.app/profile/joelrushnba.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/joelrushnba.bsky.social",
+        "team": "DEN",
+        "kind": "reporter",
+        "outlet": "Forbes (contributor)",
+        "name": "Joel Rush"
+      },
+      "createdAt": "2026-08-14T03:23:46.350Z",
+      "indexedAt": "2026-08-14T03:23:47.063Z",
+      "url": "https://bsky.app/profile/joelrushnba.bsky.social/post/3msz7gmptyc2a",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:nlq6uv3pja3zg5y2cjfzl57c/app.bsky.feed.post/3msz6l26nac2a",
+      "text": "I haven't had time to dig deep into the #Nuggets' 2026-27 schedule yet, but at first glance it sure seems far more favorable than last season's.\n\nWhich they'll likely need in a year they're almost certainly taking a step back (in overall roster quality, hopefully not injuries).",
+      "handle": "joelrushnba.bsky.social",
+      "name": "Joel Rush",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DEN",
+      "outlet": "Forbes (contributor)",
+      "role": "Denver Nuggets writer",
+      "accountUrl": "https://bsky.app/profile/joelrushnba.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/joelrushnba.bsky.social",
+        "team": "DEN",
+        "kind": "reporter",
+        "outlet": "Forbes (contributor)",
+        "name": "Joel Rush"
+      },
+      "createdAt": "2026-08-14T03:08:20.942Z",
+      "indexedAt": "2026-08-14T03:08:21.867Z",
+      "url": "https://bsky.app/profile/joelrushnba.bsky.social/post/3msz6l26nac2a",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
     },
     {
       "uri": "at://did:plc:ll23rgrkk7tvdjey3kflygoq/app.bsky.feed.post/3mstouv4u6s2v",
@@ -9142,6 +9266,33 @@
       "createdAt": "2026-07-03T18:08:53.850Z",
       "indexedAt": "2026-07-03T18:08:54.331Z",
       "url": "https://bsky.app/profile/jmcdonaldsa.bsky.social/post/3mpr5comnwk2i",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:g6ifxgrzi22eaemi4lc5pyr2/app.bsky.feed.post/3mp3bhekupc2t",
+      "text": "I think it's a questionable fit for the Cavs but he's definitely a first round talent.",
+      "handle": "dannycunningham.bsky.social",
+      "name": "Danny Cunningham",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "CLE",
+      "outlet": "The Inside Shot / Locked On Cavs",
+      "role": "Cleveland Cavaliers beat writer",
+      "accountUrl": "https://bsky.app/profile/dannycunningham.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/dannycunningham.bsky.social",
+        "team": "CLE",
+        "kind": "reporter",
+        "outlet": "The Inside Shot / Locked On Cavs",
+        "name": "Danny Cunningham"
+      },
+      "createdAt": "2026-06-25T01:24:31.800Z",
+      "indexedAt": "2026-06-25T01:24:32.268Z",
+      "url": "https://bsky.app/profile/dannycunningham.bsky.social/post/3mp3bhekupc2t",
       "sev": "mention",
       "sevLabel": "NON-INJURY (rest / roster / decision)",
       "inGameWatch": false,
@@ -9877,6 +10028,33 @@
       "kindLabel": "mention"
     },
     {
+      "uri": "at://did:plc:afemdig43rskuwvh5vifnoxt/app.bsky.feed.post/3mhccokwj3s27",
+      "text": "The road trip is over and we were back in Mavs Studio 41 for Take Dat Wit You with Brian Dameris and me. On this week’s podcast we look at Cooper Flagg’s return to pre-injury form, PJ Washington as a small ball 5 and a big day in Cleveland for John Poulakidas! youtu.be/4pF_838bXFA?...",
+      "handle": "mfollowill.bsky.social",
+      "name": "Mark Followill",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+      "role": "Mavericks television play-by-play — in the arena, not an injury reporter",
+      "accountUrl": "https://bsky.app/profile/mfollowill.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/mfollowill.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+        "name": "Mark Followill"
+      },
+      "createdAt": "2026-03-18T01:13:32.243Z",
+      "indexedAt": "2026-03-18T01:13:33.458Z",
+      "url": "https://bsky.app/profile/mfollowill.bsky.social/post/3mhccokwj3s27",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:u3zuvwlvfrhhg2s75er7sw3b/app.bsky.feed.post/3mh7jriijzc2h",
       "text": "#Cavs Craig Porter Jr. suffered a left groin strain on March 13 in Dallas. He’s begun treatment and could miss 1 to 3 weeks.\n\nJarrett Allen and Tyrese Proctor remain OUT with right knee tendonitis and a right quad strain, respectively. #LetEmKnow #NBASky",
       "handle": "ejelite1.bsky.social",
@@ -9985,6 +10163,87 @@
       "kindLabel": "designation"
     },
     {
+      "uri": "at://did:plc:afemdig43rskuwvh5vifnoxt/app.bsky.feed.post/3mgg4s4nnic2u",
+      "text": "Yeah I wonder why it’s being done as in person only. Two fold I guess, to encourage attendance here at the end of year and shipping opens the door to people who aren’t fans and just want them for memorabilia resale. But to your point the transplanted fan is hurt here. No easy solution regrettably",
+      "handle": "mfollowill.bsky.social",
+      "name": "Mark Followill",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+      "role": "Mavericks television play-by-play — in the arena, not an injury reporter",
+      "accountUrl": "https://bsky.app/profile/mfollowill.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/mfollowill.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+        "name": "Mark Followill"
+      },
+      "createdAt": "2026-03-06T20:13:36.365Z",
+      "indexedAt": "2026-03-06T20:13:36.851Z",
+      "url": "https://bsky.app/profile/mfollowill.bsky.social/post/3mgg4s4nnic2u",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:afemdig43rskuwvh5vifnoxt/app.bsky.feed.post/3mgg2rxuaws2k",
+      "text": "Tune into KFAA/MavsTV for Mavs vs Celtics and Cooper Flagg’s first game in Boston tonight (pre 530, game 6p). Was great to see Coop back last night after a 3 week absence w/ a left foot sprain. We had a lot of fun highlights on MavsTV as he had 18 pts, 5 rebs, 6 assts & 4 blks!",
+      "handle": "mfollowill.bsky.social",
+      "name": "Mark Followill",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+      "role": "Mavericks television play-by-play — in the arena, not an injury reporter",
+      "accountUrl": "https://bsky.app/profile/mfollowill.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/mfollowill.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+        "name": "Mark Followill"
+      },
+      "createdAt": "2026-03-06T19:37:43.855Z",
+      "indexedAt": "2026-03-06T19:37:47.459Z",
+      "url": "https://bsky.app/profile/mfollowill.bsky.social/post/3mgg2rxuaws2k",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:afemdig43rskuwvh5vifnoxt/app.bsky.feed.post/3mgdutnh7js2s",
+      "text": "Cooper Flagg returns for the Mavs tonight at Orlando. He’s missed the last 8 with a left foot sprain. Target is 20-25 minutes according to JKidd. More on Mavs CenterCourt at 5:30 and game broadcast at 6p CST on KFAA/MavsTV.",
+      "handle": "mfollowill.bsky.social",
+      "name": "Mark Followill",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "DAL",
+      "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+      "role": "Mavericks television play-by-play — in the arena, not an injury reporter",
+      "accountUrl": "https://bsky.app/profile/mfollowill.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/mfollowill.bsky.social",
+        "team": "DAL",
+        "kind": "reporter",
+        "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+        "name": "Mark Followill"
+      },
+      "createdAt": "2026-03-05T22:45:58.123Z",
+      "indexedAt": "2026-03-05T22:45:58.750Z",
+      "url": "https://bsky.app/profile/mfollowill.bsky.social/post/3mgdutnh7js2s",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:tna6odclgfacu2mwyoc4tfvo/app.bsky.feed.post/3mgdfzpponc2c",
       "text": "Jayson Tatum nearing return to Celtics’ lineup after 10-month absence with Achilles tear www.nytimes.com/athletic/708...",
       "handle": "byjayking.bsky.social",
@@ -10091,6 +10350,114 @@
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
       "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:u4fkp34f7xgikmvw27pdlft6/app.bsky.feed.post/3mepkwryyau2w",
+      "text": "Oscar Tshiebwe downgraded to out for the rest of the game (concussion protocol).",
+      "handle": "andyblarsen.bsky.social",
+      "name": "Andy Larsen",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "The Salt Lake Tribune",
+      "role": "Tribune data columnist — Jazz beat is FORMER per his own bio; beat NOT asserted",
+      "accountUrl": "https://bsky.app/profile/andyblarsen.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/andyblarsen.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "The Salt Lake Tribune",
+        "name": "Andy Larsen"
+      },
+      "createdAt": "2026-02-13T03:30:19.511Z",
+      "indexedAt": "2026-02-13T03:30:19.857Z",
+      "url": "https://bsky.app/profile/andyblarsen.bsky.social/post/3mepkwryyau2w",
+      "sev": "questionable",
+      "sevLabel": "⚠ IN-GAME EXIT WATCH (social, unconfirmed)",
+      "inGameWatch": true,
+      "kindLabel": "ingame-watch"
+    },
+    {
+      "uri": "at://did:plc:u4fkp34f7xgikmvw27pdlft6/app.bsky.feed.post/3mepjyi3xub2w",
+      "text": "Oscar Tshiebwe is questionable to return, he is currently in the locker room receiving stitches over his eye. ",
+      "handle": "andyblarsen.bsky.social",
+      "name": "Andy Larsen",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "The Salt Lake Tribune",
+      "role": "Tribune data columnist — Jazz beat is FORMER per his own bio; beat NOT asserted",
+      "accountUrl": "https://bsky.app/profile/andyblarsen.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/andyblarsen.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "The Salt Lake Tribune",
+        "name": "Andy Larsen"
+      },
+      "createdAt": "2026-02-13T03:13:22.452Z",
+      "indexedAt": "2026-02-13T03:13:22.950Z",
+      "url": "https://bsky.app/profile/andyblarsen.bsky.social/post/3mepjyi3xub2w",
+      "sev": "questionable",
+      "sevLabel": "⚠ IN-GAME EXIT WATCH (social, unconfirmed)",
+      "inGameWatch": true,
+      "kindLabel": "ingame-watch"
+    },
+    {
+      "uri": "at://did:plc:u4fkp34f7xgikmvw27pdlft6/app.bsky.feed.post/3meosfgnfbw2w",
+      "text": "with any luck at all, this can be my final injury report tweet ever",
+      "handle": "andyblarsen.bsky.social",
+      "name": "Andy Larsen",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "The Salt Lake Tribune",
+      "role": "Tribune data columnist — Jazz beat is FORMER per his own bio; beat NOT asserted",
+      "accountUrl": "https://bsky.app/profile/andyblarsen.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/andyblarsen.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "The Salt Lake Tribune",
+        "name": "Andy Larsen"
+      },
+      "createdAt": "2026-02-12T20:11:07.386Z",
+      "indexedAt": "2026-02-12T20:11:07.660Z",
+      "url": "https://bsky.app/profile/andyblarsen.bsky.social/post/3meosfgnfbw2w",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:u4fkp34f7xgikmvw27pdlft6/app.bsky.feed.post/3meoer6n2472u",
+      "text": "Jazz officially announce Jaren Jackson Jr. will undergo surgery for a knee tumor. They're not giving a timetable, but Chris Haynes is saying likely out for the season. ",
+      "handle": "andyblarsen.bsky.social",
+      "name": "Andy Larsen",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "The Salt Lake Tribune",
+      "role": "Tribune data columnist — Jazz beat is FORMER per his own bio; beat NOT asserted",
+      "accountUrl": "https://bsky.app/profile/andyblarsen.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/andyblarsen.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "The Salt Lake Tribune",
+        "name": "Andy Larsen"
+      },
+      "createdAt": "2026-02-12T16:07:09.186Z",
+      "indexedAt": "2026-02-12T16:07:09.653Z",
+      "url": "https://bsky.app/profile/andyblarsen.bsky.social/post/3meoer6n2472u",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
     },
     {
       "uri": "at://did:plc:3rn7xhow32uvrou7pkurykxq/app.bsky.feed.post/3mdvf4oeovc2c",
@@ -10633,6 +11000,33 @@
       "kindLabel": "mention"
     },
     {
+      "uri": "at://did:plc:4ivyaukkdm3po7xb7hyuv5cn/app.bsky.feed.post/3llmtbguydc2o",
+      "text": "JJ Redick had his staff look up actual stats to prove players return from injury against Lakers\n\nwww.silverscreenandroll.com/2025/3/30/24...",
+      "handle": "lakerssbn.bsky.social",
+      "name": "Silver Screen and Roll",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "LAL",
+      "outlet": "SB Nation — Los Angeles Lakers blog",
+      "role": "Lakers blog (publication account — not a credentialed individual)",
+      "accountUrl": "https://bsky.app/profile/lakerssbn.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/lakerssbn.bsky.social",
+        "team": "LAL",
+        "kind": "reporter",
+        "outlet": "SB Nation — Los Angeles Lakers blog",
+        "name": "Silver Screen and Roll"
+      },
+      "createdAt": "2025-03-30T21:51:37.633Z",
+      "indexedAt": "2025-03-30T21:51:37.806Z",
+      "url": "https://bsky.app/profile/lakerssbn.bsky.social/post/3llmtbguydc2o",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:gvascdxtsbx4vmhujcsc4ff5/app.bsky.feed.post/3ljkq2vtflk2i",
       "text": "When the Rockets announced that 4 of their starters would be out vs. OKC, the intrigue of the matchup dissipated — or so I thought. \n\nOn Jabari Smith Jr.’s 2-way glue, Jalen Green’s playmaking, the case for Cam and a Reed sighting. \n\nFor @theathletic.bsky.social \n\nwww.nytimes.com/athletic/617...",
       "handle": "kellyiko.bsky.social",
@@ -10739,6 +11133,33 @@
       "sevLabel": "OUT (social report)",
       "inGameWatch": false,
       "kindLabel": "designation"
+    },
+    {
+      "uri": "at://did:plc:jf45osmp7qfugv4a5nlqfvfg/app.bsky.feed.post/3lbqnirc3mc2e",
+      "text": "WTF is going on with Zion Williamson and the New Orleans Pelicans? Long injury timelines, agent changes, viral videos...\n\nwww.youtube.com/watch?v=Yc37...",
+      "handle": "nolajake.bsky.social",
+      "name": "Jake Madison",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "NOP",
+      "outlet": "Locked On Pelicans",
+      "role": "Pelicans podcast host",
+      "accountUrl": "https://bsky.app/profile/nolajake.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/nolajake.bsky.social",
+        "team": "NOP",
+        "kind": "reporter",
+        "outlet": "Locked On Pelicans",
+        "name": "Jake Madison"
+      },
+      "createdAt": "2024-11-25T04:07:03.228Z",
+      "indexedAt": "2024-11-25T04:06:54.149Z",
+      "url": "https://bsky.app/profile/nolajake.bsky.social/post/3lbqnirc3mc2e",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
     },
     {
       "uri": "at://did:plc:5goy74ed3awtl5fyowo3xtjn/app.bsky.feed.post/3lbkqemfr522t",
