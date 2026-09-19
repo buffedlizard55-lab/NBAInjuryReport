@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-19T19:10:36.477Z",
+ "generated": "2026-09-19T19:26:03.277Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -921,7 +921,7 @@
    "privateProfile": false,
    "bio": "Denver Nuggets | Mile High Sports | Pickaxe and Roll | Locked On Nuggets | Just trying to make it",
    "latestPostAt": "2025-06-20T19:19:27.415Z",
-   "dormantDays": 455,
+   "dormantDays": 456,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -929,7 +929,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 455 days old (>30)"
+    "quote matches, but newest post is 456 days old (>30)"
    ]
   },
   {
@@ -1172,7 +1172,7 @@
    "privateProfile": false,
    "bio": "Memphis Grizzlies beat reporter for The Daily Memphian. Occasionally writes columns. Bama grad and Gump 🐘",
    "latestPostAt": "2026-09-10T19:19:48.672Z",
-   "dormantDays": 8,
+   "dormantDays": 9,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1256,7 +1256,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com\n \n\nEverything I drop, out of the question\nStop the guessing—it's hot\n\nSubscribe 👉 https://wbb-roundup.beehiiv.com/subscribe",
-   "latestPostAt": "2026-09-19T17:06:50.127Z",
+   "latestPostAt": "2026-09-19T19:16:26.073Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -2152,7 +2152,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Sports columnist for The Times-Picayune | The New Orleans Advocate. We'll talk Saints, Pelicans and all the other hot topics in the 504 and beyond.\nMississippi made, Louisiana paid.\n#39194ever ",
-   "latestPostAt": "2026-09-19T18:00:07.611Z",
+   "latestPostAt": "2026-09-19T19:17:26.501Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -3137,9 +3137,5 @@
    "UTA:http403",
    "WAS:http403"
   ]
- },
- "lastAttempt": {
-  "at": "2026-09-19T19:25:02.993Z",
-  "result": "UNREACHABLE: no profile could be read (first error: fetch failed)"
  }
 }
