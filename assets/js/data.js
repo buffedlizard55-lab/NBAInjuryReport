@@ -532,7 +532,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/highkin.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=highkin.bsky.social",
     evidenceQuote: "Trail Blazers + Fire rosegardenreport.com",
-    observed: { latestPostAt: "2026-09-16T19:59:46.218Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1569, followersCount: 16810, profileIndexedAt: "2026-06-25T04:00:53.771Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-19T00:35:48.448Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 1569, followersCount: 16810, profileIndexedAt: "2026-06-25T04:00:53.771Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Trail Blazers + Fire rosegardenreport.com' + VALID Bluesky verification object (issuer bsky.app). Closes the POR in-arena gap." },
 
   { name: "Josh Robbins", handle: "joshrobbins.bsky.social", outlet: "The Athletic", role: "Senior Writer — Washington Wizards", team: "WAS", feed: true,
@@ -564,7 +564,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/jimowczarski.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jimowczarski.bsky.social",
     evidenceQuote: "I cover the #Bucks for the Milwaukee Journal Sentinel.",
-    observed: { latestPostAt: "2026-09-17T20:18:13.186Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 13074, followersCount: 31492, profileIndexedAt: "2026-06-24T11:49:57.966Z", verificationValid: true },
+    observed: { latestPostAt: "2026-09-19T00:53:29.496Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 13074, followersCount: 31492, profileIndexedAt: "2026-06-24T11:49:57.966Z", verificationValid: true },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'I cover the #Bucks for the Milwaukee Journal Sentinel.' + VALID Bluesky verification object (issuer bsky.app). Closes the MIL in-arena gap WITHOUT depending on The Athletic, whose author pages answer HTTP 403 to this client (see FLAGS)." },
 
   { name: "Jason Beede", handle: "jbeede.bsky.social", outlet: "Orlando Sentinel", role: "Magic beat reporter", team: "ORL", feed: true,
@@ -621,7 +621,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/scottagness.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=scottagness.bsky.social",
     evidenceQuote: "Indiana Pacers, Fever beat writer: Fieldhouse Files",
-    observed: { latestPostAt: "2026-09-19T00:10:22.001Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2863, followersCount: 3324, profileIndexedAt: "2025-01-29T19:09:52.545Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-19T00:46:45.555Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 2863, followersCount: 3324, profileIndexedAt: "2025-01-29T19:09:52.545Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'Indiana Pacers, Fever beat writer: Fieldhouse Files | Podcast Host | Play-by-play announcer'. NO verification object. Upgrades IND from byline-citation to a pollable in-arena account." },
 
   { name: "Ira Winderman", handle: "irawinderman.bsky.social", outlet: "South Florida Sun Sentinel", role: "Miami Heat beat writer", team: "MIA", feed: true,
