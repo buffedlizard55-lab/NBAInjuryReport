@@ -70,7 +70,7 @@ These observations do not certify every legacy reporter link or guarantee later 
 python3 -m http.server 8080 --bind 0.0.0.0
 node tools/smoke_test.js                 # 224 checks (what the social layer actually polls + the OUT-label invariant)
 node tools/impact_test.js                # 80 checks (geo, collector math, impact model v2, wiring)
-node tools/integration_test.js           # 83 checks (boots the real dashboard AND the reporter page)
+node tools/integration_test.js           # 86 checks (boots the real dashboard AND the reporter page; pins the board as the second section)
 node tools/poll_fixture_test.js          # 25 checks (poller set DERIVED from the registry, held-out rows never polled; real poller, fixture transports)
 node tools/verify_reporters_test.js      # 109 checks (identity policy + the REAL CLI run offline against a stubbed network)
 node tools/regression_test.js            # 26 groups (includes the registry-recency backfill's own behavioural tests)
