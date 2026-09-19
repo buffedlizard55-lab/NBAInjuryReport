@@ -233,12 +233,60 @@ function detectBeatChange(bio, registeredTeam, registeredOutlet) {
   return null;
 }
 
+/* Floored at 0 for the same reason as arenaDaysSince in assets/js/data.js: a newest post can
+ * legitimately be NEWER than the reference clock (a row measured at 18:28Z whose post is stamped
+ * 14:24Z the same day, evaluated by a test pinned to 12:00Z). An unclamped -1 would read as
+ * "more active than today" and would render a negative age. Both copies clamp identically so the
+ * page and its own audit cannot disagree about the arithmetic. */
 function ageDays(iso, now) {
   if (!iso) return null;
   const t = Date.parse(iso);
   if (Number.isNaN(t)) return null;
-  return Math.floor(((now || Date.now()) - t) / 86400000);
+  const days = Math.floor(((now || Date.now()) - t) / 86400000);
+  return days < 0 ? 0 : days;
 }
+
+/* =====================================================================================
+ * detectProseActivity — does the row's OWN prose agree with the measurement?
+ *
+ * WHY THIS EXISTS (found 2026-09-19, session 17, on committed data). The registry stores activity
+ * twice: as a machine field (`observed.latestPostAt`, which the page's recency pill renders from
+ * and which tools/backfill_registry_recency.js keeps current) and as a human sentence inside
+ * `verified` ("ACTIVITY: newest post 2026-08-10T18:05:49Z = 39 days → DORMANT by the 30-day
+ * rule"). Nothing ever compared them.
+ *
+ * Michael Grange (TOR) shipped that way: the backfill had already moved his stored date to
+ * 2026-09-19T14:24:17.055Z — a real post, independently re-read this session via
+ * app.bsky.feed.getAuthorFeed — while the prose still asserted 39 days and DORMANT. The pill said
+ * ACTIVE, the sentence said DORMANT, and every test passed, because the row's status was "ok".
+ *
+ * The comparison is deliberately made on the CLAIM THAT MATTERS — the ACTIVE/DORMANT verdict —
+ * and not on the day count. A day count written on 2026-09-19 is simply older by 2026-09-25; that
+ * is not drift. A row that says DORMANT while the measurement says ACTIVE is a false coverage
+ * statement about a team, and that is what gets flagged.
+ * ===================================================================================== */
+const PROSE_ACTIVITY_RE = /=\s*(\d+)\s*days?\s*(?:→|->|=>)\s*(DORMANT|ACTIVE)/i;
+function detectProseActivity(verifiedText, measuredDays, thresholdDays) {
+  const prose = String(verifiedText || "");
+  const at = prose.indexOf("ACTIVITY:");
+  if (at < 0) return null;                       // the row makes no activity claim — nothing to drift
+  const clause = prose.slice(at, at + 400);
+  const m = PROSE_ACTIVITY_RE.exec(clause);
+  if (!m) return null;                           // claim present but not in the parseable form
+  const limit = thresholdDays == null ? DORMANT_DAYS : thresholdDays;
+  const claimed = { days: Number(m[1]), state: m[2].toUpperCase() };
+  if (measuredDays == null) {
+    return Object.assign(claimed, { detected: false, measured: null, contradicts: false });
+  }
+  const measuredState = measuredDays <= limit ? "ACTIVE" : "DORMANT";
+  const contradicts = claimed.state !== measuredState;
+  return Object.assign(claimed, {
+    detected: true, measured: measuredDays, measuredState: measuredState, contradicts: contradicts,
+    detail: "row prose asserts " + claimed.days + " days → " + claimed.state +
+      ", but the newest post actually measured is " + measuredDays + " day(s) old → " + measuredState
+  });
+}
+
 
 /* judge() is the whole policy in one function: given what the registry CLAIMS and what the API
  * actually RETURNED, produce one of:
@@ -298,6 +346,12 @@ function judge(row, observed, now) {
   if (beatChange && beatChange.detected) {
     notes.push("beat-change watch: " + beatChange.detail);
   }
+  /* Watcher: the row's own prose vs the measurement (see detectProseActivity). Warn, never fatal —
+   * the identity and the pollable feed are both fine, it is the human sentence that is stale. */
+  const proseActivity = detectProseActivity(row.verified, claimsCoverage ? days : null, DORMANT_DAYS);
+  if (proseActivity && proseActivity.contradicts) {
+    notes.push("prose-activity-drift: " + proseActivity.detail + " — re-read the feed and rewrite the ACTIVITY sentence");
+  }
   if (v.invalid && !v.valid) {
     notes.push("verifier-revocation detected: verification object issued by " + (v.badIssuers.join(", ") || "unknown issuer") + " has isValid:false");
   }
@@ -312,7 +366,8 @@ function judge(row, observed, now) {
     latestPostAt: o.latestPostAt || null, dormantDays: days,
     postItems: o.postItems == null ? null : o.postItems,
     recencyReadable: o.feedReadable !== false,
-    beatChange: beatChange || null
+    beatChange: beatChange || null,
+    proseActivity: proseActivity || null
   };
   if (!hasQuote) return Object.assign(base, { status: "no-quote", fatal: false, notes: ["no stored evidenceQuote (pre-2026-09-18 row): bio recorded, drift cannot be judged"] });
   /* A REFUSED row stores no identity claim: its evidenceQuote is a note about what the API
@@ -346,6 +401,12 @@ function judge(row, observed, now) {
     notes: ["identity matches, but the newest post could NOT be read (" + (o.feedError || "author feed unavailable") + ") — recency is NOT established"] });
   if (noPosts) return Object.assign(base, { status: "dormant", fatal: false, notes: ["quote matches, but the feed is readable and holds ZERO posts — not a news channel"] });
   if (dormant) return Object.assign(base, { status: "dormant", fatal: false, notes: ["quote matches, but newest post is " + days + " days old (>" + DORMANT_DAYS + ")"] });
+  /* A clean identity verdict is NOT an all-clear if the row's own prose tells the reader something
+   * the measurement contradicts: that sentence is what a human reads when deciding whether a team
+   * has a live in-arena writer. Surfaced as its own status so the panel lists it, warn not fatal. */
+  if (proseActivity && proseActivity.contradicts) {
+    return Object.assign(base, { status: "prose-drift", fatal: false, notes: notes });
+  }
   return Object.assign(base, { status: "ok", fatal: false,
     notes: (claimsCoverage ? [] : ["held out of the alert path (feed:false) — identity re-checked, recency not enforced"]).concat(notes) });
 }
@@ -358,7 +419,12 @@ function summarize(rows) {
    * a reader of the coverage matrix needs. `active` here means: in the alert path AND a newest
    * post inside DORMANT_DAYS. Anything without a measurable date is `unmeasured`, never `active`. */
   const inPath = rows.filter(r => r.feed);
-  const active = inPath.filter(r => r.status === "ok");
+  /* `prose-drift` counts as ACTIVE on purpose. It is returned only from the branch that would
+   * otherwise be "ok" — identity matched, feed readable, newest post inside the window — so the
+   * account really is a live feed. What is stale is the human sentence in the registry row, not the
+   * coverage. Folding it into "not ok" would make this page understate live coverage, which is the
+   * opposite of the error it exists to catch. */
+  const active = inPath.filter(r => r.status === "ok" || r.status === "prose-drift");
   const measured = inPath.filter(r => r.dormantDays != null);
   return {
     checked: rows.length,
@@ -366,6 +432,7 @@ function summarize(rows) {
     missing: by.missing || 0, verificationLost: by["verification-lost"] || 0, noQuote: by["no-quote"] || 0,
     recencyUnknown: by["recency-unknown"] || 0,
     impersonationLabel: by["impersonation-label"] || 0, profilePrivate: by["profile-private"] || 0,
+    proseDrift: by["prose-drift"] || 0,
     inAlertPath: inPath.length,
     activeInAlertPath: active.length,
     dormantInAlertPath: inPath.filter(r => r.status === "dormant").length,
@@ -574,7 +641,7 @@ async function mapLimitedOnce(handle) {
   return r[0] || null;
 }
 
-module.exports = { judge, summarize, quotePresent, validVerification, profileLabels, MODERATION_LABEL_RE, ageDays, chunk, norm, DORMANT_DAYS, latestPost, channelStatus, profilesFor, detectBeatChange };
+module.exports = { judge, summarize, quotePresent, validVerification, profileLabels, MODERATION_LABEL_RE, ageDays, chunk, norm, DORMANT_DAYS, latestPost, channelStatus, profilesFor, detectBeatChange, detectProseActivity, PROSE_ACTIVITY_RE };
 
 if (require.main === module) {
   main().catch(e => { console.error("verify_reporters failed: " + e.message); process.exit(1); });

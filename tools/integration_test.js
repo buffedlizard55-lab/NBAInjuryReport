@@ -516,6 +516,36 @@ console.log("== runtime: App.init() refresh chain ==");
       /teams have a writer who posted within 30 days/.test(pageEls.coverageSummary.innerHTML) &&
       /DORMANT/.test(pageEls.coverageSummary.innerHTML));
 
+    /* Session 17: the panel must render the prose/measurement contradiction, and must render EVERY
+     * note on a row — the earlier version printed notes[0] only, so a row carrying both a
+     * beat-change watch and a prose contradiction showed the badge for one and the text of the
+     * other. Fixture shaped exactly like the real defect: a live writer whose registry sentence
+     * still says DORMANT. */
+    global.fetch = async () => ({ ok: true, status: 200, json: async () => ({
+      generated: "2026-09-19T18:28:52Z",
+      summary: { checked: 94, ok: 70, dormant: 23, proseDrift: 1, activeInAlertPath: 55, inAlertPath: 78,
+        dormantInAlertPath: 23, unmeasuredInAlertPath: 0, quietestInAlertPath: 639, dormantThresholdDays: 30 },
+      rows: [
+        { handle: "grange.fixture.bsky.social", status: "prose-drift", latestPostAt: "2026-09-19T14:24:17.055Z",
+          dormantDays: 0, proseActivity: { contradicts: true },
+          notes: ["beat-change watch: bio marks TOR as former coverage",
+            "prose-activity-drift: row prose asserts 39 days → DORMANT, but the newest post actually measured is 0 day(s) old → ACTIVE — re-read the feed and rewrite the ACTIVITY sentence"] },
+        { handle: "dormant.fixture.bsky.social", status: "dormant", latestPostAt: "2025-01-29T22:40:27Z",
+          dormantDays: 597, notes: ["quote matches, but newest post is 597 days old (>30)"] }
+      ],
+      channelSummary: { ok: 4, checked: 30, failed: [] }
+    }) });
+    R.Reporters.init();
+    await new Promise(r => setTimeout(r, 60));
+    const vs17 = pageEls.verifyStatus.innerHTML || "";
+    check("the verify panel names a row whose own prose contradicts the measurement",
+      /prose ≠ measurement/.test(vs17) && /grange\.fixture\.bsky\.social/.test(vs17),
+      vs17.replace(/<[^>]+>/g, " ").slice(0, 240));
+    check("the panel prints EVERY note on a row, not just the first",
+      /beat-change watch: bio marks TOR/.test(vs17) && /prose-activity-drift: row prose asserts 39 days/.test(vs17));
+    check("the panel counts prose-drift rows in its summary line",
+      /row\(s\) whose own prose contradicts the measurement/.test(vs17));
+
     global.document = prevDoc;
   }
 

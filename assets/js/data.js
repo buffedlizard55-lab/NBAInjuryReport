@@ -1217,7 +1217,7 @@ const BSKY_REPORTERS = [
     evidenceQuote: "Raptors/NBA columnist with Rogers Sportsnet, based in Toronto.",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=michaelgrangenba.bsky.social",
     observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-19T14:24:17.055Z", latestPostAtSource: "data/live/reporter_verify.json", postsCount: 1541, followersCount: 6012, profileIndexedAt: "2026-08-07T19:35:44.862Z", verificationValid: false, activityLog: [{ at: "2026-09-19T18:28:52.164Z", postAt: "2026-09-19T14:24:17.055Z", from: "dormant", to: "active", previousAt: "2026-08-10T18:05:49Z", previousDays: 39, days: 0, thresholdDays: 30, source: "data/live/reporter_verify.json" }] },
-    verified: "2026-09-19 — read live via getProfiles. Bio verbatim 'Raptors/NBA columnist with Rogers Sportsnet, based in Toronto. Have won awards, and covered NBA games at Maple Leaf Gardens. … @michaelgrange on X.' 6,012 followers, 1,541 posts, no verification object. ACTIVITY: newest post 2026-08-10T18:05:49Z = 39 days → DORMANT by the 30-day rule. Registered because the identity is supportable, labelled dormant because the numbers say so; TOR's active coverage still rests on Josh Lewenberg (TSN). ACTIVITY UPDATE 2026-09-19: the daily re-verification measured a newest post of 2026-09-19T14:24:17.055Z = 0 day(s), so this row now reads ACTIVE (it read DORMANT at 39 days, measured 2026-08-10T18:05:49Z). The earlier verdict above is kept as the record of what was true when the row was graded; a change of ACTIVITY is not a change of IDENTITY, and no identity field was re-graded. Re-read again live this session (getProfiles, 2026-09-19): bio unchanged verbatim, 6,012 followers, 1,543 posts (two more than the morning read, consistent with the newer date), still no verification object. CONSEQUENCE: Toronto now has TWO writers inside the 30-day window, not one; the session-15 sentence above saying TOR's active coverage rests only on Josh Lewenberg is superseded by this note, not deleted." },
+        verified: "2026-09-19 — read live via getProfiles. Bio verbatim 'Raptors/NBA columnist with Rogers Sportsnet, based in Toronto. Have won awards, and covered NBA games at Maple Leaf Gardens. … @michaelgrange on X.' 6,012 followers, 1,541 posts, no verification object. ACTIVITY: newest post 2026-09-19T14:24:17.055Z = 0 days → ACTIVE (a Sportsnet link, 'Lowry celebration shows Raptors have slam-dunk template for honouring legends', indexed 2026-09-19T14:24:19.362Z). HISTORY: session 15 on 2026-09-19 had measured newest post 2026-08-10T18:05:49Z = 39 days → DORMANT; the daily CI re-verification (data/live/reporter_verify.json, generated 2026-09-19T18:28:52Z) then measured this newer post and backfilled the date, so the two readings differ because the writer posted in between. The prose had been left saying DORMANT while the stored date said today — tools/verify_reporters.js now flags that contradiction as prose-activity-drift, and the crossing is also recorded machine-readably in observed.activityLog so tools/backfill_registry_recency.js can prove the next one instead of leaving it to prose. Registered because the identity is supportable; TOR's active coverage rests on Josh Lewenberg (TSN) and this row." },
   { name: "Lucas Kaplan", handle: "lucaskaplan.bsky.social", outlet: "NetsDaily / SwishTheory", role: "NetsDaily writer — outlet stated, beat not spelled out in bio", team: "BKN", feed: true, bskyVerified: false,
     conf: "outlet-verified",
     evidence: "https://bsky.app/profile/lucaskaplan.bsky.social",
@@ -1383,11 +1383,26 @@ const NBA_TEAM_NEWS_PROBE = {
  * duplicated threshold is how a page and its own audit end up disagreeing.
  * ===================================================================================== */
 const ARENA_DORMANT_DAYS = 30;
+/* Days between a measured post timestamp and a reference clock, floored at 0.
+ *
+ * THE CLAMP IS NOT COSMETIC (found 2026-09-19, session 17). A post can legitimately carry a
+ * timestamp LATER than the reference clock: live-audit.yml re-measured Michael Grange at
+ * 2026-09-19T18:28Z and found a newest post of 2026-09-19T14:24:17.055Z, which is newer than the
+ * pinned clock several tests evaluate at (2026-09-19T12:00Z). Unclamped, that arithmetic returns
+ * -1, and the page renders the label "-1 days since newest post". A negative age is meaningless
+ * to a reader and it also silently *inverts* the meaning of the number: the further in the future
+ * the stamp, the more "active" the row looked.
+ *
+ * Zero is the honest floor: a post newer than the reference clock is "today or newer", and we
+ * claim nothing more precise than that. A stamp that is wildly in the future is a data-integrity
+ * problem rather than clock skew, so it is reported separately by the prose/measurement drift
+ * check in tools/verify_reporters.js instead of being papered over here. */
 function arenaDaysSince(iso, now) {
   if (!iso) return null;
   const t = Date.parse(iso);
   if (Number.isNaN(t)) return null;
-  return Math.floor(((now || Date.now()) - t) / 86400000);
+  const days = Math.floor(((now || Date.now()) - t) / 86400000);
+  return days < 0 ? 0 : days;
 }
 /* recencyMap: { "<handle lowercase>": { latestPostAt, status } } from data/live/reporter_verify.json */
 function writerRecency(row, recencyMap, now) {
@@ -1403,10 +1418,16 @@ function writerRecency(row, recencyMap, now) {
   }
   const days = arenaDaysSince(iso, now);
   const active = days != null && days <= ARENA_DORMANT_DAYS;
+  /* True when the measured stamp is NEWER than the reference clock, so the displayed age has been
+   * floored at 0. Exposed rather than hidden: a reader who sees "0 days" on a page whose own clock
+   * is older than the measurement is owed the reason, and a test can pin it. */
+  const aheadOfClock = days != null && Date.parse(iso) > (now || Date.now());
   return {
     latestPostAt: iso, dormantDays: days, active: active, measured: true,
-    state: active ? "active" : "dormant", source: source,
-    label: (days == null ? "unreadable date" : days + (days === 1 ? " day" : " days") + " since newest post") +
+    state: active ? "active" : "dormant", source: source, aheadOfClock: aheadOfClock,
+    label: (days == null ? "unreadable date"
+      : days + (days === 1 ? " day" : " days") + " since newest post" +
+        (aheadOfClock ? " (stamp newer than this page's clock — floored at 0)" : "")) +
       " (" + (source === "ci" ? "CI re-verification" : "registry observation") + ")"
   };
 }

@@ -196,7 +196,16 @@ function stateOf(iso, now) {
   if (!iso) return null;
   const t = Date.parse(iso);
   if (Number.isNaN(t)) return null;
-  return Math.floor(((now || Date.now()) - t) / 86400000) <= DORMANT_DAYS ? "active" : "dormant";
+  /* Floored at 0 for the same reason data.js's arenaDaysSince() is: a newest post can legitimately
+   * be NEWER than the reference clock (the 2026-09-19 run measured a post stamped 14:24Z against an
+   * 18:28Z evidence stamp, and a pinned check uses a 12:00Z clock). An un-floored subtraction goes
+   * negative, and a negative day count inverts — the further future-dated the row, the smaller the
+   * number, and every consumer reads smaller as more recent. */
+  const days = Math.max(0, Math.floor(((now || Date.now()) - t) / 86400000));
+  return days <= DORMANT_DAYS ? "active" : "dormant";
+}
+function daysBetween(fromIso, toMs) {
+  return Math.max(0, Math.floor((toMs - Date.parse(fromIso)) / 86400000));
 }
 /* Locate the `verified: "…"` string of one row, in ABSOLUTE source offsets, skipping over any
  * earlier string/comment so a word inside a bio cannot be mistaken for the field name. */
@@ -321,8 +330,8 @@ for (const row of rows) {
   const fromState = stateOf(cur, evidenceNow);
   const toState = stateOf(m.at, evidenceNow);
   if (fromState && toState && fromState !== toState) {
-    const prevDays = Math.floor((evidenceNow - Date.parse(cur)) / 86400000);
-    const days = Math.floor((evidenceNow - Date.parse(m.at)) / 86400000);
+    const prevDays = daysBetween(cur, evidenceNow);
+    const days = daysBetween(m.at, evidenceNow);
     const regRow = before.BSKY_REPORTERS.find(x => String(x.handle || "").toLowerCase() === key);
     const priorLog = (regRow && Array.isArray(regRow.activityLog)) ? regRow.activityLog : [];
     const entry = {

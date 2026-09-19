@@ -206,7 +206,14 @@ check("every session-15 row is present by name, and no unnamed row appeared with
  * legitimate CI re-measurement to find a quiet writer posting again turned the suite red while the
  * product was right. michaelgrangenba.bsky.social did exactly that on 2026-09-19: 39 days → 0 days.
  * The check now pins the RULE, and requires any row that left the window to carry the dated record of
- * leaving it — which is the thing that was actually missing when this went red. */
+ * leaving it — which is the thing that was actually missing when this went red.
+ *
+ * MERGE NOTE (same session, two branches): the concurrent branch resolved this by keeping the
+ * handle list and correcting Grange to ACTIVE. That is right about the data and still brittle about
+ * the check — the next dormant writer to post breaks it again. This branch pins the RULE here and
+ * covers the individual handles in the two checks below, which allow a row that left the window
+ * provided it carries the dated record of leaving it. Both readings of the data agree; only the
+ * shape of the assertion differs, and the non-brittle one is kept. */
 check("the 30-day rule reads dormant outside the window and active inside it",
   (() => {
     const now = Date.parse("2026-09-19T12:00:00Z");
@@ -944,6 +951,108 @@ console.log("== session 14: the registry recency backfill ==");
   check("the tool never writes into the repository when its output root is redirected",
     fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8") === original);
   fs.rmSync(tmp, { recursive: true, force: true });
+}
+
+/* =====================================================================================
+ * SESSION 17 — two defects found on committed data, and the invariants that keep them out
+ *
+ * 1. A newest post can be NEWER than the reference clock. live-audit.yml measured Michael Grange
+ *    at 2026-09-19T18:28Z and found a post stamped 2026-09-19T14:24:17.055Z, which is later than
+ *    the 12:00Z clock several checks here are pinned to. Unclamped, the age arithmetic returned
+ *    -1 and the page would have rendered "-1 days since newest post".
+ * 2. The registry stores activity twice — as `observed.latestPostAt` (machine, backfilled by CI)
+ *    and as a human ACTIVITY sentence inside `verified`. Nothing compared them, so Grange shipped
+ *    with a stored date of "today" and prose asserting "39 days → DORMANT". Both were true of
+ *    different moments, and the page printed both.
+ * ===================================================================================== */
+console.log("== session 17: clock skew and prose/measurement drift ==");
+{
+  const NOW17 = Date.parse("2026-09-19T12:00:00Z");
+
+  /* --- 1. the age arithmetic cannot go negative ------------------------------------------ */
+  const future = new Date(NOW17 + 2 * 3600000).toISOString();   // the real Grange shape
+  check("a newest post NEWER than the reference clock floors at 0 days, not -1",
+    D.arenaDaysSince(future, NOW17) === 0, "got " + D.arenaDaysSince(future, NOW17));
+  check("an unreadable date still reads null, not 0", D.arenaDaysSince("not-a-date", NOW17) === null);
+  check("a missing date still reads null", D.arenaDaysSince(null, NOW17) === null);
+  check("a genuinely old post is unaffected by the clamp",
+    D.arenaDaysSince(new Date(NOW17 - 597 * 86400000).toISOString(), NOW17) === 597);
+
+  const futureRow = { handle: "future.bsky.social", observed: { latestPostAt: future } };
+  const fr = D.writerRecency(futureRow, null, NOW17);
+  check("the recency label never prints a negative age",
+    !/-\d+\s*days?/.test(fr.label) && /floored at 0/.test(fr.label), fr.label);
+  check("a post newer than the clock reads ACTIVE, and says why", fr.state === "active" && fr.aheadOfClock === true);
+  check("a post at or before the clock is not marked ahead-of-clock",
+    D.writerRecency({ handle: "past.bsky.social", observed: { latestPostAt: new Date(NOW17 - 86400000).toISOString() } }, null, NOW17).aheadOfClock === false);
+
+  /* The verifier keeps its own copy of the arithmetic; both must clamp identically or the page
+   * and its own audit would disagree about the same account. */
+  check("tools/verify_reporters.js clamps the same way as the page does",
+    V.ageDays(future, NOW17) === 0 && V.ageDays(new Date(NOW17 - 86400000).toISOString(), NOW17) === 1);
+
+  /* --- 2. prose vs measurement ----------------------------------------------------------- */
+  const prof = (d) => ({ handle: "x.bsky.social", description: d });
+  const rowFor = (verified) => ({
+    handle: "grange.bsky.social", name: "Michael Grange", team: "TOR", feed: true,
+    evidenceQuote: "Raptors/NBA columnist with Rogers Sportsnet, based in Toronto.",
+    verified: verified
+  });
+  const BIO = "Raptors/NBA columnist with Rogers Sportsnet, based in Toronto.";
+  const fresh = { profile: prof(BIO), latestPostAt: new Date(NOW17 + 7200000).toISOString(), postItems: 1, feedReadable: true };
+
+  const stale = V.judge(rowFor("… ACTIVITY: newest post 2026-08-10T18:05:49Z = 39 days → DORMANT by the 30-day rule."), fresh, NOW17);
+  check("prose asserting DORMANT over a 0-day measurement is flagged prose-drift", stale.status === "prose-drift", stale.status);
+  check("the drift note carries BOTH numbers so a human can act on it",
+    /39 days/.test(stale.notes.join(" ")) && /ACTIVE/.test(stale.notes.join(" ")), stale.notes.join(" "));
+  check("prose drift is a warning, not a job failure", stale.fatal === false);
+  check("the drift verdict is recorded on the row for the page to render",
+    stale.proseActivity && stale.proseActivity.contradicts === true && stale.proseActivity.measuredState === "ACTIVE");
+
+  const agree = V.judge(rowFor("… ACTIVITY: newest post 2026-09-19T14:24:17Z = 0 days → ACTIVE."), fresh, NOW17);
+  check("prose that agrees with the measurement stays ok", agree.status === "ok", agree.status);
+  check("a row with no ACTIVITY sentence has nothing to drift",
+    V.judge(rowFor("Read live via getProfiles; bio recorded."), fresh, NOW17).status === "ok");
+  check("a dormant measurement still reads dormant even when the prose claimed ACTIVE",
+    V.judge(rowFor("… ACTIVITY: newest post x = 5 days → ACTIVE."),
+      { profile: prof(BIO), latestPostAt: new Date(NOW17 - 90 * 86400000).toISOString(), postItems: 1, feedReadable: true }, NOW17).status === "dormant");
+
+  const sum = V.summarize([
+    { handle: "a", status: "prose-drift", fatal: false, feed: true, dormantDays: 0 },
+    { handle: "b", status: "ok", fatal: false, feed: true, dormantDays: 1 },
+    { handle: "c", status: "dormant", fatal: false, feed: true, dormantDays: 90 }
+  ]);
+  check("a prose-drift row still counts as LIVE coverage (only the sentence is stale)",
+    sum.activeInAlertPath === 2, "active=" + sum.activeInAlertPath);
+  check("summarize() reports the prose-drift count separately", sum.proseDrift === 1);
+
+  /* --- 3. the shipped registry must satisfy the invariant -------------------------------- */
+  /* This is the check that would have caught the committed defect. It is evaluated against the
+   * registry's own stored dates, so it needs no network and it fails on a fresh clone. */
+  const drift = D.BSKY_REPORTERS.filter(r => {
+    const iso = (r.observed && r.observed.latestPostAt) || null;
+    const days = iso ? D.arenaDaysSince(iso, Date.now()) : null;
+    const pa = V.detectProseActivity(r.verified, days, D.ARENA_DORMANT_DAYS);
+    return !!(pa && pa.contradicts);
+  });
+  check("no committed registry row's ACTIVITY prose contradicts its stored measurement",
+    drift.length === 0, drift.map(r => r.handle).join(", "));
+
+  const claimed = D.BSKY_REPORTERS.filter(r => V.detectProseActivity(r.verified, 0, D.ARENA_DORMANT_DAYS));
+  check("the invariant actually parses the registry's ACTIVITY sentences (not vacuously true)",
+    claimed.length >= 10, "parsed " + claimed.length);
+
+  /* The corrected row must agree with the measurement CI recorded, in both directions. */
+  const grange = D.BSKY_REPORTERS.find(r => r.handle === "michaelgrangenba.bsky.social");
+  const gpa = V.detectProseActivity(grange.verified,
+    D.arenaDaysSince(grange.observed.latestPostAt, Date.now()), D.ARENA_DORMANT_DAYS);
+  check("Michael Grange's prose now asserts the state his stored date implies",
+    gpa.state === "ACTIVE" && gpa.contradicts === false);
+  check("Michael Grange's stored date is the one CI measured (not a hand-typed guess)",
+    grange.observed.latestPostAt === "2026-09-19T14:24:17.055Z" &&
+    grange.observed.latestPostAtSource === "data/live/reporter_verify.json", String(grange.observed.latestPostAt));
+  check("Michael Grange's row keeps the earlier DORMANT reading as dated history, not deleted",
+    /39 days/.test(grange.verified) && /HISTORY/.test(grange.verified));
 }
 
 console.log("\n" + pass + " passed, " + fail + " failed");
