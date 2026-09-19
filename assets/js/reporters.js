@@ -144,6 +144,9 @@ const Reporters = (() => {
    * Loaded before the matrix renders; when the file is missing the registry's own observations are
    * used and the page says which it is showing — never a silent blend of the two. */
   let RECENCY = null;
+  /* Timestamp of the CI evidence file actually loaded (null = not loaded yet). Drives the pills'
+   * "verified on" date so the page cannot assert a re-verification that has not happened. */
+  let CI_GENERATED = null;
   const CONF_META = {
     "bsky-verified": { badge: "ok", short: "Bluesky-verified" },
     "bio-verified": { badge: "warn", short: "bio states outlet + beat" },
@@ -276,6 +279,8 @@ const Reporters = (() => {
         for (const r of (v.rows || [])) {
           if (r && r.handle) RECENCY[String(r.handle).toLowerCase()] = { latestPostAt: r.latestPostAt || null, status: r.status };
         }
+        CI_GENERATED = v.generated || null;
+        renderPills();
         renderCoverage();
         renderArenaMatrix();
         el.innerHTML = `<b>Last automated re-verification:</b> ${esc(new Date(v.generated).toLocaleString())} —
@@ -324,15 +329,39 @@ const Reporters = (() => {
   }
 
   /* Pills are computed from the registry so the numbers on a verification page cannot go stale. */
+  /* ===================================================================================
+   * The verification DATE is derived, not typed (session 13). This page used to say "verified
+   * against the public API 2026-09-17" forever, while the registry underneath it was re-read on
+   * 2026-09-18 and is re-read by CI every day. A hardcoded date on a verification page is the same
+   * defect as a hardcoded count: it keeps asserting a check nobody is running. The date now comes
+   * from the newest `observed.checkedAt` in the registry, and is replaced by the CI evidence file's
+   * own `generated` stamp once that file has loaded.
+   * =================================================================================== */
+  function registryCheckedAt() {
+    let newest = null;
+    const rows = (typeof BSKY_REPORTERS !== "undefined" ? BSKY_REPORTERS : [])
+      .concat(typeof SOCIAL_ACCOUNTS !== "undefined" ? SOCIAL_ACCOUNTS : []);
+    for (const r of rows) {
+      const d = r && r.observed && r.observed.checkedAt;
+      if (d && (!newest || String(d) > String(newest))) newest = d;
+    }
+    return newest;
+  }
+
   function renderPills() {
     const el = document.getElementById("reporterPills");
     if (!el || typeof REPORTERS === "undefined") return;
     const by = st => REPORTERS.filter(r => r.status === st).length;
     const bsky = (typeof BSKY_REPORTERS !== "undefined") ? BSKY_REPORTERS.length : 0;
     const accounts = (typeof SOCIAL_ACCOUNTS !== "undefined") ? SOCIAL_ACCOUNTS.length : 0;
+    /* CI file wins when present: it is a measurement of the whole allow-list, the registry dates are
+     * per-row reads. Both are stated as what they are. */
+    const bskyDate = CI_GENERATED
+      ? `re-verified by CI ${String(CI_GENERATED).slice(0, 10).replace(/-/g, "-")}`
+      : `verified against the public API ${registryCheckedAt() || "(no dated read on file)"}`;
     const pills = [
       ["ok", `✓ ${by("verified-handle")} X handles verified (first pass 2026-09-17, each with an evidence link)`],
-      ["ok", `✓ ${bsky} reporter Bluesky accounts verified against the public API 2026-09-17`],
+      ["ok", `✓ ${bsky} reporter Bluesky accounts ${bskyDate}${CI_GENERATED ? "" : " · re-checked daily by live-audit.yml"}`],
       ["ok", `✓ ${accounts} official league/team/outlet Bluesky accounts verified`],
       ["ok", `✓ ${by("citation-verified")} reporters added from bylines on the injury feed itself (no handle asserted)`],
       ["warn", `${by("outlet-only")} outlet-verified · X handle unconfirmed (none asserted)`],

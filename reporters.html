@@ -26,8 +26,9 @@
     <p>The second verification layer: the people who break or confirm injury news — often <i>before</i> the official designation.
       This page keeps three identity layers apart, because their evidence quality differs and mixing them is how a directory starts lying:
       <b>X handles</b> (verified 2026-09-17 in the first pass, each with a link),
-      <b>Bluesky handles</b> (re-verified live 2026-09-17 against the Bluesky public API — including Bluesky's own
-      verification objects and a curated 150-member NBA-writers list), and
+      <b>Bluesky handles</b> (re-verified live against the Bluesky public API — the date shown in the pills below is
+      <i>computed</i> from the newest dated read in the registry, and is replaced by the CI evidence file's own timestamp
+      once it loads; verification objects and a curated 150-member NBA-writers list are read too), and
       <b>bylines observed on the injury feed itself</b> — reporters named inside ESPN's injury comments for a specific player, with the quote stored
       verbatim so it can be re-checked. Only the Bluesky layer can be polled automatically for free, so it is what feeds the live wire;
       the citation layer carries <b>no asserted handle</b>, because a profile that cannot be read from this environment is not evidence.</p>
@@ -329,7 +330,9 @@
 
   <footer>
     <div class="wrap" style="padding:0">
-      X layer verified 2026-09-17 (first pass) · Bluesky layer verified live 2026-09-17 via the public API ·
+      X layer verified 2026-09-17 (first pass) · Bluesky layer re-verified live via the public API and then
+      <b>re-checked every day by <code>live-audit.yml</code></b> — the date printed above is derived from the newest dated
+      read, never typed ·
       citation layer re-checked against <code>data/live/latest.json</code> by <code>tools/smoke_test.js</code> on every run — a row whose quote
       no longer appears in the snapshot fails the build instead of quietly staying up ·
       <a href="sources.html">Verification log</a> · <a href="index.html">← back to dashboard</a>
