@@ -46,8 +46,10 @@ standing constraint that **no X API key is available** and everything must be re
 **40 pollable writers, 19 Bluesky-verified**. Activity: **5 teams have a writer who posted inside 30 days**
 (GSW Monte Poole 16d · MEM Drew Hill 8d · MIN Sarah Todd 0d · PHX Gerald Bourguet 0d · SAS Jeff McDonald 23d +
 Tom Orsborn 1d), **CLE / DAL / DEN have no active writer**, and **30 of 40 writers have no registry-stored
-date** — printed as *unmeasured*. The daily CI file measures the whole allow-list (**36 of 53 accounts in the
-alert path active, 15 dormant, quietest 638 days**) and is the measurement of record.
+date** — printed as *unmeasured*. The daily CI file measures the whole allow-list and is the measurement of
+record: the 2026-09-19T00:07Z run checked **65 handles — 50 clean, 15 dormant, 0 bio-drift, 0 missing,
+0 verification-lost, 0 impersonation-labelled, 0 unreadable, 0 fatal — 38 of the 53 accounts in the alert
+path active, quietest 638 days.**
 
 **What the first CI run of the new verifier found (and what was wrong with it)**
 
@@ -78,7 +80,8 @@ alert path active, 15 dormant, quietest 638 days**) and is the measurement of re
 - ~~Two CI rows still read bio-drift~~ **RESOLVED this session by live re-read:** `nbasarah.bsky.social` was a
   genuine beat change (row moved to MIN, UTA now gap-listed) and `timcato.bsky.social` was a verifier defect
   (curly apostrophes). The next CI run should report `bioDrift: 0`; if it does not, read the row before
-  believing either number.
+  believing either number. **Confirmed: the 2026-09-19T00:07Z run reports `bioDrift: 0` and
+  `profilePrivate: 0`.**
 - **No verified club Bluesky account exists for 26 of 30 franchises.** Until a club verifies one, club
   corroboration on Bluesky is unavailable by construction; `nba.com/<slug>/news` returns 403 to CI for all 30.
 - **Unread candidates** worth a live read next session: `daltonjohnson.bsky.social` (NBCS Bay Area, posted
