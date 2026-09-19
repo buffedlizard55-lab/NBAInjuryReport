@@ -31,7 +31,9 @@ for (const [page, scripts] of Object.entries(PAGES)) {
   const referenced = new Set();
   for (const s of scripts) {
     const src = fs.readFileSync(path.join(ROOT, s), "utf8");
-    for (const m of src.matchAll(/getElementById\("([^"]+)"\)/g)) referenced.add(m[1]);
+    /* Tolerates `getElementById( "id" )` and single quotes: a stricter pattern than the code's own
+     * formatting silently audits nothing, which is how impact_test.js and this file came to disagree. */
+    for (const m of src.matchAll(/getElementById\(\s*["']([^"'$]+)["']/g)) referenced.add(m[1]);
   }
   /* intelligence.js is loaded on both pages. Dashboard-only nodes are null-guarded
    * (officialEvidence, playerHistory, historySearch, impactLegend). Requiring them on
@@ -44,6 +46,86 @@ for (const [page, scripts] of Object.entries(PAGES)) {
   check(`${page}: ${referenced.size} ids referenced, all present`, missing.length === 0, "missing: " + missing.join(", "));
   /* every script tag exists on disk and the load order is the documented one */
   for (const s of scripts) check(`${page} loads ${s}`, html.includes(`src="${s}"`) && fs.existsSync(path.join(ROOT, s)));
+
+  /* SESSION 17 — one layer down from the id audit: a status CLASS a module emits but the stylesheet
+   * never defined renders in ordinary body colour, so a "revoked" badge and an ordinary one look the
+   * same. This project has shipped that defect twice (.sev-border-*, then .good/.bad) and .pill.info
+   * would have been the third.
+   *
+   * FIVE earlier versions of this check were wrong, and only a non-vacuity run each time exposed
+   * them: (1) it collected class NAMES and looked each up anywhere in the stylesheet, so deleting
+   * .pill.info passed because .badge.info exists; (2) it handled a lookup-table form the drift panel
+   * does not use and missed the ternary form it does; (3) it took every quoted word on the line and
+   * accused the stylesheet of missing .pill.noopener; (4) it read m.length — the match ARRAY length,
+   * always 1 — instead of m[0].length, so it parsed no attribute at all; (5) it matched the selector
+   * inside CSS comments, so the very comment documenting .pill.info counted as its rule.
+   * The version below parses the class ATTRIBUTE (walking ${} depth so a nested quote cannot end it
+   * early), only considers the six status prefixes, strips comments before matching, and treats a
+   * token as satisfied when either the prefixed rule or a bare utility rule exists — a prefix plus a
+   * class is ONE selector. Verified non-vacuous by deleting .pill.info and .pill.dim in turn.
+   * It immediately found a REAL shipped defect: .pill.dim has been emitted by reporters.js since
+   * session 13 and was never defined, so the "CI file not loaded" pill rendered in body colour. */
+  {
+    /* Comments are stripped first: the .pill.info comment added this session names the selector, and
+     * a rule lookup that reads prose would have called the missing rule present. */
+    const css = fs.readFileSync(path.join(ROOT, "assets/css/style.css"), "utf8").replace(/\/\*[\s\S]*?\*\//g, "");
+    const STATUS_PREFIX = ["badge", "pill", "tag", "callout", "dot", "btn"];
+    const classAttrs = src => {
+      const out = [];
+      const re = /class="/g;
+      let m;
+      while ((m = re.exec(src))) {
+        let i = m.index + m[0].length, depth = 0, val = "";
+        while (i < src.length) {
+          const c = src[i];
+          if (c === "$" && src[i + 1] === "{") { depth++; val += "${"; i += 2; continue; }
+          if (depth > 0 && c === "{") { depth++; val += c; i++; continue; }
+          if (depth > 0 && c === "}") { depth--; val += c; i++; continue; }
+          if (c === '"' && depth === 0) break;
+          val += c; i++;
+        }
+        out.push(val);
+      }
+      return out;
+    };
+    /* A rule lookup must be ANCHORED: the first version of hasRule used /\.info\b/, which matches
+     * inside .badge.info — so the bare-utility excuse below was satisfied by a prefixed rule and the
+     * check stayed green with .pill.info deleted. A bare selector starts a rule or follows a comma. */
+    const hasRule = sel => new RegExp("(^|[,}\\s])\\." + sel.replace(/\./g, "\\.") + "\\b").test(css);
+    const pairs = new Set();
+    for (const s of scripts) {
+      const src = fs.readFileSync(path.join(ROOT, s), "utf8");
+      for (const val of classAttrs(src)) {
+        const head = /^([a-z][a-z-]*)\b/.exec(val.trim());
+        if (!head || !STATUS_PREFIX.includes(head[1])) continue;
+        const prefix = head[1];
+        /* literal tokens: `class="pill tiny warn"` — the value's own words, never template syntax and
+         * never a variable spliced in by concatenation. `' + cls + '` is a name, not a class, and
+         * counting it accused the stylesheet of a missing `.pill.cls`. */
+        const literal = val.replace(/'\s*\+\s*[A-Za-z0-9_.$()[\]]+(\s*\+\s*[A-Za-z0-9_.$()[\]]+)*\s*\+\s*'/g, " ");
+        for (const tok of literal.trim().split(/\s+/).slice(1)) {
+          if (/^[a-z][a-z-]*$/.test(tok)) pairs.add(prefix + "." + tok);
+        }
+        /* every quoted word a ${} expression can evaluate to (ternaries, fallbacks) */
+        for (const q of val.matchAll(/"([a-z][a-z-]*)"/g)) pairs.add(prefix + "." + q[1]);
+        /* an identifier inside the expression resolves to the object literal it is defined by */
+        for (const id of val.matchAll(/\$\{([A-Z_][A-Z0-9_]*)\[/g)) {
+          const tbl = new RegExp(id[1] + " = \\{([\\s\\S]*?)\\n  \\};").exec(src);
+          if (tbl) for (const x of tbl[1].matchAll(/"[a-z-]+":\s*"([a-z-]+)"/g)) pairs.add(prefix + "." + x[1]);
+        }
+      }
+    }
+    /* A token is satisfied by its prefixed rule OR by a bare utility rule (.tiny, .muted, .small…),
+     * which is how the stylesheet actually defines the layout words that sit next to status words. */
+    const undef = [...pairs].filter(pc => {
+      const [prefix, tok] = pc.split(".");
+      return !hasRule(pc) && !hasRule(tok);
+    });
+    if (undef.length) console.log("      emitted with no stylesheet rule: " + undef.join(", "));
+    check(`${page}: every prefix+status class pair the scripts emit has its own rule in style.css`,
+      undef.length === 0 && pairs.size >= 6,
+      undef.join(", ") || ([...pairs].sort().join(", ")));
+  }
 }
 {
   const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
@@ -289,6 +371,25 @@ console.log("== runtime: App.init() refresh chain ==");
       /session-10 manual pass of 2026-09-18/.test(pageEls.verifyStatus.innerHTML),
       pageEls.verifyStatus.innerHTML.replace(/<[^>]+>/g, " ").slice(0, 200));
 
+    /* SESSION 17 — the verifier-drift panel. Booted for real: with the CI file MISSING the panel
+     * must still say something true (the registry's own recorded transition) and must label its
+     * scope as registry-only, because an unlabelled panel reading "0 drift facts" is the exact
+     * shape of a claim this project refuses to make. */
+    const driftRows0 = pageEls.driftTable ? pageEls.driftTable.innerHTML : "";
+    const driftNote0 = pageEls.driftNote ? pageEls.driftNote.innerHTML : "";
+    const driftPills0 = (pageEls.driftPills ? pageEls.driftPills.innerHTML : "").replace(/<[^>]+>/g, " ");
+    check("the drift panel renders the registry's own recorded activity transition with no CI file at all",
+      /michaelgrangenba\.bsky\.social/.test(driftRows0) && /activity change/.test(driftRows0) &&
+      /dormant → active/.test(driftRows0), driftRows0.replace(/<[^>]+>/g, " ").slice(0, 200));
+    check("with no CI file the drift panel labels its scope as registry-only instead of implying a sweep",
+      /registry only/.test(driftNote0) && /no CI re-verification file loaded/.test(driftPills0 + driftNote0),
+      driftNote0.replace(/<[^>]+>/g, " ").slice(0, 200));
+    check("every drift row carries a re-openable evidence link",
+      (driftRows0.match(/re-open the evidence ↗/g) || []).length === (driftRows0.match(/<tr>/g) || []).length,
+      String((driftRows0.match(/re-open the evidence ↗/g) || []).length));
+    check("the drift panel states that none of its facts downgrades an identity on its own",
+      /beat change<\/b> is a coverage loss/.test(driftNote0) && /never re-grades it/.test(driftNote0));
+
     /* The verification DATE must be derived too. This page used to print "verified against the
      * public API 2026-09-17" forever while the registry underneath was re-read on 2026-09-18 — the
      * same defect as a hardcoded count. With NO CI file loaded it must quote the newest dated read
@@ -311,6 +412,46 @@ console.log("== runtime: App.init() refresh chain ==");
     const vs = pageEls.verifyStatus.innerHTML;
     check("a CI run renders its counts and names each problem row", /26 handles checked/.test(vs) && /missing/.test(vs) && /someone\.bsky\.social/.test(vs));
     check("club-channel results are reported separately from identity results", /club channels 29\/30/.test(vs));
+
+    /* once the CI file loads, the drift panel must quote IT and widen its scope line */
+    const driftNote1 = pageEls.driftNote ? pageEls.driftNote.innerHTML : "";
+    check("once the CI file loads the drift panel's scope line quotes the CI re-verification",
+      /registry \+ CI re-verification \(1 handles\)/.test(driftNote1) && !/registry only/.test(driftNote1),
+      driftNote1.replace(/<[^>]+>/g, " ").slice(0, 220));
+    /* A dedicated drift scenario: a CI row carrying a DEPARTED beat must render as a coverage loss,
+     * and a row carrying a recorded-valid object that is now invalid must render as revoked. Both are
+     * branches of verifierDrift() that the committed evidence file happens not to contain, so they are
+     * driven by a fixture here rather than left unexercised. */
+    global.fetch = async () => ({ ok: true, status: 200, json: async () => ({
+      generated: "2026-09-19T19:00:00Z",
+      summary: { checked: 2, ok: 0, dormant: 2, verificationLost: 0 },
+      rows: [
+        { handle: "andyblarsen.bsky.social", status: "dormant", latestPostAt: "2026-08-18T20:20:32Z",
+          verification: { present: false, valid: false, invalid: false },
+          beatChange: { detected: true, type: "beat-departed", previousTeam: "UTA", newTeam: null, detail: "Bio marks UTA (jazz) as former/previous coverage" },
+          notes: [] },
+        { handle: "hunterpatterson.bsky.social", status: "dormant", latestPostAt: "2026-09-18T23:54:58Z",
+          verification: { present: true, valid: false, invalid: true, revoked: true, issuer: "theathletic.com", badIssuers: ["theathletic.com"] },
+          notes: [] }
+      ],
+      channelSummary: { ok: 0, checked: 0, failed: [] }
+    }) });
+    R.Reporters.init();
+    await new Promise(r => setTimeout(r, 60));
+    const driftRows2 = pageEls.driftTable.innerHTML;
+    const driftText2 = driftRows2.replace(/<[^>]+>/g, " ");
+    check("a departed beat renders as FORMER coverage and is called a coverage loss, not a transfer",
+      /FORMER coverage/.test(driftText2) && /coverage loss, not a transfer/.test(driftText2) &&
+      /andyblarsen\.bsky\.social/.test(driftRows2));
+    check("a recorded-valid object that is now invalid renders as verification revoked, with the issuer named",
+      /verification object revoked/.test(driftText2) && /theathletic\.com/.test(driftText2) &&
+      /hunterpatterson\.bsky\.social/.test(driftRows2));
+    check("the drift pills count each drift kind separately so a reader can see what moved",
+      /verification revoked/.test((pageEls.driftPills.innerHTML || "").replace(/<[^>]+>/g, " ")) &&
+      /beat change/.test((pageEls.driftPills.innerHTML || "").replace(/<[^>]+>/g, " ")) &&
+      /activity change/.test((pageEls.driftPills.innerHTML || "").replace(/<[^>]+>/g, " ")));
+    check("the drift panel never claims an identity was downgraded by a drift fact",
+      !/identity (was )?(downgraded|revoked|removed)/i.test(driftText2));
 
     /* ------------------------------------------------------------------------------------
      * SESSION 13 — the panels added for the official-account probe, the documented X/IG/FB
@@ -381,3 +522,4 @@ console.log("== runtime: App.init() refresh chain ==");
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail ? 1 : 0);
 })().catch(e => { console.error("integration test crashed:", e); process.exit(1); });
+

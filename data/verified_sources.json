@@ -2,7 +2,7 @@
   "generated": "2026-09-19",
   "project": "NBAInjuryReport — live injury alert notification system (all 30 NBA teams)",
   "live_site": "https://buffedlizard55-lab.github.io/NBAInjuryReport/",
-  "method": "Single source of truth: assets/js/data.js. Each entry verified line-by-line against live official pages/APIs on 2026-09-17 across seven passes (verification channels: assistant page-fetch tool + GitHub Actions runner audit data/audit/latest.json; shell HTTPS egress is blocked in the build environment). See sources.html for evidence links. Session 2 added the structured all-30-team ESPN injuries API and the free Bluesky/AT-Protocol social layer; session 4 re-verified the official/ESPN/Bluesky rows and fixed the social alert-eligibility gate (identity evidence, not only the verification object); session 6 resolved the Jake Fischer outlet question from the outlet's own byline and re-verified the Buckner/Haynes/Guillory rows against dated 2025-2026 reports; session 7 re-read the audit tool itself and fixed four of its checks (getList AT-URI parameter, Bluesky verification field, ESPN roster path, and a verdict ladder that printed OK for checks it could not run), then re-verified the 2026-27 official page (still 404), the ESPN injuries and roster payloads, the NBA account's 6 follows (4 valid verification objects) and Howard Beck's 150-member writers list; session 8 re-read the LIVE deployed page line by line (board 75 listings via espn-direct, coverage gaps CLE/DET/LAL named, ESPN news OK, scoreboard 0 events) and fixed the one rendering defect found there (legend printed 'undefined' — see the session-8 FLAGS entry); session 12 re-verified every Bluesky row in the alert path against the keyless API on 2026-09-18 and pinned the two identities that refuse verification (see the identityRefused rows); session 13 (2026-09-18) probed 25 candidate official-club handles with one keyless getProfiles request (16 resolved, 9 do not exist, 0 carry a verification object, 3 carry Bluesky's own impersonation label — see NBA_OFFICIAL_ACCOUNT_PROBE), added the activity model that separates identity from recency (ARENA_DORMANT_DAYS, writerRecency, arenaCoverage().recency), taught the verifier to read Bluesky moderation labels (impersonation-label / profile-private verdicts), and re-documented the Instagram/Facebook read blocker with dated platform evidence; all rows carry their exact evidence strings below.",
+  "method": "Single source of truth: assets/js/data.js. Each entry verified line-by-line against live official pages/APIs on 2026-09-17 across seven passes (verification channels: assistant page-fetch tool + GitHub Actions runner audit data/audit/latest.json; shell HTTPS egress is blocked in the build environment). See sources.html for evidence links. Session 2 added the structured all-30-team ESPN injuries API and the free Bluesky/AT-Protocol social layer; session 4 re-verified the official/ESPN/Bluesky rows and fixed the social alert-eligibility gate (identity evidence, not only the verification object); session 6 resolved the Jake Fischer outlet question from the outlet's own byline and re-verified the Buckner/Haynes/Guillory rows against dated 2025-2026 reports; session 7 re-read the audit tool itself and fixed four of its checks (getList AT-URI parameter, Bluesky verification field, ESPN roster path, and a verdict ladder that printed OK for checks it could not run), then re-verified the 2026-27 official page (still 404), the ESPN injuries and roster payloads, the NBA account's 6 follows (4 valid verification objects) and Howard Beck's 150-member writers list; session 8 re-read the LIVE deployed page line by line (board 75 listings via espn-direct, coverage gaps CLE/DET/LAL named, ESPN news OK, scoreboard 0 events) and fixed the one rendering defect found there (legend printed 'undefined' — see the session-8 FLAGS entry); session 12 re-verified every Bluesky row in the alert path against the keyless API on 2026-09-18 and pinned the two identities that refuse verification (see the identityRefused rows); session 13 (2026-09-18) probed 25 candidate official-club handles with one keyless getProfiles request (16 resolved, 9 do not exist, 0 carry a verification object, 3 carry Bluesky's own impersonation label — see NBA_OFFICIAL_ACCOUNT_PROBE), added the activity model that separates identity from recency (ARENA_DORMANT_DAYS, writerRecency, arenaCoverage().recency), taught the verifier to read Bluesky moderation labels (impersonation-label / profile-private verdicts), and re-documented the Instagram/Facebook read blocker with dated platform evidence; session 17 (2026-09-19) re-read every standing constraint live (official 2026-27 report page still 404, new XID 72640245; ESPN injuries JSON 200 at 2026-09-19T18:50:34Z, 2026-27 Preseason; Basketball Monster playernews.aspx 200 with the 10/20 slate; nba.com on Bluesky valid with 123,008 followers and the Oct 20 tripleheader in its own bio; theathletic.com's object still isValid:false while its trustedVerifierStatus stays valid; rodboone.bsky.social still has no bio on a second dated read), re-probed 41 club handles in four batched keyless getProfiles calls and found ZERO new verification objects (POR, PHI, DEN and the league account remain the only four), and shipped verifierDrift() plus its reporters.html panel so revoked verification objects, beat changes and activity transitions are computed and shown instead of sitting in an audit file; all rows carry their exact evidence strings below.",
   "endpoints": {
     "news": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/news?limit=50",
     "scoreboard": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
@@ -34,7 +34,7 @@
       "outlet-only": 4,
       "citation-verified": 20
     },
-    "flags": 83,
+    "flags": 89,
     "socialAccounts": 11,
     "socialAccountsPolled": 4,
     "blueskyReporters": 83,
@@ -283,7 +283,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=howardbeck.bsky.social",
         "observed": {
           "checkedAt": "2026-09-18",
-          "latestPostAt": "2026-09-18T17:05:28.623Z",
+          "latestPostAt": "2026-09-19T17:26:44.758Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "verificationValid": true,
           "recheckedBy": "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z"
@@ -322,7 +322,8 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=mikevorkunov.bsky.social",
         "observed": {
           "checkedAt": "2026-09-18",
-          "latestPostAt": "2026-09-18T14:01:19.579Z",
+          "latestPostAt": "2026-09-19T17:45:13.195Z",
+          "latestPostAtSource": "data/live/reporter_verify.json",
           "verificationValid": true,
           "recheckedBy": "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z"
         },
@@ -341,7 +342,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=johnhollinger.bsky.social",
         "observed": {
           "checkedAt": "2026-09-18",
-          "latestPostAt": "2026-09-19T03:55:32.356Z",
+          "latestPostAt": "2026-09-19T17:50:45.871Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "verificationValid": false,
           "recheckedBy": "tools/verify_reporters.js @ GitHub runner 2026-09-18T19:21:28Z"
@@ -588,7 +589,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=lawmurraythenu.bsky.social",
         "evidenceQuote": "#NBASky writer at The Athletic",
         "observed": {
-          "latestPostAt": "2026-09-19T02:02:48.947Z",
+          "latestPostAt": "2026-09-19T17:23:01.121Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "checkedAt": "2026-09-18",
           "postsCount": 16801,
@@ -612,7 +613,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=jimowczarski.bsky.social",
         "evidenceQuote": "I cover the #Bucks for the Milwaukee Journal Sentinel.",
         "observed": {
-          "latestPostAt": "2026-09-19T00:53:29.496Z",
+          "latestPostAt": "2026-09-19T15:22:04.042Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "checkedAt": "2026-09-18",
           "postsCount": 13074,
@@ -747,7 +748,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=btrowland.bsky.social",
         "evidenceQuote": "Podcast Host: Locked on Hawks, Hammer Territory",
         "observed": {
-          "latestPostAt": "2026-09-18T03:17:33.120Z",
+          "latestPostAt": "2026-09-19T14:10:21.266Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "checkedAt": "2026-09-18",
           "postsCount": 8972,
@@ -793,7 +794,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=irawinderman.bsky.social",
         "evidenceQuote": "Covering the Miami Heat for the South Florida Sun Sentinel",
         "observed": {
-          "latestPostAt": "2026-09-19T12:35:41.021Z",
+          "latestPostAt": "2026-09-19T13:13:17.447Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "checkedAt": "2026-09-18",
           "postsCount": 2150,
@@ -866,7 +867,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=gwashburnglobe.bsky.social",
         "evidenceQuote": "Boston Globe National NBA writer giving thoughts on the NBA, other sports and various topics. UC Berkeley grad. Masters degree, Univ. of Nebraska",
         "observed": {
-          "latestPostAt": "2026-09-06T18:22:45.219Z",
+          "latestPostAt": "2026-09-19T14:45:25.171Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "checkedAt": "2026-09-18",
           "postsCount": 49,
@@ -1260,7 +1261,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=busyxb.bsky.social",
         "evidenceQuote": "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com",
         "observed": {
-          "latestPostAt": "2026-09-17T20:27:54.458Z",
+          "latestPostAt": "2026-09-19T17:06:50.127Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "checkedAt": "2026-09-18",
           "postsCount": 3732,
@@ -1514,8 +1515,8 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=dannycunningham.bsky.social",
         "observed": {
           "checkedAt": "2026-09-19",
-          "latestPostAt": "2026-09-01T18:50:49.607Z",
-          "latestPostAtSource": "getAuthorFeed?actor=dannycunningham.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)",
+          "latestPostAt": "2026-09-19T14:10:21.266Z",
+          "latestPostAtSource": "data/live/reporter_verify.json",
           "postsCount": 3629,
           "followersCount": 10017,
           "profileIndexedAt": "2024-11-12T21:20:29.914Z",
@@ -1583,8 +1584,8 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=joelrushnba.bsky.social",
         "observed": {
           "checkedAt": "2026-09-19",
-          "latestPostAt": "2026-09-17T15:37:12.880Z",
-          "latestPostAtSource": "getAuthorFeed?actor=joelrushnba.bsky.social&limit=1 @ 2026-09-19 (session 14 keyless read)",
+          "latestPostAt": "2026-09-19T15:45:00.288Z",
+          "latestPostAtSource": "data/live/reporter_verify.json",
           "postsCount": 3614,
           "followersCount": 9804,
           "profileIndexedAt": "2026-04-18T16:41:52.851Z",
@@ -1904,14 +1905,27 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=michaelgrangenba.bsky.social",
         "observed": {
           "checkedAt": "2026-09-19",
-          "latestPostAt": "2026-08-10T18:05:49.482Z",
+          "latestPostAt": "2026-09-19T14:24:17.055Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "postsCount": 1541,
           "followersCount": 6012,
           "profileIndexedAt": "2026-08-07T19:35:44.862Z",
-          "verificationValid": false
+          "verificationValid": false,
+          "activityLog": [
+            {
+              "at": "2026-09-19T18:28:52.164Z",
+              "postAt": "2026-09-19T14:24:17.055Z",
+              "from": "dormant",
+              "to": "active",
+              "previousAt": "2026-08-10T18:05:49Z",
+              "previousDays": 39,
+              "days": 0,
+              "thresholdDays": 30,
+              "source": "data/live/reporter_verify.json"
+            }
+          ]
         },
-        "verified": "2026-09-19 — read live via getProfiles. Bio verbatim 'Raptors/NBA columnist with Rogers Sportsnet, based in Toronto. Have won awards, and covered NBA games at Maple Leaf Gardens. … @michaelgrange on X.' 6,012 followers, 1,541 posts, no verification object. ACTIVITY: newest post 2026-08-10T18:05:49Z = 39 days → DORMANT by the 30-day rule. Registered because the identity is supportable, labelled dormant because the numbers say so; TOR's active coverage still rests on Josh Lewenberg (TSN)."
+        "verified": "2026-09-19 — read live via getProfiles. Bio verbatim 'Raptors/NBA columnist with Rogers Sportsnet, based in Toronto. Have won awards, and covered NBA games at Maple Leaf Gardens. … @michaelgrange on X.' 6,012 followers, 1,541 posts, no verification object. ACTIVITY: newest post 2026-08-10T18:05:49Z = 39 days → DORMANT by the 30-day rule. Registered because the identity is supportable, labelled dormant because the numbers say so; TOR's active coverage still rests on Josh Lewenberg (TSN). ACTIVITY UPDATE 2026-09-19: the daily re-verification measured a newest post of 2026-09-19T14:24:17.055Z = 0 day(s), so this row now reads ACTIVE (it read DORMANT at 39 days, measured 2026-08-10T18:05:49Z). The earlier verdict above is kept as the record of what was true when the row was graded; a change of ACTIVITY is not a change of IDENTITY, and no identity field was re-graded. Re-read again live this session (getProfiles, 2026-09-19): bio unchanged verbatim, 6,012 followers, 1,543 posts (two more than the morning read, consistent with the newer date), still no verification object. CONSEQUENCE: Toronto now has TWO writers inside the 30-day window, not one; the session-15 sentence above saying TOR's active coverage rests only on Josh Lewenberg is superseded by this note, not deleted."
       },
       {
         "name": "Lucas Kaplan",
@@ -1950,8 +1964,8 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=rodwalkernola.bsky.social",
         "observed": {
           "checkedAt": "2026-09-19",
-          "latestPostAt": "2026-09-18T13:07:21.430Z",
-          "latestPostAtSource": "getAuthorFeed?actor=rodwalkernola.bsky.social&limit=1 @ 2026-09-19 (session 15 keyless read)",
+          "latestPostAt": "2026-09-19T18:00:07.611Z",
+          "latestPostAtSource": "data/live/reporter_verify.json",
           "postsCount": 1628,
           "followersCount": 1523,
           "profileIndexedAt": "2024-11-29T02:34:02.547Z",
@@ -1973,8 +1987,8 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=masonginsberg.bsky.social",
         "observed": {
           "checkedAt": "2026-09-19",
-          "latestPostAt": "2026-09-18T23:23:14.248Z",
-          "latestPostAtSource": "getAuthorFeed?actor=masonginsberg.bsky.social&limit=1 @ 2026-09-19 (session 15 keyless read) — newest item is a reply in his own thread",
+          "latestPostAt": "2026-09-19T16:24:38.609Z",
+          "latestPostAtSource": "data/live/reporter_verify.json",
           "postsCount": 1598,
           "followersCount": 6131,
           "profileIndexedAt": "2024-11-14T19:02:21.426Z",
@@ -2590,6 +2604,36 @@
     }
   ],
   "flags": [
+    {
+      "level": "bad",
+      "title": "2026-09-19 (session 17): the suite was RED on main, and the red test was the wrong thing — a session-15 check pinned the LIST of dormant handles, so a legitimate CI re-measurement broke the build",
+      "detail": "verify_reporters_test.js asserted michaelgrangenba / millerjryan / stevepopper all evaluate 'dormant' at a fixed clock. Session 15 graded Grange DORMANT at 39 days (newest post 2026-08-10T18:05:49Z); the daily live-audit re-measured him the same day at newest post 2026-09-19T14:24:17.055Z = 0 days, and backfill_registry_recency.js copied that date into the row. The product was correct and the build was red. Worse, the row's own prose went on saying '39 days -> DORMANT' over a date that evaluated ACTIVE, and nothing in the repository compared the two. Three fixes: (1) the check now pins the RULE (0/30 days active, 31/597 dormant) plus the requirement that a row leaving the window carries the dated record of leaving it; (2) a registry-wide invariant fails if any row's prose verdict contradicts its own measured date without a dated activityLog entry — verified non-vacuous by deleting the record and watching it name exactly that row; (3) backfill_registry_recency.js now detects a state transition when it writes a date, records it machine-readably in observed.activityLog (at/postAt/from/to/previousAt/days/thresholdDays) and appends one dated sentence to the prose, with post-write proofs that the log entry evaluates and that exactly the expected number of notes appeared. Grange's row is corrected in place with both measurements kept."
+    },
+    {
+      "level": "warn",
+      "title": "2026-09-19 (session 17): official 2026-27 injury-report page still 404 — re-read live this session, new XID 72640245",
+      "detail": "https://official.nba.com/nba-injury-report-2026-27-season/ returned HTTP 404, page title 'Error 404 Not Found', body 'NBA | XID: 72640245' and the path echoed back. XID history: 74717976 (session 7) -> 44289229 (session 15) -> 71103381 (session 16) -> 72640245 (session 17). The official adapter stays blocked and still never guesses a PDF filename; the 2025-26 rules page remains the last verified official text."
+    },
+    {
+      "level": "info",
+      "title": "2026-09-19 (session 17): live re-reads of every standing constraint — ESPN, Basketball Monster, the league account, The Athletic's verifier object, and rodboone",
+      "detail": "ESPN injuries JSON https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries returned 200 with payload timestamp 2026-09-19T18:50:34Z and season {year:2027, type:1, name:'Preseason', displayName:'2026-27'}; Mouhamed Gueye ATL still carries date=2026-07-19T00:14Z, so the listing-DATE vs observed-date distinction the session-16 alert fix depends on is still live. https://basketballmonster.com/playernews.aspx returned 200: 'The regular season begins in 31 days', and the 10/20 slate as BOS at DET 2:00pm / PHI at NYK 6:00pm / OKC at SAS 8:30pm, with Adem Bona PHI Questionable (foot sprain) and Nikola Topic OKC listed for that game. nba.com on Bluesky re-read via getProfiles: verifiedStatus 'valid' (issuer bsky.app, isValid true), 123,008 followers (was 122,589 on 2026-09-17), bio verbatim 'The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! 3:00pm/et: Celtics/Pistons 7:00pm/et: 76ers/Knicks 9:30pm/et: Thunder/Spurs' — first-party confirmation of the opening-night tripleheader, and still a one-hour difference from Basketball Monster's listing that this project records rather than resolves. theathletic.com: verifiedStatus 'invalid' with isValid:false while trustedVerifierStatus is still 'valid' — unchanged since 2025-04-21. rodboone.bsky.social re-read as session 15 asked: STILL no description field at all, 654 posts, 2,042 followers, 11 follows, indexedAt 2025-07-03 — the refusal stands on a second dated read, not on memory."
+    },
+    {
+      "level": "info",
+      "title": "2026-09-19 (session 17): club-account re-probe — 41 handles requested in four batched keyless getProfiles calls, ZERO new verification objects, and the three verified clubs re-confirmed",
+      "detail": "Re-ran the periodic probe the session-15 list asked for. Valid bsky.app verification objects found: trailblazers.bsky.social (POR, 26,314 followers / 1,550 posts, object created 2025-04-21), sixersnba.bsky.social (PHI, 12,523 / 2,498, 2025-04-21), nuggets.bsky.social (DEN, 3,834 / 4,269, 2025-07-08) — plus nba.com for the league. So 4 of 30 franchises, unchanged. Still no object: celticsnba (8,282 / 1,579), clevelandcavaliers (11,928 / 19), dallasmavs (24,519 / 2 posts), sunsphx (14,028 / 4,144), sacramentokings (4,284 / 66), washwizards (2,856 / 214), okcthunder (5,932 / 11), utahjazz (43 followers / 0 posts), miamiheat (!no-unauthenticated self-label, 4 posts), laclippers (364 / 0). Bluesky impersonation labels re-confirmed on memphisgrizzlies, nyknicks and cavs.com. Squatted placeholders re-confirmed: bostonceltics ('UmYeah', 1 follower / 1 post), brooklynnets ('Saving this for the Brooklyn Nets', 1 post), orlandomagic ('Whifffle', 4 followers / 0 posts), charlottehornets (1 follower / 0 posts), dallasmavericks (0 / 0), denvernuggets (1 follower / 7 posts), losangeleslakers (2 / 0), torontoraptors (3 / 0), houstonrockets (17 / 0), indianapacers (7 / 0). Handles that still do not resolve at all: athhawks, hornetsonprime, hawksnba, hornetsnba, chicagobulls, detroitpistons, detroitspistons, warriorsnba, lakersnba, minnesotatimberwolves, neworleanspelicans, sanantoniospurs. Club corroboration therefore stays manual for 26 of 30 franchises; nothing keyless changed that this session."
+    },
+    {
+      "level": "info",
+      "title": "2026-09-19 (session 17): the verifier-drift UI shipped, and computing it surfaced two facts the page had never shown",
+      "detail": "verifierDrift() in assets/js/data.js computes three kinds of rot under a reporter row — a recorded-valid verification object now missing or isValid:false, a beat the bio has moved or dropped, and an activity transition across the 30-day line — and reporters.html renders it in a new 'Verifier drift & activity watch' panel with per-fact evidence links. Run against the committed CI evidence it reports three facts: andyblarsen.bsky.social beat-DEPARTED (his Tribune bio now reads 'Formerly Jazz beat writer', so UTA is left with no beat claim from that account — a coverage loss, labelled as one and not as a transfer); joevardon.bsky.social carrying a verification object the API marks isValid:false with issuer theathletic.com, recorded as a standing risk on a row that never graded him on the object; and the Grange activity transition. None of the three downgrades an identity, and the panel says so. beat-departed and beat-changed are separate labels because they are different facts: one leaves a club with no claim, the other moves a writer somewhere else."
+    },
+    {
+      "level": "warn",
+      "title": "2026-09-19 (session 17): .pill.dim had been emitted by reporters.js since session 13 with no stylesheet rule — found by the new prefix+class audit, not by looking",
+      "detail": "reporters.js line 257 renders a pill whose class is RECENCY ? ok : dim — the pill that tells a reader the activity numbers are NOT from the CI file. .pill.dim was never defined, so on the deployed page it rendered in ordinary body colour instead of dimmed: the same markup-ahead-of-stylesheet defect class as .sev-border-* and .good/.bad. tools/integration_test.js now audits prefix+class PAIRS per page (not class names anywhere in the file) and is verified non-vacuous by deleting .pill.info and .pill.dim in turn. Writing that audit took five attempts, each caught by a non-vacuity run rather than by review: it matched class names anywhere (so .badge.info excused a missing .pill.info), missed the ternary form, over-collected from whole lines, read the match ARRAY length m.length instead of m[0].length, and finally matched selectors inside CSS comments. All five are recorded in the check's own comment so the next session does not repeat them."
+    },
     {
       "level": "bad",
       "title": "2026-09-19 (session 16): board alerts keyed eligibility on ESPN's listing DATE, which would have silenced training-camp changes — fixed",

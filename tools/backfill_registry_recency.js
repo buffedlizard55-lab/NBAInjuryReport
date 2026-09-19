@@ -86,7 +86,9 @@ for (const r of evidence.rows) {
 function loadRegistry(src) {
   const sandbox = { console: console, Date: Date, Math: Math, JSON: JSON };
   vm.createContext(sandbox);
-  vm.runInContext(src + "\n;globalThis.__r = { BSKY_REPORTERS, SOCIAL_ACCOUNTS };", sandbox, { filename: "data.js" });
+  /* ARENA_DORMANT_DAYS is read out of the registry, never copied here: a duplicated threshold is how
+   * the tool and the page end up disagreeing about what "dormant" means. */
+  vm.runInContext(src + "\n;globalThis.__r = { BSKY_REPORTERS, SOCIAL_ACCOUNTS, ARENA_DORMANT_DAYS };", sandbox, { filename: "data.js" });
   return sandbox.__r;
 }
 const source = fs.readFileSync(DATA_FILE, "utf8");
@@ -175,6 +177,43 @@ const region = arrayRegion(source, "BSKY_REPORTERS");
 const rows = rowsInRegion(source, region, "BSKY_REPORTERS");
 
 /* ---- 4. decide the edits -------------------------------------------------------------- */
+/* ACTIVITY-STATE TRANSITIONS (added 2026-09-19, session 17) — WHY THIS EXISTS
+ *   The first version of this tool moved `latestPostAt` and nothing else. That is enough for the
+ *   page, which recomputes "dormant" from the date — but a registry row also carries free-text
+ *   prose in `verified:` that states the verdict the grader reached that day ("= 39 days → DORMANT").
+ *   When a quiet writer starts posting again, the date moves and the prose does not, so the row ends
+ *   up asserting two opposite things. That is exactly what happened to michaelgrangenba.bsky.social:
+ *   graded DORMANT at 39 days on 2026-09-19, re-measured the same day at 0 days by CI, and the row
+ *   then read ACTIVE from its date while still saying DORMANT in its own words. Nothing in the
+ *   repository noticed; a session-15 test that pinned the LIST of dormant handles went red instead.
+ *   So when a write moves a row across the dormant boundary, this tool now records the transition
+ *   (machine-readable, appended to `observed.activityLog`) and adds one dated sentence to the prose.
+ *   It never rewrites or deletes the earlier verdict — that sentence is the record of what was true
+ *   when the row was graded. */
+const evidenceNow = Date.parse(evidence.generated) || Date.now();
+const DORMANT_DAYS = Number.isFinite(before.ARENA_DORMANT_DAYS) ? before.ARENA_DORMANT_DAYS : 30;
+function stateOf(iso, now) {
+  if (!iso) return null;
+  const t = Date.parse(iso);
+  if (Number.isNaN(t)) return null;
+  return Math.floor(((now || Date.now()) - t) / 86400000) <= DORMANT_DAYS ? "active" : "dormant";
+}
+/* Locate the `verified: "…"` string of one row, in ABSOLUTE source offsets, skipping over any
+ * earlier string/comment so a word inside a bio cannot be mistaken for the field name. */
+function verifiedSpan(row) {
+  const m = /\bverified:\s*"/.exec(row.text);
+  if (!m) return null;
+  const openLocal = m.index + m[0].length - 1;   // index of the opening quote, inside row.text
+  let i = openLocal + 1;
+  while (i < row.text.length) {
+    const c = row.text[i];
+    if (c === "\\") { i += 2; continue; }
+    if (c === '"') return { open: row.start + openLocal, close: row.start + i };
+    i++;
+  }
+  return null;
+}
+
 /* The provenance label is the FILE, not the file's timestamp. WHY (2026-09-19): this tool runs
  * inside live-audit.yml, whose push trigger includes assets/js/data.js. If the label embedded each
  * run's `generated` value, every run would rewrite the label, the commit would fire another run,
@@ -186,8 +225,34 @@ const stampLabel = "data/live/reporter_verify.json";
 const AT_LITERAL = /latestPostAt:\s*(?:null|"[^"]*")/;
 const SRC_LITERAL = /latestPostAtSource:\s*(?:null|"[^"]*")/;
 const edits = [];        // {start, end, text}
+const proseEdits = [];   // dated ACTIVITY UPDATE sentences appended to a row's `verified` prose
 const plannedDate = new Map();   // handle → the date this run intends to store
-const report = { updated: [], current: [], noEvidence: [], registryAhead: [], noObserved: [], repaired: [], duplicateAhead: [] };
+const report = { updated: [], current: [], noEvidence: [], registryAhead: [], noObserved: [], repaired: [], duplicateAhead: [], transitions: [], transitionsNoProse: [] };
+
+/* Replace (or insert) one `key: { … }` / `key: [ … ]` member inside a small object body.
+ * String- and comment-aware, so a bracket inside a stored filename cannot end the match early. */
+function replaceBlock(body, keyName, replacement) {
+  const m = new RegExp("(^|[,{])\\s*" + keyName + "\\s*:\\s*(\\{|\\[)").exec(body);
+  /* `body` is the INNER text of the observed block, so a fresh key goes at the front. The
+   * replacement carries its own leading space and trailing comma, and the body's own leading
+   * whitespace is left alone, so the row still reads `{ activityLog: …, checkedAt: … }`. */
+  if (!m) return replacement + body;
+  const opener = body.indexOf(m[2], m.index + m[1].length);
+  const closer = m[2] === "{" ? "}" : "]";
+  let depth = 0, i = opener;
+  while (i < body.length) {
+    const c = body[i];
+    if (c === '"' || c === "'") {
+      const q = c; i++;
+      while (i < body.length) { if (body[i] === "\\") { i += 2; continue; } if (body[i] === q) { i++; break; } i++; }
+      continue;
+    }
+    if (c === m[2]) depth++;
+    else if (c === closer) { depth--; if (depth === 0) break; }
+    i++;
+  }
+  return body.slice(0, opener) + replacement.trim() + body.slice(i + 1);
+}
 
 for (const row of rows) {
   if (!row.handle) { continue; }
@@ -252,6 +317,43 @@ for (const row of rows) {
   } else {
     body = body.replace(/(latestPostAt:\s*"[^"]*")/, '$1, latestPostAtSource: "' + stampLabel + '"');
   }
+  /* --- activity-state transition: record it, and tell the row's own prose about it ------- */
+  const fromState = stateOf(cur, evidenceNow);
+  const toState = stateOf(m.at, evidenceNow);
+  if (fromState && toState && fromState !== toState) {
+    const prevDays = Math.floor((evidenceNow - Date.parse(cur)) / 86400000);
+    const days = Math.floor((evidenceNow - Date.parse(m.at)) / 86400000);
+    const regRow = before.BSKY_REPORTERS.find(x => String(x.handle || "").toLowerCase() === key);
+    const priorLog = (regRow && Array.isArray(regRow.activityLog)) ? regRow.activityLog : [];
+    const entry = {
+      /* `at` is WHEN this was measured; `postAt` is the newest post that was found. Both are kept
+       * because they are different facts — a reader who sees "0 days" needs the post's own
+       * timestamp to re-check it, and the measurement stamp alone cannot supply it. */
+      at: evidenceStamp, postAt: m.at, from: fromState, to: toState,
+      previousAt: cur, previousDays: prevDays, days: days,
+      thresholdDays: DORMANT_DAYS, source: stampLabel
+    };
+    /* The log is an APPEND list, rebuilt from the evaluated registry rather than parsed out of the
+     * text: a second `activityLog:` key would be the same silent-duplicate-key defect this tool was
+     * rewritten once already to stop shipping. */
+    const serialised = " activityLog: " + JSON.stringify(priorLog.concat([entry])) + ",";
+    body = replaceBlock(body, "activityLog", serialised);
+    report.transitions.push(row.handle + " " + fromState + " → " + toState +
+      " (newest post " + cur + " = " + prevDays + "d → " + m.at + " = " + days + "d, threshold " + DORMANT_DAYS + "d)");
+    /* One dated sentence appended to the prose. The earlier verdict is never rewritten or deleted —
+     * it is the record of what was true when the row was graded. */
+    const span = verifiedSpan(row);
+    if (span) {
+      const note = " ACTIVITY UPDATE " + String(evidenceStamp).slice(0, 10) + ": the daily re-verification measured a newest post of " +
+        m.at + " = " + days + " day(s), so this row now reads " + toState.toUpperCase() +
+        " (it read " + fromState.toUpperCase() + " at " + prevDays + " days, measured " + cur +
+        "). The earlier verdict above is kept as the record of what was true when the row was graded; " +
+        "a change of ACTIVITY is not a change of IDENTITY, and no identity field was re-graded.";
+      proseEdits.push({ start: span.close, end: span.close, text: note.replace(/"/g, "") });
+    } else {
+      report.transitionsNoProse.push(row.handle);
+    }
+  }
   edits.push({ start: obsOpen + 1, end: obsClose, text: body });
   plannedDate.set(key, m.at);
   report.updated.push(row.handle + " → " + m.at + (m.status ? " (" + m.status + ")" : "") +
@@ -260,7 +362,7 @@ for (const row of rows) {
 
 /* ---- 5. apply, then PROVE the identity fields did not move ----------------------------- */
 let next = source;
-for (const e of edits.sort((a, b) => b.start - a.start)) {
+for (const e of edits.concat(proseEdits).sort((a, b) => b.start - a.start)) {
   next = next.slice(0, e.start) + e.text + next.slice(e.end);
 }
 let after;
@@ -305,6 +407,37 @@ if (changedOwned.length !== report.updated.length + report.noObserved.length) {
     (report.updated.length + report.noObserved.length) + " were planned. Nothing written.");
   process.exit(1);
 }
+/* And every transition this run claimed must actually be recorded on the row it belongs to —
+ * "the file changed" is not "the row now carries the log entry", which is the same distinction that
+ * caught the duplicate-key no-op. */
+for (const t of report.transitions) {
+  const handle = t.split(" ")[0];
+  const r = after.BSKY_REPORTERS.find(x => String(x.handle || "") === handle);
+  const log = (r && r.observed && Array.isArray(r.observed.activityLog)) ? r.observed.activityLog : [];
+  const last = log[log.length - 1];
+  if (!last || last.at !== evidenceStamp) {
+    console.error("✗ activity-log check FAILED for " + handle + ": a " + t + " transition was planned but the row " +
+      "evaluates to " + JSON.stringify(last) + ". Nothing written.");
+    process.exit(1);
+  }
+  const evaluated = stateOf(r.observed.latestPostAt, evidenceNow);
+  if (evaluated !== last.to) {
+    console.error("✗ activity-log check FAILED for " + handle + ": the log says " + last.to +
+      " but the stored date evaluates to " + evaluated + ". Nothing written.");
+    process.exit(1);
+  }
+}
+/* Every transition with prose to correct must have produced exactly one dated note. Counted across
+ * the whole file, so a note appended to the WRONG row cannot hide here. */
+const noteTag = "ACTIVITY UPDATE " + String(evidenceStamp).slice(0, 10);
+const notesBefore = (source.split(noteTag).length - 1);
+const notesAfter = (next.split(noteTag).length - 1);
+const expectedNotes = report.transitions.length - report.transitionsNoProse.length;
+if (notesAfter - notesBefore !== expectedNotes) {
+  console.error("✗ activity-note check FAILED: " + expectedNotes + " note(s) were planned but " +
+    (notesAfter - notesBefore) + " appeared. Nothing written.");
+  process.exit(1);
+}
 const sameContent = next === source;
 
 /* ---- 6. report / write ---------------------------------------------------------------- */
@@ -315,6 +448,14 @@ console.log("  rows brought up to date  : " + (report.updated.length + report.no
 console.log("  already current          : " + report.current.length);
 console.log("  no evidence for handle    : " + report.noEvidence.length + " (held out of collection, or not in the allow-list)");
 if (report.registryAhead.length) console.log("  registry ahead of CI (kept): " + report.registryAhead.length);
+if (report.transitions.length) {
+  console.log("  ACTIVITY STATE CHANGED     : " + report.transitions.length +
+    " (date moved across the " + DORMANT_DAYS + "-day boundary — the row's prose is corrected in the same edit)");
+  for (const t of report.transitions) console.log("    ⇄ " + t);
+}
+if (report.transitionsNoProse.length) {
+  console.log("  … without prose to correct : " + report.transitionsNoProse.length + " (no `verified` string on the row)");
+}
 if (report.duplicateAhead.length) {
   console.log("  DUPLICATE KEYS + newer date : " + report.duplicateAhead.length + " (left for manual repair)");
   for (const r of report.duplicateAhead) console.log("    ! " + r);

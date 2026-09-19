@@ -1,5 +1,131 @@
 # Next-session priorities
 
+## State at the end of session 17 (2026-09-19) — read this first
+
+Session 17 started from a **red build on main** and ended with the reporter layer's drift made
+visible. The standing constraints are unchanged: **no X API key** (and there will not be one — the
+cost rules it out), official adapter blocked on a 404, impact UNKNOWN until box scores exist,
+in-game latency fixture-only until the first tip.
+
+**What shipped**
+
+1. **The suite was red on `main`, and the red test was the wrong thing.**
+   `tools/verify_reporters_test.js` asserted that three session-15 rows evaluate `dormant` at a fixed
+   clock. Session 15 graded `michaelgrangenba.bsky.social` DORMANT at 39 days (newest post
+   2026-08-10T18:05:49Z); the daily `live-audit.yml` re-measured him the same day at newest post
+   **2026-09-19T14:24:17.055Z = 0 days**, and the recency backfill copied that date into the row.
+   The product was correct and the build was red. Worse, the row's own prose went on asserting
+   "39 days → DORMANT" over a date that evaluated ACTIVE, and **nothing in the repository compared
+   the two**. Fixed three ways:
+   - the check now pins the **rule** (0 and 30 days active; 31 and 597 dormant) plus the requirement
+     that a row leaving the window carries the dated record of leaving it — not a list of handles;
+   - a **registry-wide invariant** fails if any row's prose verdict contradicts its own measured date
+     without a dated `observed.activityLog` entry (verified non-vacuous: deleting the record makes it
+     name exactly that row);
+   - `tools/backfill_registry_recency.js` now **detects a state transition when it writes a date**,
+     records it machine-readably in `observed.activityLog` (`at` / `postAt` / `from` / `to` /
+     `previousAt` / `previousDays` / `days` / `thresholdDays` / `source`) and appends one dated
+     sentence to the row's prose — never rewriting the earlier verdict. Post-write proofs assert the
+     log entry **evaluates**, that it agrees with the stored date, and that exactly the expected
+     number of notes appeared (a note appended to the wrong row cannot hide).
+   Consequence recorded, not hidden: **Toronto now has two writers inside the 30-day window**, so the
+   session-15 sentence saying TOR's active coverage rests only on Josh Lewenberg is superseded by a
+   dated note rather than deleted.
+
+2. **The verifier-drift UI (the session-15 leftover) shipped, and computing it surfaced two facts the
+   page had never shown.** `verifierDrift()` in `assets/js/data.js` computes three kinds of rot under
+   a reporter row — a recorded-valid verification object now missing or `isValid:false`, a beat the
+   bio has **moved or dropped**, and an activity transition across the 30-day line — and
+   `reporters.html` renders it in a new **🧭 Verifier drift & activity watch** panel with per-fact
+   evidence links. Against the committed CI evidence it reports three facts:
+   - `andyblarsen.bsky.social` — **beat-DEPARTED**. His Tribune bio now reads "Formerly Jazz beat
+     writer", so **UTA is left with no beat claim from that account**. Labelled a coverage loss, not a
+     transfer, because those are different facts and only one of them leaves a club with nothing.
+   - `joevardon.bsky.social` — a verification object the API marks `isValid:false`, issuer
+     `theathletic.com`. Recorded as a standing risk on a row that never graded him on the object, so
+     it is `verification-invalid`, **not** `verifier-revoked` — and the summary's
+     `verificationLost: 0` is consistent, not contradictory.
+   - the Grange activity transition.
+   `null` (no CI file) and `[]` (a file that re-read nothing) report different scopes, because an
+   empty sweep is not the same claim as no sweep.
+
+3. **A real shipped CSS defect, found by an audit rather than by looking.** `reporters.js` has emitted
+   `class="pill ${RECENCY ? "ok" : "dim"}"` since session 13, and `.pill.dim` was **never defined** —
+   so the pill that tells a reader the activity numbers are *not* from CI rendered in ordinary body
+   colour on the deployed page. Fixed, and `tools/integration_test.js` now audits **prefix+class
+   pairs** per page. Writing that audit took **five** attempts, each exposed by a non-vacuity run and
+   not by review: it matched class names anywhere (so `.badge.info` excused a missing `.pill.info`);
+   missed the ternary form the panel actually uses; over-collected from whole lines (accusing the
+   stylesheet of `.pill.noopener`); read `m.length` — the match **array** length, always 1 — instead of
+   `m[0].length`; and finally matched selectors **inside CSS comments**. All five are recorded in the
+   check's own comment. It is now verified non-vacuous by deleting `.pill.info` and `.pill.dim`.
+
+**Live re-reads this session (assistant page-fetch, 2026-09-19 ~18:50Z)**
+
+- `official.nba.com/nba-injury-report-2026-27-season/` still **404**, new XID **72640245**
+  (74717976 → 44289229 → 71103381 → 72640245).
+- ESPN injuries JSON **200**, payload timestamp **2026-09-19T18:50:34Z**, season
+  `{year:2027, type:1, name:'Preseason', displayName:'2026-27'}`; Mouhamed Gueye ATL still carries
+  `date=2026-07-19T00:14Z`, so the listing-DATE vs observed-date distinction the session-16 alert fix
+  depends on is still live.
+- Basketball Monster `playernews.aspx` **200**: "The regular season begins in 31 days", 10/20 slate
+  BOS@DET 2:00pm / PHI@NYK 6:00pm / OKC@SAS 8:30pm, Adem Bona PHI Questionable (foot sprain),
+  Nikola Topic OKC listed for that game. **Linked, never scraped.**
+- `nba.com` on Bluesky: `verifiedStatus: valid` (issuer `bsky.app`), **123,008 followers** (122,589 on
+  2026-09-17), bio verbatim "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock!
+  3:00pm/et: Celtics/Pistons 7:00pm/et: 76ers/Knicks 9:30pm/et: Thunder/Spurs" — first-party
+  confirmation of the opening-night tripleheader, and still one hour apart from Basketball Monster's
+  listing. Both claims stay stored; neither is picked.
+- `theathletic.com`: `verifiedStatus: invalid`, object `isValid:false`, **`trustedVerifierStatus`
+  still `valid`** — unchanged since 2025-04-21. The issuer and the issued object stay separate.
+- `rodboone.bsky.social`, re-read as session 15 asked: **still no `description` field at all**,
+  654 posts, 2,042 followers, 11 follows, `indexedAt` 2025-07-03. The refusal stands on a **second
+  dated read**, not on memory.
+- **Club re-probe: 41 handles in four batched keyless `getProfiles` calls, ZERO new verification
+  objects.** Valid: `trailblazers.bsky.social` (POR, 26,314/1,550, object 2025-04-21),
+  `sixersnba.bsky.social` (PHI, 12,523/2,498, 2025-04-21), `nuggets.bsky.social` (DEN, 3,834/4,269,
+  2025-07-08) — plus `nba.com`. So **4 of 30 franchises, unchanged**. Impersonation labels
+  re-confirmed on `memphisgrizzlies`, `nyknicks`, `cavs.com`. Placeholders re-confirmed
+  (`bostonceltics` "UmYeah" 1 follower/1 post, `brooklynnets`, `orlandomagic` "Whifffle",
+  `charlottehornets`, `dallasmavericks` 0/0, `denvernuggets` 1/7, `losangeleslakers` 2/0,
+  `torontoraptors` 3/0, `houstonrockets` 17/0, `indianapacers` 7/0). Still unresolvable: `athawks`,
+  `hornetsonprime`, `hawksnba`, `hornetsnba`, `chicagobulls`, `detroitpistons`, `detroitspistons`,
+  `warriorsnba`, `lakersnba`, `minnesotatimberwolves`, `neworleanspelicans`, `sanantoniospurs`.
+  `utahjazz.bsky.social` has 43 followers and **0 posts**.
+
+**Measured coverage after session 17** (`arenaCoverageSummary()`, identical from the registry alone
+and from the CI evidence file): 30 teams · **18 verified-pollable · 12 bio-pollable · 0 official-only
+· 0 unexplained gaps** · **65 pollable writers, 21 Bluesky-verified** · activity **47 active /
+18 dormant / 0 unmeasured** (was 46/19 — Grange moved, and the move is the logged transition) ·
+**27 teams with an active writer** · **dormant-only: DAL, LAL, UTA** · the **same 12 teams** (ATL,
+BKN, CHA, CHI, DEN, IND, MIA, NOP, ORL, SAC, SAS, UTA) still lack a Bluesky-verified writer.
+
+**Tests:** smoke 234 · integration 102 · impact 80 · poll-fixture 25 · regression 27 groups ·
+verify-reporters 149 · Python 26.
+
+**What is still open, and why**
+
+1. **Official adapter still blocked** until `official.nba.com/nba-injury-report-2026-27-season/`
+   stops 404 (XID 72640245 today). Never guess a PDF filename.
+2. **Lineup impact stays UNKNOWN** until box scores exist (`roleStats` empty). First measurement
+   window is preseason tip **2026-10-03**, then opening night **2026-10-20**.
+3. **In-game QTR/exit latency is fixture-tested only** until that tip.
+4. **CLE / DET / LAL still absent from ESPN's injuries feed** (27/30). Re-check at camp: if they are
+   still missing *while games are live*, that is a source-coverage problem, not an offseason artefact.
+5. **UTA is now worse than "thin".** `nbasarah` moved to MIN (session 13), `andyblarsen`'s bio marks
+   the Jazz beat as **former** (surfaced this session), and `millerjryan` / `saltcityhoops` /
+   `andyblarsen` all measure dormant. UTA has three rows and no active beat claim; the drift panel now
+   says so, but nothing can invent a replacement.
+6. **X / Instagram / Facebook remain manual-review links.** There will be no X API key — the cost
+   rules it out — so this is a permanent boundary, not a to-do.
+7. **Reporter-layer leftovers:** beat-change watch is now *detected and displayed* but still not
+   *acted on* automatically (a departed beat should re-open the team's gap worklist); thin teams with
+   one pollable writer (ATL, MIA, SAC, HOU, MIL, PHX, POR, LAC, OKC) need a free corpus; 26/30 clubs
+   still have no verified Bluesky account.
+8. **`verifierDrift()` reads the CI file, which is written daily.** Nothing yet compares this run to
+   the *previous* run, so a fact that appears and disappears between runs is invisible. An append-only
+   drift history would close that.
+
 ## State at the end of session 16 (2026-09-19) — read this first
 
 Session 16 was the **injury-board product**, not another reporter sweep. Training camp opens

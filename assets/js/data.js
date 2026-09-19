@@ -1216,8 +1216,8 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/michaelgrangenba.bsky.social",
     evidenceQuote: "Raptors/NBA columnist with Rogers Sportsnet, based in Toronto.",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=michaelgrangenba.bsky.social",
-    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-19T14:24:17.055Z", latestPostAtSource: "data/live/reporter_verify.json", postsCount: 1541, followersCount: 6012, profileIndexedAt: "2026-08-07T19:35:44.862Z", verificationValid: false },
-    verified: "2026-09-19 — read live via getProfiles. Bio verbatim 'Raptors/NBA columnist with Rogers Sportsnet, based in Toronto. Have won awards, and covered NBA games at Maple Leaf Gardens. … @michaelgrange on X.' 6,012 followers, 1,541 posts, no verification object. ACTIVITY: newest post 2026-08-10T18:05:49Z = 39 days → DORMANT by the 30-day rule. Registered because the identity is supportable, labelled dormant because the numbers say so; TOR's active coverage still rests on Josh Lewenberg (TSN)." },
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-19T14:24:17.055Z", latestPostAtSource: "data/live/reporter_verify.json", postsCount: 1541, followersCount: 6012, profileIndexedAt: "2026-08-07T19:35:44.862Z", verificationValid: false, activityLog: [{ at: "2026-09-19T18:28:52.164Z", postAt: "2026-09-19T14:24:17.055Z", from: "dormant", to: "active", previousAt: "2026-08-10T18:05:49Z", previousDays: 39, days: 0, thresholdDays: 30, source: "data/live/reporter_verify.json" }] },
+    verified: "2026-09-19 — read live via getProfiles. Bio verbatim 'Raptors/NBA columnist with Rogers Sportsnet, based in Toronto. Have won awards, and covered NBA games at Maple Leaf Gardens. … @michaelgrange on X.' 6,012 followers, 1,541 posts, no verification object. ACTIVITY: newest post 2026-08-10T18:05:49Z = 39 days → DORMANT by the 30-day rule. Registered because the identity is supportable, labelled dormant because the numbers say so; TOR's active coverage still rests on Josh Lewenberg (TSN). ACTIVITY UPDATE 2026-09-19: the daily re-verification measured a newest post of 2026-09-19T14:24:17.055Z = 0 day(s), so this row now reads ACTIVE (it read DORMANT at 39 days, measured 2026-08-10T18:05:49Z). The earlier verdict above is kept as the record of what was true when the row was graded; a change of ACTIVITY is not a change of IDENTITY, and no identity field was re-graded. Re-read again live this session (getProfiles, 2026-09-19): bio unchanged verbatim, 6,012 followers, 1,543 posts (two more than the morning read, consistent with the newer date), still no verification object. CONSEQUENCE: Toronto now has TWO writers inside the 30-day window, not one; the session-15 sentence above saying TOR's active coverage rests only on Josh Lewenberg is superseded by this note, not deleted." },
   { name: "Lucas Kaplan", handle: "lucaskaplan.bsky.social", outlet: "NetsDaily / SwishTheory", role: "NetsDaily writer — outlet stated, beat not spelled out in bio", team: "BKN", feed: true, bskyVerified: false,
     conf: "outlet-verified",
     evidence: "https://bsky.app/profile/lucaskaplan.bsky.social",
@@ -1502,6 +1502,135 @@ function arenaCoverageSummary(recencyMap, now) {
   };
 }
 
+/* =====================================================================================
+ * verifierDrift — "is the identity layer still true?" (session 17)
+ *
+ * WHY THIS IS A FUNCTION IN data.js AND NOT MARKUP IN reporters.html: three different facts can
+ * rot underneath a reporter row, and all three are re-measurable for free. Until now two of them
+ * were detected only inside tools/verify_reporters.js and printed as one badge inside a run-on
+ * status line, so the page could not answer "what has changed about who these people are?".
+ *
+ *   1. verifier-revoked     the row recorded a VALID Bluesky verification object and the API now
+ *                           returns none, or returns one with isValid:false. The Athletic's own
+ *                           object has read isValid:false since 2025-04-21 while the objects it
+ *                           ISSUED to staff stayed valid — so the issuer and the issued object are
+ *                           reported separately and neither is allowed to imply the other.
+ *   2. beat-change          the bio still names an outlet but a different team than the row's.
+ *                           Sarah Todd (UTA→MIN) and Christopher Hine (MIN→PHI) are the pattern;
+ *                           a beat change is a COVERAGE LOSS for the team that was left.
+ *   3. activity-transition  the measured newest post crossed the dormant boundary since the row
+ *                           was graded, in either direction.
+ *
+ * WHAT IT IS NOT: this function grades nothing and upgrades nothing. A revoked object does not
+ * make an identity false, and a bio naming a team is not a credential. Every fact carries the
+ * evidence that produced it so a reader can re-open the same keyless URL and check.
+ *
+ * `evidenceRows` is the `rows` array of data/live/reporter_verify.json and is OPTIONAL: without it
+ * only the registry's own recorded transitions are reportable, and the result says so.
+ * ===================================================================================== */
+function verifierDrift(evidenceRows, now) {
+  const stamp = now || Date.now();
+  const rows = Array.isArray(evidenceRows) ? evidenceRows : null;
+  const byHandle = new Map();
+  if (rows) for (const r of rows) if (r && r.handle) byHandle.set(String(r.handle).toLowerCase(), r);
+  const facts = [];
+  const push = f => { if (f && f.handle && f.kind) facts.push(f); };
+  const profileUrl = h => "https://bsky.app/profile/" + h;
+  const apiUrl = h => "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=" + h;
+
+  for (const row of BSKY_REPORTERS) {
+    const h = String(row.handle || "").toLowerCase();
+    if (!h) continue;
+    const ev = byHandle.get(h) || null;
+    const obs = row.observed || {};
+
+    /* 1. verifier revocation — the registry recorded a valid object; the API no longer does. */
+    if (obs.verificationValid === true && ev) {
+      const v = ev.verification || {};
+      if (v.present && v.valid !== true) {
+        push({ handle: row.handle, name: row.name, team: row.team || null, kind: "verifier-revoked",
+          label: "verification object now isValid:false",
+          detail: "the row recorded a valid Bluesky verification object" + (row.verifier ? " issued by " + row.verifier : "") +
+            "; the re-verification read an object with no valid entry. A revoked object does not make the identity false — re-read the bio before changing the grade.",
+          at: null, source: "tools/verify_reporters.js", url: apiUrl(row.handle) });
+      } else if (!v.present) {
+        push({ handle: row.handle, name: row.name, team: row.team || null, kind: "verifier-revoked",
+          label: "verification object no longer returned",
+          detail: "the row recorded a valid Bluesky verification object; the re-verification read no verification object at all.",
+          at: null, source: "tools/verify_reporters.js", url: apiUrl(row.handle) });
+      }
+    }
+    /* An object that exists but is invalid is reported on its own terms even when the registry never
+     * claimed a valid one — theathletic.com is the standing example, and its trustedVerifierStatus
+     * staying "valid" while verifiedStatus reads "invalid" is exactly the distinction to surface. */
+    if (ev && ev.verification && ev.verification.invalid === true && obs.verificationValid !== true) {
+      push({ handle: row.handle, name: row.name, team: row.team || null, kind: "verification-invalid",
+        label: "verification object present but isValid:false",
+        detail: "the account carries a verification object the API marks invalid" +
+          ((ev.verification.badIssuers || []).length ? " (issuer " + ev.verification.badIssuers.join(", ") + ")" : "") +
+          ". Recorded as a standing risk, not as a lost claim: the row never graded this account on the object.",
+        at: null, source: "tools/verify_reporters.js", url: apiUrl(row.handle) });
+    }
+
+    /* 2. beat change — from the verifier's own structured finding, or from its note text. */
+    const bc = ev && ev.beatChange;
+    const noteBeat = ev && Array.isArray(ev.notes) ? ev.notes.find(n => /beat-change/i.test(String(n))) : null;
+    if ((bc && bc.detected) || noteBeat) {
+      /* `beat-departed` and `beat-changed` are different facts and must not share a label: one says
+       * the writer moved to another club (that club may have gained), the other says the club was
+       * left with no beat claim at all (a pure coverage loss). */
+      const departed = bc && bc.type === "beat-departed";
+      push({ handle: row.handle, name: row.name, team: row.team || null, kind: "beat-change",
+        beatType: (bc && bc.type) || null,
+        label: departed ? "bio now marks this team as FORMER coverage" : "bio names a different team than the row",
+        detail: ((bc && bc.detail) || String(noteBeat || "")) +
+          (departed ? " The team was left with no beat claim from this account — a coverage loss, not a transfer." : ""),
+        at: null, source: "tools/verify_reporters.js", url: apiUrl(row.handle) });
+    }
+    /* The audit also reports revocation in free text. Only surface it here if the structured check
+     * above did not already file a fact for this handle — one row, one reason, no double counting. */
+    const noteRevoke = ev && Array.isArray(ev.notes) ? ev.notes.find(n => /verifier-revocation/i.test(String(n))) : null;
+    const alreadyFiled = facts.some(f => f.handle === row.handle && (f.kind === "verifier-revoked" || f.kind === "verification-invalid"));
+    if (noteRevoke && !alreadyFiled) {
+      push({ handle: row.handle, name: row.name, team: row.team || null, kind: "verifier-revoked",
+        label: "verifier revocation reported by the audit", detail: String(noteRevoke),
+        at: null, source: "tools/verify_reporters.js", url: apiUrl(row.handle) });
+    }
+
+    /* 3. activity transitions recorded on the row itself (written by the recency backfill). */
+    for (const e of (Array.isArray(obs.activityLog) ? obs.activityLog : [])) {
+      if (!e || !e.to) continue;
+      push({ handle: row.handle, name: row.name, team: row.team || null, kind: "activity-transition",
+        label: (e.from || "unmeasured") + " → " + e.to,
+        detail: "newest post moved from " + (e.previousAt || "unmeasured") + " (" + (e.previousDays == null ? "?" : e.previousDays) +
+          " days) to " + (e.postAt || obs.latestPostAt || "unmeasured") + " (" + (e.days == null ? "?" : e.days) +
+          " days) against a " + (e.thresholdDays == null ? ARENA_DORMANT_DAYS : e.thresholdDays) +
+          "-day threshold, measured " + (e.at || "unknown") + ". Activity is not identity: no identity field was re-graded.",
+        at: e.at || null, source: e.source || "data/live/reporter_verify.json", url: profileUrl(row.handle) });
+    }
+  }
+
+  /* Newest first, then by handle, so the panel is stable between runs. */
+  facts.sort((a, b) => String(b.at || "").localeCompare(String(a.at || "")) || String(a.handle).localeCompare(String(b.handle)));
+  const counts = k => facts.filter(f => f.kind === k).length;
+  return {
+    checkedAt: new Date(stamp).toISOString(),
+    evidenceRows: rows ? rows.length : 0,
+    thresholdDays: ARENA_DORMANT_DAYS,
+    facts: facts,
+    counts: {
+      total: facts.length,
+      verifierRevoked: counts("verifier-revoked"),
+      verificationInvalid: counts("verification-invalid"),
+      beatChange: counts("beat-change"),
+      activityTransition: counts("activity-transition")
+    },
+    /* Without the CI file only the registry's own transitions are knowable; the page must say that
+     * rather than printing an empty panel that looks like "no drift". */
+    scope: rows ? "registry + CI re-verification (" + rows.length + " handles)" : "registry only — no CI re-verification file loaded"
+  };
+}
+
 /* Social-post severity ladder — STRICTER than the news-headline classifier by design.
  * Why: free-form posts produced two real false positives in the first live poll —
  * "We talk Spurs locker room culture" (in-game watch) and a "clean-up procedure" post labelled
@@ -1640,6 +1769,12 @@ const SOURCES = [
 
 /* Irregularities / requirements flags raised during verification. */
 const FLAGS = [
+  { level: "bad", title: "2026-09-19 (session 17): the suite was RED on main, and the red test was the wrong thing — a session-15 check pinned the LIST of dormant handles, so a legitimate CI re-measurement broke the build", detail: "verify_reporters_test.js asserted michaelgrangenba / millerjryan / stevepopper all evaluate 'dormant' at a fixed clock. Session 15 graded Grange DORMANT at 39 days (newest post 2026-08-10T18:05:49Z); the daily live-audit re-measured him the same day at newest post 2026-09-19T14:24:17.055Z = 0 days, and backfill_registry_recency.js copied that date into the row. The product was correct and the build was red. Worse, the row's own prose went on saying '39 days -> DORMANT' over a date that evaluated ACTIVE, and nothing in the repository compared the two. Three fixes: (1) the check now pins the RULE (0/30 days active, 31/597 dormant) plus the requirement that a row leaving the window carries the dated record of leaving it; (2) a registry-wide invariant fails if any row's prose verdict contradicts its own measured date without a dated activityLog entry — verified non-vacuous by deleting the record and watching it name exactly that row; (3) backfill_registry_recency.js now detects a state transition when it writes a date, records it machine-readably in observed.activityLog (at/postAt/from/to/previousAt/days/thresholdDays) and appends one dated sentence to the prose, with post-write proofs that the log entry evaluates and that exactly the expected number of notes appeared. Grange's row is corrected in place with both measurements kept." },
+  { level: "warn", title: "2026-09-19 (session 17): official 2026-27 injury-report page still 404 — re-read live this session, new XID 72640245", detail: "https://official.nba.com/nba-injury-report-2026-27-season/ returned HTTP 404, page title 'Error 404 Not Found', body 'NBA | XID: 72640245' and the path echoed back. XID history: 74717976 (session 7) -> 44289229 (session 15) -> 71103381 (session 16) -> 72640245 (session 17). The official adapter stays blocked and still never guesses a PDF filename; the 2025-26 rules page remains the last verified official text." },
+  { level: "info", title: "2026-09-19 (session 17): live re-reads of every standing constraint — ESPN, Basketball Monster, the league account, The Athletic's verifier object, and rodboone", detail: "ESPN injuries JSON https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries returned 200 with payload timestamp 2026-09-19T18:50:34Z and season {year:2027, type:1, name:'Preseason', displayName:'2026-27'}; Mouhamed Gueye ATL still carries date=2026-07-19T00:14Z, so the listing-DATE vs observed-date distinction the session-16 alert fix depends on is still live. https://basketballmonster.com/playernews.aspx returned 200: 'The regular season begins in 31 days', and the 10/20 slate as BOS at DET 2:00pm / PHI at NYK 6:00pm / OKC at SAS 8:30pm, with Adem Bona PHI Questionable (foot sprain) and Nikola Topic OKC listed for that game. nba.com on Bluesky re-read via getProfiles: verifiedStatus 'valid' (issuer bsky.app, isValid true), 123,008 followers (was 122,589 on 2026-09-17), bio verbatim 'The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! 3:00pm/et: Celtics/Pistons 7:00pm/et: 76ers/Knicks 9:30pm/et: Thunder/Spurs' — first-party confirmation of the opening-night tripleheader, and still a one-hour difference from Basketball Monster's listing that this project records rather than resolves. theathletic.com: verifiedStatus 'invalid' with isValid:false while trustedVerifierStatus is still 'valid' — unchanged since 2025-04-21. rodboone.bsky.social re-read as session 15 asked: STILL no description field at all, 654 posts, 2,042 followers, 11 follows, indexedAt 2025-07-03 — the refusal stands on a second dated read, not on memory." },
+  { level: "info", title: "2026-09-19 (session 17): club-account re-probe — 41 handles requested in four batched keyless getProfiles calls, ZERO new verification objects, and the three verified clubs re-confirmed", detail: "Re-ran the periodic probe the session-15 list asked for. Valid bsky.app verification objects found: trailblazers.bsky.social (POR, 26,314 followers / 1,550 posts, object created 2025-04-21), sixersnba.bsky.social (PHI, 12,523 / 2,498, 2025-04-21), nuggets.bsky.social (DEN, 3,834 / 4,269, 2025-07-08) — plus nba.com for the league. So 4 of 30 franchises, unchanged. Still no object: celticsnba (8,282 / 1,579), clevelandcavaliers (11,928 / 19), dallasmavs (24,519 / 2 posts), sunsphx (14,028 / 4,144), sacramentokings (4,284 / 66), washwizards (2,856 / 214), okcthunder (5,932 / 11), utahjazz (43 followers / 0 posts), miamiheat (!no-unauthenticated self-label, 4 posts), laclippers (364 / 0). Bluesky impersonation labels re-confirmed on memphisgrizzlies, nyknicks and cavs.com. Squatted placeholders re-confirmed: bostonceltics ('UmYeah', 1 follower / 1 post), brooklynnets ('Saving this for the Brooklyn Nets', 1 post), orlandomagic ('Whifffle', 4 followers / 0 posts), charlottehornets (1 follower / 0 posts), dallasmavericks (0 / 0), denvernuggets (1 follower / 7 posts), losangeleslakers (2 / 0), torontoraptors (3 / 0), houstonrockets (17 / 0), indianapacers (7 / 0). Handles that still do not resolve at all: athhawks, hornetsonprime, hawksnba, hornetsnba, chicagobulls, detroitpistons, detroitspistons, warriorsnba, lakersnba, minnesotatimberwolves, neworleanspelicans, sanantoniospurs. Club corroboration therefore stays manual for 26 of 30 franchises; nothing keyless changed that this session." },
+  { level: "info", title: "2026-09-19 (session 17): the verifier-drift UI shipped, and computing it surfaced two facts the page had never shown", detail: "verifierDrift() in assets/js/data.js computes three kinds of rot under a reporter row — a recorded-valid verification object now missing or isValid:false, a beat the bio has moved or dropped, and an activity transition across the 30-day line — and reporters.html renders it in a new 'Verifier drift & activity watch' panel with per-fact evidence links. Run against the committed CI evidence it reports three facts: andyblarsen.bsky.social beat-DEPARTED (his Tribune bio now reads 'Formerly Jazz beat writer', so UTA is left with no beat claim from that account — a coverage loss, labelled as one and not as a transfer); joevardon.bsky.social carrying a verification object the API marks isValid:false with issuer theathletic.com, recorded as a standing risk on a row that never graded him on the object; and the Grange activity transition. None of the three downgrades an identity, and the panel says so. beat-departed and beat-changed are separate labels because they are different facts: one leaves a club with no claim, the other moves a writer somewhere else." },
+  { level: "warn", title: "2026-09-19 (session 17): .pill.dim had been emitted by reporters.js since session 13 with no stylesheet rule — found by the new prefix+class audit, not by looking", detail: "reporters.js line 257 renders a pill whose class is RECENCY ? ok : dim — the pill that tells a reader the activity numbers are NOT from the CI file. .pill.dim was never defined, so on the deployed page it rendered in ordinary body colour instead of dimmed: the same markup-ahead-of-stylesheet defect class as .sev-border-* and .good/.bad. tools/integration_test.js now audits prefix+class PAIRS per page (not class names anywhere in the file) and is verified non-vacuous by deleting .pill.info and .pill.dim in turn. Writing that audit took five attempts, each caught by a non-vacuity run rather than by review: it matched class names anywhere (so .badge.info excused a missing .pill.info), missed the ternary form, over-collected from whole lines, read the match ARRAY length m.length instead of m[0].length, and finally matched selectors inside CSS comments. All five are recorded in the check's own comment so the next session does not repeat them." },
   { level: "bad", title: "2026-09-19 (session 16): board alerts keyed eligibility on ESPN's listing DATE, which would have silenced training-camp changes — fixed", detail: "InjuryBoard.alertFor set alertEligible from AlertEngine.isFresh(row.updated, 24h). fire() already judges board/official items by observedAt (the 6-hour freshness fix), BUT a false alertEligible short-circuits fire() before that test. On 2026-09-19 ESPN's injuries API still stamps most rows with the original comment date (sampled live: Mouhamed Gueye ATL date=2026-07-19T00:14Z, payload timestamp 2026-09-19T18:13:01Z). A NEW listing or a STATUS CHANGE observed today on a July-stamped row would be silent-dropped even though observedAt is now. Training camp opens 2026-09-22. Fixed: board change alerts are eligible; freshness is judged only by observedAt + maxAgeMs. Pinned by tools/regression_test.js with a 40-day-old source stamp." },
   { level: "warn", title: "2026-09-19 (session 16): official 2026-27 injury-report page still 404 — re-read live, new XID", detail: "https://official.nba.com/nba-injury-report-2026-27-season/ returned HTTP 404 titled 'Error 404 Not Found' with XID 71103381 (previous session-15 read was XID 44289229; session-7 was XID 74717976). The 2025-26 rules page still returns 200 with the deadline text intact (5pm local day-before; 11am–1pm gameday; 1pm for back-to-backs). Automatic official confirmation remains blocked until that URL exposes timestamped PDF links. The adapter never guesses a filename." },
   { level: "warn", title: "2026-09-19 (session 16): ESPN injuries HTML + JSON still omit CLE, DET and LAL — 27/30, reconfirmed the same day as training camp minus three", detail: "Human page https://www.espn.com/nba/injuries (title 'NBA Injury Status - 2026-27 Season') and JSON https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries (timestamp 2026-09-19T18:13:01Z, season {year:2027, type:1, name:'Preseason', displayName:'2026-27'}) both returned team blocks for 27 clubs. CLE, DET and LAL still have no block at all — the same three named on 2026-09-17. Sampled live HTML rows that ARE present: Mouhamed Gueye ATL fractured left foot (Brad Rowland); Jayson Tatum BOS knee (John Schuhmann); Jimmy Butler III GSW Out est. Dec 1 (Danny Emerman); Mark Williams PHX Out torn labrum (Shams Charania); Adem Bona PHI Day-To-Day foot, re-eval at camp (Derek Bodner). An omitted block is still not clearance. The board now renders empty cards for those three in the team-grid view and a 30-chip strip on every view, instead of only naming them in a coverage line." },

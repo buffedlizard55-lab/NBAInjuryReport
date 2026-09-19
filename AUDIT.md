@@ -521,3 +521,74 @@ quietly leaving stale derived data in circulation. `MODEL_VERSION` is 3.
    them. Any new producer must be added to the smoke list of shapes.
 4. **Two sources were added to the registry this pass** (ESPN team-schedule API, the city-coordinate travel
    model) with explicit what-it-is / what-it-is-NOT wording; both are in `data/verified_sources.json`.
+
+## Session 17 (2026-09-19) — the build was red, and the red test was the wrong thing
+
+Running the project's own suite **before** changing anything produced
+`verify_reporters_test: 118 passed, 1 failed` on a clean tree at `4bf0813`. That is the audit fact
+this section exists to record, because the failure was not where it pointed.
+
+**The failing check** asserted that three session-15 rows evaluate `dormant` at a fixed clock.
+Session 15 graded `michaelgrangenba.bsky.social` DORMANT at 39 days (newest post
+`2026-08-10T18:05:49Z`). The daily `live-audit.yml` re-measured that handle later the same day at
+newest post **`2026-09-19T14:24:17.055Z` = 0 days**, and `tools/backfill_registry_recency.js` copied
+the date into the row. So the product was right, the build was red, and the row's prose went on
+asserting `39 days → DORMANT` over a date that evaluated ACTIVE.
+
+The third part is the actual defect and it matches the pattern this project keeps finding: a
+confident statement that nothing re-checks. Sessions 6 and 7 found it in a test harness and in the
+runner audit; this session found it in the registry's own prose.
+
+| Fix | Where | Verified |
+|---|---|---|
+| Date writes that cross the dormant boundary record `observed.activityLog` (`at`/`postAt`/`from`/`to`/`previousAt`/`previousDays`/`days`/`thresholdDays`/`source`) and append one dated prose sentence; the earlier verdict is never rewritten | `tools/backfill_registry_recency.js` | the real CLI on a real copy of the registry in a scratch dir, with post-write proofs that the log **evaluates** and that exactly the expected number of notes appeared |
+| Threshold read from `data.js`, not duplicated | same | both the tool and the test take `ARENA_DORMANT_DAYS` from the registry |
+| The session-15 check pins the **rule** (0/30 active, 31/597 dormant), not a handle list | `tools/verify_reporters_test.js` | 3 checks |
+| **Registry-wide invariant**: prose verdict must agree with the row's own measured date, or carry a dated activity record | `tools/verify_reporters_test.js` | **non-vacuity proven** — deleting the record makes it fail and name exactly that row |
+| `verifierDrift()` + the reporter-page drift panel | `assets/js/data.js`, `reporters.html`, `assets/js/reporters.js` | 13 logic checks against real registry rows with synthetic evidence, plus a booted-page scenario in `integration_test.js` |
+| `.pill.info` (new) and **`.pill.dim` (broken since session 13)** | `assets/css/style.css` | prefix+class audit, non-vacuous by deleting each rule in turn |
+
+**A defect that was already on the deployed page.** `reporters.js` has emitted
+`class="pill ${RECENCY ? "ok" : "dim"}"` since session 13 — that is the pill telling a reader the
+activity numbers are *not* from the CI file — and `.pill.dim` was never defined, so it rendered in
+ordinary body colour. It was found by the new audit, not by looking.
+
+**The audit itself took five attempts**, and only a non-vacuity run exposed any of them: it matched
+class *names* anywhere (so `.badge.info` excused a missing `.pill.info`); missed the ternary form the
+panel actually uses; over-collected every quoted word on a line; read `m.length` (the match **array**
+length, always 1) instead of `m[0].length`; and matched selectors **inside CSS comments**. All five
+are recorded in the check's comment. This is the third session in a row where the highest-value
+finding was in a check rather than in the product, so the standing rule holds: **a new check without
+a demonstrated failure is not a check.**
+
+**A duplicate audit was written and then deleted.** A `getElementById` audit for `reporters.html`
+failed on `officialEvidence` / `playerHistory` / `historySearch` / `impactLegend`; those are
+dashboard-only nodes and an audit for this page already existed with a documented exemption. The
+duplicate was removed and the original strengthened (it now tolerates `getElementById( "id" )` and
+single quotes, which the stricter pattern silently skipped).
+
+**A suspicion checked and dropped.** `NBA_OFFICIAL_ACCOUNT_PROBE.summary.withValidVerificationObject`
+reads `0` while a probe row says `nuggets.bsky.social` has a valid object. Not a contradiction: the
+`0` is scoped to the 25 handles of the 2026-09-18 probe, the DEN row came from a later search-based
+sweep, and the summary's own `meaning` text says so. Recorded here so nobody re-investigates it.
+
+### Live reads this session (assistant page-fetch, ~18:50Z)
+
+| Source | Result |
+|---|---|
+| `official.nba.com/nba-injury-report-2026-27-season/` | **404**, XID **72640245** (after 74717976 → 44289229 → 71103381) |
+| `site.api.espn.com/.../nba/injuries` | 200, payload timestamp **2026-09-19T18:50:34Z**, 2026-27 Preseason; Gueye ATL still `date=2026-07-19T00:14Z` |
+| `basketballmonster.com/playernews.aspx` | 200; "regular season begins in 31 days"; 10/20 slate BOS@DET 2:00pm / PHI@NYK 6:00pm / OKC@SAS 8:30pm |
+| `getProfiles` `nba.com` | `verifiedStatus: valid`, **123,008 followers**, bio names the Oct 20 tripleheader at 3:00 / 7:00 / 9:30pm ET |
+| `getProfiles` `theathletic.com` | `verifiedStatus: invalid`, object `isValid:false`, `trustedVerifierStatus: valid` — unchanged since 2025-04-21 |
+| `getProfiles` `rodboone.bsky.social` | **still no `description` field**; 654 posts, 2,042 followers, `indexedAt` 2025-07-03 — refusal stands on a second dated read |
+| club re-probe, 41 handles / 4 batched calls | **zero new verification objects**; POR, PHI, DEN + league remain the only four. Impersonation labels re-confirmed on `memphisgrizzlies`, `nyknicks`, `cavs.com` |
+
+**Not verified this session, stated plainly:** no live-game behaviour (there has been no 2026-27 tip,
+so exit detection, QTR latency and the STAKE component remain designed-and-tested, never measured);
+`tools/browser_test.js` was not run locally (it needs a Playwright/Chromium install this sandbox
+cannot fetch — it runs in CI); and `live-audit.yml` was not re-run by this session, so the evidence
+file is still the committed 2026-09-19T18:28:52Z run.
+
+**Suite at the end of the session:** smoke 234 · integration 102 · impact 80 · poll-fixture 25 ·
+regression 27 groups · verify-reporters 149 · Python 26 — green, from a red start.

@@ -69,6 +69,16 @@ nav.links a:hover, nav.links a.active { color: var(--text); background: var(--ca
 .pill.ok { color: var(--good); border-color: rgba(61,220,132,.4); }
 .pill.warn { color: var(--warn); border-color: rgba(255,190,61,.4); }
 .pill.bad { color: var(--bad); border-color: rgba(255,93,93,.4); }
+/* 2026-09-19 (session 17): the drift watch emits .pill.info for the activity-change count.
+ * .badge.info and .callout.info already existed; .pill.info did not, so the pill would have
+ * rendered in body colour — the same markup-ahead-of-stylesheet drift found twice before. */
+.pill.info { color: #9adcff; border-color: rgba(88,198,255,.4); }
+/* ALSO session 17, and this one was ALREADY BROKEN ON THE DEPLOYED PAGE: reporters.js has emitted
+ * `class="pill ${RECENCY ? "ok" : "dim"}"` since session 13, but .pill.dim was never defined, so the
+ * "activity from registry observations (CI file not loaded)" pill — the one that tells a reader the
+ * activity numbers are NOT from CI — rendered in ordinary body colour. Found by the prefix+class
+ * audit in tools/integration_test.js, not by looking. */
+.pill.dim { color: var(--muted); border-color: var(--line); opacity: 0.85; }
 
 /* Cards & grid */
 .grid { display: grid; gap: 16px; margin-top: 18px; }
