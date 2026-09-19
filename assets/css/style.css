@@ -269,6 +269,13 @@ ol.tight li, ul.tight li { margin-bottom: 6px; }
 .post.watch { border-left-color: var(--warn); background: rgba(255,190,61,.06); }
 .post .wire-meta { margin-bottom: 4px; }
 .post .wire-links { margin-top: 5px; }
+/* 2026-09-19 (session 17): social.js has emitted `class="post-head"` on every social-feed card
+ * since the feed was built, and no selector for it ever existed — so the severity tag, the
+ * reporter's name, the verification tag, the outlet and the team chip all ran together with no
+ * gap, while the in-game monitor's equivalent header (`.watch-item .wi-top`, below) was styled.
+ * Found by generalising the session-7 class/stylesheet audit from "do .good/.bad exist" to "does
+ * every single-token class the modules emit appear in the stylesheet at all". Mirrors .wi-top. */
+.post .post-head { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 3px; }
 
 /* Audit/evidence panels remain readable on narrow screens. */
 :focus-visible { outline: 3px solid var(--warn); outline-offset: 3px; }
@@ -351,6 +358,11 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
  * those words rendered in ordinary body colour — a failed refresh looked like normal text. */
 .good { color: var(--good); }
 .bad { color: var(--bad); }
+/* 2026-09-19 (session 17): the verify panel's "N row(s) whose own prose contradicts the
+ * measurement" line emitted class="warn" — the third bare status word, and like the two above it
+ * had no rule of its own, so a contradiction in the human layer would have rendered in ordinary
+ * body colour next to a red impersonation count. Same fix as the original pair. */
+.warn { color: var(--warn); }
 
 /* Empty states were unstyled, so "no listings match the current filters" read like body copy. */
 .empty {

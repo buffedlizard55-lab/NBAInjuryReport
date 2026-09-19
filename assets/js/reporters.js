@@ -315,11 +315,18 @@ const Reporters = (() => {
             ${esc(String(s.unmeasuredInAlertPath == null ? "?" : s.unmeasuredInAlertPath))} with no readable date
             ${s.quietestInAlertPath == null ? "" : `· quietest ${esc(String(s.quietestInAlertPath))} days`}
             ${s.impersonationLabel ? `· <b class="bad">${esc(String(s.impersonationLabel))} impersonation-labelled</b>` : ""}
+            ${s.proseDrift ? `· <b class="warn">${esc(String(s.proseDrift))} row(s) whose own prose contradicts the measurement</b>` : ""}
             ${s.profilePrivate ? `· ${esc(String(s.profilePrivate))} private profile(s)` : ""}</div>
           ${problems.length ? `<div class="tiny" style="margin-top:6px">${problems.map(p => {
             const beatTag = (p.beatChange || (p.notes && p.notes.some(n => /beat-change/i.test(n)))) ? ' <span class="badge warn">beat-change watch</span>' : '';
             const revokeTag = (p.verification && p.verification.invalid) || (p.notes && p.notes.some(n => /verifier-revocation/i.test(n))) ? ' <span class="badge bad">verifier-revoked</span>' : '';
-            return `<div>⚠ ${esc(p.handle || p.name)} → <b>${esc(p.status)}</b>${beatTag}${revokeTag} ${esc((p.notes || [])[0] || "")}</div>`;
+            /* Session 17: the row's OWN sentence disagrees with the measurement. Shown with both
+             * numbers because the fix is a re-read, and the reader needs to see which is which. */
+            const proseTag = (p.status === "prose-drift" || (p.notes && p.notes.some(n => /prose-activity-drift/i.test(n)))) ? ' <span class="badge warn" title="The stored newest-post date and the human sentence in the registry row disagree. The date is the measurement; the sentence is stale.">prose ≠ measurement</span>' : '';
+            /* Every note, not just the first: a row can carry a beat-change watch AND a prose
+             * contradiction, and printing notes[0] alone hid whichever came second. */
+            const noteText = (p.notes || []).filter(Boolean).map(n => esc(String(n))).join(" · ");
+            return `<div>⚠ ${esc(p.handle || p.name)} → <b>${esc(p.status)}</b>${beatTag}${revokeTag}${proseTag} ${noteText}</div>`;
           }).join("")}</div>` : ""}`;
       })
       .catch(e => {

@@ -521,3 +521,202 @@ quietly leaving stale derived data in circulation. `MODEL_VERSION` is 3.
    them. Any new producer must be added to the smoke list of shapes.
 4. **Two sources were added to the registry this pass** (ESPN team-schedule API, the city-coordinate travel
    model) with explicit what-it-is / what-it-is-NOT wording; both are in `data/verified_sources.json`.
+
+---
+
+# Session 17 pass — 2026-09-19: the registry's two voices, and a clock that runs behind its own data
+
+## Scope
+
+Not a reporter sweep and not a new source. This pass went looking for places where the project
+states the same fact twice and had no way to notice the two copies disagreeing — the failure mode
+this codebase keeps producing (the severity-colour drift of session 7, the `athletes[]` key of
+session 7, the alert-shape mismatch of session 9, the duplicate-`latestPostAt` key of session 14).
+It found one, live, on committed data. Both defects below were found by running the shipped test
+suite and reading the failure, not by inspection.
+
+## Defect 1 — the age arithmetic could go negative (fixed)
+
+`node tools/verify_reporters_test.js` failed on committed data: *"session-15 rows that measured
+DORMANT are stored dormant, and the active ones are inside the window"*. Reading the failure rather
+than the code is what made it findable:
+
+```
+michaelgrangenba.bsky.social   active   days=-1   regLatest=2026-09-19T14:24:17.055Z
+```
+
+`arenaDaysSince()` returned `Math.floor((now - t) / 86400000)` with no floor at zero. A newest post
+can legitimately be **newer than the reference clock**: `live-audit.yml` measured Michael Grange at
+2026-09-19T18:28:52Z and found a newest post stamped **2026-09-19T14:24:17.055Z**, which is later
+than the 2026-09-19T12:00:00Z clock that check is pinned to. Unclamped, that is `-1`, and
+`writerRecency()` renders its label straight into the page — so reporters.html would have printed
+**"-1 days since newest post"**.
+
+The inversion is worse than the cosmetics: the further into the future a stamp sits, the *smaller*
+the number, and every consumer treats smaller as more recent. A corrupt future-dated row would have
+read as maximally active.
+
+Independently re-read this session, keylessly, to confirm the stored date is a real measurement and
+not a hand-typed guess:
+
+`https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=michaelgrangenba.bsky.social&limit=1`
+→ `record.createdAt = "2026-09-19T14:24:17.055Z"`, `indexedAt = "2026-09-19T14:24:19.362Z"`, a
+Sportsnet link ("Lowry celebration shows Raptors have slam-dunk template for honouring legends"),
+12 likes / 2 reposts. **The CI date is correct.** (Note: `app.bsky.actor.getAuthorFeed` is not a
+method — it returns `MethodNotImplemented`. The feed method is `app.bsky.feed.getAuthorFeed`, which
+is what the poller already uses.)
+
+**Fix.** `arenaDaysSince()` in `assets/js/data.js` and `ageDays()` in `tools/verify_reporters.js`
+both floor at 0 — two copies of the same arithmetic, so both clamp or the page and its own audit
+disagree. `writerRecency()` additionally exposes `aheadOfClock` and appends *"(stamp newer than this
+page's clock — floored at 0)"*, because a reader who sees "0 days" on a page whose clock is older
+than the measurement is owed the reason. Pinned by 8 new checks.
+
+## Defect 2 — the registry stored activity twice and nothing compared them (fixed)
+
+The same failure exposed the real problem underneath it. `BSKY_REPORTERS` records activity in two
+places:
+
+| copy | who writes it | who reads it |
+|---|---|---|
+| `observed.latestPostAt` (machine) | `tools/backfill_registry_recency.js`, from CI | the page's recency pill |
+| the `ACTIVITY:` sentence inside `verified` (human) | hand-written at registration | a human, on the page |
+
+`tools/backfill_registry_recency.js` deliberately touches only the machine fields — its header says
+so — so the prose is guaranteed to go stale whenever a writer posts. Nothing ever compared the two.
+Michael Grange shipped that way on committed data:
+
+- stored date: `2026-09-19T14:24:17.055Z` → the pill read **ACTIVE, 0 days**
+- prose: *"ACTIVITY: newest post 2026-08-10T18:05:49Z = 39 days → **DORMANT** by the 30-day rule"*
+
+Both statements were true of different moments, the page printed both, and **every test passed** —
+because the row's verdict was `ok`. A reader deciding whether Toronto has a live in-arena writer got
+a flat contradiction, and the direction of the error was the costly one: it *understated* coverage.
+
+Scanning the shipped registry for the same class found **2 rows** whose prose date disagreed with
+the stored date (`michaelgrangenba`, `rodwalkernola`) out of 7 rows carrying a parseable `ACTIVITY`
+claim in that form. Rod Walker's turned out **not** to be drift: prose says `0 days → ACTIVE`, and
+the newer stored date (2026-09-19T18:00:07.611Z, re-read keylessly this session — a NOLA.com Saints
+column) still evaluates to 0 days and ACTIVE. The claim was still true; only the timestamp inside
+the sentence was old. That distinction drove the design:
+
+**Fix.** `detectProseActivity()` in `tools/verify_reporters.js` compares the claim that matters —
+the **ACTIVE/DORMANT verdict** — not the day count. A day count written on 2026-09-19 is simply
+older by 2026-09-25; that is not drift. A row that says DORMANT while the measurement says ACTIVE is
+a false statement about a team's coverage. A contradiction produces a new warn-level status
+`prose-drift`, which:
+
+- is **never fatal** — identity and the pollable feed are both fine, only the sentence is stale;
+- **still counts as live coverage** in `summarize().activeInAlertPath`, because folding it into
+  "not ok" would understate live coverage, the exact opposite of the error it exists to catch;
+- renders on reporters.html as a **`prose ≠ measurement`** badge with both numbers, closing the
+  session-15 *verifier-drift UI* leftover.
+
+The panel also now prints **every** note on a row instead of `notes[0]`; the old code showed the
+beat-change badge while printing whichever note happened to come first.
+
+**Deliberately not done: auto-rewriting the prose.** The tool could regenerate the sentence, but the
+`ACTIVITY` clauses carry parentheticals describing *what the post was* — "(Magic broadcast deal with
+WMOR-TV Tampa)", "(a book-research post, not basketball)", "(an Emmys post, not basketball —
+activity is measured, not judged)". Mechanically rewriting the date while keeping those would
+produce confidently wrong prose; regenerating them would require inventing a description of a post
+nobody read. So the machine fields stay auto-backfilled, the contradiction is flagged for re-read,
+and Grange's sentence was corrected by hand **from the post actually read this session**, with the
+earlier 39-day reading kept as dated `HISTORY:` rather than deleted.
+
+## Defect 3 — two classes emitted into markup with no rule (fixed, found by generalising an old audit)
+
+Adding the `prose ≠ measurement` badge meant emitting `<b class="warn">`. Checking it against the
+stylesheet showed `.badge.warn` exists but **bare `.warn` does not** — only `.good` and `.bad` had
+bare rules, added in session 7 for exactly this reason. So the new contradiction count would have
+rendered in ordinary body colour beside a red impersonation count.
+
+That is the same bug session 7 fixed, recurring because the fix was pinned as a **hand-picked
+pair**:
+
+```js
+check("status words .good / .bad have their own rules, not only compound ones",
+  cssBare.has("good") && cssBare.has("bad"));
+```
+
+A test that names the two classes it was written for cannot notice a third. So the audit was
+generalised to scan every `class="…"` the modules emit and assert each one appears in the
+stylesheet. That immediately surfaced a **pre-existing, previously unnoticed** orphan:
+
+- **`post-head`** — emitted by `social.js` on *every* social-feed card since the feed was built,
+  with no selector anywhere in `style.css`. Each card's severity tag, reporter name, verification
+  tag, outlet and team chip therefore ran together with no gap, while the in-game monitor's
+  equivalent header (`.watch-item .wi-top`) was styled all along. Fixed by mirroring `.wi-top`.
+- The other seven single-token classes the scan reports as having no *bare* rule
+  (`teams`, `score`, `wi-top`, `br-top`, `br-player`, `abbr`, `tight`) are legitimately styled by
+  **descendant** selectors (`.watch-item .wi-top`, `.board-team-head .abbr`, `ol.tight li`, …).
+  That is why the assertion is "appears in the stylesheet as a class selector", not "has a bare
+  rule" — demanding the bare form would report styling that exists.
+
+Two honesty notes on this check itself. First, its first version had an optional-backslash regex
+written one backslash short, where `\?` silently means a *literal question mark*; it examined
+**0** classes and the orphan assertion passed. The accompanying anti-vacuity check
+("the modules really do emit single-token class attributes", `emitted.size > 20`) is the only
+reason that was caught, and both checks are kept. Second, the audit was verified by **negative
+run**: renaming the new `.post .post-head` rule makes exactly one check fail, naming
+`post-head (social.js)` and nothing else.
+
+## Live re-reads this session (page-fetch channel, 2026-09-19 ~18:50–19:05Z)
+
+Shell HTTPS egress is still blocked here (`curl` to `site.api.espn.com` →
+`SSL_ERROR_SYSCALL`), so these are assistant page-fetches, labelled as such and not written into
+`data/audit/latest.json` — that file is runner evidence and overwriting it with a different
+channel's output is exactly what the session-7 `ENV-BLOCKED` fix was about.
+
+| Source | Result |
+|---|---|
+| `official.nba.com/nba-injury-report-2026-27-season/` | **404**, new `XID: 72640245` (previous XIDs 71103381 / 44289229 / 74717976). Official adapter still blocked. No PDF filename guessed. |
+| `official.nba.com/nba-injury-report-2025-26-season/` | **200**. Page states the league's reporting deadlines (5 p.m. local the day before; 1 p.m. local for the second night of a back-to-back; game-day report 11 a.m.–1 p.m. local, 8–10 a.m. for tips at or before 5 p.m.). **No timestamped injury-PDF links observed.** |
+| `site.api.espn.com/.../nba/injuries` | **200**, `timestamp 2026-09-19T18:50:34Z`, `season {year:2027, type:1, name:"Preseason", displayName:"2026-27"}`. Sampled row still carries a stale listing date: Mouhamed Gueye ATL `date=2026-07-19T00:14Z` while `status=Day-To-Day` — the exact shape the session-16 `alertEligible` fix guards. |
+| `www.espn.com/nba/injuries` | **200**, title "NBA Injury Status - 2026-27 Season". **27 team blocks; CLE, DET and LAL return no block at all** — the same three as 2026-09-17, re-verified by enumerating the rendered tables (the team dropdown *does* list all 30). 75 rows counted. Confirms the board's "empty is not clearance" strip is still load-bearing, not a stale artefact. |
+| `basketballmonster.com/playernews.aspx` | **200**. "The regular season begins in 31 days"; opening night 10/20 listed at 2:00pm BOS at DET / 6:00pm PHI at NYK / 8:30pm OKC at SAS — the same second tip-time claim the season clock stores without picking a side. Format evidence copied, **not scraped into alerts**: Adem Bona PHI C *Questionable — foot sprain* (sourced to a Bob Cooney post), Mark Williams PHO C *Injured — left shoulder* (sourced to Shams Charania), Cam Whitmore DEN 2-way. |
+| `public.api.bsky.app` `app.bsky.feed.getAuthorFeed` | **200** for `michaelgrangenba` and `rodwalkernola`, both keyless, both quoted above. |
+| `public.api.bsky.app` `app.bsky.actor.getAuthorFeed` | **`MethodNotImplemented`** — not a method. Recorded so a future session does not mistake it for an access restriction. |
+
+Notably absent from the ESPN blocks: **DET has no injury listing at all** while Basketball Monster
+already schedules DET in the 10/20 opener against Boston. If DET is still returning no block once
+games are live, that is a source-coverage problem and not an offseason artefact — this is the
+session-16 open item, now with a second corroborating read.
+
+## Test surface after this pass
+
+| suite | before | after |
+|---|---|---|
+| `tools/smoke_test.js` | 234 | **237** |
+| `tools/impact_test.js` | 80 | 80 |
+| `tools/integration_test.js` | 91 | **94** |
+| `tools/poll_fixture_test.js` | 25 | 25 |
+| `tools/verify_reporters_test.js` | **118 passed / 1 failed** | **141 passed / 0 failed** |
+| `tools/regression_test.js` | 27 groups | 27 groups |
+| `python3 -m unittest discover -s tools -p 'test_*.py'` | 26 | 26 |
+
+The new checks pin: the zero floor on both copies of the arithmetic; the label never printing a
+negative age; `aheadOfClock` true only when the stamp is genuinely later than the clock; every
+`prose-drift` branch (contradiction, agreement, no claim, dormant-outranks-prose); prose-drift
+counting as live coverage; `summarize().proseDrift`; the **registry-wide invariant** that no
+committed row's `ACTIVITY` prose contradicts its stored measurement (plus a check that the invariant
+actually parses 10+ sentences, so it cannot pass vacuously); Grange's stored date equal to the CI
+measurement; his row retaining the 39-day reading as history; and three UI checks that the panel
+renders the badge, the summary count and **all** notes.
+
+## Irregularities flagged for manual review (session 17)
+
+1. **The registry's prose is a hand-maintained copy of a machine measurement, and will keep going
+   stale.** The drift detector makes the contradiction visible instead of silent, but it does not
+   repair it. The durable fix is to stop restating the measurement in prose — render the pill and
+   keep only the *interpretation* ("an Emmys post, not basketball") in the sentence. That is a
+   registry-wide edit across 83 rows and was not attempted here.
+2. **`prose-drift` is warn-level, so CI will not fail on it.** Deliberate: a stale sentence is not a
+   broken identity claim, and failing the daily job on prose would train people to ignore the job.
+   The trade-off is that a contradiction can sit on the page until someone reads the panel.
+3. **The two `ageDays` implementations remain two copies.** They now clamp identically and a test
+   asserts that, but the honest fix is one shared module loaded by both the browser and Node —
+   the same argument the project already accepted for `ARENA_DORMANT_DAYS`.
+4. **`app.bsky.actor.getAuthorFeed` returns `MethodNotImplemented`, not an auth error.** Anyone
+   re-deriving the feed URL from the `getProfiles` pattern will hit it and may misread it as
+   blocked access. Recorded here and in NEXT_STEPS.
