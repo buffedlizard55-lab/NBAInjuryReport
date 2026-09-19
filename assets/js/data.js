@@ -54,6 +54,70 @@ const ENDPOINTS = {
 const NBA_OFFICIAL_REPORT_URL = "https://official.nba.com/nba-injury-report-2025-26-season/";
 const NBA_OFFICIAL_INJURY_LANDING = "https://official.nba.com/";
 
+/* =====================================================================================
+ * 2026-27 SEASON CLOCK — dated, sourced, never inferred from "today feels like camp"
+ * -------------------------------------------------------------------------------------
+ * Why this exists: 2026-09-19 is three days before the first published training-camp
+ * reporting date. The injury board is about to start moving for real (camp designations,
+ * then preseason QTR/exits, then opening-night PDFs). A dashboard that does not say
+ * WHEN those gates open invites a reader to treat July summer-league stamps as current.
+ *
+ * Every date below was re-read 2026-09-19 against a public page. Where two trusted
+ * sources disagree (Basketball Monster lists BOS@DET 2:00pm on 10/20; ESPN and the
+ * official NBA Bluesky bio list 3:00pm ET), BOTH claims are stored and neither is
+ * silently picked. First-party NBA.com key-dates HTML was not re-fetched this session
+ * (club pages answer HTTP 403 to datacentre IPs); camp dates therefore cite the
+ * Olympics.com / NBC key-dates roundups that quote the league schedule release, and
+ * are labelled as such.
+ * ===================================================================================== */
+const NBA_SEASON_CALENDAR = {
+  checkedAt: "2026-09-19",
+  timezone: "America/New_York",
+  sources: [
+    { id: "espn-schedule-story", name: "ESPN — NBA schedule 2026-27: Opening night, Christmas and must-see games", url: "https://www.espn.com/nba/story/_/id/49471934/nba-full-schedule-2026-2027-games-watch-faq-rivalries-matchups", readAt: "2026-09-19", note: "Regular season begins Oct. 20 with a tripleheader: BOS@DET 3 p.m. ET, PHI@NYK 7 p.m. ET, OKC@SAS 9:30 p.m. ET (NBC/Peacock). Christmas Day five-game slate also listed." },
+    { id: "nba-bluesky-bio", name: "Official NBA Bluesky account bio", url: "https://bsky.app/profile/nba.com", readAt: "2026-09-17", note: "Bio names the Oct 20 opener (Celtics/Pistons, 76ers/Knicks, Thunder/Spurs). Independently confirms the ESPN slate; does not publish a tip-time for BOS@DET in the 2026-09-17 read beyond the ESPN match." },
+    { id: "bm-playernews", name: "Basketball Monster player news", url: "https://basketballmonster.com/playernews.aspx", readAt: "2026-09-19", note: "Page header: 'The regular season begins in 31 days.' Slate shown as BOS at DET 2:00pm, PHI at NYK 6:00pm, OKC at SAS 8:30pm on 10/20. Tip times CONFLICT with ESPN's 3/7/9:30 p.m. ET — both shown, neither picked." },
+    { id: "olympics-key-dates", name: "Olympics.com NBA 2026/27 schedule key dates", url: "https://www.olympics.com/en/news/nba-2026-27-schedule-lebron-opening-night", readAt: "2026-09-19", note: "29 September — Training camps open; 3–11 October — Preseason including NBA Canada/China Games; 20 October — Opening night. Not a first-party NBA.com page." },
+    { id: "nbc-key-dates", name: "NBC — When does the NBA season start? Key dates for 2026-27", url: "https://www.nbcbayarea.com/nba/nba-key-dates-2026-27-opening-night-trade-deadline-finals/4126182/", readAt: "2026-09-19", note: "Preseason begins Sat Oct 3, Heat at Raptors in Quebec City. Regular season opening night Tue Oct 20." }
+  ],
+  events: [
+    { id: "camp-overseas", at: "2026-09-22", label: "Training camp opens (overseas preseason teams)", kind: "camp", sourceIds: ["olympics-key-dates"], note: "Quoted from 2026-27 key-dates roundups, not an NBA.com HTML page re-read this session." },
+    { id: "camp-league", at: "2026-09-29", label: "Training camp opens (rest of league)", kind: "camp", sourceIds: ["olympics-key-dates"], note: "Olympics.com: '29 September — Training camps open'." },
+    { id: "preseason", at: "2026-10-03", label: "Preseason begins — MIA @ TOR (Quebec City)", kind: "preseason", sourceIds: ["nbc-key-dates", "espn-schedule-story"], note: "ESPN scoreboard event 401902644 / nba.com/heat game hub. First window where in-game QTR/exit alerts can be measured rather than fixture-tested." },
+    { id: "opening-night", at: "2026-10-20", label: "Opening night — BOS@DET, PHI@NYK, OKC@SAS", kind: "regular", sourceIds: ["espn-schedule-story", "nba-bluesky-bio", "bm-playernews"], note: "ESPN/NBA: 3pm / 7pm / 9:30pm ET. Basketball Monster lists 2:00pm / 6:00pm / 8:30pm for the same games — conflict flagged, not resolved." }
+  ],
+  conflicts: [
+    { what: "Opening-night tip time for BOS@DET (and the two nightcaps, by a one-hour shift)", a: "ESPN schedule story: 3:00pm / 7:00pm / 9:30pm ET", b: "Basketball Monster playernews.aspx (read 2026-09-19): 2:00pm / 6:00pm / 8:30pm", action: "Show both. Do not pick a winner. A human should read NBC/Peacock before the date matters." }
+  ]
+};
+
+function seasonClock(nowMs) {
+  const now = Number.isFinite(nowMs) ? nowMs : Date.now();
+  const d = new Date(now);
+  const dayStart = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+  const srcById = {};
+  for (const s of (NBA_SEASON_CALENDAR.sources || [])) srcById[s.id] = s;
+  const events = (NBA_SEASON_CALENDAR.events || []).map(e => {
+    const t = Date.parse(e.at + "T00:00:00Z");
+    const days = Number.isFinite(t) ? Math.round((t - dayStart) / 86400000) : null;
+    const state = days == null ? "unknown" : days < 0 ? "past" : days === 0 ? "today" : "upcoming";
+    return {
+      id: e.id, at: e.at, label: e.label, kind: e.kind, note: e.note || "",
+      days: days, state: state,
+      sources: (e.sourceIds || []).map(id => srcById[id]).filter(Boolean)
+    };
+  });
+  const next = events.find(e => e.days != null && e.days >= 0) || null;
+  return {
+    checkedAt: NBA_SEASON_CALENDAR.checkedAt,
+    timezone: NBA_SEASON_CALENDAR.timezone,
+    sources: NBA_SEASON_CALENDAR.sources,
+    conflicts: NBA_SEASON_CALENDAR.conflicts || [],
+    events: events,
+    next: next
+  };
+}
+
 /* ESPN structured-status -> our severity scale.
  * Only statuses DIRECTLY OBSERVED in the live payload are asserted as seen;
  * the regexes below are generic so unrecognised values fall through to "mention"
@@ -1576,6 +1640,11 @@ const SOURCES = [
 
 /* Irregularities / requirements flags raised during verification. */
 const FLAGS = [
+  { level: "bad", title: "2026-09-19 (session 16): board alerts keyed eligibility on ESPN's listing DATE, which would have silenced training-camp changes — fixed", detail: "InjuryBoard.alertFor set alertEligible from AlertEngine.isFresh(row.updated, 24h). fire() already judges board/official items by observedAt (the 6-hour freshness fix), BUT a false alertEligible short-circuits fire() before that test. On 2026-09-19 ESPN's injuries API still stamps most rows with the original comment date (sampled live: Mouhamed Gueye ATL date=2026-07-19T00:14Z, payload timestamp 2026-09-19T18:13:01Z). A NEW listing or a STATUS CHANGE observed today on a July-stamped row would be silent-dropped even though observedAt is now. Training camp opens 2026-09-22. Fixed: board change alerts are eligible; freshness is judged only by observedAt + maxAgeMs. Pinned by tools/regression_test.js with a 40-day-old source stamp." },
+  { level: "warn", title: "2026-09-19 (session 16): official 2026-27 injury-report page still 404 — re-read live, new XID", detail: "https://official.nba.com/nba-injury-report-2026-27-season/ returned HTTP 404 titled 'Error 404 Not Found' with XID 71103381 (previous session-15 read was XID 44289229; session-7 was XID 74717976). The 2025-26 rules page still returns 200 with the deadline text intact (5pm local day-before; 11am–1pm gameday; 1pm for back-to-backs). Automatic official confirmation remains blocked until that URL exposes timestamped PDF links. The adapter never guesses a filename." },
+  { level: "warn", title: "2026-09-19 (session 16): ESPN injuries HTML + JSON still omit CLE, DET and LAL — 27/30, reconfirmed the same day as training camp minus three", detail: "Human page https://www.espn.com/nba/injuries (title 'NBA Injury Status - 2026-27 Season') and JSON https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries (timestamp 2026-09-19T18:13:01Z, season {year:2027, type:1, name:'Preseason', displayName:'2026-27'}) both returned team blocks for 27 clubs. CLE, DET and LAL still have no block at all — the same three named on 2026-09-17. Sampled live HTML rows that ARE present: Mouhamed Gueye ATL fractured left foot (Brad Rowland); Jayson Tatum BOS knee (John Schuhmann); Jimmy Butler III GSW Out est. Dec 1 (Danny Emerman); Mark Williams PHX Out torn labrum (Shams Charania); Adem Bona PHI Day-To-Day foot, re-eval at camp (Derek Bodner). An omitted block is still not clearance. The board now renders empty cards for those three in the team-grid view and a 30-chip strip on every view, instead of only naming them in a coverage line." },
+  { level: "info", title: "2026-09-19 (session 16): season clock added from dated public pages — camp in 3 days, preseason 14, opening night 31; tip-time conflict kept visible", detail: "NBA_SEASON_CALENDAR / seasonClock() in assets/js/data.js. Opening night 2026-10-20 tripleheader cited from ESPN's schedule story (BOS@DET 3pm ET, PHI@NYK 7pm, OKC@SAS 9:30pm) and the official NBA Bluesky bio. Basketball Monster's playernews.aspx, re-read the same day, shows the same three games at 2:00pm / 6:00pm / 8:30pm and 'The regular season begins in 31 days.' Both tip-time claims are stored; neither is picked. Camp dates (22 Sep overseas / 29 Sep rest of league) and preseason (3 Oct MIA@TOR, Quebec City) cite Olympics.com and NBC key-dates roundups — not a first-party NBA.com HTML page this session, and the rows say so. In-game QTR/exit latency remains unmeasured until that 3 Oct tip." },
+  { level: "info", title: "2026-09-19 (session 16): Basketball Monster player news re-read live as the format model — not scraped into alerts", detail: "https://basketballmonster.com/playernews.aspx returned 200. Current injury-relevant items (copied, not imported): Adem Bona PHI Questionable, foot sprain, source x.com/Bobcooney1076; Mark Williams PHX Injured, left shoulder labrum surgery, out several months, source twitter.com/ShamsCharania; plus contract/trade notes (Cam Whitmore DEN two-way, Devin Carter to be waived). Status tags QUESTIONABLE / INJURED / NOTE / TRADED present in the fetched text. This project still links out and does not scrape BBM into the alert path." },
   { level: "info", title: "2026-09-19 (session 15): 16 more in-arena identities read live for the thin teams — graded down where the bio does not support the beat, three stored DORMANT on arrival, one REFUSED", detail: "Mike Vorkunov's NBA starter-pack list (app.bsky.graph.getList, all 10 chunks), bio-phrase searchActors queries and exact-name typeahead produced 16 supportable identities, every one read via getProfiles AND getAuthorFeed?limit=1 the same day: ORL Cody Taylor (Rookie Wire, 'Credentialed reporter covering the Orlando Magic', 17 days), DET Hunter Patterson (The Athletic — VALID verification object issued by theathletic.com, so the row names the OUTLET as verifier, 0 days), PHI Gina Mizell (Inquirer beat, 8 days via a repost) and Chris Hine (Inquirer, whose bio records his own MIN→PHI move, 4 days), TOR Michael Grange (Sportsnet columnist, 39 days → DORMANT), BKN Lucas Kaplan (NetsDaily — outlet-verified, no beat stated in the bio, 0 days), NOP Rod Walker (Times-Picayune multi-sport COLUMNIST — outlet-verified, newest post is a Saints column, 0 days) and Mason Ginsberg (In the NO podcast, 0 days), CHI Julia Poe (Tribune, 'covering hoops', PBWA, 3 days) and Will Gottlieb (CHGO, 25 days), IND Caitlin Cooper (independent Pacers film blog, 0 days), CHA James Plowright (CLTure + Buzz Beat, 1 day), WAS Chase Hughes (Monumental — TEAM-OWNED network, labelled so, 18 days), UTA Ryan Miller (KSL, 597 days → DORMANT), NYK Steve Popper (Newsday, 352 days → DORMANT). REFUSED: rodboone.bsky.social — Hornets roster-move posts, 654 of them, but NO bio, no outlet, no verification object; by the rule that refused miketrudell it cannot alert. Also read and NOT added: Kristian Winfield (krisplashed, newest 2025-05-28), dan-savage (Magic employee), a 'nypostlewisbot.mirrors.bot' mirror of Brian Lewis's X account (a mirror is not the person and the registry forbids mirror handles). Measured after: 30 teams · 18 verified-pollable · 12 bio-pollable · 65 pollable writers · 21 Bluesky-verified · 46 active / 19 dormant / 0 unmeasured · dormant-only DAL, LAL, UTA · 12 teams still carry at least one gap (the same 12 as before, because none of these rows adds a VERIFICATION OBJECT to a team that lacked one — CHA and UTA in particular are deeper, not closed)." },
   { level: "warn", title: "2026-09-19 (session 15): club-handle re-probe — 20 handles re-read, ZERO change; 26 of 30 franchises still have no verified Bluesky account", detail: "One batched getProfiles request (NBA_OFFICIAL_ACCOUNT_PROBE.reprobe). POR/PHI/DEN still carry a valid bsky.app object; nothing else does. dallasmavs.bsky.social: 24,517 followers, 2 posts, no object, profile last indexed 2024-01-20 — still NOT treated as verified. utahjazz.bsky.social 43 followers / 0 posts; orlandomagic.bsky.social is 'Whifffle — Reserved for the Orlando Magic' (4 followers); brooklynnets.bsky.social 'Saving this for the Brooklyn Nets' (1 post); nyknicks.bsky.social still carries Bluesky's impersonation label. Also re-confirmed: nba.com itself is verified and active (indexed 2026-09-14), and official.nba.com's 2026-27 injury-report page still answers 404 (XID 44289229) — the official adapter remains blocked and the page must keep saying so." },
   { level: "warn", title: "2026-09-19 (session 14): the new registry-recency backfill shipped a duplicate-key bug that every existing check passed — found on its first real run and fixed, with the regression added", detail: "tools/backfill_registry_recency.js exists so a clone or a fork build can print measured recency before any CI evidence file is present, and the first real run reported success — 35 rows brought up to date, the file re-evaluated, every identity field unchanged, --check clean. It was still wrong. Rows written by sessions 13-14 carry the shape `latestPostAt: null` (checked, not yet measured). The tool only replaced QUOTED dates, so on those rows it prepended `latestPostAt: '...'` and LEFT the null behind — and JavaScript keeps the LAST duplicate key. Boston's Gary Washburn therefore still evaluated to null: the row looked measured in the diff and printed *unmeasured* in exactly the environment the tool exists for. A follow-up audit of the whole registry found the damage was one row; it is repaired. Three changes: the literal pattern accepts an unquoted null; a row with two keys is repaired (or refused with a warning if its stored date is newer than the evidence) instead of added to; and the post-edit proof now asserts the EVALUATED value of every row it touched equals the date it planned, because 'did this row change?' is a weaker question than 'does this row now hold what I meant to write?'. tools/verify_reporters_test.js pins it: the null shape, the duplicate shape, and an invariant that no committed row carries a duplicate key and that every row the evidence measures evaluates to that exact date." },

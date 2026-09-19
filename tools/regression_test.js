@@ -114,6 +114,22 @@ check('A high-impact starter tag never changes alert eligibility, only its wordi
     assert.ok(AlertEngine.isFresh(a.observedAt, a.maxAgeMs || 1800000), 'the observation is fresh even though the source stamp is 6h old');
     assert.ok(!AlertEngine.isFresh(a.ts, 1800000), 'and the source timestamp alone would have suppressed it — that was the bug');
   });
+  check('A July-stamped ESPN listing still alerts when the CHANGE is observed today (session 16)', () => {
+    /* The 6h case above is still inside the old 24h window, so it could not catch the defect:
+     * alertEligible used to be isFresh(row.updated, 24h), which is false for the July dates
+     * ESPN still publishes on 2026-09-19. fire() never ran. Reset App filters first — an
+     * earlier check in this file installs a BOS/out mute. */
+    vm.runInContext('App.getFilters=()=>({team:"ALL",sevs:{out:true,doubtful:true,questionable:true,probable:true,return:true,mention:true}});', sandbox);
+    const ancient = { id:'july-1', player:'Mouhamed Gueye', team:'ATL', status:'Out', sev:'out', sevLabel:'OUT',
+      updated: new Date(Date.now() - 40*86400000).toISOString(), shortComment:'fractured left foot', bodyPart:'Left Foot', returnDate:null, fp:'Out|Left Foot||',
+      teamUrl:'https://www.espn.com/nba/team/injuries/_/name/atl', playerUrl:null };
+    const a = InjuryBoard.alertFor('new', ancient);
+    assert.notEqual(a.alertEligible, false, 'eligibility must not be keyed on the source date');
+    assert.ok(AlertEngine.isFresh(a.observedAt, a.maxAgeMs), 'observation is fresh');
+    assert.equal(AlertEngine.isFresh(a.ts, 24*60*60*1000), false, 'the source stamp itself is older than 24h — that used to silent-drop');
+    AlertEngine.clearLog();
+    assert.equal(AlertEngine.fire(a), true, 'fire() must sound for a newly observed change on an old-stamped listing');
+  });
   check('Social alerts stay bound to post time (old resurfacing posts cannot re-alert)', () => {
     const old = { uri:'at://old', handle:'x.bsky.social', name:'X', text:'Veteran is out tonight with a knee injury', url:'https://bsky.app/profile/x.bsky.social/post/old',
       createdAt: new Date(Date.now() - 3*86400000).toISOString(), sev:'out', sevLabel:'OUT (social report)', verified:true, inGameWatch:false };

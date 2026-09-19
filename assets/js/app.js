@@ -487,8 +487,49 @@ const App = (() => {
     const nowBtn = document.getElementById("refreshNow");
     if (nowBtn) nowBtn.addEventListener("click", () => refresh(false));
 
+    const strip = document.getElementById("boardTeamStrip");
+    if (strip) strip.addEventListener("click", (e) => {
+      const btn = e.target && e.target.closest ? e.target.closest("[data-team]") : null;
+      if (!btn) return;
+      const sel = document.getElementById("teamFilter");
+      const next = (sel && sel.value === btn.dataset.team) ? "ALL" : btn.dataset.team;
+      if (sel) {
+        sel.value = next;
+        sel.dispatchEvent(new Event("change"));
+      } else {
+        const ff = getFilters(); ff.team = next; saveFilters(ff);
+        if (typeof InjuryBoard !== "undefined") InjuryBoard.render();
+      }
+    });
+
+    renderSeasonClock();
     renderInArenaSummary();
     refresh(true).then(() => startPolling());
+  }
+
+  function renderSeasonClock() {
+    const el = document.getElementById("seasonClock");
+    if (!el || typeof seasonClock !== "function") return;
+    const clock = seasonClock();
+    const esc = AlertEngine.escapeHtml;
+    const next = clock.next;
+    const nextBit = next
+      ? ('<b>' + esc(next.label) + '</b> in <b>' + next.days + '</b> day' + (next.days === 1 ? "" : "s") +
+         ' <span class="tiny muted">(' + esc(next.at) + ')</span>')
+      : '<span class="muted">No upcoming dated gate in the calendar.</span>';
+    const events = (clock.events || []).map(e => {
+      const cls = e.state === "today" ? "ok" : e.state === "upcoming" ? "" : "muted";
+      const when = e.days == null ? "" : e.days === 0 ? "today" : e.days > 0 ? ("in " + e.days + "d") : (Math.abs(e.days) + "d ago");
+      const href = (e.sources && e.sources[0] && e.sources[0].url) || "";
+      return '<span class="pill ' + cls + '">' + (href ? '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(e.label) + ' ↗</a>' : esc(e.label)) +
+        ' · ' + esc(when) + '</span>';
+    }).join("");
+    const conflict = (clock.conflicts || []).map(c =>
+      '<div class="tiny muted">⚠ Tip-time conflict kept visible: ' + esc(c.a) + ' vs ' + esc(c.b) + ' — ' + esc(c.action) + '</div>'
+    ).join("");
+    el.innerHTML = '<div class="season-clock-next">📅 ' + nextBit +
+      ' <span class="tiny muted">· calendar re-read ' + esc(clock.checkedAt) + '</span></div>' +
+      '<div class="pill-row" style="margin-top:8px">' + events + '</div>' + conflict;
   }
 
   /* The dashboard's one-line view of the second verification layer. Computed from arenaCoverage()

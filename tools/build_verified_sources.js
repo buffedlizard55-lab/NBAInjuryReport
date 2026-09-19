@@ -10,9 +10,9 @@ const root = path.join(__dirname, "..");
 const dataSrc = fs.readFileSync(path.join(root, "assets/js/data.js"), "utf8");
 
 const extract = new Function(dataSrc + `
-  return { ENDPOINTS, TEAMS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE };
+  return { ENDPOINTS, TEAMS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, NBA_SEASON_CALENDAR };
 `);
-const { ENDPOINTS, TEAMS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE } = extract();
+const { ENDPOINTS, TEAMS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, NBA_SEASON_CALENDAR } = extract();
 
 const statusCounts = REPORTERS.reduce((m, r) => { m[r.status] = (m[r.status] || 0) + 1; return m; }, {});
 

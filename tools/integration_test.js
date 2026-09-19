@@ -33,7 +33,14 @@ for (const [page, scripts] of Object.entries(PAGES)) {
     const src = fs.readFileSync(path.join(ROOT, s), "utf8");
     for (const m of src.matchAll(/getElementById\("([^"]+)"\)/g)) referenced.add(m[1]);
   }
-  const missing = [...referenced].filter(id => !ids.has(id));
+  /* intelligence.js is loaded on both pages. Dashboard-only nodes are null-guarded
+   * (officialEvidence, playerHistory, historySearch, impactLegend). Requiring them on
+   * reporters.html would force fake markup; dropping them from the dashboard is already
+   * caught by the index.html pass and by tools/impact_test.js. */
+  const sharedOptional = page === "reporters.html"
+    ? new Set(["officialEvidence", "playerHistory", "historySearch", "impactLegend"])
+    : new Set();
+  const missing = [...referenced].filter(id => !ids.has(id) && !sharedOptional.has(id));
   check(`${page}: ${referenced.size} ids referenced, all present`, missing.length === 0, "missing: " + missing.join(", "));
   /* every script tag exists on disk and the load order is the documented one */
   for (const s of scripts) check(`${page} loads ${s}`, html.includes(`src="${s}"`) && fs.existsSync(path.join(ROOT, s)));
@@ -156,6 +163,22 @@ console.log("== runtime: App.init() refresh chain ==");
     els.boardCoverage.innerHTML.slice(0, 240));
   check("the coverage line refuses to treat an absent block as clearance",
     /NOT evidence that nobody/.test(els.boardCoverage.innerHTML));
+  check("season clock names the next dated gate from the sourced calendar",
+    /Training camp/.test(els.seasonClock.innerHTML) && /calendar re-read/.test(els.seasonClock.innerHTML),
+    (els.seasonClock.innerHTML || "").replace(/<[^>]+>/g, " ").slice(0, 160));
+  check("30-chip strip renders every franchise",
+    (els.boardTeamStrip.innerHTML.match(/team-strip-chip/g) || []).length === 30,
+    String((els.boardTeamStrip.innerHTML.match(/team-strip-chip/g) || []).length));
+  check("strip marks omitted teams as no-listings (fixture is ATL-only)",
+    (els.boardTeamStrip.innerHTML.match(/no-listings/g) || []).length === 29 &&
+    /data-team="CLE"/.test(els.boardTeamStrip.innerHTML));
+  M.InjuryBoard.setView("teams");
+  check("team-grid paints empty cards for omitted franchises instead of hiding them",
+    (els.injuryBoard.innerHTML.match(/board-team-empty/g) || []).length === 29 &&
+    /CLE/.test(els.injuryBoard.innerHTML) && /not clearance/.test(els.injuryBoard.innerHTML),
+    String((els.injuryBoard.innerHTML.match(/board-team-empty/g) || []).length));
+  check("dashboard reporter scorecard container exists so intelligence.js can write it",
+    typeof els.autoScorecard !== "undefined");
   check("every absent team links its own ESPN injuries page",
     (els.boardCoverage.innerHTML.match(/espn\.com\/nba\/team\/injuries\/_\/name\//g) || []).length >= 28,
     String((els.boardCoverage.innerHTML.match(/espn\.com\/nba\/team\/injuries/g) || []).length));

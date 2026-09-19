@@ -26,12 +26,14 @@
     <p>Structured injury board + chat-style wire + sound alerts, modeled on
       <a href="https://basketballmonster.com/playernews.aspx" target="_blank" rel="noopener">Basketball Monster's player news</a>.
       Every alert carries a link so you can re-verify it in one click. No account, no API key, runs in your browser.</p>
+    <div id="seasonClock" class="season-clock" aria-live="polite">Loading season clock from dated public pages…</div>
     <div class="pill-row">
       <span class="pill">NBA only · all 30 teams in scope</span>
       <span class="pill">Official / ESPN / social layers — separately labelled</span>
       <span class="pill warn">Open-tab alerts · best-effort polling, not guaranteed real time</span>
-      <span class="pill bad">⚠ Official NBA PDF 2026-27 unavailable (404) — board uses ESPN + Bluesky</span>
+      <span class="pill bad">⚠ Official NBA PDF 2026-27 still 404 (re-read 2026-09-19, XID 71103381) — board uses ESPN + Bluesky</span>
       <span class="pill bad">⚠ X/Twitter feed not configured — Bluesky only</span>
+      <span class="pill warn">ESPN injuries 27/30 this snapshot — CLE, DET, LAL omitted (not clearance)</span>
       <span class="pill"><a href="VERIFICATION.md" style="color:inherit; text-decoration:underline">Pass 1–3 verification report ↗</a></span>
     </div>
   </section>
@@ -60,6 +62,7 @@
 
     <div class="tiny muted" id="coverageSummary"></div>
     <div class="tiny" id="boardCoverage" aria-live="polite"></div>
+    <div id="boardTeamStrip" class="team-strip" aria-label="All 30 teams — listing count in this snapshot. Empty is not clearance."></div>
 
     <div class="board-toolbar" id="boardToolbar" style="margin: 12px 0 10px;">
       <div class="board-search-wrap" style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">
@@ -159,6 +162,14 @@
     <h2>Official NBA evidence <span class="tiny muted">highest-authority layer</span></h2>
     <div id="officialEvidence" aria-live="polite">Checking the published official-report snapshot…</div>
     <p class="tiny muted">Unknown is not healthy. ESPN statuses and social posts are not automatically league-confirmed. Injury severity is medical information; starter/rotation importance is a separate lineup-impact estimate.</p>
+  </section>
+
+  <section class="card" style="margin-top:16px" id="reporterScorecardCard">
+    <h2>📊 Reporter evidence ledger <span class="tiny muted">forward collection — accuracy not established</span></h2>
+    <p class="muted small">Automatic one-player claims from the allow-listed Bluesky layer, compared later with a same-game official designation when one exists.
+      Counts are evidence, not a reliability rating and not a global first-to-report ranking. In-game exits stay pending without a game-specific outcome.
+      Full directory + identity evidence: <a href="reporters.html">Reporters &amp; Scorecard →</a></p>
+    <div id="autoScorecard">Loading automated evidence…</div>
   </section>
 
   <!-- ============ WIRE ============ -->

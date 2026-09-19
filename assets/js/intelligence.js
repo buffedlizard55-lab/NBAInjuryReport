@@ -32,7 +32,7 @@ const Intelligence = (() => {
   }
 
   function render() {
-    const officialEl = document.getElementById('officialEvidence');
+    const officialEl = document.getElementById("officialEvidence");
     if (officialEl) {
       const fresh = official.health === 'ok' && AlertEngine.isFresh(official.checkedAt);
       officialEl.innerHTML = `<div class="callout ${fresh ? 'info' : 'warn'}"><b>${fresh ? 'Official report collected' : 'Official designations unavailable or historical — not a live confirmation'}</b><br>
@@ -41,7 +41,7 @@ const Intelligence = (() => {
         <ul>${(official.flags || []).map(f => `<li>${esc(f)}</li>`).join('')}</ul></div>`;
       if ((official.rows || []).length) officialEl.innerHTML += `<details><summary>${official.rows.length} sourced designations ${fresh ? '' : '(historical; no alerts)'}</summary><div class="table-wrap"><table><thead><tr><th>Player / team</th><th>Game</th><th>Status</th><th>Reason</th></tr></thead><tbody>${official.rows.map(r => `<tr><td>${esc(r.player)}<br><small>${esc(r.teamName)}</small></td><td>${esc(r.gameDate)} ${esc(r.matchup)}</td><td>${esc(r.status)}</td><td>${esc(r.reason)} ${link(r.url, 'PDF')}</td></tr>`).join('')}</tbody></table></div></details>`;
     }
-    const coverage = document.getElementById('coverageSummary');
+    const coverage = document.getElementById("coverageSummary");
     if (coverage) {
       const rosters = Object.values(context.rosters || {}).filter(r => AlertEngine.isFresh(r.fetchedAt, 48 * 3600000));
       const aggregated = Object.keys(context.roleStats || {}).length;
@@ -50,16 +50,16 @@ const Intelligence = (() => {
         <details><summary>Collection problems (${Object.keys(context.errors || {}).length})</summary><pre>${esc(JSON.stringify(context.errors || {}, null, 2))}</pre></details>`;
     }
     renderHistory();
-    const scores = document.getElementById('autoScorecard');
+    const scores = document.getElementById("autoScorecard");
     if (scores) scores.innerHTML = `<p class="muted small">Collected ${esc(ledger.generated || 'not yet')}. Accuracy: <b>not established</b>. These are evidence counts, not reliability ratings or global first-to-report rankings. Pending includes unresolved players, multi-player text and in-game return claims.</p>
       <div class="table-wrap"><table><thead><tr><th>Reporter</th><th>Observed</th><th>Corroborated</th><th>Conflicts to review</th><th>Pending</th></tr></thead><tbody>${(ledger.scores || []).map(s => `<tr><td>${link('https://bsky.app/profile/' + s.handle, s.name || s.handle)}</td><td>${s.observed}</td><td>${s.corroborated}</td><td>${s.conflicts}</td><td>${s.pending}</td></tr>`).join('') || '<tr><td colspan="5">No automated observations published yet.</td></tr>'}</tbody></table></div>
       <details><summary>Recent claim evidence (latest 50)</summary>${Object.values(ledger.claims || {}).sort((a,b) => Date.parse(b.firstObservedAt)-Date.parse(a.firstObservedAt)).slice(0,50).map(c => `<article class="post"><b>${esc(c.name)} · ${esc(c.outcome)}</b><p>${esc(c.text)}</p><small>${esc(c.player || 'Player unresolved')} · posted ${esc(c.postedAt)} · first observed ${esc(c.firstObservedAt)}<br>${link(c.url, 'Original post')} ${c.evidence ? ' · ' + link(c.evidence.url, 'Official comparison') : ''}</small></article>`).join('')}</details>
       <a href="data/live/intelligence.json">Download automated evidence ledger ↗</a>`;
   }
   function renderHistory() {
-    const el = document.getElementById('playerHistory');
+    const el = document.getElementById("playerHistory");
     if (!el) return;
-    const query = (document.getElementById('historySearch')?.value || '').toLowerCase();
+    const query = (document.getElementById("historySearch")?.value || '').toLowerCase();
     const rows = (ledger.history || []).filter(r => (r.player + ' ' + r.team).toLowerCase().includes(query)).slice(-80).reverse();
     el.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Player / team</th><th>Observed status</th><th>Role / lineup impact</th><th>Evidence time</th></tr></thead><tbody>${rows.map(r => {
       const role = (context.roles || []).find(a => String(a.playerId) === String(r.playerId) && a.team === r.team && AlertEngine.isFresh(a.observedAt));
@@ -113,13 +113,13 @@ const Intelligence = (() => {
     rebuildContext();
     officialAlerts(first); render();
     if (typeof InjuryBoard !== 'undefined' && InjuryBoard.render) InjuryBoard.render();   // re-render with impact now that context is in
-    if (typeof LineupImpact !== 'undefined' && document.getElementById('impactLegend')) {
+    if (typeof LineupImpact !== 'undefined' && document.getElementById("impactLegend")) {
       const c = LineupImpact.CONFIG;
       /* Session-8 regression guard: this template previously read `c.minGames`, but LineupImpact.CONFIG
        * only exposes `minGamesForRole`, so the deployed legend printed "needs at least undefined collected
        * games". A smoke check (tools/smoke_test.js, "the impact legend only references existing CONFIG keys")
        * pins every identifier this template interpolates, so a renamed key cannot render "undefined" again. */
-      document.getElementById('impactLegend').innerHTML = `Lineup impact — <b>not</b> medical severity.
+      document.getElementById("impactLegend").innerHTML = `Lineup impact — <b>not</b> medical severity.
         Score = <b>stake ${Math.round(c.weightStake * 100)}%</b> (minutes, starts, share of the team's collected scoring, assists, on-court +/-, bounded to ±${c.plusMinusCap})
         + <b>exposure ${Math.round(c.weightExposure * 100)}%</b> (games in the next 7 days, back-to-backs, road games, city-to-city miles, time zones)
         + <b>recurrence ${Math.round(c.weightRecurrence * 100)}%</b> (dated injury listings, reported in-game exits), renormalised over whichever parts have evidence.
@@ -128,8 +128,8 @@ const Intelligence = (() => {
     }
   }
   document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('historySearch')?.addEventListener('input', renderHistory);
-    if (document.getElementById('autoScorecard') && !document.getElementById('officialEvidence')) refresh(true);
+    document.getElementById("historySearch")?.addEventListener("input", renderHistory);
+    if (document.getElementById("autoScorecard") && !document.getElementById("officialEvidence")) refresh(true);
   });
   function resolveText(text) {
     if (/\b(NFL|WNBA|football|baseball|hockey)\b/i.test(text)) return null;

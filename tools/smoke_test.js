@@ -73,7 +73,7 @@ const source = FILES.map(f => fs.readFileSync(path.join(ROOT, "assets/js", f), "
 const env = new Function(source + `
   return { ENDPOINTS, TEAMS, TEAM_ALIASES, SIGNALS, REPORTERS, SOURCES, FLAGS, SCORING_RUBRIC, arenaCoverage, arenaCoverageSummary, nbaTeamNewsUrl, reporterConf,
            SOCIAL_ACCOUNTS, BSKY_REPORTERS, BLUESKY_LIST_SOURCE, INGAME_WATCH_RE, NBA_OFFICIAL_REPORT_URL,
-           NBA_OFFICIAL_ACCOUNT_PROBE, ARENA_DORMANT_DAYS, writerRecency,
+           NBA_OFFICIAL_ACCOUNT_PROBE, ARENA_DORMANT_DAYS, writerRecency, NBA_SEASON_CALENDAR, seasonClock,
            teamByAbbr, espnTeamInjuriesUrl, normalizeInjuryStatus, xSearchUrl,
            standardAbbr, classifySocialSeverity, SOCIAL_INJURY_GATE_RE, SOCIAL_INJURY_VOCAB_RE, SOCIAL_NON_INJURY_RE, SOCIAL_OUT_LANGUAGE_RE,
            AlertEngine, Wire, InjuryBoard, Social, InGame, LineupImpact };
@@ -98,6 +98,28 @@ check("Bluesky public API endpoint registered", M.ENDPOINTS.bskyAuthorFeed.start
 check("same-origin snapshot path registered", M.ENDPOINTS.liveSnapshot === "data/live/latest.json");
 check("flags present (>= 20)", M.FLAGS.length >= 20, "got " + M.FLAGS.length);
 check("flag levels are valid", M.FLAGS.every(f => ["bad", "warn", "info"].includes(f.level)));
+check("session-16 board-alert defect is flagged (source-date eligibility)",
+  M.FLAGS.some(f => /board alerts keyed eligibility on ESPN's listing DATE/.test(f.title)));
+check("session-16 official 2026-27 404 re-read is flagged with the new XID",
+  M.FLAGS.some(f => /XID 71103381/.test(f.detail)));
+check("season calendar has four dated gates and names its sources",
+  M.NBA_SEASON_CALENDAR.events.length === 4 &&
+  M.NBA_SEASON_CALENDAR.events.every(e => /^\d{4}-\d{2}-\d{2}$/.test(e.at) && (e.sourceIds || []).length) &&
+  M.NBA_SEASON_CALENDAR.sources.every(s => /^https:\/\//.test(s.url)));
+check("seasonClock on 2026-09-19 is 3 days to overseas camp, 31 to opening night", () => {
+  const c = M.seasonClock(Date.parse("2026-09-19T18:00:00Z"));
+  const camp = c.events.find(e => e.id === "camp-overseas");
+  const open = c.events.find(e => e.id === "opening-night");
+  if (!camp || camp.days !== 3) throw new Error("camp-overseas days=" + (camp && camp.days));
+  if (!open || open.days !== 31) throw new Error("opening-night days=" + (open && open.days));
+  if (!c.next || c.next.id !== "camp-overseas") throw new Error("next=" + (c.next && c.next.id));
+  if (!c.conflicts.length) throw new Error("tip-time conflict missing");
+});
+check("index.html carries the season clock, 30-team strip and reporter scorecard",
+  (() => {
+    const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
+    return /id="seasonClock"/.test(html) && /id="boardTeamStrip"/.test(html) && /id="autoScorecard"/.test(html);
+  })());
 check("Bluesky reporter handles look like handles",
   M.BSKY_REPORTERS.every(r => /^[a-z0-9.-]+\.[a-z]{2,}$/.test(r.handle) && r.evidence.startsWith("https://bsky.app/profile/")));
 check("every social account has verification evidence", M.SOCIAL_ACCOUNTS.every(a => a.verified && a.url));
@@ -321,7 +343,7 @@ const LI = M.LineupImpact;
  * cannot silently print a bare `undefined` to the live page again. */
 check("the impact legend renders without 'undefined' and only uses keys that exist in LineupImpact.CONFIG", () => {
   const intelSrc = fs.readFileSync(path.join(ROOT, "assets/js/intelligence.js"), "utf8");
-  const m = intelSrc.match(/getElementById\('impactLegend'\)\.innerHTML = `([^`]*)`/);
+  const m = intelSrc.match(/getElementById\(["']impactLegend["']\)\.innerHTML = `([^`]*)`/);
   if (!m) throw new Error("impactLegend template not found in intelligence.js");
   const refs = [...m[1].matchAll(/\$\{[^}]*\bc\.(\w+)/g)].map(x => x[1]);
   if (!refs.length) throw new Error("no CONFIG references found in the legend template");
@@ -577,6 +599,24 @@ check("an empty snapshot makes no per-team coverage claim at all",
 check("index.html carries the #boardCoverage element the module writes to",
   fs.readFileSync(path.join(ROOT, "index.html"), "utf8").includes('id="boardCoverage"'));
 
+console.log("== injury board: 30-team strip and empty franchise cards (session 16) ==");
+M.InjuryBoard.renderTeamStrip(SNAP_ROWS);
+check("30-chip strip has one chip per franchise",
+  (els.boardTeamStrip.innerHTML.match(/team-strip-chip/g) || []).length === 30,
+  String((els.boardTeamStrip.innerHTML.match(/team-strip-chip/g) || []).length));
+check("omitted teams are labelled no-listings, not clearance",
+  GAPS.every(g => els.boardTeamStrip.innerHTML.includes('data-team="' + g.abbr + '"')) &&
+  /NOT clearance/.test(els.boardTeamStrip.innerHTML));
+check("listed teams carry a numeric count, omitted teams carry an em-dash",
+  /has-listings/.test(els.boardTeamStrip.innerHTML) &&
+  (els.boardTeamStrip.innerHTML.match(/no-listings/g) || []).length === GAPS.length);
+M.InjuryBoard.setView("teams");
+check("team-grid with no internal rows still paints 30 empty franchise cards",
+  (els.injuryBoard.innerHTML.match(/board-team-empty/g) || []).length === 30 &&
+  /not clearance/.test(els.injuryBoard.innerHTML),
+  String((els.injuryBoard.innerHTML.match(/board-team-empty/g) || []).length));
+M.InjuryBoard.resetFilter();
+
 console.log("== CSS: every status class the modules emit actually has a rule ==");
 /* Found 2026-09-17 (session 7): wire.js, social.js and injuries.js all emit `sev-border-<sev>` while
  * style.css only had `.wire-item.sev-<sev>` / `.post.watch`, so the severity edge never rendered on
@@ -602,6 +642,8 @@ check("the board row declares a left border for the severity edge to colour",
 check("status words .good / .bad have their own rules, not only compound ones",
   cssBare.has("good") && cssBare.has("bad"));
 check("the empty-state class is styled", cssBare.has("empty"));
+check("the 30-chip strip and empty franchise card have rules",
+  cssTokens.has("team-strip-chip") && cssTokens.has("board-team-empty") && cssTokens.has("season-clock"));
 check("in-game watch posts and team chips have tag rules", cssTokens.has("ingame-watch") && cssTokens.has("team"));
 check("severity + impact tag rules survived", SEVS.every(s => cssTokens.has(s)) &&
   ["ok", "warn", "gtd", "watch", "impact-high", "impact-medium", "impact-low", "impact-unknown"].every(c => cssTokens.has(c)));
