@@ -391,8 +391,8 @@ const App = (() => {
     const liveAlertBtn = document.getElementById("testLiveAlertBtn");
     if (liveAlertBtn) liveAlertBtn.addEventListener("click", () => {
       const res = AlertEngine.testLiveAlert();
-      liveAlertBtn.textContent = res ? "🚨 Alert Triggered!" : "⚠ Audio unavailable";
-      setTimeout(() => { liveAlertBtn.textContent = "▶🚨 Test live alert (offensive OUT / in-game)"; }, 1500);
+      liveAlertBtn.textContent = res.delivered ? "Synthetic test delivered" : "Test silent — check filters";
+      setTimeout(() => { liveAlertBtn.textContent = "▶ Test synthetic alert (OUT / QTR)"; }, 1500);
     });
     const bSearch = document.getElementById("boardSearch");
     if (bSearch) {

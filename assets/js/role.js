@@ -27,8 +27,8 @@
  *        starts            30 pts  share of collected games started (>=80% / >=60% / >=30% / >=10%)
  *        offense share     30 pts  the player's ppg as a share of the ppg his team scored in
  *                                  the SAME collected games (>=20% / >=14% / >=8% / >=4%)
- *        playmaking share  10 pts  assists per game as a share of the team's collected apg
- *                                  (>=25% / >=15% / >=8%)
+ *        playmaking        10 pts  assists per game against hand-set thresholds
+ *                                  (>=8: 10 pts / >=5: 6 pts / >0: 3 pts), not team share
  *        on-court net      ±8 pts  the box score's own plusMinus, averaged over >=3 collected
  *                                  games and capped — kept small ON PURPOSE: a single-game
  *                                  +/- is a lineup-context artefact, not a player rating, and
@@ -127,7 +127,11 @@ const LineupImpact = (function () {
     const t = Date.parse(iso || "");
     return Number.isFinite(t) && t <= Date.now() + 60000 && Date.now() - t <= maxAge;
   }
-  function numOrNull(v) { const n = Number(v); return Number.isFinite(n) ? n : null; }
+  function numOrNull(v) {
+    if (v == null || typeof v === "boolean" || String(v).trim() === "") return null;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  }
   function clamp(n, lo, hi) { return Math.min(hi, Math.max(lo, n)); }
   function roundTo(n, p) { const f = 10 ** p; return Math.round(n * f) / f; }
 
@@ -150,11 +154,11 @@ const LineupImpact = (function () {
     const currentStarter = !!(currentRole && isFresh(currentRole.observedAt, CONFIG.currentGameFreshMs) && /Starter/i.test(currentRole.role || ""));
     /* Staleness is checked on the aggregate too: a sample from the finished season must not be
      * presented as this week's role. When it is old the tier becomes unknown WITH a note. */
-    const statsFresh = !!(stats && stats.games >= CONFIG.minGamesForRole && (!stats.updatedAt || isFresh(stats.updatedAt, CONFIG.roleFreshMs)));
-    const statsStale = !!(stats && stats.games >= CONFIG.minGamesForRole && stats.updatedAt && !isFresh(stats.updatedAt, CONFIG.roleFreshMs));
+    const statsFresh = !!(stats && stats.games >= CONFIG.minGamesForRole && isFresh(stats.updatedAt, CONFIG.roleFreshMs));
+    const statsStale = !!(stats && stats.games >= CONFIG.minGamesForRole && !isFresh(stats.updatedAt, CONFIG.roleFreshMs));
     /* The aggregate wins when it exists: a single box score proves tonight's lineup, not the role.
      * The current-game flag is still carried through so the UI can say "started tonight". */
-    if (statsStale) {
+    if (statsStale && !currentStarter) {
       return { tier: "unknown", games: stats.games, starts: stats.starts || 0, avgMinutes: null, staleSample: true, staleAt: stats.updatedAt, currentGameStarter: currentStarter };
     }
     if (currentStarter && !statsFresh) {
@@ -197,7 +201,7 @@ const LineupImpact = (function () {
   /* ---------- listing cadence (ESPN roster injuries[] entries: {status,date}) ---------- */
   function listingCadence(rp) {
     const entries = (rp && Array.isArray(rp.injuryEntries) ? rp.injuryEntries : [])
-      .filter(e => e && e.date && Number.isFinite(Date.parse(e.date)) && Date.now() - Date.parse(e.date) < CONFIG.listingRecentDays * 86400000);
+      .filter(e => e && e.date && Number.isFinite(Date.parse(e.date)) && Date.parse(e.date) <= Date.now() && Date.now() - Date.parse(e.date) < CONFIG.listingRecentDays * 86400000);
     const dates = [...new Set(entries.map(e => e.date.slice(0, 10)))].sort();
     return { count: dates.length, dates, statuses: [...new Set(entries.map(e => e.status).filter(Boolean))], source: rp && rp.rosterUrl };
   }
@@ -230,9 +234,8 @@ const LineupImpact = (function () {
       }
     }
     if (stats && Number.isFinite(stats.assistsGames) && stats.assistsGames >= 1 && tTeam && tTeam.games >= 1 && stats.assistsTotal > 0) {
-      /* team assists are not collected as a separate endpoint; the player's own apg is compared
-       * against a 24-assist-per-game team baseline ONLY when that baseline is unavailable. Using a
-       * league-typical constant would be an assumption, so it is labelled as one. */
+      /* No measured team-assist total is collected: use disclosed hand-set APG thresholds,
+       * never an invented team baseline or a claimed share of team assists. */
       const apg = stats.assistsTotal / stats.assistsGames;
       parts.push({ key: "assists", label: roundTo(apg, 1) + " apg over " + stats.assistsGames + " collected game(s) — scored against hand-set thresholds (>=8 / >=5 apg), not a share of a measured team total", pts: apg >= 8 ? 10 : apg >= 5 ? 6 : 3, max: 10 });
     }
@@ -373,9 +376,12 @@ const LineupImpact = (function () {
     const stats = context && context.roleStats ? context.roleStats[String(row.playerId || row.player)] : null;
     const currentRole = findCurrentRole(row.playerId, row.team, context);
     const t = tierFromObservations(stats, currentRole);
+    // Role freshness alone is insufficient: stale production used to re-enter STAKE and
+    // create a HIGH score even while the role label said UNKNOWN. Unknown age fails closed.
+    const usableStats = stats && isFresh(stats.updatedAt, CONFIG.roleFreshMs) ? stats : null;
     const evidence = uniqueUrls([currentRole && currentRole.url, ...((stats && stats.sampleUrls) || [])]);
 
-    const med = (stats && Array.isArray(stats.minutesValues) && stats.minutesValues.length >= 3 && !t.staleSample)
+    const med = (stats && Array.isArray(stats.minutesValues) && stats.minutesValues.length >= 3 && usableStats)
       ? medianOf(stats.minutesValues) : null;
 
     out.role = {
@@ -429,9 +435,10 @@ const LineupImpact = (function () {
     }
 
     /* ---------- the model ---------- */
-    const teamStats = (context && context.teamStats) ? context.teamStats[row.team] : null;
-    out.stake = stakeComponent(t, stats, teamStats);
-    out.production = (stats && Number.isFinite(stats.pointsGames) && stats.pointsGames > 0) ? {
+    const rawTeamStats = (context && context.teamStats) ? context.teamStats[row.team] : null;
+    const teamStats = rawTeamStats && isFresh(rawTeamStats.updatedAt, CONFIG.roleFreshMs) ? rawTeamStats : null;
+    out.stake = stakeComponent(t, usableStats, teamStats);
+    out.production = (usableStats && Number.isFinite(stats.pointsGames) && stats.pointsGames > 0) ? {
       ppg: roundTo(stats.pointsTotal / stats.pointsGames, 1),
       apg: Number.isFinite(stats.assistsGames) && stats.assistsGames > 0 ? roundTo(stats.assistsTotal / stats.assistsGames, 1) : null,
       rpg: Number.isFinite(stats.reboundsGames) && stats.reboundsGames > 0 ? roundTo(stats.reboundsTotal / stats.reboundsGames, 1) : null,

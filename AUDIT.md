@@ -811,3 +811,56 @@ renders the badge, the summary count and **all** notes.
 4. **`app.bsky.actor.getAuthorFeed` returns `MethodNotImplemented`, not an auth error.** Anyone
    re-deriving the feed URL from the `getProfiles` pattern will hit it and may misread it as
    blocked access. Recorded here and in NEXT_STEPS.
+
+
+## Session 18 (2026-09-19) — three-pass integrity review
+
+### Pass 1 — implementation and baseline
+- Reviewed the existing board-first/all-30-team dashboard, alerts, role model, collector,
+  source/reporter directory, tests and Pages configuration. Existing Pages site is configured
+  in legacy branch mode; no duplicate site was created.
+- Baseline: smoke 237, integration 105, impact 80, polling 25, regression 27 groups,
+  reporter verifier 171, Python 26 — all passed.
+- Found a fabricated-news path: the live-test button invented Curry/Tatum injuries and stats,
+  claimed official/in-game authority, linked generic pages and inserted them into the wire.
+  Replaced it with fictional, **TEST ONLY** OUT/QTR delivery tests. No real player, fake stats,
+  source link or wire insertion. Notification title/body and persisted log identify the test.
+  Sound and team/status filters still apply; the button reports delivery or filter suppression,
+  not a false claim that audio was heard.
+
+### Pass 2 — missing evidence / edge cases
+- Stale/undated production could bypass the role freshness check and score STAKE anyway.
+  Gated production, median and team baseline on measured freshness. Unknown/stale/future age
+  cannot create a high-impact claim. A valid fresh starting-lineup observation still stands
+  on its own, without importing the old production sample.
+- Fixed null/blank/boolean minutes becoming zero in both the role reader and collector.
+- Future-dated injury listings no longer count as past recurrence.
+- Corrected an inaccurate playmaking-model comment: assists use disclosed APG thresholds,
+  not a measured team-assist share or a fabricated 24-APG baseline.
+- Added regression tests for delivery labeling, no wire pollution, no review URL, filter
+  suppression, stale/undated/future production, fresh lineup fallback, missing minutes and
+  future listings; extended the browser interaction test for the synthetic button.
+
+### Pass 3 — requirements and verification
+- Local final suite: smoke 237, integration 105, impact 99, polling 25, regression 28 groups,
+  reporter verifier 171, Python 26 — all passed. `git diff --check` clean.
+- Current-source re-reads and transport failures: [session evidence](data/audit/review-2026-09-19.md).
+  NBA page still displays 404. No guessed PDF filename. No X key or scraping adapter added.
+- Browser execution passed in [GitHub CI run 35464863848](https://github.com/buffedlizard55-lab/NBAInjuryReport/actions/runs/35464863848), including the synthetic-alert assertions.
+  Local Chromium download was TLS-blocked. A fixture pass does not establish live injury latency.
+
+### Next session — acceptance gates, not promises
+1. Monitor the official season page for actual linked reports; exercise discovery, parser
+   and source timestamps on that first report. Do not synthesize a PDF URL.
+2. First planned live-game window: **3 October preseason**. Collect actual box scores before
+   claiming lineup impact; measure publication → first observation → alert times for true
+   QTR/exit signals. Until then, live latency is **unvalidated**, tests are fixtures only.
+3. Keep verifier drift/beat watch running. Address thin teams and dormant-only DAL/LAL/UTA
+   with evidence, not name matches. CHA/UTA identity ceilings and **26/30 club Bluesky gaps**
+   remain unresolved; this pass did not independently re-verify the reporter census.
+4. Forward-collect reporter outcomes; never present sparse corroboration as an established
+   accuracy score. X/Instagram/Facebook stay manual-review links permanently without API access.
+5. Audit per-player vs team box-score sample alignment and team-transfer aggregation before
+   relying on offensive-share rankings. Current aggregates are not proof of causal player value.
+6. Browser-tab polling remains best effort, not guaranteed low latency or closed-tab push.
+   Schedule/travel are workload estimates, not medical predictions or actual charter flights.

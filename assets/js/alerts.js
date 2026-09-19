@@ -84,72 +84,24 @@ const AlertEngine = (() => {
 
   let testAlertToggle = 0;
   function testLiveAlert() {
+    // Exercise delivery, never manufacture player news or an official source link.
+    // Synthetic alerts stay out of Wire and the injury/history evidence stores.
     testAlertToggle = (testAlertToggle + 1) % 2;
-    if (testAlertToggle === 1) {
-      // Test 1: Primary offensive starter ruled OUT officially
-      const item = {
-        key: "test-official-out-" + Date.now(),
-        title: "Stephen Curry (GSW) — Ruled OUT tonight vs. Thunder with left ankle sprain",
-        detail: "Starting PG and primary offensive option (28.4 PPG, 32.5 MPG, +6.4 on-court +/-). Official league injury report filing.",
-        sev: "out",
-        sevLabel: "OUT (Official NBA Report)",
-        team: "GSW",
-        player: "Stephen Curry",
-        url: "https://official.nba.com/nba-injury-report-2025-26-season/",
-        observedAt: new Date().toISOString(),
-        ts: new Date().toISOString(),
-        alertEligible: true,
-        impact: {
-          impact: "high",
-          grade: "high",
-          score: 88,
-          offenseTier: "primary",
-          impactLabel: "HIGH — primary offensive starter is off the floor · 28.4 ppg, +6.4 on-court +/-"
-        }
-      };
-      fire(item);
-      if (typeof Wire !== "undefined" && Wire.push) {
-        Wire.push({
-          key: item.key, ts: item.ts, sev: item.sev, sevLabel: item.sevLabel, layer: "official-nba",
-          text: item.title, detail: item.detail, url: item.url, team: item.team, player: item.player,
-          source: "Official NBA report (live test alert)"
-        });
-        Wire.render([]);
-      }
-      return { type: "official-out", title: item.title };
-    } else {
-      // Test 2: In-game ongoing exit, offensive player questionable to return
-      const item = {
-        key: "test-ingame-exit-" + Date.now(),
-        title: "Jayson Tatum (BOS) — Left game in 2Q to locker room; QUESTIONABLE TO RETURN vs. Heat",
-        detail: "In-game exit reported from court. Starting forward, primary scoring option (27.1 PPG, 35.8 MPG).",
-        sev: "questionable",
-        sevLabel: "QUESTIONABLE TO RETURN (in-game)",
-        team: "BOS",
-        player: "Jayson Tatum",
-        url: "https://www.espn.com/nba/scoreboard",
-        observedAt: new Date().toISOString(),
-        ts: new Date().toISOString(),
-        alertEligible: true,
-        impact: {
-          impact: "high",
-          grade: "high",
-          score: 91,
-          offenseTier: "primary",
-          impactLabel: "HIGH — primary offensive option exited ongoing game · questionable to return"
-        }
-      };
-      fire(item);
-      if (typeof Wire !== "undefined" && Wire.push) {
-        Wire.push({
-          key: item.key, ts: item.ts, sev: item.sev, sevLabel: item.sevLabel, layer: "in-game",
-          text: item.title, detail: item.detail, url: item.url, team: item.team, player: item.player,
-          source: "Live in-game monitor (live test alert)"
-        });
-        Wire.render([]);
-      }
-      return { type: "ingame-exit", title: item.title };
-    }
+    const out = testAlertToggle === 1;
+    const item = {
+      key: "synthetic-alert-" + Date.now(),
+      title: "TEST ONLY — Fictional demo player — " + (out ? "OUT scenario" : "QUESTIONABLE TO RETURN scenario"),
+      detail: "Synthetic delivery test. No real player, game, injury, statistics or source report. Does not validate live detection latency.",
+      sev: out ? "out" : "questionable",
+      sevLabel: "TEST ONLY / " + (out ? "OUT" : "QTR"),
+      team: null, player: null, url: null,
+      observedAt: new Date().toISOString(),
+      alertEligible: true,
+      synthetic: true,
+      impact: { grade: "high" }
+    };
+    const delivered = fire(item);
+    return { type: out ? "synthetic-out" : "synthetic-qtr", title: item.title, delivered };
   }
 
   function setSoundOn(v) {
@@ -256,7 +208,7 @@ const AlertEngine = (() => {
     const score = impactScore(item);
     const offenseBit = off === "primary" ? "[PRIMARY OFFENSIVE OPTION] " : off === "secondary" ? "[2nd OPTION] " : "";
     const impact = high ? "⚡ HIGH LINEUP IMPACT" + (score == null ? "" : " " + score + "/100") + " " + offenseBit : "";
-    const label = `${impact}[${item.sevLabel}] ${item.title}`;
+    const label = `${item.synthetic ? "TEST ONLY — " : ""}${impact}[${item.sevLabel}] ${item.title}`;
     const ageNote = item.observedAt && item.ts && item.ts !== item.observedAt
       ? ` (source timestamp ${item.ts}; observed ${item.observedAt})` : "";
     if (item.alertEligible === false || !allowed || !fresh) {
@@ -270,7 +222,7 @@ const AlertEngine = (() => {
       if (high) playHighImpactChime(); else playChime();
       lastChimeAt = Date.now();
     }
-    notify((high ? "⚡ HIGH LINEUP IMPACT — " : "") + "NBA Injury Alert — " + item.sevLabel,
+    notify((item.synthetic ? "TEST ONLY — " : "") + (high ? "⚡ HIGH LINEUP IMPACT — " : "") + "NBA Injury Alert — " + item.sevLabel,
       [item.title, item.detail].filter(Boolean).join(" — "), item.url);
     return true;
   }

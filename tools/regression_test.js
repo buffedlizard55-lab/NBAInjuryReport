@@ -16,6 +16,30 @@ sandbox.window = sandbox;
 vm.createContext(sandbox);
 vm.runInContext(['data','role','alerts','injuries','ingame','social'].map(f => fs.readFileSync('assets/js/' + f + '.js','utf8')).join('\n') + '\nthis.M={AlertEngine,InjuryBoard,InGame,Social,LineupImpact,SIGNALS,REPORTERS,espnAbbr,SOCIAL_ACCOUNTS,BSKY_REPORTERS};', sandbox);
 const { AlertEngine, InjuryBoard, InGame, Social, LineupImpact, SIGNALS, REPORTERS, SOCIAL_ACCOUNTS } = sandbox.M;
+check('Synthetic tests label every delivery surface and never enter the wire', () => {
+  const notices = [], pushed = [];
+  sandbox.Notification = function(title, options) { notices.push({ title, ...options }); };
+  sandbox.Notification.permission = 'granted';
+  sandbox.Wire = { push: item => pushed.push(item), render() {} };
+  AlertEngine.setSoundOn(false);
+  AlertEngine.clearLog();
+  for (let i = 0; i < 2; i++) {
+    const result = AlertEngine.testLiveAlert();
+    assert.equal(result.delivered, true);
+    assert.match(result.title, /TEST ONLY/);
+    assert.match(result.type, /^synthetic-/);
+  }
+  assert.equal(notices.length, 2);
+  assert.ok(notices.every(n => n.title.startsWith('TEST ONLY') && /No real player/.test(n.body)));
+  assert.equal(pushed.length, 0);
+  assert.equal(AlertEngine.getLog().length, 2);
+  assert.ok(AlertEngine.getLog().every(e => /TEST ONLY/.test(e.message) && e.url === null));
+  sandbox.App = { getFilters: () => ({ team: 'BOS' }) };
+  assert.equal(AlertEngine.testLiveAlert().delivered, false, 'team filter must be respected');
+  assert.equal(notices.length, 2);
+  delete sandbox.App; delete sandbox.Wire; delete sandbox.Notification;
+  AlertEngine.clearLog();
+});
 check('Freshness rejects old, missing, malformed and future timestamps', () => {
   for (const t of [null, 'no', '2020-01-01', new Date(Date.now()+3600000).toISOString()]) assert.equal(AlertEngine.isFresh(t), false);
   assert.equal(AlertEngine.isFresh(now), true);
