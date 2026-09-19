@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-19T19:30:37.743Z",
+ "generated": "2026-09-19T22:00:32.811Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -207,7 +207,7 @@
    "privateProfile": false,
    "bio": "Spurs beat writer for the San Antonio Express-News. Live music and dead poets. Refugee from The Bad Place.",
    "latestPostAt": "2026-08-26T20:48:10.961Z",
-   "dormantDays": 23,
+   "dormantDays": 24,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -234,7 +234,7 @@
    "privateProfile": false,
    "bio": "In my 40th year as a reporter with the San Antonio Express-News and my 11th consecutive season as one of the E-N’s Spurs beat writers. Also do occasional stories on food insecurity issues. Proud San Antonio College alumnus. 🏳️‍🌈ally",
    "latestPostAt": "2026-09-17T21:19:48.442Z",
-   "dormantDays": 1,
+   "dormantDays": 2,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -260,7 +260,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors. 530. 510.\nTwo-time Utah Sportswriter of the Year.",
-   "latestPostAt": "2026-09-19T12:00:12.277Z",
+   "latestPostAt": "2026-09-19T21:42:20.363Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -644,7 +644,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "I write and talk about sports. \n\nPodcast Host: Locked on Hawks, Hammer Territory\n\nWriter: Patreon, FanSided, USBWA, Freelance\n\nFormer: DIME, SportsLine, Peachtree Hoops, CBS Sports, Bleacher Report, Battery Power\n\nPatreon.com/BTRowland\n\nlockedonhawks.com",
-   "latestPostAt": "2026-09-19T14:10:21.266Z",
+   "latestPostAt": "2026-09-19T20:27:55.021Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -671,7 +671,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Indiana Pacers, Fever beat writer: Fieldhouse Files | Podcast Host l Play-by-play announcer | fieldhousefiles@gmail.com",
-   "latestPostAt": "2026-09-19T01:47:17.860Z",
+   "latestPostAt": "2026-09-19T21:00:55.964Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -837,7 +837,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "WNBA @sbnation, Celtics @clnsceltics",
-   "latestPostAt": "2026-09-18T19:43:53.784Z",
+   "latestPostAt": "2026-09-19T19:50:01.541Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -950,7 +950,7 @@
    "privateProfile": false,
    "bio": "NBA writer for ESPN",
    "latestPostAt": "2026-08-14T21:36:29.349Z",
-   "dormantDays": 35,
+   "dormantDays": 36,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -958,7 +958,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 35 days old (>30)"
+    "quote matches, but newest post is 36 days old (>30)"
    ]
   },
   {
@@ -1199,7 +1199,7 @@
    "privateProfile": false,
    "bio": "Memphis Grizzlies beat reporter for The Commercial Appeal\nUTK graduate \nProverbs 3:5-6",
    "latestPostAt": "2025-02-17T21:02:40.702Z",
-   "dormantDays": 578,
+   "dormantDays": 579,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1207,7 +1207,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 578 days old (>30)"
+    "quote matches, but newest post is 579 days old (>30)"
    ]
   },
   {
@@ -1256,7 +1256,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com\n \n\nEverything I drop, out of the question\nStop the guessing—it's hot\n\nSubscribe 👉 https://wbb-roundup.beehiiv.com/subscribe",
-   "latestPostAt": "2026-09-19T19:16:26.073Z",
+   "latestPostAt": "2026-09-19T21:48:41.996Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -1706,8 +1706,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Writer at The Daily Memphian. Memphisotan. Somewhere along Johnny Cash’s Big River. Memphis Grizzlies/NBA, movies, music, etc.",
-   "latestPostAt": "2026-09-14T21:30:34.319Z",
-   "dormantDays": 4,
+   "latestPostAt": "2026-09-19T19:44:48.477Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1792,7 +1792,7 @@
    "privateProfile": false,
    "bio": "Data columnist for The Salt Lake Tribune — I write about the intersection of numbers & the world. Formerly Jazz beat writer. Opinions are mine, not the Trib's.",
    "latestPostAt": "2026-08-18T20:20:32.049057Z",
-   "dormantDays": 31,
+   "dormantDays": 32,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": {
@@ -1806,7 +1806,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 31 days old (>30)"
+    "quote matches, but newest post is 32 days old (>30)"
    ]
   },
   {
@@ -2152,7 +2152,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Sports columnist for The Times-Picayune | The New Orleans Advocate. We'll talk Saints, Pelicans and all the other hot topics in the 504 and beyond.\nMississippi made, Louisiana paid.\n#39194ever ",
-   "latestPostAt": "2026-09-19T19:17:26.501Z",
+   "latestPostAt": "2026-09-19T20:30:47.849Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,

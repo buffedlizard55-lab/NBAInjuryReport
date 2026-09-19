@@ -34,7 +34,7 @@
       "outlet-only": 4,
       "citation-verified": 20
     },
-    "flags": 89,
+    "flags": 93,
     "socialAccounts": 11,
     "socialAccountsPolled": 4,
     "blueskyReporters": 83,
@@ -1261,7 +1261,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=busyxb.bsky.social",
         "evidenceQuote": "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com",
         "observed": {
-          "latestPostAt": "2026-09-19T19:10:30.033Z",
+          "latestPostAt": "2026-09-19T19:16:26.073Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "checkedAt": "2026-09-18",
           "postsCount": 3732,
@@ -1964,7 +1964,7 @@
         "evidenceApi": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=rodwalkernola.bsky.social",
         "observed": {
           "checkedAt": "2026-09-19",
-          "latestPostAt": "2026-09-19T18:00:07.611Z",
+          "latestPostAt": "2026-09-19T19:17:26.501Z",
           "latestPostAtSource": "data/live/reporter_verify.json",
           "postsCount": 1628,
           "followersCount": 1523,
@@ -3048,6 +3048,26 @@
       "level": "info",
       "title": "2026-09-18 (session 12): Instagram / Facebook free public endpoints — NONE found, documented blocker",
       "detail": "Web_search depth 3 for 'Instagram public page free endpoint without credentials' + 'Facebook public page free endpoint without token' + Stack Overflow 'Public Instagram endpoint without credentials' + 'Get public page statuses using Facebook Graph API without Access Token': all results confirm NO free public read API exists without authentication. Instagram Graph API requires Facebook Login + Business/Creator account + app review + OAuth, limited to own accounts; public endpoint ?__a=1 deprecated after dozen requests; unofficial private API requires session management + proxy, violates ToS, requires paid scrapers (Hiker API $0.0006/request, Data365 €300/mo, Apify $2.70/1k, BrightData $1.50/1k). Facebook Graph API requires App Access Token (APP-ID|APP-SECRET) + Page Public Content Access review + pages_read_engagement permission + appsecret_proof; cannot be called without token by design (changed to block anonymous access). RapidAPI axesso-facebook-data-service is paid. Consequence: X/Instagram/Facebook remain manual (embeds + search links + reporter scorecard) as flagged in existing bad flag 'Truly automated X/Instagram/Facebook listening is NOT free'. No free endpoint is asserted or used; site creation uses Bluesky free public API as the only free machine-readable social layer."
+    },
+    {
+      "level": "warn",
+      "title": "2026-09-19 (session 20): official 2026-27 injury-report page still 404 — re-read live this session, new XID 79058498",
+      "detail": "https://official.nba.com/nba-injury-report-2026-27-season/ returned HTTP 404 at ~21:51Z, page title 'Error 404 Not Found', body 'NBA | XID: 79058498'. XID history: 74717976 (session 7) -> 44289229 (session 15) -> 71103381 (session 16) -> 72640245 (session 17) -> 79058498 (this session). The XID changes on every read and is only evidence that the refusal was newly observed, not that anything moved. The official adapter stays blocked and still never guesses a PDF filename; the 2025-26 rules page remains the last verified official text, re-read this session (deadline text intact: 5pm local day-before; 1pm for back-to-backs; 11am-1pm gameday)."
+    },
+    {
+      "level": "info",
+      "title": "2026-09-19 (session 20): ESPN injuries API re-read live — 200, 2026-27 Preseason, and the CLE/DET/LAL gap is zero-listing, not missing-block",
+      "detail": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries returned 200 with payload timestamp 2026-09-19T21:51:10Z and season {year:2027, type:1, name:'Preseason', displayName:'2026-27'}. The per-team sub-feed (?team=5 CLE, ?team=8 DET, ?team=13 LAL) returned HTTP 200 with 'injuries':[] each — i.e. ESPN currently files no entries for those three clubs, which is a different (narrower) statement than 'the block is missing'. The committed snapshot stays 75 rows / 27 teams / no CLE-DET-LAL block, and the board's coverage-gap wording ('omitted block is not clearance') remains honest: an empty array is still not evidence that nobody on the roster is injured. Re-check at the 2026-10-03 presetason tip; if any team is still empty while games are live that is a source-coverage question, not an offseason artefact."
+    },
+    {
+      "level": "info",
+      "title": "2026-09-19 (session 20): Basketball Monster player news re-read as the format model — still linked, never scraped",
+      "detail": "https://basketballmonster.com/playernews.aspx returned 200: 'The regular season begins in 31 days.' Current injury-relevant items (copied for format evidence, not imported into alerts): Adem Bona PHI Questionable foot sprain (source x.com/Bobcooney1076); Mark Williams PHO Injured left shoulder, torn labrum, out several months (source twitter.com/ShamsCharania); plus NOTE/TRADED contract items (Cam Whitmore DEN two-way, Devin Carter to be waived, Taj Gibson waived by NOP, Ben Simmons SAC). Status tags QUESTIONABLE / INJURED / NOTE / TRADED present in the fetched text. 10/20 slate shown as BOS at DET 2:00pm / PHI at NYK 6:00pm / OKC at SAS 8:30pm — the one-hour tip-time conflict with ESPN/NBA (3/7/9:30pm ET) is still stored, not resolved. Tracks the exact features the brief asked to reverse-engineer (structured per-player status + source link + impact tag), and this project's board mirrors that shape with honest provenance instead of scraping it."
+    },
+    {
+      "level": "info",
+      "title": "2026-09-19 (session 20): full three-pass review — every requirement mapped to shipped, tested code before the PR",
+      "detail": "Traced the brief line by line against this tree: (1) intelligence layer defining high lineup impact on minutes/offensive production/on-court +/- plus schedule and travel = LineupImpact model v2 (assets/js/role.js, 60% stake / 20% exposure / 20% recurrence, grades >=65 HIGH, R1-R4 rules) with travel from assets/js/geo.js — all pinned by tools/impact_test.js, 99 checks. (2) low-latency verified free feed = ESPN injuries API (browser-direct with same-origin CI fallback) + NBA official PDF adapter (correctly blocked on the 404) + Bluesky allow-list, every alert carrying a review link. (3) severity/rotation/starter/injury-history/in-game-exit = role tier from collected box scores, dated ESPN injury listings as recurrence, in-game exits flagged unconfirmed. (4) reporter scorecard = forward-collection ledger with two reconciliation lanes (official 3 pts, ESPN board 1 pt), agreement-is-not-accuracy, rendered on the dashboard and reporters.html. (5) verified-reporters subpage = reporters.html with per-row verbatim bio + re-checkable evidenceApi + activity + drift watch. (6) sound toggle + pleasant two-voice WebAudio chime + synthetic OUT/QTR test that never pollutes the wire. (7) in-game QTR/out alerts = social exit-language watch + ESPN game-summary monitor, DNP never alert-eligible. (8) chat-style wire = assets/js/wire.js merging all layers. (9) GitHub Pages site, clean UI, official review links everywhere. All tests green this session: smoke 237, impact 99, intelligence 23, integration 106, poll-fixture 25, verify-reporters 171, regression 28 groups, Python 26."
     }
   ],
   "scoring_rubric": [
