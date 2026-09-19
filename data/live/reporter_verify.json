@@ -1,23 +1,23 @@
 {
- "generated": "2026-09-19T00:56:25.891Z",
+ "generated": "2026-09-19T04:31:59.548Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
- "handlesChecked": 78,
+ "handlesChecked": 94,
  "summary": {
-  "checked": 78,
-  "ok": 57,
+  "checked": 94,
+  "ok": 70,
   "bioDrift": 0,
-  "dormant": 21,
+  "dormant": 24,
   "missing": 0,
   "verificationLost": 0,
   "noQuote": 0,
   "recencyUnknown": 0,
   "impersonationLabel": 0,
   "profilePrivate": 0,
-  "inAlertPath": 63,
-  "activeInAlertPath": 42,
-  "dormantInAlertPath": 21,
+  "inAlertPath": 78,
+  "activeInAlertPath": 54,
+  "dormantInAlertPath": 24,
   "unmeasuredInAlertPath": 0,
   "quietestInAlertPath": 638,
   "dormantThresholdDays": 30,
@@ -43,6 +43,9 @@
    "saltcityhoops.bsky.social (dormant)",
    "andyblarsen.bsky.social (dormant)",
    "lakerssbn.bsky.social (dormant)",
+   "michaelgrangenba.bsky.social (dormant)",
+   "millerjryan.bsky.social (dormant)",
+   "stevepopper.bsky.social (dormant)",
    "trailblazers.bsky.social (dormant)"
   ]
  },
@@ -84,13 +87,13 @@
    "privateProfile": false,
    "bio": "I write about basketball. And watch movies. Senior Writer at \n@TheAthletic on the NBA/NBA Draft. Host of the Game Theory Podcast. Email: sam.vecenie@gmail.com",
    "latestPostAt": "2026-07-07T01:57:53.546Z",
-   "dormantDays": 73,
+   "dormantDays": 74,
    "postItems": 1,
    "recencyReadable": true,
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 73 days old (>30)"
+    "quote matches, but newest post is 74 days old (>30)"
    ]
   },
   {
@@ -129,7 +132,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "The Athletic NBA columnist\nPER creator  - Former Grizzlies VP Basketball Ops - Former ESPN\nWahoowa - Commanders - Brewers - Timbers - huh?\nAtlanta/a hotel",
-   "latestPostAt": "2026-09-18T22:00:23.051Z",
+   "latestPostAt": "2026-09-19T03:55:32.356Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -152,13 +155,13 @@
    "privateProfile": false,
    "bio": "✍️ http://TomTheFinder.com substack and Yahoo Sports | 📺 Portland Trail Blazers analytics insider | 🍽️ Pack Your Knives and Count the Dings | 💪🏼 Hoops4ALS",
    "latestPostAt": "2026-07-23T02:13:40.726Z",
-   "dormantDays": 57,
+   "dormantDays": 58,
    "postItems": 1,
    "recencyReadable": true,
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 57 days old (>30)"
+    "quote matches, but newest post is 58 days old (>30)"
    ]
   },
   {
@@ -219,7 +222,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors. 530. 510.\nTwo-time Utah Sportswriter of the Year.",
-   "latestPostAt": "2026-09-18T22:55:22.741Z",
+   "latestPostAt": "2026-09-19T02:48:43.330Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -330,7 +333,7 @@
    "privateProfile": false,
    "bio": "Senior Writer for The Athletic. I cover the Washington Wizards and the NBA.",
    "latestPostAt": "2026-08-20T03:17:18.137Z",
-   "dormantDays": 29,
+   "dormantDays": 30,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -373,7 +376,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "#NBASky writer at The Athletic\nIn LA\nFrom Philadelphia\n*under construction*",
-   "latestPostAt": "2026-09-18T22:58:02.878Z",
+   "latestPostAt": "2026-09-19T02:02:48.947Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -440,7 +443,7 @@
    "privateProfile": false,
    "bio": "Kings Insider for ESPN 1320, The Kings Beat and Locked On Kings. Long time beat writer, podcaster and radio personality covering the NBA's Sacramento Kings.",
    "latestPostAt": "2026-09-18T03:37:40.780Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -534,7 +537,7 @@
    "privateProfile": false,
    "bio": "I write and talk about sports. \n\nPodcast Host: Locked on Hawks, Hammer Territory\n\nWriter: Patreon, FanSided, USBWA, Freelance\n\nFormer: DIME, SportsLine, Peachtree Hoops, CBS Sports, Bleacher Report, Battery Power\n\nPatreon.com/BTRowland\n\nlockedonhawks.com",
    "latestPostAt": "2026-09-18T03:17:33.120Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -555,7 +558,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Indiana Pacers, Fever beat writer: Fieldhouse Files | Podcast Host l Play-by-play announcer | fieldhousefiles@gmail.com",
-   "latestPostAt": "2026-09-19T00:46:45.555Z",
+   "latestPostAt": "2026-09-19T01:47:17.860Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -714,7 +717,7 @@
    "privateProfile": false,
    "bio": "ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast ",
    "latestPostAt": "2026-09-18T02:12:07.628Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -1170,13 +1173,13 @@
    "privateProfile": false,
    "bio": "Dallas-based reporter covering the NBA & WNBA. Dallas: DallasHoopsJournal.com. National: RG.org, BallisLife.com",
    "latestPostAt": "2025-10-14T01:00:04.138Z",
-   "dormantDays": 339,
+   "dormantDays": 340,
    "postItems": 1,
    "recencyReadable": true,
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 339 days old (>30)"
+    "quote matches, but newest post is 340 days old (>30)"
    ]
   },
   {
@@ -1577,6 +1580,366 @@
    "fatal": false,
    "notes": [
     "identity REFUSED on 2026-09-19 and still held out of collection (feed:false) — there is no identity claim here to drift"
+   ]
+  },
+  {
+   "handle": "codytaylornba.bsky.social",
+   "name": "Cody Taylor",
+   "team": "ORL",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Credentialed reporter covering the Orlando Magic and the rest of the NBA at Rookie Wire, part of the USA TODAY Network | 📧: codytaylornba@gmail.com\n\nhttps://therookiewire.usatoday.com/staff/74887312007/cody-taylor/",
+   "latestPostAt": "2026-09-01T14:08:32.199Z",
+   "dormantDays": 17,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "hunterpatterson.bsky.social",
+   "name": "Hunter Patterson",
+   "team": "DET",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "theathletic.com"
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Covering the Detroit Pistons for The Athletic.",
+   "latestPostAt": "2026-09-18T23:54:58.068Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "ginamizell.bsky.social",
+   "name": "Gina Mizell",
+   "team": "PHI",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Sixers beat reporter for The Philadelphia Inquirer | Arizona State alum | Probably at a game, on a plane or at the theater.",
+   "latestPostAt": "2026-09-10T15:46:29.979Z",
+   "dormantDays": 8,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "christopherhine.bsky.social",
+   "name": "Chris Hine",
+   "team": "PHI",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "76ers writer for Philadelphia Inquirer. Author of “Ant,” a biography of Anthony Edwards, out NOW via HarperCollins. Previous: 8 seasons as Timberwolves writer for the Minnesota Star Tribune.",
+   "latestPostAt": "2026-09-15T00:25:14.601Z",
+   "dormantDays": 4,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "michaelgrangenba.bsky.social",
+   "name": "Michael Grange",
+   "team": "TOR",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Raptors/NBA columnist with Rogers Sportsnet, based in Toronto. Have won awards, and covered NBA games at Maple Leaf Gardens. Family guy, golf guy, dog guy, I will happily give you my blood. @michaelgrange on X.",
+   "latestPostAt": "2026-08-10T18:05:49.482Z",
+   "dormantDays": 39,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 39 days old (>30)"
+   ]
+  },
+  {
+   "handle": "lucaskaplan.bsky.social",
+   "name": "Lucas Kaplan",
+   "team": "BKN",
+   "conf": "outlet-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "🗣 that's why they brought me here 🗣\nNets Daily | SwishTheory",
+   "latestPostAt": "2026-09-19T01:29:52.034Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "rodwalkernola.bsky.social",
+   "name": "Rod Walker",
+   "team": "NOP",
+   "conf": "outlet-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Sports columnist for The Times-Picayune | The New Orleans Advocate. We'll talk Saints, Pelicans and all the other hot topics in the 504 and beyond.\nMississippi made, Louisiana paid.\n#39194ever ",
+   "latestPostAt": "2026-09-18T13:07:21.430Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "masonginsberg.bsky.social",
+   "name": "Mason Ginsberg",
+   "team": "NOP",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Pelicans & NBA stuff for the In the NO podcast\n\nTulanian 🌊 and Longhorn 🤘🏻",
+   "latestPostAt": "2026-09-18T23:23:14.248Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "juliapoe.bsky.social",
+   "name": "Julia Poe",
+   "team": "CHI",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Covering hoops for the Chicago Tribune • USC alum • PBWA member • Kansan 🌻",
+   "latestPostAt": "2026-09-15T18:36:28.925Z",
+   "dormantDays": 3,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "willgottlieb.bsky.social",
+   "name": "Will Gottlieb",
+   "team": "CHI",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Covering the Chicago Bulls ✍️🎙",
+   "latestPostAt": "2026-08-24T13:34:02.872Z",
+   "dormantDays": 25,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "caitlinmaycooper.bsky.social",
+   "name": "Caitlin Cooper",
+   "team": "IND",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Creator of Basketball, She Wrote — A blog about the basketball played by the Indiana Pacers: patreon.com/basketballshewrote",
+   "latestPostAt": "2026-09-18T15:07:26.355Z",
+   "dormantDays": 0,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "britishbuzz.bsky.social",
+   "name": "James Plowright",
+   "team": "CHA",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "NBA Journalist for @CLTure + Podcasts host for the Buzz Beat Podcast. NBA Draft analyst.",
+   "latestPostAt": "2026-09-17T17:15:30.375Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "chasedcsports.bsky.social",
+   "name": "Chase Hughes",
+   "team": "WAS",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Wizards and NBA @monsportsnet.",
+   "latestPostAt": "2026-08-31T14:46:35.192Z",
+   "dormantDays": 18,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "millerjryan.bsky.social",
+   "name": "Ryan Miller",
+   "team": "UTA",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Covering the Utah Jazz and Utah Hockey Club for KSL.com. ",
+   "latestPostAt": "2025-01-29T22:40:27.331Z",
+   "dormantDays": 597,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 597 days old (>30)"
+   ]
+  },
+  {
+   "handle": "stevepopper.bsky.social",
+   "name": "Steve Popper",
+   "team": "NYK",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Knicks writer and NBA columnist for @newsdaysports. I’ve done this for a long time at a lot of papers. Opinions are my own - no one else would claim them.",
+   "latestPostAt": "2025-10-02T11:05:42.443Z",
+   "dormantDays": 351,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 351 days old (>30)"
+   ]
+  },
+  {
+   "handle": "rodboone.bsky.social",
+   "name": "Rod Boone (handle REFUSED)",
+   "team": "CHA",
+   "conf": "unconfirmed",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "identity REFUSED on 2026-09-19 and still held out of collection (feed:false) — there is no identity claim here to drift; profile is still empty"
    ]
   },
   {

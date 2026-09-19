@@ -1,5 +1,72 @@
 # Next-session priorities
 
+## State at the end of session 15 (2026-09-19) — read this first
+
+Session 15 worked the brief's **"next candidates"** list: Mike Vorkunov's NBA starter pack as a corpus for the
+thin teams, a periodic re-probe of the club handles, and the CHA / UTA identity ceiling — still under the
+standing constraints that **no X API key exists**, every claim must be re-checkable by a free keyless call,
+and dormant-only teams stay labelled dormant.
+
+**What shipped**
+
+1. **Vorkunov's starter-pack list was read in full** (`app.bsky.graph.getList`, 10 chunks) and cross-checked
+   against the registry; bio-phrase `searchActors` queries ("covering the Orlando Magic") and exact-name
+   `searchActorsTypeahead` filled the rest. **16 new graded rows**, each read via `getProfiles` **and**
+   `getAuthorFeed?limit=1` the same day, with the verbatim bio, the counts and the newest-post date stored:
+   ORL `codytaylornba` (Rookie Wire, "credentialed", 17d) · DET `hunterpatterson` (The Athletic — **valid
+   verification object issued by `theathletic.com`**, recorded with the outlet as verifier, 0d) · PHI
+   `ginamizell` (Inquirer beat, 8d via repost) + `christopherhine` (Inquirer; bio records his own MIN→PHI
+   move, 4d) · TOR `michaelgrangenba` (Sportsnet columnist, **39d DORMANT**) · BKN `lucaskaplan` (NetsDaily,
+   **outlet-verified** — bio names no beat, 0d) · NOP `rodwalkernola` (Times-Picayune **multi-sport
+   columnist, outlet-verified**; newest post is a Saints column, 0d) + `masonginsberg` (In the NO, 0d) · CHI
+   `juliapoe` (Tribune, "covering hoops", PBWA, 3d) + `willgottlieb` (CHGO, 25d) · IND `caitlinmaycooper`
+   (independent Pacers film blog, labelled so, 0d) · CHA `britishbuzz` (CLTure + Buzz Beat, 1d) · WAS
+   `chasedcsports` (Monumental — **team-owned** network, labelled so, 18d) · UTA `millerjryan` (KSL, **597d
+   DORMANT**) · NYK `stevepopper` (Newsday, **352d DORMANT**).
+2. **One refusal kept visible, and it is the hardest one so far.** `rodboone.bsky.social` posts Hornets
+   roster moves (654 posts) but the profile has **no bio, no outlet, no verification object**. By the rule
+   that refused `miketrudell`, the row is `identityRefused, feed:false, unconfirmed` and can never alert. Also
+   read and **not** added: Kristian Winfield (`krisplashed`, newest post 2025-05-28), `dan-savage` (a Magic
+   employee), and `nypostlewisbot.mirrors.bot` (a third-party mirror of an X account — the registry forbids
+   mirror handles, so it is recorded in the FLAGS log, not as a row). No Bluesky presence could be found for
+   Brian Lewis (NY Post), Will Guillory, Eric Walden or Tony Jones.
+3. **Club-handle re-probe: 20 handles, one batched request, zero change** (`NBA_OFFICIAL_ACCOUNT_PROBE.reprobe`).
+   POR / PHI / DEN still carry the only valid `bsky.app` objects; `dallasmavs` still has 2 posts and no object;
+   `utahjazz` 0 posts; `orlandomagic` / `brooklynnets` are still squatted placeholders; `nyknicks` still carries
+   the `impersonation` label. `nba.com` itself is verified and active; `official.nba.com`'s 2026-27 injury
+   report page still answers **404**.
+4. **Tests grew with the registry.** `tools/verify_reporters_test.js` names every session-15 handle
+   (`SESSION_15_HANDLES`, folded into the count sum), asserts the three dormant arrivals evaluate `dormant` and
+   the active ones `active` at a fixed clock, asserts the Athletic-verified row names the outlet as verifier,
+   asserts the two outlet-verified rows never read as a current beat writer, and asserts **CHA and UTA are
+   still gap-listed** after the additions. Refused-row count pinned 5 → 6.
+
+**Measured coverage after session 15** (`arenaCoverageSummary()`, registry evidence):
+30 teams · **18 verified-pollable · 12 bio-pollable · 0 official-only · 0 unexplained gaps** · **65 pollable
+writers, 21 Bluesky-verified** · activity **46 active / 19 dormant / 0 unmeasured**, **27 teams with an active
+writer**, **dormant-only: DAL, LAL, UTA**. The **same 12 teams** (ATL, BKN, CHA, CHI, DEN, IND, MIA, NOP, ORL,
+SAC, SAS, UTA) still lack a Bluesky-verified writer — session 15 added *depth* to eight of them, but no row
+added a verification object to a team that lacked one, so no gap was closed and none is claimed closed.
+
+**What is still open, and why**
+
+1. **Club corroboration is manual for 26 of 30 franchises** — re-confirmed today; nothing keyless changes it.
+2. **In-arena identity ceiling.** CHA now has three registered identities (podcast analyst, culture-site
+   journalist, and a refused no-bio account whose posts look like the beat) and still **no credentialed beat
+   writer**; UTA now has three rows and **all three are dormant** (31 / 53 / 597 days); BKN has two supported
+   accounts, neither verified. DAL / LAL / UTA stay dormant-only.
+3. **The daily CI evidence file has not yet re-measured the 16 new rows** — `live-audit.yml` (09:17 UTC) will;
+   until then the page prints the session-15 registry observations (all dated 2026-09-19). If CI finds a
+   newer date the CI date wins; if the registry is behind, `--check` fails the job by design.
+4. **Live latency remains unvalidated** until the first 2026-27 game (tip-off 2026-10-20); the impact model
+   reads UNKNOWN off-season by rule R4; the official NBA adapter stays blocked on 404; X / Instagram /
+   Facebook remain manual-review links.
+5. **Next candidates:** a "verifier drift" check that flags when an outlet-issued verification object
+   (`theathletic.com`) is revoked (`isValid:false` was seen on `joevardon` in the list read); a
+   per-season beat-change watch across all rows (Hine's MIN→PHI and Todd's UTA→MIN are the pattern); the
+   remaining thin teams with **one** pollable writer (ATL, MIA, SAC, HOU, MIL, PHX, POR, LAC, OKC) if a free
+   corpus surfaces; and re-reading `rodboone` for a bio.
+
 ## State at the end of session 14 (2026-09-19) — read this first
 
 Session 14 was **the reporter/verification layer**: the brief's open items were *run the audit, backfill the

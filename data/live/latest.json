@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-19T01:28:03.418Z",
+  "generated": "2026-09-19T04:32:07.623Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -7504,6 +7504,13 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
+      "nuggets.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Denver Nuggets — official",
+        "kind": "official-team",
+        "team": "DEN"
+      },
       "trailblazers.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7517,13 +7524,6 @@
         "name": "Philadelphia 76ers — official",
         "kind": "official-team",
         "team": "PHI"
-      },
-      "nuggets.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Denver Nuggets — official",
-        "kind": "official-team",
-        "team": "DEN"
       },
       "nba.com": {
         "ok": true,
@@ -7560,13 +7560,6 @@
         "kind": "reporter",
         "team": null
       },
-      "jmcdonaldsa.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Jeff McDonald",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "tomorsborn.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7580,6 +7573,13 @@
         "name": "Tom Haberstroh",
         "kind": "reporter",
         "team": null
+      },
+      "jmcdonaldsa.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
       },
       "nbasarah.bsky.social": {
         "ok": true,
@@ -7602,13 +7602,6 @@
         "kind": "reporter",
         "team": "PHI"
       },
-      "jonkrawczynski.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jon Krawczynski",
-        "kind": "reporter",
-        "team": "MIN"
-      },
       "highkin.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7616,12 +7609,12 @@
         "kind": "reporter",
         "team": "POR"
       },
-      "lawmurraythenu.bsky.social": {
+      "jonkrawczynski.bsky.social": {
         "ok": true,
-        "count": 5,
-        "name": "Law Murray",
+        "count": 1,
+        "name": "Jon Krawczynski",
         "kind": "reporter",
-        "team": "LAC"
+        "team": "MIN"
       },
       "joshrobbins.bsky.social": {
         "ok": true,
@@ -7629,6 +7622,13 @@
         "name": "Josh Robbins",
         "kind": "reporter",
         "team": "WAS"
+      },
+      "lawmurraythenu.bsky.social": {
+        "ok": true,
+        "count": 5,
+        "name": "Law Murray",
+        "kind": "reporter",
+        "team": "LAC"
       },
       "jlewenberg.bsky.social": {
         "ok": true,
@@ -7721,19 +7721,19 @@
         "kind": "reporter",
         "team": "BOS"
       },
-      "ryanblackburn.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Ryan Blackburn",
-        "kind": "reporter",
-        "team": "DEN"
-      },
       "bullsjay.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Jason Patt",
         "kind": "reporter",
         "team": "CHI"
+      },
+      "ryanblackburn.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Ryan Blackburn",
+        "kind": "reporter",
+        "team": "DEN"
       },
       "anthonyvslater.bsky.social": {
         "ok": true,
@@ -7791,6 +7791,13 @@
         "kind": "reporter",
         "team": "NYK"
       },
+      "drewhilldailym.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Drew Hill",
+        "kind": "reporter",
+        "team": "MEM"
+      },
       "damichaelcole.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7805,19 +7812,19 @@
         "kind": "reporter",
         "team": "DAL"
       },
-      "drewhilldailym.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Drew Hill",
-        "kind": "reporter",
-        "team": "MEM"
-      },
       "busyxb.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Busy — NetsDaily",
         "kind": "reporter",
         "team": "BKN"
+      },
+      "fearthebrown.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Shamit Dua",
+        "kind": "reporter",
+        "team": "NOP"
       },
       "olehkosel.bsky.social": {
         "ok": true,
@@ -7833,19 +7840,12 @@
         "kind": "reporter",
         "team": "HOU"
       },
-      "fearthebrown.bsky.social": {
+      "jasonlloyd.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Shamit Dua",
+        "count": 3,
+        "name": "Jason Lloyd",
         "kind": "reporter",
-        "team": "NOP"
-      },
-      "montepoole.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Monte Poole",
-        "kind": "reporter",
-        "team": "GSW"
+        "team": "CLE"
       },
       "bennettdurando.bsky.social": {
         "ok": true,
@@ -7854,19 +7854,19 @@
         "kind": "reporter",
         "team": "DEN"
       },
+      "montepoole.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Monte Poole",
+        "kind": "reporter",
+        "team": "GSW"
+      },
       "grantafseth.bsky.social": {
         "ok": true,
         "count": 12,
         "name": "Grant Afseth",
         "kind": "reporter",
         "team": "DAL"
-      },
-      "jasonlloyd.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Jason Lloyd",
-        "kind": "reporter",
-        "team": "CLE"
       },
       "dannycunningham.bsky.social": {
         "ok": true,
@@ -7903,6 +7903,13 @@
         "kind": "reporter",
         "team": "DEN"
       },
+      "bgeisinger.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Brian Geisinger",
+        "kind": "reporter",
+        "team": "CHA"
+      },
       "nolajake.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7917,20 +7924,6 @@
         "kind": "reporter",
         "team": "MEM"
       },
-      "bgeisinger.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Brian Geisinger",
-        "kind": "reporter",
-        "team": "CHA"
-      },
-      "lakerssbn.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Silver Screen and Roll",
-        "kind": "reporter",
-        "team": "LAL"
-      },
       "andyblarsen.bsky.social": {
         "ok": true,
         "count": 5,
@@ -7944,6 +7937,118 @@
         "name": "Salt City Hoops",
         "kind": "reporter",
         "team": "UTA"
+      },
+      "lakerssbn.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Silver Screen and Roll",
+        "kind": "reporter",
+        "team": "LAL"
+      },
+      "codytaylornba.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Cody Taylor",
+        "kind": "reporter",
+        "team": "ORL"
+      },
+      "hunterpatterson.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Hunter Patterson",
+        "kind": "reporter",
+        "team": "DET"
+      },
+      "ginamizell.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Gina Mizell",
+        "kind": "reporter",
+        "team": "PHI"
+      },
+      "michaelgrangenba.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Michael Grange",
+        "kind": "reporter",
+        "team": "TOR"
+      },
+      "christopherhine.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Chris Hine",
+        "kind": "reporter",
+        "team": "PHI"
+      },
+      "lucaskaplan.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Lucas Kaplan",
+        "kind": "reporter",
+        "team": "BKN"
+      },
+      "rodwalkernola.bsky.social": {
+        "ok": true,
+        "count": 4,
+        "name": "Rod Walker",
+        "kind": "reporter",
+        "team": "NOP"
+      },
+      "masonginsberg.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Mason Ginsberg",
+        "kind": "reporter",
+        "team": "NOP"
+      },
+      "juliapoe.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Julia Poe",
+        "kind": "reporter",
+        "team": "CHI"
+      },
+      "willgottlieb.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Will Gottlieb",
+        "kind": "reporter",
+        "team": "CHI"
+      },
+      "caitlinmaycooper.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Caitlin Cooper",
+        "kind": "reporter",
+        "team": "IND"
+      },
+      "chasedcsports.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Chase Hughes",
+        "kind": "reporter",
+        "team": "WAS"
+      },
+      "britishbuzz.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "James Plowright",
+        "kind": "reporter",
+        "team": "CHA"
+      },
+      "millerjryan.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Ryan Miller",
+        "kind": "reporter",
+        "team": "UTA"
+      },
+      "stevepopper.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Steve Popper",
+        "kind": "reporter",
+        "team": "NYK"
       }
     }
   },
@@ -8408,6 +8513,33 @@
       "kindLabel": "mention"
     },
     {
+      "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mvbekvkeo22h",
+      "text": "Alvn Kamara is listed as questionable for Sunday's game against the Lions. \n\nDE Cam Jordan (hamstring), TE Oscar Delp (hamstring) and RB Audric Estime (thigh) are all out.  \n\nIt'll be just the third game Jordan has missed in his career. One was due to COVID protocol and the other was an eye injury.",
+      "handle": "rodwalkernola.bsky.social",
+      "name": "Rod Walker",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "NOP",
+      "outlet": "The Times-Picayune | The New Orleans Advocate",
+      "role": "Sports columnist (Saints + Pelicans) — NOT a Pelicans beat assignment",
+      "accountUrl": "https://bsky.app/profile/rodwalkernola.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/rodwalkernola.bsky.social",
+        "team": "NOP",
+        "kind": "reporter",
+        "outlet": "The Times-Picayune | The New Orleans Advocate",
+        "name": "Rod Walker"
+      },
+      "createdAt": "2026-09-11T20:07:19.692Z",
+      "indexedAt": "2026-09-11T20:07:20.156Z",
+      "url": "https://bsky.app/profile/rodwalkernola.bsky.social/post/3mvbekvkeo22h",
+      "sev": "questionable",
+      "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
       "uri": "at://did:plc:jeb5puwe2trbthuqu4qnuctx/app.bsky.feed.post/3mv6ow6hfuk2s",
       "text": "NEW: Ezi Magbegor will miss the remainder of the World Cup and WNBA season.\n\nIt's a devastating blow to both Australia and the Seattle Storm: \nwww.sbnation.com/womens-sport...",
       "handle": "noadalzell.bsky.social",
@@ -8433,6 +8565,33 @@
       "sevLabel": "NON-INJURY (rest / roster / decision)",
       "inGameWatch": false,
       "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mv4f6gsxvk25",
+      "text": "Cam Jordan (hamstring) will not play this week. \n\nIt will be just the third game he’s ever missed.\n\nOne was Covid and other was the eye injury.",
+      "handle": "rodwalkernola.bsky.social",
+      "name": "Rod Walker",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "NOP",
+      "outlet": "The Times-Picayune | The New Orleans Advocate",
+      "role": "Sports columnist (Saints + Pelicans) — NOT a Pelicans beat assignment",
+      "accountUrl": "https://bsky.app/profile/rodwalkernola.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/rodwalkernola.bsky.social",
+        "team": "NOP",
+        "kind": "reporter",
+        "outlet": "The Times-Picayune | The New Orleans Advocate",
+        "name": "Rod Walker"
+      },
+      "createdAt": "2026-09-09T20:34:56.642Z",
+      "indexedAt": "2026-09-09T20:34:56.871Z",
+      "url": "https://bsky.app/profile/rodwalkernola.bsky.social/post/3mv4f6gsxvk25",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
     },
     {
       "uri": "at://did:plc:pz2e6pmf64ey4zpgyjuvpdfj/app.bsky.feed.post/3muy27stgqc2y",
@@ -8705,6 +8864,33 @@
       "kindLabel": "mention"
     },
     {
+      "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mtcrqa4yvs2e",
+      "text": "Saints rookie WR Jordyn Tyson expected to miss at least two months with his hamstring injury, per Ian Rappoport.",
+      "handle": "rodwalkernola.bsky.social",
+      "name": "Rod Walker",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "NOP",
+      "outlet": "The Times-Picayune | The New Orleans Advocate",
+      "role": "Sports columnist (Saints + Pelicans) — NOT a Pelicans beat assignment",
+      "accountUrl": "https://bsky.app/profile/rodwalkernola.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/rodwalkernola.bsky.social",
+        "team": "NOP",
+        "kind": "reporter",
+        "outlet": "The Times-Picayune | The New Orleans Advocate",
+        "name": "Rod Walker"
+      },
+      "createdAt": "2026-08-17T22:45:13.686Z",
+      "indexedAt": "2026-08-17T22:45:14.271Z",
+      "url": "https://bsky.app/profile/rodwalkernola.bsky.social/post/3mtcrqa4yvs2e",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mtcga56ne22r",
       "text": "Let's do a quick count: \n\nActive roster: FVV, Reed, Amen, Bruce, Marcus, Bogdan, Tate, Bari, KD, Tari, Crawford, Alpy, Clint and Steven (14)\n\nTwo-ways: Pedulla, Tristen Newton, Quadir Copeland (3)\n\nTBD, probably E9 or 10 contracts: Julian Phillips and Oscar Tshiebwe",
       "handle": "byvarunshankar.bsky.social",
@@ -8757,6 +8943,33 @@
       "sevLabel": "NON-INJURY (rest / roster / decision)",
       "inGameWatch": false,
       "kindLabel": "non-injury"
+    },
+    {
+      "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mt2ok2efos2u",
+      "text": "Jordyn Tyson has a hamstring injury, Moore says. “Not related to previous hamstring injury. “",
+      "handle": "rodwalkernola.bsky.social",
+      "name": "Rod Walker",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "NOP",
+      "outlet": "The Times-Picayune | The New Orleans Advocate",
+      "role": "Sports columnist (Saints + Pelicans) — NOT a Pelicans beat assignment",
+      "accountUrl": "https://bsky.app/profile/rodwalkernola.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/rodwalkernola.bsky.social",
+        "team": "NOP",
+        "kind": "reporter",
+        "outlet": "The Times-Picayune | The New Orleans Advocate",
+        "name": "Rod Walker"
+      },
+      "createdAt": "2026-08-14T17:26:47.179Z",
+      "indexedAt": "2026-08-14T17:26:47.769Z",
+      "url": "https://bsky.app/profile/rodwalkernola.bsky.social/post/3mt2ok2efos2u",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
     },
     {
       "uri": "at://did:plc:nlq6uv3pja3zg5y2cjfzl57c/app.bsky.feed.post/3msz7gmptyc2a",
@@ -8834,6 +9047,33 @@
       "createdAt": "2026-08-11T22:44:12.620Z",
       "indexedAt": "2026-08-11T22:44:16.965Z",
       "url": "https://bsky.app/profile/anthonyvslater.bsky.social/post/3mstouv4u6s2v",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:zgn2mtu5aynj7al5cfsih36j/app.bsky.feed.post/3msqou6cpzs2a",
+      "text": "As some may know, I had hip replacement surgery this past December. I had a lot of questions, but chief among them was: 'yeah sure, but what about golf?' \nFor @scoregolf.bsky.social I wrote about the path to back to the tee that more golfers are taking: scoregolf.com/from-the-mag...",
+      "handle": "michaelgrangenba.bsky.social",
+      "name": "Michael Grange",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "TOR",
+      "outlet": "Rogers Sportsnet",
+      "role": "Raptors/NBA columnist (Toronto)",
+      "accountUrl": "https://bsky.app/profile/michaelgrangenba.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/michaelgrangenba.bsky.social",
+        "team": "TOR",
+        "kind": "reporter",
+        "outlet": "Rogers Sportsnet",
+        "name": "Michael Grange"
+      },
+      "createdAt": "2026-08-10T18:05:49.482Z",
+      "indexedAt": "2026-08-10T18:05:51.766Z",
+      "url": "https://bsky.app/profile/michaelgrangenba.bsky.social/post/3msqou6cpzs2a",
       "sev": "mention",
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
@@ -8942,6 +9182,33 @@
       "createdAt": "2026-07-15T01:14:00.424Z",
       "indexedAt": "2026-07-15T01:14:04.077Z",
       "url": "https://bsky.app/profile/jbeede.bsky.social/post/3mqnk6xnrm22j",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:jnzaardlvkrjurtvgig4fhj7/app.bsky.feed.post/3mqjvvzbnak2m",
+      "text": "Magic two-way rookie Izaiyah Nelson has suffered a fracture in his left ankle and will require surgery, the team announced:",
+      "handle": "codytaylornba.bsky.social",
+      "name": "Cody Taylor",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "ORL",
+      "outlet": "Rookie Wire (USA TODAY Network)",
+      "role": "Credentialed Orlando Magic reporter",
+      "accountUrl": "https://bsky.app/profile/codytaylornba.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/codytaylornba.bsky.social",
+        "team": "ORL",
+        "kind": "reporter",
+        "outlet": "Rookie Wire (USA TODAY Network)",
+        "name": "Cody Taylor"
+      },
+      "createdAt": "2026-07-13T14:33:06.081Z",
+      "indexedAt": "2026-07-13T14:33:08.677Z",
+      "url": "https://bsky.app/profile/codytaylornba.bsky.social/post/3mqjvvzbnak2m",
       "sev": "mention",
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
@@ -10082,6 +10349,33 @@
       "kindLabel": "designation"
     },
     {
+      "uri": "at://did:plc:l6xg2eoini254i5vndnt5spm/app.bsky.feed.post/3mgqu7y7wnc2x",
+      "text": "I talked to Rob Dillingham pre-game about the two cysts he has in his right shooting wrist\n\nHe showed me the difference in mobility, it's pretty stark. And it's something he's dealt with since he entered the NBA. More ⬇️\n\nallchgo.com/bulls-rob-di...",
+      "handle": "willgottlieb.bsky.social",
+      "name": "Will Gottlieb",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "CHI",
+      "outlet": "CHGO Sports",
+      "role": "Bulls writer/podcaster",
+      "accountUrl": "https://bsky.app/profile/willgottlieb.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/willgottlieb.bsky.social",
+        "team": "CHI",
+        "kind": "reporter",
+        "outlet": "CHGO Sports",
+        "name": "Will Gottlieb"
+      },
+      "createdAt": "2026-03-11T02:39:34.930Z",
+      "indexedAt": "2026-03-11T02:39:38.864Z",
+      "url": "https://bsky.app/profile/willgottlieb.bsky.social/post/3mgqu7y7wnc2x",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
       "uri": "at://did:plc:u3zuvwlvfrhhg2s75er7sw3b/app.bsky.feed.post/3mglamnq2ck27",
       "text": "For Cleveland’s second night of a back-to-back on Monday against the Sixers, Tyrese Maxey is officially OUT with a right fifth finger sprain.\n\nJoel Embiid is also out tomorrow’s contest against the #Cavs. #NBASky",
       "handle": "ejelite1.bsky.social",
@@ -11135,6 +11429,60 @@
       "kindLabel": "designation"
     },
     {
+      "uri": "at://did:plc:ceyyjh5wd4jbwu3b5xetzu7p/app.bsky.feed.post/3lcjpci72uc2f",
+      "text": "Utah HC prospect Tij Iginla had season-ending hip surgery, the club announced. He had 14 goals and 18 assists in 21 games with the Kelowna Rockets.",
+      "handle": "millerjryan.bsky.social",
+      "name": "Ryan Miller",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "KSL.com",
+      "role": "Utah Jazz + Utah Hockey Club reporter (dual beat)",
+      "accountUrl": "https://bsky.app/profile/millerjryan.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/millerjryan.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "KSL.com",
+        "name": "Ryan Miller"
+      },
+      "createdAt": "2024-12-05T03:15:53.310Z",
+      "indexedAt": "2024-12-05T03:15:53.766Z",
+      "url": "https://bsky.app/profile/millerjryan.bsky.social/post/3lcjpci72uc2f",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
+      "uri": "at://did:plc:ceyyjh5wd4jbwu3b5xetzu7p/app.bsky.feed.post/3lbsq4yfxlc2n",
+      "text": "Jordan Clarkson (left plantar fasciitis),  Kyle Filipowski (left lower leg inflammation) and Cody Williams (G League) are all out tomorrow. \n\nThe Jazz say Filipowski has been cleared from his right ankle sprain, but is now receiving treatment for leg inflammation.",
+      "handle": "millerjryan.bsky.social",
+      "name": "Ryan Miller",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "KSL.com",
+      "role": "Utah Jazz + Utah Hockey Club reporter (dual beat)",
+      "accountUrl": "https://bsky.app/profile/millerjryan.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/millerjryan.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "KSL.com",
+        "name": "Ryan Miller"
+      },
+      "createdAt": "2024-11-25T23:59:28.745Z",
+      "indexedAt": "2024-11-25T23:59:28.960Z",
+      "url": "https://bsky.app/profile/millerjryan.bsky.social/post/3lbsq4yfxlc2n",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
       "uri": "at://did:plc:jf45osmp7qfugv4a5nlqfvfg/app.bsky.feed.post/3lbqnirc3mc2e",
       "text": "WTF is going on with Zion Williamson and the New Orleans Pelicans? Long injury timelines, agent changes, viral videos...\n\nwww.youtube.com/watch?v=Yc37...",
       "handle": "nolajake.bsky.social",
@@ -11187,6 +11535,33 @@
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
       "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:ceyyjh5wd4jbwu3b5xetzu7p/app.bsky.feed.post/3lbhzb5jb322w",
+      "text": "Jordan Clarkson (left plantar fasciitis) has been downgraded to doubtful for tonight’s game in San Antonio",
+      "handle": "millerjryan.bsky.social",
+      "name": "Ryan Miller",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "UTA",
+      "outlet": "KSL.com",
+      "role": "Utah Jazz + Utah Hockey Club reporter (dual beat)",
+      "accountUrl": "https://bsky.app/profile/millerjryan.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/millerjryan.bsky.social",
+        "team": "UTA",
+        "kind": "reporter",
+        "outlet": "KSL.com",
+        "name": "Ryan Miller"
+      },
+      "createdAt": "2024-11-21T17:43:34.869Z",
+      "indexedAt": "2024-11-21T17:43:35.180Z",
+      "url": "https://bsky.app/profile/millerjryan.bsky.social/post/3lbhzb5jb322w",
+      "sev": "mention",
+      "sevLabel": "NON-INJURY (rest / roster / decision)",
+      "inGameWatch": false,
+      "kindLabel": "non-injury"
     },
     {
       "uri": "at://did:plc:oy6hobm74iwspxyuvzzujbuo/app.bsky.feed.post/3lbe6xg4ub224",
