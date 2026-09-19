@@ -249,6 +249,16 @@ console.log("== runtime: App.init() refresh chain ==");
       /session-10 manual pass of 2026-09-18/.test(pageEls.verifyStatus.innerHTML),
       pageEls.verifyStatus.innerHTML.replace(/<[^>]+>/g, " ").slice(0, 200));
 
+    /* The verification DATE must be derived too. This page used to print "verified against the
+     * public API 2026-09-17" forever while the registry underneath was re-read on 2026-09-18 — the
+     * same defect as a hardcoded count. With NO CI file loaded it must quote the newest dated read
+     * in the registry (checked below, before the mock); once the file loads it must quote the
+     * file's own timestamp (checked after). */
+    const pills0 = (pageEls.reporterPills.innerHTML || "").replace(/<[^>]+>/g, " ");
+    check("the reporter pills quote a verification date derived from the registry, not a typed one",
+      !/public API 2026-09-17/.test(pills0) && /public API \d{4}-\d{2}-\d{2}/.test(pills0) &&
+        pills0.includes("re-checked daily by live-audit.yml"), pills0.slice(0, 220));
+
     /* now pretend CI has run: problems must surface, and a clean run must not invent any */
     global.fetch = async () => ({ ok: true, status: 200, json: async () => ({
       generated: "2026-09-19T09:17:00Z",
@@ -307,6 +317,9 @@ console.log("== runtime: App.init() refresh chain ==");
       "expected " + expectedDays + "d · " + matrix2.replace(/\s+/g, " ").slice(0, 200));
     check("the verify panel reports the activity line from the CI summary, including the quietest account",
       /activity:/.test(pageEls.verifyStatus.innerHTML) && /628 days/.test(pageEls.verifyStatus.innerHTML));
+    check("once the CI evidence file loads, the pills quote ITS timestamp instead of the registry date",
+      /re-verified by CI 2026-09-19/.test((pageEls.reporterPills.innerHTML || "").replace(/<[^>]+>/g, " ")),
+      (pageEls.reporterPills.innerHTML || "").replace(/<[^>]+>/g, " ").slice(0, 200));
     check("the coverage summary counts teams with a recent writer separately from teams with a verified one",
       /teams have a writer who posted within 30 days/.test(pageEls.coverageSummary.innerHTML) &&
       /DORMANT/.test(pageEls.coverageSummary.innerHTML));
