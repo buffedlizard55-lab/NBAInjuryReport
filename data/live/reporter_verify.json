@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-19T00:07:50.891Z",
+ "generated": "2026-09-19T00:11:34.670Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -549,7 +549,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Indiana Pacers, Fever beat writer: Fieldhouse Files | Podcast Host l Play-by-play announcer | fieldhousefiles@gmail.com",
-   "latestPostAt": "2026-09-18T23:57:11.824Z",
+   "latestPostAt": "2026-09-19T00:10:22.001Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
