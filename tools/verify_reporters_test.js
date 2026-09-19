@@ -115,7 +115,7 @@ console.log("== registry: the 2026-09-18 in-arena expansion ==");
 const sandbox = { window: {} };
 vm.createContext(sandbox);
 vm.runInContext(fs.readFileSync(path.join(ROOT, "assets/js/data.js"), "utf8") +
-  ";globalThis.__d = { TEAMS, REPORTERS, BSKY_REPORTERS, SOCIAL_ACCOUNTS, arenaCoverage, arenaCoverageSummary, reporterConf, nbaTeamNewsUrl, ARENA_CONF_RANK, ARENA_DORMANT_DAYS, NBA_OFFICIAL_ACCOUNT_PROBE, writerRecency, arenaDaysSince };", sandbox);
+  ";globalThis.__d = { TEAMS, REPORTERS, BSKY_REPORTERS, SOCIAL_ACCOUNTS, arenaCoverage, arenaCoverageSummary, reporterConf, nbaTeamNewsUrl, ARENA_CONF_RANK, ARENA_DORMANT_DAYS, NBA_OFFICIAL_ACCOUNT_PROBE, writerRecency, arenaDaysSince, verifierDrift };", sandbox);
 const D = sandbox.__d;
 
 /* Two groups, deliberately separated:
@@ -201,27 +201,71 @@ check("every session-13 row is present by name, and no unnamed row appeared with
 check("every session-15 row is present by name, and no unnamed row appeared with it",
   SESSION_15_HANDLES.every(h => NEW.filter(r => r.handle === h).length === 1),
   "missing: " + SESSION_15_HANDLES.filter(h => !NEW.some(r => r.handle === h)).join(","));
-/* Session 17 correction. This check used to pin michaelgrangenba.bsky.social as DORMANT, because
- * that is what session 15 measured (newest post 2026-08-10T18:05:49Z = 39 days). It then FAILED,
- * and the failure was the finding: the daily CI re-verification (data/live/reporter_verify.json,
- * generated 2026-09-19T18:28:52Z) measured a NEWER post — 2026-09-19T14:24:17.055Z, re-read
- * independently on 2026-09-19 via
- * public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=michaelgrangenba.bsky.social&limit=1
- * (a Sportsnet link, indexed 2026-09-19T14:24:19.362Z) — and backfill_registry_recency.js had
- * correctly written that date into the row while the row's prose still asserted 39 days/DORMANT.
- * The pinned expectation was stale, not the data. Grange is ACTIVE; the two genuinely dormant
- * session-15 arrivals stay pinned dormant, and the prose contradiction is now caught by the
- * prose-activity-drift checks below rather than by a hand-maintained list. */
-check("session-15 rows that measured DORMANT are still stored dormant, and the active ones are inside the window",
+/* Session 15 graded three rows DORMANT on that day's read. That measurement is history and it stays
+ * in the registry — but the FIRST form of this check pinned the LIST of dormant handles, so the first
+ * legitimate CI re-measurement to find a quiet writer posting again turned the suite red while the
+ * product was right. michaelgrangenba.bsky.social did exactly that on 2026-09-19: 39 days → 0 days.
+ * The check now pins the RULE, and requires any row that left the window to carry the dated record of
+ * leaving it — which is the thing that was actually missing when this went red.
+ *
+ * MERGE NOTE (same session, two branches): the concurrent branch resolved this by keeping the
+ * handle list and correcting Grange to ACTIVE. That is right about the data and still brittle about
+ * the check — the next dormant writer to post breaks it again. This branch pins the RULE here and
+ * covers the individual handles in the two checks below, which allow a row that left the window
+ * provided it carries the dated record of leaving it. Both readings of the data agree; only the
+ * shape of the assertion differs, and the non-brittle one is kept. */
+check("the 30-day rule reads dormant outside the window and active inside it",
   (() => {
     const now = Date.parse("2026-09-19T12:00:00Z");
-    const rec = h => D.writerRecency(D.BSKY_REPORTERS.find(r => r.handle === h), null, now).state;
-    return ["millerjryan.bsky.social", "stevepopper.bsky.social"].every(h => rec(h) === "dormant") &&
-      ["michaelgrangenba.bsky.social", "codytaylornba.bsky.social", "hunterpatterson.bsky.social",
-        "ginamizell.bsky.social", "lucaskaplan.bsky.social", "juliapoe.bsky.social",
-        "britishbuzz.bsky.social"].every(h => rec(h) === "active");
+    const at = isoDate => D.writerRecency({ handle: "x.bsky.social", observed: { latestPostAt: isoDate } }, null, now).state;
+    const ago = n => new Date(now - n * 86400000).toISOString();
+    return at(ago(0)) === "active" && at(ago(D.ARENA_DORMANT_DAYS)) === "active" &&
+      at(ago(D.ARENA_DORMANT_DAYS + 1)) === "dormant" && at(ago(597)) === "dormant";
   })());
+check("session-15's dormant rows are still dormant, OR carry the dated record of having left the window",
+  (() => {
+    const now = Date.parse("2026-09-19T12:00:00Z");
+    const bad = ["michaelgrangenba.bsky.social", "millerjryan.bsky.social", "stevepopper.bsky.social"].filter(h => {
+      const row = D.BSKY_REPORTERS.find(r => r.handle === h);
+      if (!row) return true;
+      const rec = D.writerRecency(row, null, now);
+      const logged = !!(row.observed && Array.isArray(row.observed.activityLog) && row.observed.activityLog.length);
+      return rec.state !== "dormant" && !logged;
+    });
+    return bad.length === 0;
+  })(), "left the window with no dated activity record: see michaelgrangenba.bsky.social");
+check("session-15's active rows are still inside the window",
+  (() => {
+    const now = Date.parse("2026-09-19T12:00:00Z");
+    return ["codytaylornba.bsky.social", "hunterpatterson.bsky.social", "ginamizell.bsky.social", "lucaskaplan.bsky.social",
+      "juliapoe.bsky.social", "britishbuzz.bsky.social"].every(h => D.writerRecency(D.BSKY_REPORTERS.find(r => r.handle === h), null, now).state === "active");
+  })());
+/* THE INVARIANT THAT WAS MISSING (session 17). A registry row states two things: what the account
+ * IS (identity) and what it last DID (activity). Activity is re-measured daily and moves; the prose
+ * that recorded the original verdict does not. Nothing in the repository compared the two, so
+ * michaelgrangenba.bsky.social sat there saying "39 days → DORMANT" over a date that evaluated
+ * ACTIVE, and the only thing that noticed was a test pinning the wrong thing. From here on, a prose
+ * verdict that contradicts the row's own measured date must be accompanied by the dated activity
+ * record — the same record the backfill now writes when it moves a row across the boundary. */
+const proseContradictions = (() => {
+  const now = Date.now();
+  return D.BSKY_REPORTERS.filter(r => {
+    const prose = String(r.verified || "");
+    const claims = /→\s*DORMANT/i.test(prose) ? "dormant" : (/→\s*ACTIVE/i.test(prose) ? "active" : null);
+    if (!claims) return false;
+    const rec = D.writerRecency(r, null, now);
+    if (!rec.measured || rec.state === claims) return false;
+    const logged = !!(r.observed && Array.isArray(r.observed.activityLog) &&
+      r.observed.activityLog.some(e => e && e.to === rec.state));
+    return !logged;
+  }).map(r => r.handle + " (prose says " + (/→\s*DORMANT/i.test(String(r.verified)) ? "DORMANT" : "ACTIVE") +
+    ", its own measured date " + (r.observed && r.observed.latestPostAt) + " reads " +
+    D.writerRecency(r, null, now).state + ", and no dated activity record explains the change)");
+})();
+check("no row's prose activity verdict contradicts its measured date without a dated activity record",
+  proseContradictions.length === 0, proseContradictions.join("; "));
 check("the Athletic-verified Pistons row names the OUTLET as verifier, not bsky.app",
+
   (() => { const r = D.BSKY_REPORTERS.find(x => x.handle === "hunterpatterson.bsky.social");
     return r && r.conf === "bsky-verified" && r.verifier === "theathletic.com" && r.observed.verificationValid === true; })());
 check("the two session-15 outlet-verified rows never read as a current beat writer",
@@ -618,6 +662,126 @@ console.log("== session 13: refused identities stay refused, and the club probe 
  * the original with every date field stripped, so "it only touched the dates" is proven rather than
  * claimed. Nothing is written inside the repository.
  * ===================================================================================== */
+/* =====================================================================================
+ * SESSION 17: verifierDrift() — the computed drift watch behind the new reporters.html panel.
+ *
+ * The session-15 leftover was a "verifier-drift UI". The DETECTION already existed in
+ * tools/verify_reporters.js; what was missing was anywhere a reader could see it. So the
+ * computation moved into data.js (testable in Node, same source the page paints from) and these
+ * checks pin its branches against REAL registry rows with synthetic evidence — a fixture row
+ * would only prove the fixture was shaped the way the function expects.
+ * ===================================================================================== */
+console.log("== session 17: verifier drift & activity watch ==");
+{
+  const evRow = (handle, extra) => Object.assign({ handle: handle, name: handle, status: "ok", notes: [] }, extra);
+  const kinds = (d, h) => d.facts.filter(f => f.handle === h).map(f => f.kind);
+  const fact = (d, h, k) => d.facts.find(f => f.handle === h && f.kind === k);
+
+  /* 1. a row that RECORDED a valid object and no longer has one — the strongest drift there is. */
+  {
+    const d = D.verifierDrift([evRow("hunterpatterson.bsky.social",
+      { verification: { present: true, valid: false, invalid: true, revoked: true, issuer: "theathletic.com", badIssuers: ["theathletic.com"] } })], NOW);
+    check("a recorded-valid verification object that is now isValid:false reads verifier-revoked, not verification-invalid",
+      kinds(d, "hunterpatterson.bsky.social").join(",") === "verifier-revoked" && d.counts.verifierRevoked === 1,
+      JSON.stringify(kinds(d, "hunterpatterson.bsky.social")));
+    check("the revoked fact names the issuer and re-openable evidence URL",
+      /theathletic\.com/.test(fact(d, "hunterpatterson.bsky.social", "verifier-revoked").detail) &&
+      /^https:\/\/public\.api\.bsky\.app\/xrpc\/app\.bsky\.actor\.getProfiles\?actors=/.test(fact(d, "hunterpatterson.bsky.social", "verifier-revoked").url));
+  }
+  {
+    const d = D.verifierDrift([evRow("hunterpatterson.bsky.social", { verification: { present: false, valid: false, invalid: false } })], NOW);
+    check("a recorded-valid object that DISAPPEARS entirely is also verifier-revoked, with its own wording",
+      fact(d, "hunterpatterson.bsky.social", "verifier-revoked") &&
+      /no longer returned|no verification object at all/.test(fact(d, "hunterpatterson.bsky.social", "verifier-revoked").detail));
+  }
+  /* 2. an invalid object on a row that never claimed a valid one is a standing risk, NOT a loss. */
+  {
+    const d = D.verifierDrift([evRow("joevardon.bsky.social",
+      { verification: { present: true, valid: false, invalid: true, revoked: true, issuer: "theathletic.com", badIssuers: ["theathletic.com"] } })], NOW);
+    check("an invalid object on a row that never claimed a valid one reads verification-invalid, and only once",
+      kinds(d, "joevardon.bsky.social").join(",") === "verification-invalid" && d.counts.verificationInvalid === 1 &&
+      d.counts.verifierRevoked === 0, JSON.stringify(kinds(d, "joevardon.bsky.social")));
+    check("the invalid-object fact names the issuer that marked it invalid",
+      /issuer theathletic\.com/.test(fact(d, "joevardon.bsky.social", "verification-invalid").detail));
+  }
+  /* 3. a note-based revocation must not be counted twice alongside the structured check. */
+  {
+    const d = D.verifierDrift([evRow("joevardon.bsky.social",
+      { verification: { present: true, valid: false, invalid: true }, notes: ["verifier-revocation detected: verification object issued by theathletic.com has isValid:false"] })], NOW);
+    check("a revocation reported BOTH structurally and in note text produces ONE fact, not two",
+      d.facts.filter(f => f.handle === "joevardon.bsky.social").length === 1);
+  }
+  /* 4. beat-departed and beat-changed are different facts and must not share a label. */
+  {
+    const d = D.verifierDrift([evRow("andyblarsen.bsky.social",
+      { verification: { present: false }, beatChange: { detected: true, type: "beat-departed", previousTeam: "UTA", newTeam: null, detail: "Bio marks UTA (jazz) as former/previous coverage" } })], NOW);
+    const f = fact(d, "andyblarsen.bsky.social", "beat-change");
+    check("beat-DEPARTED says the club was left with no beat claim (a coverage loss, not a transfer)",
+      f && f.beatType === "beat-departed" && /FORMER coverage/.test(f.label) && /coverage loss, not a transfer/.test(f.detail),
+      f ? f.label + " | " + f.detail : "no fact");
+  }
+  {
+    const d = D.verifierDrift([evRow("nbasarah.bsky.social",
+      { verification: { present: true, valid: true }, beatChange: { detected: true, type: "beat-changed", previousTeam: "UTA", newTeam: "MIN", detail: "Bio now names the Minnesota Star Tribune" } })], NOW);
+    const f = fact(d, "nbasarah.bsky.social", "beat-change");
+    check("beat-CHANGED names the different team and does NOT claim a coverage loss",
+      f && f.beatType === "beat-changed" && /different team/.test(f.label) && !/coverage loss/.test(f.detail));
+    check("a beat change on a row with a VALID object does not also read as a revocation",
+      kinds(d, "nbasarah.bsky.social").join(",") === "beat-change");
+  }
+  /* 5. activity transitions come from the row's own log and quote the POST, not the measurement. */
+  {
+    const d = D.verifierDrift([], NOW);
+    const f = fact(d, "michaelgrangenba.bsky.social", "activity-transition");
+    check("the committed activity transition is surfaced from the registry alone (no CI file needed)",
+      !!f && f.label === "dormant → active" && d.counts.activityTransition === 1);
+    check("the transition detail quotes the newest POST timestamp, not the measurement stamp",
+      f && /to 2026-09-19T14:24:17\.055Z \(0 days\)/.test(f.detail) && /measured 2026-09-19T18:28:52\.164Z/.test(f.detail),
+      f ? f.detail : "no fact");
+    /* `null` means NO FILE; `[]` means a file that re-read nothing. The two must not be reported the
+     * same way — an empty sweep is not the same claim as no sweep, and the panel says which it has. */
+    const noFile = D.verifierDrift(null, NOW);
+    const emptyFile = D.verifierDrift([], NOW);
+    check("with no CI file the scope says so instead of implying a sweep happened",
+      /registry only/.test(noFile.scope) && noFile.evidenceRows === 0 &&
+      noFile.counts.beatChange === 0 && noFile.counts.verifierRevoked === 0 && noFile.counts.verificationInvalid === 0,
+      noFile.scope);
+    check("an empty CI file is reported as a sweep that read nothing, not as no sweep at all",
+      /registry \+ CI re-verification \(0 handles\)/.test(emptyFile.scope) && emptyFile.evidenceRows === 0,
+      emptyFile.scope);
+    check("the registry-only view still surfaces the recorded activity transition",
+      noFile.facts.some(f => f.kind === "activity-transition" && f.handle === "michaelgrangenba.bsky.social"));
+  }
+  /* 6. the whole committed evidence file, as the page will actually call it. */
+  {
+    const evidenceFile = JSON.parse(fs.readFileSync(path.join(ROOT, "data/live/reporter_verify.json"), "utf8"));
+    const d = D.verifierDrift(evidenceFile.rows, NOW);
+    check("the committed run reports the three facts that are really in it, and names them",
+      d.counts.total === d.facts.length &&
+      !!fact(d, "andyblarsen.bsky.social", "beat-change") &&
+      !!fact(d, "joevardon.bsky.social", "verification-invalid") &&
+      !!fact(d, "michaelgrangenba.bsky.social", "activity-transition"),
+      JSON.stringify(d.counts));
+    check("verifierRevoked stays 0, consistent with the CI summary's verificationLost: 0",
+      d.counts.verifierRevoked === 0 && evidenceFile.summary.verificationLost === 0);
+    check("every fact carries a handle, a kind, a label, a detail and a re-openable URL",
+      d.facts.every(f => f.handle && f.kind && f.label && f.detail && /^https:\/\//.test(f.url)));
+    check("the scope line names the CI file and how many handles it covers",
+      /registry \+ CI re-verification \(\d+ handles\)/.test(d.scope) && d.evidenceRows === evidenceFile.rows.length);
+  }
+  /* 7. the panel must exist and be wired, or the computation is inert. */
+  {
+    const page = fs.readFileSync(path.join(ROOT, "reporters.html"), "utf8");
+    const rep = fs.readFileSync(path.join(ROOT, "assets/js/reporters.js"), "utf8");
+    check("reporters.html carries the drift panel containers the renderer writes to",
+      /id="driftCard"/.test(page) && /id="driftPills"/.test(page) && /id="driftTable"/.test(page) && /id="driftNote"/.test(page));
+    check("the renderer is called from init() and paints from verifierDrift(), not from its own copy",
+      /renderDrift\(\);/.test(rep) && /verifierDrift\(/.test(rep) && /paintDrift\(verifierDrift\(/.test(rep));
+    check("the renderer paints the registry-only view first, so the panel is never blank in flight",
+      rep.indexOf("paintDrift(verifierDrift(null, Date.now()))") < rep.indexOf('fetch("data/live/reporter_verify.json", { cache: "no-store" })\n      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })\n      .then(v => paintDrift(verifierDrift(v.rows || [], Date.now())))'));
+  }
+}
+
 console.log("== session 14: the registry recency backfill ==");
 {
   const cp = require("child_process");
@@ -657,12 +821,18 @@ console.log("== session 14: the registry recency backfill ==");
 
   const write = run([], tmp);
   const rewritten = fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8");
-  /* Normalising a whole file cannot just blank the two fields: the tool also INSERTS them
-   * (a row with no observed block gets one; a row with a date but no source gets a source). So the
-   * normaliser deletes each owned key together with the comma that separated it, iterating until
-   * stable, and only then the two files may be compared character for character. */
+  /* Normalising a whole file cannot just blank the date fields: the tool also INSERTS them
+   * (a row with no observed block gets one; a row with a date but no source gets a source), and since
+   * session 17 it also appends an `activityLog` entry plus one dated prose sentence whenever the
+   * date it writes moves a row across the dormant boundary. So the normaliser deletes each owned key
+   * together with the comma that separated it, iterating until stable, and only then the two files
+   * may be compared character for character. */
   const strip = src => {
-    let t = src.replace(/latestPostAtSource: "[^"]*"/g, "\u0000").replace(/latestPostAt: "[^"]*"/g, "\u0000");
+    let t = src.replace(/latestPostAtSource: "[^"]*"/g, "\u0000").replace(/latestPostAt: "[^"]*"/g, "\u0000")
+      .replace(/activityLog: \[[^\]]*\]/g, "\u0000")
+      /* The note is matched to its fixed closing clause, not by counting sentences: the dates inside
+       * it contain periods, so a `[^.]*` sentence pattern cannot delimit it. */
+      .replace(/ ACTIVITY UPDATE \d{4}-\d{2}-\d{2}: [\s\S]*?no identity field was re-graded\./g, "");
     let prev;
     do { prev = t; t = t.replace(/,\s*\u0000/g, "").replace(/\u0000,\s*/g, "").replace(/\{\s*\u0000\s*,?/g, "{ "); } while (t !== prev);
     return t.split("\u0000").join("");
@@ -674,6 +844,42 @@ console.log("== session 14: the registry recency backfill ==");
     strip(rewritten) === strip(original));
   check("a second run is a no-op (idempotent, so CI cannot commit forever)",
     run(["--check"], tmp).status === 0 && fs.readFileSync(path.join(tmp, "assets/js/data.js"), "utf8") === rewritten);
+
+  /* --- session 17: a date move that crosses the dormant boundary is a STATE CHANGE -------------
+   * michaelgrangenba.bsky.social was graded DORMANT at 39 days on 2026-09-19; the same day's CI
+   * re-measurement found a newest post 0 days old, so the registry date moved and the row's prose
+   * went on asserting the opposite. The tool now records the transition and corrects the prose in
+   * the same edit. These checks run against the REAL tool on a REAL copy of the registry. */
+  const rwRow = vm.runInNewContext(rewritten + "\n;BSKY_REPORTERS.find(r => r.handle === 'howardbeck.bsky.social')", {});
+  const staleDays = Math.floor((Date.parse(evidenceFile.generated) - Date.parse(staleDate)) / 86400000);
+  const newDays = Math.floor((Date.parse(evidenceFile.generated) - Date.parse(hbEvidence.latestPostAt)) / 86400000);
+  check("the stale fixture really does straddle the dormant boundary (the check is not vacuous)",
+    staleDays > D.ARENA_DORMANT_DAYS && newDays <= D.ARENA_DORMANT_DAYS,
+    "stale " + staleDays + "d vs measured " + newDays + "d, threshold " + D.ARENA_DORMANT_DAYS);
+  const log = (rwRow.observed || {}).activityLog;
+  check("a date move across the boundary is recorded in observed.activityLog, with both dates and both day counts",
+    Array.isArray(log) && log.length === 1 && log[0].from === "dormant" && log[0].to === "active" &&
+    log[0].previousAt === staleDate && log[0].previousDays === staleDays && log[0].days === newDays &&
+    log[0].thresholdDays === D.ARENA_DORMANT_DAYS && log[0].at === evidenceFile.generated,
+    "evaluated: " + JSON.stringify(log));
+  check("the transition is announced in the tool's own report", /ACTIVITY STATE CHANGED\s*:\s*1\b/.test(write.stdout || "") &&
+    /howardbeck\.bsky\.social dormant → active/.test(write.stdout || ""), (write.stdout || "").split("\n").filter(l => /ACTIVITY|⇄/.test(l)).join(" | "));
+  const origRow = D.BSKY_REPORTERS.find(r => r.handle === "howardbeck.bsky.social");
+  check("the row's original verdict is KEPT and a dated correction is appended, not substituted",
+    typeof rwRow.verified === "string" && rwRow.verified.startsWith(origRow.verified) &&
+    / ACTIVITY UPDATE \d{4}-\d{2}-\d{2}: /.test(rwRow.verified) &&
+    /no identity field was re-graded\.$/.test(rwRow.verified) && rwRow.verified.length > origRow.verified.length);
+  check("only the row that actually changed state gains a log entry",
+    (() => {
+      const withLog = src => vm.runInNewContext(src +
+        "\n;BSKY_REPORTERS.filter(r => r.observed && Array.isArray(r.observed.activityLog)).map(r => r.handle)", {});
+      const gained = withLog(rewritten).filter(h => !withLog(original).includes(h));
+      return gained.join(",") === "howardbeck.bsky.social";
+    })());
+  check("a third run appends nothing twice (no duplicate activityLog key, no second note)",
+    (rewritten.match(/activityLog:/g) || []).length === (original.match(/activityLog:/g) || []).length + 1 &&
+    (rewritten.match(/ACTIVITY UPDATE/g) || []).length === (original.match(/ACTIVITY UPDATE/g) || []).length + 1,
+    "activityLog " + (rewritten.match(/activityLog:/g) || []).length + " vs baseline " + (original.match(/activityLog:/g) || []).length);
 
   /* --- the shape that broke the first version: `latestPostAt: null`, and duplicate keys -------- */
   /* Fixtures are built by swapping the OBSERVED BLOCK of one row, so nothing else about the file

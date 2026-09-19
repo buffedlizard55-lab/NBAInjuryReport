@@ -57,6 +57,25 @@
       <b>A verified account is still not proof the reporter is in the building</b>, and a beat assignment is a claim about coverage, never a proven location.</p>
   </section>
 
+  <!-- ============ VERIFIER DRIFT & ACTIVITY WATCH (session 17) ============ -->
+  <section class="card" style="margin-top:16px" id="driftCard">
+    <h2>🧭 Verifier drift &amp; activity watch <span class="tiny muted">computed, not typed</span></h2>
+    <p class="muted small">A reporter row goes stale in three ways that a green tick hides: the outlet's <b>verification object</b> is revoked,
+      the account's own bio <b>moves or drops the beat</b>, or the account simply <b>stops posting</b>. All three are re-measurable for free, so this
+      panel is computed by <code>verifierDrift()</code> in <code>assets/js/data.js</code> from the registry plus
+      <code>data/live/reporter_verify.json</code>, and it lists the misses rather than filtering them out.
+      <b>None of these facts downgrades an identity on its own.</b> A revoked object does not make a person someone else, a bio is not a credential,
+      and a quiet account is not a wrong one — each row is a prompt to re-open the linked evidence and decide.</p>
+    <div class="pill-row" id="driftPills" data-pills><span class="pill">reading the re-verification file…</span></div>
+    <div class="table-wrap" style="margin-top:8px">
+      <table>
+        <thead><tr><th>Account</th><th>Team</th><th>What changed</th><th>Evidence</th><th>Re-check</th></tr></thead>
+        <tbody id="driftTable"></tbody>
+      </table>
+    </div>
+    <p class="tiny muted" id="driftNote">Reading…</p>
+  </section>
+
   <div class="callout warn"><b class="t">⚠ Read this before using the list for alerts</b>
     <ul class="tight" style="margin:6px 0 0; padding-left:18px">
       <li><b>Wojnarowski is retired</b> (Sept 2024) — historical reference only, never a live source.</li>

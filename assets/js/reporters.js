@@ -282,6 +282,71 @@ const Reporters = (() => {
   }
 
   /* ---- what the CI re-verification run observed last (data/live/reporter_verify.json) ---- */
+  /* ---- Verifier drift & activity watch (session 17) ----
+   * The session-15 leftover was a "verifier-drift UI": the verifier had been detecting revoked
+   * verification objects and beat changes for two sessions, but the only place a reader could see
+   * them was one badge inside a run-on status line, so the page could not answer the question the
+   * panel exists for — what has changed about who these people are? The computation lives in
+   * data.js so it is testable in Node; this function only paints it. */
+  const DRIFT_BADGE = {
+    "verifier-revoked": "bad",
+    "verification-invalid": "warn",
+    "beat-change": "warn",
+    "activity-transition": "info"
+  };
+  const DRIFT_LABEL = {
+    "verifier-revoked": "verification object revoked",
+    "verification-invalid": "verification object invalid",
+    "beat-change": "beat change",
+    "activity-transition": "activity change"
+  };
+  function paintDrift(drift) {
+    const esc = AlertEngine.escapeHtml;
+    const c = drift.counts;
+    const pills = document.getElementById("driftPills");
+    if (pills) {
+      pills.innerHTML = [
+        `<span class="pill"><b>${esc(String(c.total))}</b> drift fact(s)</span>`,
+        `<span class="pill ${c.verifierRevoked ? "warn" : ""}">🔐 <b>${esc(String(c.verifierRevoked))}</b> verification revoked</span>`,
+        `<span class="pill ${c.verificationInvalid ? "warn" : ""}">◐ <b>${esc(String(c.verificationInvalid))}</b> object invalid</span>`,
+        `<span class="pill ${c.beatChange ? "warn" : ""}">🔀 <b>${esc(String(c.beatChange))}</b> beat change</span>`,
+        `<span class="pill ${c.activityTransition ? "info" : ""}">📉 <b>${esc(String(c.activityTransition))}</b> activity change</span>`,
+        `<span class="pill">threshold <b>${esc(String(drift.thresholdDays))}</b> days</span>`
+      ].join("");
+    }
+    const tb = document.getElementById("driftTable");
+    if (tb) {
+      tb.innerHTML = drift.facts.length ? drift.facts.map(f => `<tr>
+        <td><b>${esc(f.name || f.handle)}</b><br><span class="tiny muted">@${esc(f.handle)}</span></td>
+        <td>${f.team ? `<span class="team-chip">${esc(f.team)}</span>` : '<span class="tiny muted">national</span>'}</td>
+        <td><span class="badge ${DRIFT_BADGE[f.kind] || "info"}">${esc(DRIFT_LABEL[f.kind] || f.kind)}</span>
+          <div class="small" style="margin-top:3px">${esc(f.label || "")}</div></td>
+        <td class="small">${esc(f.detail || "")}${f.at ? `<div class="tiny muted">measured ${esc(String(f.at))}</div>` : ""}
+          <div class="tiny muted">${esc(f.source || "")}</div></td>
+        <td>${f.url ? `<a class="tiny" href="${esc(f.url)}" target="_blank" rel="noopener">re-open the evidence ↗</a>` : '<span class="tiny muted">—</span>'}</td>
+      </tr>`).join("") : `<tr><td colspan="5" class="small muted">No drift measured. That is a statement about this
+        re-verification run, not a guarantee: the verifier can only compare what it re-read.</td></tr>`;
+    }
+    const note = document.getElementById("driftNote");
+    if (note) {
+      note.innerHTML = `Scope: ${esc(drift.scope)} · computed ${esc(new Date(drift.checkedAt).toLocaleString())}.
+        A <b>beat change</b> is a coverage loss for the team that was left and must be filled from a live read, never invented;
+        a <b>revoked or invalid verification object</b> is a standing risk recorded against the row, not a retraction of the identity;
+        an <b>activity change</b> moves a row across the ${esc(String(drift.thresholdDays))}-day line in either direction and never re-grades it.`;
+    }
+  }
+  function renderDrift() {
+    const el = document.getElementById("driftTable");
+    if (!el || typeof verifierDrift !== "function") return;
+    /* Registry-only first, so the panel is never empty while the CI file is in flight, then
+     * repainted with the measurement when it arrives. */
+    paintDrift(verifierDrift(null, Date.now()));
+    fetch("data/live/reporter_verify.json", { cache: "no-store" })
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(v => paintDrift(verifierDrift(v.rows || [], Date.now())))
+      .catch(() => { /* the registry-only paint above already stands, and says so in its scope line */ });
+  }
+
   function renderVerifyStatus() {
     const el = document.getElementById("verifyStatus");
     if (!el) return;
@@ -600,6 +665,7 @@ const Reporters = (() => {
     renderClubProbe();
     renderSocialBlockers();
     renderVerifyStatus();
+    renderDrift();
     buildForm();
     paintScores();
     const t = document.getElementById("tierFilter");
