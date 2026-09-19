@@ -318,6 +318,7 @@ const InjuryBoard = (function () {
   let boardSearchQuery = "";
   let boardStatusFilter = "ALL";
   let boardImpactFilter = "ALL";
+  let boardView = "cards"; // "cards" (Basketball Monster Player News) or "teams" (Team Grid)
 
   function setSearch(q) {
     boardSearchQuery = String(q || "");
@@ -335,6 +336,16 @@ const InjuryBoard = (function () {
     render();
   }
 
+  function setView(v) {
+    boardView = v === "teams" ? "teams" : "cards";
+    if (typeof document !== "undefined" && document.querySelectorAll) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.toggle("active", t.dataset.boardView === boardView));
+    }
+    render();
+  }
+
+  function getView() { return boardView; }
+
   function countsByImpact(list) {
     const c = { ALL: (list || rows).length, high: 0, medium: 0, low: 0, unknown: 0 };
     for (const r of (list || rows)) {
@@ -348,11 +359,13 @@ const InjuryBoard = (function () {
     boardSearchQuery = "";
     boardStatusFilter = "ALL";
     boardImpactFilter = "ALL";
+    boardView = "cards";
     const inp = document.getElementById("boardSearch");
     if (inp) inp.value = "";
     if (typeof document !== "undefined" && document.querySelectorAll) {
-      document.querySelectorAll(".board-tab").forEach(t => t.classList.toggle("active", t.dataset.boardStatus === "ALL"));
+      document.querySelectorAll(".board-tab[data-board-status]").forEach(t => t.classList.toggle("active", t.dataset.boardStatus === "ALL"));
       document.querySelectorAll(".impact-tab").forEach(t => t.classList.toggle("active", t.dataset.impactFilter === "ALL"));
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.toggle("active", t.dataset.boardView === "cards"));
     }
     render();
   }
@@ -454,6 +467,70 @@ const InjuryBoard = (function () {
       return;
     }
 
+    if (boardView === "cards") {
+      const sorted = shown.slice().sort((x, y) =>
+        ((impactFor(y) || {}).score ?? -1) - ((impactFor(x) || {}).score ?? -1)
+        || (SEV_ORDER[x.sev] ?? 9) - (SEV_ORDER[y.sev] ?? 9)
+        || new Date(y.updated || 0) - new Date(x.updated || 0));
+
+      box.innerHTML = '<div class="board-cards">' + sorted.map(r => {
+        const imp = impactFor(r);
+        const listing = imp && imp.listing && imp.listing.count
+          ? '<div class="br-history tiny"><b>' + (imp.listing.count > 1 ? "Injury-listing cadence" : "Dated injury listings observed") + ' (ESPN roster feed, ' + imp.listing.count + ' listing' + (imp.listing.count > 1 ? "s" : "") + ' in ~9 months):</b> ' +
+            esc(imp.listing.dates.slice(-6).join(", ")) +
+            (imp.listing.source ? ' · <a href="' + esc(imp.listing.source) + '" target="_blank" rel="noopener">source JSON ↗</a>' : "") +
+            '<br><span class="muted">Cadence is how often the player appeared on a listing — not a medical history.</span></div>'
+          : "";
+        return '<div class="board-row bm-player-card sev-border-' + esc(r.sev) + '">' +
+          '<div class="br-top"><span class="tag ' + esc(r.sev) + '">' + esc(r.sevLabel) + '</span>' +
+          '<span class="team-chip">' + esc(r.team) + '</span>' +
+          '<b class="br-player">' + esc(r.player) + '</b>' +
+          (r.position ? '<span class="muted tiny">' + esc(r.position) + '</span>' : "") +
+          (imp ? '<span class="tag impact-' + esc(imp.impact) + '" title="' + esc(imp.notes.join(" ")) + '">' + esc(impactShort(imp)) + '</span>' : "") +
+          (imp && imp.offenseTier === "primary" ? '<span class="tag offense" title="Scoring leader / primary offensive option">TOP OFFENSIVE OPTION</span>' : imp && imp.offenseTier === "secondary" ? '<span class="tag offense" title="Secondary offensive option">2ND OPTION</span>' : "") +
+          (imp && imp.exit ? '<span class="tag watch" title="Reported by a monitored account — not a league designation">IN-GAME EXIT (reported)</span>' : "") +
+          (r.fantasyStatus ? '<span class="tag gtd" title="ESPN fantasy status">' + esc(r.fantasyStatus) + '</span>' : "") +
+          '<span class="br-when tiny muted" title="' + esc(r.updated || "") + '">' + esc(ago(r.updated)) + '</span></div>' +
+          '<div class="br-meta tiny muted">' +
+          (r.bodyPart ? esc(r.bodyPart) + " · " : "") +
+          (r.returnDate ? "est. return " + esc(r.returnDate) + " · " : "") +
+          "Lineup impact: " + esc(imp ? imp.impactLabel : "not computed") +
+          (imp && imp.role.games ? " · role from " + imp.role.starts + "/" + imp.role.games + " collected box score(s)" + (imp.role.avgMinutes != null ? ", " + imp.role.avgMinutes + " min avg" : "") + (imp.role.medianMinutes != null ? ", median " + imp.role.medianMinutes : "") : "") +
+          (imp && imp.role.teamChanged ? " · ⚠ sample collected with previous team" : "") +
+          (imp && imp.contract && imp.contract.label ? " · " + esc(imp.contract.label) : "") +
+          " · Medical severity: not assessed · ESPN: " + esc(r.status) + (r.noteSource ? " · per " + esc(r.noteSource) : "") +
+          '</div>' +
+          (imp && imp.factors && imp.factors.length ? '<div class="br-model tiny">' +
+            '<span class="muted">Impact model v' + esc((imp.model && imp.model.version) || 2) + ':</span> ' + esc(factorsLine(imp)) +
+            (imp.confidence != null ? ' <span class="muted">· evidence coverage ' + Math.round(imp.confidence * 100) + '%</span>' : '') +
+            '</div>' : '') +
+          (imp && imp.production ? '<div class="br-prod tiny muted">Collected production: ' + esc(
+            [imp.production.ppg != null ? imp.production.ppg + " ppg" : null,
+             imp.production.apg != null ? imp.production.apg + " apg" : null,
+             imp.production.rpg != null ? imp.production.rpg + " rpg" : null,
+             imp.production.avgPlusMinus != null ? (imp.production.avgPlusMinus >= 0 ? "+" : "") + imp.production.avgPlusMinus + " on-court +/-" : null]
+              .filter(Boolean).join(", ")) +
+            ' over ' + esc(imp.production.games) + ' collected game(s)' +
+            (imp.production.teamPpg != null ? ' · team scored ' + esc(imp.production.teamPpg) + ' ppg in the same games' : '') +
+            (imp.production.source ? ' · <a href="' + esc(imp.production.source) + '" target="_blank" rel="noopener">box-score source ↗</a>' : '') +
+            '</div>' : '') +
+          (imp && imp.travel ? '<div class="br-travel tiny muted">Schedule/travel: ' + esc(travelLine(imp)) +
+            (imp.travel.source ? ' · <a href="' + esc(imp.travel.source) + '" target="_blank" rel="noopener">schedule source ↗</a>' : '') + '</div>' : '') +
+          (imp && imp.availabilityRisk ? '<div class="br-risk tiny"><span class="tag risk-' + esc(imp.availabilityRisk.level) + '">AVAILABILITY RISK: ' + esc(imp.availabilityRisk.level.toUpperCase()) + '</span> <span class="muted">' + esc(imp.availabilityRisk.label) + '</span></div>' : '') +
+          (imp ? '<div class="br-why tiny muted">' + esc(imp.notes[0] || "") + (imp.role.evidence.length ? ' · <a href="' + esc(imp.role.evidence[0]) + '" target="_blank" rel="noopener">box-score evidence ↗</a>' : "") + '</div>' : "") +
+          (r.shortComment ? '<div class="br-comment">' + esc(r.shortComment) + '</div>' : "") +
+          listing +
+          '<div class="br-links tiny">' +
+          (r.playerUrl ? '<a href="' + esc(r.playerUrl) + '" target="_blank" rel="noopener">player page</a> · ' : "") +
+          (r.teamUrl ? '<a href="' + esc(r.teamUrl) + '" target="_blank" rel="noopener">team injuries</a> · ' : "") +
+          '<a href="' + espnTeamDepthUrl(r.team) + '" target="_blank" rel="noopener">ESPN depth chart ↗</a> · ' +
+          (r.officialUrl ? '<a href="' + esc(r.officialUrl) + '" target="_blank" rel="noopener">NBA report index (not row confirmation)</a> · ' : "") +
+          (r.searchUrl ? '<a href="' + esc(r.searchUrl) + '" target="_blank" rel="noopener">search reporting</a>' : "") +
+          '</div></div>';
+      }).join("") + '</div>';
+      return;
+    }
+
     const byTeam = {};
     for (const r of shown) (byTeam[r.team] = byTeam[r.team] || []).push(r);
     /* Highest-impact teams first: the whole point of the board is to answer "who is in trouble
@@ -550,7 +627,7 @@ const InjuryBoard = (function () {
     coverageGaps: coverageGaps, renderCoverage: renderCoverage, countsByImpact: countsByImpact, factorsLine: factorsLine,
     renderImpactWatch: renderImpactWatch,
     travelLine: travelLine, getImpactFilter: () => boardImpactFilter,
-    alertFor: alertFor, setSearch: setSearch, setStatusFilter: setStatusFilter, setImpactFilter: setImpactFilter, resetFilter: resetFilter,
+    alertFor: alertFor, setSearch: setSearch, setStatusFilter: setStatusFilter, setImpactFilter: setImpactFilter, setView: setView, getView: getView, resetFilter: resetFilter,
     fingerprint: fp, getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, season: season, count: rows.length })
   };
 })();

@@ -122,18 +122,117 @@ function profileLabels(profile) {
 }
 
 /* A valid verification object = at least one entry with isValid true. `trustedVerifierStatus`
- * is NOT the same thing (bsky.app is a trusted verifier regardless), so it is not consulted. */
+ * is NOT the same thing (bsky.app is a trusted verifier regardless), so it is not consulted.
+ * Verifier-revocation check: track objects with isValid: false and bad issuers explicitly. */
 function validVerification(profile) {
   const v = (profile && profile.verification) || null;
-  if (!v || !Array.isArray(v.verifications)) return { present: false, valid: false, issuer: null };
+  if (!v || !Array.isArray(v.verifications)) return { present: false, valid: false, invalid: false, issuer: null, badIssuers: [], revoked: false };
   const good = v.verifications.filter(x => x && x.isValid === true);
+  const bad = v.verifications.filter(x => x && x.isValid === false);
   const pick = good[0] || v.verifications[0] || null;
+  const badIssuers = bad.map(b => b.issuerHandle).filter(Boolean);
   return {
     present: v.verifications.length > 0,
     valid: good.length > 0,
-    issuer: pick ? (pick.issuerHandle || null) : null
+    invalid: bad.length > 0,
+    revoked: bad.length > 0 && good.length === 0,
+    issuer: pick ? (pick.issuerHandle || null) : null,
+    badIssuers: badIssuers
   };
 }
+
+/* =====================================================================================
+ * AUTOMATED PER-SEASON BEAT-CHANGE WATCH (session 16, 2026-09-19)
+ * -------------------------------------------------------------------------------------
+ * Hine (MIN->PHI) and Todd (UTA->MIN) established the pattern: a reporter legitimately
+ * changes beats between seasons, their bio updates to say "Previously <team>" or "Now covering
+ * <otherTeam>", and a static registry keeps asserting their old beat until human review.
+ * This detector scans for departure phrases and new team assignments.
+ * ===================================================================================== */
+const TEAM_KEYWORDS = {
+  ATL: ["hawks", "atlanta hawks"],
+  BOS: ["celtics", "boston celtics"],
+  BKN: ["nets", "brooklyn nets"],
+  CHA: ["hornets", "charlotte hornets", "buzz city"],
+  CHI: ["bulls", "chicago bulls"],
+  CLE: ["cavaliers", "cavs", "cleveland cavaliers"],
+  DAL: ["mavericks", "mavs", "dallas mavericks"],
+  DEN: ["nuggets", "denver nuggets"],
+  DET: ["pistons", "detroit pistons"],
+  GSW: ["warriors", "dubs", "golden state warriors"],
+  HOU: ["rockets", "houston rockets"],
+  IND: ["pacers", "indiana pacers"],
+  LAC: ["clippers", "la clippers"],
+  LAL: ["lakers", "los angeles lakers"],
+  MEM: ["grizzlies", "memphis grizzlies"],
+  MIA: ["heat", "miami heat"],
+  MIL: ["bucks", "milwaukee bucks"],
+  MIN: ["timberwolves", "wolves", "minnesota timberwolves"],
+  NOP: ["pelicans", "pels", "new orleans pelicans"],
+  NYK: ["knicks", "new york knicks"],
+  OKC: ["thunder", "okc thunder"],
+  ORL: ["magic", "orlando magic"],
+  PHI: ["sixers", "76ers", "philadelphia 76ers"],
+  PHX: ["suns", "phoenix suns"],
+  POR: ["trail blazers", "blazers", "portland"],
+  SAC: ["kings", "sacramento kings"],
+  SAS: ["spurs", "san antonio spurs"],
+  TOR: ["raptors", "toronto raptors"],
+  UTA: ["jazz", "utah jazz"],
+  WAS: ["wizards", "washington wizards"]
+};
+
+function detectBeatChange(bio, registeredTeam, registeredOutlet) {
+  if (!bio || !registeredTeam) return null;
+  const b = norm(bio);
+  const myKeywords = TEAM_KEYWORDS[registeredTeam] || [];
+  if (!myKeywords.length) return null;
+
+  // 1. Explicit departure phrase matching the registered team ("previously Jazz", "formerly covered Sixers", etc.)
+  for (const kw of myKeywords) {
+    const prevRe = new RegExp(`\\b(?:previously|formerly|former|ex-|used to cover|prior to|left)\\s+(?:covering\\s+)?(?:the\\s+)?(?:[a-z0-9-]+\\s+)*${kw}\\b`, "i");
+    if (prevRe.test(b)) {
+      let newTeam = null;
+      for (const [teamCode, keywords] of Object.entries(TEAM_KEYWORDS)) {
+        if (teamCode === registeredTeam) continue;
+        for (const nkw of keywords) {
+          const nowRe = new RegExp(`\\b(?:now\\s+(?:covering|at|reporter)|currently\\s+covering|(?:beat\\s+writer|reporter)\\s+(?:at|for|covering))\\s+(?:the\\s+)?(?:[a-z0-9-]+\\s+)*${nkw}\\b|\\b${nkw}\\s+(?:beat\\s+writer|reporter)\\b`, "i");
+          if (nowRe.test(b)) { newTeam = teamCode; break; }
+        }
+        if (newTeam) break;
+      }
+      return {
+        detected: true,
+        type: "beat-departed",
+        previousTeam: registeredTeam,
+        newTeam: newTeam,
+        detail: `Bio marks ${registeredTeam} (${kw}) as former/previous coverage` + (newTeam ? `; now indicates ${newTeam}` : "")
+      };
+    }
+  }
+
+  // 2. Clear new beat claimed without mentioning registered team
+  const mentionsMyTeam = myKeywords.some(kw => new RegExp(`\\b${kw}\\b`, "i").test(b));
+  if (!mentionsMyTeam) {
+    for (const [teamCode, keywords] of Object.entries(TEAM_KEYWORDS)) {
+      if (teamCode === registeredTeam) continue;
+      for (const nkw of keywords) {
+        const beatRe = new RegExp(`\\b(?:covering\\s+(?:the\\s+)?${nkw}|${nkw}\\s+(?:beat\\s+writer|reporter|insider))\\b`, "i");
+        if (beatRe.test(b)) {
+          return {
+            detected: true,
+            type: "team-mismatch",
+            previousTeam: registeredTeam,
+            newTeam: teamCode,
+            detail: `Bio claims ${teamCode} beat (${nkw}) with no mention of registered team ${registeredTeam}`
+          };
+        }
+      }
+    }
+  }
+  return null;
+}
+
 function ageDays(iso, now) {
   if (!iso) return null;
   const t = Date.parse(iso);
@@ -193,13 +292,27 @@ function judge(row, observed, now) {
   const noPosts = claimsCoverage && o.feedReadable === true && o.postItems === 0;
   const recencyUnread = claimsCoverage && o.feedReadable === false;
   const dormant = claimsCoverage && (noPosts || (days != null && days > DORMANT_DAYS));
+
+  /* Watchers: beat changes (Hine/Todd pattern) and verifier revocations (joevardon/Athletic pattern) */
+  const beatChange = detectBeatChange(o.profile.description, row.team, row.outlet);
+  if (beatChange && beatChange.detected) {
+    notes.push("beat-change watch: " + beatChange.detail);
+  }
+  if (v.invalid && !v.valid) {
+    notes.push("verifier-revocation detected: verification object issued by " + (v.badIssuers.join(", ") || "unknown issuer") + " has isValid:false");
+  }
+  if (row.observed && row.observed.verificationValid === true && !v.valid) {
+    notes.push("verifier-revocation detected: account previously had a valid verification object, now invalid or missing");
+  }
+
   const base = {
     handle: row.handle, name: row.name, team: row.team || null, conf: D.reporterConf(row), feed: row.feed !== false,
     verification: v, labels: labels.all, privateProfile: labels.privateProfile,
     bio: String(o.profile.description || "").slice(0, 400),
     latestPostAt: o.latestPostAt || null, dormantDays: days,
     postItems: o.postItems == null ? null : o.postItems,
-    recencyReadable: o.feedReadable !== false
+    recencyReadable: o.feedReadable !== false,
+    beatChange: beatChange || null
   };
   if (!hasQuote) return Object.assign(base, { status: "no-quote", fatal: false, notes: ["no stored evidenceQuote (pre-2026-09-18 row): bio recorded, drift cannot be judged"] });
   /* A REFUSED row stores no identity claim: its evidenceQuote is a note about what the API
@@ -216,7 +329,7 @@ function judge(row, observed, now) {
       notes: ["identity REFUSED on " + (row.observed && row.observed.checkedAt ? row.observed.checkedAt : "an earlier read") + " and still held out of collection (feed:false) — there is no identity claim here to drift" +
         (expectedEmpty ? "; profile is still empty" : "")] });
   }
-  if (present === false) return Object.assign(base, { status: "bio-drift", fatal: false, notes: ["stored quote is no longer present in the live bio — re-read and update the row"] });
+  if (present === false) return Object.assign(base, { status: "bio-drift", fatal: false, notes: notes.concat(["stored quote is no longer present in the live bio — re-read and update the row"]) });
   /* `!no-unauthenticated` means the profile holder asked Bluesky not to serve their content to
    * logged-out clients. Identity still matched the stored quote, but a keyless poller can never
    * read the posts — which makes the row useless as a live feed. Reported, not fatal: the fix is
@@ -234,7 +347,7 @@ function judge(row, observed, now) {
   if (noPosts) return Object.assign(base, { status: "dormant", fatal: false, notes: ["quote matches, but the feed is readable and holds ZERO posts — not a news channel"] });
   if (dormant) return Object.assign(base, { status: "dormant", fatal: false, notes: ["quote matches, but newest post is " + days + " days old (>" + DORMANT_DAYS + ")"] });
   return Object.assign(base, { status: "ok", fatal: false,
-    notes: claimsCoverage ? [] : ["held out of the alert path (feed:false) — identity re-checked, recency not enforced"] });
+    notes: (claimsCoverage ? [] : ["held out of the alert path (feed:false) — identity re-checked, recency not enforced"]).concat(notes) });
 }
 
 function summarize(rows) {
@@ -461,7 +574,7 @@ async function mapLimitedOnce(handle) {
   return r[0] || null;
 }
 
-module.exports = { judge, summarize, quotePresent, validVerification, profileLabels, MODERATION_LABEL_RE, ageDays, chunk, norm, DORMANT_DAYS, latestPost, channelStatus, profilesFor };
+module.exports = { judge, summarize, quotePresent, validVerification, profileLabels, MODERATION_LABEL_RE, ageDays, chunk, norm, DORMANT_DAYS, latestPost, channelStatus, profilesFor, detectBeatChange };
 
 if (require.main === module) {
   main().catch(e => { console.error("verify_reporters failed: " + e.message); process.exit(1); });

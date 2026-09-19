@@ -388,6 +388,12 @@ const App = (() => {
       hiBtn.textContent = ok ? "🔔⚡ Playing high-impact chime…" : "⚠ Audio unavailable";
       setTimeout(() => { hiBtn.textContent = "▶⚡ Test high-impact sound"; }, 1400);
     });
+    const liveAlertBtn = document.getElementById("testLiveAlertBtn");
+    if (liveAlertBtn) liveAlertBtn.addEventListener("click", () => {
+      const res = AlertEngine.testLiveAlert();
+      liveAlertBtn.textContent = res ? "🚨 Alert Triggered!" : "⚠ Audio unavailable";
+      setTimeout(() => { liveAlertBtn.textContent = "▶🚨 Test live alert (offensive OUT / in-game)"; }, 1500);
+    });
     const bSearch = document.getElementById("boardSearch");
     if (bSearch) {
       bSearch.addEventListener("input", () => {
@@ -425,7 +431,21 @@ const App = (() => {
           }
         });
       });
+      /* View mode switcher: Basketball Monster Player News vs Team-by-Team Grid */
+      document.querySelectorAll(".view-tab[data-board-view]").forEach(tab => {
+        tab.addEventListener("click", () => {
+          document.querySelectorAll(".view-tab[data-board-view]").forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          if (typeof InjuryBoard !== "undefined" && InjuryBoard.setView) {
+            InjuryBoard.setView(tab.dataset.boardView);
+          }
+        });
+      });
     }
+    const wireMarkRead = document.getElementById("wireMarkRead");
+    if (wireMarkRead) wireMarkRead.addEventListener("click", () => Wire.markRead());
+    const wireClear = document.getElementById("wireClear");
+    if (wireClear) wireClear.addEventListener("click", () => Wire.clear());
     const testFeeds = document.getElementById("testFeeds");
     if (testFeeds) testFeeds.addEventListener("click", async () => {
       testFeeds.disabled = true; testFeeds.textContent = "Testing…";

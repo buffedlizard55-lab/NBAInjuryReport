@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-19T04:33:22.544Z",
+ "generated": "2026-09-19T04:52:40.063Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -59,7 +59,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -68,6 +71,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -81,7 +85,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -90,6 +97,7 @@
    "dormantDays": 74,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -105,7 +113,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -114,6 +125,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -127,7 +139,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -136,6 +151,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -149,7 +165,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -158,6 +177,7 @@
    "dormantDays": 58,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -173,7 +193,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -182,6 +205,7 @@
    "dormantDays": 23,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -195,7 +219,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -204,6 +231,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -217,7 +245,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -226,6 +257,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -239,7 +271,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -248,6 +283,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -261,7 +297,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -270,6 +309,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -283,7 +323,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -292,6 +335,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -305,7 +349,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -314,6 +361,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -327,7 +375,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -336,6 +387,7 @@
    "dormantDays": 30,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -349,7 +401,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -358,6 +413,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -371,7 +427,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -380,6 +439,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -393,7 +453,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -402,6 +465,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -415,7 +479,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -424,6 +491,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -437,7 +505,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -446,6 +517,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -459,7 +531,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -468,6 +543,7 @@
    "dormantDays": 45,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -483,7 +559,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -492,6 +571,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -507,7 +587,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -516,6 +599,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -531,7 +615,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -540,6 +627,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -553,7 +641,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -562,6 +653,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -575,7 +667,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -584,6 +679,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -597,7 +693,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [
     "!no-unauthenticated"
@@ -608,6 +707,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -621,7 +721,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -630,6 +733,7 @@
    "dormantDays": 99,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -645,7 +749,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -654,6 +761,7 @@
    "dormantDays": 12,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -667,7 +775,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -676,6 +787,7 @@
    "dormantDays": 6,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -689,7 +801,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -698,6 +813,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -711,7 +827,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -720,6 +839,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -733,7 +853,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -742,6 +865,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -757,7 +881,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -766,6 +893,7 @@
    "dormantDays": 455,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -781,7 +909,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -790,6 +921,7 @@
    "dormantDays": 35,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -805,7 +937,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -814,6 +949,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -827,7 +963,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -836,6 +975,7 @@
    "dormantDays": 129,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -851,7 +991,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -860,6 +1003,7 @@
    "dormantDays": 61,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -875,7 +1019,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -884,6 +1031,7 @@
    "dormantDays": 20,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -897,7 +1045,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -906,6 +1057,7 @@
    "dormantDays": 28,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -919,7 +1071,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -928,6 +1083,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -941,7 +1097,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -950,6 +1109,7 @@
    "dormantDays": 15,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -963,7 +1123,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -972,6 +1135,7 @@
    "dormantDays": 8,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -985,7 +1149,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -994,6 +1161,7 @@
    "dormantDays": 578,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1009,7 +1177,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -1018,6 +1189,7 @@
    "dormantDays": 628,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1033,7 +1205,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1042,6 +1217,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1055,7 +1231,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1064,6 +1243,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1077,7 +1257,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1086,6 +1269,7 @@
    "dormantDays": 4,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1099,7 +1283,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "washingtonpost.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "washingtonpost.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -1108,6 +1295,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1121,7 +1309,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1130,6 +1321,7 @@
    "dormantDays": 16,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1143,7 +1335,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1152,6 +1347,7 @@
    "dormantDays": 149,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1167,7 +1363,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1176,6 +1375,7 @@
    "dormantDays": 340,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1191,7 +1391,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1200,6 +1403,7 @@
    "dormantDays": 638,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1215,7 +1419,12 @@
    "verification": {
     "present": true,
     "valid": false,
-    "issuer": "theathletic.com"
+    "invalid": true,
+    "revoked": true,
+    "issuer": "theathletic.com",
+    "badIssuers": [
+     "theathletic.com"
+    ]
    },
    "labels": [],
    "privateProfile": false,
@@ -1224,6 +1433,7 @@
    "dormantDays": 86,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1239,7 +1449,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1248,6 +1461,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -1263,7 +1477,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1272,6 +1489,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -1287,7 +1505,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -1296,6 +1517,7 @@
    "dormantDays": 17,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1309,7 +1531,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1318,6 +1543,7 @@
    "dormantDays": 119,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1333,7 +1559,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1342,6 +1571,7 @@
    "dormantDays": 44,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1357,7 +1587,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1366,6 +1599,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1379,15 +1613,19 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
    "bio": "basketball analyst/dork, art museum loiterer, look up at the trees\n\ncollege hoops: https://briangeisinger.substack.com/\nBuzz Beat - Charlotte Hornets podcast: https://shorturl.at/sajhV",
-   "latestPostAt": "2026-09-16T14:02:39.971Z",
-   "dormantDays": 2,
+   "latestPostAt": "2026-09-19T04:49:20.399Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1401,7 +1639,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1410,6 +1651,7 @@
    "dormantDays": 4,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1423,7 +1665,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1432,6 +1677,7 @@
    "dormantDays": 458,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1447,7 +1693,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1456,6 +1705,7 @@
    "dormantDays": 52,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1471,7 +1721,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1480,6 +1733,13 @@
    "dormantDays": 31,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": {
+    "detected": true,
+    "type": "beat-departed",
+    "previousTeam": "UTA",
+    "newTeam": null,
+    "detail": "Bio marks UTA (jazz) as former/previous coverage"
+   },
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1495,7 +1755,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1504,6 +1767,7 @@
    "dormantDays": 317,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1519,7 +1783,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1528,6 +1795,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -1543,7 +1811,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1552,6 +1823,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -1567,7 +1839,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1576,6 +1851,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -1591,7 +1867,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1600,6 +1879,7 @@
    "dormantDays": 17,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1613,7 +1893,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "theathletic.com"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "theathletic.com",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -1622,6 +1905,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1635,7 +1919,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1644,6 +1931,7 @@
    "dormantDays": 8,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1657,7 +1945,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1666,6 +1957,7 @@
    "dormantDays": 4,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1679,7 +1971,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1688,6 +1983,7 @@
    "dormantDays": 39,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1703,7 +1999,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1712,6 +2011,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1725,7 +2025,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1734,6 +2037,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1747,7 +2051,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1756,6 +2063,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1769,7 +2077,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1778,6 +2089,7 @@
    "dormantDays": 3,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1791,7 +2103,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1800,6 +2115,7 @@
    "dormantDays": 25,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1813,7 +2129,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1822,6 +2141,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1835,7 +2155,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1844,6 +2167,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1857,7 +2181,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1866,6 +2193,7 @@
    "dormantDays": 18,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1879,7 +2207,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1888,6 +2219,7 @@
    "dormantDays": 597,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1903,7 +2235,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1912,6 +2247,7 @@
    "dormantDays": 351,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1927,7 +2263,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -1936,6 +2275,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -1951,7 +2291,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -1960,6 +2303,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -1973,7 +2317,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -1982,6 +2329,7 @@
    "dormantDays": 309,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "dormant",
    "fatal": false,
    "notes": [
@@ -1997,7 +2345,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -2006,6 +2357,7 @@
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -2019,7 +2371,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -2028,6 +2383,7 @@
    "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": []
@@ -2041,7 +2397,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -2050,6 +2409,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -2065,7 +2425,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -2074,6 +2437,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -2089,7 +2453,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -2098,6 +2465,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -2113,7 +2481,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -2122,6 +2493,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -2137,7 +2509,10 @@
    "verification": {
     "present": false,
     "valid": false,
-    "issuer": null
+    "invalid": false,
+    "issuer": null,
+    "badIssuers": [],
+    "revoked": false
    },
    "labels": [],
    "privateProfile": false,
@@ -2146,6 +2521,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
@@ -2161,7 +2537,12 @@
    "verification": {
     "present": true,
     "valid": false,
-    "issuer": "bsky.app"
+    "invalid": true,
+    "revoked": true,
+    "issuer": "bsky.app",
+    "badIssuers": [
+     "bsky.app"
+    ]
    },
    "labels": [],
    "privateProfile": false,
@@ -2170,10 +2551,12 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [
-    "held out of the alert path (feed:false) — identity re-checked, recency not enforced"
+    "held out of the alert path (feed:false) — identity re-checked, recency not enforced",
+    "verifier-revocation detected: verification object issued by bsky.app has isValid:false"
    ]
   },
   {
@@ -2185,7 +2568,10 @@
    "verification": {
     "present": true,
     "valid": true,
-    "issuer": "bsky.app"
+    "invalid": false,
+    "revoked": false,
+    "issuer": "bsky.app",
+    "badIssuers": []
    },
    "labels": [],
    "privateProfile": false,
@@ -2194,6 +2580,7 @@
    "dormantDays": null,
    "postItems": null,
    "recencyReadable": true,
+   "beatChange": null,
    "status": "ok",
    "fatal": false,
    "notes": [

@@ -74,7 +74,27 @@ const Reporters = (() => {
     const el = document.getElementById("reporterTable");
     if (!el) return;
     const q = (filter.q || "").toLowerCase();
-    const rows = REPORTERS.filter(r => {
+    let sourceRows = REPORTERS;
+    if (currentCategory === "official") {
+      const officials = (typeof SOCIAL_ACCOUNTS !== "undefined" ? SOCIAL_ACCOUNTS : [])
+        .filter(a => a.kind === "official-league" || a.kind === "official-team" || a.kind === "outlet");
+      sourceRows = officials.map(a => ({
+        name: a.name,
+        role: a.kind === "official-league" ? "Official NBA League Account" : ("Official Club Channel" + (a.team ? " (" + a.team + ")" : "")),
+        outlet: a.team ? (a.team + " (NBA Club)") : "NBA",
+        beat: a.team || null,
+        tier: 1,
+        inArena: true,
+        handle: null,
+        status: a.bskyVerified ? "verified-handle" : "outlet-only",
+        verifyUrl: a.url || ("https://bsky.app/profile/" + a.handle),
+        notes: a.verified || (a.bskyVerified ? "Official Bluesky verified account" : "Official unverified channel"),
+        bskyHandle: a.handle,
+        bskyVerified: a.bskyVerified
+      }));
+    }
+
+    const rows = sourceRows.filter(r => {
       if (filter.tier !== "ALL" && String(r.tier) !== filter.tier) return false;
       if (filter.status !== "ALL" && r.status !== filter.status) return false;
 
@@ -296,7 +316,11 @@ const Reporters = (() => {
             ${s.quietestInAlertPath == null ? "" : `· quietest ${esc(String(s.quietestInAlertPath))} days`}
             ${s.impersonationLabel ? `· <b class="bad">${esc(String(s.impersonationLabel))} impersonation-labelled</b>` : ""}
             ${s.profilePrivate ? `· ${esc(String(s.profilePrivate))} private profile(s)` : ""}</div>
-          ${problems.length ? `<div class="tiny" style="margin-top:6px">${problems.map(p => `<div>⚠ ${esc(p.handle || p.name)} → <b>${esc(p.status)}</b> ${esc((p.notes || [])[0] || "")}</div>`).join("")}</div>` : ""}`;
+          ${problems.length ? `<div class="tiny" style="margin-top:6px">${problems.map(p => {
+            const beatTag = (p.beatChange || (p.notes && p.notes.some(n => /beat-change/i.test(n)))) ? ' <span class="badge warn">beat-change watch</span>' : '';
+            const revokeTag = (p.verification && p.verification.invalid) || (p.notes && p.notes.some(n => /verifier-revocation/i.test(n))) ? ' <span class="badge bad">verifier-revoked</span>' : '';
+            return `<div>⚠ ${esc(p.handle || p.name)} → <b>${esc(p.status)}</b>${beatTag}${revokeTag} ${esc((p.notes || [])[0] || "")}</div>`;
+          }).join("")}</div>` : ""}`;
       })
       .catch(e => {
         el.innerHTML = `<span class="muted">No automated re-verification file yet (${esc(e.message)}). The daily

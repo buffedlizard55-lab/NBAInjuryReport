@@ -375,3 +375,72 @@ pre { white-space: pre-wrap; overflow-wrap: anywhere; }
 /* The matrix packs several lines per cell; keep them from touching on narrow screens. */
 #arenaMatrixTable td { vertical-align: top; }
 #arenaMatrixTable .badge { white-space: nowrap; }
+
+/* ===================================================================================
+ * Session 16: Basketball Monster-style Player News cards & Live Chat Wire
+ * =================================================================================== */
+.board-cards {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.bm-player-card {
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 9px;
+  padding: 12px 14px; display: flex; flex-direction: column; gap: 6px;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.bm-player-card:hover {
+  border-color: var(--accent);
+}
+.bm-player-card .br-top {
+  display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+}
+.bm-player-card .br-player {
+  font-size: 1.05rem; font-weight: 700; color: var(--text);
+}
+.bm-player-card .br-player a {
+  color: inherit; text-decoration: none;
+}
+.bm-player-card .br-player a:hover {
+  text-decoration: underline; color: var(--accent);
+}
+
+/* Chat wire styling */
+.wire {
+  display: flex; flex-direction: column; gap: 8px; max-height: 520px; overflow-y: auto; padding-right: 4px;
+}
+.wire-item {
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 9px;
+  padding: 10px 14px; display: flex; flex-direction: column; gap: 4px;
+  position: relative; transition: background 0.12s ease;
+}
+.wire-item.is-new {
+  background: rgba(77, 163, 255, 0.08); border-color: rgba(77, 163, 255, 0.45);
+}
+.wire-line {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.82rem;
+}
+.wire-dot {
+  width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex-shrink: 0;
+}
+.wire-dot.sev-out { background: var(--bad); box-shadow: 0 0 6px var(--bad); }
+.wire-dot.sev-doubtful { background: #ff8a3d; }
+.wire-dot.sev-questionable { background: var(--warn); }
+.wire-dot.sev-probable { background: var(--info); }
+.wire-dot.sev-return { background: var(--good); }
+.wire-dot.sev-mention { background: #7c6cff; }
+.wire-layer {
+  font-weight: 700; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.04em;
+  padding: 2px 7px; border-radius: 4px; background: var(--card-2); border: 1px solid var(--line);
+}
+.wire-layer.board { color: #60a5fa; border-color: rgba(96, 165, 250, 0.4); }
+.wire-layer.news { color: #f59e0b; border-color: rgba(245, 158, 11, 0.4); }
+.wire-layer.social { color: #38bdf8; border-color: rgba(56, 189, 248, 0.4); }
+.wire-layer.ingame { color: #ef4444; border-color: rgba(239, 68, 68, 0.4); }
+.wire-text {
+  font-size: 0.92rem; font-weight: 600; line-height: 1.4; color: var(--text);
+}
+.wire-detail {
+  font-size: 0.82rem; color: var(--muted); line-height: 1.35;
+}
+.wire-foot {
+  display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px;
+}
