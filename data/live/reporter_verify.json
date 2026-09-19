@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-19T19:10:36.477Z",
+ "generated": "2026-09-19T19:12:23.927Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -1256,7 +1256,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com\n \n\nEverything I drop, out of the question\nStop the guessing—it's hot\n\nSubscribe 👉 https://wbb-roundup.beehiiv.com/subscribe",
-   "latestPostAt": "2026-09-19T17:06:50.127Z",
+   "latestPostAt": "2026-09-19T19:10:30.033Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
