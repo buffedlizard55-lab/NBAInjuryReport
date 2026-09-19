@@ -67,8 +67,18 @@ const DORMANT_DAYS = (typeof D.ARENA_DORMANT_DAYS === "number" && D.ARENA_DORMAN
 /* Bios come back with hard line breaks and doubled spaces; the stored quotes were copied by
  * hand from the same field. Compare on a whitespace-normalised, case-folded copy so a reformat
  * is not reported as identity drift — but never fuzzy-match beyond that. */
+/* Typographic folding is load-bearing, not cosmetic: the 2026-09-18T23:54Z CI run reported
+ * `timcato.bsky.social` as bio-drift while the live bio still read "didn’t use to have followers
+ * here i’m sorry" — the ONLY difference was curly apostrophes (U+2019) against the straight
+ * apostrophes (U+0027) in the stored quote. A drift verdict that fires on punctuation hides the
+ * drift that matters, so quotes and dashes are folded before comparison. */
 function norm(s) {
-  return String(s == null ? "" : s).replace(/\s+/g, " ").trim().toLowerCase();
+  return String(s == null ? "" : s)
+    .replace(/[\u2018\u2019\u02bc]/g, "'")          // ‘ ’ ʼ  → '
+    .replace(/[\u201c\u201d]/g, '"')                 // “ ”  → "
+    .replace(/[\u2013\u2014\u2212]/g, "-")          // – — −  → -
+    .replace(/[\u00a0\u202f\u2009]/g, " ")          // narrow/no-break spaces
+    .replace(/\s+/g, " ").trim().toLowerCase();
 }
 function quotePresent(quote, bio) {
   const q = norm(quote);
@@ -192,13 +202,33 @@ function judge(row, observed, now) {
     recencyReadable: o.feedReadable !== false
   };
   if (!hasQuote) return Object.assign(base, { status: "no-quote", fatal: false, notes: ["no stored evidenceQuote (pre-2026-09-18 row): bio recorded, drift cannot be judged"] });
+  /* A REFUSED row stores no identity claim: its evidenceQuote is a note about what the API
+   * returned (e.g. "the API returned NO description"), so "quote not in bio" is true by
+   * construction and reporting drift would be noise. For a row recorded as having an EMPTY bio the
+   * meaningful check is the inverse — has a bio appeared, which would make the identity
+   * establishable again? */
+  if (row.identityRefused === true) {
+    const stillEmpty = !String(o.profile.description || "").trim();
+    const expectedEmpty = !!(row.observed && row.observed.bioEmpty);
+    if (expectedEmpty && !stillEmpty) return Object.assign(base, { status: "bio-drift", fatal: false,
+      notes: ["row was REFUSED because the profile had NO bio at all, but the live bio now reads: " + JSON.stringify(String(o.profile.description).slice(0, 160)) + " — re-read, the identity may now be establishable"] });
+    return Object.assign(base, { status: "ok", fatal: false,
+      notes: ["identity REFUSED on " + (row.observed && row.observed.checkedAt ? row.observed.checkedAt : "an earlier read") + " and still held out of collection (feed:false) — there is no identity claim here to drift" +
+        (expectedEmpty ? "; profile is still empty" : "")] });
+  }
   if (present === false) return Object.assign(base, { status: "bio-drift", fatal: false, notes: ["stored quote is no longer present in the live bio — re-read and update the row"] });
   /* `!no-unauthenticated` means the profile holder asked Bluesky not to serve their content to
    * logged-out clients. Identity still matched the stored quote, but a keyless poller can never
    * read the posts — which makes the row useless as a live feed. Reported, not fatal: the fix is
    * to take the row out of collection, and that is a human decision the page must surface. */
-  if (labels.privateProfile && claimsCoverage) return Object.assign(base, { status: "profile-private", fatal: false,
-    notes: ["profile carries '!no-unauthenticated': posts are NOT readable without authentication, so a keyless poller sees nothing — take the row out of collection"] });
+  /* `!no-unauthenticated` is the account holder's REQUEST, not a measurement. The first CI run
+   * with this verdict reported geraldbourguet.bsky.social as profile-private on the label alone —
+   * while app.bsky.feed.getAuthorFeed?actor=geraldbourguet.bsky.social returned two posts keylessly
+   * the same day (newest 2026-09-18T18:45:43Z). So the verdict now requires the read to have
+   * actually failed; a readable-but-labelled account is reported as readable, with the label
+   * recorded as a standing risk that it can stop at any time. */
+  if (labels.privateProfile && claimsCoverage && o.feedReadable !== true) return Object.assign(base, { status: "profile-private", fatal: false,
+    notes: ["profile carries '!no-unauthenticated' AND the keyless feed read failed (" + (o.feedError || "no posts returned") + ") — a poller without authentication sees nothing; take the row out of collection"] });
   if (recencyUnread) return Object.assign(base, { status: "recency-unknown", fatal: false,
     notes: ["identity matches, but the newest post could NOT be read (" + (o.feedError || "author feed unavailable") + ") — recency is NOT established"] });
   if (noPosts) return Object.assign(base, { status: "dormant", fatal: false, notes: ["quote matches, but the feed is readable and holds ZERO posts — not a news channel"] });

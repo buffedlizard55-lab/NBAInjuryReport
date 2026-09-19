@@ -344,7 +344,11 @@ const ctx = {
     "2": { player: "Rotation Guy", team: "UTA", games: 4, starts: 1, minutesTotal: 90, minutesGames: 4, sampleUrls: [], updatedAt: nowIso, keys: [] },
     "3": { player: "Depth Guy", team: "UTA", games: 6, starts: 0, minutesTotal: 30, minutesGames: 6, sampleUrls: [], updatedAt: nowIso, keys: [] }
   },
-  exits: { "2": { player: "Rotation Guy", playerId: "2", team: "UTA", name: "Sarah Todd", handle: "nbasarah.bsky.social", postedAt: nowIso, url: "https://bsky.app/profile/nbasarah.bsky.social/post/x", at: Date.now(), status: "reported-unconfirmed" } }
+  /* A NATIONAL writer is used here on purpose: the 2026-09-18T23:54Z re-verification showed
+   * nbasarah.bsky.social moved from the Jazz to the Timberwolves, so this registry no longer holds
+   * any UTA in-arena writer. A fixture that had a UTA exit reported by a MIN writer would assert
+   * something the registry now contradicts. */
+  exits: { "2": { player: "Rotation Guy", playerId: "2", team: "UTA", name: "Howard Beck", handle: "howardbeck.bsky.social", postedAt: nowIso, url: "https://bsky.app/profile/howardbeck.bsky.social/post/x", at: Date.now(), status: "reported-unconfirmed" } }
 };
 M.InjuryBoard.setImpactContext(ctx);
 const aStarter = LI.assess({ player: "Trey Alexander", playerId: "1", team: "UTA", sev: "out" }, ctx);

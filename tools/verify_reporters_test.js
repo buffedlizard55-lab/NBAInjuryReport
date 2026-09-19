@@ -117,8 +117,27 @@ const BACKFILLED = D.BSKY_REPORTERS.filter(r => r.conf === undefined);
 const SESSION_13_HANDLES = ["montepoole.bsky.social", "bennettdurando.bsky.social", "grantafseth.bsky.social",
   "jasonlloyd.bsky.social", "joevardon.bsky.social", "bstownsend.bsky.social", "jovanbuha.bsky.social"];
 const EXPECTED_NEW = 18 + 14 + 7 + SESSION_13_HANDLES.length;
-check("the sessions added " + EXPECTED_NEW + " evidence rows — 18 (s10) + 14 (s11) + 7 (s12) + " + SESSION_13_HANDLES.length + " (s13)",
-  NEW.length === EXPECTED_NEW, "got " + NEW.length);
+/* +1 RE-GRADED original: nbasarah.bsky.social is not a session row at all. It is one of the
+ * pre-existing backfilled rows, and it gained a grade on 2026-09-18 when the daily re-verification
+ * reported bio-drift and the live re-read showed a beat change (Jazz → Timberwolves) plus a valid
+ * bsky.app verification object. Naming it here, instead of moving the number, keeps the ledger of
+ * "rows this project graded from its own reads" auditable. */
+const REGRADED = ["nbasarah.bsky.social"];
+check("the sessions added " + EXPECTED_NEW + " evidence rows — 18 (s10) + 14 (s11) + 7 (s12) + " + SESSION_13_HANDLES.length + " (s13) — plus " + REGRADED.length + " re-graded original",
+  NEW.length === EXPECTED_NEW + REGRADED.length, "got " + NEW.length + " (expected " + (EXPECTED_NEW + REGRADED.length) + ")");
+check("the re-graded row is the one the re-verification caught, and its grade rests on a live read",
+  REGRADED.every(h => {
+    const r = D.BSKY_REPORTERS.find(x => x.handle === h);
+    return r && r.conf === "bsky-verified" && r.verifier === "bsky.app" && /RE-READ live via getProfiles/.test(r.verified || "");
+  }), REGRADED.join(","));
+check("the beat change is recorded as a COVERAGE LOSS for the team it left, not silently reassigned",
+  (() => {
+    const uta = D.arenaCoverage().find(c => c.abbr === "UTA");
+    const min = D.arenaCoverage().find(c => c.abbr === "MIN");
+    return uta.pollable.length === 0 && uta.cls !== "verified-pollable" &&
+      min.pollable.some(p => p.handle === "nbasarah.bsky.social") &&
+      D.arenaCoverageSummary().withGaps.includes("UTA");
+  })(), "UTA cls=" + D.arenaCoverage().find(c => c.abbr === "UTA").cls);
 check("every session-13 row is present by name, and no unnamed row appeared with it",
   SESSION_13_HANDLES.every(h => NEW.some(r => r.handle === h)) &&
     NEW.filter(r => r.handle === "joevardon.bsky.social").length === 1,
@@ -127,8 +146,12 @@ check("every added row carries the exact bio it was verified from", NEW.every(r 
 check("every added row carries a re-runnable evidence URL on the public API", NEW.every(r => /^https:\/\/public\.api\.bsky\.app\/xrpc\/app\.bsky\.actor\.getProfiles\?actors=/.test(r.evidenceApi || "")));
 check("every added row carries the counts actually observed that day", NEW.every(r => r.observed.postsCount != null && r.observed.profileIndexedAt && r.observed.verificationValid !== undefined));
 check("every added row declares an identity class the code knows", NEW.every(r => D.ARENA_CONF_RANK[r.conf] !== undefined));
+/* 8 until 2026-09-18, now 7: nbasarah.bsky.social was re-read live after the daily re-verification
+ * reported bio-drift and is now graded bsky-verified (valid bsky.app object, beat changed to MIN),
+ * so it left the ungraded set. The count is deliberately pinned — a row silently gaining or losing
+ * its grade should fail here rather than change what the page claims. */
 check("the pre-existing rows were BACKFILLED with machine-observed evidence rather than left ungradeable",
-  BACKFILLED.length === 8 && BACKFILLED.every(r => r.evidenceQuote && /actors=/.test(r.evidenceApi || "") && r.observed && r.observed.recheckedBy),
+  BACKFILLED.length === 7 && BACKFILLED.every(r => r.evidenceQuote && /actors=/.test(r.evidenceApi || "") && r.observed && r.observed.recheckedBy),
   "backfilled " + BACKFILLED.length);
 check("a backfilled row's API link cannot point at a different account",
   BACKFILLED.every(r => String(r.evidenceApi).endsWith("actors=" + r.handle)));
@@ -277,15 +300,48 @@ console.log("== session 13: moderation labels ==");
     held.status === "impersonation-label" && held.fatal === false);
   check("the impersonation verdict outranks bio-drift (identity, not text, is the problem)",
     V.judge(clubRow, { profile: { description: "totally different bio", labels: [imp] } }, NOW).status === "impersonation-label");
+  /* Typography is evidence-adjacent: the 2026-09-18T23:54Z CI run flagged timcato.bsky.social as
+   * bio-drift while the live bio still read "didn’t use to have followers here i’m sorry" — the only
+   * difference was curly apostrophes against the straight ones in the stored quote. A drift verdict
+   * that fires on punctuation hides the drift that matters. */
+  check("quote comparison folds typographic apostrophes, quotes and dashes instead of reporting drift on punctuation",
+    V.norm("didn\u2019t use to have followers here i\u2019m sorry") === V.norm("didn't use to have followers here i'm sorry") &&
+    V.quotePresent("didn't use to have followers here i'm sorry", "didn\u2019t use to have followers here i\u2019m sorry") === true &&
+    V.quotePresent("Staff Writer, Mavericks", "didn\u2019t use to have followers here i\u2019m sorry") === false);
+  check("the stored quote for the account CI flagged on punctuation is unchanged and now matches",
+    V.quotePresent((D.BSKY_REPORTERS.find(r => r.handle === "timcato.bsky.social") || {}).evidenceQuote,
+      "didn\u2019t use to have followers here i\u2019m sorry") === true);
+  /* A refused row stores no identity claim, so "quote missing from bio" is true by construction.
+   * The meaningful check is the inverse: has a bio appeared, making the identity establishable? */
+  const refused = D.BSKY_REPORTERS.find(r => r.identityRefused === true && r.observed && r.observed.bioEmpty === true);
+  check("a REFUSED row with an empty profile is not reported as bio-drift (there is no claim to drift)",
+    V.judge(refused, { profile: { description: "" } }, NOW).status === "ok" &&
+      /identity REFUSED/.test(V.judge(refused, { profile: { description: "" } }, NOW).notes[0]),
+      V.judge(refused, { profile: { description: "" } }, NOW).status);
+  check("...but the SAME row flips to drift if a bio appears, which would make the identity checkable again",
+    V.judge(refused, { profile: { description: "Lakers beat writer for The Athletic" } }, NOW).status === "bio-drift" &&
+      /may now be establishable/.test(V.judge(refused, { profile: { description: "Lakers beat writer for The Athletic" } }, NOW).notes[0]));
+
   check("no allow-listed handle in the registry is one this project measured as impersonation-labelled",
     ["memphisgrizzlies.bsky.social", "nyknicks.bsky.social", "charlottehornetsbb.bsky.social"]
       .every(h => !D.BSKY_REPORTERS.concat(D.SOCIAL_ACCOUNTS).some(r => r.handle === h)));
 
-  const priv = V.judge({ handle: "miamiheat.bsky.social", name: "Miami HEAT", team: "MIA", feed: true,
-    evidenceQuote: "HEAT", bskyVerified: false },
-    { profile: { description: "HEAT", labels: [{ val: "!no-unauthenticated" }] }, latestPostAt: iso(2), feedReadable: true, postItems: 4 }, NOW);
-  check("a private profile is reported as unreachable by a keyless poller, not as healthy",
-    priv.status === "profile-private" && priv.fatal === false && priv.privateProfile === true);
+  /* MEASURED, not inferred. The first version of this verdict treated the `!no-unauthenticated`
+   * label as proof that a keyless poller sees nothing — and the first CI run promptly reported
+   * geraldbourguet.bsky.social as profile-private while a keyless getAuthorFeed on that same handle
+   * returned two posts (newest 2026-09-18T18:45:43Z). The label is the holder's REQUEST; only the
+   * read is evidence, so the verdict now requires the read to have actually failed. */
+  const labelledRow = { handle: "miamiheat.bsky.social", name: "Miami HEAT", team: "MIA", feed: true,
+    evidenceQuote: "HEAT", bskyVerified: false };
+  const labelledProfile = { description: "HEAT", labels: [{ val: "!no-unauthenticated" }] };
+  const readable = V.judge(labelledRow, { profile: labelledProfile, latestPostAt: iso(2), feedReadable: true, postItems: 4 }, NOW);
+  const unreadable = V.judge(labelledRow, { profile: labelledProfile, latestPostAt: null, feedReadable: false, feedError: "HTTP 401" }, NOW);
+  check("a labelled profile whose feed the keyless poller CAN read stays healthy, with the label kept as a standing risk",
+    readable.status === "ok" && readable.privateProfile === true && readable.labels.join() === "!no-unauthenticated",
+    readable.status);
+  check("the SAME profile reads 'profile-private' only once the keyless read has actually failed",
+    unreadable.status === "profile-private" && unreadable.fatal === false && /HTTP 401/.test(unreadable.notes[0]),
+    unreadable.status + " | " + unreadable.notes[0]);
   check("a private profile held out of collection is not double-reported as a reachability problem",
     V.judge({ handle: "m.bsky.social", name: "M", feed: false, evidenceQuote: "HEAT" },
       { profile: { description: "HEAT", labels: [{ val: "!no-unauthenticated" }] }, latestPostAt: iso(2), feedReadable: true, postItems: 4 }, NOW).status === "ok");

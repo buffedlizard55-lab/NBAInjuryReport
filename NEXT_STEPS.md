@@ -42,22 +42,43 @@ standing constraint that **no X API key is available** and everything must be re
    `feed: false`, listed for manual review, never polled.
 
 **Measured coverage after the change** (`arenaCoverageSummary()`, registry evidence only):
-30 teams · **18 verified-pollable · 11 bio-pollable · 1 official-channel-only (CHA) · 0 unexplained gaps** ·
-**40 pollable writers, 19 Bluesky-verified**. Activity: **4 teams have a writer who posted inside 30 days**
-(GSW Monte Poole 16d · MEM Drew Hill 8d · SAS Jeff McDonald 23d + Tom Orsborn 1d · UTA Sarah Todd 1d),
-**CLE / DAL / DEN have no active writer**, and **31 of 40 writers have no registry-stored date** — printed as
-*unmeasured*. The daily CI file holds dates for far more accounts and is the measurement of record.
+30 teams · **17 verified-pollable · 11 bio-pollable · 2 official-channel-only (CHA, UTA) · 0 unexplained gaps** ·
+**40 pollable writers, 19 Bluesky-verified**. Activity: **5 teams have a writer who posted inside 30 days**
+(GSW Monte Poole 16d · MEM Drew Hill 8d · MIN Sarah Todd 0d · PHX Gerald Bourguet 0d · SAS Jeff McDonald 23d +
+Tom Orsborn 1d), **CLE / DAL / DEN have no active writer**, and **30 of 40 writers have no registry-stored
+date** — printed as *unmeasured*. The daily CI file measures the whole allow-list (**36 of 53 accounts in the
+alert path active, 15 dormant, quietest 638 days**) and is the measurement of record.
 
-**Tests:** smoke 222 · verify_reporters 82 · integration 80 · impact 80 · poll_fixture 25 · regression 26 groups.
+**What the first CI run of the new verifier found (and what was wrong with it)**
+
+1. **A beat change, caught with no human input.** `nbasarah.bsky.social` was flagged `bio-drift`; the live
+   re-read showed the bio now names the **Timberwolves / Minnesota Star Tribune** ("Previously Jazz, 76ers and
+   Warriors"), with a valid `bsky.app` object. The row moved to MIN and **UTA lost its only in-arena writer** —
+   reported as a coverage loss, because inventing a replacement is not an option.
+2. **`profile-private` was inferred, not measured — fixed.** It reported PHX's Gerald Bourguet unreachable
+   from the `!no-unauthenticated` label alone, while a keyless `getAuthorFeed` on that handle returned two
+   posts the same day (newest `2026-09-18T18:45:43Z`). The verdict now requires the keyless read to have
+   actually failed; a labelled-but-readable row stays pollable with the label recorded as a standing risk.
+3. **A drift verdict that fired on punctuation — fixed.** `timcato.bsky.social` read `bio-drift` while its bio
+   still said the same thing; the only difference was curly apostrophes. Quote comparison now folds
+   typographic apostrophes, quotes, dashes and narrow spaces.
+4. **A refused row that could never stop drifting — fixed.** `jovanbuha.bsky.social` stores a note about the
+   *absence* of a bio, so "quote not in bio" was true by construction. Refused rows are exempt, and the useful
+   inverse check replaced it: if a bio **appears**, the row flips to drift so the identity can be re-examined.
+
+**Tests:** smoke 222 · verify_reporters 89 · integration 80 · impact 80 · poll_fixture 25 · regression 26 groups.
 
 **Still open / blocking**
 
 - **CHA has no writer account at all** — the Charlotte Observer eliminated its Hornets beat on 2026-09-14
   (McClatchy cuts). A replacement in-arena identity has to be found from a live read, not invented.
-- **DAL, DEN, LAL, CLE are covered by dormant writers only** on the freshest CI measurement. Either find an
+- **UTA and CHA have no writer account at all**; **DAL, DEN, LAL, CLE are covered by dormant writers only**
+  on the freshest CI measurement. Either find an
   active alternative or keep them explicitly labelled dormant — never quietly "covered".
-- Two CI rows still read **bio-drift**: `nbasarah.bsky.social`, `timcato.bsky.social` — refresh the stored
-  `evidenceQuote` from a live read (the tool cannot fix text it cannot fetch here; the sandbox has no egress).
+- ~~Two CI rows still read bio-drift~~ **RESOLVED this session by live re-read:** `nbasarah.bsky.social` was a
+  genuine beat change (row moved to MIN, UTA now gap-listed) and `timcato.bsky.social` was a verifier defect
+  (curly apostrophes). The next CI run should report `bioDrift: 0`; if it does not, read the row before
+  believing either number.
 - **No verified club Bluesky account exists for 26 of 30 franchises.** Until a club verifies one, club
   corroboration on Bluesky is unavailable by construction; `nba.com/<slug>/news` returns 403 to CI for all 30.
 - **Unread candidates** worth a live read next session: `daltonjohnson.bsky.social` (NBCS Bay Area, posted
