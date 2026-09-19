@@ -45,6 +45,23 @@ for (const [page, scripts] of Object.entries(PAGES)) {
     order.join(",") === "data.js,alerts.js,wire.js,role.js,injuries.js,social.js,ingame.js,intelligence.js,app.js", order.join(","));
   check("sources.html loads data.js + alerts.js", /src="assets\/js\/data\.js"/.test(fs.readFileSync(path.join(ROOT, "sources.html"), "utf8")));
   check(".nojekyll present (GitHub Pages doesn't preprocess assets)", fs.existsSync(path.join(ROOT, ".nojekyll")));
+
+  /* THE BRIEF'S FIRST ORDERING REQUIREMENT: "the injury board … must be at the very top and the main
+   * focus". It is a layout property, so nothing else in the suite would notice a redesign that pushed
+   * the board below the wire or the alert center — the page would still render and every other check
+   * would still pass. Pinned structurally: the hero is the only thing above it, and every other card
+   * comes after it. */
+  const boardAt = html.indexOf('id="injuryBoardCard"');
+  const sectionStarts = [...html.matchAll(/<section\b/g)].map(m => m.index);
+  check("the injury board is the SECOND section on the dashboard (hero, then board) — nothing pushes it down",
+    boardAt > 0 && sectionStarts.length > 2 && sectionStarts[0] < boardAt && sectionStarts[1] < boardAt && sectionStarts[2] > boardAt,
+    "board@" + boardAt + " section offsets: " + sectionStarts.slice(0, 4).join(","));
+  const afterBoard = ["Alert center", "Live injury wire", "Social layer", "Today's games", "Player history", "X (Twitter) view", "cross-check links", "trusted sources"]
+    .map(t => [t, html.indexOf(t)]);
+  check("every other dashboard panel renders AFTER the injury board",
+    afterBoard.every(([, i]) => i > boardAt), afterBoard.filter(([, i]) => i < boardAt).map(([t]) => t).join(", "));
+  check("the board heading claims all 30 teams and the page still says lineup impact is not medical severity",
+    /INJURY BOARD — every team/.test(html) && /lineup impact is not medical severity/.test(html));
 }
 
 /* ---------------- 2. runtime boot with fixtures ---------------- */
