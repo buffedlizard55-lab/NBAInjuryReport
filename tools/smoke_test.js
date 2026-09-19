@@ -642,8 +642,17 @@ console.log("== in-arena expansion: what the live social layer actually polls ==
   check("coverage names every one of the 30 teams and leaves no unexplained gap",
     (() => { const cov = M.arenaCoverage(); const s = M.arenaCoverageSummary();
       return cov.length === 30 && s.teams === 30 && s.gap === 0 && cov.every(c => c.gaps.length >= 0 && c.official.news); })());
-  check("the coverage summary does NOT claim all 30 teams have a verified writer",
-    (() => { const s = M.arenaCoverageSummary(); return s.verifiedPollable + s.bioPollable < 30 && s.officialOnly > 0; })());
+  /* UPDATED 2026-09-19 (session 14). This used to also require `s.officialOnly > 0`, which was
+   * true only because CHA and UTA had no writer account at all. Session 14 found evidenced
+   * accounts for both, so officialOnly legitimately reached 0 — and a test that demanded an
+   * uncovered team would now be demanding a defect. The invariant it was protecting is kept:
+   * the page must never claim all 30 teams at the strongest class, and every team must be
+   * accounted for by exactly one of the four classes. */
+  check("the coverage summary does NOT claim all 30 teams have a verified writer, and every team is accounted for",
+    (() => { const s = M.arenaCoverageSummary();
+      return s.verifiedPollable < 30 &&
+        s.verifiedPollable + s.bioPollable + s.officialOnly + s.gap === 30 &&
+        s.withGaps.length === 30 - s.verifiedPollable; })());
   check("official club news URLs are generated from the team registry, not typed twice",
     M.nbaTeamNewsUrl("CLE") === "https://www.nba.com/cavaliers/news" && M.nbaTeamNewsUrl("MIA") === "https://www.nba.com/heat/news");
   check("the reporter re-verification tool exists and states its failure policy",
@@ -674,8 +683,38 @@ console.log("== in-arena expansion: what the live social layer actually polls ==
     (() => { const s = M.arenaCoverageSummary();
       return s.writersActive + s.writersDormant + s.writersUnmeasured === s.pollableWriters &&
         M.arenaCoverage().every(c => c.pollable.every(p => p.recency.state !== "active" || p.recency.dormantDays <= M.ARENA_DORMANT_DAYS)); })());
-  check("the registry's own observations already show that DAL/DEN/LAL/CLE have no active writer",
-    ["DAL", "DEN", "LAL", "CLE"].every(a => M.arenaCoverage().find(c => c.abbr === a).recency !== "active"));
+  /* UPDATED 2026-09-19 (session 14, after the feed reads). Session 13 measured that DAL/DEN/LAL/CLE
+   * had no ACTIVE writer; session 14 added an evidenced account to each and then MEASURED them:
+   * CLE (Danny Cunningham, 2026-09-01) and DEN (Joel Rush, 2026-09-17) are active, while DAL and
+   * LAL are dormant-only and must keep saying so — a team is never rendered as covered because a
+   * name exists. The point of the check is that each of the four still has a pollable writer, so
+   * the dormancy is a measurement about a real account, not an absence of research. */
+  check("the four dormant-only clubs are now measured one by one: CLE and DEN active, DAL and LAL dormant",
+    (() => {
+      const cov = M.arenaCoverage();
+      const st = a => cov.find(c => c.abbr === a).recency;
+      return st("CLE") === "active" && st("DEN") === "active" &&
+        ["DAL", "LAL"].every(a => st(a) === "dormant-only") &&
+        ["DAL", "DEN", "LAL", "CLE"].every(a => cov.find(c => c.abbr === a).pollable.length > 0);
+    })(), ["DAL", "DEN", "LAL", "CLE"].map(a => a + ":" + M.arenaCoverage().find(c => c.abbr === a).recency).join(" "));
+  check("activity comes from a MEASURED date, not from a row existing: removing the date makes the team inactive again",
+    (() => {
+      const row = M.BSKY_REPORTERS.find(r => r.handle === "dannycunningham.bsky.social");
+      const cov = () => M.arenaCoverage().find(c => c.abbr === "CLE");
+      const saved = row.observed.latestPostAt;
+      try {
+        delete row.observed.latestPostAt;
+        const after = cov().recency;
+        row.observed.latestPostAt = saved;
+        return after !== "active" && cov().recency === "active";
+      } finally { row.observed.latestPostAt = saved; }
+    })());
+  check("no session-14 row claims a NEWER post date than the live read that recorded it",
+    (() => {
+      const day = "2026-09-19";
+      return M.BSKY_REPORTERS.filter(r => r.observed && r.observed.checkedAt === day)
+        .every(r => !r.observed.latestPostAt || Date.parse(r.observed.latestPostAt) <= Date.parse("2026-09-19T23:59:59Z"));
+    })());
   /* The three paid/closed platforms are registered WITH their cost flag and with wording that says
    * they are not wired into alerts — a source row that quietly looked like a working feed is how a
    * verification page ends up promising a capability it does not have. */

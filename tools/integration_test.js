@@ -206,7 +206,7 @@ console.log("== runtime: App.init() refresh chain ==");
      * render an empty panel that reads like "0 problems" */
     global.fetch = async () => ({ ok: false, status: 404, json: async () => ({}) });
     const repSrc = PAGES["reporters.html"].map(f => fs.readFileSync(path.join(ROOT, f), "utf8")).join("\n;\n");
-    const R = new Function(repSrc + "\n; return { Reporters, arenaCoverage, arenaCoverageSummary, TEAMS, BSKY_REPORTERS };")();
+    const R = new Function(repSrc + "\n; return { Reporters, arenaCoverage, arenaCoverageSummary, TEAMS, BSKY_REPORTERS, NBA_OFFICIAL_ACCOUNT_PROBE };")();
     if (global.__repReady) global.__repReady();
     await new Promise(r => setTimeout(r, 60));
 
@@ -281,8 +281,19 @@ console.log("== runtime: App.init() refresh chain ==");
     const clubRows = pageEls.clubProbeTable ? pageEls.clubProbeTable.innerHTML : "";
     const clubMeta = pageEls.clubProbeMeta ? pageEls.clubProbeMeta.innerHTML : "";
     const blockers = pageEls.socialBlockers ? pageEls.socialBlockers.innerHTML : "";
+    /* UPDATED 2026-09-19 (session 14). This used to read `=== 27`, a number that had to be edited
+     * every time the probe grew — the failure text said "34" and nothing else. It now counts the
+     * rows the REGISTRY declares, and separately asserts that the session-14 sweep rows reached the
+     * page, so a rendering regression and a registry growth are different messages. */
+    const probeRowCount = (R.NBA_OFFICIAL_ACCOUNT_PROBE && Array.isArray(R.NBA_OFFICIAL_ACCOUNT_PROBE.rows))
+      ? R.NBA_OFFICIAL_ACCOUNT_PROBE.rows.length : -1;
     check("the official club probe table renders one row per probed handle",
-      (clubRows.match(/<tr>/g) || []).length === 27, String((clubRows.match(/<tr>/g) || []).length));
+      (clubRows.match(/<tr>/g) || []).length === probeRowCount,
+      (clubRows.match(/<tr>/g) || []).length + " rendered vs " + probeRowCount + " registered");
+    check("the session-14 sweep rows reach the page, including the ones that found nothing",
+      ["cavs.com", "charlottehornets.bsky.social", "denvernuggets.bsky.social", "nuggets.bsky.social", "dallas-maverick-s.bsky.social"]
+        .every(h => clubRows.includes(h)) &&
+      /Bluesky-labelled impersonation/.test(clubRows) && /placeholder — no club claim/.test(clubRows));
     check("the probe table shows the misses too — handles that do not exist, not just the finds",
       /no such handle/.test(clubRows) && /handle does not exist/.test(clubRows));
     check("the probe table surfaces Bluesky's own impersonation labels",

@@ -1,23 +1,23 @@
 {
- "generated": "2026-09-19T00:11:34.670Z",
+ "generated": "2026-09-19T00:55:46.709Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
- "handlesChecked": 65,
+ "handlesChecked": 78,
  "summary": {
-  "checked": 65,
-  "ok": 50,
+  "checked": 78,
+  "ok": 57,
   "bioDrift": 0,
-  "dormant": 15,
+  "dormant": 21,
   "missing": 0,
   "verificationLost": 0,
   "noQuote": 0,
   "recencyUnknown": 0,
   "impersonationLabel": 0,
   "profilePrivate": 0,
-  "inAlertPath": 53,
-  "activeInAlertPath": 38,
-  "dormantInAlertPath": 15,
+  "inAlertPath": 63,
+  "activeInAlertPath": 42,
+  "dormantInAlertPath": 21,
   "unmeasuredInAlertPath": 0,
   "quietestInAlertPath": 638,
   "dormantThresholdDays": 30,
@@ -37,6 +37,12 @@
    "grantafseth.bsky.social (dormant)",
    "jasonlloyd.bsky.social (dormant)",
    "joevardon.bsky.social (dormant)",
+   "mfollowill.bsky.social (dormant)",
+   "nickvanexit.bsky.social (dormant)",
+   "nolajake.bsky.social (dormant)",
+   "saltcityhoops.bsky.social (dormant)",
+   "andyblarsen.bsky.social (dormant)",
+   "lakerssbn.bsky.social (dormant)",
    "trailblazers.bsky.social (dormant)"
   ]
  },
@@ -301,8 +307,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Trail Blazers + Fire rosegardenreport.com",
-   "latestPostAt": "2026-09-16T19:59:46.218Z",
-   "dormantDays": 2,
+   "latestPostAt": "2026-09-19T00:35:48.448Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -389,8 +395,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "I cover the #Bucks for the Milwaukee Journal Sentinel. I take my coffee intravenously & my Wu-Tang loud. Black lives matter. he/him/his",
-   "latestPostAt": "2026-09-17T20:18:13.186Z",
-   "dormantDays": 1,
+   "latestPostAt": "2026-09-19T00:53:29.496Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "status": "ok",
@@ -549,7 +555,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Indiana Pacers, Fever beat writer: Fieldhouse Files | Podcast Host l Play-by-play announcer | fieldhousefiles@gmail.com",
-   "latestPostAt": "2026-09-19T00:10:22.001Z",
+   "latestPostAt": "2026-09-19T00:46:45.555Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -848,13 +854,13 @@
    "privateProfile": false,
    "bio": "Locked On Thunder Podcast Host. Thunder on SI Beat Writer. Locked on NBA Saturday night host. OKC Dream Team Co-Host. Elvis Stan.",
    "latestPostAt": "2026-07-20T00:51:39.978Z",
-   "dormantDays": 60,
+   "dormantDays": 61,
    "postItems": 1,
    "recencyReadable": true,
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 60 days old (>30)"
+    "quote matches, but newest post is 61 days old (>30)"
    ]
   },
   {
@@ -1267,6 +1273,310 @@
    "fatal": false,
    "notes": [
     "identity REFUSED on 2026-09-18 and still held out of collection (feed:false) — there is no identity claim here to drift; profile is still empty"
+   ]
+  },
+  {
+   "handle": "dannycunningham.bsky.social",
+   "name": "Danny Cunningham",
+   "team": "CLE",
+   "conf": "bsky-verified",
+   "feed": true,
+   "verification": {
+    "present": true,
+    "valid": true,
+    "issuer": "bsky.app"
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "On the Cleveland Cavaliers beat at The Inside Shot and the Locked On Cavs Podcast.\n\nSubscribe here: https://theinsideshot.substack.com/Bluesky ",
+   "latestPostAt": "2026-09-01T18:50:49.607Z",
+   "dormantDays": 17,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "mfollowill.bsky.social",
+   "name": "Mark Followill",
+   "team": "DAL",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Television Play-by-play Dallas Mavericks, NBA on NBC/Peacock, Big Ten Network. 15 Lone Star Emmy Awards. 2018 NSMA Texas Sportscaster of the Year. B.A - UNT, M.A. - Alabama. Enthusiast of travel, food and drink, running, history and greyhounds.",
+   "latestPostAt": "2026-05-22T17:11:08.555Z",
+   "dormantDays": 119,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 119 days old (>30)"
+   ]
+  },
+  {
+   "handle": "nickvanexit.bsky.social",
+   "name": "Nick Angstadt",
+   "team": "DAL",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Dallas Mavericks on Locked On Mavs Podcast | NBA Channel Manager for Locked On Podcast Network | Ahsoka & Zuko Fan\n\n📲 https://linktr.ee/nickvanexit",
+   "latestPostAt": "2026-08-05T17:25:52.371Z",
+   "dormantDays": 44,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 44 days old (>30)"
+   ]
+  },
+  {
+   "handle": "joelrushnba.bsky.social",
+   "name": "Joel Rush",
+   "team": "DEN",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Denver #Nuggets writer for Forbes. \nGrateful Dead, Star Wars. No-fascism zone.\nStill at the old place (same handle) but weaning off.\nMy Forbes pieces: https://www.forbes.com/sites/joelrush/\nMy NBA Bluesky list: https://shrtn.escalar.pt/iRuN",
+   "latestPostAt": "2026-09-17T15:37:12.880Z",
+   "dormantDays": 1,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "bgeisinger.bsky.social",
+   "name": "Brian Geisinger",
+   "team": "CHA",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "basketball analyst/dork, art museum loiterer, look up at the trees\n\ncollege hoops: https://briangeisinger.substack.com/\nBuzz Beat - Charlotte Hornets podcast: https://shorturl.at/sajhV",
+   "latestPostAt": "2026-09-16T14:02:39.971Z",
+   "dormantDays": 2,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "chrisherrington.bsky.social",
+   "name": "Chris Herrington",
+   "team": "MEM",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Writer at The Daily Memphian. Memphisotan. Somewhere along Johnny Cash’s Big River. Memphis Grizzlies/NBA, movies, music, etc.",
+   "latestPostAt": "2026-09-14T21:30:34.319Z",
+   "dormantDays": 4,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": []
+  },
+  {
+   "handle": "nolajake.bsky.social",
+   "name": "Jake Madison",
+   "team": "NOP",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Host of Locked On Pelicans, the daily podcast covering the New Orleans Pelicans. Also co-host of Locked on NBA on Wednesdays. I am secretly Jose Calderon.",
+   "latestPostAt": "2025-06-17T18:10:36.407Z",
+   "dormantDays": 458,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 458 days old (>30)"
+   ]
+  },
+  {
+   "handle": "saltcityhoops.bsky.social",
+   "name": "Salt City Hoops",
+   "team": "UTA",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Covering the Utah Jazz since 2007 • ESPN TrueHoop Network • Basketball stories for the Salt Lake Tribune",
+   "latestPostAt": "2026-07-28T14:13:21.843Z",
+   "dormantDays": 52,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 52 days old (>30)"
+   ]
+  },
+  {
+   "handle": "andyblarsen.bsky.social",
+   "name": "Andy Larsen",
+   "team": "UTA",
+   "conf": "outlet-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Data columnist for The Salt Lake Tribune — I write about the intersection of numbers & the world. Formerly Jazz beat writer. Opinions are mine, not the Trib's.",
+   "latestPostAt": "2026-08-18T20:20:32.049057Z",
+   "dormantDays": 31,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 31 days old (>30)"
+   ]
+  },
+  {
+   "handle": "lakerssbn.bsky.social",
+   "name": "Silver Screen and Roll",
+   "team": "LAL",
+   "conf": "bio-verified",
+   "feed": true,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "The SB Nation Los Angeles Lakers blog!",
+   "latestPostAt": "2025-11-05T18:43:10.372Z",
+   "dormantDays": 317,
+   "postItems": 1,
+   "recencyReadable": true,
+   "status": "dormant",
+   "fatal": false,
+   "notes": [
+    "quote matches, but newest post is 317 days old (>30)"
+   ]
+  },
+  {
+   "handle": "miketrudell.bsky.social",
+   "name": "Mike Trudell (handle REFUSED)",
+   "team": "LAL",
+   "conf": "unconfirmed",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "identity REFUSED on 2026-09-19 and still held out of collection (feed:false) — there is no identity claim here to drift; profile is still empty"
+   ]
+  },
+  {
+   "handle": "erikslaterphoto.bsky.social",
+   "name": "Erik Slater (handle REFUSED)",
+   "team": "BKN",
+   "conf": "unconfirmed",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Based in Seward, Alaska. Analog, digital.\nGear - \n\nSony A7riv \nFuji x100v\nCanon Av-1\nPentax 6X7 \nHasselblad 500cm\nBencini Comet 111\nLeica dlux-7 \niPhone 15 pro max \nOsmo Pocket 3",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "identity REFUSED on 2026-09-19 and still held out of collection (feed:false) — there is no identity claim here to drift"
+   ]
+  },
+  {
+   "handle": "david-locke.bsky.social",
+   "name": "David Locke (handle REFUSED)",
+   "team": "UTA",
+   "conf": "unconfirmed",
+   "feed": false,
+   "verification": {
+    "present": false,
+    "valid": false,
+    "issuer": null
+   },
+   "labels": [],
+   "privateProfile": false,
+   "bio": "Reject imposed obligations, expectations, and roles.",
+   "latestPostAt": null,
+   "dormantDays": null,
+   "postItems": null,
+   "recencyReadable": true,
+   "status": "ok",
+   "fatal": false,
+   "notes": [
+    "identity REFUSED on 2026-09-19 and still held out of collection (feed:false) — there is no identity claim here to drift"
    ]
   },
   {

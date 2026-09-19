@@ -80,7 +80,7 @@
         legitimately changing outlets must be visible, not fatal.</li>
       <li>The file is rendered on <a href="reporters.html#inArenaCoverageCard">the reporter page</a> (counts, plus each problem row). If it has not
         run yet, the page says so and presents the session-10 manual pass of 2026-09-18 instead — it never shows a blank panel that reads like "no problems".</li>
-      <li>Run locally: <span class="kbd">node tools/verify_reporters_test.js</span> (offline, 37 checks) then
+      <li>Run locally: <span class="kbd">node tools/verify_reporters_test.js</span> (offline, 109 checks) then
         <span class="kbd">node tools/verify_reporters.js</span> (needs network). Scheduled daily in
         <span class="kbd">.github/workflows/live-audit.yml</span>, and on any change to the registry.</li>
     </ul>
@@ -88,7 +88,32 @@
 
   <!-- WHAT CHANGED -->
   <section class="card" style="margin-top:16px">
-    <h2>🆕 What changed on 2026-09-18 (this session)</h2>
+    <h2>🆕 What changed on 2026-09-19 (session 14)</h2>
+    <ul class="tight small">
+      <li><b>The registry now stores the measured newest-post date</b> (<span class="kbd">tools/backfill_registry_recency.js</span>),
+        and <span class="kbd">live-audit.yml</span> runs it after the live re-verification, then runs <span class="kbd">--check</span>, which fails the job
+        if the registry is behind the CI evidence. The page therefore prints the same activity numbers with or without an evidence file:
+        <b>34 writers active · 16 dormant · 0 unmeasured</b>, 27 teams with an active writer, and DAL / LAL / UTA dormant-only.</li>
+      <li><b>A real defect in that new tool was found by running it for real, and fixed with tests.</b> Its first version replaced only QUOTED dates, so a row
+        storing the pre-measurement shape <span class="kbd">latestPostAt: null</span> kept the null as a second, winning key — Boston's Gary Washburn still
+        evaluated to null while every check in the repository passed. The fix accepts the unquoted null, repairs duplicate keys (or refuses and warns when the
+        stored date is newer than the evidence), and proves the <i>evaluated</i> value of every row it touches equals the date it planned. The full story is in
+        the first flag below.</li>
+      <li><b>Every pollable writer is measured.</b> Ten more rows came from keyless reads, and six <span class="kbd">getAuthorFeed?limit=1</span> reads closed the
+        rows that had never been read. Two of those newest items are not basketball at all and one is another user's post returned as a repost; each row records
+        that, because the measurement is a fact about the feed, not proof that the writer still covers the team.</li>
+      <li><b>A second official-club sweep:</b> six more candidate handles — four self-evident placeholders, three more <span class="kbd">impersonation</span>-labelled
+        handles, and exactly one real find (<span class="kbd">nuggets.bsky.social</span>, valid Bluesky verification created 2025-07-08).
+        <b>26 of 30 franchises still have no verified club Bluesky account</b>, and all 30 <span class="kbd">nba.com/&lt;slug&gt;/news</span> pages still answer
+        HTTP 403 to the CI runner, so club corroboration stays a manual-review link.</li>
+      <li><b>CHA and UTA are gap-listed, not covered.</b> Charlotte's paper of record eliminated its Hornets beat on 2026-09-14 and Utah lost its writer to
+        Minnesota in session 13; both were searched and read again, and both remain short of a current in-arena beat writer. The reasons are printed, and three
+        candidate handles that did not support an identity were refused rather than asserted.</li>
+    </ul>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2>🆕 What changed on 2026-09-18 (session 13)</h2>
     <ul class="tight small">
       <li><b>In-arena coverage is now computed for all 30 teams</b> (<span class="kbd">arenaCoverage()</span> in data.js) instead of being a typed table.
         Measured state: 10 verified-pollable · 7 bio-pollable · 13 official-channel-only · 0 unexplained gaps · 18 pollable writers (10 Bluesky-verified).
