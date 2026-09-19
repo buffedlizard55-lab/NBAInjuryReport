@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-19T19:26:03.277Z",
+ "generated": "2026-09-19T19:30:37.743Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -1064,7 +1064,7 @@
    "privateProfile": false,
    "bio": "Chicago-based NBA writer for The Athletic. Joe-L. Past: Thunder for The Oklahoman. Mizzou alum. Out West forever. https://www.nytimes.com/athletic/author/joel-lorenzi/",
    "latestPostAt": "2026-08-29T19:26:37.066Z",
-   "dormantDays": 20,
+   "dormantDays": 21,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
