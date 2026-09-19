@@ -932,7 +932,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/busyxb.bsky.social",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=busyxb.bsky.social",
     evidenceQuote: "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com",
-    observed: { latestPostAt: "2026-09-19T19:10:30.033Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 3732, followersCount: 1803, profileIndexedAt: "2026-08-01T14:43:51.964Z", verificationValid: false },
+    observed: { latestPostAt: "2026-09-19T19:16:26.073Z", latestPostAtSource: "data/live/reporter_verify.json", checkedAt: "2026-09-18", postsCount: 3732, followersCount: 1803, profileIndexedAt: "2026-08-01T14:43:51.964Z", verificationValid: false },
     verified: "2026-09-18 — read live via getProfiles: bio verbatim 'NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily...' + 3,732 posts (highest BKN volume). Closes BKN gap as bio-pollable. X @busyxb same person." },
 
   { name: "Shamit Dua", handle: "fearthebrown.bsky.social", outlet: "In The NO (intheno.net)", role: "Pelicans credentialed media", team: "NOP", feed: true,
@@ -1230,7 +1230,7 @@ const BSKY_REPORTERS = [
     evidence: "https://bsky.app/profile/rodwalkernola.bsky.social",
     evidenceQuote: "Sports columnist for The Times-Picayune | The New Orleans Advocate. We'll talk Saints, Pelicans and all the other hot topics in the 504 and beyond.",
     evidenceApi: "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=rodwalkernola.bsky.social",
-    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-19T18:00:07.611Z", latestPostAtSource: "data/live/reporter_verify.json", postsCount: 1628, followersCount: 1523, profileIndexedAt: "2024-11-29T02:34:02.547Z", verificationValid: false },
+    observed: { checkedAt: "2026-09-19", latestPostAt: "2026-09-19T19:17:26.501Z", latestPostAtSource: "data/live/reporter_verify.json", postsCount: 1628, followersCount: 1523, profileIndexedAt: "2024-11-29T02:34:02.547Z", verificationValid: false },
     verified: "2026-09-19 — typeahead q='Rod Walker', then getProfiles. Bio verbatim as quoted. 1,523 followers, 1,628 posts, no verification object. GRADED outlet-verified: the paper of record is established by the bio, but he is a multi-sport COLUMNIST and the Pelicans are one of several topics — not a beat claim. ACTIVITY: newest post 2026-09-18T13:07:21Z = 0 days → ACTIVE, and it is a Saints/Derrick Henry column, which is exactly why this row is labelled the way it is. Searches for Will Guillory (The Athletic Pelicans) found no Bluesky presence." },
   { name: "Mason Ginsberg", handle: "masonginsberg.bsky.social", outlet: "In the NO podcast", role: "Pelicans podcast analyst — not a credentialed beat writer", team: "NOP", feed: true, bskyVerified: false,
     conf: "bio-verified",
