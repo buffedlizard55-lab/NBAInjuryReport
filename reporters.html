@@ -92,9 +92,18 @@
   </div>
 
   <section class="card" style="margin-top:16px">
-    <h2>Automatic forward collection</h2>
-    <p class="muted small">No manual entry is required. One-player, explicit claims can be compared with a later official designation for the same game date within four hours. In-game exits and questionable-to-return reports need game-specific outcomes and remain pending. A later change in status is not proof a reporter was wrong.</p>
-    <div id="autoScorecard">Loading automated evidence…</div>
+    <h2>Automatic forward collection &amp; forward score</h2>
+    <p class="muted small">No manual entry is required. Every pollable, identity-evidenced post naming exactly one recognized NBA player with an
+      explicit status (Out / Questionable / Doubtful) becomes a tracked claim. Each claim is then reconciled against <b>two layers, official first</b>:
+      the NBA game-day report (a same-status designation for the same game date within four hours = <b>corroborated, 3 pts</b>) and, when no official
+      designation exists yet, the ESPN structured injury board (a later listing in the same status bucket — Out; Questionable, where ESPN's
+      <i>Day-To-Day</i> counts; Doubtful — where <i>both</i> our sighting time and ESPN's own
+      status stamp provably postdate the post, within 72 hours = <b>board agreement, 1 pt</b> — a second-layer agreement, <b>never official confirmation</b>).
+      A disagreement at either layer is flagged <b>for review</b> and never subtracts points, because a later change in status is not proof a reporter was
+      wrong. In-game exits and questionable-to-return reports need game-specific outcomes and remain pending; silence is never a verdict.
+      The result is the <b>forward score</b>: agreement counting over posts collected from 2026-09-17 onward — <b>not an accuracy rating</b>,
+      not a historical scorecard, and not a global first-to-report ranking.</p>
+    <div id="autoScorecard" data-scoring="auto-forward">Loading automated evidence…</div>
   </section>
   <div class="callout warn"><b>Directory verification is not report verification.</b> Legacy evidence and tiers below are historical curation, not measured accuracy or proof of current in-arena attendance. Team-account coverage is incomplete. No source is promised to cover every game. Recheck each linked identity before relying on it.</div>
 

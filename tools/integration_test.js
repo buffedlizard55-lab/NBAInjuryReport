@@ -261,6 +261,15 @@ console.log("== runtime: App.init() refresh chain ==");
     String((els.injuryBoard.innerHTML.match(/board-team-empty/g) || []).length));
   check("dashboard reporter scorecard container exists so intelligence.js can write it",
     typeof els.autoScorecard !== "undefined");
+  /* Session 19 — the forward scorecard renders even when the evidence file cannot load (degraded
+   * state): both reconciliation lanes are named, the honesty line survives, and a fetch failure can
+   * never paint a fabricated score. */
+  check("scorecard renders the two-lane forward score header (degraded state still paints)",
+    /Official corroboration/.test(els.autoScorecard.innerHTML) &&
+    /ESPN-board agreement/.test(els.autoScorecard.innerHTML) &&
+    /Forward score/.test(els.autoScorecard.innerHTML) &&
+    /not established/i.test(els.autoScorecard.innerHTML),
+    els.autoScorecard.innerHTML.replace(/<[^>]+>/g, " ").slice(0, 200));
   check("every absent team links its own ESPN injuries page",
     (els.boardCoverage.innerHTML.match(/espn\.com\/nba\/team\/injuries\/_\/name\//g) || []).length >= 28,
     String((els.boardCoverage.innerHTML.match(/espn\.com\/nba\/team\/injuries/g) || []).length));

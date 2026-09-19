@@ -1,5 +1,60 @@
 # Next-session priorities
 
+## Session 19 (2026-09-19) — automatic reporter forward scoring, second reconciliation lane
+
+### Pass 1 — implementation and verification
+- The request asks to "forward collect how correct they are when they post an injury report and give
+  them a score". The ledger only reconciled against the NBA game-day PDF — 404 for the entire audit
+  window — so all 140 collected claims sat pending with nothing to score. Added a **second
+  reconciliation lane** to `tools/build_intelligence.js`: a resolved one-player claim (Out /
+  Questionable / Doubtful) is compared with the earliest ESPN structured-board listing whose **sighting
+  time AND ESPN's own status stamp both postdate the post, within 72 h** — same status bucket =>
+  `board-agreement` (1 pt), different => `board-conflict-review`. Official lane keeps authority:
+  corroboration = 3 pts and any maturing official designation **overrides** a board outcome (the
+  superseded read is kept on the record). Forward score sums agreement only; conflicts are review-only
+  and never subtract; silence is never a verdict; `accuracy` stays `null` — agreement is not accuracy.
+- Rendered on both surfaces that carry `autoScorecard` (dashboard card renamed "Reporter evidence
+  ledger & forward score", reporters page "Automatic forward collection & forward score"): per-reporter
+  Observed / Official corroboration / ESPN-board agreement / Conflicts / Pending / Forward score +
+  agreement % of resolved, every claim row naming its lane and linking its comparison evidence.
+- New `tools/intelligence_test.js` (22 checks) pins both lanes: status mapping, both timestamp guards
+  (incl. the real "Furphy" stale-stamp counter-example), evidence-time windowing, earliest-evidence
+  comparison, identity gating, silence-is-pending, official-over-board authority, score arithmetic
+  and sorting. Wired into `test.yml` and `injury-watch.yml`.
+- Full suite green: smoke 237 · integration 106 · impact 99 · intelligence 22 · polling 25 ·
+  regression 28 groups · reporter verifier 171 · Python 26 · replay OK · `git diff --check` clean.
+
+### Pass 2 — review of own work
+- Window bug fixed before merge: the 72 h window first judged *sighting* time, which let a poller gap
+  erase evidence that was public in time; it now judges **evidence time** (ESPN stamp, else sighting),
+  with sighting kept only as a postdate guard. Comparator is earliest by evidence time. Three tests pin it.
+- ESPN status vocabulary extended (`Out For Season`, `Out Indefinitely`) — the first test run caught it.
+- Bundled claims mislabel risk closed: pre-lane `evidence` objects without a `layer` render as
+  "Comparison evidence", never as an ESPN-board comparison.
+- Copy states the status bucketing (ESPN "Day-To-Day" counts as Questionable) on the page and in the
+  ledger's own `scoringNote`.
+- Regenerated `data/live/intelligence.json` against the committed snapshot: **140/140 claims stay
+  pending** — every candidate claim predates its board evidence, so the new lane fabricates nothing.
+
+### Pass 3 — re-check against the original request
+- Verified each brief item maps to a shipped, tested surface; the one material gap (automatic
+  reporter scoring with evidence) is what this session adds. X remains manual-review only (no free
+  API); the NFL-phrased sentences in the brief are covered by the NBA-wide scope already documented.
+- Re-ran the whole pipeline locally (`build_intelligence.js` against real data), all tests, and the
+  replay/invariant checks after every edit.
+
+### Known limits this session did not fix (next session)
+- No claim can resolve until a *future* post is answered by *future* evidence — scores begin with the
+  first in-season reports (preseason 2026-10-03; official PDFs from opening night 2026-10-20).
+- A reporter whose post is answered only by a *changed/removed* ESPN listing still reads "pending"
+  (no absence verdicts); game-outcome reconciliation for in-game claims stays future work.
+- Standing constraints from session 18 are unchanged: official adapter blocked on the 404 page,
+  in-game latency fixture-only until first tip, lineup impact UNKNOWN until collected box scores,
+  26/30 clubs without a verified Bluesky account, X/Instagram/Facebook manual-review links only.
+
+
+---
+
 ## Session 18 (2026-09-19) — three-pass integrity review
 
 ### Pass 1 — implementation and baseline

@@ -22,6 +22,7 @@ jobs:
           node tools/smoke_test.js
           node tools/integration_test.js
           node tools/impact_test.js
+          node tools/intelligence_test.js
           node tools/poll_fixture_test.js
           node tools/regression_test.js
           node tools/verify_reporters_test.js
