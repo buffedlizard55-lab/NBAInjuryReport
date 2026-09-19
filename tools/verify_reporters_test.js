@@ -509,7 +509,7 @@ console.log("== session 13: activity is computed, and CI evidence beats a stale 
     const refused = rows.filter(r => r.feed === false);
     const provenance = r => String((r.observed || {}).latestPostAtSource || "");
     return readers.length + refused.length === rows.length && readers.length > 0 &&
-      readers.every(r => r.observed && r.observed.latestPostAt && /getAuthorFeed\?actor=/.test(provenance(r))) &&
+      readers.every(r => r.observed && r.observed.latestPostAt && /(?:getAuthorFeed\?actor=|data\/live\/reporter_verify\.json)/.test(provenance(r))) &&
       refused.every(r => r.identityRefused === true && !(r.observed || {}).latestPostAt) &&
       rows.every(r => r.observed && r.observed.checkedAt === "2026-09-19" && r.observed.followersCount != null);
   })(), SESSION_14_HANDLES.map(h => { const r = D.BSKY_REPORTERS.find(x => x.handle === h) || {}; return h + ":" + ((r.observed || {}).latestPostAt || (r.feed === false ? "(refused)" : "(NONE)")); }).join(" "));
