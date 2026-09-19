@@ -126,7 +126,19 @@ const SESSION_14_HANDLES = ["dannycunningham.bsky.social", "mfollowill.bsky.soci
   "joelrushnba.bsky.social", "bgeisinger.bsky.social", "chrisherrington.bsky.social", "nolajake.bsky.social",
   "saltcityhoops.bsky.social", "andyblarsen.bsky.social", "lakerssbn.bsky.social",
   "miketrudell.bsky.social", "erikslaterphoto.bsky.social", "david-locke.bsky.social"];
-const EXPECTED_NEW = 18 + 14 + 7 + SESSION_13_HANDLES.length + SESSION_14_HANDLES.length;
+/* SESSION 15 (2026-09-19) — depth for the gap-listed teams from Vorkunov's starter-pack list
+ * (read in full), bio-phrase searches and exact-name typeahead. 16 pollable rows (ORL, DET,
+ * PHI x2, TOR, BKN, NOP x2, CHI x2, IND, CHA, WAS, UTA, NYK) and 1 REFUSED handle (a Hornets
+ * name match whose profile carries no bio). Grades are conservative on purpose: 1 outlet-verified
+ * via theathletic.com (graded bsky-verified with verifier named), 2 outlet-verified (NetsDaily
+ * writer with no beat stated; a multi-sport columnist), the rest bio-verified. Three of the 16
+ * measure DORMANT (Grange 39d, Miller 597d, Popper 352d) and are stored that way. */
+const SESSION_15_HANDLES = ["codytaylornba.bsky.social", "hunterpatterson.bsky.social", "ginamizell.bsky.social",
+  "christopherhine.bsky.social", "michaelgrangenba.bsky.social", "lucaskaplan.bsky.social", "rodwalkernola.bsky.social",
+  "masonginsberg.bsky.social", "juliapoe.bsky.social", "willgottlieb.bsky.social", "caitlinmaycooper.bsky.social",
+  "britishbuzz.bsky.social", "chasedcsports.bsky.social", "millerjryan.bsky.social", "stevepopper.bsky.social",
+  "rodboone.bsky.social"];
+const EXPECTED_NEW = 18 + 14 + 7 + SESSION_13_HANDLES.length + SESSION_14_HANDLES.length + SESSION_15_HANDLES.length;
 /* +1 RE-GRADED original: nbasarah.bsky.social is not a session row at all. It is one of the
  * pre-existing backfilled rows, and it gained a grade on 2026-09-18 when the daily re-verification
  * reported bio-drift and the live re-read showed a beat change (Jazz → Timberwolves) plus a valid
@@ -134,7 +146,7 @@ const EXPECTED_NEW = 18 + 14 + 7 + SESSION_13_HANDLES.length + SESSION_14_HANDLE
  * "rows this project graded from its own reads" auditable. */
 const REGRADED = ["nbasarah.bsky.social"];
 check("the sessions added " + EXPECTED_NEW + " evidence rows — 18 (s10) + 14 (s11) + 7 (s12) + " +
-  SESSION_13_HANDLES.length + " (s13) + " + SESSION_14_HANDLES.length + " (s14) — plus " +
+  SESSION_13_HANDLES.length + " (s13) + " + SESSION_14_HANDLES.length + " (s14) + " + SESSION_15_HANDLES.length + " (s15) — plus " +
   REGRADED.length + " re-graded original",
   NEW.length === EXPECTED_NEW + REGRADED.length, "got " + NEW.length + " (expected " + (EXPECTED_NEW + REGRADED.length) + ")");
 check("the re-graded row is the one the re-verification caught, and its grade rests on a live read",
@@ -165,6 +177,34 @@ check("every session-13 row is present by name, and no unnamed row appeared with
   SESSION_13_HANDLES.every(h => NEW.some(r => r.handle === h)) &&
     NEW.filter(r => r.handle === "joevardon.bsky.social").length === 1,
   "missing: " + SESSION_13_HANDLES.filter(h => !NEW.some(r => r.handle === h)).join(","));
+check("every session-15 row is present by name, and no unnamed row appeared with it",
+  SESSION_15_HANDLES.every(h => NEW.filter(r => r.handle === h).length === 1),
+  "missing: " + SESSION_15_HANDLES.filter(h => !NEW.some(r => r.handle === h)).join(","));
+check("session-15 rows that measured DORMANT are stored dormant, and the active ones are inside the window",
+  (() => {
+    const now = Date.parse("2026-09-19T12:00:00Z");
+    const rec = h => D.writerRecency(D.BSKY_REPORTERS.find(r => r.handle === h), null, now).state;
+    return ["michaelgrangenba.bsky.social", "millerjryan.bsky.social", "stevepopper.bsky.social"].every(h => rec(h) === "dormant") &&
+      ["codytaylornba.bsky.social", "hunterpatterson.bsky.social", "ginamizell.bsky.social", "lucaskaplan.bsky.social",
+        "juliapoe.bsky.social", "britishbuzz.bsky.social"].every(h => rec(h) === "active");
+  })());
+check("the Athletic-verified Pistons row names the OUTLET as verifier, not bsky.app",
+  (() => { const r = D.BSKY_REPORTERS.find(x => x.handle === "hunterpatterson.bsky.social");
+    return r && r.conf === "bsky-verified" && r.verifier === "theathletic.com" && r.observed.verificationValid === true; })());
+check("the two session-15 outlet-verified rows never read as a current beat writer",
+  ["lucaskaplan.bsky.social", "rodwalkernola.bsky.social"].every(h => {
+    const r = D.BSKY_REPORTERS.find(x => x.handle === h);
+    return r && r.conf === "outlet-verified" && !/beat writer$/.test(r.role) && !/credentialed/i.test(r.role);
+  }));
+check("CHA and UTA are still gap-listed after session 15 (identity ceiling honoured, not papered over)",
+  (() => {
+    const cov = D.arenaCoverage();
+    const cha = cov.find(c => c.abbr === "CHA"), uta = cov.find(c => c.abbr === "UTA");
+    const summary = D.arenaCoverageSummary();
+    return cha.cls !== "verified-pollable" && uta.cls !== "verified-pollable" && uta.recency === "dormant-only" &&
+      summary.withGaps.includes("CHA") && summary.withGaps.includes("UTA") &&
+      cha.graded.some(g => g.handle === "rodboone.bsky.social" && g.refused && !g.feed);
+  })());
 check("every added row carries the exact bio it was verified from", NEW.every(r => r.evidenceQuote && r.evidenceQuote.length > 10));
 check("every added row carries a re-runnable evidence URL on the public API", NEW.every(r => /^https:\/\/public\.api\.bsky\.app\/xrpc\/app\.bsky\.actor\.getProfiles\?actors=/.test(r.evidenceApi || "")));
 check("every added row carries the counts actually observed that day", NEW.every(r => r.observed.postsCount != null && r.observed.profileIndexedAt && r.observed.verificationValid !== undefined));
@@ -457,12 +497,13 @@ console.log("== session 13: activity is computed, and CI evidence beats a stale 
 console.log("== session 13: refused identities stay refused, and the club probe is internally consistent ==");
 {
   const refused = D.BSKY_REPORTERS.filter(r => r.identityRefused === true);
-  /* 2 until 2026-09-19; 5 now. Session 14 refused three more handles — a Lakers-broadcaster name
+  /* 2 until 2026-09-19; 5 after session 14; 6 after session 15 (rodboone.bsky.social — Hornets
+   * roster-move posts, NO bio, no outlet, no verification object). Session 14 refused three handles — a Lakers-broadcaster name
    * with an empty profile, an Alaska photographer returned for a Nets writer, and two Utah
    * play-by-play name matches with no Jazz identity. The count is pinned so a refused row can
    * neither be dropped quietly nor added without naming it here. */
   check("every refused handle is present, pinned feed:false and classed unconfirmed",
-    refused.length === 5 && refused.every(r => r.feed === false && r.conf === "unconfirmed" && r.team),
+    refused.length === 6 && refused.every(r => r.feed === false && r.conf === "unconfirmed" && r.team),
     refused.map(r => r.handle).join(","));
   check("a refused row records WHAT the API returned instead of an invented bio",
     refused.every(r => (r.evidenceQuote || "").length > 10 && /REFUSED/.test(r.verified)));

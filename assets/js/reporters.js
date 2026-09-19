@@ -531,7 +531,13 @@ const Reporters = (() => {
       <a href="${esc(P.probeUrl)}" target="_blank" rel="noopener">re-run the probe ↗</a> ·
       <a href="${esc(P.leagueFollows.url)}" target="_blank" rel="noopener">league follows (${esc(String(P.leagueFollows.count))}) ↗</a> ·
       <a href="${esc(P.starterPack.url)}" target="_blank" rel="noopener">third-party starter pack (${esc(String(P.starterPack.listItemCount))} items) ↗</a>
-      <div class="tiny muted" style="margin-top:4px">${esc(P.summary.meaning)}</div>`;
+      <div class="tiny muted" style="margin-top:4px">${esc(P.summary.meaning)}</div>
+      ${P.summary.reprobe ? `<div class="tiny" style="margin-top:6px"><b>Latest re-probe ${esc(P.summary.reprobe.when)}:</b>
+      ${esc(String(P.summary.reprobe.handlesRequested))} handles requested · ${esc(String(P.summary.reprobe.resolved))} resolved ·
+      <b class="${P.summary.reprobe.withValidVerificationObject.length ? "ok" : "bad"}">${esc(String(P.summary.reprobe.withValidVerificationObject.length))}</b> with a valid verification object
+      (${esc(P.summary.reprobe.withValidVerificationObject.join(", "))}) · changed since last probe: <b>${esc(String(P.summary.reprobe.changed.length))}</b> ·
+      <a href="${esc(P.summary.reprobe.url)}" target="_blank" rel="noopener">re-run ↗</a>
+      <div class="muted">${esc(P.summary.reprobe.meaning)}</div></div>` : ""}`;
   }
 
   /* ===================================================================================
