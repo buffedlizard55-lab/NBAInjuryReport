@@ -79,6 +79,27 @@ console.log("== judge(): every verdict branch ==");
   const noFeedDrift = V.judge({ handle: "c.bsky.social", name: "C", evidenceQuote: "Miami Heat reporter for the Miami Herald.", feed: false },
     { profile: profile("Now a chef in Coral Gables.", undefined) }, NOW);
   check("...but its identity claim is still checked: a changed bio is still bio-drift", noFeedDrift.status === "bio-drift", noFeedDrift.status);
+
+  // Session 16: verifier revocation & beat-change watch
+  const revokedObj = V.validVerification(profile("Some bio", BAD_OBJ));
+  check("validVerification flags invalid object (isValid:false) as invalid and revoked",
+    revokedObj.invalid === true && revokedObj.valid === false && revokedObj.revoked === true);
+
+  const vRevokeRow = V.judge({ handle: "jv.bsky.social", name: "JV", team: null, evidenceQuote: "National NBA writer.", bskyVerified: false, feed: true },
+    { profile: profile("National NBA writer.", BAD_OBJ), latestPostAt: iso(1) }, NOW);
+  check("judge() records verifier-revocation in notes when object is invalid (joevardon pattern)",
+    vRevokeRow.notes.some(n => /verifier-revocation detected/.test(n)));
+
+  const toddChange = V.detectBeatChange("Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors.", "UTA", "Deseret News");
+  check("detectBeatChange catches departure from registered team (Todd: previously Jazz -> MIN)",
+    toddChange && toddChange.detected === true && toddChange.previousTeam === "UTA" && toddChange.newTeam === "MIN");
+
+  const hineChange = V.detectBeatChange("Sixers reporter for The Philadelphia Inquirer. Previously covered Minnesota Timberwolves.", "MIN", "Star Tribune");
+  check("detectBeatChange catches move to Sixers (Hine: previously Timberwolves -> PHI)",
+    hineChange && hineChange.detected === true && hineChange.previousTeam === "MIN" && hineChange.newTeam === "PHI");
+
+  const curtisStay = V.detectBeatChange("Mavericks beat writer for The Dallas Morning News.", "DAL", "Dallas Morning News");
+  check("detectBeatChange returns null for steady beat reporter (Curtis: DAL)", curtisStay === null);
 }
 {
   const s = V.summarize([

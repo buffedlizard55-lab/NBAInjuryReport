@@ -66,6 +66,11 @@
         <input type="search" id="boardSearch" placeholder="🔍 Search player, team or injury (e.g. Tatum, ankle, GSW)…" autocomplete="off" style="flex:1; min-width:240px;">
         <button class="btn sm ghost" id="boardResetFilter" type="button">Reset</button>
       </div>
+      <div class="board-quick-filters" id="boardViewSwitcher" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-bottom:6px;">
+        <span class="tiny muted" style="font-weight:600">Layout view:</span>
+        <button class="board-tab view-tab active" data-board-view="cards" type="button">📋 Basketball Monster Player News</button>
+        <button class="board-tab view-tab" data-board-view="teams" type="button">🏟️ Team-by-Team Grid</button>
+      </div>
       <div class="board-quick-filters" id="boardImpactFilters" style="display:flex; gap:6px; flex-wrap:wrap; align-items:center; margin-bottom:6px;">
         <span class="tiny muted" style="font-weight:600">Lineup impact:</span>
         <button class="board-tab impact-tab active" data-impact-filter="ALL" type="button">All (<span id="countImpactAll">0</span>)</button>
@@ -123,6 +128,7 @@
         <div class="btn-row">
           <button class="btn" id="testSound">▶ Test sound</button>
           <button class="btn ghost" id="testHighImpactSound">▶⚡ Test high-impact sound</button>
+          <button class="btn ghost" id="testLiveAlertBtn">▶🚨 Test live alert (offensive OUT / in-game)</button>
           <button class="btn ghost" id="notifBtn">Enable browser notifications</button>
         </div>
         <div class="btn-row">
@@ -156,15 +162,21 @@
   </section>
 
   <!-- ============ WIRE ============ -->
-  <section class="card" style="margin-top:16px">
-    <h2>💬 Live injury wire <span class="tiny muted" id="wireCount"></span></h2>
-    <p class="muted small">One chat-style stream, newest first, merged from every layer. Severity is classified from the source's own words —
-      always confirm via the linked source before acting.</p>
+  <section class="card" style="margin-top:16px" id="liveWireCard">
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
+      <h2>💬 Live injury wire &amp; news chat <span class="tiny muted" id="wireCount"></span></h2>
+      <span class="live-dot" style="margin:0"><i style="background:#22c55e"></i>LIVE CHAT STREAM ACTIVE</span>
+    </div>
+    <p class="muted small">Real-time chat-style injury stream, newest updates first, merged across official NBA reports, ESPN news, verified beat reporters, and live in-game monitor exits. Severity is classified directly from source reporting with one-click manual review links.</p>
     <div class="filterbar">
       <select id="teamFilter" aria-label="Filter by team"></select>
       <div class="checks" id="sevChecks"></div>
+      <div style="margin-left:auto; display:flex; gap:6px; align-items:center;">
+        <button class="btn sm ghost" id="wireMarkRead" type="button">✓ Mark all read</button>
+        <button class="btn sm ghost" id="wireClear" type="button">Clear stream</button>
+      </div>
     </div>
-    <div class="wire" id="wire"><div class="muted">Loading wire…</div></div>
+    <div class="wire" id="wire"><div class="muted">Loading live chat stream…</div></div>
   </section>
 
   <div class="grid two">
