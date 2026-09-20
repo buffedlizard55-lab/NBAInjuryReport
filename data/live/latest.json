@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T01:41:51.437Z",
+  "generated": "2026-09-20T07:06:36.154Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -7504,12 +7504,12 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "sixersnba.bsky.social": {
+      "nba.com": {
         "ok": true,
         "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "nuggets.bsky.social": {
         "ok": true,
@@ -7525,17 +7525,17 @@
         "kind": "official-team",
         "team": "POR"
       },
-      "nba.com": {
+      "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
-      "samvecenie.bsky.social": {
+      "johnhollinger.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Sam Vecenie",
+        "count": 0,
+        "name": "John Hollinger",
         "kind": "reporter",
         "team": null
       },
@@ -7546,10 +7546,10 @@
         "kind": "reporter",
         "team": null
       },
-      "johnhollinger.bsky.social": {
+      "samvecenie.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "John Hollinger",
+        "count": 3,
+        "name": "Sam Vecenie",
         "kind": "reporter",
         "team": null
       },
@@ -7560,12 +7560,12 @@
         "kind": "reporter",
         "team": null
       },
-      "tomorsborn.bsky.social": {
+      "tomhaberstroh.bsky.social": {
         "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
+        "count": 0,
+        "name": "Tom Haberstroh",
         "kind": "reporter",
-        "team": "SAS"
+        "team": null
       },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
@@ -7574,12 +7574,12 @@
         "kind": "reporter",
         "team": "SAS"
       },
-      "tomhaberstroh.bsky.social": {
+      "tomorsborn.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
+        "count": 2,
+        "name": "Tom Orsborn",
         "kind": "reporter",
-        "team": null
+        "team": "SAS"
       },
       "nbasarah.bsky.social": {
         "ok": true,
@@ -7588,12 +7588,12 @@
         "kind": "reporter",
         "team": "MIN"
       },
-      "kyleneubeck.bsky.social": {
+      "jonkrawczynski.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Kyle Neubeck",
+        "count": 1,
+        "name": "Jon Krawczynski",
         "kind": "reporter",
-        "team": "PHI"
+        "team": "MIN"
       },
       "omarisankofa.bsky.social": {
         "ok": true,
@@ -7602,26 +7602,12 @@
         "kind": "reporter",
         "team": "DET"
       },
-      "jonkrawczynski.bsky.social": {
+      "kyleneubeck.bsky.social": {
         "ok": true,
-        "count": 1,
-        "name": "Jon Krawczynski",
+        "count": 3,
+        "name": "Kyle Neubeck",
         "kind": "reporter",
-        "team": "MIN"
-      },
-      "highkin.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Sean Highkin",
-        "kind": "reporter",
-        "team": "POR"
-      },
-      "joshrobbins.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Josh Robbins",
-        "kind": "reporter",
-        "team": "WAS"
+        "team": "PHI"
       },
       "lawmurraythenu.bsky.social": {
         "ok": true,
@@ -7630,19 +7616,26 @@
         "kind": "reporter",
         "team": "LAC"
       },
+      "joshrobbins.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Josh Robbins",
+        "kind": "reporter",
+        "team": "WAS"
+      },
+      "highkin.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Sean Highkin",
+        "kind": "reporter",
+        "team": "POR"
+      },
       "jlewenberg.bsky.social": {
         "ok": true,
-        "count": 2,
+        "count": 1,
         "name": "Josh Lewenberg",
         "kind": "reporter",
         "team": "TOR"
-      },
-      "jimowczarski.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jim Owczarski",
-        "kind": "reporter",
-        "team": "MIL"
       },
       "jbeede.bsky.social": {
         "ok": true,
@@ -7651,26 +7644,19 @@
         "kind": "reporter",
         "team": "ORL"
       },
+      "jimowczarski.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Jim Owczarski",
+        "kind": "reporter",
+        "team": "MIL"
+      },
       "jameshamnba.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "James Ham",
         "kind": "reporter",
         "team": "SAC"
-      },
-      "ejelite1.bsky.social": {
-        "ok": true,
-        "count": 8,
-        "name": "Ethan Sands",
-        "kind": "reporter",
-        "team": "CLE"
-      },
-      "btrowland.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Brad Rowland",
-        "kind": "reporter",
-        "team": "ATL"
       },
       "scottagness.bsky.social": {
         "ok": true,
@@ -7679,6 +7665,13 @@
         "kind": "reporter",
         "team": "IND"
       },
+      "ejelite1.bsky.social": {
+        "ok": true,
+        "count": 8,
+        "name": "Ethan Sands",
+        "kind": "reporter",
+        "team": "CLE"
+      },
       "irawinderman.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7686,12 +7679,12 @@
         "kind": "reporter",
         "team": "MIA"
       },
-      "geraldbourguet.bsky.social": {
+      "btrowland.bsky.social": {
         "ok": true,
-        "count": 4,
-        "name": "Gerald Bourguet",
+        "count": 1,
+        "name": "Brad Rowland",
         "kind": "reporter",
-        "team": "PHX"
+        "team": "ATL"
       },
       "kellyiko.bsky.social": {
         "ok": true,
@@ -7700,17 +7693,24 @@
         "kind": "reporter",
         "team": null
       },
-      "gwashburnglobe.bsky.social": {
+      "geraldbourguet.bsky.social": {
         "ok": true,
-        "count": 1,
-        "name": "Gary Washburn",
+        "count": 4,
+        "name": "Gerald Bourguet",
         "kind": "reporter",
-        "team": "BOS"
+        "team": "PHX"
       },
       "byjayking.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Jay King",
+        "kind": "reporter",
+        "team": "BOS"
+      },
+      "gwashburnglobe.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Gary Washburn",
         "kind": "reporter",
         "team": "BOS"
       },
@@ -7728,19 +7728,19 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "ryanblackburn.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Ryan Blackburn",
-        "kind": "reporter",
-        "team": "DEN"
-      },
       "anthonyvslater.bsky.social": {
         "ok": true,
         "count": 9,
         "name": "Anthony Slater",
         "kind": "reporter",
         "team": "GSW"
+      },
+      "ryanblackburn.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Ryan Blackburn",
+        "kind": "reporter",
+        "team": "DEN"
       },
       "danielle-lerner.bsky.social": {
         "ok": true,
@@ -7791,6 +7791,13 @@
         "kind": "reporter",
         "team": "NYK"
       },
+      "drewhilldailym.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Drew Hill",
+        "kind": "reporter",
+        "team": "MEM"
+      },
       "damichaelcole.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7805,16 +7812,9 @@
         "kind": "reporter",
         "team": "DAL"
       },
-      "drewhilldailym.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Drew Hill",
-        "kind": "reporter",
-        "team": "MEM"
-      },
       "busyxb.bsky.social": {
         "ok": true,
-        "count": 2,
+        "count": 0,
         "name": "Busy — NetsDaily",
         "kind": "reporter",
         "team": "BKN"
@@ -7826,13 +7826,6 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "byvarunshankar.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Varun Shankar",
-        "kind": "reporter",
-        "team": "HOU"
-      },
       "olehkosel.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7840,12 +7833,12 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "jasonlloyd.bsky.social": {
+      "byvarunshankar.bsky.social": {
         "ok": true,
         "count": 3,
-        "name": "Jason Lloyd",
+        "name": "Varun Shankar",
         "kind": "reporter",
-        "team": "CLE"
+        "team": "HOU"
       },
       "bennettdurando.bsky.social": {
         "ok": true,
@@ -7854,6 +7847,13 @@
         "kind": "reporter",
         "team": "DEN"
       },
+      "grantafseth.bsky.social": {
+        "ok": true,
+        "count": 12,
+        "name": "Grant Afseth",
+        "kind": "reporter",
+        "team": "DAL"
+      },
       "montepoole.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7861,12 +7861,12 @@
         "kind": "reporter",
         "team": "GSW"
       },
-      "grantafseth.bsky.social": {
+      "jasonlloyd.bsky.social": {
         "ok": true,
-        "count": 12,
-        "name": "Grant Afseth",
+        "count": 3,
+        "name": "Jason Lloyd",
         "kind": "reporter",
-        "team": "DAL"
+        "team": "CLE"
       },
       "joevardon.bsky.social": {
         "ok": true,
@@ -7882,17 +7882,17 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "nickvanexit.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Nick Angstadt",
-        "kind": "reporter",
-        "team": "DAL"
-      },
       "mfollowill.bsky.social": {
         "ok": true,
         "count": 4,
         "name": "Mark Followill",
+        "kind": "reporter",
+        "team": "DAL"
+      },
+      "nickvanexit.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Nick Angstadt",
         "kind": "reporter",
         "team": "DAL"
       },
@@ -7903,13 +7903,6 @@
         "kind": "reporter",
         "team": "DEN"
       },
-      "bgeisinger.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Brian Geisinger",
-        "kind": "reporter",
-        "team": "CHA"
-      },
       "nolajake.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7917,12 +7910,26 @@
         "kind": "reporter",
         "team": "NOP"
       },
+      "bgeisinger.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Brian Geisinger",
+        "kind": "reporter",
+        "team": "CHA"
+      },
       "chrisherrington.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Chris Herrington",
         "kind": "reporter",
         "team": "MEM"
+      },
+      "lakerssbn.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Silver Screen and Roll",
+        "kind": "reporter",
+        "team": "LAL"
       },
       "andyblarsen.bsky.social": {
         "ok": true,
@@ -7938,13 +7945,6 @@
         "kind": "reporter",
         "team": "UTA"
       },
-      "lakerssbn.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Silver Screen and Roll",
-        "kind": "reporter",
-        "team": "LAL"
-      },
       "codytaylornba.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7959,12 +7959,12 @@
         "kind": "reporter",
         "team": "DET"
       },
-      "ginamizell.bsky.social": {
+      "michaelgrangenba.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Gina Mizell",
+        "count": 1,
+        "name": "Michael Grange",
         "kind": "reporter",
-        "team": "PHI"
+        "team": "TOR"
       },
       "christopherhine.bsky.social": {
         "ok": true,
@@ -7973,12 +7973,12 @@
         "kind": "reporter",
         "team": "PHI"
       },
-      "michaelgrangenba.bsky.social": {
+      "ginamizell.bsky.social": {
         "ok": true,
-        "count": 1,
-        "name": "Michael Grange",
+        "count": 0,
+        "name": "Gina Mizell",
         "kind": "reporter",
-        "team": "TOR"
+        "team": "PHI"
       },
       "lucaskaplan.bsky.social": {
         "ok": true,
@@ -8015,13 +8015,6 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "caitlinmaycooper.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Caitlin Cooper",
-        "kind": "reporter",
-        "team": "IND"
-      },
       "britishbuzz.bsky.social": {
         "ok": true,
         "count": 0,
@@ -8029,12 +8022,12 @@
         "kind": "reporter",
         "team": "CHA"
       },
-      "millerjryan.bsky.social": {
+      "caitlinmaycooper.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Ryan Miller",
+        "count": 0,
+        "name": "Caitlin Cooper",
         "kind": "reporter",
-        "team": "UTA"
+        "team": "IND"
       },
       "chasedcsports.bsky.social": {
         "ok": true,
@@ -8042,6 +8035,13 @@
         "name": "Chase Hughes",
         "kind": "reporter",
         "team": "WAS"
+      },
+      "millerjryan.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Ryan Miller",
+        "kind": "reporter",
+        "team": "UTA"
       },
       "stevepopper.bsky.social": {
         "ok": true,
@@ -8486,60 +8486,6 @@
       "kindLabel": "mention"
     },
     {
-      "uri": "at://did:plc:k4fpni725uq2pm75c24wyneu/app.bsky.feed.post/3mvdcuz4yac2n",
-      "text": "A world cup (happening right now!) @blackrosiemedia.com newsletter. In addition to the cup, we're talking Ezi Magbegor's injury, the LA Sparks' new investment, and more. Subscribe and tell a friend to subscribe!\nwbb-roundup.beehiiv.com/p/the-world-...",
-      "handle": "busyxb.bsky.social",
-      "name": "Busy — NetsDaily",
-      "verified": true,
-      "bskyVerified": false,
-      "kind": "reporter",
-      "team": "BKN",
-      "outlet": "NetsDaily",
-      "role": "Brooklyn Nets / NY Liberty writer",
-      "accountUrl": "https://bsky.app/profile/busyxb.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/busyxb.bsky.social",
-        "team": "BKN",
-        "kind": "reporter",
-        "outlet": "NetsDaily",
-        "name": "Busy — NetsDaily"
-      },
-      "createdAt": "2026-09-12T14:42:30.988Z",
-      "indexedAt": "2026-09-12T14:42:32.159Z",
-      "url": "https://bsky.app/profile/busyxb.bsky.social/post/3mvdcuz4yac2n",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
-    },
-    {
-      "uri": "at://did:plc:k4fpni725uq2pm75c24wyneu/app.bsky.feed.post/3mvc3ojm4kk2e",
-      "text": "\"doctor said i need to let my injured wrist recover. you understand, right?!\" - sami zayn",
-      "handle": "busyxb.bsky.social",
-      "name": "Busy — NetsDaily",
-      "verified": true,
-      "bskyVerified": false,
-      "kind": "reporter",
-      "team": "BKN",
-      "outlet": "NetsDaily",
-      "role": "Brooklyn Nets / NY Liberty writer",
-      "accountUrl": "https://bsky.app/profile/busyxb.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/busyxb.bsky.social",
-        "team": "BKN",
-        "kind": "reporter",
-        "outlet": "NetsDaily",
-        "name": "Busy — NetsDaily"
-      },
-      "createdAt": "2026-09-12T03:00:57.450Z",
-      "indexedAt": "2026-09-12T03:00:57.771Z",
-      "url": "https://bsky.app/profile/busyxb.bsky.social/post/3mvc3ojm4kk2e",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
-    },
-    {
       "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mvbekvkeo22h",
       "text": "Alvn Kamara is listed as questionable for Sunday's game against the Lions. \n\nDE Cam Jordan (hamstring), TE Oscar Delp (hamstring) and RB Audric Estime (thigh) are all out.  \n\nIt'll be just the third game Jordan has missed in his career. One was due to COVID protocol and the other was an eye injury.",
       "handle": "rodwalkernola.bsky.social",
@@ -8781,33 +8727,6 @@
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
       "kindLabel": "mention"
-    },
-    {
-      "uri": "at://did:plc:75ywphuamkbx76cq6efue5y5/app.bsky.feed.post/3mu3kdfa2uc2k",
-      "text": "Doesn’t look like Nickeil Alexander-Walker or Lu Dort made the trip to Panama City; neither are available for Canada’s game vs Panama tonight. Kelly Olynyk is the lone active NBAer. Would expect to see NAW and Dort vs Argentina on Monday - a much tougher test on home soil.",
-      "handle": "jlewenberg.bsky.social",
-      "name": "Josh Lewenberg",
-      "verified": true,
-      "bskyVerified": true,
-      "kind": "reporter",
-      "team": "TOR",
-      "outlet": "TSN",
-      "role": "Toronto Raptors beat reporter",
-      "accountUrl": "https://bsky.app/profile/jlewenberg.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/jlewenberg.bsky.social",
-        "team": "TOR",
-        "kind": "reporter",
-        "outlet": "TSN",
-        "name": "Josh Lewenberg"
-      },
-      "createdAt": "2026-08-27T19:09:20.090Z",
-      "indexedAt": "2026-08-27T19:09:23.668Z",
-      "url": "https://bsky.app/profile/jlewenberg.bsky.social/post/3mu3kdfa2uc2k",
-      "sev": "mention",
-      "sevLabel": "NON-INJURY (rest / roster / decision)",
-      "inGameWatch": false,
-      "kindLabel": "non-injury"
     },
     {
       "uri": "at://did:plc:dfd7vm55wtu76azcjrmav4xz/app.bsky.feed.post/3mtjuy7f5ps2w",

@@ -1,9 +1,9 @@
 {
-  "checkedAt": "2026-09-20T01:41:50.758Z",
+  "checkedAt": "2026-09-20T07:06:34.868Z",
   "schema": 3,
   "rosters": {
     "CHA": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster",
       "players": [
         {
@@ -268,7 +268,7 @@
       ]
     },
     "BOS": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bos/roster",
       "players": [
         {
@@ -505,7 +505,7 @@
       ]
     },
     "BKN": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bkn/roster",
       "players": [
         {
@@ -784,7 +784,7 @@
       ]
     },
     "ATL": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster",
       "players": [
         {
@@ -1077,7 +1077,7 @@
       ]
     },
     "CHI": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/roster",
       "players": [
         {
@@ -1335,7 +1335,7 @@
       ]
     },
     "CLE": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cle/roster",
       "players": [
         {
@@ -1600,7 +1600,7 @@
       ]
     },
     "DET": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/det/roster",
       "players": [
         {
@@ -1886,7 +1886,7 @@
       ]
     },
     "DEN": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/roster",
       "players": [
         {
@@ -2165,7 +2165,7 @@
       ]
     },
     "DAL": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/roster",
       "players": [
         {
@@ -2451,7 +2451,7 @@
       ]
     },
     "HOU": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
       "players": [
         {
@@ -2709,7 +2709,7 @@
       ]
     },
     "GSW": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/roster",
       "players": [
         {
@@ -2988,7 +2988,7 @@
       ]
     },
     "IND": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/roster",
       "players": [
         {
@@ -3239,7 +3239,7 @@
       ]
     },
     "LAC": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
       "players": [
         {
@@ -3574,7 +3574,7 @@
       ]
     },
     "MIA": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "players": [
         {
@@ -3895,7 +3895,7 @@
       ]
     },
     "MEM": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
       "players": [
         {
@@ -4230,7 +4230,7 @@
       ]
     },
     "LAL": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lal/roster",
       "players": [
         {
@@ -4516,7 +4516,7 @@
       ]
     },
     "MIL": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mil/roster",
       "players": [
         {
@@ -4802,7 +4802,7 @@
       ]
     },
     "MIN": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/min/roster",
       "players": [
         {
@@ -5088,7 +5088,7 @@
       ]
     },
     "OKC": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
       "players": [
         {
@@ -5360,7 +5360,7 @@
       ]
     },
     "NYK": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/roster",
       "players": [
         {
@@ -5604,7 +5604,7 @@
       ]
     },
     "ORL": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/roster",
       "players": [
         {
@@ -5897,7 +5897,7 @@
       ]
     },
     "PHI": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/roster",
       "players": [
         {
@@ -6197,7 +6197,7 @@
       ]
     },
     "POR": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/roster",
       "players": [
         {
@@ -6469,7 +6469,7 @@
       ]
     },
     "SAC": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/roster",
       "players": [
         {
@@ -6720,7 +6720,7 @@
       ]
     },
     "PHX": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/roster",
       "players": [
         {
@@ -7027,7 +7027,7 @@
       ]
     },
     "TOR": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/roster",
       "players": [
         {
@@ -7327,7 +7327,7 @@
       ]
     },
     "SAS": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/roster",
       "players": [
         {
@@ -7613,7 +7613,7 @@
       ]
     },
     "WAS": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/roster",
       "players": [
         {
@@ -7878,7 +7878,7 @@
       ]
     },
     "UTA": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster",
       "players": [
         {
@@ -8164,7 +8164,7 @@
       ]
     },
     "NOP": {
-      "fetchedAt": "2026-09-19T06:31:14.937Z",
+      "fetchedAt": "2026-09-20T07:06:34.868Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/roster",
       "players": [
         {
