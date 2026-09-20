@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-19T23:39:24.442Z",
+  "generated": "2026-09-20T01:41:51.437Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -68,7 +68,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-18 (1 day(s) ago)",
+                "label": "newest listing dated 2026-09-18 (2 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -170,7 +170,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-17 (2 day(s) ago)",
+                "label": "newest listing dated 2026-09-17 (3 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -272,7 +272,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-17 (2 day(s) ago)",
+                "label": "newest listing dated 2026-09-17 (3 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -374,7 +374,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-14 (5 day(s) ago)",
+                "label": "newest listing dated 2026-09-14 (6 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -476,7 +476,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-11 (8 day(s) ago)",
+                "label": "newest listing dated 2026-09-11 (9 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -578,7 +578,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-11 (8 day(s) ago)",
+                "label": "newest listing dated 2026-09-11 (9 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -676,7 +676,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (9 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (10 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -776,7 +776,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (9 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (10 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -878,7 +878,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (9 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (10 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -980,7 +980,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-09 (10 day(s) ago)",
+                "label": "newest listing dated 2026-09-09 (11 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1082,7 +1082,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-07 (12 day(s) ago)",
+                "label": "newest listing dated 2026-09-07 (13 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1184,7 +1184,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-04 (15 day(s) ago)",
+                "label": "newest listing dated 2026-09-04 (16 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1286,7 +1286,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (17 day(s) ago)",
+                "label": "newest listing dated 2026-09-02 (18 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1388,7 +1388,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (17 day(s) ago)",
+                "label": "newest listing dated 2026-09-02 (18 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1490,7 +1490,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (17 day(s) ago)",
+                "label": "newest listing dated 2026-09-02 (18 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1592,7 +1592,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-26 (24 day(s) ago)",
+                "label": "newest listing dated 2026-08-26 (25 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1690,7 +1690,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-25 (25 day(s) ago)",
+                "label": "newest listing dated 2026-08-25 (26 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1792,7 +1792,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-24 (26 day(s) ago)",
+                "label": "newest listing dated 2026-08-24 (27 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1890,7 +1890,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-24 (26 day(s) ago)",
+                "label": "newest listing dated 2026-08-24 (27 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1988,7 +1988,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-19 (31 day(s) ago)",
+                "label": "newest listing dated 2026-08-19 (32 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2090,7 +2090,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-14 (36 day(s) ago)",
+                "label": "newest listing dated 2026-08-14 (37 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2192,7 +2192,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-05 (45 day(s) ago)",
+                "label": "newest listing dated 2026-08-05 (46 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2294,7 +2294,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-31 (50 day(s) ago)",
+                "label": "newest listing dated 2026-07-31 (51 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2396,7 +2396,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-30 (51 day(s) ago)",
+                "label": "newest listing dated 2026-07-30 (52 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2494,7 +2494,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-30 (51 day(s) ago)",
+                "label": "newest listing dated 2026-07-30 (52 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2596,7 +2596,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-28 (53 day(s) ago)",
+                "label": "newest listing dated 2026-07-28 (54 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2698,7 +2698,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-27 (54 day(s) ago)",
+                "label": "newest listing dated 2026-07-27 (55 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2800,7 +2800,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-27 (54 day(s) ago)",
+                "label": "newest listing dated 2026-07-27 (55 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2902,7 +2902,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-25 (56 day(s) ago)",
+                "label": "newest listing dated 2026-07-25 (57 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3004,7 +3004,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-22 (59 day(s) ago)",
+                "label": "newest listing dated 2026-07-22 (60 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3106,7 +3106,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-20 (61 day(s) ago)",
+                "label": "newest listing dated 2026-07-20 (62 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3208,7 +3208,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-20 (61 day(s) ago)",
+                "label": "newest listing dated 2026-07-20 (62 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3308,7 +3308,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3408,7 +3408,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3508,7 +3508,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3610,7 +3610,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3712,7 +3712,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3814,7 +3814,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3910,7 +3910,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4012,7 +4012,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4114,7 +4114,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (64 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4214,7 +4214,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (64 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4316,7 +4316,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (64 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4418,7 +4418,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (64 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4520,7 +4520,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-17 (64 day(s) ago)",
+                "label": "newest listing dated 2026-07-17 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4620,7 +4620,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-17 (64 day(s) ago)",
+                "label": "newest listing dated 2026-07-17 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4722,7 +4722,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-15 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-15 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4822,7 +4822,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-13 (68 day(s) ago)",
+                "label": "newest listing dated 2026-07-13 (69 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4922,7 +4922,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-08 (73 day(s) ago)",
+                "label": "newest listing dated 2026-07-08 (74 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5024,7 +5024,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (80 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (81 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5126,7 +5126,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (80 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (81 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5228,7 +5228,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (80 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (81 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5330,7 +5330,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-06-30 (81 day(s) ago)",
+                "label": "newest listing dated 2026-06-30 (82 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5432,7 +5432,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-06-29 (82 day(s) ago)",
+                "label": "newest listing dated 2026-06-29 (83 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -7504,19 +7504,12 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nba.com": {
+      "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
+        "name": "Philadelphia 76ers — official",
         "kind": "official-team",
-        "team": "POR"
+        "team": "PHI"
       },
       "nuggets.bsky.social": {
         "ok": true,
@@ -7525,12 +7518,19 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "sixersnba.bsky.social": {
+      "trailblazers.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Philadelphia 76ers — official",
+        "name": "Portland Trail Blazers — official",
         "kind": "official-team",
-        "team": "PHI"
+        "team": "POR"
+      },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "samvecenie.bsky.social": {
         "ok": true,
@@ -7567,19 +7567,19 @@
         "kind": "reporter",
         "team": "SAS"
       },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
-        "kind": "reporter",
-        "team": null
-      },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Jeff McDonald",
         "kind": "reporter",
         "team": "SAS"
+      },
+      "tomhaberstroh.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tom Haberstroh",
+        "kind": "reporter",
+        "team": null
       },
       "nbasarah.bsky.social": {
         "ok": true,
@@ -7588,19 +7588,19 @@
         "kind": "reporter",
         "team": "MIN"
       },
-      "omarisankofa.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Omari Sankofa II",
-        "kind": "reporter",
-        "team": "DET"
-      },
       "kyleneubeck.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Kyle Neubeck",
         "kind": "reporter",
         "team": "PHI"
+      },
+      "omarisankofa.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Omari Sankofa II",
+        "kind": "reporter",
+        "team": "DET"
       },
       "jonkrawczynski.bsky.social": {
         "ok": true,
@@ -7623,19 +7623,19 @@
         "kind": "reporter",
         "team": "WAS"
       },
-      "jlewenberg.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Josh Lewenberg",
-        "kind": "reporter",
-        "team": "TOR"
-      },
       "lawmurraythenu.bsky.social": {
         "ok": true,
         "count": 6,
         "name": "Law Murray",
         "kind": "reporter",
         "team": "LAC"
+      },
+      "jlewenberg.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Josh Lewenberg",
+        "kind": "reporter",
+        "team": "TOR"
       },
       "jimowczarski.bsky.social": {
         "ok": true,
@@ -7651,19 +7651,19 @@
         "kind": "reporter",
         "team": "ORL"
       },
-      "ejelite1.bsky.social": {
-        "ok": true,
-        "count": 8,
-        "name": "Ethan Sands",
-        "kind": "reporter",
-        "team": "CLE"
-      },
       "jameshamnba.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "James Ham",
         "kind": "reporter",
         "team": "SAC"
+      },
+      "ejelite1.bsky.social": {
+        "ok": true,
+        "count": 8,
+        "name": "Ethan Sands",
+        "kind": "reporter",
+        "team": "CLE"
       },
       "btrowland.bsky.social": {
         "ok": true,
@@ -7728,19 +7728,19 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "anthonyvslater.bsky.social": {
-        "ok": true,
-        "count": 9,
-        "name": "Anthony Slater",
-        "kind": "reporter",
-        "team": "GSW"
-      },
       "ryanblackburn.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Ryan Blackburn",
         "kind": "reporter",
         "team": "DEN"
+      },
+      "anthonyvslater.bsky.social": {
+        "ok": true,
+        "count": 9,
+        "name": "Anthony Slater",
+        "kind": "reporter",
+        "team": "GSW"
       },
       "danielle-lerner.bsky.social": {
         "ok": true,
@@ -7770,19 +7770,19 @@
         "kind": "reporter",
         "team": null
       },
-      "andrewschlecht.bsky.social": {
-        "ok": true,
-        "count": 6,
-        "name": "Andrew Schlecht",
-        "kind": "reporter",
-        "team": "OKC"
-      },
       "fredkatz.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Fred Katz",
         "kind": "reporter",
         "team": "NYK"
+      },
+      "andrewschlecht.bsky.social": {
+        "ok": true,
+        "count": 6,
+        "name": "Andrew Schlecht",
+        "kind": "reporter",
+        "team": "OKC"
       },
       "jledwardsiii.bsky.social": {
         "ok": true,
@@ -7819,13 +7819,6 @@
         "kind": "reporter",
         "team": "BKN"
       },
-      "olehkosel.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Oleh Kosel",
-        "kind": "reporter",
-        "team": "NOP"
-      },
       "fearthebrown.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7840,12 +7833,12 @@
         "kind": "reporter",
         "team": "HOU"
       },
-      "montepoole.bsky.social": {
+      "olehkosel.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Monte Poole",
+        "name": "Oleh Kosel",
         "kind": "reporter",
-        "team": "GSW"
+        "team": "NOP"
       },
       "jasonlloyd.bsky.social": {
         "ok": true,
@@ -7860,6 +7853,13 @@
         "name": "Bennett Durando",
         "kind": "reporter",
         "team": "DEN"
+      },
+      "montepoole.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Monte Poole",
+        "kind": "reporter",
+        "team": "GSW"
       },
       "grantafseth.bsky.social": {
         "ok": true,
@@ -7882,17 +7882,17 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "mfollowill.bsky.social": {
-        "ok": true,
-        "count": 4,
-        "name": "Mark Followill",
-        "kind": "reporter",
-        "team": "DAL"
-      },
       "nickvanexit.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Nick Angstadt",
+        "kind": "reporter",
+        "team": "DAL"
+      },
+      "mfollowill.bsky.social": {
+        "ok": true,
+        "count": 4,
+        "name": "Mark Followill",
         "kind": "reporter",
         "team": "DAL"
       },
@@ -7910,13 +7910,6 @@
         "kind": "reporter",
         "team": "CHA"
       },
-      "chrisherrington.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Chris Herrington",
-        "kind": "reporter",
-        "team": "MEM"
-      },
       "nolajake.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7924,17 +7917,24 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "saltcityhoops.bsky.social": {
+      "chrisherrington.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Salt City Hoops",
+        "name": "Chris Herrington",
         "kind": "reporter",
-        "team": "UTA"
+        "team": "MEM"
       },
       "andyblarsen.bsky.social": {
         "ok": true,
         "count": 5,
         "name": "Andy Larsen",
+        "kind": "reporter",
+        "team": "UTA"
+      },
+      "saltcityhoops.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Salt City Hoops",
         "kind": "reporter",
         "team": "UTA"
       },
@@ -7952,12 +7952,12 @@
         "kind": "reporter",
         "team": "ORL"
       },
-      "michaelgrangenba.bsky.social": {
+      "hunterpatterson.bsky.social": {
         "ok": true,
-        "count": 1,
-        "name": "Michael Grange",
+        "count": 0,
+        "name": "Hunter Patterson",
         "kind": "reporter",
-        "team": "TOR"
+        "team": "DET"
       },
       "ginamizell.bsky.social": {
         "ok": true,
@@ -7966,13 +7966,6 @@
         "kind": "reporter",
         "team": "PHI"
       },
-      "hunterpatterson.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Hunter Patterson",
-        "kind": "reporter",
-        "team": "DET"
-      },
       "christopherhine.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7980,12 +7973,12 @@
         "kind": "reporter",
         "team": "PHI"
       },
-      "rodwalkernola.bsky.social": {
+      "michaelgrangenba.bsky.social": {
         "ok": true,
-        "count": 4,
-        "name": "Rod Walker",
+        "count": 1,
+        "name": "Michael Grange",
         "kind": "reporter",
-        "team": "NOP"
+        "team": "TOR"
       },
       "lucaskaplan.bsky.social": {
         "ok": true,
@@ -7993,6 +7986,13 @@
         "name": "Lucas Kaplan",
         "kind": "reporter",
         "team": "BKN"
+      },
+      "rodwalkernola.bsky.social": {
+        "ok": true,
+        "count": 4,
+        "name": "Rod Walker",
+        "kind": "reporter",
+        "team": "NOP"
       },
       "masonginsberg.bsky.social": {
         "ok": true,
@@ -8015,13 +8015,6 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "britishbuzz.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "James Plowright",
-        "kind": "reporter",
-        "team": "CHA"
-      },
       "caitlinmaycooper.bsky.social": {
         "ok": true,
         "count": 0,
@@ -8029,12 +8022,12 @@
         "kind": "reporter",
         "team": "IND"
       },
-      "chasedcsports.bsky.social": {
+      "britishbuzz.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Chase Hughes",
+        "name": "James Plowright",
         "kind": "reporter",
-        "team": "WAS"
+        "team": "CHA"
       },
       "millerjryan.bsky.social": {
         "ok": true,
@@ -8042,6 +8035,13 @@
         "name": "Ryan Miller",
         "kind": "reporter",
         "team": "UTA"
+      },
+      "chasedcsports.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Chase Hughes",
+        "kind": "reporter",
+        "team": "WAS"
       },
       "stevepopper.bsky.social": {
         "ok": true,
