@@ -507,29 +507,70 @@ const App = (() => {
     refresh(true).then(() => startPolling());
   }
 
+  function snapshotAgeText(generatedIso, nowMs) {
+    if (!generatedIso) return null;
+    const t = Date.parse(generatedIso);
+    if (!Number.isFinite(t)) return null;
+    const now = Number.isFinite(nowMs) ? nowMs : Date.now();
+    const ms = now - t;
+    if (ms < 0) return "fresh";
+    const hours = ms / 3600000;
+    const days = ms / 86400000;
+    if (days >= 1) return Math.floor(days) + "d " + Math.floor(hours % 24) + "h ago";
+    if (hours >= 1) return Math.floor(hours) + "h " + Math.floor((ms % 3600000) / 60000) + "m ago";
+    return Math.floor(ms / 60000) + "m ago";
+  }
+
   function renderSeasonClock() {
     const el = document.getElementById("seasonClock");
     if (!el || typeof seasonClock !== "function") return;
     const clock = seasonClock();
     const esc = AlertEngine.escapeHtml;
+    const nowMs = Date.now();
     const next = clock.next;
+    const todayEvents = (clock.events || []).filter(e => e.state === "today");
+    const todayBanner = todayEvents.length
+      ? ('<div class="today-banner">🔴 LIVE TODAY — ' + todayEvents.map(e => esc(e.label)).join(" · ") +
+         ' <span class="pill today" style="margin-left:6px">TODAY</span></div>')
+      : "";
     const nextBit = next
-      ? ('<b>' + esc(next.label) + '</b> in <b>' + next.days + '</b> day' + (next.days === 1 ? "" : "s") +
-         ' <span class="tiny muted">(' + esc(next.at) + ')</span>')
+      ? (next.days === 0
+        ? ('<b>🔴 ' + esc(next.label) + '</b> — <span class="today-badge">LIVE TODAY</span> <span class="tiny muted">(' + esc(next.at) + ')</span>')
+        : ('<b>' + esc(next.label) + '</b> in <b>' + next.days + '</b> day' + (next.days === 1 ? "" : "s") +
+           ' <span class="tiny muted">(' + esc(next.at) + ')</span>'))
       : '<span class="muted">No upcoming dated gate in the calendar.</span>';
     const events = (clock.events || []).map(e => {
-      const cls = e.state === "today" ? "ok" : e.state === "upcoming" ? "" : "muted";
+      let cls = e.state === "today" ? "today" : e.state === "upcoming" ? "" : "dim";
       const when = e.days == null ? "" : e.days === 0 ? "today" : e.days > 0 ? ("in " + e.days + "d") : (Math.abs(e.days) + "d ago");
       const href = (e.sources && e.sources[0] && e.sources[0].url) || "";
+      const todayTag = e.state === "today" ? ' <span class="today-badge sm">TODAY</span>' : "";
       return '<span class="pill ' + cls + '">' + (href ? '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(e.label) + ' ↗</a>' : esc(e.label)) +
-        ' · ' + esc(when) + '</span>';
+        ' · ' + esc(when) + todayTag + '</span>';
     }).join("");
     const conflict = (clock.conflicts || []).map(c =>
       '<div class="tiny muted">⚠ Tip-time conflict kept visible: ' + esc(c.a) + ' vs ' + esc(c.b) + ' — ' + esc(c.action) + '</div>'
     ).join("");
-    el.innerHTML = '<div class="season-clock-next">📅 ' + nextBit +
+    let snapGen = null;
+    try {
+      if (typeof InjuryBoard !== "undefined" && InjuryBoard.lastSnapshotMeta) snapGen = InjuryBoard.lastSnapshotMeta().generated;
+      else if (typeof window !== "undefined" && window.__LIVE_SNAPSHOT_GENERATED) snapGen = window.__LIVE_SNAPSHOT_GENERATED;
+    } catch (e2) {}
+    const age = snapGen ? snapshotAgeText(snapGen, nowMs) : null;
+    const stale = age && snapGen && (nowMs - Date.parse(snapGen)) > 24 * 3600000;
+    const staleLine = age
+      ? ('<div class="tiny ' + (stale ? 'bad' : 'muted') + '" style="margin-top:6px">' +
+         (stale ? '⚠ Snapshot stale — ' : 'Snapshot age — ') + esc(age) + ' (generated ' + esc(snapGen) + ')' +
+         (stale ? ' · <a href="https://github.com/buffedlizard55-lab/NBAInjuryReport/actions" target="_blank" rel="noopener">check Actions run ↗</a>' : '') +
+         '</div>')
+      : "";
+    el.innerHTML = todayBanner + '<div class="season-clock-next">📅 ' + nextBit +
       ' <span class="tiny muted">· calendar re-read ' + esc(clock.checkedAt) + '</span></div>' +
-      '<div class="pill-row" style="margin-top:8px">' + events + '</div>' + conflict;
+      '<div class="pill-row" style="margin-top:8px">' + events + '</div>' + staleLine + conflict;
+    const staleEl = document.getElementById("snapshotStaleness");
+    if (staleEl) {
+      if (age) staleEl.innerHTML = (stale ? '⚠ <span class="bad">Snapshot stale</span> — ' : '') + 'Snapshot generated ' + esc(snapGen) + ' (' + esc(age) + ')';
+      else staleEl.textContent = "";
+    }
   }
 
   /* The dashboard's one-line view of the second verification layer. Computed from arenaCoverage()

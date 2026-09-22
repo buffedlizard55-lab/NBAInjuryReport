@@ -693,6 +693,8 @@ const InjuryBoard = (function () {
 
   function resetSeen() { saveBaseline([], Date.now()); return true; }
 
+  function lastSnapshotMeta() { return { generated: fetchedAt, path: path, season: season, count: rows.length }; }
+
   return {
     check: check, normalize: normalize, diffAlerts: diffAlerts, render: render,
     fetchBoard: fetchBoard, resetSeen: resetSeen, getRows: () => rows, fp: fp,
@@ -701,6 +703,6 @@ const InjuryBoard = (function () {
     renderImpactWatch: renderImpactWatch,
     travelLine: travelLine, getImpactFilter: () => boardImpactFilter,
     alertFor: alertFor, setSearch: setSearch, setStatusFilter: setStatusFilter, setImpactFilter: setImpactFilter, setView: setView, getView: getView, resetFilter: resetFilter,
-    fingerprint: fp, getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, season: season, count: rows.length })
+    fingerprint: fp, getMeta: () => ({ path: path, error: error, fetchedAt: fetchedAt, season: season, count: rows.length }), lastSnapshotMeta: lastSnapshotMeta
   };
 })();
