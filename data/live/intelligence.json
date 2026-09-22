@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-22T20:04:46.535Z",
-  "inputGenerated": "2026-09-22T20:04:42.179Z",
+  "generated": "2026-09-22T22:55:32.871Z",
+  "inputGenerated": "2026-09-22T22:55:24.400Z",
   "inputFresh": true,
   "claims": {
     "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3mqpt2qmdd22q": {
@@ -2858,6 +2858,25 @@
       "bskyVerified": true,
       "outcome": "pending",
       "note": "Awaiting game-scoped official evidence; no score from silence."
+    },
+    "at://did:plc:6ahv2jk7wea2fql74oiisng6/app.bsky.feed.post/3mw5cc6dhz22e": {
+      "uri": "at://did:plc:6ahv2jk7wea2fql74oiisng6/app.bsky.feed.post/3mw5cc6dhz22e",
+      "handle": "scottagness.bsky.social",
+      "name": "Scott Agness",
+      "text": "Minnesota Lynx rookie Olivia Miles has been downgraded from questionable to OUT tonight in Indy due to a left calf injury.\n\nFever-Lynx play a Tue/Thu home-and-home to conclude the regular season. Seeding on the line.",
+      "url": "https://bsky.app/profile/scottagness.bsky.social/post/3mw5cc6dhz22e",
+      "textSha256": "e789c4de3ffd109e5be11f64e9e8b09993cdcb7d974364bdb0206245491f377a",
+      "postedAt": "2026-09-22T22:41:12.108Z",
+      "firstObservedAt": "2026-09-22T22:55:32.871Z",
+      "player": null,
+      "playerId": null,
+      "team": null,
+      "status": "Out",
+      "inGameWatch": false,
+      "identityVerifiedAtCollection": true,
+      "bskyVerified": false,
+      "outcome": "pending",
+      "note": "Player unresolved or multiple players; not auto-scored."
     }
   },
   "scores": [
@@ -3480,6 +3499,20 @@
     {
       "handle": "ryanblackburn.bsky.social",
       "name": "Ryan Blackburn",
+      "observed": 1,
+      "corroborated": 0,
+      "conflicts": 0,
+      "boardAgree": 0,
+      "boardConflicts": 0,
+      "pending": 1,
+      "resolved": 0,
+      "forwardScore": 0,
+      "agreementRate": null,
+      "accuracy": null
+    },
+    {
+      "handle": "scottagness.bsky.social",
+      "name": "Scott Agness",
       "observed": 1,
       "corroborated": 0,
       "conflicts": 0,
