@@ -115,6 +115,18 @@ check("seasonClock on 2026-09-19 is 3 days to overseas camp, 31 to opening night
   if (!c.next || c.next.id !== "camp-overseas") throw new Error("next=" + (c.next && c.next.id));
   if (!c.conflicts.length) throw new Error("tip-time conflict missing");
 });
+check("seasonClock on 2026-09-22 overseas camp is today (0 days), preseason in 11, opening night in 28", () => {
+  const c = M.seasonClock(Date.parse("2026-09-22T12:00:00Z"));
+  const camp = c.events.find(e => e.id === "camp-overseas");
+  const campLeague = c.events.find(e => e.id === "camp-league");
+  const pre = c.events.find(e => e.id === "preseason");
+  const open = c.events.find(e => e.id === "opening-night");
+  if (!camp || camp.days !== 0 || camp.state !== "today") throw new Error("camp-overseas days=" + (camp && camp.days) + " state=" + (camp && camp.state));
+  if (!campLeague || campLeague.days !== 7) throw new Error("camp-league days=" + (campLeague && campLeague.days));
+  if (!pre || pre.days !== 11) throw new Error("preseason days=" + (pre && pre.days));
+  if (!open || open.days !== 28) throw new Error("opening-night days=" + (open && open.days));
+  if (!c.next || c.next.id !== "camp-overseas") throw new Error("next=" + (c.next && c.next.id) + " should be camp-overseas on its opening day");
+});
 check("index.html carries the season clock, 30-team strip and reporter scorecard",
   (() => {
     const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
@@ -793,9 +805,26 @@ console.log("== in-arena expansion: what the live social layer actually polls ==
     })());
   check("no session-14 row claims a NEWER post date than the live read that recorded it",
     (() => {
+      // Rows added on 2026-09-19 originally had latestPostAt <= that day, but the
+      // recency backfill (tools/backfill_registry_recency.js) later updated many of
+      // them with newer measurements from data/live/reporter_verify.json (generated
+      // 2026-09-21). The honest bound is the evidence file's timestamp when the row
+      // was backfilled (latestPostAtSource === "data/live/reporter_verify.json");
+      // only non-backfilled rows are still bounded by the original checkedAt day.
+      let evidenceLimit = Date.parse("2026-09-19T23:59:59Z");
+      try {
+        const ev = JSON.parse(fs.readFileSync(path.join(ROOT, "data/live/reporter_verify.json"), "utf8"));
+        if (ev && ev.generated) evidenceLimit = Date.parse(ev.generated);
+      } catch (e) {}
       const day = "2026-09-19";
       return M.BSKY_REPORTERS.filter(r => r.observed && r.observed.checkedAt === day)
-        .every(r => !r.observed.latestPostAt || Date.parse(r.observed.latestPostAt) <= Date.parse("2026-09-19T23:59:59Z"));
+        .every(r => {
+          if (!r.observed.latestPostAt) return true;
+          const ts = Date.parse(r.observed.latestPostAt);
+          if (Number.isNaN(ts)) return false;
+          if (r.observed.latestPostAtSource === "data/live/reporter_verify.json") return ts <= evidenceLimit;
+          return ts <= Date.parse("2026-09-19T23:59:59Z");
+        });
     })());
   /* The three paid/closed platforms are registered WITH their cost flag and with wording that says
    * they are not wired into alerts — a source row that quietly looked like a working feed is how a

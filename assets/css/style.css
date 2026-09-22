@@ -79,6 +79,19 @@ nav.links a:hover, nav.links a.active { color: var(--text); background: var(--ca
  * activity numbers are NOT from CI — rendered in ordinary body colour. Found by the prefix+class
  * audit in tools/integration_test.js, not by looking. */
 .pill.dim { color: var(--muted); border-color: var(--line); opacity: 0.85; }
+/* 2026-09-22 (session 22): camp opens TODAY — needs a distinct badge, not the generic warn/green. */
+.pill.today { color: #fff; background: linear-gradient(90deg, rgba(255,93,93,.9), rgba(255,93,93,.65)); border-color: rgba(255,93,93,.9); box-shadow: 0 0 8px rgba(255,93,93,.35); animation: pulse 1.8s infinite; }
+.today-banner {
+  background: linear-gradient(90deg, rgba(255,93,93,.12), rgba(255,93,93,.04));
+  border: 1px solid rgba(255,93,93,.4); border-radius: 10px;
+  padding: 10px 12px; margin-bottom: 10px; font-weight: 700; color: #ffa8a8;
+}
+.today-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: rgba(255,93,93,.16); color: #ffa8a8; border: 1px solid rgba(255,93,93,.4);
+  padding: 1px 7px; border-radius: 999px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.4px;
+}
+.today-badge.sm { font-size: 0.64rem; padding: 1px 6px; }
 
 /* Cards & grid */
 .grid { display: grid; gap: 16px; margin-top: 18px; }
