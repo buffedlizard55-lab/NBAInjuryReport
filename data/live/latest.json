@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-20T12:20:59.764Z",
+  "generated": "2026-09-22T07:07:51.244Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -11,6 +11,319 @@
       "displayName": "2026-27"
     },
     "rows": [
+      {
+        "id": "-57577",
+        "player": "Henri Veesaar",
+        "playerId": "5105571",
+        "position": "C",
+        "team": "ATL",
+        "teamName": "Atlanta Hawks",
+        "status": "Out",
+        "sev": "out",
+        "sevLabel": "OUT",
+        "updated": "2026-09-21T19:50Z",
+        "returnDate": "2027-07-01",
+        "fantasyStatus": "OFS",
+        "injuryType": "Knee",
+        "injuryLocation": "Leg",
+        "injurySide": "Right",
+        "bodyPart": "Right Knee Leg",
+        "shortComment": "Veesaar was diagnosed with a torn right ACL and is expected to miss the 2026-27 season, the Hawks announced Monday.",
+        "longComment": "Veesaar suffered the injury during a workout on Sept. 15, and an MRI confirmed the diagnosis. The No. 52 overall pick in the 2026 NBA Draft, Veesaar was expected to spend a lot of time with Atlanta's G League affiliate this season.",
+        "noteHeadline": null,
+        "noteText": null,
+        "noteDate": null,
+        "noteSource": null,
+        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/5105571.png",
+        "playerUrl": "https://www.espn.com/nba/player/_/id/5105571/henri-veesaar",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/atl",
+        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+        "searchUrl": "https://x.com/search?q=Henri%20Veesaar%20injury",
+        "fp": "Out|Right Knee Leg|2027-07-01|OFS",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 45,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-21 (1 day(s) ago)",
+                "pts": 15,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-05T23:00Z",
+          "opponent": "MEM",
+          "homeAway": "home",
+          "venue": "State Farm Arena",
+          "city": "Atlanta",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule"
+        },
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-21"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster",
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
+        ]
+      },
+      {
+        "id": "532644",
+        "player": "Trae Young",
+        "playerId": "4277905",
+        "position": "G",
+        "team": "WAS",
+        "teamName": "Washington Wizards",
+        "status": "Day-To-Day",
+        "sev": "questionable",
+        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+        "updated": "2026-09-21T18:19Z",
+        "returnDate": "2026-10-01",
+        "fantasyStatus": "GTD",
+        "injuryType": "Quadriceps",
+        "injuryLocation": "Leg",
+        "injurySide": "Right",
+        "bodyPart": "Right Quadriceps Leg",
+        "shortComment": "Young (quadriceps) has been doing sand-dune workouts during the offseason, and his trainer discussed the guard's outlook and leadership criticism Monday, Mark Medina of RG reports.",
+        "longComment": "With Young limited to 15 regular-season appearances in 2025-26 due to injuries, any sign of offseason rehab progress is notable. This report points to active conditioning work after his quadriceps issue, though it does not provide a return timeline or formal clearance update ahead of training camp for Washington.",
+        "noteHeadline": null,
+        "noteText": null,
+        "noteDate": null,
+        "noteSource": null,
+        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4277905.png",
+        "playerUrl": "https://www.espn.com/nba/player/_/id/4277905/trae-young",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
+        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+        "searchUrl": "https://x.com/search?q=Trae%20Young%20injury",
+        "fp": "Day-To-Day|Right Quadriceps Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 45,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-21 (1 day(s) ago)",
+                "pts": 15,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-08T23:30Z",
+          "opponent": "NYK",
+          "homeAway": "away",
+          "venue": "Madison Square Garden",
+          "city": "New York",
+          "restDays": null,
+          "miles": 203,
+          "hours": 4.5,
+          "mode": "ground (model)",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-21"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/roster",
+        "salaryCurrent": 48967380,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
+        ]
+      },
+      {
+        "id": "532643",
+        "player": "Jalen Williams",
+        "playerId": "4593803",
+        "position": "G",
+        "team": "OKC",
+        "teamName": "Oklahoma City Thunder",
+        "status": "Day-To-Day",
+        "sev": "questionable",
+        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+        "updated": "2026-09-21T18:17Z",
+        "returnDate": "2026-10-01",
+        "fantasyStatus": "GTD",
+        "injuryType": "Hamstring",
+        "injuryLocation": "Leg",
+        "injurySide": "Left",
+        "bodyPart": "Left Hamstring Leg",
+        "shortComment": "Williams said he has \"enthusiasm\" for the 2026-27 season after dealing with injuries, according to Justin Martinez of the Thunder Wire.",
+        "longComment": "Williams was limited to 33 regular-season appearances during the 2025-26 campaign while dealing with four separate hamstring strains, and he appeared in only five playoff contests. The All-NBA forward said he's been working out for \"basically a year without playing\" and is eager to get back on the court, though there hasn't been an official update regarding his health entering training camp.",
+        "noteHeadline": null,
+        "noteText": null,
+        "noteDate": null,
+        "noteSource": null,
+        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4593803.png",
+        "playerUrl": "https://www.espn.com/nba/player/_/id/4593803/jalen-williams",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/okc",
+        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+        "searchUrl": "https://x.com/search?q=Jalen%20Williams%20injury",
+        "fp": "Day-To-Day|Left Hamstring Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected · in-game exit reported (unconfirmed)",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 63.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-21 (1 day(s) ago)",
+                "pts": 15,
+                "max": 15
+              },
+              {
+                "key": "reportedExit",
+                "label": "in-game exit reported by a monitored account (unconfirmed — not a league designation)",
+                "pts": 30,
+                "max": 30
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-07T00:00Z",
+          "opponent": "NOP",
+          "homeAway": "home",
+          "venue": "BOK Center",
+          "city": "Tulsa",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-21"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
+        "salaryCurrent": 41500000,
+        "salarySeason": 2027,
+        "inGameExitReported": {
+          "at": "2026-05-21T02:02:33.541Z",
+          "by": "Rylan Stiles",
+          "url": "https://bsky.app/profile/rylanstiles.bsky.social/post/3mmddb5pz3y2s",
+          "status": "reported-unconfirmed"
+        },
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "An in-game exit was reported by a monitored account (not a league designation) — see the linked post.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
+        ]
+      },
       {
         "id": "532626",
         "player": "Jalen Brunson",
@@ -68,7 +381,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-18 (2 day(s) ago)",
+                "label": "newest listing dated 2026-09-18 (4 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -170,7 +483,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-17 (3 day(s) ago)",
+                "label": "newest listing dated 2026-09-17 (5 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -272,7 +585,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-17 (3 day(s) ago)",
+                "label": "newest listing dated 2026-09-17 (5 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -364,7 +677,7 @@
             "parts": []
           },
           "recurrence": {
-            "score": 45,
+            "score": 33.3,
             "parts": [
               {
                 "key": "cadence",
@@ -374,8 +687,8 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-14 (6 day(s) ago)",
-                "pts": 15,
+                "label": "newest listing dated 2026-09-14 (8 day(s) ago)",
+                "pts": 8,
                 "max": 15
               }
             ]
@@ -476,7 +789,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-11 (9 day(s) ago)",
+                "label": "newest listing dated 2026-09-11 (11 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -578,7 +891,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-11 (9 day(s) ago)",
+                "label": "newest listing dated 2026-09-11 (11 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -676,7 +989,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (10 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (12 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -776,7 +1089,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (10 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (12 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -878,7 +1191,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (10 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (12 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -980,7 +1293,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-09 (11 day(s) ago)",
+                "label": "newest listing dated 2026-09-09 (13 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1082,7 +1395,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-07 (13 day(s) ago)",
+                "label": "newest listing dated 2026-09-07 (15 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1184,7 +1497,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-04 (16 day(s) ago)",
+                "label": "newest listing dated 2026-09-04 (18 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1286,7 +1599,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (18 day(s) ago)",
+                "label": "newest listing dated 2026-09-02 (20 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1388,7 +1701,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (18 day(s) ago)",
+                "label": "newest listing dated 2026-09-02 (20 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1490,7 +1803,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (18 day(s) ago)",
+                "label": "newest listing dated 2026-09-02 (20 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1592,7 +1905,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-26 (25 day(s) ago)",
+                "label": "newest listing dated 2026-08-26 (27 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1690,7 +2003,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-25 (26 day(s) ago)",
+                "label": "newest listing dated 2026-08-25 (28 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1792,7 +2105,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-24 (27 day(s) ago)",
+                "label": "newest listing dated 2026-08-24 (29 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1890,7 +2203,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-24 (27 day(s) ago)",
+                "label": "newest listing dated 2026-08-24 (29 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1988,7 +2301,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-19 (32 day(s) ago)",
+                "label": "newest listing dated 2026-08-19 (34 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2090,7 +2403,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-14 (37 day(s) ago)",
+                "label": "newest listing dated 2026-08-14 (39 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2192,7 +2505,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-05 (46 day(s) ago)",
+                "label": "newest listing dated 2026-08-05 (48 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2294,7 +2607,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-31 (51 day(s) ago)",
+                "label": "newest listing dated 2026-07-31 (53 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2396,7 +2709,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-30 (52 day(s) ago)",
+                "label": "newest listing dated 2026-07-30 (54 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2494,7 +2807,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-30 (52 day(s) ago)",
+                "label": "newest listing dated 2026-07-30 (54 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2596,7 +2909,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-28 (54 day(s) ago)",
+                "label": "newest listing dated 2026-07-28 (56 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2698,7 +3011,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-27 (55 day(s) ago)",
+                "label": "newest listing dated 2026-07-27 (57 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2800,7 +3113,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-27 (55 day(s) ago)",
+                "label": "newest listing dated 2026-07-27 (57 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2902,7 +3215,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-25 (57 day(s) ago)",
+                "label": "newest listing dated 2026-07-25 (59 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3004,7 +3317,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-22 (60 day(s) ago)",
+                "label": "newest listing dated 2026-07-22 (62 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3106,7 +3419,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-20 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-20 (64 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3208,7 +3521,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-20 (62 day(s) ago)",
+                "label": "newest listing dated 2026-07-20 (64 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3308,7 +3621,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3408,7 +3721,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3508,7 +3821,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3610,7 +3923,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3712,7 +4025,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3814,7 +4127,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3910,7 +4223,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4012,7 +4325,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (65 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4114,7 +4427,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (64 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (66 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4214,7 +4527,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (64 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (66 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4316,7 +4629,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (64 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (66 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4418,7 +4731,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (64 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (66 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4520,7 +4833,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-17 (65 day(s) ago)",
+                "label": "newest listing dated 2026-07-17 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4620,7 +4933,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-17 (65 day(s) ago)",
+                "label": "newest listing dated 2026-07-17 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4722,7 +5035,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-15 (67 day(s) ago)",
+                "label": "newest listing dated 2026-07-15 (69 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4822,7 +5135,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-13 (69 day(s) ago)",
+                "label": "newest listing dated 2026-07-13 (71 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4922,7 +5235,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-08 (74 day(s) ago)",
+                "label": "newest listing dated 2026-07-08 (76 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5024,7 +5337,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (81 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (83 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5126,7 +5439,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (81 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (83 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5228,7 +5541,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (81 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (83 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5330,7 +5643,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-06-30 (82 day(s) ago)",
+                "label": "newest listing dated 2026-06-30 (84 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5432,7 +5745,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-06-29 (83 day(s) ago)",
+                "label": "newest listing dated 2026-06-29 (85 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -6314,207 +6627,6 @@
         "salarySeason": 2027,
         "impactNotes": [
           "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
-        "id": "530951",
-        "player": "Trae Young",
-        "playerId": "4277905",
-        "position": "G",
-        "team": "WAS",
-        "teamName": "Washington Wizards",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-06-22T18:50Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Quadriceps",
-        "injuryLocation": "Leg",
-        "injurySide": "Right",
-        "bodyPart": "Right Quadriceps Leg",
-        "shortComment": "Young (quadriceps) plans to sign a four-year, $212 million deal with the Wizards, Shams Charania of ESPN reports.",
-        "longComment": "Young declined his $49 million player option and was initially going to test the waters in free agency.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4277905.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/4277905/trae-young",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/wsh",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Trae%20Young%20injury",
-        "fp": "Day-To-Day|Right Quadriceps Leg|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 0,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 0,
-                "max": 45
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-08T23:30Z",
-          "opponent": "NYK",
-          "homeAway": "away",
-          "venue": "Madison Square Garden",
-          "city": "New York",
-          "restDays": null,
-          "miles": 203,
-          "hours": 4.5,
-          "mode": "ground (model)",
-          "tzShiftHours": 0,
-          "unmappedCity": null,
-          "venueNameResolved": null,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 0,
-        "listingDates": [],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/roster",
-        "salaryCurrent": 48967380,
-        "salarySeason": 2027,
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
-        "id": "-54297",
-        "player": "Jalen Williams",
-        "playerId": "4593803",
-        "position": "G",
-        "team": "OKC",
-        "teamName": "Oklahoma City Thunder",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-06-16T14:43Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Hamstring",
-        "injuryLocation": "Leg",
-        "injurySide": "Left",
-        "bodyPart": "Left Hamstring Leg",
-        "shortComment": "Williams (hamstring) has been ruled out for Saturday's Game 7 of the Western Conference Finals against the Spurs.",
-        "longComment": "Williams aggravated his left hamstring injury in Game 2 and missed the next three contests before returning for Thursday's Game 6 loss. The star forward played just 10 minutes and took only one shot, chipping in one point and one assist. He's now being ruled out for Game 7 due to injury management, so his next chance to play will come in the NBA FInals if the Thunder win Saturday. With Williams sidelined, Jared McCain, Kenrich Williams and Cason Wallace will likely see increased run in Game 7.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4593803.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/4593803/jalen-williams",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/okc",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Jalen%20Williams%20injury",
-        "fp": "Day-To-Day|Left Hamstring Leg|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected · in-game exit reported (unconfirmed)",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 40,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 0,
-                "max": 45
-              },
-              {
-                "key": "reportedExit",
-                "label": "in-game exit reported by a monitored account (unconfirmed — not a league designation)",
-                "pts": 30,
-                "max": 30
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-07T00:00Z",
-          "opponent": "NOP",
-          "homeAway": "home",
-          "venue": "BOK Center",
-          "city": "Tulsa",
-          "restDays": null,
-          "miles": 0,
-          "hours": 0,
-          "mode": "home game — no travel leg",
-          "tzShiftHours": 0,
-          "unmappedCity": null,
-          "venueNameResolved": null,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 0,
-        "listingDates": [],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
-        "salaryCurrent": 41500000,
-        "salarySeason": 2027,
-        "inGameExitReported": {
-          "at": "2026-05-21T02:02:33.541Z",
-          "by": "Rylan Stiles",
-          "url": "https://bsky.app/profile/rylanstiles.bsky.social/post/3mmddb5pz3y2s",
-          "status": "reported-unconfirmed"
-        },
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "An in-game exit was reported by a monitored account (not a league designation) — see the linked post.",
           "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
         ]
       },
@@ -7451,6 +7563,16 @@
   },
   "news": [
     {
+      "id": "50000438",
+      "ts": "2026-09-21T20:44:55Z",
+      "sev": "out",
+      "sevLabel": "OUT",
+      "title": "Hawks rookie Henri Veesaar (ACL) expected to miss season",
+      "desc": "Hawks rookie 7-footer Henri Veesaar suffered a torn ACL in his right knee during a workout last week and is expected to miss the season.",
+      "url": "https://www.espn.com/nba/story/_/id/50000438/hawks-rookie-henri-veesaar-acl-expected-miss-season",
+      "byline": "Ohm Youngmisuk"
+    },
+    {
       "id": "49961989",
       "ts": "2026-09-17T03:06:15Z",
       "sev": "mention",
@@ -7469,61 +7591,24 @@
       "desc": "It was an offseason of change for the Celtics. Can they still compete in the upgraded Eastern Conference?",
       "url": "https://www.espn.com/nba/story/_/id/49939898/boston-celtics-offseason-recap-early-2026-27-season-preview-jayson-tatum",
       "byline": "NBA Insiders"
-    },
-    {
-      "id": "49925264",
-      "ts": "2026-09-13T07:48:54Z",
-      "sev": "return",
-      "sevLabel": "RETURN / GOOD NEWS",
-      "title": "'Has the talent to be All-Star this year': Jefferson on Ben Simmons return to NBA",
-      "desc": "Richard Jefferson gives his perspective on Ben Simmons return to the NBA with the Sacramento Kings",
-      "url": "https://www.espn.com/video/clip/_/id/49925264/jefferson-ben-simmons-return-nba",
-      "byline": null
-    },
-    {
-      "id": "49925238",
-      "ts": "2026-09-13T07:45:15Z",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "title": "Jefferson believes Bogut is going to be 'outstanding' coach",
-      "desc": "Richard Jefferson reflects on being teammates with Aussie great Andrew Bogut, his future as a coach, and his infamous injury in Cleveland",
-      "url": "https://www.espn.com/video/clip/_/id/49925238/jefferson-believes-bogut-going-outstanding-coach",
-      "byline": null
-    },
-    {
-      "id": "49904356",
-      "ts": "2026-09-11T20:35:12Z",
-      "sev": "out",
-      "sevLabel": "OUT",
-      "title": "Suns' Mark Williams to miss months after shoulder surgery",
-      "desc": "Phoenix Suns center Mark Williams had surgery Thursday to repair a torn labrum in his left shoulder and will miss several months.",
-      "url": "https://www.espn.com/nba/story/_/id/49904356/sources-suns-mark-williams-miss-shoulder-surgery",
-      "byline": null
     }
   ],
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nuggets.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Denver Nuggets — official",
-        "kind": "official-team",
-        "team": "DEN"
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
       "nba.com": {
         "ok": true,
         "count": 0,
         "name": "NBA — official league account",
         "kind": "official-league",
         "team": null
+      },
+      "nuggets.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Denver Nuggets — official",
+        "kind": "official-team",
+        "team": "DEN"
       },
       "sixersnba.bsky.social": {
         "ok": true,
@@ -7532,17 +7617,24 @@
         "kind": "official-team",
         "team": "PHI"
       },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
+      "johnhollinger.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "John Hollinger",
+        "kind": "reporter",
+        "team": null
+      },
       "samvecenie.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Sam Vecenie",
-        "kind": "reporter",
-        "team": null
-      },
-      "mikevorkunov.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Mike Vorkunov",
         "kind": "reporter",
         "team": null
       },
@@ -7553,13 +7645,6 @@
         "kind": "reporter",
         "team": null
       },
-      "johnhollinger.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "John Hollinger",
-        "kind": "reporter",
-        "team": null
-      },
       "tomhaberstroh.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7567,12 +7652,19 @@
         "kind": "reporter",
         "team": null
       },
-      "nbasarah.bsky.social": {
+      "mikevorkunov.bsky.social": {
         "ok": true,
-        "count": 4,
-        "name": "Sarah Todd",
+        "count": 0,
+        "name": "Mike Vorkunov",
         "kind": "reporter",
-        "team": "MIN"
+        "team": null
+      },
+      "jmcdonaldsa.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
       },
       "tomorsborn.bsky.social": {
         "ok": true,
@@ -7581,12 +7673,12 @@
         "kind": "reporter",
         "team": "SAS"
       },
-      "jmcdonaldsa.bsky.social": {
+      "nbasarah.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Jeff McDonald",
+        "count": 4,
+        "name": "Sarah Todd",
         "kind": "reporter",
-        "team": "SAS"
+        "team": "MIN"
       },
       "jonkrawczynski.bsky.social": {
         "ok": true,
@@ -7609,6 +7701,13 @@
         "kind": "reporter",
         "team": "PHI"
       },
+      "lawmurraythenu.bsky.social": {
+        "ok": true,
+        "count": 8,
+        "name": "Law Murray",
+        "kind": "reporter",
+        "team": "LAC"
+      },
       "highkin.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7630,20 +7729,6 @@
         "kind": "reporter",
         "team": "TOR"
       },
-      "lawmurraythenu.bsky.social": {
-        "ok": true,
-        "count": 6,
-        "name": "Law Murray",
-        "kind": "reporter",
-        "team": "LAC"
-      },
-      "jbeede.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Jason Beede",
-        "kind": "reporter",
-        "team": "ORL"
-      },
       "jimowczarski.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7657,6 +7742,13 @@
         "name": "James Ham",
         "kind": "reporter",
         "team": "SAC"
+      },
+      "jbeede.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Jason Beede",
+        "kind": "reporter",
+        "team": "ORL"
       },
       "ejelite1.bsky.social": {
         "ok": true,
@@ -7672,6 +7764,13 @@
         "kind": "reporter",
         "team": "IND"
       },
+      "btrowland.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Brad Rowland",
+        "kind": "reporter",
+        "team": "ATL"
+      },
       "irawinderman.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7679,16 +7778,23 @@
         "kind": "reporter",
         "team": "MIA"
       },
-      "btrowland.bsky.social": {
+      "byjayking.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Jay King",
+        "kind": "reporter",
+        "team": "BOS"
+      },
+      "gwashburnglobe.bsky.social": {
         "ok": true,
         "count": 1,
-        "name": "Brad Rowland",
+        "name": "Gary Washburn",
         "kind": "reporter",
-        "team": "ATL"
+        "team": "BOS"
       },
       "geraldbourguet.bsky.social": {
         "ok": true,
-        "count": 4,
+        "count": 3,
         "name": "Gerald Bourguet",
         "kind": "reporter",
         "team": "PHX"
@@ -7699,27 +7805,6 @@
         "name": "Kelly Iko",
         "kind": "reporter",
         "team": null
-      },
-      "gwashburnglobe.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Gary Washburn",
-        "kind": "reporter",
-        "team": "BOS"
-      },
-      "byjayking.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Jay King",
-        "kind": "reporter",
-        "team": "BOS"
-      },
-      "noadalzell.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Noa Dalzell",
-        "kind": "reporter",
-        "team": "BOS"
       },
       "bullsjay.bsky.social": {
         "ok": true,
@@ -7735,12 +7820,12 @@
         "kind": "reporter",
         "team": "GSW"
       },
-      "danielle-lerner.bsky.social": {
+      "noadalzell.bsky.social": {
         "ok": true,
         "count": 2,
-        "name": "Danielle Lerner",
+        "name": "Noa Dalzell",
         "kind": "reporter",
-        "team": null
+        "team": "BOS"
       },
       "ryanblackburn.bsky.social": {
         "ok": true,
@@ -7748,6 +7833,13 @@
         "name": "Ryan Blackburn",
         "kind": "reporter",
         "team": "DEN"
+      },
+      "danielle-lerner.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Danielle Lerner",
+        "kind": "reporter",
+        "team": null
       },
       "rylanstiles.bsky.social": {
         "ok": true,
@@ -7763,13 +7855,6 @@
         "kind": "reporter",
         "team": "LAL"
       },
-      "andrewschlecht.bsky.social": {
-        "ok": true,
-        "count": 6,
-        "name": "Andrew Schlecht",
-        "kind": "reporter",
-        "team": "OKC"
-      },
       "jxlorenzi.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7784,6 +7869,13 @@
         "kind": "reporter",
         "team": "NYK"
       },
+      "andrewschlecht.bsky.social": {
+        "ok": true,
+        "count": 6,
+        "name": "Andrew Schlecht",
+        "kind": "reporter",
+        "team": "OKC"
+      },
       "jledwardsiii.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7791,17 +7883,17 @@
         "kind": "reporter",
         "team": "NYK"
       },
-      "damichaelcole.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Damichael Cole",
-        "kind": "reporter",
-        "team": "MEM"
-      },
       "drewhilldailym.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Drew Hill",
+        "kind": "reporter",
+        "team": "MEM"
+      },
+      "damichaelcole.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Damichael Cole",
         "kind": "reporter",
         "team": "MEM"
       },
@@ -7819,13 +7911,6 @@
         "kind": "reporter",
         "team": "BKN"
       },
-      "fearthebrown.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Shamit Dua",
-        "kind": "reporter",
-        "team": "NOP"
-      },
       "olehkosel.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7839,6 +7924,20 @@
         "name": "Varun Shankar",
         "kind": "reporter",
         "team": "HOU"
+      },
+      "fearthebrown.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Shamit Dua",
+        "kind": "reporter",
+        "team": "NOP"
+      },
+      "montepoole.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Monte Poole",
+        "kind": "reporter",
+        "team": "GSW"
       },
       "bennettdurando.bsky.social": {
         "ok": true,
@@ -7854,12 +7953,12 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "montepoole.bsky.social": {
+      "joevardon.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Monte Poole",
+        "count": 1,
+        "name": "Joe Vardon",
         "kind": "reporter",
-        "team": "GSW"
+        "team": null
       },
       "grantafseth.bsky.social": {
         "ok": true,
@@ -7867,13 +7966,6 @@
         "name": "Grant Afseth",
         "kind": "reporter",
         "team": "DAL"
-      },
-      "joevardon.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Joe Vardon",
-        "kind": "reporter",
-        "team": null
       },
       "dannycunningham.bsky.social": {
         "ok": true,
@@ -7896,13 +7988,6 @@
         "kind": "reporter",
         "team": "DAL"
       },
-      "nolajake.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jake Madison",
-        "kind": "reporter",
-        "team": "NOP"
-      },
       "joelrushnba.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7924,10 +8009,24 @@
         "kind": "reporter",
         "team": "MEM"
       },
+      "nolajake.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Jake Madison",
+        "kind": "reporter",
+        "team": "NOP"
+      },
       "andyblarsen.bsky.social": {
         "ok": true,
         "count": 5,
         "name": "Andy Larsen",
+        "kind": "reporter",
+        "team": "UTA"
+      },
+      "saltcityhoops.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Salt City Hoops",
         "kind": "reporter",
         "team": "UTA"
       },
@@ -7944,13 +8043,6 @@
         "name": "Cody Taylor",
         "kind": "reporter",
         "team": "ORL"
-      },
-      "saltcityhoops.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Salt City Hoops",
-        "kind": "reporter",
-        "team": "UTA"
       },
       "hunterpatterson.bsky.social": {
         "ok": true,
@@ -8015,13 +8107,6 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "caitlinmaycooper.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Caitlin Cooper",
-        "kind": "reporter",
-        "team": "IND"
-      },
       "britishbuzz.bsky.social": {
         "ok": true,
         "count": 0,
@@ -8043,6 +8128,13 @@
         "kind": "reporter",
         "team": "UTA"
       },
+      "caitlinmaycooper.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Caitlin Cooper",
+        "kind": "reporter",
+        "team": "IND"
+      },
       "stevepopper.bsky.social": {
         "ok": true,
         "count": 0,
@@ -8053,6 +8145,222 @@
     }
   },
   "posts": [
+    {
+      "uri": "at://did:plc:paf4vetn26bu7uggsie3vyrc/app.bsky.feed.post/3mw2y5b5xnk2k",
+      "text": "Week 2 of NFL season\n\ninjured: top two picks of 2024 NFL Draft\n\nsubbing in: top two picks of 2015 NFL Draft",
+      "handle": "lawmurraythenu.bsky.social",
+      "name": "Law Murray",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "LAC",
+      "outlet": "The Athletic",
+      "role": "NBA writer (LA Clippers)",
+      "accountUrl": "https://bsky.app/profile/lawmurraythenu.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/lawmurraythenu.bsky.social",
+        "team": "LAC",
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Law Murray"
+      },
+      "createdAt": "2026-09-22T00:34:10.406Z",
+      "indexedAt": "2026-09-22T00:34:10.862Z",
+      "url": "https://bsky.app/profile/lawmurraythenu.bsky.social/post/3mw2y5b5xnk2k",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:yvy5ax23zpmoearxn6xsgqzf/app.bsky.feed.post/3mw2uxftcz22w",
+      "text": "new locked on hawks podcast is on the way...\n\n- henri veesaar injury\n- veesaar fallout + roster crunch\n- hield/DFS trade rumblings\n- etc. etc.\n\n🎧 Apple: apple.co/3xGpUhr\n🎧 YouTube: tinyurl.com/4fnjpma2\n🎧 Spotify: tinyurl.com/vycdm5ye",
+      "handle": "btrowland.bsky.social",
+      "name": "Brad Rowland",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "ATL",
+      "outlet": "Locked On Hawks (podcast host) / FanSided",
+      "role": "Hawks writer & podcast host",
+      "accountUrl": "https://bsky.app/profile/btrowland.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/btrowland.bsky.social",
+        "team": "ATL",
+        "kind": "reporter",
+        "outlet": "Locked On Hawks (podcast host) / FanSided",
+        "name": "Brad Rowland"
+      },
+      "createdAt": "2026-09-21T23:37:12.747Z",
+      "indexedAt": "2026-09-21T23:37:13.767Z",
+      "url": "https://bsky.app/profile/btrowland.bsky.social/post/3mw2uxftcz22w",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:j24jtz7xkt5ttdsk32mmpkvn/app.bsky.feed.post/3mw2ijbdr722g",
+      "text": "Ugh. Hawks rookie center Henri Vessaar has a torn ACL and will miss the entire season.",
+      "handle": "johnhollinger.bsky.social",
+      "name": "John Hollinger",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": null,
+      "outlet": "The Athletic",
+      "role": "Senior NBA columnist",
+      "accountUrl": "https://bsky.app/profile/johnhollinger.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/johnhollinger.bsky.social",
+        "team": null,
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "John Hollinger"
+      },
+      "createdAt": "2026-09-21T19:54:33.380Z",
+      "indexedAt": "2026-09-21T19:54:34.460Z",
+      "url": "https://bsky.app/profile/johnhollinger.bsky.social/post/3mw2ijbdr722g",
+      "sev": "out",
+      "sevLabel": "OUT (social report)",
+      "inGameWatch": false,
+      "kindLabel": "designation"
+    },
+    {
+      "uri": "at://did:plc:paf4vetn26bu7uggsie3vyrc/app.bsky.feed.post/3mw2igr74tk2q",
+      "text": "Henri Veesaar injury news (torn ACL) is terrible\n\nFell in the draft\nWent to a team that selected a big in first round\nNow will have to use rookie season to get healthy\nAll before camp and preseason\nInjuries will happen at any time",
+      "handle": "lawmurraythenu.bsky.social",
+      "name": "Law Murray",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "LAC",
+      "outlet": "The Athletic",
+      "role": "NBA writer (LA Clippers)",
+      "accountUrl": "https://bsky.app/profile/lawmurraythenu.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/lawmurraythenu.bsky.social",
+        "team": "LAC",
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Law Murray"
+      },
+      "createdAt": "2026-09-21T19:53:09.340Z",
+      "indexedAt": "2026-09-21T19:53:09.656Z",
+      "url": "https://bsky.app/profile/lawmurraythenu.bsky.social/post/3mw2igr74tk2q",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:yvy5ax23zpmoearxn6xsgqzf/app.bsky.feed.post/3mw2hfvu4o22f",
+      "text": "Note: Veesaar’s injury was suffered during a workout on Sept. 15",
+      "handle": "btrowland.bsky.social",
+      "name": "Brad Rowland",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "ATL",
+      "outlet": "Locked On Hawks (podcast host) / FanSided",
+      "role": "Hawks writer & podcast host",
+      "accountUrl": "https://bsky.app/profile/btrowland.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/btrowland.bsky.social",
+        "team": "ATL",
+        "kind": "reporter",
+        "outlet": "Locked On Hawks (podcast host) / FanSided",
+        "name": "Brad Rowland"
+      },
+      "createdAt": "2026-09-21T19:34:46.929Z",
+      "indexedAt": "2026-09-21T19:34:47.657Z",
+      "url": "https://bsky.app/profile/btrowland.bsky.social/post/3mw2hfvu4o22f",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:yvy5ax23zpmoearxn6xsgqzf/app.bsky.feed.post/3mw2hagm5lk2f",
+      "text": "Major Hawks injury news…\n\nHenri Veesaar was diagnosed with a torn right ACL. \n\nVeesaar will undergo surgery with Dr. Kyle Hammond at the Emory Sports Medicine Complex in October and is expected to miss the 2026-27 season.",
+      "handle": "btrowland.bsky.social",
+      "name": "Brad Rowland",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "ATL",
+      "outlet": "Locked On Hawks (podcast host) / FanSided",
+      "role": "Hawks writer & podcast host",
+      "accountUrl": "https://bsky.app/profile/btrowland.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/btrowland.bsky.social",
+        "team": "ATL",
+        "kind": "reporter",
+        "outlet": "Locked On Hawks (podcast host) / FanSided",
+        "name": "Brad Rowland"
+      },
+      "createdAt": "2026-09-21T19:31:43.166Z",
+      "indexedAt": "2026-09-21T19:31:43.459Z",
+      "url": "https://bsky.app/profile/btrowland.bsky.social/post/3mw2hagm5lk2f",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mvyhrfhqwk25",
+      "text": "#Saints  are just fourth NFC team to beat Lamar Jackson.\n\nJackson is 25-4 as a starter vs. NFC teams.\nThe NFC QBs who beat him\n\n2022 Daniel Jones, NYG\n2024 Jalen Hurts, PHI\n2025 Jared Goff, DET\n2026 Tyler Shough, NO\n\nShough is only one of the 4 to pass for more yards than Jackson in one of the wins",
+      "handle": "rodwalkernola.bsky.social",
+      "name": "Rod Walker",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "NOP",
+      "outlet": "The Times-Picayune | The New Orleans Advocate",
+      "role": "Sports columnist (Saints + Pelicans) — NOT a Pelicans beat assignment",
+      "accountUrl": "https://bsky.app/profile/rodwalkernola.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/rodwalkernola.bsky.social",
+        "team": "NOP",
+        "kind": "reporter",
+        "outlet": "The Times-Picayune | The New Orleans Advocate",
+        "name": "Rod Walker"
+      },
+      "createdAt": "2026-09-21T00:35:52.916Z",
+      "indexedAt": "2026-09-21T00:35:53.362Z",
+      "url": "https://bsky.app/profile/rodwalkernola.bsky.social/post/3mvyhrfhqwk25",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:paf4vetn26bu7uggsie3vyrc/app.bsky.feed.post/3mvy6uu2kkc2b",
+      "text": "Caleb Williams and Jayden Daniels with brutal freak injuries on the same afternoon smh",
+      "handle": "lawmurraythenu.bsky.social",
+      "name": "Law Murray",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "LAC",
+      "outlet": "The Athletic",
+      "role": "NBA writer (LA Clippers)",
+      "accountUrl": "https://bsky.app/profile/lawmurraythenu.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/lawmurraythenu.bsky.social",
+        "team": "LAC",
+        "kind": "reporter",
+        "outlet": "The Athletic",
+        "name": "Law Murray"
+      },
+      "createdAt": "2026-09-20T21:56:45.201Z",
+      "indexedAt": "2026-09-20T21:56:45.561Z",
+      "url": "https://bsky.app/profile/lawmurraythenu.bsky.social/post/3mvy6uu2kkc2b",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
     {
       "uri": "at://did:plc:paf4vetn26bu7uggsie3vyrc/app.bsky.feed.post/3mvv74hejzc2b",
       "text": "Day 19 -- Houston Rockets\n\nVanVleet's return from injury should give the Rockets a chance to put their best players in a better position to succeed, but other breakthroughs are needed too.\n\nSmart replaces Okogie\nBogdanovic replaces Holiday\nCrawford promoted, Finney-Smith out\nyoutu.be/jbam85sJJ58?...",
@@ -8378,33 +8686,6 @@
       "kindLabel": "non-injury"
     },
     {
-      "uri": "at://did:plc:paf4vetn26bu7uggsie3vyrc/app.bsky.feed.post/3mvigupiouk2b",
-      "text": "Day 14 -- Golden State Warriors\n\nA frequent Play-In tournament participant whose best player is 39 in March, best defender is 37 in March, and best wing is 37 and recovering from ACL tear. The best young wing is recovering from patellar tear.\n\nYAXEL replaces Quinten Post\n\nyoutu.be/L7BT28T0QaI?...",
-      "handle": "lawmurraythenu.bsky.social",
-      "name": "Law Murray",
-      "verified": true,
-      "bskyVerified": true,
-      "kind": "reporter",
-      "team": "LAC",
-      "outlet": "The Athletic",
-      "role": "NBA writer (LA Clippers)",
-      "accountUrl": "https://bsky.app/profile/lawmurraythenu.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/lawmurraythenu.bsky.social",
-        "team": "LAC",
-        "kind": "reporter",
-        "outlet": "The Athletic",
-        "name": "Law Murray"
-      },
-      "createdAt": "2026-09-14T15:37:14.546Z",
-      "indexedAt": "2026-09-14T15:37:19.857Z",
-      "url": "https://bsky.app/profile/lawmurraythenu.bsky.social/post/3mvigupiouk2b",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
-    },
-    {
       "uri": "at://did:plc:b5s7pvomuo3xwd3wgdpnohtt/app.bsky.feed.post/3mvggxj7krk2r",
       "text": "yeah it was both a compliment and a dig haha that Rams team was going to break the scoring record before Warner got hurt and their defense was just SO BAD",
       "handle": "bullsjay.bsky.social",
@@ -8565,60 +8846,6 @@
       "sevLabel": "OUT (social report)",
       "inGameWatch": false,
       "kindLabel": "designation"
-    },
-    {
-      "uri": "at://did:plc:pz2e6pmf64ey4zpgyjuvpdfj/app.bsky.feed.post/3muy27stgqc2y",
-      "text": "S3 of Silo started off slow (I hate amnesia as a plot device), but MAN did it go out with a bang. That finale was its best episode so far, and shoutout to Ashley Zuckerman and Jessica Henwick for making a totally separate storyline so compelling. Cannot wait for the final season!",
-      "handle": "geraldbourguet.bsky.social",
-      "name": "Gerald Bourguet",
-      "verified": true,
-      "bskyVerified": true,
-      "kind": "reporter",
-      "team": "PHX",
-      "outlet": "Suns After Dark",
-      "role": "Suns beat writer / reporter / podcaster",
-      "accountUrl": "https://bsky.app/profile/geraldbourguet.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/geraldbourguet.bsky.social",
-        "team": "PHX",
-        "kind": "reporter",
-        "outlet": "Suns After Dark",
-        "name": "Gerald Bourguet"
-      },
-      "createdAt": "2026-09-08T03:08:12.683Z",
-      "indexedAt": "2026-09-08T03:08:12.968Z",
-      "url": "https://bsky.app/profile/geraldbourguet.bsky.social/post/3muy27stgqc2y",
-      "sev": "mention",
-      "sevLabel": "NON-INJURY (rest / roster / decision)",
-      "inGameWatch": false,
-      "kindLabel": "non-injury"
-    },
-    {
-      "uri": "at://did:plc:yvy5ax23zpmoearxn6xsgqzf/app.bsky.feed.post/3muuhfcgyoc2n",
-      "text": "I know there is a social media video circulating with Dyson Daniels wearing something on his right arm that caused a bit of a stir.\n\nWas told by a source this morning that there is no injury.\n\n(Back to your regularly scheduled early September programming.)",
-      "handle": "btrowland.bsky.social",
-      "name": "Brad Rowland",
-      "verified": true,
-      "bskyVerified": false,
-      "kind": "reporter",
-      "team": "ATL",
-      "outlet": "Locked On Hawks (podcast host) / FanSided",
-      "role": "Hawks writer & podcast host",
-      "accountUrl": "https://bsky.app/profile/btrowland.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/btrowland.bsky.social",
-        "team": "ATL",
-        "kind": "reporter",
-        "outlet": "Locked On Hawks (podcast host) / FanSided",
-        "name": "Brad Rowland"
-      },
-      "createdAt": "2026-09-06T16:53:16.515Z",
-      "indexedAt": "2026-09-06T16:53:17.056Z",
-      "url": "https://bsky.app/profile/btrowland.bsky.social/post/3muuhfcgyoc2n",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
     },
     {
       "uri": "at://did:plc:dfd7vm55wtu76azcjrmav4xz/app.bsky.feed.post/3mukspaccps2g",
@@ -8862,33 +9089,6 @@
       "sevLabel": "NON-INJURY (rest / roster / decision)",
       "inGameWatch": false,
       "kindLabel": "non-injury"
-    },
-    {
-      "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mt2ok2efos2u",
-      "text": "Jordyn Tyson has a hamstring injury, Moore says. “Not related to previous hamstring injury. “",
-      "handle": "rodwalkernola.bsky.social",
-      "name": "Rod Walker",
-      "verified": true,
-      "bskyVerified": false,
-      "kind": "reporter",
-      "team": "NOP",
-      "outlet": "The Times-Picayune | The New Orleans Advocate",
-      "role": "Sports columnist (Saints + Pelicans) — NOT a Pelicans beat assignment",
-      "accountUrl": "https://bsky.app/profile/rodwalkernola.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/rodwalkernola.bsky.social",
-        "team": "NOP",
-        "kind": "reporter",
-        "outlet": "The Times-Picayune | The New Orleans Advocate",
-        "name": "Rod Walker"
-      },
-      "createdAt": "2026-08-14T17:26:47.179Z",
-      "indexedAt": "2026-08-14T17:26:47.769Z",
-      "url": "https://bsky.app/profile/rodwalkernola.bsky.social/post/3mt2ok2efos2u",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
     },
     {
       "uri": "at://did:plc:nlq6uv3pja3zg5y2cjfzl57c/app.bsky.feed.post/3msz7gmptyc2a",
