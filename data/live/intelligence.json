@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-22T16:55:10.295Z",
-  "inputGenerated": "2026-09-22T16:55:05.684Z",
+  "generated": "2026-09-22T20:04:46.535Z",
+  "inputGenerated": "2026-09-22T20:04:42.179Z",
   "inputFresh": true,
   "claims": {
     "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3mqpt2qmdd22q": {
@@ -2839,6 +2839,25 @@
       "bskyVerified": false,
       "outcome": "pending",
       "note": "Player unresolved or multiple players; not auto-scored."
+    },
+    "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mw4p5jlu2k25": {
+      "uri": "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mw4p5jlu2k25",
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "text": "Steven Adams on his injury: \"There's a lot of bones down there mate, it's pretty complicated.\"",
+      "url": "https://bsky.app/profile/byvarunshankar.bsky.social/post/3mw4p5jlu2k25",
+      "textSha256": "1d10f3a17cc3f92fdb12cfa721699411d72f1e9ad98dc752da8dd5fc037552b0",
+      "postedAt": "2026-09-22T16:58:35.051Z",
+      "firstObservedAt": "2026-09-22T20:04:46.535Z",
+      "player": "Steven Adams",
+      "playerId": "2991235",
+      "team": "HOU",
+      "status": null,
+      "inGameWatch": false,
+      "identityVerifiedAtCollection": true,
+      "bskyVerified": true,
+      "outcome": "pending",
+      "note": "Awaiting game-scoped official evidence; no score from silence."
     }
   },
   "scores": [
@@ -2955,6 +2974,20 @@
       "accuracy": null
     },
     {
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "observed": 5,
+      "corroborated": 0,
+      "conflicts": 0,
+      "boardAgree": 0,
+      "boardConflicts": 0,
+      "pending": 5,
+      "resolved": 0,
+      "forwardScore": 0,
+      "agreementRate": null,
+      "accuracy": null
+    },
+    {
       "handle": "nbasarah.bsky.social",
       "name": "Sarah Todd",
       "observed": 5,
@@ -2985,20 +3018,6 @@
     {
       "handle": "btrowland.bsky.social",
       "name": "Brad Rowland",
-      "observed": 4,
-      "corroborated": 0,
-      "conflicts": 0,
-      "boardAgree": 0,
-      "boardConflicts": 0,
-      "pending": 4,
-      "resolved": 0,
-      "forwardScore": 0,
-      "agreementRate": null,
-      "accuracy": null
-    },
-    {
-      "handle": "byvarunshankar.bsky.social",
-      "name": "Varun Shankar",
       "observed": 4,
       "corroborated": 0,
       "conflicts": 0,
