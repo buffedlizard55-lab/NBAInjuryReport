@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22T12:05:50.530Z",
+  "generated": "2026-09-22T16:55:05.684Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -726,108 +726,6 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
         "salaryCurrent": 40000000,
-        "salarySeason": 2027,
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
-        "id": "532558",
-        "player": "Fred VanVleet",
-        "playerId": "2991230",
-        "position": "G",
-        "team": "HOU",
-        "teamName": "Houston Rockets",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-09-11T20:46Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Knee",
-        "injuryLocation": "Leg",
-        "injurySide": "Right",
-        "bodyPart": "Right Knee Leg",
-        "shortComment": "Head coach Ime Udoka said Friday that VanVleet (knee) is ramping up his rehab work, Lachard Binkley of SI.com reports.",
-        "longComment": "With VanVleet having missed the entire 2025-26 campaign after suffering a torn ACL late last offseason, it's encouraging to hear he's back on the court as a notable step in his recovery. The veteran point guard is almost a full calendar year removed from the surgery, so there's optimism he'll be ready for Opening Night in late October. His levels of participation in training camp and the preseason remain a question mark, though.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/2991230.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/2991230/fred-vanvleet",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/hou",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Fred%20VanVleet%20injury",
-        "fp": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 33.3,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 12,
-                "max": 45
-              },
-              {
-                "key": "listingRecency",
-                "label": "newest listing dated 2026-09-11 (11 day(s) ago)",
-                "pts": 8,
-                "max": 15
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-09T12:00Z",
-          "opponent": "DAL",
-          "homeAway": "away",
-          "venue": "Venetian Arena",
-          "city": "Las Vegas",
-          "restDays": null,
-          "miles": 1226,
-          "hours": 4.7,
-          "mode": "air (model)",
-          "tzShiftHours": 2,
-          "unmappedCity": null,
-          "venueNameResolved": true,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 1,
-        "listingDates": [
-          "2026-09-11"
-        ],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
-        "salaryCurrent": 25000000,
         "salarySeason": 2027,
         "impactNotes": [
           "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
@@ -7610,19 +7508,19 @@
         "kind": "official-league",
         "team": null
       },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
       "trailblazers.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Portland Trail Blazers — official",
         "kind": "official-team",
         "team": "POR"
+      },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "samvecenie.bsky.social": {
         "ok": true,
@@ -7638,17 +7536,17 @@
         "kind": "reporter",
         "team": null
       },
-      "johnhollinger.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "John Hollinger",
-        "kind": "reporter",
-        "team": null
-      },
       "howardbeck.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
+      "johnhollinger.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "John Hollinger",
         "kind": "reporter",
         "team": null
       },
@@ -7659,17 +7557,17 @@
         "kind": "reporter",
         "team": null
       },
-      "tomorsborn.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Tom Orsborn",
-        "kind": "reporter",
-        "team": "SAS"
-      },
       "jmcdonaldsa.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Jeff McDonald",
+        "kind": "reporter",
+        "team": "SAS"
+      },
+      "tomorsborn.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Tom Orsborn",
         "kind": "reporter",
         "team": "SAS"
       },
@@ -7680,19 +7578,19 @@
         "kind": "reporter",
         "team": "MIN"
       },
-      "omarisankofa.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Omari Sankofa II",
-        "kind": "reporter",
-        "team": "DET"
-      },
       "kyleneubeck.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Kyle Neubeck",
         "kind": "reporter",
         "team": "PHI"
+      },
+      "omarisankofa.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Omari Sankofa II",
+        "kind": "reporter",
+        "team": "DET"
       },
       "jonkrawczynski.bsky.social": {
         "ok": true,
@@ -7708,12 +7606,12 @@
         "kind": "reporter",
         "team": "POR"
       },
-      "joshrobbins.bsky.social": {
+      "lawmurraythenu.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Josh Robbins",
+        "count": 8,
+        "name": "Law Murray",
         "kind": "reporter",
-        "team": "WAS"
+        "team": "LAC"
       },
       "jlewenberg.bsky.social": {
         "ok": true,
@@ -7722,12 +7620,12 @@
         "kind": "reporter",
         "team": "TOR"
       },
-      "lawmurraythenu.bsky.social": {
+      "joshrobbins.bsky.social": {
         "ok": true,
-        "count": 8,
-        "name": "Law Murray",
+        "count": 0,
+        "name": "Josh Robbins",
         "kind": "reporter",
-        "team": "LAC"
+        "team": "WAS"
       },
       "jimowczarski.bsky.social": {
         "ok": true,
@@ -7738,17 +7636,10 @@
       },
       "jbeede.bsky.social": {
         "ok": true,
-        "count": 2,
+        "count": 1,
         "name": "Jason Beede",
         "kind": "reporter",
         "team": "ORL"
-      },
-      "jameshamnba.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "James Ham",
-        "kind": "reporter",
-        "team": "SAC"
       },
       "ejelite1.bsky.social": {
         "ok": true,
@@ -7757,6 +7648,13 @@
         "kind": "reporter",
         "team": "CLE"
       },
+      "jameshamnba.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "James Ham",
+        "kind": "reporter",
+        "team": "SAC"
+      },
       "btrowland.bsky.social": {
         "ok": true,
         "count": 3,
@@ -7764,19 +7662,19 @@
         "kind": "reporter",
         "team": "ATL"
       },
-      "irawinderman.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Ira Winderman",
-        "kind": "reporter",
-        "team": "MIA"
-      },
       "scottagness.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Scott Agness",
         "kind": "reporter",
         "team": "IND"
+      },
+      "irawinderman.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Ira Winderman",
+        "kind": "reporter",
+        "team": "MIA"
       },
       "geraldbourguet.bsky.social": {
         "ok": true,
@@ -7799,13 +7697,6 @@
         "kind": "reporter",
         "team": "BOS"
       },
-      "noadalzell.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Noa Dalzell",
-        "kind": "reporter",
-        "team": "BOS"
-      },
       "byjayking.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7813,9 +7704,16 @@
         "kind": "reporter",
         "team": "BOS"
       },
-      "bullsjay.bsky.social": {
+      "noadalzell.bsky.social": {
         "ok": true,
         "count": 2,
+        "name": "Noa Dalzell",
+        "kind": "reporter",
+        "team": "BOS"
+      },
+      "bullsjay.bsky.social": {
+        "ok": true,
+        "count": 3,
         "name": "Jason Patt",
         "kind": "reporter",
         "team": "CHI"
@@ -7834,13 +7732,6 @@
         "kind": "reporter",
         "team": "GSW"
       },
-      "danwoikesports.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Dan Woike",
-        "kind": "reporter",
-        "team": "LAL"
-      },
       "danielle-lerner.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7848,19 +7739,19 @@
         "kind": "reporter",
         "team": null
       },
+      "danwoikesports.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Dan Woike",
+        "kind": "reporter",
+        "team": "LAL"
+      },
       "rylanstiles.bsky.social": {
         "ok": true,
         "count": 11,
         "name": "Rylan Stiles",
         "kind": "reporter",
         "team": "OKC"
-      },
-      "fredkatz.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Fred Katz",
-        "kind": "reporter",
-        "team": "NYK"
       },
       "jxlorenzi.bsky.social": {
         "ok": true,
@@ -7876,12 +7767,12 @@
         "kind": "reporter",
         "team": "OKC"
       },
-      "damichaelcole.bsky.social": {
+      "fredkatz.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Damichael Cole",
+        "count": 2,
+        "name": "Fred Katz",
         "kind": "reporter",
-        "team": "MEM"
+        "team": "NYK"
       },
       "jledwardsiii.bsky.social": {
         "ok": true,
@@ -7889,6 +7780,13 @@
         "name": "James L. Edwards III",
         "kind": "reporter",
         "team": "NYK"
+      },
+      "damichaelcole.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Damichael Cole",
+        "kind": "reporter",
+        "team": "MEM"
       },
       "christianclark3.bsky.social": {
         "ok": true,
@@ -7904,19 +7802,19 @@
         "kind": "reporter",
         "team": "MEM"
       },
-      "busyxb.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Busy — NetsDaily",
-        "kind": "reporter",
-        "team": "BKN"
-      },
       "fearthebrown.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Shamit Dua",
         "kind": "reporter",
         "team": "NOP"
+      },
+      "busyxb.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Busy — NetsDaily",
+        "kind": "reporter",
+        "team": "BKN"
       },
       "olehkosel.bsky.social": {
         "ok": true,
@@ -7932,12 +7830,12 @@
         "kind": "reporter",
         "team": "HOU"
       },
-      "jasonlloyd.bsky.social": {
+      "montepoole.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Jason Lloyd",
+        "count": 0,
+        "name": "Monte Poole",
         "kind": "reporter",
-        "team": "CLE"
+        "team": "GSW"
       },
       "bennettdurando.bsky.social": {
         "ok": true,
@@ -7946,12 +7844,12 @@
         "kind": "reporter",
         "team": "DEN"
       },
-      "montepoole.bsky.social": {
+      "jasonlloyd.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Monte Poole",
+        "count": 3,
+        "name": "Jason Lloyd",
         "kind": "reporter",
-        "team": "GSW"
+        "team": "CLE"
       },
       "grantafseth.bsky.social": {
         "ok": true,
@@ -7960,19 +7858,19 @@
         "kind": "reporter",
         "team": "DAL"
       },
-      "joevardon.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Joe Vardon",
-        "kind": "reporter",
-        "team": null
-      },
       "dannycunningham.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Danny Cunningham",
         "kind": "reporter",
         "team": "CLE"
+      },
+      "joevardon.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Joe Vardon",
+        "kind": "reporter",
+        "team": null
       },
       "nickvanexit.bsky.social": {
         "ok": true,
@@ -7995,13 +7893,6 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "joelrushnba.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Joel Rush",
-        "kind": "reporter",
-        "team": "DEN"
-      },
       "chrisherrington.bsky.social": {
         "ok": true,
         "count": 0,
@@ -8015,6 +7906,13 @@
         "name": "Brian Geisinger",
         "kind": "reporter",
         "team": "CHA"
+      },
+      "joelrushnba.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Joel Rush",
+        "kind": "reporter",
+        "team": "DEN"
       },
       "andyblarsen.bsky.social": {
         "ok": true,
@@ -8030,19 +7928,19 @@
         "kind": "reporter",
         "team": "LAL"
       },
-      "saltcityhoops.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Salt City Hoops",
-        "kind": "reporter",
-        "team": "UTA"
-      },
       "codytaylornba.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Cody Taylor",
         "kind": "reporter",
         "team": "ORL"
+      },
+      "saltcityhoops.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Salt City Hoops",
+        "kind": "reporter",
+        "team": "UTA"
       },
       "hunterpatterson.bsky.social": {
         "ok": true,
@@ -8100,19 +7998,19 @@
         "kind": "reporter",
         "team": "CHI"
       },
+      "chasedcsports.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Chase Hughes",
+        "kind": "reporter",
+        "team": "WAS"
+      },
       "willgottlieb.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Will Gottlieb",
         "kind": "reporter",
         "team": "CHI"
-      },
-      "caitlinmaycooper.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Caitlin Cooper",
-        "kind": "reporter",
-        "team": "IND"
       },
       "britishbuzz.bsky.social": {
         "ok": true,
@@ -8121,19 +8019,12 @@
         "kind": "reporter",
         "team": "CHA"
       },
-      "chasedcsports.bsky.social": {
+      "caitlinmaycooper.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Chase Hughes",
+        "name": "Caitlin Cooper",
         "kind": "reporter",
-        "team": "WAS"
-      },
-      "millerjryan.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Ryan Miller",
-        "kind": "reporter",
-        "team": "UTA"
+        "team": "IND"
       },
       "stevepopper.bsky.social": {
         "ok": true,
@@ -8141,10 +8032,71 @@
         "name": "Steve Popper",
         "kind": "reporter",
         "team": "NYK"
+      },
+      "millerjryan.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Ryan Miller",
+        "kind": "reporter",
+        "team": "UTA"
       }
     }
   },
   "posts": [
+    {
+      "uri": "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mw4npkjebc2r",
+      "text": "Fred VanVleet says he definitely feels a difference in his knee pre/post injury. Says there's no substitute for live game reps and he's excited to get them.",
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "HOU",
+      "outlet": "Houston Chronicle",
+      "role": "Rockets beat reporter",
+      "accountUrl": "https://bsky.app/profile/byvarunshankar.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/byvarunshankar.bsky.social",
+        "team": "HOU",
+        "kind": "reporter",
+        "outlet": "Houston Chronicle",
+        "name": "Varun Shankar"
+      },
+      "createdAt": "2026-09-22T16:32:52.514Z",
+      "indexedAt": "2026-09-22T16:32:52.862Z",
+      "url": "https://bsky.app/profile/byvarunshankar.bsky.social/post/3mw4npkjebc2r",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:b5s7pvomuo3xwd3wgdpnohtt/app.bsky.feed.post/3mw4cn3gvps2s",
+      "text": "I must admit while the Caleb Williams injury discourse is extremely stupid and meatbally....the memes are #good",
+      "handle": "bullsjay.bsky.social",
+      "name": "Jason Patt",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "CHI",
+      "outlet": "ClutchPoints / Blog a Bull",
+      "role": "Bulls writer",
+      "accountUrl": "https://bsky.app/profile/bullsjay.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/bullsjay.bsky.social",
+        "team": "CHI",
+        "kind": "reporter",
+        "outlet": "ClutchPoints / Blog a Bull",
+        "name": "Jason Patt"
+      },
+      "createdAt": "2026-09-22T13:14:38.433Z",
+      "indexedAt": "2026-09-22T13:14:38.858Z",
+      "url": "https://bsky.app/profile/bullsjay.bsky.social/post/3mw4cn3gvps2s",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
     {
       "uri": "at://did:plc:paf4vetn26bu7uggsie3vyrc/app.bsky.feed.post/3mw2y5b5xnk2k",
       "text": "Week 2 of NFL season\n\ninjured: top two picks of 2024 NFL Draft\n\nsubbing in: top two picks of 2015 NFL Draft",
@@ -9280,33 +9232,6 @@
       "kindLabel": "non-injury"
     },
     {
-      "uri": "at://did:plc:e7fdktkwv37ws6rljgnoljfz/app.bsky.feed.post/3mqnk6xnrm22j",
-      "text": "#Magic rookie Izaiyah Nelson shared on Instagram that the surgery to repair a fracture in his left ankle was a success:",
-      "handle": "jbeede.bsky.social",
-      "name": "Jason Beede",
-      "verified": true,
-      "bskyVerified": false,
-      "kind": "reporter",
-      "team": "ORL",
-      "outlet": "Orlando Sentinel",
-      "role": "Magic beat reporter",
-      "accountUrl": "https://bsky.app/profile/jbeede.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/jbeede.bsky.social",
-        "team": "ORL",
-        "kind": "reporter",
-        "outlet": "Orlando Sentinel",
-        "name": "Jason Beede"
-      },
-      "createdAt": "2026-07-15T01:14:00.424Z",
-      "indexedAt": "2026-07-15T01:14:04.077Z",
-      "url": "https://bsky.app/profile/jbeede.bsky.social/post/3mqnk6xnrm22j",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
-    },
-    {
       "uri": "at://did:plc:jnzaardlvkrjurtvgig4fhj7/app.bsky.feed.post/3mqjvvzbnak2m",
       "text": "Magic two-way rookie Izaiyah Nelson has suffered a fracture in his left ankle and will require surgery, the team announced:",
       "handle": "codytaylornba.bsky.social",
@@ -9413,33 +9338,6 @@
       "sevLabel": "NON-INJURY (rest / roster / decision)",
       "inGameWatch": false,
       "kindLabel": "non-injury"
-    },
-    {
-      "uri": "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mqhrhfvfo22b",
-      "text": "Rockets two-way guard Quadir Copeland already has a nickname for teammate Bruce Thornton.",
-      "handle": "byvarunshankar.bsky.social",
-      "name": "Varun Shankar",
-      "verified": true,
-      "bskyVerified": true,
-      "kind": "reporter",
-      "team": "HOU",
-      "outlet": "Houston Chronicle",
-      "role": "Rockets beat reporter",
-      "accountUrl": "https://bsky.app/profile/byvarunshankar.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/byvarunshankar.bsky.social",
-        "team": "HOU",
-        "kind": "reporter",
-        "outlet": "Houston Chronicle",
-        "name": "Varun Shankar"
-      },
-      "createdAt": "2026-07-12T18:08:01.553Z",
-      "indexedAt": "2026-07-12T18:08:03.867Z",
-      "url": "https://bsky.app/profile/byvarunshankar.bsky.social/post/3mqhrhfvfo22b",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
     },
     {
       "uri": "at://did:plc:fdw3hkjrul22w75bdw5pcsn3/app.bsky.feed.post/3mq36e5ihlc24",

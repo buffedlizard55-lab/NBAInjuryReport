@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-22T12:05:53.819Z",
-  "inputGenerated": "2026-09-22T12:05:50.530Z",
+  "generated": "2026-09-22T16:55:10.295Z",
+  "inputGenerated": "2026-09-22T16:55:05.684Z",
   "inputFresh": true,
   "claims": {
     "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3mqpt2qmdd22q": {
@@ -2801,6 +2801,44 @@
       "bskyVerified": true,
       "outcome": "pending",
       "note": "Player unresolved or multiple players; not auto-scored."
+    },
+    "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mw4npkjebc2r": {
+      "uri": "at://did:plc:nesthe6gbr5vjpwq7enhwq55/app.bsky.feed.post/3mw4npkjebc2r",
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "text": "Fred VanVleet says he definitely feels a difference in his knee pre/post injury. Says there's no substitute for live game reps and he's excited to get them.",
+      "url": "https://bsky.app/profile/byvarunshankar.bsky.social/post/3mw4npkjebc2r",
+      "textSha256": "bd48344d6c97a411b1cc7423850eea47810b31070b1546b373663cc3e36124d9",
+      "postedAt": "2026-09-22T16:32:52.514Z",
+      "firstObservedAt": "2026-09-22T16:55:10.295Z",
+      "player": "Fred VanVleet",
+      "playerId": "2991230",
+      "team": "HOU",
+      "status": null,
+      "inGameWatch": false,
+      "identityVerifiedAtCollection": true,
+      "bskyVerified": true,
+      "outcome": "pending",
+      "note": "Awaiting game-scoped official evidence; no score from silence."
+    },
+    "at://did:plc:b5s7pvomuo3xwd3wgdpnohtt/app.bsky.feed.post/3mw4cn3gvps2s": {
+      "uri": "at://did:plc:b5s7pvomuo3xwd3wgdpnohtt/app.bsky.feed.post/3mw4cn3gvps2s",
+      "handle": "bullsjay.bsky.social",
+      "name": "Jason Patt",
+      "text": "I must admit while the Caleb Williams injury discourse is extremely stupid and meatbally....the memes are #good",
+      "url": "https://bsky.app/profile/bullsjay.bsky.social/post/3mw4cn3gvps2s",
+      "textSha256": "68c616b2a21d8e8e735595dc379cda25712c6559c4f43accd47511f8b7318362",
+      "postedAt": "2026-09-22T13:14:38.433Z",
+      "firstObservedAt": "2026-09-22T16:55:10.295Z",
+      "player": null,
+      "playerId": null,
+      "team": null,
+      "status": null,
+      "inGameWatch": false,
+      "identityVerifiedAtCollection": true,
+      "bskyVerified": false,
+      "outcome": "pending",
+      "note": "Player unresolved or multiple players; not auto-scored."
     }
   },
   "scores": [
@@ -2959,6 +2997,20 @@
       "accuracy": null
     },
     {
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "observed": 4,
+      "corroborated": 0,
+      "conflicts": 0,
+      "boardAgree": 0,
+      "boardConflicts": 0,
+      "pending": 4,
+      "resolved": 0,
+      "forwardScore": 0,
+      "agreementRate": null,
+      "accuracy": null
+    },
+    {
       "handle": "geraldbourguet.bsky.social",
       "name": "Gerald Bourguet",
       "observed": 4,
@@ -2987,8 +3039,8 @@
       "accuracy": null
     },
     {
-      "handle": "byvarunshankar.bsky.social",
-      "name": "Varun Shankar",
+      "handle": "bullsjay.bsky.social",
+      "name": "Jason Patt",
       "observed": 3,
       "corroborated": 0,
       "conflicts": 0,
@@ -3079,20 +3131,6 @@
       "boardAgree": 0,
       "boardConflicts": 0,
       "pending": 3,
-      "resolved": 0,
-      "forwardScore": 0,
-      "agreementRate": null,
-      "accuracy": null
-    },
-    {
-      "handle": "bullsjay.bsky.social",
-      "name": "Jason Patt",
-      "observed": 2,
-      "corroborated": 0,
-      "conflicts": 0,
-      "boardAgree": 0,
-      "boardConflicts": 0,
-      "pending": 2,
       "resolved": 0,
       "forwardScore": 0,
       "agreementRate": null,
