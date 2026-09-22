@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-21T15:53:09.629Z",
+ "generated": "2026-09-22T07:07:46.306Z",
  "tool": "tools/verify_reporters.js",
  "method": "getProfiles (bio + verification object) + getAuthorFeed?limit=1 (recency) per allow-list handle, then one HTTP GET per club channel. Verdicts are policy, not heuristics: see judge() in this file.",
  "dormantThresholdDays": 30,
@@ -20,19 +20,19 @@
   "activeInAlertPath": 54,
   "dormantInAlertPath": 24,
   "unmeasuredInAlertPath": 0,
-  "quietestInAlertPath": 640,
+  "quietestInAlertPath": 641,
   "dormantThresholdDays": 30,
   "fatal": 0,
   "withProblems": [
    "samvecenie.bsky.social (dormant)",
    "tomhaberstroh.bsky.social (dormant)",
-   "joshrobbins.bsky.social (dormant)",
    "ejelite1.bsky.social (dormant)",
    "kellyiko.bsky.social (dormant)",
    "ryanblackburn.bsky.social (dormant)",
    "anthonyvslater.bsky.social (dormant)",
    "danwoikesports.bsky.social (dormant)",
    "rylanstiles.bsky.social (dormant)",
+   "andrewschlecht.bsky.social (dormant)",
    "damichaelcole.bsky.social (dormant)",
    "christianclark3.bsky.social (dormant)",
    "bennettdurando.bsky.social (dormant)",
@@ -68,7 +68,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Senior NBA Writer at TheRinger.com | Co-host, the Real Ones | #NBASky evangelist\n\nPreviously: SI.com, BleacherReport.com, NYTimes.com, DailyNews.com, VCStar.com, DavisEnterprise.com\n\nhttps://www.theringer.com/authors/howard-beck\nauthory.com/howardbeck",
-   "latestPostAt": "2026-09-21T00:32:34.059Z",
+   "latestPostAt": "2026-09-21T17:00:44.456Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -96,7 +96,7 @@
    "privateProfile": false,
    "bio": "I write about basketball. And watch movies. Senior Writer at \n@TheAthletic on the NBA/NBA Draft. Host of the Game Theory Podcast. Email: sam.vecenie@gmail.com",
    "latestPostAt": "2026-07-07T01:57:53.546Z",
-   "dormantDays": 76,
+   "dormantDays": 77,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -104,7 +104,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 76 days old (>30)"
+    "quote matches, but newest post is 77 days old (>30)"
    ]
   },
   {
@@ -124,7 +124,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "National NBA + basketball reporter at The Athletic — a self-indulgent way to say I write about basketball.\n\nCo-founder @30newsletter.bsky.social\n\nHost @businessdecisionmv.bsky.social \nWatch: www.youtube.com/@MikeVorkunov22\n\nEmail: mvorkunov@theathletic.com",
-   "latestPostAt": "2026-09-21T14:08:26.287Z",
+   "latestPostAt": "2026-09-21T19:27:44.565Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -151,7 +151,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "The Athletic NBA columnist\nPER creator  - Former Grizzlies VP Basketball Ops - Former ESPN\nWahoowa - Commanders - Brewers - Timbers - huh?\nAtlanta/a hotel",
-   "latestPostAt": "2026-09-21T14:12:39.077Z",
+   "latestPostAt": "2026-09-22T03:46:17.327Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -179,7 +179,7 @@
    "privateProfile": false,
    "bio": "✍️ http://TomTheFinder.com substack and Yahoo Sports | 📺 Portland Trail Blazers analytics insider | 🍽️ Pack Your Knives and Count the Dings | 💪🏼 Hoops4ALS",
    "latestPostAt": "2026-07-23T02:13:40.726Z",
-   "dormantDays": 60,
+   "dormantDays": 61,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -187,7 +187,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 60 days old (>30)"
+    "quote matches, but newest post is 61 days old (>30)"
    ]
   },
   {
@@ -208,7 +208,7 @@
    "privateProfile": false,
    "bio": "Spurs beat writer for the San Antonio Express-News. Live music and dead poets. Refugee from The Bad Place.",
    "latestPostAt": "2026-08-26T20:48:10.961Z",
-   "dormantDays": 25,
+   "dormantDays": 26,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -235,7 +235,7 @@
    "privateProfile": false,
    "bio": "In my 40th year as a reporter with the San Antonio Express-News and my 11th consecutive season as one of the E-N’s Spurs beat writers. Also do occasional stories on food insecurity issues. Proud San Antonio College alumnus. 🏳️‍🌈ally",
    "latestPostAt": "2026-09-17T21:19:48.442Z",
-   "dormantDays": 3,
+   "dormantDays": 4,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -262,7 +262,7 @@
    "privateProfile": false,
    "bio": "Timberwolves reporter at Minnesota Star Tribune. Previously Jazz, 76ers and Warriors. 530. 510.\nTwo-time Utah Sportswriter of the Year.",
    "latestPostAt": "2026-09-21T04:12:58.497Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -289,7 +289,7 @@
    "privateProfile": false,
    "bio": "Timberwolves/NBA writer for The Athletic. Also covering Vikings and other Minnesota sports stories of note. 2024 People Sexiest Man Alive. \n\nPodcast: The Jon Krawczynski Show on TalkNorth Podcast Network.",
    "latestPostAt": "2026-09-21T03:58:07.390Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -315,7 +315,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Pistons beat writer for the Detroit Free Press.\n\nCo-host of The Pistons Pulse podcast w/ \n@MotorCityHoops\n\nMichigan State ‘16. Westsider.",
-   "latestPostAt": "2026-09-21T13:35:37.169Z",
+   "latestPostAt": "2026-09-21T17:18:08.768Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -343,7 +343,7 @@
    "privateProfile": false,
    "bio": "Covering the Sixers for PHLY.\n\nStories at: https://allphly.com/author/kyle/\n\nPodcast at: https://link.chtbl.com/PHLYSixers\n\nOtherwise Philly, video games, rap music, and Liverpool.",
    "latestPostAt": "2026-09-20T20:00:40.127Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -369,7 +369,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Trail Blazers + Fire rosegardenreport.com",
-   "latestPostAt": "2026-09-20T19:17:27.387Z",
+   "latestPostAt": "2026-09-21T18:53:25.527Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -396,17 +396,15 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Senior Writer for The Athletic. I cover the Washington Wizards and the NBA.",
-   "latestPostAt": "2026-08-20T03:17:18.137Z",
-   "dormantDays": 32,
+   "latestPostAt": "2026-09-21T17:10:52.959Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
    "proseActivity": null,
-   "status": "dormant",
+   "status": "ok",
    "fatal": false,
-   "notes": [
-    "quote matches, but newest post is 32 days old (>30)"
-   ]
+   "notes": []
   },
   {
    "handle": "jlewenberg.bsky.social",
@@ -425,8 +423,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Toronto Raptors NBA Beat Reporter @ TSN",
-   "latestPostAt": "2026-09-20T03:13:58.084Z",
-   "dormantDays": 1,
+   "latestPostAt": "2026-09-21T18:53:30.510Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -452,7 +450,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "#NBASky writer at The Athletic\nIn LA\nFrom Philadelphia\n*under construction*",
-   "latestPostAt": "2026-09-21T14:40:05.999Z",
+   "latestPostAt": "2026-09-22T00:44:45.643Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -479,7 +477,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "I cover the #Bucks for the Milwaukee Journal Sentinel. I take my coffee intravenously & my Wu-Tang loud. Black lives matter. he/him/his",
-   "latestPostAt": "2026-09-21T04:24:58.069Z",
+   "latestPostAt": "2026-09-22T01:17:21.852Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -533,7 +531,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Kings Insider for ESPN 1320, The Kings Beat and Locked On Kings. Long time beat writer, podcaster and radio personality covering the NBA's Sacramento Kings.",
-   "latestPostAt": "2026-09-21T03:57:29.093Z",
+   "latestPostAt": "2026-09-22T05:45:07.649Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -647,7 +645,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "I write and talk about sports. \n\nPodcast Host: Locked on Hawks, Hammer Territory\n\nWriter: Patreon, FanSided, USBWA, Freelance\n\nFormer: DIME, SportsLine, Peachtree Hoops, CBS Sports, Bleacher Report, Battery Power\n\nPatreon.com/BTRowland\n\nlockedonhawks.com",
-   "latestPostAt": "2026-09-20T17:55:36.689Z",
+   "latestPostAt": "2026-09-21T23:37:12.747Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -675,7 +673,7 @@
    "privateProfile": false,
    "bio": "Indiana Pacers, Fever beat writer: Fieldhouse Files | Podcast Host l Play-by-play announcer | fieldhousefiles@gmail.com",
    "latestPostAt": "2026-09-19T21:00:55.964Z",
-   "dormantDays": 1,
+   "dormantDays": 2,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -730,7 +728,7 @@
    ],
    "privateProfile": true,
    "bio": "@sunsafterdark.bsky.social writer, reporter & podcaster | ABQ native | Former Phoenician | 12-year vet on the Suns beat",
-   "latestPostAt": "2026-09-21T04:05:33.045Z",
+   "latestPostAt": "2026-09-22T04:49:01.064Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -840,8 +838,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "WNBA @sbnation, Celtics @clnsceltics",
-   "latestPostAt": "2026-09-19T19:50:01.541Z",
-   "dormantDays": 1,
+   "latestPostAt": "2026-09-21T23:09:09.010Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -867,7 +865,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "ClutchPoints.com, Cash Considerations: A Chicago Bulls Podcast ",
-   "latestPostAt": "2026-09-20T23:24:41.797Z",
+   "latestPostAt": "2026-09-22T01:23:45.040Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -924,7 +922,7 @@
    "privateProfile": false,
    "bio": "Denver Nuggets | Mile High Sports | Pickaxe and Roll | Locked On Nuggets | Just trying to make it",
    "latestPostAt": "2025-06-20T19:19:27.415Z",
-   "dormantDays": 457,
+   "dormantDays": 458,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -932,7 +930,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 457 days old (>30)"
+    "quote matches, but newest post is 458 days old (>30)"
    ]
   },
   {
@@ -953,7 +951,7 @@
    "privateProfile": false,
    "bio": "NBA writer for ESPN",
    "latestPostAt": "2026-08-14T21:36:29.349Z",
-   "dormantDays": 37,
+   "dormantDays": 38,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -961,7 +959,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 37 days old (>30)"
+    "quote matches, but newest post is 38 days old (>30)"
    ]
   },
   {
@@ -982,7 +980,7 @@
    "privateProfile": false,
    "bio": "USA TODAY national sports enterprise reporter. California transplant, but the cool kind. 🏳️‍🌈\n\ndlerner@usatodayco.com",
    "latestPostAt": "2026-09-20T21:29:00.385Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1038,7 +1036,7 @@
    "privateProfile": false,
    "bio": "Locked On Thunder Podcast Host. Thunder on SI Beat Writer. Locked on NBA Saturday night host. OKC Dream Team Co-Host. Elvis Stan.",
    "latestPostAt": "2026-07-20T00:51:39.978Z",
-   "dormantDays": 63,
+   "dormantDays": 64,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1046,7 +1044,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 63 days old (>30)"
+    "quote matches, but newest post is 64 days old (>30)"
    ]
   },
   {
@@ -1067,7 +1065,7 @@
    "privateProfile": false,
    "bio": "Chicago-based NBA writer for The Athletic. Joe-L. Past: Thunder for The Oklahoman. Mizzou alum. Out West forever. https://www.nytimes.com/athletic/author/joel-lorenzi/",
    "latestPostAt": "2026-08-29T19:26:37.066Z",
-   "dormantDays": 22,
+   "dormantDays": 23,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1094,14 +1092,16 @@
    "privateProfile": false,
    "bio": "Covering the OKC Thunder \nExecutive Producer at The Athletic\nDown to Dunk\nSaturday Slam N Jam\nOKC Dream Team",
    "latestPostAt": "2026-08-21T18:39:49.219Z",
-   "dormantDays": 30,
+   "dormantDays": 31,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
    "proseActivity": null,
-   "status": "ok",
+   "status": "dormant",
    "fatal": false,
-   "notes": []
+   "notes": [
+    "quote matches, but newest post is 31 days old (>30)"
+   ]
   },
   {
    "handle": "fredkatz.bsky.social",
@@ -1121,7 +1121,7 @@
    "privateProfile": false,
    "bio": "Senior NBA Writer for The Athletic | Host of Katz and Shoot, a twice-a-week Knicks and NBA podcast",
    "latestPostAt": "2026-09-17T16:14:40.433Z",
-   "dormantDays": 3,
+   "dormantDays": 4,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1175,7 +1175,7 @@
    "privateProfile": false,
    "bio": "Memphis Grizzlies beat reporter for The Daily Memphian. Occasionally writes columns. Bama grad and Gump 🐘",
    "latestPostAt": "2026-09-10T19:19:48.672Z",
-   "dormantDays": 10,
+   "dormantDays": 11,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1202,7 +1202,7 @@
    "privateProfile": false,
    "bio": "Memphis Grizzlies beat reporter for The Commercial Appeal\nUTK graduate \nProverbs 3:5-6",
    "latestPostAt": "2025-02-17T21:02:40.702Z",
-   "dormantDays": 580,
+   "dormantDays": 581,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1210,7 +1210,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 580 days old (>30)"
+    "quote matches, but newest post is 581 days old (>30)"
    ]
   },
   {
@@ -1231,7 +1231,7 @@
    "privateProfile": false,
    "bio": "NBA reporter for The Athletic. Texan back in Texas. It's all in the game.",
    "latestPostAt": "2024-12-29T05:29:34.431Z",
-   "dormantDays": 631,
+   "dormantDays": 632,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1239,7 +1239,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 631 days old (>30)"
+    "quote matches, but newest post is 632 days old (>30)"
    ]
   },
   {
@@ -1259,7 +1259,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "NBA/WNBA (Brooklyn Nets/NY Liberty) for NetsDaily, The Local W. Podcast + Women's Basketball Roundup newsletter @blackrosiemedia.com\n \n\nEverything I drop, out of the question\nStop the guessing—it's hot\n\nSubscribe 👉 https://wbb-roundup.beehiiv.com/subscribe",
-   "latestPostAt": "2026-09-21T03:58:21.311Z",
+   "latestPostAt": "2026-09-22T02:15:54.400Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -1286,7 +1286,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "I cover the Pelicans as a credentialed media member for intheno.net | Ultimate Frisbee Coach | Wannabe Disc Golfer",
-   "latestPostAt": "2026-09-21T14:33:24.790Z",
+   "latestPostAt": "2026-09-21T13:28:45.954Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -1340,7 +1340,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Covering the Rockets for The Houston Chronicle. Retweets aren’t endorsements and don’t represent views of employer. \n\nHe/him\n\nFind my work: linktr.ee/byvarunshankar",
-   "latestPostAt": "2026-09-21T15:29:31.678Z",
+   "latestPostAt": "2026-09-21T17:20:13.304Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -1367,8 +1367,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Newspaper sports columnist turned NBA/Warriors Insider on NBC Sports Bay Area. Willing to meet at the intersection of Sports, Culture and Society, usually via ‘Race in America: A Candid Conversation’ on NBCSBA.",
-   "latestPostAt": "2026-09-02T22:47:34.906Z",
-   "dormantDays": 18,
+   "latestPostAt": "2026-09-21T20:54:39.133Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1395,7 +1395,7 @@
    "privateProfile": false,
    "bio": "Nuggets beat writer for the Denver Post",
    "latestPostAt": "2026-04-22T16:01:51.062Z",
-   "dormantDays": 151,
+   "dormantDays": 152,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1403,7 +1403,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 151 days old (>30)"
+    "quote matches, but newest post is 152 days old (>30)"
    ]
   },
   {
@@ -1424,7 +1424,7 @@
    "privateProfile": false,
    "bio": "Dallas-based reporter covering the NBA & WNBA. Dallas: DallasHoopsJournal.com. National: RG.org, BallisLife.com",
    "latestPostAt": "2025-10-14T01:00:04.138Z",
-   "dormantDays": 342,
+   "dormantDays": 343,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1432,7 +1432,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 342 days old (>30)"
+    "quote matches, but newest post is 343 days old (>30)"
    ]
   },
   {
@@ -1453,7 +1453,7 @@
    "privateProfile": false,
    "bio": "Browns, Cavs and Guardians for The Athletic. Also: Ultimate Cleveland Sports Show, 92.3 The Fan, WKYC Cleveland",
    "latestPostAt": "2024-12-19T17:16:09.988Z",
-   "dormantDays": 640,
+   "dormantDays": 641,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1461,7 +1461,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 640 days old (>30)"
+    "quote matches, but newest post is 641 days old (>30)"
    ]
   },
   {
@@ -1484,7 +1484,7 @@
    "privateProfile": false,
    "bio": "Writes NBA for the The Athletic; spot host, SiriusXM NBA radio, BBC contributor.",
    "latestPostAt": "2026-06-24T23:03:48.696Z",
-   "dormantDays": 88,
+   "dormantDays": 89,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1492,7 +1492,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 88 days old (>30)"
+    "quote matches, but newest post is 89 days old (>30)"
    ]
   },
   {
@@ -1598,7 +1598,7 @@
    "privateProfile": false,
    "bio": "Television Play-by-play Dallas Mavericks, NBA on NBC/Peacock, Big Ten Network. 15 Lone Star Emmy Awards. 2018 NSMA Texas Sportscaster of the Year. B.A - UNT, M.A. - Alabama. Enthusiast of travel, food and drink, running, history and greyhounds.",
    "latestPostAt": "2026-05-22T17:11:08.555Z",
-   "dormantDays": 121,
+   "dormantDays": 122,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1606,7 +1606,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 121 days old (>30)"
+    "quote matches, but newest post is 122 days old (>30)"
    ]
   },
   {
@@ -1627,7 +1627,7 @@
    "privateProfile": false,
    "bio": "Dallas Mavericks on Locked On Mavs Podcast | NBA Channel Manager for Locked On Podcast Network | Ahsoka & Zuko Fan\n\n📲 https://linktr.ee/nickvanexit",
    "latestPostAt": "2026-08-05T17:25:52.371Z",
-   "dormantDays": 46,
+   "dormantDays": 47,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1635,7 +1635,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 46 days old (>30)"
+    "quote matches, but newest post is 47 days old (>30)"
    ]
   },
   {
@@ -1656,7 +1656,7 @@
    "privateProfile": false,
    "bio": "Denver #Nuggets writer for Forbes. \nGrateful Dead, Star Wars. No-fascism zone.\nStill at the old place (same handle) but weaning off.\nMy Forbes pieces: https://www.forbes.com/sites/joelrush/\nMy NBA Bluesky list: https://shrtn.escalar.pt/iRuN",
    "latestPostAt": "2026-09-21T02:17:53.045Z",
-   "dormantDays": 0,
+   "dormantDays": 1,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1682,8 +1682,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "basketball analyst/dork, art museum loiterer, look up at the trees\n\ncollege hoops: https://briangeisinger.substack.com/\nBuzz Beat - Charlotte Hornets podcast: https://shorturl.at/sajhV",
-   "latestPostAt": "2026-09-19T04:49:20.399Z",
-   "dormantDays": 2,
+   "latestPostAt": "2026-09-18T17:06:52.776Z",
+   "dormantDays": 3,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1710,7 +1710,7 @@
    "privateProfile": false,
    "bio": "Writer at The Daily Memphian. Memphisotan. Somewhere along Johnny Cash’s Big River. Memphis Grizzlies/NBA, movies, music, etc.",
    "latestPostAt": "2026-09-19T19:44:48.477Z",
-   "dormantDays": 1,
+   "dormantDays": 2,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1737,7 +1737,7 @@
    "privateProfile": false,
    "bio": "Host of Locked On Pelicans, the daily podcast covering the New Orleans Pelicans. Also co-host of Locked on NBA on Wednesdays. I am secretly Jose Calderon.",
    "latestPostAt": "2025-06-17T18:10:36.407Z",
-   "dormantDays": 460,
+   "dormantDays": 461,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1745,7 +1745,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 460 days old (>30)"
+    "quote matches, but newest post is 461 days old (>30)"
    ]
   },
   {
@@ -1795,7 +1795,7 @@
    "privateProfile": false,
    "bio": "Data columnist for The Salt Lake Tribune — I write about the intersection of numbers & the world. Formerly Jazz beat writer. Opinions are mine, not the Trib's.",
    "latestPostAt": "2026-08-18T20:20:32.049057Z",
-   "dormantDays": 33,
+   "dormantDays": 34,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": {
@@ -1809,7 +1809,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 33 days old (>30)"
+    "quote matches, but newest post is 34 days old (>30)"
    ]
   },
   {
@@ -1830,7 +1830,7 @@
    "privateProfile": false,
    "bio": "The SB Nation Los Angeles Lakers blog!",
    "latestPostAt": "2025-11-05T18:43:10.372Z",
-   "dormantDays": 319,
+   "dormantDays": 320,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -1838,7 +1838,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 319 days old (>30)"
+    "quote matches, but newest post is 320 days old (>30)"
    ]
   },
   {
@@ -1980,7 +1980,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Covering the Detroit Pistons for The Athletic.",
-   "latestPostAt": "2026-09-21T12:43:40.769Z",
+   "latestPostAt": "2026-09-21T22:52:32.283Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -2051,7 +2051,7 @@
    "privateProfile": false,
    "bio": "76ers writer for Philadelphia Inquirer. Author of “Ant,” a biography of Anthony Edwards, out NOW via HarperCollins. Previous: 8 seasons as Timberwolves writer for the Minnesota Star Tribune.",
    "latestPostAt": "2026-09-15T00:25:14.601Z",
-   "dormantDays": 6,
+   "dormantDays": 7,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2059,10 +2059,10 @@
     "days": 4,
     "state": "ACTIVE",
     "detected": true,
-    "measured": 6,
+    "measured": 7,
     "measuredState": "ACTIVE",
     "contradicts": false,
-    "detail": "row prose asserts 4 days → ACTIVE, but the newest post actually measured is 6 day(s) old → ACTIVE"
+    "detail": "row prose asserts 4 days → ACTIVE, but the newest post actually measured is 7 day(s) old → ACTIVE"
    },
    "status": "ok",
    "fatal": false,
@@ -2120,8 +2120,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "🗣 that's why they brought me here 🗣\nNets Daily | SwishTheory",
-   "latestPostAt": "2026-09-19T01:29:52.034Z",
-   "dormantDays": 2,
+   "latestPostAt": "2026-09-21T18:41:30.616Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2129,10 +2129,10 @@
     "days": 0,
     "state": "ACTIVE",
     "detected": true,
-    "measured": 2,
+    "measured": 0,
     "measuredState": "ACTIVE",
     "contradicts": false,
-    "detail": "row prose asserts 0 days → ACTIVE, but the newest post actually measured is 2 day(s) old → ACTIVE"
+    "detail": "row prose asserts 0 days → ACTIVE, but the newest post actually measured is 0 day(s) old → ACTIVE"
    },
    "status": "ok",
    "fatal": false,
@@ -2155,7 +2155,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Sports columnist for The Times-Picayune | The New Orleans Advocate. We'll talk Saints, Pelicans and all the other hot topics in the 504 and beyond.\nMississippi made, Louisiana paid.\n#39194ever ",
-   "latestPostAt": "2026-09-21T03:27:16.949Z",
+   "latestPostAt": "2026-09-22T03:12:15.378Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
@@ -2226,7 +2226,7 @@
    "privateProfile": false,
    "bio": "Covering hoops for the Chicago Tribune • USC alum • PBWA member • Kansan 🌻",
    "latestPostAt": "2026-09-15T18:36:28.925Z",
-   "dormantDays": 5,
+   "dormantDays": 6,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2234,10 +2234,10 @@
     "days": 3,
     "state": "ACTIVE",
     "detected": true,
-    "measured": 5,
+    "measured": 6,
     "measuredState": "ACTIVE",
     "contradicts": false,
-    "detail": "row prose asserts 3 days → ACTIVE, but the newest post actually measured is 5 day(s) old → ACTIVE"
+    "detail": "row prose asserts 3 days → ACTIVE, but the newest post actually measured is 6 day(s) old → ACTIVE"
    },
    "status": "ok",
    "fatal": false,
@@ -2295,8 +2295,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "Creator of Basketball, She Wrote — A blog about the basketball played by the Indiana Pacers: patreon.com/basketballshewrote",
-   "latestPostAt": "2026-09-20T16:44:35.234Z",
-   "dormantDays": 0,
+   "latestPostAt": "2026-09-18T15:07:26.354Z",
+   "dormantDays": 3,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2304,10 +2304,10 @@
     "days": 0,
     "state": "ACTIVE",
     "detected": true,
-    "measured": 0,
+    "measured": 3,
     "measuredState": "ACTIVE",
     "contradicts": false,
-    "detail": "row prose asserts 0 days → ACTIVE, but the newest post actually measured is 0 day(s) old → ACTIVE"
+    "detail": "row prose asserts 0 days → ACTIVE, but the newest post actually measured is 3 day(s) old → ACTIVE"
    },
    "status": "ok",
    "fatal": false,
@@ -2331,7 +2331,7 @@
    "privateProfile": false,
    "bio": "NBA Journalist for @CLTure + Podcasts host for the Buzz Beat Podcast. NBA Draft analyst.",
    "latestPostAt": "2026-09-17T17:15:30.375Z",
-   "dormantDays": 3,
+   "dormantDays": 4,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2339,10 +2339,10 @@
     "days": 1,
     "state": "ACTIVE",
     "detected": true,
-    "measured": 3,
+    "measured": 4,
     "measuredState": "ACTIVE",
     "contradicts": false,
-    "detail": "row prose asserts 1 days → ACTIVE, but the newest post actually measured is 3 day(s) old → ACTIVE"
+    "detail": "row prose asserts 1 days → ACTIVE, but the newest post actually measured is 4 day(s) old → ACTIVE"
    },
    "status": "ok",
    "fatal": false,
@@ -2401,7 +2401,7 @@
    "privateProfile": false,
    "bio": "Covering the Utah Jazz and Utah Hockey Club for KSL.com. ",
    "latestPostAt": "2025-01-29T22:40:27.331Z",
-   "dormantDays": 599,
+   "dormantDays": 600,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2409,15 +2409,15 @@
     "days": 597,
     "state": "DORMANT",
     "detected": true,
-    "measured": 599,
+    "measured": 600,
     "measuredState": "DORMANT",
     "contradicts": false,
-    "detail": "row prose asserts 597 days → DORMANT, but the newest post actually measured is 599 day(s) old → DORMANT"
+    "detail": "row prose asserts 597 days → DORMANT, but the newest post actually measured is 600 day(s) old → DORMANT"
    },
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 599 days old (>30)"
+    "quote matches, but newest post is 600 days old (>30)"
    ]
   },
   {
@@ -2503,8 +2503,8 @@
    "labels": [],
    "privateProfile": false,
    "bio": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! 🏀 3:00pm/et: Celtics/Pistons 🏀 7:00pm/et: 76ers/Knicks 🏀 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
-   "latestPostAt": "2026-09-20T14:59:04.769Z",
-   "dormantDays": 1,
+   "latestPostAt": "2026-09-21T16:02:07.797Z",
+   "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2531,7 +2531,7 @@
    "privateProfile": false,
    "bio": "PNW hoops since 1970.",
    "latestPostAt": "2025-11-13T22:05:22.015Z",
-   "dormantDays": 311,
+   "dormantDays": 312,
    "postItems": 1,
    "recencyReadable": true,
    "beatChange": null,
@@ -2539,7 +2539,7 @@
    "status": "dormant",
    "fatal": false,
    "notes": [
-    "quote matches, but newest post is 311 days old (>30)"
+    "quote matches, but newest post is 312 days old (>30)"
    ]
   },
   {
@@ -2559,7 +2559,7 @@
    "labels": [],
    "privateProfile": false,
    "bio": "2023 NBA Champs ⚒\nlinktr.ee/denvernuggets",
-   "latestPostAt": "2026-09-20T17:03:16.796Z",
+   "latestPostAt": "2026-09-21T22:31:22.921Z",
    "dormantDays": 0,
    "postItems": 1,
    "recencyReadable": true,
