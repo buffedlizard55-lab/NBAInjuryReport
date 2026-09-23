@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T17:00:25.859Z",
+  "generated": "2026-09-23T20:14:24.273Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -11,6 +11,202 @@
       "displayName": "2026-27"
     },
     "rows": [
+      {
+        "id": "532695",
+        "player": "Steven Adams",
+        "playerId": "2991235",
+        "position": "C",
+        "team": "HOU",
+        "teamName": "Houston Rockets",
+        "status": "Day-To-Day",
+        "sev": "questionable",
+        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+        "updated": "2026-09-23T19:30Z",
+        "returnDate": "2026-10-01",
+        "fantasyStatus": "GTD",
+        "injuryType": "Ankle",
+        "injuryLocation": "Leg",
+        "injurySide": "Left",
+        "bodyPart": "Left Ankle Leg",
+        "shortComment": "Adams (ankle) didn't offer a return timetable Monday at media day, per Varun Shankar of the Houston Chronicle.",
+        "longComment": "Adams referred to the ankle surgery he underwent in January as \"complicated.\" The veteran center's status will remain worth monitoring throughout training camp and the preseason. Clint Capela should take on the leftover reps as the No. 2 center until Adams is cleared for action.",
+        "noteHeadline": null,
+        "noteText": null,
+        "noteDate": null,
+        "noteSource": null,
+        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/2991235.png",
+        "playerUrl": "https://www.espn.com/nba/player/_/id/2991235/steven-adams",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/hou",
+        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+        "searchUrl": "https://x.com/search?q=Steven%20Adams%20injury",
+        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T12:00Z",
+          "opponent": "DAL",
+          "homeAway": "away",
+          "venue": "Venetian Arena",
+          "city": "Las Vegas",
+          "restDays": null,
+          "miles": 1226,
+          "hours": 4.7,
+          "mode": "air (model)",
+          "tzShiftHours": 2,
+          "unmappedCity": null,
+          "venueNameResolved": true,
+          "travelFromFallback": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
+        "salaryCurrent": 13000000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
+        ]
+      },
+      {
+        "id": "532688",
+        "player": "Brandon Ingram",
+        "playerId": "3913176",
+        "position": "F",
+        "team": "LAC",
+        "teamName": "LA Clippers",
+        "status": "Day-To-Day",
+        "sev": "questionable",
+        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+        "updated": "2026-09-23T17:45Z",
+        "returnDate": "2026-10-01",
+        "fantasyStatus": "GTD",
+        "injuryType": "Heel",
+        "injuryLocation": "Leg",
+        "injurySide": "Right",
+        "bodyPart": "Right Heel Leg",
+        "shortComment": "Ingram had surgery on his foot/heel during the offseason, ESPN's Brian Windhorst reported Tuesday.",
+        "longComment": "\"We're going to hear at Media Day where he's at with his heel,\" Windhorst added. This update is certainly ominous, and there's been no mention of this by the Clippers. Fantasy managers will want to monitor this closely in case it impacts his availability for Opening Night.",
+        "noteHeadline": null,
+        "noteText": null,
+        "noteDate": null,
+        "noteSource": null,
+        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3913176.png",
+        "playerUrl": "https://www.espn.com/nba/player/_/id/3913176/brandon-ingram",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/lac",
+        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+        "searchUrl": "https://x.com/search?q=Brandon%20Ingram%20injury",
+        "fp": "Day-To-Day|Right Heel Leg|2026-10-01|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 33.3,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 12,
+                "max": 45
+              },
+              {
+                "key": "listingRecency",
+                "label": "newest listing dated 2026-09-14 (9 day(s) ago)",
+                "pts": 8,
+                "max": 15
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-04T23:00Z",
+          "opponent": "GSW",
+          "homeAway": "home",
+          "venue": "Intuit Dome",
+          "city": "Inglewood",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 0,
+          "unmappedCity": null,
+          "venueNameResolved": null,
+          "travelFromFallback": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 1,
+        "listingDates": [
+          "2026-09-14"
+        ],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
+        "salaryCurrent": 40000000,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
+        ]
+      },
       {
         "id": "-57577",
         "player": "Henri Veesaar",
@@ -625,108 +821,6 @@
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/roster",
         "salaryCurrent": 2221677,
         "salarySeason": 2026,
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
-        "id": "532571",
-        "player": "Brandon Ingram",
-        "playerId": "3913176",
-        "position": "F",
-        "team": "LAC",
-        "teamName": "LA Clippers",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-09-14T19:08Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Heel",
-        "injuryLocation": "Leg",
-        "injurySide": "Right",
-        "bodyPart": "Right Heel Leg",
-        "shortComment": "The Clippers and Raptors both agreed Monday to finalize the trade sending Leonard to Toronto for Brandon Ingram (heel), Gradey Dick, two unprotected first-round picks, one first-round pick swap and two second-rounders, Shams Charania of ESPN reports.",
-        "longComment": "The deal, which was agreed in principle June 30, was held up over two months due to the league's investigation involving salary-cap circumvention by Leonard and the Clippers. Ingram underwent surgery in early May to address ongoing right heel pain, so his health will be worth monitoring when he reports to Los Angeles training camp later in September.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3913176.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/3913176/brandon-ingram",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/lac",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Brandon%20Ingram%20injury",
-        "fp": "Day-To-Day|Right Heel Leg|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 33.3,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 12,
-                "max": 45
-              },
-              {
-                "key": "listingRecency",
-                "label": "newest listing dated 2026-09-14 (9 day(s) ago)",
-                "pts": 8,
-                "max": 15
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-04T23:00Z",
-          "opponent": "GSW",
-          "homeAway": "home",
-          "venue": "Intuit Dome",
-          "city": "Inglewood",
-          "restDays": null,
-          "miles": 0,
-          "hours": 0,
-          "mode": "home game — no travel leg",
-          "tzShiftHours": 0,
-          "unmappedCity": null,
-          "venueNameResolved": null,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 1,
-        "listingDates": [
-          "2026-09-14"
-        ],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
-        "salaryCurrent": 40000000,
-        "salarySeason": 2027,
         "impactNotes": [
           "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
           "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
@@ -1434,108 +1528,6 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/roster",
         "salaryCurrent": 42166510,
-        "salarySeason": 2027,
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
-        "id": "532491",
-        "player": "Domantas Sabonis",
-        "playerId": "3155942",
-        "position": "F",
-        "team": "SAC",
-        "teamName": "Sacramento Kings",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-09-02T16:35Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Knee",
-        "injuryLocation": "Leg",
-        "injurySide": "Left",
-        "bodyPart": "Left Knee Leg",
-        "shortComment": "Sabonis (knee) did not participate in Lithuania's latest FIBA World Cup qualifying window as he turned his attention toward preparing for the 2026-27 NBA season.",
-        "longComment": "Sabonis was limited to just 19 regular-season appearances for Sacramento last season due to injuries but remained productive when available, averaging 15.8 points, 11.4 rebounds and 4.1 assists while shooting 54.3 percent from the field. The 30-year-old remains a major part of the Kings' frontcourt entering 2026-27 and should continue providing strong production in rebounds, assists and field-goal percentage.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3155942.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/3155942/domantas-sabonis",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/sac",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Domantas%20Sabonis%20injury",
-        "fp": "Day-To-Day|Left Knee Leg|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 33.3,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 12,
-                "max": 45
-              },
-              {
-                "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (21 day(s) ago)",
-                "pts": 8,
-                "max": 15
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-06T02:00Z",
-          "opponent": "LAL",
-          "homeAway": "home",
-          "venue": "Golden 1 Center",
-          "city": "Sacramento",
-          "restDays": null,
-          "miles": 0,
-          "hours": 0,
-          "mode": "home game — no travel leg",
-          "tzShiftHours": 0,
-          "unmappedCity": null,
-          "venueNameResolved": null,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 1,
-        "listingDates": [
-          "2026-09-02"
-        ],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/roster",
-        "salaryCurrent": 45472000,
         "salarySeason": 2027,
         "impactNotes": [
           "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
@@ -2340,108 +2332,6 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
         "salaryCurrent": 5621700,
-        "salarySeason": 2027,
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
-        "id": "532263",
-        "player": "Kevin Durant",
-        "playerId": "3202",
-        "position": "F",
-        "team": "HOU",
-        "teamName": "Houston Rockets",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-08-05T15:22Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Ankle",
-        "injuryLocation": "Leg",
-        "injurySide": "Left",
-        "bodyPart": "Left Ankle Leg",
-        "shortComment": "Durant (ankle) averaged 26.0 points per game during his first season with Houston and continued to cement his place among the NBA's all-time great scorers, moving into the top five on the league's career 30-point games list.",
-        "longComment": "He also helped lead the Rockets to a 52-30 record and a playoff berth despite battling injuries late in the year. Houston made no major changes to its core during the offseason, so Durant should once again operate as the club's primary scoring option while chasing another deep postseason run.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/3202.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/3202/kevin-durant",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/hou",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Kevin%20Durant%20injury",
-        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 20,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "1 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 12,
-                "max": 45
-              },
-              {
-                "key": "listingRecency",
-                "label": "newest listing dated 2026-08-05 (49 day(s) ago)",
-                "pts": 0,
-                "max": 15
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-09T12:00Z",
-          "opponent": "DAL",
-          "homeAway": "away",
-          "venue": "Venetian Arena",
-          "city": "Las Vegas",
-          "restDays": null,
-          "miles": 1226,
-          "hours": 4.7,
-          "mode": "air (model)",
-          "tzShiftHours": 2,
-          "unmappedCity": null,
-          "venueNameResolved": true,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 1,
-        "listingDates": [
-          "2026-08-05"
-        ],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
-        "salaryCurrent": 43902439,
         "salarySeason": 2027,
         "impactNotes": [
           "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
@@ -6999,100 +6889,6 @@
         ]
       },
       {
-        "id": "-54135",
-        "player": "Steven Adams",
-        "playerId": "2991235",
-        "position": "C",
-        "team": "HOU",
-        "teamName": "Houston Rockets",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-06-16T14:28Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Ankle",
-        "injuryLocation": "Leg",
-        "injurySide": "Left",
-        "bodyPart": "Left Ankle Leg",
-        "shortComment": "The Rockets announced Wednesday that Adams has undergone season-ending left ankle surgery, per Shams Charania of ESPN.",
-        "longComment": "Adams was already viewed as out indefinitely with a Grade 3 sprain, but now he won't be able to return during the 2025-26 campaign. The veteran big man is under contract with Houston through the 2027-28 season. With Adams' year now over, Clint Capela and Dorian Finney-Smith are set to split the backup center duties behind Alperen Sengun.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/2991235.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/2991235/steven-adams",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/hou",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Steven%20Adams%20injury",
-        "fp": "Day-To-Day|Left Ankle Leg|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 0,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 0,
-                "max": 45
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-09T12:00Z",
-          "opponent": "DAL",
-          "homeAway": "away",
-          "venue": "Venetian Arena",
-          "city": "Las Vegas",
-          "restDays": null,
-          "miles": 1226,
-          "hours": 4.7,
-          "mode": "air (model)",
-          "tzShiftHours": 2,
-          "unmappedCity": null,
-          "venueNameResolved": true,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 0,
-        "listingDates": [],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
-        "salaryCurrent": 13000000,
-        "salarySeason": 2027,
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
         "id": "-54122",
         "player": "Nikola Topic",
         "playerId": "5159925",
@@ -7499,16 +7295,6 @@
       "desc": "Hawks rookie 7-footer Henri Veesaar suffered a torn ACL in his right knee during a workout last week and is expected to miss the season.",
       "url": "https://www.espn.com/nba/story/_/id/50000438/hawks-rookie-henri-veesaar-acl-expected-miss-season",
       "byline": "Ohm Youngmisuk"
-    },
-    {
-      "id": "49961989",
-      "ts": "2026-09-17T03:06:15Z",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "title": "Sources: Suns add center depth with free agent Duop Reath",
-      "desc": "The Phoenix Suns, looking for depth in the wake of Mark Williams' injury, are signing center Duop Reath to a deal, sources told ESPN's Shams Charania.",
-      "url": "https://www.espn.com/nba/story/_/id/49961989/sources-suns-add-center-depth-free-agent-duop-reath",
-      "byline": null
     }
   ],
   "socialPath": "direct",
@@ -7521,38 +7307,10 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
       "howardbeck.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
-      "johnhollinger.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "John Hollinger",
         "kind": "reporter",
         "team": null
       },
@@ -7567,6 +7325,20 @@
         "ok": true,
         "count": 0,
         "name": "Mike Vorkunov",
+        "kind": "reporter",
+        "team": null
+      },
+      "johnhollinger.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "John Hollinger",
+        "kind": "reporter",
+        "team": null
+      },
+      "tomhaberstroh.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tom Haberstroh",
         "kind": "reporter",
         "team": null
       },
@@ -7591,26 +7363,12 @@
         "kind": "reporter",
         "team": "MIN"
       },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
-        "kind": "reporter",
-        "team": null
-      },
       "jonkrawczynski.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Jon Krawczynski",
         "kind": "reporter",
         "team": "MIN"
-      },
-      "kyleneubeck.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Kyle Neubeck",
-        "kind": "reporter",
-        "team": "PHI"
       },
       "omarisankofa.bsky.social": {
         "ok": true,
@@ -7619,12 +7377,40 @@
         "kind": "reporter",
         "team": "DET"
       },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
+      },
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
+      },
+      "kyleneubeck.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Kyle Neubeck",
+        "kind": "reporter",
+        "team": "PHI"
+      },
       "highkin.bsky.social": {
         "ok": true,
-        "count": 1,
+        "count": 5,
         "name": "Sean Highkin",
         "kind": "reporter",
         "team": "POR"
+      },
+      "joshrobbins.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Josh Robbins",
+        "kind": "reporter",
+        "team": "WAS"
       },
       "jlewenberg.bsky.social": {
         "ok": true,
@@ -7640,19 +7426,19 @@
         "kind": "reporter",
         "team": "LAC"
       },
-      "joshrobbins.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Josh Robbins",
-        "kind": "reporter",
-        "team": "WAS"
-      },
       "jimowczarski.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Jim Owczarski",
         "kind": "reporter",
         "team": "MIL"
+      },
+      "jbeede.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Jason Beede",
+        "kind": "reporter",
+        "team": "ORL"
       },
       "jameshamnba.bsky.social": {
         "ok": true,
@@ -7661,13 +7447,6 @@
         "kind": "reporter",
         "team": "SAC"
       },
-      "jbeede.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jason Beede",
-        "kind": "reporter",
-        "team": "ORL"
-      },
       "ejelite1.bsky.social": {
         "ok": true,
         "count": 8,
@@ -7675,19 +7454,19 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "btrowland.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Brad Rowland",
-        "kind": "reporter",
-        "team": "ATL"
-      },
       "scottagness.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Scott Agness",
         "kind": "reporter",
         "team": "IND"
+      },
+      "btrowland.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Brad Rowland",
+        "kind": "reporter",
+        "team": "ATL"
       },
       "irawinderman.bsky.social": {
         "ok": true,
@@ -7703,13 +7482,6 @@
         "kind": "reporter",
         "team": "PHX"
       },
-      "gwashburnglobe.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Gary Washburn",
-        "kind": "reporter",
-        "team": "BOS"
-      },
       "kellyiko.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7717,19 +7489,12 @@
         "kind": "reporter",
         "team": null
       },
-      "byjayking.bsky.social": {
+      "gwashburnglobe.bsky.social": {
         "ok": true,
-        "count": 2,
-        "name": "Jay King",
+        "count": 1,
+        "name": "Gary Washburn",
         "kind": "reporter",
         "team": "BOS"
-      },
-      "bullsjay.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Jason Patt",
-        "kind": "reporter",
-        "team": "CHI"
       },
       "noadalzell.bsky.social": {
         "ok": true,
@@ -7738,12 +7503,26 @@
         "kind": "reporter",
         "team": "BOS"
       },
-      "ryanblackburn.bsky.social": {
+      "byjayking.bsky.social": {
         "ok": true,
-        "count": 1,
-        "name": "Ryan Blackburn",
+        "count": 2,
+        "name": "Jay King",
         "kind": "reporter",
-        "team": "DEN"
+        "team": "BOS"
+      },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
+      "bullsjay.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Jason Patt",
+        "kind": "reporter",
+        "team": "CHI"
       },
       "anthonyvslater.bsky.social": {
         "ok": true,
@@ -7752,12 +7531,12 @@
         "kind": "reporter",
         "team": "GSW"
       },
-      "danwoikesports.bsky.social": {
+      "ryanblackburn.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Dan Woike",
+        "count": 1,
+        "name": "Ryan Blackburn",
         "kind": "reporter",
-        "team": "LAL"
+        "team": "DEN"
       },
       "danielle-lerner.bsky.social": {
         "ok": true,
@@ -7766,19 +7545,19 @@
         "kind": "reporter",
         "team": null
       },
+      "danwoikesports.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Dan Woike",
+        "kind": "reporter",
+        "team": "LAL"
+      },
       "rylanstiles.bsky.social": {
         "ok": true,
         "count": 11,
         "name": "Rylan Stiles",
         "kind": "reporter",
         "team": "OKC"
-      },
-      "jxlorenzi.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Joel Lorenzi",
-        "kind": "reporter",
-        "team": null
       },
       "fredkatz.bsky.social": {
         "ok": true,
@@ -7787,6 +7566,13 @@
         "kind": "reporter",
         "team": "NYK"
       },
+      "jxlorenzi.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Joel Lorenzi",
+        "kind": "reporter",
+        "team": null
+      },
       "andrewschlecht.bsky.social": {
         "ok": true,
         "count": 6,
@@ -7794,19 +7580,19 @@
         "kind": "reporter",
         "team": "OKC"
       },
-      "jledwardsiii.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "James L. Edwards III",
-        "kind": "reporter",
-        "team": "NYK"
-      },
       "damichaelcole.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Damichael Cole",
         "kind": "reporter",
         "team": "MEM"
+      },
+      "jledwardsiii.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "James L. Edwards III",
+        "kind": "reporter",
+        "team": "NYK"
       },
       "christianclark3.bsky.social": {
         "ok": true,
@@ -7857,13 +7643,6 @@
         "kind": "reporter",
         "team": "GSW"
       },
-      "bennettdurando.bsky.social": {
-        "ok": true,
-        "count": 5,
-        "name": "Bennett Durando",
-        "kind": "reporter",
-        "team": "DEN"
-      },
       "jasonlloyd.bsky.social": {
         "ok": true,
         "count": 3,
@@ -7871,24 +7650,17 @@
         "kind": "reporter",
         "team": "CLE"
       },
+      "bennettdurando.bsky.social": {
+        "ok": true,
+        "count": 5,
+        "name": "Bennett Durando",
+        "kind": "reporter",
+        "team": "DEN"
+      },
       "grantafseth.bsky.social": {
         "ok": true,
         "count": 12,
         "name": "Grant Afseth",
-        "kind": "reporter",
-        "team": "DAL"
-      },
-      "dannycunningham.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Danny Cunningham",
-        "kind": "reporter",
-        "team": "CLE"
-      },
-      "mfollowill.bsky.social": {
-        "ok": true,
-        "count": 4,
-        "name": "Mark Followill",
         "kind": "reporter",
         "team": "DAL"
       },
@@ -7899,12 +7671,33 @@
         "kind": "reporter",
         "team": null
       },
+      "dannycunningham.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Danny Cunningham",
+        "kind": "reporter",
+        "team": "CLE"
+      },
       "nickvanexit.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Nick Angstadt",
         "kind": "reporter",
         "team": "DAL"
+      },
+      "mfollowill.bsky.social": {
+        "ok": true,
+        "count": 4,
+        "name": "Mark Followill",
+        "kind": "reporter",
+        "team": "DAL"
+      },
+      "nolajake.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Jake Madison",
+        "kind": "reporter",
+        "team": "NOP"
       },
       "joelrushnba.bsky.social": {
         "ok": true,
@@ -7927,24 +7720,10 @@
         "kind": "reporter",
         "team": "MEM"
       },
-      "nolajake.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jake Madison",
-        "kind": "reporter",
-        "team": "NOP"
-      },
       "andyblarsen.bsky.social": {
         "ok": true,
         "count": 5,
         "name": "Andy Larsen",
-        "kind": "reporter",
-        "team": "UTA"
-      },
-      "saltcityhoops.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Salt City Hoops",
         "kind": "reporter",
         "team": "UTA"
       },
@@ -7955,19 +7734,19 @@
         "kind": "reporter",
         "team": "LAL"
       },
+      "saltcityhoops.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Salt City Hoops",
+        "kind": "reporter",
+        "team": "UTA"
+      },
       "codytaylornba.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Cody Taylor",
         "kind": "reporter",
         "team": "ORL"
-      },
-      "christopherhine.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Chris Hine",
-        "kind": "reporter",
-        "team": "PHI"
       },
       "hunterpatterson.bsky.social": {
         "ok": true,
@@ -7980,6 +7759,13 @@
         "ok": true,
         "count": 0,
         "name": "Gina Mizell",
+        "kind": "reporter",
+        "team": "PHI"
+      },
+      "christopherhine.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Chris Hine",
         "kind": "reporter",
         "team": "PHI"
       },
@@ -7997,19 +7783,19 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "masonginsberg.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Mason Ginsberg",
-        "kind": "reporter",
-        "team": "NOP"
-      },
       "lucaskaplan.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Lucas Kaplan",
         "kind": "reporter",
         "team": "BKN"
+      },
+      "masonginsberg.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Mason Ginsberg",
+        "kind": "reporter",
+        "team": "NOP"
       },
       "juliapoe.bsky.social": {
         "ok": true,
@@ -8063,6 +7849,114 @@
     }
   },
   "posts": [
+    {
+      "uri": "at://did:plc:t2fqrxpw2yko4xlifv7y6hsi/app.bsky.feed.post/3mw7hjq4wdc2v",
+      "text": "SAB: \"I'm grateful that I tore my ACL. I know people look at me like I'm crazy when I say that but I wouldn't want my journey to be any different. It's making me the person I am.\"",
+      "handle": "highkin.bsky.social",
+      "name": "Sean Highkin",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "POR",
+      "outlet": "The Rose Garden Report (rosegardenreport.com)",
+      "role": "Trail Blazers writer",
+      "accountUrl": "https://bsky.app/profile/highkin.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/highkin.bsky.social",
+        "team": "POR",
+        "kind": "reporter",
+        "outlet": "The Rose Garden Report (rosegardenreport.com)",
+        "name": "Sean Highkin"
+      },
+      "createdAt": "2026-09-23T19:20:13.823Z",
+      "indexedAt": "2026-09-23T19:20:13.964Z",
+      "url": "https://bsky.app/profile/highkin.bsky.social/post/3mw7hjq4wdc2v",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:t2fqrxpw2yko4xlifv7y6hsi/app.bsky.feed.post/3mw7gt2lr462v",
+      "text": "Sarah Ashlee Barker on her ACL: \"I don't have a set date for when I'll come back. There's nothing I'm pinpointing, because I'm so focused on attacking that rehab and every aspect of how I can get better on the court. My nutrition, my lifting, the mental side of the game.\"",
+      "handle": "highkin.bsky.social",
+      "name": "Sean Highkin",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "POR",
+      "outlet": "The Rose Garden Report (rosegardenreport.com)",
+      "role": "Trail Blazers writer",
+      "accountUrl": "https://bsky.app/profile/highkin.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/highkin.bsky.social",
+        "team": "POR",
+        "kind": "reporter",
+        "outlet": "The Rose Garden Report (rosegardenreport.com)",
+        "name": "Sean Highkin"
+      },
+      "createdAt": "2026-09-23T19:07:33.016Z",
+      "indexedAt": "2026-09-23T19:07:33.258Z",
+      "url": "https://bsky.app/profile/highkin.bsky.social/post/3mw7gt2lr462v",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:t2fqrxpw2yko4xlifv7y6hsi/app.bsky.feed.post/3mw7d46szkf2r",
+      "text": "Nika Mühl on being Vanja Černivec's \"personal pick\": \"To be laid up with your knee up straight out of surgery and get a call that someone wants you and believes in you, it's crazy. I don't understand it myself.\"",
+      "handle": "highkin.bsky.social",
+      "name": "Sean Highkin",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "POR",
+      "outlet": "The Rose Garden Report (rosegardenreport.com)",
+      "role": "Trail Blazers writer",
+      "accountUrl": "https://bsky.app/profile/highkin.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/highkin.bsky.social",
+        "team": "POR",
+        "kind": "reporter",
+        "outlet": "The Rose Garden Report (rosegardenreport.com)",
+        "name": "Sean Highkin"
+      },
+      "createdAt": "2026-09-23T18:01:04.502Z",
+      "indexedAt": "2026-09-23T18:01:05.654Z",
+      "url": "https://bsky.app/profile/highkin.bsky.social/post/3mw7d46szkf2r",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:t2fqrxpw2yko4xlifv7y6hsi/app.bsky.feed.post/3mw7d45l3a52r",
+      "text": "Nika Mühl: \"The way they play is so selfless, and that's an extension of them off the court. Since I got here I've felt extremely wanted and welcome.\" Says this season has involved \"a lot of anger management\" as she rehabs a second straight ACL tear.",
+      "handle": "highkin.bsky.social",
+      "name": "Sean Highkin",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "POR",
+      "outlet": "The Rose Garden Report (rosegardenreport.com)",
+      "role": "Trail Blazers writer",
+      "accountUrl": "https://bsky.app/profile/highkin.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/highkin.bsky.social",
+        "team": "POR",
+        "kind": "reporter",
+        "outlet": "The Rose Garden Report (rosegardenreport.com)",
+        "name": "Sean Highkin"
+      },
+      "createdAt": "2026-09-23T18:01:03.167Z",
+      "indexedAt": "2026-09-23T18:01:05.483Z",
+      "url": "https://bsky.app/profile/highkin.bsky.social/post/3mw7d45l3a52r",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
     {
       "uri": "at://did:plc:6ahv2jk7wea2fql74oiisng6/app.bsky.feed.post/3mw5cc6dhz22e",
       "text": "Minnesota Lynx rookie Olivia Miles has been downgraded from questionable to OUT tonight in Indy due to a left calf injury.\n\nFever-Lynx play a Tue/Thu home-and-home to conclude the regular season. Seeding on the line.",
@@ -9169,33 +9063,6 @@
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
       "kindLabel": "mention"
-    },
-    {
-      "uri": "at://did:plc:e7fdktkwv37ws6rljgnoljfz/app.bsky.feed.post/3mqpido7w6k2e",
-      "text": "Probable #Magic starters for today’s Las Vegas Summer League game vs. the 76ers on ESPNU:\n\nJase Richardson\nLester Quinones\nAlex Morales\nNoah Penda\nColin Castleton",
-      "handle": "jbeede.bsky.social",
-      "name": "Jason Beede",
-      "verified": true,
-      "bskyVerified": false,
-      "kind": "reporter",
-      "team": "ORL",
-      "outlet": "Orlando Sentinel",
-      "role": "Magic beat reporter",
-      "accountUrl": "https://bsky.app/profile/jbeede.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/jbeede.bsky.social",
-        "team": "ORL",
-        "kind": "reporter",
-        "outlet": "Orlando Sentinel",
-        "name": "Jason Beede"
-      },
-      "createdAt": "2026-07-15T19:46:10.299Z",
-      "indexedAt": "2026-07-15T19:46:10.568Z",
-      "url": "https://bsky.app/profile/jbeede.bsky.social/post/3mqpido7w6k2e",
-      "sev": "mention",
-      "sevLabel": "NON-INJURY (rest / roster / decision)",
-      "inGameWatch": false,
-      "kindLabel": "non-injury"
     },
     {
       "uri": "at://did:plc:jnzaardlvkrjurtvgig4fhj7/app.bsky.feed.post/3mqjvvzbnak2m",
