@@ -1,9 +1,9 @@
 {
-  "checkedAt": "2026-09-23T06:31:22.974Z",
+  "checkedAt": "2026-09-23T12:09:09.852Z",
   "schema": 3,
   "rosters": {
     "CHA": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster",
       "players": [
         {
@@ -63,20 +63,6 @@
           "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster"
         },
         {
-          "playerId": "2578185",
-          "player": "Dorian Finney-Smith",
-          "team": "CHA",
-          "slug": "dorian-finney-smith",
-          "position": "F",
-          "experienceYears": 10,
-          "rosterStatus": "Active",
-          "injuryEntries": [],
-          "salaryCurrent": 13335000,
-          "salarySeason": 2027,
-          "playerUrl": "https://www.espn.com/nba/player/_/id/2578185/dorian-finney-smith",
-          "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster"
-        },
-        {
           "playerId": "4701225",
           "player": "PJ Hall",
           "team": "CHA",
@@ -88,6 +74,20 @@
           "salaryCurrent": 0,
           "salarySeason": 2027,
           "playerUrl": "https://www.espn.com/nba/player/_/id/4701225/pj-hall",
+          "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster"
+        },
+        {
+          "playerId": "2990984",
+          "player": "Buddy Hield",
+          "team": "CHA",
+          "slug": "buddy-hield",
+          "position": "G",
+          "experienceYears": 11,
+          "rosterStatus": "Active",
+          "injuryEntries": [],
+          "salaryCurrent": 9658536,
+          "salarySeason": 2027,
+          "playerUrl": "https://www.espn.com/nba/player/_/id/2990984/buddy-hield",
           "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster"
         },
         {
@@ -165,6 +165,20 @@
           "salaryCurrent": 15104625,
           "salarySeason": 2027,
           "playerUrl": "https://www.espn.com/nba/player/_/id/4433287/brandon-miller",
+          "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster"
+        },
+        {
+          "playerId": "4433629",
+          "player": "Ryan Nembhard",
+          "team": "CHA",
+          "slug": "ryan-nembhard",
+          "position": "G",
+          "experienceYears": 1,
+          "rosterStatus": "Active",
+          "injuryEntries": [],
+          "salaryCurrent": 321875,
+          "salarySeason": 2026,
+          "playerUrl": "https://www.espn.com/nba/player/_/id/4433629/ryan-nembhard",
           "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/roster"
         },
         {
@@ -268,7 +282,7 @@
       ]
     },
     "BOS": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bos/roster",
       "players": [
         {
@@ -505,7 +519,7 @@
       ]
     },
     "BKN": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bkn/roster",
       "players": [
         {
@@ -784,7 +798,7 @@
       ]
     },
     "ATL": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster",
       "players": [
         {
@@ -865,6 +879,20 @@
           "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster"
         },
         {
+          "playerId": "2578185",
+          "player": "Dorian Finney-Smith",
+          "team": "ATL",
+          "slug": "dorian-finney-smith",
+          "position": "F",
+          "experienceYears": 11,
+          "rosterStatus": "Active",
+          "injuryEntries": [],
+          "salaryCurrent": 13335000,
+          "salarySeason": 2027,
+          "playerUrl": "https://www.espn.com/nba/player/_/id/2578185/dorian-finney-smith",
+          "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster"
+        },
+        {
           "playerId": "5149077",
           "player": "Kingston Flemings",
           "team": "ATL",
@@ -921,20 +949,6 @@
           "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster"
         },
         {
-          "playerId": "2990984",
-          "player": "Buddy Hield",
-          "team": "ATL",
-          "slug": "buddy-hield",
-          "position": "G",
-          "experienceYears": 10,
-          "rosterStatus": "Active",
-          "injuryEntries": [],
-          "salaryCurrent": 9658536,
-          "salarySeason": 2027,
-          "playerUrl": "https://www.espn.com/nba/player/_/id/2990984/buddy-hield",
-          "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster"
-        },
-        {
           "playerId": "4701230",
           "player": "Jalen Johnson",
           "team": "ATL",
@@ -988,20 +1002,6 @@
           "salaryCurrent": 30666666,
           "salarySeason": 2026,
           "playerUrl": "https://www.espn.com/nba/player/_/id/2490149/cj-mccollum",
-          "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster"
-        },
-        {
-          "playerId": "4433629",
-          "player": "Ryan Nembhard",
-          "team": "ATL",
-          "slug": "ryan-nembhard",
-          "position": "G",
-          "experienceYears": 1,
-          "rosterStatus": "Active",
-          "injuryEntries": [],
-          "salaryCurrent": 321875,
-          "salarySeason": 2026,
-          "playerUrl": "https://www.espn.com/nba/player/_/id/4433629/ryan-nembhard",
           "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/roster"
         },
         {
@@ -1084,7 +1084,7 @@
       ]
     },
     "CHI": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/roster",
       "players": [
         {
@@ -1342,7 +1342,7 @@
       ]
     },
     "CLE": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cle/roster",
       "players": [
         {
@@ -1607,7 +1607,7 @@
       ]
     },
     "DET": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/det/roster",
       "players": [
         {
@@ -1893,7 +1893,7 @@
       ]
     },
     "DEN": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/roster",
       "players": [
         {
@@ -2172,7 +2172,7 @@
       ]
     },
     "DAL": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/roster",
       "players": [
         {
@@ -2458,7 +2458,7 @@
       ]
     },
     "HOU": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/roster",
       "players": [
         {
@@ -2700,14 +2700,7 @@
           "position": "G",
           "experienceYears": 9,
           "rosterStatus": "Active",
-          "injuryEntries": [
-            {
-              "status": "Day-To-Day",
-              "date": "2026-09-11T20:46Z",
-              "type": null,
-              "detail": null
-            }
-          ],
+          "injuryEntries": [],
           "salaryCurrent": 25000000,
           "salarySeason": 2027,
           "playerUrl": "https://www.espn.com/nba/player/_/id/2991230/fred-vanvleet",
@@ -2716,7 +2709,7 @@
       ]
     },
     "GSW": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/roster",
       "players": [
         {
@@ -2995,7 +2988,7 @@
       ]
     },
     "IND": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/roster",
       "players": [
         {
@@ -3246,7 +3239,7 @@
       ]
     },
     "LAC": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/roster",
       "players": [
         {
@@ -3581,7 +3574,7 @@
       ]
     },
     "MIA": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "players": [
         {
@@ -3802,6 +3795,20 @@
           "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster"
         },
         {
+          "playerId": "4898237",
+          "player": "Bez Mbeng",
+          "team": "MIA",
+          "slug": "bez-mbeng",
+          "position": "G",
+          "experienceYears": 0,
+          "rosterStatus": "Active",
+          "injuryEntries": [],
+          "salaryCurrent": null,
+          "salarySeason": null,
+          "playerUrl": "https://www.espn.com/nba/player/_/id/4898237/bez-mbeng",
+          "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster"
+        },
+        {
           "playerId": "4278053",
           "player": "Davion Mitchell",
           "team": "MIA",
@@ -3902,7 +3909,7 @@
       ]
     },
     "MEM": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/roster",
       "players": [
         {
@@ -4237,7 +4244,7 @@
       ]
     },
     "LAL": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lal/roster",
       "players": [
         {
@@ -4523,7 +4530,7 @@
       ]
     },
     "MIL": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mil/roster",
       "players": [
         {
@@ -4809,7 +4816,7 @@
       ]
     },
     "MIN": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/min/roster",
       "players": [
         {
@@ -5095,7 +5102,7 @@
       ]
     },
     "OKC": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/roster",
       "players": [
         {
@@ -5374,7 +5381,7 @@
       ]
     },
     "NYK": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/roster",
       "players": [
         {
@@ -5618,7 +5625,7 @@
       ]
     },
     "ORL": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/roster",
       "players": [
         {
@@ -5911,7 +5918,7 @@
       ]
     },
     "PHI": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/roster",
       "players": [
         {
@@ -6211,7 +6218,7 @@
       ]
     },
     "POR": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/roster",
       "players": [
         {
@@ -6483,7 +6490,7 @@
       ]
     },
     "SAC": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/roster",
       "players": [
         {
@@ -6734,7 +6741,7 @@
       ]
     },
     "PHX": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/roster",
       "players": [
         {
@@ -7041,7 +7048,7 @@
       ]
     },
     "TOR": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/roster",
       "players": [
         {
@@ -7341,7 +7348,7 @@
       ]
     },
     "SAS": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/roster",
       "players": [
         {
@@ -7627,7 +7634,7 @@
       ]
     },
     "WAS": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/roster",
       "players": [
         {
@@ -7899,7 +7906,7 @@
       ]
     },
     "UTA": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster",
       "players": [
         {
@@ -8085,20 +8092,6 @@
           "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster"
         },
         {
-          "playerId": "4898237",
-          "player": "Bez Mbeng",
-          "team": "UTA",
-          "slug": "bez-mbeng",
-          "position": "G",
-          "experienceYears": 1,
-          "rosterStatus": "Active",
-          "injuryEntries": [],
-          "salaryCurrent": null,
-          "salarySeason": null,
-          "playerUrl": "https://www.espn.com/nba/player/_/id/4898237/bez-mbeng",
-          "rosterUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/roster"
-        },
-        {
           "playerId": "3133602",
           "player": "Svi Mykhailiuk",
           "team": "UTA",
@@ -8185,7 +8178,7 @@
       ]
     },
     "NOP": {
-      "fetchedAt": "2026-09-22T07:08:42.152Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/roster",
       "players": [
         {
@@ -8444,9 +8437,7 @@
     }
   },
   "roles": [],
-  "errors": {
-    "schedule-CHA": "The operation was aborted due to timeout"
-  },
+  "errors": {},
   "schedules": {
     "BOS": {
       "fetchedAt": "2026-09-23T06:31:22.974Z",
@@ -8714,7 +8705,7 @@
       "venueResolvedCount": 0
     },
     "CHA": {
-      "fetchedAt": "2026-09-22T22:55:23.136Z",
+      "fetchedAt": "2026-09-23T12:09:09.852Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cha/schedule",
       "team": "CHA",
       "geoModel": 3,
