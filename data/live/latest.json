@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T12:09:12.006Z",
+  "generated": "2026-09-23T17:00:25.859Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -7462,7 +7462,7 @@
   "news": [
     {
       "id": "50007712",
-      "ts": "2026-09-22T23:43:03Z",
+      "ts": "2026-09-23T13:12:33Z",
       "sev": "return",
       "sevLabel": "RETURN / GOOD NEWS",
       "title": "Rockets, with return of VanVleet, hope to make 'real noise'",
@@ -7514,20 +7514,6 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
-      "trailblazers.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
-      },
       "nuggets.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7542,24 +7528,24 @@
         "kind": "official-team",
         "team": "PHI"
       },
-      "samvecenie.bsky.social": {
+      "trailblazers.bsky.social": {
         "ok": true,
-        "count": 3,
-        "name": "Sam Vecenie",
-        "kind": "reporter",
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
+      },
+      "nba.com": {
+        "ok": true,
+        "count": 0,
+        "name": "NBA — official league account",
+        "kind": "official-league",
         "team": null
       },
       "howardbeck.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Howard Beck",
-        "kind": "reporter",
-        "team": null
-      },
-      "mikevorkunov.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Mike Vorkunov",
         "kind": "reporter",
         "team": null
       },
@@ -7570,10 +7556,17 @@
         "kind": "reporter",
         "team": null
       },
-      "tomhaberstroh.bsky.social": {
+      "samvecenie.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Sam Vecenie",
+        "kind": "reporter",
+        "team": null
+      },
+      "mikevorkunov.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Tom Haberstroh",
+        "name": "Mike Vorkunov",
         "kind": "reporter",
         "team": null
       },
@@ -7598,12 +7591,12 @@
         "kind": "reporter",
         "team": "MIN"
       },
-      "omarisankofa.bsky.social": {
+      "tomhaberstroh.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Omari Sankofa II",
+        "name": "Tom Haberstroh",
         "kind": "reporter",
-        "team": "DET"
+        "team": null
       },
       "jonkrawczynski.bsky.social": {
         "ok": true,
@@ -7619,19 +7612,19 @@
         "kind": "reporter",
         "team": "PHI"
       },
+      "omarisankofa.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Omari Sankofa II",
+        "kind": "reporter",
+        "team": "DET"
+      },
       "highkin.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Sean Highkin",
         "kind": "reporter",
         "team": "POR"
-      },
-      "joshrobbins.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Josh Robbins",
-        "kind": "reporter",
-        "team": "WAS"
       },
       "jlewenberg.bsky.social": {
         "ok": true,
@@ -7647,12 +7640,26 @@
         "kind": "reporter",
         "team": "LAC"
       },
+      "joshrobbins.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Josh Robbins",
+        "kind": "reporter",
+        "team": "WAS"
+      },
       "jimowczarski.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Jim Owczarski",
         "kind": "reporter",
         "team": "MIL"
+      },
+      "jameshamnba.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "James Ham",
+        "kind": "reporter",
+        "team": "SAC"
       },
       "jbeede.bsky.social": {
         "ok": true,
@@ -7661,13 +7668,6 @@
         "kind": "reporter",
         "team": "ORL"
       },
-      "jameshamnba.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "James Ham",
-        "kind": "reporter",
-        "team": "SAC"
-      },
       "ejelite1.bsky.social": {
         "ok": true,
         "count": 8,
@@ -7675,19 +7675,19 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "scottagness.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Scott Agness",
-        "kind": "reporter",
-        "team": "IND"
-      },
       "btrowland.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Brad Rowland",
         "kind": "reporter",
         "team": "ATL"
+      },
+      "scottagness.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Scott Agness",
+        "kind": "reporter",
+        "team": "IND"
       },
       "irawinderman.bsky.social": {
         "ok": true,
@@ -7703,13 +7703,6 @@
         "kind": "reporter",
         "team": "PHX"
       },
-      "kellyiko.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Kelly Iko",
-        "kind": "reporter",
-        "team": null
-      },
       "gwashburnglobe.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7717,17 +7710,17 @@
         "kind": "reporter",
         "team": "BOS"
       },
+      "kellyiko.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "Kelly Iko",
+        "kind": "reporter",
+        "team": null
+      },
       "byjayking.bsky.social": {
         "ok": true,
         "count": 2,
         "name": "Jay King",
-        "kind": "reporter",
-        "team": "BOS"
-      },
-      "noadalzell.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Noa Dalzell",
         "kind": "reporter",
         "team": "BOS"
       },
@@ -7738,12 +7731,12 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "anthonyvslater.bsky.social": {
+      "noadalzell.bsky.social": {
         "ok": true,
-        "count": 9,
-        "name": "Anthony Slater",
+        "count": 2,
+        "name": "Noa Dalzell",
         "kind": "reporter",
-        "team": "GSW"
+        "team": "BOS"
       },
       "ryanblackburn.bsky.social": {
         "ok": true,
@@ -7751,6 +7744,13 @@
         "name": "Ryan Blackburn",
         "kind": "reporter",
         "team": "DEN"
+      },
+      "anthonyvslater.bsky.social": {
+        "ok": true,
+        "count": 9,
+        "name": "Anthony Slater",
+        "kind": "reporter",
+        "team": "GSW"
       },
       "danwoikesports.bsky.social": {
         "ok": true,
@@ -7801,13 +7801,6 @@
         "kind": "reporter",
         "team": "NYK"
       },
-      "drewhilldailym.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Drew Hill",
-        "kind": "reporter",
-        "team": "MEM"
-      },
       "damichaelcole.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7822,19 +7815,19 @@
         "kind": "reporter",
         "team": "DAL"
       },
+      "drewhilldailym.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Drew Hill",
+        "kind": "reporter",
+        "team": "MEM"
+      },
       "busyxb.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Busy — NetsDaily",
         "kind": "reporter",
         "team": "BKN"
-      },
-      "byvarunshankar.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Varun Shankar",
-        "kind": "reporter",
-        "team": "HOU"
       },
       "fearthebrown.bsky.social": {
         "ok": true,
@@ -7850,19 +7843,19 @@
         "kind": "reporter",
         "team": "NOP"
       },
+      "byvarunshankar.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Varun Shankar",
+        "kind": "reporter",
+        "team": "HOU"
+      },
       "montepoole.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Monte Poole",
         "kind": "reporter",
         "team": "GSW"
-      },
-      "jasonlloyd.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Jason Lloyd",
-        "kind": "reporter",
-        "team": "CLE"
       },
       "bennettdurando.bsky.social": {
         "ok": true,
@@ -7871,19 +7864,19 @@
         "kind": "reporter",
         "team": "DEN"
       },
+      "jasonlloyd.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Jason Lloyd",
+        "kind": "reporter",
+        "team": "CLE"
+      },
       "grantafseth.bsky.social": {
         "ok": true,
         "count": 12,
         "name": "Grant Afseth",
         "kind": "reporter",
         "team": "DAL"
-      },
-      "joevardon.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Joe Vardon",
-        "kind": "reporter",
-        "team": null
       },
       "dannycunningham.bsky.social": {
         "ok": true,
@@ -7898,6 +7891,13 @@
         "name": "Mark Followill",
         "kind": "reporter",
         "team": "DAL"
+      },
+      "joevardon.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Joe Vardon",
+        "kind": "reporter",
+        "team": null
       },
       "nickvanexit.bsky.social": {
         "ok": true,
@@ -7934,17 +7934,17 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "saltcityhoops.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Salt City Hoops",
-        "kind": "reporter",
-        "team": "UTA"
-      },
       "andyblarsen.bsky.social": {
         "ok": true,
         "count": 5,
         "name": "Andy Larsen",
+        "kind": "reporter",
+        "team": "UTA"
+      },
+      "saltcityhoops.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Salt City Hoops",
         "kind": "reporter",
         "team": "UTA"
       },
@@ -7962,19 +7962,19 @@
         "kind": "reporter",
         "team": "ORL"
       },
-      "hunterpatterson.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Hunter Patterson",
-        "kind": "reporter",
-        "team": "DET"
-      },
       "christopherhine.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Chris Hine",
         "kind": "reporter",
         "team": "PHI"
+      },
+      "hunterpatterson.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Hunter Patterson",
+        "kind": "reporter",
+        "team": "DET"
       },
       "ginamizell.bsky.social": {
         "ok": true,
@@ -7990,13 +7990,6 @@
         "kind": "reporter",
         "team": "TOR"
       },
-      "lucaskaplan.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Lucas Kaplan",
-        "kind": "reporter",
-        "team": "BKN"
-      },
       "rodwalkernola.bsky.social": {
         "ok": true,
         "count": 4,
@@ -8010,6 +8003,13 @@
         "name": "Mason Ginsberg",
         "kind": "reporter",
         "team": "NOP"
+      },
+      "lucaskaplan.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Lucas Kaplan",
+        "kind": "reporter",
+        "team": "BKN"
       },
       "juliapoe.bsky.social": {
         "ok": true,
@@ -9462,33 +9462,6 @@
       "createdAt": "2026-07-06T22:58:46.472Z",
       "indexedAt": "2026-07-06T22:58:46.727Z",
       "url": "https://bsky.app/profile/nbasarah.bsky.social/post/3mpz6vrvme225",
-      "sev": "out",
-      "sevLabel": "OUT (social report)",
-      "inGameWatch": false,
-      "kindLabel": "designation"
-    },
-    {
-      "uri": "at://did:plc:df2gzsny4y5khzaa5rsfrblr/app.bsky.feed.post/3mpywztxdqc2r",
-      "text": "According to a league source, Adam Flagler, Jonathan Mogbo and Emanuel Sharpe will not play at the California Classic tonight, in addition to Alex Karaban who is out with an ankle injury. Sounds like Darius Acuff Jr., Dylan Cardwell and Nique Clifford are all playing,",
-      "handle": "jameshamnba.bsky.social",
-      "name": "James Ham",
-      "verified": true,
-      "bskyVerified": false,
-      "kind": "reporter",
-      "team": "SAC",
-      "outlet": "ESPN 1320 / The Kings Beat / Locked On Kings",
-      "role": "Kings insider (beat writer, podcaster)",
-      "accountUrl": "https://bsky.app/profile/jameshamnba.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/jameshamnba.bsky.social",
-        "team": "SAC",
-        "kind": "reporter",
-        "outlet": "ESPN 1320 / The Kings Beat / Locked On Kings",
-        "name": "James Ham"
-      },
-      "createdAt": "2026-07-06T20:37:52.910Z",
-      "indexedAt": "2026-07-06T20:37:53.226Z",
-      "url": "https://bsky.app/profile/jameshamnba.bsky.social/post/3mpywztxdqc2r",
       "sev": "out",
       "sevLabel": "OUT (social report)",
       "inGameWatch": false,

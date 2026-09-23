@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-23T12:09:09.852Z",
+  "checkedAt": "2026-09-23T17:00:25.107Z",
   "schema": 3,
   "rosters": {
     "CHA": {
@@ -8440,7 +8440,7 @@
   "errors": {},
   "schedules": {
     "BOS": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bos/schedule",
       "team": "BOS",
       "geoModel": 3,
@@ -8523,7 +8523,7 @@
       "venueResolvedCount": 0
     },
     "ATL": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/atl/schedule",
       "team": "ATL",
       "geoModel": 3,
@@ -8622,7 +8622,7 @@
       "venueResolvedCount": 0
     },
     "BKN": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/bkn/schedule",
       "team": "BKN",
       "geoModel": 3,
@@ -8788,7 +8788,7 @@
       "venueResolvedCount": 0
     },
     "CLE": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/cle/schedule",
       "team": "CLE",
       "geoModel": 3,
@@ -8855,7 +8855,7 @@
       "venueResolvedCount": 0
     },
     "CHI": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/chi/schedule",
       "team": "CHI",
       "geoModel": 3,
@@ -8954,7 +8954,7 @@
       "venueResolvedCount": 0
     },
     "DAL": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule",
       "team": "DAL",
       "geoModel": 3,
@@ -9039,7 +9039,7 @@
       "venueResolvedCount": 2
     },
     "DEN": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/den/schedule",
       "team": "DEN",
       "geoModel": 3,
@@ -9138,7 +9138,7 @@
       "venueResolvedCount": 0
     },
     "DET": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/det/schedule",
       "team": "DET",
       "geoModel": 3,
@@ -9221,7 +9221,7 @@
       "venueResolvedCount": 0
     },
     "GSW": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/gs/schedule",
       "team": "GSW",
       "geoModel": 3,
@@ -9336,7 +9336,7 @@
       "venueResolvedCount": 0
     },
     "HOU": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/hou/schedule",
       "team": "HOU",
       "geoModel": 3,
@@ -9405,7 +9405,7 @@
       "venueResolvedCount": 2
     },
     "LAC": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lac/schedule",
       "team": "LAC",
       "geoModel": 3,
@@ -9472,7 +9472,7 @@
       "venueResolvedCount": 0
     },
     "LAL": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/lal/schedule",
       "team": "LAL",
       "geoModel": 3,
@@ -9571,7 +9571,7 @@
       "venueResolvedCount": 0
     },
     "IND": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ind/schedule",
       "team": "IND",
       "geoModel": 3,
@@ -9654,7 +9654,7 @@
       "venueResolvedCount": 0
     },
     "MIA": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/schedule",
       "team": "MIA",
       "geoModel": 3,
@@ -9753,7 +9753,7 @@
       "venueResolvedCount": 0
     },
     "MEM": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mem/schedule",
       "team": "MEM",
       "geoModel": 3,
@@ -9836,7 +9836,7 @@
       "venueResolvedCount": 0
     },
     "MIL": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mil/schedule",
       "team": "MIL",
       "geoModel": 3,
@@ -9935,7 +9935,7 @@
       "venueResolvedCount": 0
     },
     "MIN": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/min/schedule",
       "team": "MIN",
       "geoModel": 3,
@@ -10050,7 +10050,7 @@
       "venueResolvedCount": 0
     },
     "NOP": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/no/schedule",
       "team": "NOP",
       "geoModel": 3,
@@ -10133,7 +10133,7 @@
       "venueResolvedCount": 0
     },
     "ORL": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/orl/schedule",
       "team": "ORL",
       "geoModel": 3,
@@ -10216,7 +10216,7 @@
       "venueResolvedCount": 0
     },
     "PHI": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phi/schedule",
       "team": "PHI",
       "geoModel": 3,
@@ -10299,7 +10299,7 @@
       "venueResolvedCount": 0
     },
     "NYK": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/ny/schedule",
       "team": "NYK",
       "geoModel": 3,
@@ -10398,7 +10398,7 @@
       "venueResolvedCount": 0
     },
     "PHX": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/phx/schedule",
       "team": "PHX",
       "geoModel": 3,
@@ -10497,7 +10497,7 @@
       "venueResolvedCount": 0
     },
     "OKC": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule",
       "team": "OKC",
       "geoModel": 3,
@@ -10596,7 +10596,7 @@
       "venueResolvedCount": 0
     },
     "POR": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/por/schedule",
       "team": "POR",
       "geoModel": 3,
@@ -10679,7 +10679,7 @@
       "venueResolvedCount": 0
     },
     "SAC": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/schedule",
       "team": "SAC",
       "geoModel": 3,
@@ -10778,7 +10778,7 @@
       "venueResolvedCount": 0
     },
     "SAS": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sa/schedule",
       "team": "SAS",
       "geoModel": 3,
@@ -10877,7 +10877,7 @@
       "venueResolvedCount": 0
     },
     "TOR": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/tor/schedule",
       "team": "TOR",
       "geoModel": 3,
@@ -10976,7 +10976,7 @@
       "venueResolvedCount": 0
     },
     "UTA": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/utah/schedule",
       "team": "UTA",
       "geoModel": 3,
@@ -11059,7 +11059,7 @@
       "venueResolvedCount": 0
     },
     "WAS": {
-      "fetchedAt": "2026-09-23T06:31:22.974Z",
+      "fetchedAt": "2026-09-23T17:00:25.107Z",
       "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/wsh/schedule",
       "team": "WAS",
       "geoModel": 3,
