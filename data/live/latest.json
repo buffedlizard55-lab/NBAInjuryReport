@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T20:14:24.273Z",
+  "generated": "2026-09-23T23:00:20.198Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -7025,8 +7025,15 @@
             "parts": []
           },
           "exposure": {
-            "score": 0,
-            "parts": []
+            "score": 50,
+            "parts": [
+              {
+                "key": "backToBacks",
+                "label": "1 back-to-back(s) in the next 14 days",
+                "pts": 15,
+                "max": 30
+              }
+            ]
           },
           "recurrence": {
             "score": 0,
@@ -7300,6 +7307,13 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
+      "sixersnba.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
+      },
       "nuggets.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7307,12 +7321,19 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "howardbeck.bsky.social": {
+      "nba.com": {
         "ok": true,
         "count": 0,
-        "name": "Howard Beck",
-        "kind": "reporter",
+        "name": "NBA — official league account",
+        "kind": "official-league",
         "team": null
+      },
+      "trailblazers.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Portland Trail Blazers — official",
+        "kind": "official-team",
+        "team": "POR"
       },
       "samvecenie.bsky.social": {
         "ok": true,
@@ -7328,17 +7349,17 @@
         "kind": "reporter",
         "team": null
       },
+      "howardbeck.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
       "johnhollinger.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "John Hollinger",
-        "kind": "reporter",
-        "team": null
-      },
-      "tomhaberstroh.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Tom Haberstroh",
         "kind": "reporter",
         "team": null
       },
@@ -7356,17 +7377,17 @@
         "kind": "reporter",
         "team": "SAS"
       },
+      "tomhaberstroh.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Tom Haberstroh",
+        "kind": "reporter",
+        "team": null
+      },
       "nbasarah.bsky.social": {
         "ok": true,
         "count": 4,
         "name": "Sarah Todd",
-        "kind": "reporter",
-        "team": "MIN"
-      },
-      "jonkrawczynski.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jon Krawczynski",
         "kind": "reporter",
         "team": "MIN"
       },
@@ -7377,20 +7398,6 @@
         "kind": "reporter",
         "team": "DET"
       },
-      "nba.com": {
-        "ok": true,
-        "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
-      },
-      "sixersnba.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
-      },
       "kyleneubeck.bsky.social": {
         "ok": true,
         "count": 3,
@@ -7398,9 +7405,16 @@
         "kind": "reporter",
         "team": "PHI"
       },
+      "jonkrawczynski.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Jon Krawczynski",
+        "kind": "reporter",
+        "team": "MIN"
+      },
       "highkin.bsky.social": {
         "ok": true,
-        "count": 5,
+        "count": 6,
         "name": "Sean Highkin",
         "kind": "reporter",
         "team": "POR"
@@ -7412,19 +7426,19 @@
         "kind": "reporter",
         "team": "WAS"
       },
-      "jlewenberg.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Josh Lewenberg",
-        "kind": "reporter",
-        "team": "TOR"
-      },
       "lawmurraythenu.bsky.social": {
         "ok": true,
         "count": 7,
         "name": "Law Murray",
         "kind": "reporter",
         "team": "LAC"
+      },
+      "jlewenberg.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Josh Lewenberg",
+        "kind": "reporter",
+        "team": "TOR"
       },
       "jimowczarski.bsky.social": {
         "ok": true,
@@ -7454,19 +7468,19 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "scottagness.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Scott Agness",
-        "kind": "reporter",
-        "team": "IND"
-      },
       "btrowland.bsky.social": {
         "ok": true,
         "count": 3,
         "name": "Brad Rowland",
         "kind": "reporter",
         "team": "ATL"
+      },
+      "scottagness.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Scott Agness",
+        "kind": "reporter",
+        "team": "IND"
       },
       "irawinderman.bsky.social": {
         "ok": true,
@@ -7475,13 +7489,6 @@
         "kind": "reporter",
         "team": "MIA"
       },
-      "geraldbourguet.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Gerald Bourguet",
-        "kind": "reporter",
-        "team": "PHX"
-      },
       "kellyiko.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7489,17 +7496,17 @@
         "kind": "reporter",
         "team": null
       },
+      "geraldbourguet.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Gerald Bourguet",
+        "kind": "reporter",
+        "team": "PHX"
+      },
       "gwashburnglobe.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Gary Washburn",
-        "kind": "reporter",
-        "team": "BOS"
-      },
-      "noadalzell.bsky.social": {
-        "ok": true,
-        "count": 2,
-        "name": "Noa Dalzell",
         "kind": "reporter",
         "team": "BOS"
       },
@@ -7510,12 +7517,12 @@
         "kind": "reporter",
         "team": "BOS"
       },
-      "trailblazers.bsky.social": {
+      "noadalzell.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Portland Trail Blazers — official",
-        "kind": "official-team",
-        "team": "POR"
+        "count": 2,
+        "name": "Noa Dalzell",
+        "kind": "reporter",
+        "team": "BOS"
       },
       "bullsjay.bsky.social": {
         "ok": true,
@@ -7524,19 +7531,19 @@
         "kind": "reporter",
         "team": "CHI"
       },
-      "anthonyvslater.bsky.social": {
-        "ok": true,
-        "count": 9,
-        "name": "Anthony Slater",
-        "kind": "reporter",
-        "team": "GSW"
-      },
       "ryanblackburn.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Ryan Blackburn",
         "kind": "reporter",
         "team": "DEN"
+      },
+      "anthonyvslater.bsky.social": {
+        "ok": true,
+        "count": 9,
+        "name": "Anthony Slater",
+        "kind": "reporter",
+        "team": "GSW"
       },
       "danielle-lerner.bsky.social": {
         "ok": true,
@@ -7545,13 +7552,6 @@
         "kind": "reporter",
         "team": null
       },
-      "danwoikesports.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Dan Woike",
-        "kind": "reporter",
-        "team": "LAL"
-      },
       "rylanstiles.bsky.social": {
         "ok": true,
         "count": 11,
@@ -7559,12 +7559,12 @@
         "kind": "reporter",
         "team": "OKC"
       },
-      "fredkatz.bsky.social": {
+      "danwoikesports.bsky.social": {
         "ok": true,
-        "count": 2,
-        "name": "Fred Katz",
+        "count": 0,
+        "name": "Dan Woike",
         "kind": "reporter",
-        "team": "NYK"
+        "team": "LAL"
       },
       "jxlorenzi.bsky.social": {
         "ok": true,
@@ -7580,12 +7580,12 @@
         "kind": "reporter",
         "team": "OKC"
       },
-      "damichaelcole.bsky.social": {
+      "fredkatz.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Damichael Cole",
+        "count": 2,
+        "name": "Fred Katz",
         "kind": "reporter",
-        "team": "MEM"
+        "team": "NYK"
       },
       "jledwardsiii.bsky.social": {
         "ok": true,
@@ -7594,12 +7594,12 @@
         "kind": "reporter",
         "team": "NYK"
       },
-      "christianclark3.bsky.social": {
+      "damichaelcole.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "Christian Clark",
+        "name": "Damichael Cole",
         "kind": "reporter",
-        "team": "DAL"
+        "team": "MEM"
       },
       "drewhilldailym.bsky.social": {
         "ok": true,
@@ -7607,6 +7607,13 @@
         "name": "Drew Hill",
         "kind": "reporter",
         "team": "MEM"
+      },
+      "christianclark3.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Christian Clark",
+        "kind": "reporter",
+        "team": "DAL"
       },
       "busyxb.bsky.social": {
         "ok": true,
@@ -7636,6 +7643,13 @@
         "kind": "reporter",
         "team": "HOU"
       },
+      "bennettdurando.bsky.social": {
+        "ok": true,
+        "count": 5,
+        "name": "Bennett Durando",
+        "kind": "reporter",
+        "team": "DEN"
+      },
       "montepoole.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7649,13 +7663,6 @@
         "name": "Jason Lloyd",
         "kind": "reporter",
         "team": "CLE"
-      },
-      "bennettdurando.bsky.social": {
-        "ok": true,
-        "count": 5,
-        "name": "Bennett Durando",
-        "kind": "reporter",
-        "team": "DEN"
       },
       "grantafseth.bsky.social": {
         "ok": true,
@@ -7678,13 +7685,6 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "nickvanexit.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Nick Angstadt",
-        "kind": "reporter",
-        "team": "DAL"
-      },
       "mfollowill.bsky.social": {
         "ok": true,
         "count": 4,
@@ -7692,12 +7692,12 @@
         "kind": "reporter",
         "team": "DAL"
       },
-      "nolajake.bsky.social": {
+      "nickvanexit.bsky.social": {
         "ok": true,
-        "count": 1,
-        "name": "Jake Madison",
+        "count": 0,
+        "name": "Nick Angstadt",
         "kind": "reporter",
-        "team": "NOP"
+        "team": "DAL"
       },
       "joelrushnba.bsky.social": {
         "ok": true,
@@ -7713,12 +7713,26 @@
         "kind": "reporter",
         "team": "CHA"
       },
+      "nolajake.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Jake Madison",
+        "kind": "reporter",
+        "team": "NOP"
+      },
       "chrisherrington.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Chris Herrington",
         "kind": "reporter",
         "team": "MEM"
+      },
+      "saltcityhoops.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Salt City Hoops",
+        "kind": "reporter",
+        "team": "UTA"
       },
       "andyblarsen.bsky.social": {
         "ok": true,
@@ -7733,13 +7747,6 @@
         "name": "Silver Screen and Roll",
         "kind": "reporter",
         "team": "LAL"
-      },
-      "saltcityhoops.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Salt City Hoops",
-        "kind": "reporter",
-        "team": "UTA"
       },
       "codytaylornba.bsky.social": {
         "ok": true,
@@ -7849,6 +7856,60 @@
     }
   },
   "posts": [
+    {
+      "uri": "at://did:plc:t2fqrxpw2yko4xlifv7y6hsi/app.bsky.feed.post/3mw7lxfn4ym2r",
+      "text": "Karlie Samuelson on Alex Sarama's style: \"It's definitely different. It's just a super-happy environment to be in. Coming back from a major injury, this was the best place to be.\"",
+      "handle": "highkin.bsky.social",
+      "name": "Sean Highkin",
+      "verified": true,
+      "bskyVerified": true,
+      "kind": "reporter",
+      "team": "POR",
+      "outlet": "The Rose Garden Report (rosegardenreport.com)",
+      "role": "Trail Blazers writer",
+      "accountUrl": "https://bsky.app/profile/highkin.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/highkin.bsky.social",
+        "team": "POR",
+        "kind": "reporter",
+        "outlet": "The Rose Garden Report (rosegardenreport.com)",
+        "name": "Sean Highkin"
+      },
+      "createdAt": "2026-09-23T20:39:27.541Z",
+      "indexedAt": "2026-09-23T20:39:27.768Z",
+      "url": "https://bsky.app/profile/highkin.bsky.social/post/3mw7lxfn4ym2r",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
+    {
+      "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mw7lf24p322r",
+      "text": "Barion Brown is dealing with a hamstring injury. So is Travis Etienne.",
+      "handle": "rodwalkernola.bsky.social",
+      "name": "Rod Walker",
+      "verified": true,
+      "bskyVerified": false,
+      "kind": "reporter",
+      "team": "NOP",
+      "outlet": "The Times-Picayune | The New Orleans Advocate",
+      "role": "Sports columnist (Saints + Pelicans) — NOT a Pelicans beat assignment",
+      "accountUrl": "https://bsky.app/profile/rodwalkernola.bsky.social",
+      "account": {
+        "url": "https://bsky.app/profile/rodwalkernola.bsky.social",
+        "team": "NOP",
+        "kind": "reporter",
+        "outlet": "The Times-Picayune | The New Orleans Advocate",
+        "name": "Rod Walker"
+      },
+      "createdAt": "2026-09-23T20:29:11.487Z",
+      "indexedAt": "2026-09-23T20:29:11.861Z",
+      "url": "https://bsky.app/profile/rodwalkernola.bsky.social/post/3mw7lf24p322r",
+      "sev": "mention",
+      "sevLabel": "INJURY MENTION",
+      "inGameWatch": false,
+      "kindLabel": "mention"
+    },
     {
       "uri": "at://did:plc:t2fqrxpw2yko4xlifv7y6hsi/app.bsky.feed.post/3mw7hjq4wdc2v",
       "text": "SAB: \"I'm grateful that I tore my ACL. I know people look at me like I'm crazy when I say that but I wouldn't want my journey to be any different. It's making me the person I am.\"",
@@ -8843,33 +8904,6 @@
       "createdAt": "2026-08-18T20:20:32.049057Z",
       "indexedAt": "2026-08-18T20:20:36.073Z",
       "url": "https://bsky.app/profile/andyblarsen.bsky.social/post/3mtf24g7rfr2o",
-      "sev": "mention",
-      "sevLabel": "INJURY MENTION",
-      "inGameWatch": false,
-      "kindLabel": "mention"
-    },
-    {
-      "uri": "at://did:plc:qo6fzlty4qh7bnol4nmdthgs/app.bsky.feed.post/3mtcrqa4yvs2e",
-      "text": "Saints rookie WR Jordyn Tyson expected to miss at least two months with his hamstring injury, per Ian Rappoport.",
-      "handle": "rodwalkernola.bsky.social",
-      "name": "Rod Walker",
-      "verified": true,
-      "bskyVerified": false,
-      "kind": "reporter",
-      "team": "NOP",
-      "outlet": "The Times-Picayune | The New Orleans Advocate",
-      "role": "Sports columnist (Saints + Pelicans) — NOT a Pelicans beat assignment",
-      "accountUrl": "https://bsky.app/profile/rodwalkernola.bsky.social",
-      "account": {
-        "url": "https://bsky.app/profile/rodwalkernola.bsky.social",
-        "team": "NOP",
-        "kind": "reporter",
-        "outlet": "The Times-Picayune | The New Orleans Advocate",
-        "name": "Rod Walker"
-      },
-      "createdAt": "2026-08-17T22:45:13.686Z",
-      "indexedAt": "2026-08-17T22:45:14.271Z",
-      "url": "https://bsky.app/profile/rodwalkernola.bsky.social/post/3mtcrqa4yvs2e",
       "sev": "mention",
       "sevLabel": "INJURY MENTION",
       "inGameWatch": false,
