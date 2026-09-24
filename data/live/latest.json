@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-23T23:00:20.198Z",
+  "generated": "2026-09-24T01:19:41.143Z",
   "source": "github-actions-poller",
   "errors": {},
   "injuries": {
@@ -11,6 +11,100 @@
       "displayName": "2026-27"
     },
     "rows": [
+      {
+        "id": "532719",
+        "player": "Dereck Lively II",
+        "playerId": "4683688",
+        "position": "C",
+        "team": "DAL",
+        "teamName": "Dallas Mavericks",
+        "status": "Day-To-Day",
+        "sev": "questionable",
+        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
+        "updated": "2026-09-24T01:04Z",
+        "returnDate": "2026-10-09",
+        "fantasyStatus": "GTD",
+        "injuryType": "Foot",
+        "injuryLocation": "Leg",
+        "injurySide": "Right",
+        "bodyPart": "Right Foot Leg",
+        "shortComment": "Lively (foot) has not been cleared to participate in training camp yet and is slowly ramping up toward basketball activities, Tim MacMahon of ESPN.com reports.",
+        "longComment": "Lively underwent right foot surgery in December after appearing in just seven regular-season games (four starts), during which he averaged 4.3 points, 5.3 rebounds, 1.9 assists, 1.6 blocks and 0.6 steals across 16.4 minutes per contest. The big man is in jeopardy of missing time to begin the 2026-27 regular season, and it wouldn't be surprising if he operates under a heavy minutes restriction upon his return. If the 22-year-old misses an extended period, Daniel Gafford, Santi Aldama (knee) and Morez Johnson would be candidates for increased burn.",
+        "noteHeadline": null,
+        "noteText": null,
+        "noteDate": null,
+        "noteSource": null,
+        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4683688.png",
+        "playerUrl": "https://www.espn.com/nba/player/_/id/4683688/dereck-lively-ii",
+        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/dal",
+        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
+        "searchUrl": "https://x.com/search?q=Dereck%20Lively%20II%20injury",
+        "fp": "Day-To-Day|Right Foot Leg|2026-10-09|GTD",
+        "impact": "unknown",
+        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
+        "impactScore": null,
+        "impactConfidence": 0.4,
+        "impactModelVersion": 2,
+        "impactRules": [
+          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
+        ],
+        "impactComponents": {
+          "stake": {
+            "score": null,
+            "parts": []
+          },
+          "exposure": {
+            "score": 0,
+            "parts": []
+          },
+          "recurrence": {
+            "score": 0,
+            "parts": [
+              {
+                "key": "cadence",
+                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
+                "pts": 0,
+                "max": 45
+              }
+            ]
+          }
+        },
+        "offenseTier": "unknown",
+        "travel": {
+          "nextGame": "2026-10-09T12:00Z",
+          "opponent": "HOU",
+          "homeAway": "home",
+          "venue": "Venetian Arena",
+          "city": "Las Vegas",
+          "restDays": null,
+          "miles": 0,
+          "hours": 0,
+          "mode": "home game — no travel leg",
+          "tzShiftHours": 2,
+          "unmappedCity": null,
+          "venueNameResolved": true,
+          "travelFromFallback": null,
+          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule"
+        },
+        "availabilityRisk": {
+          "score": 0,
+          "level": "low"
+        },
+        "roleTier": "unknown",
+        "roleGames": 0,
+        "roleStarts": 0,
+        "roleAvgMinutes": null,
+        "roleEvidence": [],
+        "listingCount": 0,
+        "listingDates": [],
+        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/roster",
+        "salaryCurrent": 7239130,
+        "salarySeason": 2027,
+        "impactNotes": [
+          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
+          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
+        ]
+      },
       {
         "id": "532695",
         "player": "Steven Adams",
@@ -162,7 +256,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-14 (9 day(s) ago)",
+                "label": "newest listing dated 2026-09-14 (10 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -264,7 +358,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-21 (2 day(s) ago)",
+                "label": "newest listing dated 2026-09-21 (3 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -360,7 +454,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-21 (2 day(s) ago)",
+                "label": "newest listing dated 2026-09-21 (3 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -448,8 +542,15 @@
             "parts": []
           },
           "exposure": {
-            "score": 0,
-            "parts": []
+            "score": 50,
+            "parts": [
+              {
+                "key": "backToBacks",
+                "label": "1 back-to-back(s) in the next 14 days",
+                "pts": 15,
+                "max": 30
+              }
+            ]
           },
           "recurrence": {
             "score": 63.3,
@@ -462,7 +563,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-21 (2 day(s) ago)",
+                "label": "newest listing dated 2026-09-21 (3 day(s) ago)",
                 "pts": 15,
                 "max": 15
               },
@@ -493,8 +594,8 @@
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
-          "score": 0,
-          "level": "low"
+          "score": 50,
+          "level": "medium"
         },
         "roleTier": "unknown",
         "roleGames": 0,
@@ -577,7 +678,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-18 (5 day(s) ago)",
+                "label": "newest listing dated 2026-09-18 (6 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -679,7 +780,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-17 (6 day(s) ago)",
+                "label": "newest listing dated 2026-09-17 (7 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -781,7 +882,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-17 (6 day(s) ago)",
+                "label": "newest listing dated 2026-09-17 (7 day(s) ago)",
                 "pts": 15,
                 "max": 15
               }
@@ -883,7 +984,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-11 (12 day(s) ago)",
+                "label": "newest listing dated 2026-09-11 (13 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -981,7 +1082,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (13 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (14 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1081,7 +1182,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (13 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (14 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1183,7 +1284,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-10 (13 day(s) ago)",
+                "label": "newest listing dated 2026-09-10 (14 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1285,7 +1386,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-09 (14 day(s) ago)",
+                "label": "newest listing dated 2026-09-09 (15 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1373,8 +1474,15 @@
             "parts": []
           },
           "exposure": {
-            "score": 0,
-            "parts": []
+            "score": 50,
+            "parts": [
+              {
+                "key": "backToBacks",
+                "label": "1 back-to-back(s) in the next 14 days",
+                "pts": 15,
+                "max": 30
+              }
+            ]
           },
           "recurrence": {
             "score": 33.3,
@@ -1387,7 +1495,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-07 (16 day(s) ago)",
+                "label": "newest listing dated 2026-09-07 (17 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1412,8 +1520,8 @@
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
-          "score": 0,
-          "level": "low"
+          "score": 50,
+          "level": "medium"
         },
         "roleTier": "unknown",
         "roleGames": 0,
@@ -1489,7 +1597,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-04 (19 day(s) ago)",
+                "label": "newest listing dated 2026-09-04 (20 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1591,7 +1699,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (21 day(s) ago)",
+                "label": "newest listing dated 2026-09-02 (22 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1693,7 +1801,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-09-02 (21 day(s) ago)",
+                "label": "newest listing dated 2026-09-02 (22 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1795,7 +1903,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-26 (28 day(s) ago)",
+                "label": "newest listing dated 2026-08-26 (29 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1893,7 +2001,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-25 (29 day(s) ago)",
+                "label": "newest listing dated 2026-08-25 (30 day(s) ago)",
                 "pts": 8,
                 "max": 15
               }
@@ -1985,7 +2093,7 @@
             "parts": []
           },
           "recurrence": {
-            "score": 33.3,
+            "score": 20,
             "parts": [
               {
                 "key": "cadence",
@@ -1995,8 +2103,8 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-24 (30 day(s) ago)",
-                "pts": 8,
+                "label": "newest listing dated 2026-08-24 (31 day(s) ago)",
+                "pts": 0,
                 "max": 15
               }
             ]
@@ -2083,7 +2191,7 @@
             "parts": []
           },
           "recurrence": {
-            "score": 33.3,
+            "score": 20,
             "parts": [
               {
                 "key": "cadence",
@@ -2093,8 +2201,8 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-24 (30 day(s) ago)",
-                "pts": 8,
+                "label": "newest listing dated 2026-08-24 (31 day(s) ago)",
+                "pts": 0,
                 "max": 15
               }
             ]
@@ -2191,7 +2299,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-19 (35 day(s) ago)",
+                "label": "newest listing dated 2026-08-19 (36 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2293,7 +2401,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-08-14 (40 day(s) ago)",
+                "label": "newest listing dated 2026-08-14 (41 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2395,7 +2503,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-31 (54 day(s) ago)",
+                "label": "newest listing dated 2026-07-31 (55 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2497,7 +2605,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-30 (55 day(s) ago)",
+                "label": "newest listing dated 2026-07-30 (56 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2581,8 +2689,15 @@
             "parts": []
           },
           "exposure": {
-            "score": 0,
-            "parts": []
+            "score": 50,
+            "parts": [
+              {
+                "key": "backToBacks",
+                "label": "1 back-to-back(s) in the next 14 days",
+                "pts": 15,
+                "max": 30
+              }
+            ]
           },
           "recurrence": {
             "score": 20,
@@ -2595,7 +2710,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-30 (55 day(s) ago)",
+                "label": "newest listing dated 2026-07-30 (56 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2620,8 +2735,8 @@
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
-          "score": 0,
-          "level": "low"
+          "score": 50,
+          "level": "medium"
         },
         "roleTier": "unknown",
         "roleGames": 0,
@@ -2697,7 +2812,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-28 (57 day(s) ago)",
+                "label": "newest listing dated 2026-07-28 (58 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2799,7 +2914,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-27 (58 day(s) ago)",
+                "label": "newest listing dated 2026-07-27 (59 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -2901,7 +3016,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-27 (58 day(s) ago)",
+                "label": "newest listing dated 2026-07-27 (59 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3003,7 +3118,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-25 (60 day(s) ago)",
+                "label": "newest listing dated 2026-07-25 (61 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3105,7 +3220,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-22 (63 day(s) ago)",
+                "label": "newest listing dated 2026-07-22 (64 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3207,7 +3322,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-20 (65 day(s) ago)",
+                "label": "newest listing dated 2026-07-20 (66 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3309,7 +3424,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-20 (65 day(s) ago)",
+                "label": "newest listing dated 2026-07-20 (66 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3395,8 +3510,15 @@
             "parts": []
           },
           "exposure": {
-            "score": 0,
-            "parts": []
+            "score": 50,
+            "parts": [
+              {
+                "key": "backToBacks",
+                "label": "1 back-to-back(s) in the next 14 days",
+                "pts": 15,
+                "max": 30
+              }
+            ]
           },
           "recurrence": {
             "score": 20,
@@ -3409,7 +3531,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3434,8 +3556,8 @@
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
-          "score": 0,
-          "level": "low"
+          "score": 50,
+          "level": "medium"
         },
         "roleTier": "unknown",
         "roleGames": 0,
@@ -3509,7 +3631,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3609,7 +3731,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3711,7 +3833,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3813,7 +3935,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -3915,7 +4037,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4011,7 +4133,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4113,7 +4235,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-19 (66 day(s) ago)",
+                "label": "newest listing dated 2026-07-19 (67 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4215,7 +4337,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (67 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (68 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4315,7 +4437,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (67 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (68 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4417,7 +4539,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (67 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (68 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4519,7 +4641,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-18 (67 day(s) ago)",
+                "label": "newest listing dated 2026-07-18 (68 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4621,7 +4743,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-17 (68 day(s) ago)",
+                "label": "newest listing dated 2026-07-17 (69 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4721,7 +4843,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-17 (68 day(s) ago)",
+                "label": "newest listing dated 2026-07-17 (69 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4823,7 +4945,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-15 (70 day(s) ago)",
+                "label": "newest listing dated 2026-07-15 (71 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -4923,7 +5045,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-13 (72 day(s) ago)",
+                "label": "newest listing dated 2026-07-13 (73 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5023,7 +5145,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-08 (77 day(s) ago)",
+                "label": "newest listing dated 2026-07-08 (78 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5111,8 +5233,15 @@
             "parts": []
           },
           "exposure": {
-            "score": 0,
-            "parts": []
+            "score": 50,
+            "parts": [
+              {
+                "key": "backToBacks",
+                "label": "1 back-to-back(s) in the next 14 days",
+                "pts": 15,
+                "max": 30
+              }
+            ]
           },
           "recurrence": {
             "score": 20,
@@ -5125,7 +5254,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (84 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (85 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5150,8 +5279,8 @@
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
-          "score": 0,
-          "level": "low"
+          "score": 50,
+          "level": "medium"
         },
         "roleTier": "unknown",
         "roleGames": 0,
@@ -5227,7 +5356,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (84 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (85 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5329,7 +5458,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-07-01 (84 day(s) ago)",
+                "label": "newest listing dated 2026-07-01 (85 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5431,7 +5560,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-06-30 (85 day(s) ago)",
+                "label": "newest listing dated 2026-06-30 (86 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5533,7 +5662,7 @@
               },
               {
                 "key": "listingRecency",
-                "label": "newest listing dated 2026-06-29 (86 day(s) ago)",
+                "label": "newest listing dated 2026-06-29 (87 day(s) ago)",
                 "pts": 0,
                 "max": 15
               }
@@ -5572,100 +5701,6 @@
         ],
         "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/sac/roster",
         "salaryCurrent": 48967380,
-        "salarySeason": 2027,
-        "impactNotes": [
-          "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
-          "Model rule applied: R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load."
-        ]
-      },
-      {
-        "id": "531146",
-        "player": "Dereck Lively II",
-        "playerId": "4683688",
-        "position": "C",
-        "team": "DAL",
-        "teamName": "Dallas Mavericks",
-        "status": "Day-To-Day",
-        "sev": "questionable",
-        "sevLabel": "QUESTIONABLE / DAY-TO-DAY",
-        "updated": "2026-06-26T20:09Z",
-        "returnDate": "2026-10-01",
-        "fantasyStatus": "GTD",
-        "injuryType": "Foot",
-        "injuryLocation": "Leg",
-        "injurySide": "Right",
-        "bodyPart": "Right Foot Leg",
-        "shortComment": "Lively (foot) still hasn't progressed to running yet, per Christian Clark of The Athletic.",
-        "longComment": "Lively is walking and lifting weights, though he's not quite ready to enter the next phase of his rehab. The 22-year-old big man is recovering from right foot surgery, which cut his season short in December of last yar, and it remains uncertain if he'll be a full participant in training camp this fall. The Mavericks did take Morez Johnson with the No. 9 overall pick in the 2026 NBA Draft to improve its frontcourt, but Lively remains the most likely candidate to open next season as Dallas' starting center.",
-        "noteHeadline": null,
-        "noteText": null,
-        "noteDate": null,
-        "noteSource": null,
-        "headshot": "https://a.espncdn.com/i/headshots/nba/players/full/4683688.png",
-        "playerUrl": "https://www.espn.com/nba/player/_/id/4683688/dereck-lively-ii",
-        "teamUrl": "https://www.espn.com/nba/team/injuries/_/name/dal",
-        "officialUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
-        "searchUrl": "https://x.com/search?q=Dereck%20Lively%20II%20injury",
-        "fp": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
-        "impact": "unknown",
-        "impactLabel": "IMPACT UNKNOWN — no role evidence collected",
-        "impactScore": null,
-        "impactConfidence": 0.4,
-        "impactModelVersion": 2,
-        "impactRules": [
-          "R4 no stake evidence (no collected box score or lineup) = UNKNOWN, regardless of schedule load"
-        ],
-        "impactComponents": {
-          "stake": {
-            "score": null,
-            "parts": []
-          },
-          "exposure": {
-            "score": 0,
-            "parts": []
-          },
-          "recurrence": {
-            "score": 0,
-            "parts": [
-              {
-                "key": "cadence",
-                "label": "0 dated injury listing(s) on ESPN's roster feed in the last 9 months",
-                "pts": 0,
-                "max": 45
-              }
-            ]
-          }
-        },
-        "offenseTier": "unknown",
-        "travel": {
-          "nextGame": "2026-10-09T12:00Z",
-          "opponent": "HOU",
-          "homeAway": "home",
-          "venue": "Venetian Arena",
-          "city": "Las Vegas",
-          "restDays": null,
-          "miles": 0,
-          "hours": 0,
-          "mode": "home game — no travel leg",
-          "tzShiftHours": 2,
-          "unmappedCity": null,
-          "venueNameResolved": true,
-          "travelFromFallback": null,
-          "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/schedule"
-        },
-        "availabilityRisk": {
-          "score": 0,
-          "level": "low"
-        },
-        "roleTier": "unknown",
-        "roleGames": 0,
-        "roleStarts": 0,
-        "roleAvgMinutes": null,
-        "roleEvidence": [],
-        "listingCount": 0,
-        "listingDates": [],
-        "listingSource": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/dal/roster",
-        "salaryCurrent": 7239130,
         "salarySeason": 2027,
         "impactNotes": [
           "No box-score observation has been collected for this player, so lineup impact is unknown. Absence of evidence is reported as unknown, never as 'role player'.",
@@ -6931,8 +6966,15 @@
             "parts": []
           },
           "exposure": {
-            "score": 0,
-            "parts": []
+            "score": 50,
+            "parts": [
+              {
+                "key": "backToBacks",
+                "label": "1 back-to-back(s) in the next 14 days",
+                "pts": 15,
+                "max": 30
+              }
+            ]
           },
           "recurrence": {
             "score": 0,
@@ -6964,8 +7006,8 @@
           "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/okc/schedule"
         },
         "availabilityRisk": {
-          "score": 0,
-          "level": "low"
+          "score": 50,
+          "level": "medium"
         },
         "roleTier": "unknown",
         "roleGames": 0,
@@ -7264,6 +7306,16 @@
   },
   "news": [
     {
+      "id": "50016983",
+      "ts": "2026-09-24T01:18:06Z",
+      "sev": "return",
+      "sevLabel": "RETURN / GOOD NEWS",
+      "title": "Sources: Mavs' Dereck Lively II (foot) not cleared for camp",
+      "desc": "Dereck Lively II's status for the start of the season has yet to be determined as he continues to recover from right foot surgery, sources said.",
+      "url": "https://www.espn.com/nba/story/_/id/50016983/sources-mavs-dereck-lively-ii-foot-not-cleared-camp",
+      "byline": "Tim MacMahon"
+    },
+    {
       "id": "50007712",
       "ts": "2026-09-23T13:12:33Z",
       "sev": "return",
@@ -7307,12 +7359,12 @@
   "socialPath": "direct",
   "social": {
     "accounts": {
-      "sixersnba.bsky.social": {
+      "nba.com": {
         "ok": true,
         "count": 0,
-        "name": "Philadelphia 76ers — official",
-        "kind": "official-team",
-        "team": "PHI"
+        "name": "NBA — official league account",
+        "kind": "official-league",
+        "team": null
       },
       "nuggets.bsky.social": {
         "ok": true,
@@ -7321,12 +7373,12 @@
         "kind": "official-team",
         "team": "DEN"
       },
-      "nba.com": {
+      "sixersnba.bsky.social": {
         "ok": true,
         "count": 0,
-        "name": "NBA — official league account",
-        "kind": "official-league",
-        "team": null
+        "name": "Philadelphia 76ers — official",
+        "kind": "official-team",
+        "team": "PHI"
       },
       "trailblazers.bsky.social": {
         "ok": true,
@@ -7342,17 +7394,17 @@
         "kind": "reporter",
         "team": null
       },
-      "mikevorkunov.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Mike Vorkunov",
-        "kind": "reporter",
-        "team": null
-      },
       "howardbeck.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Howard Beck",
+        "kind": "reporter",
+        "team": null
+      },
+      "mikevorkunov.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Mike Vorkunov",
         "kind": "reporter",
         "team": null
       },
@@ -7391,6 +7443,13 @@
         "kind": "reporter",
         "team": "MIN"
       },
+      "jonkrawczynski.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Jon Krawczynski",
+        "kind": "reporter",
+        "team": "MIN"
+      },
       "omarisankofa.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7404,13 +7463,6 @@
         "name": "Kyle Neubeck",
         "kind": "reporter",
         "team": "PHI"
-      },
-      "jonkrawczynski.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jon Krawczynski",
-        "kind": "reporter",
-        "team": "MIN"
       },
       "highkin.bsky.social": {
         "ok": true,
@@ -7496,19 +7548,19 @@
         "kind": "reporter",
         "team": null
       },
-      "geraldbourguet.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Gerald Bourguet",
-        "kind": "reporter",
-        "team": "PHX"
-      },
       "gwashburnglobe.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Gary Washburn",
         "kind": "reporter",
         "team": "BOS"
+      },
+      "geraldbourguet.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Gerald Bourguet",
+        "kind": "reporter",
+        "team": "PHX"
       },
       "byjayking.bsky.social": {
         "ok": true,
@@ -7552,19 +7604,19 @@
         "kind": "reporter",
         "team": null
       },
-      "rylanstiles.bsky.social": {
-        "ok": true,
-        "count": 11,
-        "name": "Rylan Stiles",
-        "kind": "reporter",
-        "team": "OKC"
-      },
       "danwoikesports.bsky.social": {
         "ok": true,
         "count": 0,
         "name": "Dan Woike",
         "kind": "reporter",
         "team": "LAL"
+      },
+      "rylanstiles.bsky.social": {
+        "ok": true,
+        "count": 11,
+        "name": "Rylan Stiles",
+        "kind": "reporter",
+        "team": "OKC"
       },
       "jxlorenzi.bsky.social": {
         "ok": true,
@@ -7573,13 +7625,6 @@
         "kind": "reporter",
         "team": null
       },
-      "andrewschlecht.bsky.social": {
-        "ok": true,
-        "count": 6,
-        "name": "Andrew Schlecht",
-        "kind": "reporter",
-        "team": "OKC"
-      },
       "fredkatz.bsky.social": {
         "ok": true,
         "count": 2,
@@ -7587,24 +7632,24 @@
         "kind": "reporter",
         "team": "NYK"
       },
-      "jledwardsiii.bsky.social": {
+      "andrewschlecht.bsky.social": {
         "ok": true,
-        "count": 2,
-        "name": "James L. Edwards III",
+        "count": 6,
+        "name": "Andrew Schlecht",
         "kind": "reporter",
-        "team": "NYK"
-      },
-      "damichaelcole.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Damichael Cole",
-        "kind": "reporter",
-        "team": "MEM"
+        "team": "OKC"
       },
       "drewhilldailym.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Drew Hill",
+        "kind": "reporter",
+        "team": "MEM"
+      },
+      "damichaelcole.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Damichael Cole",
         "kind": "reporter",
         "team": "MEM"
       },
@@ -7636,19 +7681,19 @@
         "kind": "reporter",
         "team": "NOP"
       },
-      "byvarunshankar.bsky.social": {
-        "ok": true,
-        "count": 3,
-        "name": "Varun Shankar",
-        "kind": "reporter",
-        "team": "HOU"
-      },
       "bennettdurando.bsky.social": {
         "ok": true,
         "count": 5,
         "name": "Bennett Durando",
         "kind": "reporter",
         "team": "DEN"
+      },
+      "byvarunshankar.bsky.social": {
+        "ok": true,
+        "count": 3,
+        "name": "Varun Shankar",
+        "kind": "reporter",
+        "team": "HOU"
       },
       "montepoole.bsky.social": {
         "ok": true,
@@ -7657,6 +7702,13 @@
         "kind": "reporter",
         "team": "GSW"
       },
+      "jledwardsiii.bsky.social": {
+        "ok": true,
+        "count": 2,
+        "name": "James L. Edwards III",
+        "kind": "reporter",
+        "team": "NYK"
+      },
       "jasonlloyd.bsky.social": {
         "ok": true,
         "count": 3,
@@ -7664,19 +7716,19 @@
         "kind": "reporter",
         "team": "CLE"
       },
-      "grantafseth.bsky.social": {
-        "ok": true,
-        "count": 12,
-        "name": "Grant Afseth",
-        "kind": "reporter",
-        "team": "DAL"
-      },
       "joevardon.bsky.social": {
         "ok": true,
         "count": 1,
         "name": "Joe Vardon",
         "kind": "reporter",
         "team": null
+      },
+      "grantafseth.bsky.social": {
+        "ok": true,
+        "count": 12,
+        "name": "Grant Afseth",
+        "kind": "reporter",
+        "team": "DAL"
       },
       "dannycunningham.bsky.social": {
         "ok": true,
@@ -7713,13 +7765,6 @@
         "kind": "reporter",
         "team": "CHA"
       },
-      "nolajake.bsky.social": {
-        "ok": true,
-        "count": 1,
-        "name": "Jake Madison",
-        "kind": "reporter",
-        "team": "NOP"
-      },
       "chrisherrington.bsky.social": {
         "ok": true,
         "count": 0,
@@ -7727,12 +7772,12 @@
         "kind": "reporter",
         "team": "MEM"
       },
-      "saltcityhoops.bsky.social": {
+      "nolajake.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Salt City Hoops",
+        "count": 1,
+        "name": "Jake Madison",
         "kind": "reporter",
-        "team": "UTA"
+        "team": "NOP"
       },
       "andyblarsen.bsky.social": {
         "ok": true,
@@ -7741,12 +7786,12 @@
         "kind": "reporter",
         "team": "UTA"
       },
-      "lakerssbn.bsky.social": {
+      "saltcityhoops.bsky.social": {
         "ok": true,
-        "count": 1,
-        "name": "Silver Screen and Roll",
+        "count": 0,
+        "name": "Salt City Hoops",
         "kind": "reporter",
-        "team": "LAL"
+        "team": "UTA"
       },
       "codytaylornba.bsky.social": {
         "ok": true,
@@ -7754,6 +7799,13 @@
         "name": "Cody Taylor",
         "kind": "reporter",
         "team": "ORL"
+      },
+      "lakerssbn.bsky.social": {
+        "ok": true,
+        "count": 1,
+        "name": "Silver Screen and Roll",
+        "kind": "reporter",
+        "team": "LAL"
       },
       "hunterpatterson.bsky.social": {
         "ok": true,
@@ -7769,13 +7821,6 @@
         "kind": "reporter",
         "team": "PHI"
       },
-      "christopherhine.bsky.social": {
-        "ok": true,
-        "count": 0,
-        "name": "Chris Hine",
-        "kind": "reporter",
-        "team": "PHI"
-      },
       "michaelgrangenba.bsky.social": {
         "ok": true,
         "count": 1,
@@ -7783,12 +7828,12 @@
         "kind": "reporter",
         "team": "TOR"
       },
-      "rodwalkernola.bsky.social": {
+      "christopherhine.bsky.social": {
         "ok": true,
-        "count": 4,
-        "name": "Rod Walker",
+        "count": 0,
+        "name": "Chris Hine",
         "kind": "reporter",
-        "team": "NOP"
+        "team": "PHI"
       },
       "lucaskaplan.bsky.social": {
         "ok": true,
@@ -7797,10 +7842,10 @@
         "kind": "reporter",
         "team": "BKN"
       },
-      "masonginsberg.bsky.social": {
+      "rodwalkernola.bsky.social": {
         "ok": true,
-        "count": 0,
-        "name": "Mason Ginsberg",
+        "count": 4,
+        "name": "Rod Walker",
         "kind": "reporter",
         "team": "NOP"
       },
@@ -7810,6 +7855,13 @@
         "name": "Julia Poe",
         "kind": "reporter",
         "team": "CHI"
+      },
+      "masonginsberg.bsky.social": {
+        "ok": true,
+        "count": 0,
+        "name": "Mason Ginsberg",
+        "kind": "reporter",
+        "team": "NOP"
       },
       "willgottlieb.bsky.social": {
         "ok": true,

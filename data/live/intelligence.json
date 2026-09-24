@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-23T23:00:23.535Z",
-  "inputGenerated": "2026-09-23T23:00:20.198Z",
+  "generated": "2026-09-24T01:19:50.670Z",
+  "inputGenerated": "2026-09-24T01:19:41.143Z",
   "inputFresh": true,
   "claims": {
     "at://did:plc:22fudzaxnal4ddodzv2o6mwk/app.bsky.feed.post/3mqpt2qmdd22q": {
@@ -3707,7 +3707,7 @@
     "4066650:CHI": "Day-To-Day|Right Toe Leg|2026-10-01|GTD",
     "5279130:BKN": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
     "3064440:SAC": "Day-To-Day|Right Hand Arm|2026-10-01|GTD",
-    "4683688:DAL": "Day-To-Day|Right Foot Leg|2026-10-01|GTD",
+    "4683688:DAL": "Day-To-Day|Right Foot Leg|2026-10-09|GTD",
     "4397140:MIL": "Day-To-Day|Right Knee Leg|2026-10-01|GTD",
     "4065732:SAC": "Day-To-Day|Left Eye Head|2026-10-01|GTD",
     "5105462:MEM": "Out|Right Knee Leg|2026-12-01|OUT",
@@ -4643,6 +4643,18 @@
       "observedAt": "2026-09-22T07:08:52.261Z",
       "url": "https://www.espn.com/nba/team/injuries/_/name/atl",
       "change": "first observed (not injury onset)"
+    },
+    {
+      "key": "4683688:DAL",
+      "player": "Dereck Lively II",
+      "playerId": "4683688",
+      "team": "DAL",
+      "status": "Day-To-Day",
+      "reason": "Right Foot Leg",
+      "sourceUpdatedAt": "2026-09-24T01:04Z",
+      "observedAt": "2026-09-24T01:19:50.670Z",
+      "url": "https://www.espn.com/nba/team/injuries/_/name/dal",
+      "change": "changed listing"
     }
   ],
   "exits": {
