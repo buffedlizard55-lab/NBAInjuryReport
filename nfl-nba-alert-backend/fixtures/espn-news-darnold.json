@@ -1,0 +1,39 @@
+{
+  "provenance": {
+    "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/news?limit=15",
+    "observed": "2026-09-25T22:05Z",
+    "note": "First article of the live NFL news feed. Images and extra category links removed."
+  },
+  "articles": [
+    {
+      "id": 50029379,
+      "headline": "QB Sam Darnold back Sunday, but Seahawks down two safeties",
+      "description": "Seahawks quarterback Sam Darnold will start Sunday, but the defending Super Bowl champions will be without both starting safeties as Julian Love and Ty Okada have been ruled out.",
+      "published": "2026-09-25T21:58:49Z",
+      "lastModified": "2026-09-25T21:58:49Z",
+      "byline": "Brady Henderson",
+      "categories": [
+        { "type": "team", "description": "Seattle Seahawks", "team": { "id": 26, "abbreviation": "SEA" } },
+        { "type": "athlete", "description": "Sam Darnold", "athlete": { "id": 3912547 } },
+        { "type": "athlete", "description": "Julian Love", "athlete": { "id": 4046675 } },
+        { "type": "athlete", "description": "Ty Okada", "athlete": { "id": 4247808 } }
+      ],
+      "links": {
+        "web": { "href": "https://www.espn.com/nfl/story/_/id/50029379/qb-sam-darnold-back-sunday-seahawks-two-safeties" }
+      }
+    },
+    {
+      "id": 50029122,
+      "headline": "Commanders rule RG Cosmi, TE Okonkwo, LB Luvu out Sunday",
+      "description": "Right guard Sam Cosmi (concussion), tight end Chig Okonkwo (hamstring) and linebacker Frankie Luvu (groin) won't play Sunday vs. the Seahawks.",
+      "published": "2026-09-25T21:53:22Z",
+      "lastModified": "2026-09-25T21:53:22Z",
+      "categories": [
+        { "type": "team", "description": "Washington Commanders", "team": { "abbreviation": "WSH" } }
+      ],
+      "links": {
+        "web": { "href": "https://www.espn.com/nfl/story/_/id/50029122/commanders-rule-rg-cosmi-te-okonkwo-lb-luvu-sunday" }
+      }
+    }
+  ]
+}

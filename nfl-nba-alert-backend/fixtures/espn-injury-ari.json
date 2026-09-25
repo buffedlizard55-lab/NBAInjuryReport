@@ -1,0 +1,37 @@
+{
+  "provenance": {
+    "url": "https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/injuries",
+    "observed": "2026-09-25T22:04:50Z",
+    "note": "First row of the live league payload. Logo arrays and extra links removed. timestamp, status, date, names and player-card href are as returned."
+  },
+  "timestamp": "2026-09-25T22:04:50Z",
+  "status": "success",
+  "season": { "year": 2026, "type": 2, "name": "Regular Season", "displayName": "2026" },
+  "injuries": [
+    {
+      "id": "22",
+      "displayName": "Arizona Cardinals",
+      "injuries": [
+        {
+          "id": "-2015431",
+          "longComment": "out",
+          "shortComment": "out",
+          "status": "Out",
+          "date": "2026-09-25T21:56Z",
+          "athlete": {
+            "displayName": "Dadrion Taylor-Demerson",
+            "shortName": "D. Taylor-Demerson",
+            "position": { "abbreviation": "S", "displayName": "Safety" },
+            "team": { "id": "22", "abbreviation": "ARI", "displayName": "Arizona Cardinals" },
+            "links": [
+              {
+                "rel": ["playercard", "desktop", "athlete"],
+                "href": "https://www.espn.com/nfl/player/_/id/4428633/dadrion-taylor-demerson"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "verified_at": "2026-09-25T22:08:00Z",
+  "method": "keyless GET https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles — only rows with verification.verifiedStatus=valid and a bio that matches the named journalist are alert-eligible",
+  "note": "The brief asked for 14 NFL insiders. Ten journalist accounts plus the ESPN outlet account met that bar on this read. Handles that resolved as impersonations, empty placeholders, or a different person are listed in rejected and are never polled.",
+  "accounts": [
+    {
+      "handle": "rapsheet.bsky.social",
+      "name": "Ian Rapoport",
+      "team": null,
+      "outlet": "ESPN / NFL Network",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 3777,
+      "evidence": "verifiedStatus valid; bio 'National Insider for ESPN and NFL Network'. Feed read 2026-09-25T20:38Z contained same-day injury posts. ianrapoport.bsky.social is a different empty account (0 posts) and is not used."
+    },
+    {
+      "handle": "fieldyates.bsky.social",
+      "name": "Field Yates",
+      "team": null,
+      "outlet": "ESPN",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 71,
+      "evidence": "verifiedStatus valid; bio 'Fantasy Football and NFL Draft for ESPN'. Profile indexedAt 2024-11-18 — may be dormant; still identity-valid."
+    },
+    {
+      "handle": "minakimes.bsky.social",
+      "name": "Mina Kimes",
+      "team": null,
+      "outlet": "ESPN",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 8938,
+      "evidence": "verifiedStatus valid; bio 'NFL analyst at ESPN.'"
+    },
+    {
+      "handle": "benjaminsolak.bsky.social",
+      "name": "Benjamin Solak",
+      "team": null,
+      "outlet": "The Ringer",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 1384,
+      "evidence": "verifiedStatus valid; bio 'Write about football. Talk about football.'"
+    },
+    {
+      "handle": "natetice.bsky.social",
+      "name": "Nate Tice",
+      "team": null,
+      "outlet": "Yahoo / Football 301",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 3947,
+      "evidence": "verifiedStatus valid; bio hosts Football 301."
+    },
+    {
+      "handle": "robertmays.bsky.social",
+      "name": "Robert Mays",
+      "team": null,
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "issuer": "theathletic.com",
+      "postsCount": 718,
+      "evidence": "verifiedStatus valid, issuer The Athletic; bio 'Host of The Athletic Football Show.'"
+    },
+    {
+      "handle": "jourdanrodrigue.bsky.social",
+      "name": "Jourdan Rodrigue",
+      "team": null,
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "issuer": "theathletic.com",
+      "postsCount": 1934,
+      "evidence": "verifiedStatus valid, issuer The Athletic; bio 'Senior NFL writer for The Athletic.'"
+    },
+    {
+      "handle": "cameronwolfe.bsky.social",
+      "name": "Cameron Wolfe",
+      "team": null,
+      "outlet": "NFL Network",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 134,
+      "evidence": "verifiedStatus valid; bio 'National NFL Network TV reporter.'"
+    },
+    {
+      "handle": "mikereiss.bsky.social",
+      "name": "Mike Reiss",
+      "team": "NE",
+      "outlet": "ESPN",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 2932,
+      "evidence": "verifiedStatus valid; bio 'Patriots reporter for ESPN.'"
+    },
+    {
+      "handle": "billbarnwell.com",
+      "name": "Bill Barnwell",
+      "team": null,
+      "outlet": "ESPN",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 2429,
+      "evidence": "verifiedStatus valid; bio 'ESPN writer/yapper'. billbarnwell.bsky.social did not resolve."
+    },
+    {
+      "handle": "espn.com",
+      "name": "ESPN",
+      "team": null,
+      "outlet": "ESPN",
+      "bskyVerified": true,
+      "issuer": "bsky.app",
+      "postsCount": 872,
+      "kind": "outlet",
+      "evidence": "verifiedStatus valid; official outlet account, not a person. Polled because injury posts from the outlet are first-party. theathletic.com verifiedStatus was invalid on this read and is not polled."
+    }
+  ],
+  "rejected": [
+    { "handle": "adamschefter.bsky.social", "why": "Bluesky moderation label impersonation (src did:plc:ar7c4by46qjdydhdevvrndac, 2023-09-29). 3 posts. Not Schefter." },
+    { "handle": "ianrapoport.bsky.social", "why": "Empty display name, 0 posts, 27 followers, no verification object. The posting account is rapsheet.bsky.social." },
+    { "handle": "tompelissero.bsky.social", "why": "Active (1011 posts, indexed 2026-09-16) but no verification object on this read. Not alert-eligible." },
+    { "handle": "nflnetwork.bsky.social", "why": "No verification object. 30 posts, indexed 2025-06-14." },
+    { "handle": "kevinclark.bsky.social", "why": "Wrong person. Bio is 'Business Metaphysics', not the NFL writer." },
+    { "handle": "lindsayjones.bsky.social", "why": "Wrong person. Bio is a voice actor, not the NFL reporter." },
+    { "handle": "mikeflorio.bsky.social", "why": "Bio explicitly says this is not Mike Florio the football commentator." },
+    { "handle": "profootballtalk.bsky.social", "why": "Outlet-shaped bio and 27369 posts, but no verification object. Not alert-eligible." },
+    { "handle": "kalynkahler.bsky.social", "why": "Bio 'Senior NFL writer for ESPN' but no verification object on this read." },
+    { "handle": "josinaanderson.bsky.social", "why": "0 posts, no verification object." },
+    { "handle": "jeffdarlington.bsky.social", "why": "Empty display name, 1 post, no verification object." },
+    { "handle": "jonathanjones.bsky.social", "why": "Empty, 0 posts, no verification object." },
+    { "handle": "dangraziano.bsky.social", "why": "Display name 'Dan', 0 posts, no verification object." },
+    { "handle": "russini.bsky.social", "why": "Empty, 0 posts, 0 followers. Dianna Russini did not resolve via typeahead either." },
+    { "handle": "jordanschultz.bsky.social", "why": "Empty, 0 posts, no verification object." },
+    { "handle": "peterking.bsky.social", "why": "Label !no-unauthenticated, 0 posts. Not readable keyless." },
+    { "handle": "theathletic.com", "why": "verifiedStatus invalid (isValid false) on 2026-09-25 read. Trusted verifier, not a verified subject." },
+    { "handle": "nfl.com", "why": "getProfiles did not return this actor." }
+  ]
+}

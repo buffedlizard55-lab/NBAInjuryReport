@@ -1,0 +1,20 @@
+# Render free web service. Free instances sleep after about 15 minutes without
+# HTTP traffic and are not a 24/7 guarantee. See LIMITATIONS.md.
+services:
+  - type: web
+    name: nfl-nba-alert-backend
+    runtime: node
+    plan: free
+    rootDir: nfl-nba-alert-backend
+    buildCommand: node -e "process.exit(0)"
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: GAME_WINDOW_HOURS
+        value: "0"
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false

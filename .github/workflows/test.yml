@@ -26,6 +26,7 @@ jobs:
           node tools/poll_fixture_test.js
           node tools/regression_test.js
           node tools/verify_reporters_test.js
+          node nfl-nba-alert-backend/tools/test.js
           python3 -m unittest discover -s tools -p 'test_*.py'
       - name: Browser interaction tests (fixture transport)
         run: |

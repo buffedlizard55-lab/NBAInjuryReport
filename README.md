@@ -4,6 +4,8 @@
 
 **Directory:** https://buffedlizard55-lab.github.io/NBAInjuryReport/reporters.html
 
+**Live-alert backend (separate process):** [nfl-nba-alert-backend/README.md](nfl-nba-alert-backend/README.md). The Pages dashboard above is unchanged. [live-alerts.html](live-alerts.html) can poll a deployed `/api/alerts` every 2 seconds once that process has a public URL. It is not a latency claim.
+
 NBA-only injury monitoring for all 30 teams, inspired by [Basketball Monster player news](https://basketballmonster.com/playernews.aspx). All NBA players are in scope, not an NFL-style offensive roster subset.
 
 ## What works, and what is not established

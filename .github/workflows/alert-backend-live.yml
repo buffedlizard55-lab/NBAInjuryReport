@@ -1,0 +1,34 @@
+# Measures free-source fetch latency from a GitHub runner, which can open TLS
+# to ESPN / Bluesky / Google News / Mastodon. This is not the alert service.
+# A 15-minute schedule would not meet a 60-second target, so this workflow
+# runs only when dispatched.
+name: alert-backend-live
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Offline backend tests
+        run: node nfl-nba-alert-backend/tools/test.js
+
+      - name: Live probe
+        run: node nfl-nba-alert-backend/tools/live_probe.js
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: alert-backend-probe
+          path: nfl-nba-alert-backend/probe-output/latest.json

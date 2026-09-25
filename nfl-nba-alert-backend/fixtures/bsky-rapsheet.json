@@ -1,0 +1,54 @@
+{
+  "provenance": {
+    "url": "https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=rapsheet.bsky.social&limit=5",
+    "observed": "2026-09-25T22:06Z",
+    "note": "Own posts only. Avatars, image blobs and the quote-post embed dropped. Text, createdAt, indexedAt and verification object are as returned."
+  },
+  "feed": [
+    {
+      "post": {
+        "uri": "at://did:plc:hlvr2omhnmvdmfnvmcuhyevz/app.bsky.feed.post/3mwemivdajs2d",
+        "author": {
+          "handle": "rapsheet.bsky.social",
+          "displayName": "Ian Rapoport",
+          "verification": { "verifiedStatus": "valid", "verifications": [{ "issuerHandle": "bsky.app", "isValid": true }] }
+        },
+        "record": {
+          "createdAt": "2026-09-25T20:32:33.128Z",
+          "text": "Good news for the Ravens: Star DT Nnamdi Madubuike will return to the field for the first time since his neck injury."
+        },
+        "indexedAt": "2026-09-25T20:32:34.965Z"
+      }
+    },
+    {
+      "post": {
+        "uri": "at://did:plc:hlvr2omhnmvdmfnvmcuhyevz/app.bsky.feed.post/3mwemhjhdq22d",
+        "author": {
+          "handle": "rapsheet.bsky.social",
+          "displayName": "Ian Rapoport",
+          "verification": { "verifiedStatus": "valid", "verifications": [{ "issuerHandle": "bsky.app", "isValid": true }] }
+        },
+        "record": {
+          "createdAt": "2026-09-25T20:31:47.119Z",
+          "text": "Seahawks QB Sam Darnold (glute) is off the injury report and will play against the Commanders."
+        },
+        "indexedAt": "2026-09-25T20:31:47.360Z"
+      }
+    },
+    {
+      "post": {
+        "uri": "at://did:plc:hlvr2omhnmvdmfnvmcuhyevz/app.bsky.feed.post/3mweeq7yf422v",
+        "author": {
+          "handle": "rapsheet.bsky.social",
+          "displayName": "Ian Rapoport",
+          "verification": { "verifiedStatus": "valid", "verifications": [{ "issuerHandle": "bsky.app", "isValid": true }] }
+        },
+        "record": {
+          "createdAt": "2026-09-25T18:13:29.256Z",
+          "text": "Rams coach Sean McVay told reporters that WR Puka Nacua is doubtful for game against the Broncos."
+        },
+        "indexedAt": "2026-09-25T18:13:29.567Z"
+      }
+    }
+  ]
+}
