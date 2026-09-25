@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Rebuilt as XML because the 2026-09-25 page-fetch returned text, not the raw
+     document. Title, link, pubDate and source are the values from that read of
+     https://news.google.com/rss/search?q=NFL+injury+when:1d&hl=en-US&gl=US&ceid=US:en
+     at about 22:05Z. The RSS wrapper itself was not preserved byte-for-byte. -->
+<rss version="2.0">
+  <channel>
+    <title>NFL injury when:1d - Google News</title>
+    <item>
+      <title>Niners DE Nick Bosa expected to miss multiple weeks with calf injury - NFL.com</title>
+      <link>https://news.google.com/rss/articles/CBMie0FVX3lxTE5McWFDSWZHd0RPSHRfejdTWm1hWDZVVk1fV21FeklhaE40U1lwNjY2ZndrVVFfTzBQNkRTNDdDU0dHeG9NWktQRmoyc3J6a1BRTVlfTTd5U3BDb1paUmd2Tlh4cFFseVNPVFI5SVNGWHhJUDJhSUNnbmhUaw</link>
+      <pubDate>Fri, 25 Sep 2026 15:20:53 GMT</pubDate>
+      <source>NFL.com</source>
+      <description>Niners DE Nick Bosa expected to miss multiple weeks with calf injury</description>
+    </item>
+    <item>
+      <title>NFL injury report for Week 3: Updates on Puka Nacua, Sam Darnold, Nick Bosa, Nico Collins and more - CBS Sports</title>
+      <link>https://news.google.com/rss/articles/CBMickFVX3lxTE01a2ZSem5waE9TdmFYMTRGNEdfaFVXYm4tdEJ1eVV2ZXZjLVVGWXNKeHo2dkJmSGpRdWJkYVhkbmU3MGtyTDVVaWpjbl8wTjB6ZHc1MVBtYnBvT1BUTks2Y2MyZnlha1dTbWpLNHNNSkROdw</link>
+      <pubDate>Fri, 25 Sep 2026 20:33:00 GMT</pubDate>
+      <source>CBS Sports</source>
+      <description>NFL injury report for Week 3: Updates on Puka Nacua, Sam Darnold, Nick Bosa, Nico Collins and more</description>
+    </item>
+  </channel>
+</rss>

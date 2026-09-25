@@ -1,0 +1,632 @@
+{
+  "generated_from": "assets/js/data.js",
+  "generated_at": "2026-09-25T22:08:00Z",
+  "reporters": [
+    {
+      "handle": "howardbeck.bsky.social",
+      "name": "Howard Beck",
+      "team": null,
+      "outlet": "The Ringer",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "samvecenie.bsky.social",
+      "name": "Sam Vecenie",
+      "team": null,
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "mikevorkunov.bsky.social",
+      "name": "Mike Vorkunov",
+      "team": null,
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "johnhollinger.bsky.social",
+      "name": "John Hollinger",
+      "team": null,
+      "outlet": "The Athletic",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "tomhaberstroh.bsky.social",
+      "name": "Tom Haberstroh",
+      "team": null,
+      "outlet": "Yahoo Sports / TomTheFinder.com",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jmcdonaldsa.bsky.social",
+      "name": "Jeff McDonald",
+      "team": "SAS",
+      "outlet": "San Antonio Express-News",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "tomorsborn.bsky.social",
+      "name": "Tom Orsborn",
+      "team": "SAS",
+      "outlet": "San Antonio Express-News",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "nbasarah.bsky.social",
+      "name": "Sarah Todd",
+      "team": "MIN",
+      "outlet": "Minnesota Star Tribune",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jonkrawczynski.bsky.social",
+      "name": "Jon Krawczynski",
+      "team": "MIN",
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "omarisankofa.bsky.social",
+      "name": "Omari Sankofa II",
+      "team": "DET",
+      "outlet": "Detroit Free Press",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "kyleneubeck.bsky.social",
+      "name": "Kyle Neubeck",
+      "team": "PHI",
+      "outlet": "PHLY Sports",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "highkin.bsky.social",
+      "name": "Sean Highkin",
+      "team": "POR",
+      "outlet": "The Rose Garden Report (rosegardenreport.com)",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "joshrobbins.bsky.social",
+      "name": "Josh Robbins",
+      "team": "WAS",
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jlewenberg.bsky.social",
+      "name": "Josh Lewenberg",
+      "team": "TOR",
+      "outlet": "TSN",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "lawmurraythenu.bsky.social",
+      "name": "Law Murray",
+      "team": "LAC",
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jimowczarski.bsky.social",
+      "name": "Jim Owczarski",
+      "team": "MIL",
+      "outlet": "Milwaukee Journal Sentinel",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jbeede.bsky.social",
+      "name": "Jason Beede",
+      "team": "ORL",
+      "outlet": "Orlando Sentinel",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jameshamnba.bsky.social",
+      "name": "James Ham",
+      "team": "SAC",
+      "outlet": "ESPN 1320 / The Kings Beat / Locked On Kings",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "ejelite1.bsky.social",
+      "name": "Ethan Sands",
+      "team": "CLE",
+      "outlet": "cleveland.com",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "btrowland.bsky.social",
+      "name": "Brad Rowland",
+      "team": "ATL",
+      "outlet": "Locked On Hawks (podcast host) / FanSided",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "scottagness.bsky.social",
+      "name": "Scott Agness",
+      "team": "IND",
+      "outlet": "Fieldhouse Files",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "irawinderman.bsky.social",
+      "name": "Ira Winderman",
+      "team": "MIA",
+      "outlet": "South Florida Sun Sentinel",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "geraldbourguet.bsky.social",
+      "name": "Gerald Bourguet",
+      "team": "PHX",
+      "outlet": "Suns After Dark",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "kellyiko.bsky.social",
+      "name": "Kelly Iko",
+      "team": null,
+      "outlet": "Yahoo Sports",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "gwashburnglobe.bsky.social",
+      "name": "Gary Washburn",
+      "team": "BOS",
+      "outlet": "Boston Globe",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "byjayking.bsky.social",
+      "name": "Jay King",
+      "team": "BOS",
+      "outlet": "The Athletic / Still Poddable",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "noadalzell.bsky.social",
+      "name": "Noa Dalzell",
+      "team": "BOS",
+      "outlet": "SB Nation / CLNS Media",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "bullsjay.bsky.social",
+      "name": "Jason Patt",
+      "team": "CHI",
+      "outlet": "ClutchPoints / Blog a Bull",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "ryanblackburn.bsky.social",
+      "name": "Ryan Blackburn",
+      "team": "DEN",
+      "outlet": "Mile High Sports / Pickaxe and Roll / Locked On Nuggets",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "anthonyvslater.bsky.social",
+      "name": "Anthony Slater",
+      "team": "GSW",
+      "outlet": "ESPN",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "danielle-lerner.bsky.social",
+      "name": "Danielle Lerner",
+      "team": null,
+      "outlet": "USA TODAY",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "danwoikesports.bsky.social",
+      "name": "Dan Woike",
+      "team": "LAL",
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "rylanstiles.bsky.social",
+      "name": "Rylan Stiles",
+      "team": "OKC",
+      "outlet": "Locked On Thunder / Thunder on SI",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jxlorenzi.bsky.social",
+      "name": "Joel Lorenzi",
+      "team": null,
+      "outlet": "The Athletic (ex-Oklahoman)",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "andrewschlecht.bsky.social",
+      "name": "Andrew Schlecht",
+      "team": "OKC",
+      "outlet": "The Athletic / Down to Dunk",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "fredkatz.bsky.social",
+      "name": "Fred Katz",
+      "team": "NYK",
+      "outlet": "The Athletic",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jledwardsiii.bsky.social",
+      "name": "James L. Edwards III",
+      "team": "NYK",
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "drewhilldailym.bsky.social",
+      "name": "Drew Hill",
+      "team": "MEM",
+      "outlet": "The Daily Memphian",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "damichaelcole.bsky.social",
+      "name": "Damichael Cole",
+      "team": "MEM",
+      "outlet": "The Commercial Appeal",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "christianclark3.bsky.social",
+      "name": "Christian Clark",
+      "team": "DAL",
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "busyxb.bsky.social",
+      "name": "Busy — NetsDaily",
+      "team": "BKN",
+      "outlet": "NetsDaily",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "fearthebrown.bsky.social",
+      "name": "Shamit Dua",
+      "team": "NOP",
+      "outlet": "In The NO (intheno.net)",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "olehkosel.bsky.social",
+      "name": "Oleh Kosel",
+      "team": "NOP",
+      "outlet": "The Bird Writes / Pelicans media",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "byvarunshankar.bsky.social",
+      "name": "Varun Shankar",
+      "team": "HOU",
+      "outlet": "Houston Chronicle",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "montepoole.bsky.social",
+      "name": "Monte Poole",
+      "team": "GSW",
+      "outlet": "NBC Sports Bay Area",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "bennettdurando.bsky.social",
+      "name": "Bennett Durando",
+      "team": "DEN",
+      "outlet": "The Denver Post",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "grantafseth.bsky.social",
+      "name": "Grant Afseth",
+      "team": "DAL",
+      "outlet": "Dallas Hoops Journal / RG.org",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "jasonlloyd.bsky.social",
+      "name": "Jason Lloyd",
+      "team": "CLE",
+      "outlet": "The Athletic",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "joevardon.bsky.social",
+      "name": "Joe Vardon",
+      "team": null,
+      "outlet": "The Athletic",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "dannycunningham.bsky.social",
+      "name": "Danny Cunningham",
+      "team": "CLE",
+      "outlet": "The Inside Shot / Locked On Cavs",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "mfollowill.bsky.social",
+      "name": "Mark Followill",
+      "team": "DAL",
+      "outlet": "Dallas Mavericks TV (play-by-play) / NBA on NBC-Peacock",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "nickvanexit.bsky.social",
+      "name": "Nick Angstadt",
+      "team": "DAL",
+      "outlet": "Locked On Mavs (podcast network)",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "joelrushnba.bsky.social",
+      "name": "Joel Rush",
+      "team": "DEN",
+      "outlet": "Forbes (contributor)",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "bgeisinger.bsky.social",
+      "name": "Brian Geisinger",
+      "team": "CHA",
+      "outlet": "Buzz Beat (Charlotte Hornets podcast) / briangeisinger.substack.com",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "chrisherrington.bsky.social",
+      "name": "Chris Herrington",
+      "team": "MEM",
+      "outlet": "The Daily Memphian",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "nolajake.bsky.social",
+      "name": "Jake Madison",
+      "team": "NOP",
+      "outlet": "Locked On Pelicans",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "saltcityhoops.bsky.social",
+      "name": "Salt City Hoops",
+      "team": "UTA",
+      "outlet": "Salt City Hoops (ESPN TrueHoop) / Salt Lake Tribune",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "andyblarsen.bsky.social",
+      "name": "Andy Larsen",
+      "team": "UTA",
+      "outlet": "The Salt Lake Tribune",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "lakerssbn.bsky.social",
+      "name": "Silver Screen and Roll",
+      "team": "LAL",
+      "outlet": "SB Nation — Los Angeles Lakers blog",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "codytaylornba.bsky.social",
+      "name": "Cody Taylor",
+      "team": "ORL",
+      "outlet": "Rookie Wire (USA TODAY Network)",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "hunterpatterson.bsky.social",
+      "name": "Hunter Patterson",
+      "team": "DET",
+      "outlet": "The Athletic",
+      "bskyVerified": true,
+      "kind": "reporter"
+    },
+    {
+      "handle": "ginamizell.bsky.social",
+      "name": "Gina Mizell",
+      "team": "PHI",
+      "outlet": "The Philadelphia Inquirer",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "christopherhine.bsky.social",
+      "name": "Chris Hine",
+      "team": "PHI",
+      "outlet": "The Philadelphia Inquirer",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "michaelgrangenba.bsky.social",
+      "name": "Michael Grange",
+      "team": "TOR",
+      "outlet": "Rogers Sportsnet",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "lucaskaplan.bsky.social",
+      "name": "Lucas Kaplan",
+      "team": "BKN",
+      "outlet": "NetsDaily / SwishTheory",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "rodwalkernola.bsky.social",
+      "name": "Rod Walker",
+      "team": "NOP",
+      "outlet": "The Times-Picayune | The New Orleans Advocate",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "masonginsberg.bsky.social",
+      "name": "Mason Ginsberg",
+      "team": "NOP",
+      "outlet": "In the NO podcast",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "juliapoe.bsky.social",
+      "name": "Julia Poe",
+      "team": "CHI",
+      "outlet": "Chicago Tribune",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "willgottlieb.bsky.social",
+      "name": "Will Gottlieb",
+      "team": "CHI",
+      "outlet": "CHGO Sports",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "caitlinmaycooper.bsky.social",
+      "name": "Caitlin Cooper",
+      "team": "IND",
+      "outlet": "Basketball, She Wrote (independent blog)",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "britishbuzz.bsky.social",
+      "name": "James Plowright",
+      "team": "CHA",
+      "outlet": "CLTure / Buzz Beat podcast",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "chasedcsports.bsky.social",
+      "name": "Chase Hughes",
+      "team": "WAS",
+      "outlet": "Monumental Sports Network (team-owned RSN)",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "millerjryan.bsky.social",
+      "name": "Ryan Miller",
+      "team": "UTA",
+      "outlet": "KSL.com",
+      "bskyVerified": false,
+      "kind": "reporter"
+    },
+    {
+      "handle": "stevepopper.bsky.social",
+      "name": "Steve Popper",
+      "team": "NYK",
+      "outlet": "Newsday",
+      "bskyVerified": false,
+      "kind": "reporter"
+    }
+  ],
+  "social": [
+    {
+      "handle": "nba.com",
+      "name": "NBA — official league account",
+      "team": null,
+      "outlet": null,
+      "bskyVerified": true,
+      "kind": "official-league"
+    },
+    {
+      "handle": "trailblazers.bsky.social",
+      "name": "Portland Trail Blazers — official",
+      "team": "POR",
+      "outlet": null,
+      "bskyVerified": true,
+      "kind": "official-team"
+    },
+    {
+      "handle": "nuggets.bsky.social",
+      "name": "Denver Nuggets — official",
+      "team": "DEN",
+      "outlet": null,
+      "bskyVerified": true,
+      "kind": "official-team"
+    },
+    {
+      "handle": "sixersnba.bsky.social",
+      "name": "Philadelphia 76ers — official",
+      "team": "PHI",
+      "outlet": null,
+      "bskyVerified": true,
+      "kind": "official-team"
+    }
+  ]
+}

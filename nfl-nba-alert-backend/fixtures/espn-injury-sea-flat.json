@@ -1,0 +1,26 @@
+{
+  "provenance": {
+    "url": "https://site.web.api.espn.com/apis/site/v2/sports/football/nfl/injuries?team=sea",
+    "observed": "2026-09-25T22:08Z",
+    "note": "Team-filtered payload is a flat injuries[] of athlete rows, not team blocks. ESPN's own timestamp on this response was 2026-09-25T21:11:46Z, older than the unfiltered payload's 2026-09-25T22:04:50Z. Logos removed."
+  },
+  "timestamp": "2026-09-25T21:11:46Z",
+  "status": "success",
+  "injuries": [
+    {
+      "id": "639160",
+      "longComment": "Charbonnet sits on the reserve/PUP list due to the left ACL tear he suffered in the divisional round on Jan. 17.",
+      "shortComment": "Head coach Mike Macdonald said Friday that Charbonnet (knee) returning to practice next week is potentially on the table.",
+      "status": "Out",
+      "date": "2026-09-25T20:50Z",
+      "athlete": {
+        "displayName": "Zach Charbonnet",
+        "position": { "abbreviation": "RB" },
+        "team": { "abbreviation": "SEA", "displayName": "Seattle Seahawks" },
+        "links": [
+          { "rel": ["playercard"], "href": "https://www.espn.com/nfl/player/_/id/4426385/zach-charbonnet" }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "provenance": {
+    "url": "https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/events/401872948/competitions/401872948/plays?limit=5",
+    "observed": "2026-09-25T22:05Z",
+    "note": "Second play of ATL @ GB. No injury keyword. Participant $refs dropped. text, shortText, type, wallclock and team $ref are as returned."
+  },
+  "count": 185,
+  "items": [
+    {
+      "id": "40187294840",
+      "type": { "id": "53", "text": "Kickoff", "abbreviation": "K" },
+      "text": "T.Smack kicks 59 yards from GB 35 to ATL 6. Br.Robinson to ATL 30 for 24 yards (B.Melton).",
+      "shortText": "Trey Smack 59 Yd Kickoff Brian Robinson Jr. 24 Yd Kickoff Return",
+      "wallclock": "2026-09-25T00:15:29Z",
+      "period": { "number": 1 },
+      "clock": { "value": 900.0, "displayValue": "15:00" },
+      "team": { "$ref": "http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2026/teams/1" }
+    }
+  ]
+}

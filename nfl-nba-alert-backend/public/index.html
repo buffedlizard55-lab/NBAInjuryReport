@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Injury wire</title>
+<style>
+  :root {
+    --bg: #14120e;
+    --ink: #f4efe4;
+    --muted: #a39886;
+    --line: #3a342b;
+    --card: #1e1a15;
+    --out: #e23b2f;
+    --q: #e0a106;
+    --rep: #d8d2c6;
+    --ok: #7dba6a;
+    --bad: #e23b2f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.45 "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  }
+  header, main { max-width: 980px; margin: 0 auto; padding: 28px 20px; }
+  header { border-bottom: 1px solid var(--line); }
+  h1 { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0; }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .stat, .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .stat { min-width: 140px; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat span, .muted { color: var(--muted); font-size: 13px; }
+  h2 { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin: 28px 0 10px; }
+  .alert {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+  }
+  .pill {
+    align-self: start;
+    font: 11px/1.2 ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: #2a261f;
+  }
+  .pill.OUT_FOR_GAME { color: white; background: var(--out); }
+  .pill.QUESTIONABLE_TO_RETURN { color: #1a1404; background: var(--q); }
+  .pill.INJURY_REPORTED { color: #1a1404; background: var(--rep); }
+  .who { font-size: 18px; }
+  .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+  a { color: #f0d48a; }
+  .quote { margin: 8px 0 0; color: #ddd4c4; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td, th { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ok { color: var(--ok); }
+  .bad { color: var(--bad); }
+  .idle { color: var(--muted); }
+  footer { color: var(--muted); font-size: 13px; padding-bottom: 40px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Injury wire</h1>
+  <p class="sub">Free sources only. Polls <code>/api/alerts</code> every 2 seconds. An empty board during the week is the scoreboard gate, not a missed injury.</p>
+  <div class="row" id="stats"></div>
+</header>
+<main>
+  <h2>Live games</h2>
+  <div id="games" class="muted">Waiting for the first read.</div>
+  <h2>Alerts</h2>
+  <div id="alerts"></div>
+  <h2>Collectors</h2>
+  <table>
+    <thead><tr><th>Collector</th><th>Status</th><th>Last run</th><th>Error</th></tr></thead>
+    <tbody id="collectors"></tbody>
+  </table>
+  <footer id="foot"></footer>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function age(iso) {
+  if (!iso) return "—";
+  const ms = Date.now() - Date.parse(iso);
+  if (!Number.isFinite(ms)) return iso;
+  const s = Math.round(ms / 1000);
+  if (s < 90) return s + "s ago";
+  const m = Math.round(s / 60);
+  if (m < 90) return m + "m ago";
+  return Math.round(m / 60) + "h ago";
+}
+async function tick() {
+  let alerts, health;
+  try {
+    const [a, h] = await Promise.all([
+      fetch("/api/alerts?limit=20", { cache: "no-store" }),
+      fetch("/api/health", { cache: "no-store" })
+    ]);
+    alerts = await a.json();
+    health = await h.json();
+  } catch (e) {
+    $("alerts").innerHTML = "<p class='bad'>API unreachable. " + esc(e.message) + "</p>";
+    return;
+  }
+  const gw = alerts.game_window || {};
+  const live = gw.active_games || [];
+  $("stats").innerHTML = [
+    ["DB", health.db_connection || "—"],
+    ["Alerts stored", health.alerts_total],
+    ["Uptime", (health.uptime_seconds || 0) + "s"],
+    ["Live games", live.length],
+    ["Window hours", gw.window_hours]
+  ].map(([k, v]) => "<div class='stat'><span>" + esc(k) + "</span><b>" + esc(v) + "</b></div>").join("");
+  const board = (alerts.collectors || []).find(c => c.collector_name === "espn-scoreboard");
+  const boardDown = board && board.status === "error";
+  $("games").innerHTML = live.length
+    ? live.map(g => "<div class='card'>" + esc(g.name || g.clubs.join(" · ")) + " · " + esc(g.detail || g.state) + " · " + esc(g.game_id) + "</div>").join("")
+    : boardDown
+      ? "<p class='bad'>Scoreboard was not read (" + esc(board.error_msg) + "). Idle collectors are not a claim that no game is live.</p>"
+      : "<p>No game in ESPN state <b>in</b>. Collectors that look for injuries stay idle. Last scoreboard read: " + esc(gw.last_scoreboard_at || "not yet") + ".</p>";
+  const rows = alerts.alerts || [];
+  $("alerts").innerHTML = rows.length ? rows.map(a => `
+    <article class="alert">
+      <div class="pill ${esc(a.status)}">${esc(a.status)}</div>
+      <div>
+        <div class="who">${esc(a.player_name)} <span class="muted">${esc(a.team)} · ${esc(a.sport)}</span></div>
+        <div class="meta">${esc(a.source)} · ${a.verified ? "verified" : "unverified"} · source ${esc(age(a.timestamp_source))} · first seen ${esc(age(a.timestamp_first_seen))} · latency ${esc(a.latency_ms)} ms
+          ${a.source_url ? " · <a href='" + esc(a.source_url) + "' target='_blank' rel='noopener'>source</a>" : ""}
+        </div>
+        <p class="quote">${esc(a.verbatim_text)}</p>
+      </div>
+    </article>`).join("") : "<p class='muted'>No alert in the last query. That includes the case where every candidate was older than 30 minutes.</p>";
+  $("collectors").innerHTML = (alerts.collectors || []).map(c => `
+    <tr>
+      <td>${esc(c.collector_name)}</td>
+      <td class="${c.status === "ok" ? "ok" : c.status === "error" ? "bad" : "idle"}">${esc(c.status)}</td>
+      <td>${esc(age(c.last_run))}</td>
+      <td class="muted">${esc(c.error_msg || "")}</td>
+    </tr>`).join("") || "<tr><td colspan='4' class='muted'>No collector has reported yet.</td></tr>";
+  $("foot").textContent = "Polled " + new Date().toISOString() + " · /api/alerts every 2s";
+}
+tick();
+setInterval(tick, 2000);
+</script>
+</body>
+</html>

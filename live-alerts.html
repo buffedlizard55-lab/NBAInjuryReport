@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live injury alerts</title>
+<style>
+  body { margin: 0; background: #14120e; color: #f4efe4; font: 16px/1.45 Georgia, serif; }
+  main { max-width: 880px; margin: 0 auto; padding: 28px 20px 48px; }
+  h1 { font-size: 28px; margin: 0 0 8px; }
+  p, label { color: #a39886; }
+  input { width: min(100%, 640px); background: #1e1a15; color: #f4efe4; border: 1px solid #3a342b; border-radius: 6px; padding: 8px 10px; font: 14px/1.3 ui-sans-serif, system-ui, sans-serif; }
+  button { margin-left: 8px; background: #f0d48a; color: #1a1404; border: 0; border-radius: 6px; padding: 8px 12px; font: 14px/1.2 ui-sans-serif, system-ui, sans-serif; }
+  .alert { border-top: 1px solid #3a342b; padding: 12px 0; }
+  .who { font-size: 18px; }
+  a { color: #f0d48a; }
+  code { font-family: ui-monospace, monospace; font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Live injury alerts</h1>
+  <p>This page is static. It does not collect injuries. It reads <code>/api/alerts</code> on a backend you already deployed, every 2 seconds. The NBA dashboard is unchanged.</p>
+  <form id="form">
+    <label for="api">Backend origin</label><br>
+    <input id="api" name="api" placeholder="https://your-service.onrender.com" autocomplete="off">
+    <button type="submit">Poll</button>
+  </form>
+  <p id="status">Not polling.</p>
+  <div id="list"></div>
+</main>
+<script>
+const input = document.getElementById("api");
+const status = document.getElementById("status");
+const list = document.getElementById("list");
+const params = new URLSearchParams(location.search);
+const saved = params.get("api") || localStorage.getItem("alert-backend-origin") || "";
+input.value = saved;
+let timer = null;
+
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+async function tick() {
+  const origin = input.value.trim().replace(/\/$/, "");
+  if (!origin) { status.textContent = "Set a backend origin first."; return; }
+  try {
+    const res = await fetch(origin + "/api/alerts?limit=20", { cache: "no-store" });
+    const body = await res.json();
+    const games = (body.game_window && body.game_window.active_games) || [];
+    status.textContent = res.status + " · " + new Date().toISOString() + " · live games " + games.length + " · alerts " + ((body.alerts || []).length);
+    list.innerHTML = (body.alerts || []).map(a => `
+      <article class="alert">
+        <div class="who">${esc(a.player_name)} · ${esc(a.team)} · ${esc(a.status)}</div>
+        <div>${esc(a.source)} · latency ${esc(a.latency_ms)} ms · ${a.verified ? "verified" : "unverified"}
+          ${a.source_url ? " · <a href='" + esc(a.source_url) + "' target='_blank' rel='noopener'>source</a>" : ""}</div>
+        <p>${esc(a.verbatim_text)}</p>
+      </article>`).join("") || "<p>No alerts in this response.</p>";
+  } catch (e) {
+    status.textContent = "Fetch failed: " + e.message + ". The backend must send Access-Control-Allow-Origin (this service does).";
+  }
+}
+
+function start() {
+  const origin = input.value.trim().replace(/\/$/, "");
+  if (origin) localStorage.setItem("alert-backend-origin", origin);
+  if (timer) clearInterval(timer);
+  tick();
+  timer = setInterval(tick, 2000);
+}
+
+document.getElementById("form").addEventListener("submit", (e) => { e.preventDefault(); start(); });
+if (saved) start();
+</script>
+</body>
+</html>

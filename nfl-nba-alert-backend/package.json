@@ -1,0 +1,15 @@
+{
+  "name": "nfl-nba-alert-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free-source NFL/NBA injury alert backend. No paid APIs, no npm dependencies.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tools/test.js",
+    "probe": "node tools/live_probe.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
