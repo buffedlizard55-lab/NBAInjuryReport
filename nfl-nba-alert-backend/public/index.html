@@ -126,9 +126,13 @@ async function tick() {
     ["Live games", live.length],
     ["Window hours", gw.window_hours]
   ].map(([k, v]) => "<div class='stat'><span>" + esc(k) + "</span><b>" + esc(v) + "</b></div>").join("");
+  const board = (alerts.collectors || []).find(c => c.collector_name === "espn-scoreboard");
+  const boardDown = board && board.status === "error";
   $("games").innerHTML = live.length
     ? live.map(g => "<div class='card'>" + esc(g.name || g.clubs.join(" · ")) + " · " + esc(g.detail || g.state) + " · " + esc(g.game_id) + "</div>").join("")
-    : "<p>No game in ESPN state <b>in</b>. Collectors that look for injuries stay idle. Last scoreboard read: " + esc(gw.last_scoreboard_at || "not yet") + ".</p>";
+    : boardDown
+      ? "<p class='bad'>Scoreboard was not read (" + esc(board.error_msg) + "). Idle collectors are not a claim that no game is live.</p>"
+      : "<p>No game in ESPN state <b>in</b>. Collectors that look for injuries stay idle. Last scoreboard read: " + esc(gw.last_scoreboard_at || "not yet") + ".</p>";
   const rows = alerts.alerts || [];
   $("alerts").innerHTML = rows.length ? rows.map(a => `
     <article class="alert">
