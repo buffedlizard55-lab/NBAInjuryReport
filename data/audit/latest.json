@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-09-28T17:38:22.579319+00:00",
+  "checkedAt": "2026-09-29T15:49:07.649784+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -19,7 +19,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 1130,
-      "sha256": "bf4c3fc75d04ff8aef5fb190044119137ec9f1a3b69e5e1e096f8a365d63e769",
+      "sha256": "ba07ac625282a92603cae4fac97ae36034bbffe509c2fab47b7f04b59dab961b",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -45,7 +45,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
       "bytes": 116511,
-      "sha256": "719011222b1e2a7689eae7d8bd14138db285392948520bbbd16d9db12ac5c11a",
+      "sha256": "bb8ac237a0e222fcbcb4046aebe47d58fc74d9c47b5fc23cd15265d3b957d9b7",
       "probes": {
         "deadline 5pm-ish": true,
         "continual updates": true,
@@ -104,7 +104,7 @@
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
       "bytes": 278,
-      "sha256": "d8ad9d21a97e722a63b43bfd28a1399a643f0329b55b7baa7d30597f40f67673",
+      "sha256": "3ca5c8a347f8686e95dc780726833c87a10d82a2cddcb757999a5fe3ab12f890",
       "outboundLinks": [],
       "frames": [],
       "verdict": "DOCUMENTED-BLOCKER",
@@ -149,10 +149,10 @@
       "status": 200,
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
-      "bytes": 792451,
-      "sha256": "a49d7d7860f8251bd0afaad04a28c539dccd08e966d298eb8a110aef0247d1b0",
-      "teamBlocks": 27,
-      "rows": 69,
+      "bytes": 756333,
+      "sha256": "560bddc3bc96407889e745ceaaa767e3a5f5f8c5b55a6efcdf45aebde732e1ae",
+      "teamBlocks": 26,
+      "rows": 66,
       "season": {
         "year": 2027,
         "type": 1,
@@ -178,8 +178,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams",
       "contentType": "text/html",
-      "bytes": 439,
-      "sha256": "2e740f385d44862b2ebcb2cca4ed5b120cdd91c0f034080a9802168ede9afb37",
+      "bytes": 437,
+      "sha256": "ac160c7bc042f0a0d880a9be8285af13cda719004b17ad98e60aa4d17d07ad3f",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -200,8 +200,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "text/html",
-      "bytes": 444,
-      "sha256": "a55084cba9dbfc0ba4f98665e8ce4ee78c504e363e419cf43e430eaeda6dc67e",
+      "bytes": 442,
+      "sha256": "48c3eca6a2832d6de6a71391a7ddaa15a24c9591f82cdf8e0a88b8a5d98bc5c7",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -222,8 +222,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "text/html",
-      "bytes": 458,
-      "sha256": "fb4a300d7b317a808cfc363af17e58df9b8e3bd9dfe322b7ca81eb07ae55d636",
+      "bytes": 456,
+      "sha256": "0c6a046b7400e139af32908ec338762b5889c85ce315473fb646a0df9da42d17",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -284,8 +284,8 @@
       "status": 403,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "text/html",
-      "bytes": 447,
-      "sha256": "f6f6efaf66acee40a839a86887cc997e8bb7fe7d61d33c61a66296d87bb63b56",
+      "bytes": 445,
+      "sha256": "2325d01c96d84aa1072e6fb4db0d3d58176f0c2a3a037e6f19acf3c92a5ec9fa",
       "verdict": "ENV-BLOCKED",
       "meaning": "HTTP 403 to this script's plain client, so the claim under test was NOT verified by this run. The same URL can succeed from Node on the same runner and from a browser on the deployed origin (measured 2026-09-17: ESPN refused this client while the Node collector read the same hosts in the same minute) - client fingerprinting, not a source outage and not a capability change."
     },
@@ -306,7 +306,7 @@
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
       "contentType": "application/json; charset=utf-8",
       "bytes": 1352,
-      "sha256": "91c3a12121838e17ba463a121680581e0917e6e04e72eac78313c4c91e7b6871",
+      "sha256": "db107bed66b3b6ef2e2c2f2c08a6e337d4a6c7aaf45d1a33d33ff33955aa963a",
       "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
       "verification": {
         "verifications": [
@@ -323,7 +323,7 @@
         "trustedVerifierStatus": "none"
       },
       "displayName": "NBA",
-      "followers": 125301,
+      "followers": 125560,
       "bioSnippet": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! \ud83c\udfc0 3:00pm/et: Celtics/Pistons \ud83c\udfc0 7:00pm/et: 76ers/Knicks \ud83c\udfc0 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
       "verdict": "OK"
     },
@@ -434,8 +434,8 @@
       "status": 200,
       "finalUrl": "https://docs.x.com/x-api/getting-started/pricing",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 800619,
-      "sha256": "ad5fdbfac4b19d39a126efa89e2f750aa0462b63af63a81149fd718f26a562aa",
+      "bytes": 800386,
+      "sha256": "b0fd1af510c27deb9ddfb37d24e8ba77f2e9fafcf6b8f16185191c263bc2133f",
       "probes": {
         "pricing content present": true
       },
@@ -459,16 +459,14 @@
       "status": 200,
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 114258,
-      "sha256": "0e1d862cdd78ce72202c390993945e11896136376df57a459cfb2e50f30ad3ed",
+      "bytes": 114505,
+      "sha256": "4c9f9f6683caaf6ef8eb2396a0ba3371ab10f37f33f518b5765111c29f42de3b",
       "probes": {
         "player-news page": true,
         "source attribution": true,
-        "status tag word in raw HTML": false
+        "status tag word in raw HTML": true
       },
-      "probesMissing": [
-        "status tag word in raw HTML"
-      ],
+      "probesMissing": [],
       "outboundLinks": [
         "http://www.w3.org/2000/svg",
         "https://analytics.rotomonster.com/script.js",
@@ -484,20 +482,20 @@
         "https://schema.org",
         "https://sportradar.com/",
         "https://sports.yahoo.com/fantasy/",
+        "https://twitter.com/AndrewGreif/status/2104631279404867856",
         "https://twitter.com/BaskMonster",
         "https://twitter.com/HornetsReddit/status/2103987350099423627",
-        "https://twitter.com/ShamsCharania/status/2103523489865240893",
         "https://twitter.com/ShamsCharania/status/2103956001506414760",
+        "https://twitter.com/ShamsCharania/status/2104676929651552263",
         "https://twitter.com/TheSteinLine/status/2103577691404603666",
         "https://twitter.com/UnderdogNBA/status/2104317945698758980",
         "https://twitter.com/anthonyVslater/status/2104588513874473201",
-        "https://www.nba.com/news/raptors-brandon-ingram-surgery-right-heel",
         "https://x.com/BaskMonster",
+        "https://x.com/TomerAzarly/status/2104628934952579271?s=20",
         "https://x.com/ronknowssports/status/2103522555193938043?s=46&amp;t=pn6FykU--0hjwjHDcOYX7w"
       ],
       "frames": [],
-      "verdict": "OK-PAGE-CHANGED",
-      "meaning": "Reachable as documented, but the wording this check looks for moved: status tag word in raw HTML"
+      "verdict": "OK"
     },
     {
       "id": "covers-injuries",
@@ -516,8 +514,8 @@
       "status": 200,
       "finalUrl": "https://www.covers.com/sport/basketball/nba/injuries",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 374671,
-      "sha256": "067c28f86d6db4fea4102963e54ed21b0adc9f95d6b66d54c06213f518c1324c",
+      "bytes": 374599,
+      "sha256": "151b9637413478a0908fa22fa8b8aabbf2dc3d3a58bd117e13a22a49aff8b93a",
       "probes": {
         "injury table": true,
         "teams named": true
@@ -572,8 +570,8 @@
       "status": 200,
       "finalUrl": "https://www.rotoballer.com/player-news?sport=nba",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 1011881,
-      "sha256": "533e1827065fed1e394dc191ff36a160aefa4722261314feb941a1e4dcb67f9a",
+      "bytes": 1016584,
+      "sha256": "d7fda18e4da163cfd45781a8027592cf801c5618a654997204b1f2e4ff1ab7eb",
       "outboundLinks": [
         "http://benchsports.com/?ref=rotoballer",
         "http://custom.transaction",
@@ -581,20 +579,20 @@
         "http://ogp.me/ns#",
         "http://www.facebook.com/2008/fbml",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/alperen-sengun-works-on-three-point-shot/1952709&title=Alperen+Sengun+Works+on+Three-Point+Shot",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/blake-wesley-signing-one-year-deal-with-clippers/1952671&title=Blake+Wesley+Signing+One-Year+Deal+with+Clippers",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/daniel-gafford-adds-three-point-shot-in-camp/1952659&title=Daniel+Gafford+Adds+Three-Point+Shot+in+Camp",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/dennis-smith-jr-agrees-to-exhibit-10-deal-with-heat/1952380&title=Dennis+Smith+Jr.+Agrees+to+Exhibit+10+Deal+with+Heat",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/fred-vanvleet-faces-early-minutes-limit/1951946&title=Fred+VanVleet+Faces+Early+Minutes+Limit",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/gary-harris-waived-by-pistons/1952368&title=Gary+Harris+Waived+by+Pistons",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/ian-schieffelin-joins-heat-on-exhibit-10-deal/1951981&title=Ian+Schieffelin+Joins+Heat+on+Exhibit+10+Deal",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/jalen-duren-expected-to-miss-pistons-media-day/1952429&title=Jalen+Duren+Expected+to+Miss+Pistons+Media+Day",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/kevin-mccullar-jr-returns-to-knicks-on-two-way-deal/1952417&title=Kevin+McCullar+Jr.+Returns+to+Knicks+on+Two-Way+Deal",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/bradley-beal-to-miss-start-of-clippers-camp/1953535&title=Bradley+Beal+to+Miss+Start+of+Clippers+Camp",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/brandon-ingram-to-miss-start-of-season-with-partially-torn-achilles/1953279&title=Brandon+Ingram+to+Miss+Start+of+Season+with+Partially+Torn+Achilles",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/collin-murray-boyles-to-play-both-frontcourt-spots/1953255&title=Collin+Murray-Boyles+to+Play+Both+Frontcourt+Spots",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/jalen-duren-skips-pistons-media-day/1953240&title=Jalen+Duren+Skips+Pistons+Media+Day",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/jordan-miller-out-for-first-half-of-season/1953550&title=Jordan+Miller+Out+for+First+Half+of+Season",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/josh-giddey-enters-camp-with-no-restrictions/1953588&title=Josh+Giddey+Enters+Camp+with+No+Restrictions",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/karl-anthony-towns-to-remain-hub-of-knicks-offense/1953293&title=Karl-Anthony+Towns+to+Remain+Hub+of+Knicks+Offense",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/khaman-maluach-draws-strong-praise-ahead-of-camp/1953287&title=Khaman+Maluach+Draws+Strong+Praise+Ahead+of+Camp",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/kristaps-porzingis-out-indefinitely-with-undisclosed-health-issue/1953245&title=Kristaps+Porzingis+Out+Indefinitely+with+Undisclosed+Health+Issue",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/max-christie-gets-more-on-ball-work-in-mavericks-camp/1952721&title=Max+Christie+Gets+More+On-Ball+Work+in+Mavericks+Camp",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/miles-kelly-joins-warriors-on-training-camp-deal/1952679&title=Miles+Kelly+Joins+Warriors+on+Training+Camp+Deal",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/nfaly-dante-signs-exhibit-10-deal-with-knicks/1951972&title=N%27Faly+Dante+Signs+Exhibit+10+Deal+with+Knicks",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/santi-aldama-limited-by-nagging-injury-at-mavericks-camp/1951956&title=Santi+Aldama+Limited+by+Nagging+Injury+at+Mavericks+Camp",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/steven-adams-expected-to-sit-one-leg-of-back-to-backs-early/1951936&title=Steven+Adams+Expected+to+Sit+One+Leg+of+Back-to-Backs+Early",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/tyler-nickel-signs-two-way-deal-with-knicks/1952401&title=Tyler+Nickel+Signs+Two-Way+Deal+with+Knicks",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/morez-johnson-jr-limited-early-in-mavericks-camp/1953570&title=Morez+Johnson+Jr.+Limited+Early+in+Mavericks+Camp",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/rob-dillingham-waived-by-hornets/1953596&title=Rob+Dillingham+Waived+by+Hornets",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/tyrese-haliburton-says-he-has-no-restrictions/1953264&title=Tyrese+Haliburton+Says+He+Has+No+Restrictions",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/yanic-konan-niederhauser-to-miss-opening-night/1953539&title=Yanic+Konan+Niederhauser+to+Miss+Opening+Night",
         "http://www.theszn.com/rb",
         "http://www.w3.org/1999/xhtml",
         "http://www.w3.org/2000/svg",
@@ -623,8 +621,8 @@
       "status": 200,
       "finalUrl": "https://nba.balldontlie.io/",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 456971,
-      "sha256": "d70b20e7961770f33f2b7dd59d0c952341d5c97169409f3ef300c0c88ae9f52b",
+      "bytes": 457047,
+      "sha256": "e78e88d958b71cf82590e5dddd74f49eefa6e6651925727414dc286d9bdec204",
       "probes": {
         "paid tier named ALL-STAR": true,
         "injury endpoint mentioned": true
@@ -650,8 +648,8 @@
       "status": 200,
       "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 237806,
-      "sha256": "ae1508991062a467cc9fe9007a70a43474be0a16b659bfe80ca78ed634b0e418",
+      "bytes": 240161,
+      "sha256": "f47f08837081ae564a3bd213f13041faa275c04681d61b4d8e77dc86be8fab44",
       "verdict": "OK"
     },
     {
@@ -672,8 +670,8 @@
       "status": 200,
       "finalUrl": "https://www.sportsmediawatch.com/2026/02/new-york-times-hires-ex-washington-post-sportswriters/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 469001,
-      "sha256": "337f0014475888a17fd3af53b0dc8eec29926cb3f177c8a33fae3a2fe7a5ee1f",
+      "bytes": 469306,
+      "sha256": "7652c2a9731ea2dd6918eb91cefcaadb679f914f071334b03c94131ab8b34a27",
       "verdict": "OK"
     }
   ],
@@ -681,9 +679,8 @@
     "total": 22,
     "byVerdict": {
       "DOCUMENTED-BLOCKER": 3,
-      "OK": 12,
-      "ENV-BLOCKED": 6,
-      "OK-PAGE-CHANGED": 1
+      "OK": 13,
+      "ENV-BLOCKED": 6
     },
     "verifiedByThisRun": 16,
     "notVerifiedByThisRun": 6,
