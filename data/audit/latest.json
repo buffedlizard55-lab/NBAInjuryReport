@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-10T15:21:12.894630+00:00",
+  "checkedAt": "2026-10-11T15:38:06.994882+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -19,7 +19,7 @@
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
       "bytes": 1130,
-      "sha256": "1834d8f06e0e28cafa456ad7e04c86292460beb9d96f6b0d36893ae5c4d9cbd7",
+      "sha256": "57da21df9008f20dc28d95fb3ee91cfa5c28a4df27c06927672eb741c283b22f",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -44,8 +44,8 @@
       "status": 200,
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 116657,
-      "sha256": "e89ec253c72e6c50d62ca01f2da765b231304439fe13c47573153fd3ba61705f",
+      "bytes": 116662,
+      "sha256": "f07064497e39677671e908a56e1763c5e41384744fdf228b75b4d57160e79cdd",
       "probes": {
         "deadline 5pm-ish": true,
         "continual updates": true,
@@ -104,7 +104,7 @@
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
       "bytes": 280,
-      "sha256": "6f63175b919521acfeaa0dcfb4d01c4a3ff4084c882b2c65c385126035693753",
+      "sha256": "f9ff0b4f54ec4db8c83bc20be4ba99c0cbfab76e1a243d362f4be97cb09a82bf",
       "outboundLinks": [],
       "frames": [],
       "verdict": "DOCUMENTED-BLOCKER",
@@ -149,10 +149,10 @@
       "status": 200,
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
-      "bytes": 1345340,
-      "sha256": "1f2a8c2cc02f7fae93432e602ab1ca53701bf99c5618a82e81599de8c2d7bd67",
+      "bytes": 1484649,
+      "sha256": "1957567eec1f4ff566f5a74a368233308b82e930c6c96ace580a10bdf82b8201",
       "teamBlocks": 30,
-      "rows": 120,
+      "rows": 132,
       "season": {
         "year": 2027,
         "type": 1,
@@ -199,9 +199,9 @@
       "status": 200,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "application/json;charset=UTF-8",
-      "bytes": 87396,
-      "sha256": "7d0455cd56a80cfd8a05ae463f293ecc307aebb36b9e21437a4d464f82abfd59",
-      "events": 7,
+      "bytes": 58291,
+      "sha256": "854a197ad85b954532a2c237c781a1613963de08a63b180e2990e841f3f076d8",
+      "events": 4,
       "leagueSeason": {
         "season": {
           "year": 2027,
@@ -236,13 +236,231 @@
       "status": 200,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "application/json;charset=UTF-8",
-      "bytes": 101737,
-      "sha256": "bd1fa04f7f2159d170682ee90c1521a9d208f499e8588bca0e6f867d9f4339d4",
+      "bytes": 115615,
+      "sha256": "6258b9cc403c8f7da94dcf9993cef202a90f18a9f13c11755900eced19720562",
       "athletesPath": "athletes (top level)",
-      "athletes": 21,
-      "withInjuryListing": 4,
-      "withContract": 16,
+      "athletes": 24,
+      "withInjuryListing": 9,
+      "withContract": 18,
       "sample": [
+        {
+          "player": "Bam Adebayo",
+          "position": "C",
+          "experienceYears": 9,
+          "injuries": [
+            {
+              "status": "Day-To-Day",
+              "date": "2026-10-10T22:35Z"
+            }
+          ],
+          "contracts": [
+            {
+              "salary": 49500000,
+              "season": {
+                "year": 2027,
+                "startDate": "2026-09-30T07:00Z",
+                "endDate": "2027-06-26T06:59Z"
+              }
+            },
+            {
+              "salary": 37096620,
+              "season": {
+                "year": 2026,
+                "startDate": "2025-10-01T07:00Z",
+                "endDate": "2026-06-27T06:59Z"
+              }
+            },
+            {
+              "salary": 34848340,
+              "season": {
+                "year": 2025,
+                "startDate": "2024-09-24T07:00Z",
+                "endDate": "2025-06-27T06:59Z"
+              }
+            },
+            {
+              "salary": 32600060,
+              "season": {
+                "year": 2024,
+                "startDate": "2023-10-05T07:00Z",
+                "endDate": "2024-06-21T06:59Z"
+              }
+            },
+            {
+              "salary": 30351780,
+              "season": {
+                "year": 2023,
+                "startDate": "2022-08-30T07:00Z",
+                "endDate": "2023-06-24T06:59Z"
+              }
+            },
+            {
+              "salary": 28103500,
+              "season": {
+                "year": 2022,
+                "startDate": "2021-09-22T07:00Z",
+                "endDate": "2022-06-20T06:59Z"
+              }
+            },
+            {
+              "salary": 5115492,
+              "season": {
+                "year": 2021,
+                "startDate": "2020-12-02T08:00Z",
+                "endDate": "2021-07-23T06:59Z"
+              }
+            },
+            {
+              "salary": 3454080,
+              "season": {
+                "year": 2020,
+                "startDate": "2019-09-28T07:00Z",
+                "endDate": "2020-10-22T06:59Z"
+              }
+            },
+            {
+              "salary": 2955840,
+              "season": {
+                "year": 2019,
+                "startDate": "2018-09-13T07:00Z",
+                "endDate": "2019-06-24T06:59Z"
+              }
+            },
+            {
+              "salary": 2955840,
+              "season": {
+                "year": 2018,
+                "startDate": "2017-09-30T07:00Z",
+                "endDate": "2018-07-01T06:59Z"
+              }
+            }
+          ]
+        },
+        {
+          "player": "Giannis Antetokounmpo",
+          "position": "F",
+          "experienceYears": 13,
+          "injuries": [
+            {
+              "status": "Day-To-Day",
+              "date": "2026-10-10T22:31Z"
+            }
+          ],
+          "contracts": [
+            {
+              "salary": 58456566,
+              "season": {
+                "year": 2027,
+                "startDate": "2026-09-30T07:00Z",
+                "endDate": "2027-06-26T06:59Z"
+              }
+            },
+            {
+              "salary": 54126450,
+              "season": {
+                "year": 2026,
+                "startDate": "2025-10-01T07:00Z",
+                "endDate": "2026-06-27T06:59Z"
+              }
+            },
+            {
+              "salary": 48787676,
+              "season": {
+                "year": 2025,
+                "startDate": "2024-09-24T07:00Z",
+                "endDate": "2025-06-27T06:59Z"
+              }
+            },
+            {
+              "salary": 45640084,
+              "season": {
+                "year": 2024,
+                "startDate": "2023-10-05T07:00Z",
+                "endDate": "2024-06-21T06:59Z"
+              }
+            },
+            {
+              "salary": 42492492,
+              "season": {
+                "year": 2023,
+                "startDate": "2022-08-30T07:00Z",
+                "endDate": "2023-06-24T06:59Z"
+              }
+            },
+            {
+              "salary": 39344970,
+              "season": {
+                "year": 2022,
+                "startDate": "2021-09-22T07:00Z",
+                "endDate": "2022-06-20T06:59Z"
+              }
+            },
+            {
+              "salary": 27528090,
+              "season": {
+                "year": 2021,
+                "startDate": "2020-12-02T08:00Z",
+                "endDate": "2021-07-23T06:59Z"
+              }
+            },
+            {
+              "salary": 25842697,
+              "season": {
+                "year": 2020,
+                "startDate": "2019-09-28T07:00Z",
+                "endDate": "2020-10-22T06:59Z"
+              }
+            },
+            {
+              "salary": 24157303,
+              "season": {
+                "year": 2019,
+                "startDate": "2018-09-13T07:00Z",
+                "endDate": "2019-06-24T06:59Z"
+              }
+            },
+            {
+              "salary": 24157303,
+              "season": {
+                "year": 2018,
+                "startDate": "2017-09-30T07:00Z",
+                "endDate": "2018-07-01T06:59Z"
+              }
+            },
+            {
+              "salary": 2995421,
+              "season": {
+                "year": 2017,
+                "startDate": "2016-10-01T07:00Z",
+                "endDate": "2017-07-01T06:59Z"
+              }
+            },
+            {
+              "salary": 1953960,
+              "season": {
+                "year": 2016,
+                "startDate": "2015-10-01T07:00Z",
+                "endDate": "2016-07-01T06:59Z"
+              }
+            },
+            {
+              "salary": 1873200,
+              "season": {
+                "year": 2015,
+                "startDate": "2014-10-03T07:00Z",
+                "endDate": "2015-07-01T06:59Z"
+              }
+            },
+            {
+              "salary": 1792560,
+              "season": {
+                "year": 2014,
+                "startDate": "2013-10-04T07:00Z",
+                "endDate": "2014-07-01T06:59Z"
+              }
+            }
+          ]
+        },
         {
           "player": "Keshad Johnson",
           "position": "F",
@@ -264,64 +482,6 @@
             },
             {
               "salary": 724883,
-              "season": {
-                "year": 2025,
-                "startDate": "2024-09-24T07:00Z",
-                "endDate": "2025-06-27T06:59Z"
-              }
-            }
-          ]
-        },
-        {
-          "player": "Kylor Kelley",
-          "position": "C",
-          "experienceYears": 1,
-          "injuries": [
-            {
-              "status": "Day-To-Day",
-              "date": "2026-10-09T03:40Z"
-            }
-          ],
-          "contracts": [
-            {
-              "salary": 0,
-              "season": {
-                "year": 2025,
-                "startDate": "2024-09-24T07:00Z",
-                "endDate": "2025-06-27T06:59Z"
-              }
-            }
-          ]
-        },
-        {
-          "player": "Pelle Larsson",
-          "position": "G",
-          "experienceYears": 2,
-          "injuries": [
-            {
-              "status": "Day-To-Day",
-              "date": "2026-10-08T23:08Z"
-            }
-          ],
-          "contracts": [
-            {
-              "salary": 2296271,
-              "season": {
-                "year": 2027,
-                "startDate": "2026-09-30T07:00Z",
-                "endDate": "2027-06-26T06:59Z"
-              }
-            },
-            {
-              "salary": 1955377,
-              "season": {
-                "year": 2026,
-                "startDate": "2025-10-01T07:00Z",
-                "endDate": "2026-06-27T06:59Z"
-              }
-            },
-            {
-              "salary": 1157143,
               "season": {
                 "year": 2025,
                 "startDate": "2024-09-24T07:00Z",
@@ -390,8 +550,8 @@
       "status": 200,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "application/json;charset=UTF-8",
-      "bytes": 22080,
-      "sha256": "663dabe429121c7af92f7746fccb5dab5b2950b632128f5bfafc43ee769f7a26",
+      "bytes": 24694,
+      "sha256": "3b72b4cae76f4c09b9bc014a055bcc61ee9ae166444254f8be5b9d84a7a3eaa0",
       "teamId": "14",
       "teamNickname": null,
       "teamAbbrev": "MIA",
@@ -414,7 +574,7 @@
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
       "contentType": "application/json; charset=utf-8",
       "bytes": 1313,
-      "sha256": "e7b842035548e41457ef29a06240af8f71c37f6f1ea14678afddf5704316628d",
+      "sha256": "75de1a673fa18d29745696aabd1f7f1f45267b67dcb88a431fb8e50cc48373d2",
       "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
       "verification": {
         "verifications": [
@@ -431,7 +591,7 @@
         "trustedVerifierStatus": "none"
       },
       "displayName": "NBA",
-      "followers": 128706,
+      "followers": 128998,
       "bioSnippet": "Watch the Rockets and Mavericks live from Macao in the NBA China Games 2026 on Sunday, 10/11 (6:00am/et) on NBA TV! \ud83c\udfc0\n\nThe official account for the NBA",
       "verdict": "OK"
     },
@@ -543,7 +703,7 @@
       "finalUrl": "https://docs.x.com/x-api/getting-started/pricing",
       "contentType": "text/html; charset=utf-8",
       "bytes": 808276,
-      "sha256": "09147bc0dfb3201abfb9896ac9b24cd472322620c7220de6d8fe3ced56284e9b",
+      "sha256": "8ae89a80ead624e1e4a82bb40485e19f650931200fc5b25c9450a51343caeb30",
       "probes": {
         "pricing content present": true
       },
@@ -567,8 +727,8 @@
       "status": 200,
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 113817,
-      "sha256": "131b762701f9fd032ee2cb17e2fa5cd43fe981211573a56f0fc025a9429a9320",
+      "bytes": 114589,
+      "sha256": "1b37e1ef92b056cfdd83ffacebcf9b6ff2e2d2c328e9f5ce7cc7e29d70b2cfdf",
       "probes": {
         "player-news page": true,
         "source attribution": true,
@@ -577,9 +737,9 @@
       "probesMissing": [],
       "outboundLinks": [
         "http://www.w3.org/2000/svg",
-        "https://analytics.rotomonster.com/script.js",
         "https://api-docs.sportradar.us/logo/powered-by-sportradar-300w.png",
         "https://api-docs.sportradar.us/logo/powered-by-sportradar-reversed-300w.png",
+        "https://basketball.realgm.com/wiretap/287587/Kyle-Filipowski-Yet-To-Return-To-On-Cout-Work-After-Offseason-Back-Surgery",
         "https://basketballmonster.com",
         "https://basketballmonster.com/images/bbm-logo.png",
         "https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css",
@@ -590,12 +750,12 @@
         "https://schema.org",
         "https://sportradar.com/",
         "https://sports.yahoo.com/fantasy/",
+        "https://twitter.com/AlexGoldenNBA/status/2109033866065326518",
         "https://twitter.com/BaskMonster",
         "https://twitter.com/BrettSiegelNBA/status/2108367644697198696",
         "https://twitter.com/ChrisBHaynes/status/2107969074911387820",
         "https://twitter.com/DuaneRankin/status/2108036005475352921",
-        "https://twitter.com/ShamsCharania/status/2107548790819267047",
-        "https://twitter.com/anthonyVslater/status/2107697212612657354",
+        "https://twitter.com/jovanbuha/status/2109006767720182194",
         "https://x.com/BaskMonster",
         "https://x.com/GrizzliesPR/status/2108692940902240323/photo/1",
         "https://x.com/kcjhoop/status/2108727626529493381?s=46&amp;t=pn6FykU--0hjwjHDcOYX7w"
@@ -620,8 +780,8 @@
       "status": 200,
       "finalUrl": "https://www.covers.com/sport/basketball/nba/injuries",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 411918,
-      "sha256": "2b309fd7a3216df1af389ff566f3d3fb02b76d046dd6534350116fe833a15a64",
+      "bytes": 409834,
+      "sha256": "5bb212d32154918c73ee804d902ff191db19c6340d5385fa3ec52e6da7da85b7",
       "probes": {
         "injury table": true,
         "teams named": true
@@ -676,29 +836,29 @@
       "status": 200,
       "finalUrl": "https://www.rotoballer.com/player-news?sport=nba",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 989246,
-      "sha256": "3818e1e3f3ef221df8f1d00cf2dc06919f04cc0e87cbd86e276a834ad937424e",
+      "bytes": 993469,
+      "sha256": "fbe716947f6eca3258d9b8a0758ddf0bc06cc387bdc9e3564fb867e4017973d0",
       "outboundLinks": [
         "http://benchsports.com/?ref=rotoballer",
         "http://custom.transaction",
         "http://eepurl.com/gfwXen",
         "http://ogp.me/ns#",
         "http://www.facebook.com/2008/fbml",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/austin-reaves-dishes-eight-assists-in-preseason-debut/1961896&title=Austin+Reaves+Dishes+Eight+Assists+in+Preseason+Debut",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/brandin-podziemski-agrees-to-110-million-extension-with-warriors/1963558&title=Brandin+Podziemski+Agrees+to+%24110+Million+Extension+with+Warriors",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/caleb-wilson-pours-in-21-points-in-preseason-loss-to-grizzlies/1962767&title=Caleb+Wilson+Pours+in+21+Points+in+Preseason+Loss+to+Grizzlies",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/cameron-boozer-efficient-in-preseason-win-over-bulls/1962818&title=Cameron+Boozer+Efficient+in+Preseason+Win+Over+Bulls",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/fred-vanvleet-turns-in-impressive-preseason-debut/1962454&title=Fred+VanVleet+Turns+in+Impressive+Preseason+Debut",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/dylan-harper-stays-hot-in-second-preseason-start/1963574&title=Dylan+Harper+Stays+Hot+in+Second+Preseason+Start",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/isaiah-stewart-sidelined-at-least-two-weeks/1962472&title=Isaiah+Stewart+Sidelined+at+Least+Two+Weeks",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/kawhi-leonard-out-saturday-against-clippers/1962745&title=Kawhi+Leonard+Out+Saturday+Against+Clippers",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/lebron-james-runs-offense-in-sixers-preseason-debut/1961876&title=LeBron+James+Runs+Offense+in+Sixers+Preseason+Debut",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/khaman-maluach-posts-double-double-in-first-preseason-start/1963579&title=Khaman+Maluach+Posts+Double-Double+in+First+Preseason+Start",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/matas-buzelis-exits-fridays-preseason-contest-early/1962487&title=Matas+Buzelis+Exits+Friday%27s+Preseason+Contest+Early",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/max-christie-logs-solid-outing-in-preseason-loss-friday/1962466&title=Max+Christie+Logs+Solid+Outing+in+Preseason+Loss+Friday",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/maxime-raynaud-exits-in-a-wheelchair-with-right-knee-injury/1963567&title=Maxime+Raynaud+Exits+in+a+Wheelchair+with+Right+Knee+Injury",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/norman-powell-goes-10-for-12-at-the-line-in-preseason-loss-to-memphis/1962775&title=Norman+Powell+Goes+10-for-12+at+the+Line+in+Preseason+Loss+to+Memphis",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/oso-ighodaro-fills-the-stat-sheet-in-win-over-spurs/1963583&title=Oso+Ighodaro+Fills+the+Stat+Sheet+in+Win+Over+Spurs",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/pelicans-waive-christian-koloko/1962755&title=Pelicans+Waive+Christian+Koloko",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/steven-adams-plays-14-minutes-in-return-on-friday/1962458&title=Steven+Adams+Plays+14+Minutes+in+Return+on+Friday",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/ty-jerome-drills-four-triples-in-preseason-win-over-bulls/1962797&title=Ty+Jerome+Drills+Four+Triples+in+Preseason+Win+Over+Bulls",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/tyrese-maxey-scores-14-points-in-preseason-debut/1961891&title=Tyrese+Maxey+Scores+14+Points+in+Preseason+Debut",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/yves-missi-nears-double-double-against-heat/1961865&title=Yves+Missi+Nears+Double-Double+Against+Heat",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/yaxel-lendeborg-posts-23-point-double-double-against-kings/1963589&title=Yaxel+Lendeborg+Posts+23-Point+Double-Double+Against+Kings",
         "http://www.theszn.com/rb",
         "http://www.w3.org/1999/xhtml",
         "http://www.w3.org/2000/svg",
@@ -754,8 +914,8 @@
       "status": 200,
       "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 241455,
-      "sha256": "18d93ce2bf20b6a8dc042575ec463aa83e8f17f76f696088ae2f6a02ac881430",
+      "bytes": 241563,
+      "sha256": "2a31965d0efe8cc363265dff2a7ff1b8624265c9111937f72922de7ad3a2d012",
       "verdict": "OK"
     },
     {
@@ -776,8 +936,8 @@
       "status": 200,
       "finalUrl": "https://www.sportsmediawatch.com/2026/02/new-york-times-hires-ex-washington-post-sportswriters/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 467658,
-      "sha256": "9e7a86174bae52e5950bd5974cee1c28c4f8e860c2ff72b04c106172bef7cacc",
+      "bytes": 467194,
+      "sha256": "713b1de98871e8158ab8f3e407e5377f71074d283317a2f4381b43fcee0fbb05",
       "verdict": "OK"
     }
   ],
