@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-13T16:56:08.142933+00:00",
+  "checkedAt": "2026-10-14T14:29:50.540430+00:00",
   "why": "Re-reads every source claim the registry makes, from a real network. See tools/verify_live.py.",
   "checks": [
     {
@@ -18,8 +18,8 @@
       "status": 404,
       "finalUrl": "https://official.nba.com/nba-injury-report-2026-27-season/",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 1129,
-      "sha256": "c70065e780d3265c2421347de49b04c5387cd4badcfcc8410cfcef1363cc7bf3",
+      "bytes": 1130,
+      "sha256": "ebd2332e50836a070da57a45665614038cdadbe9975070aaff6742cb78106153",
       "outboundLinks": [
         "http://official.nba.com/",
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"
@@ -44,8 +44,8 @@
       "status": 200,
       "finalUrl": "https://official.nba.com/nba-injury-report-2025-26-season/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 116777,
-      "sha256": "7ddd341c6b870027dbd1b212ae04368cc0c75ee5283193ccd8496477569b7174",
+      "bytes": 116914,
+      "sha256": "c090575c114b0388cc22c5e2cf86585d192c26bc91bf251d87ce75f8b470e83c",
       "probes": {
         "deadline 5pm-ish": true,
         "continual updates": true,
@@ -103,8 +103,8 @@
       "status": 503,
       "finalUrl": "https://ak-static.cms.nba.com/referee/injury/",
       "contentType": "text/html",
-      "bytes": 280,
-      "sha256": "091bc7b88c0d11373b2a851cd53f41764e765ec5adecda8c86c993035ddd37a4",
+      "bytes": 278,
+      "sha256": "a5985d3a4ef8879d36a0c4c19f47efb25a1ffda8d6a11c58282355252a8f2d38",
       "outboundLinks": [],
       "frames": [],
       "verdict": "DOCUMENTED-BLOCKER",
@@ -149,8 +149,8 @@
       "status": 200,
       "finalUrl": "https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/injuries",
       "contentType": "application/json;charset=UTF-8",
-      "bytes": 1535932,
-      "sha256": "0e9e4cba043815be816b93b819106a7798cb88a13b63c39a2b7da7c001b614d6",
+      "bytes": 1532932,
+      "sha256": "dde56b50f53a9a0fa7254f2c722ec35d3ee08e4e3da368a6126d198d0c4d1837",
       "teamBlocks": 30,
       "rows": 137,
       "season": {
@@ -199,8 +199,8 @@
       "status": 200,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
       "contentType": "application/json;charset=UTF-8",
-      "bytes": 63965,
-      "sha256": "c7866b9b6700ef1a80e6f71971a11efe018fb2ff7abca8b30662e31ba4a6a739",
+      "bytes": 94131,
+      "sha256": "e7f955d22346aca3a66748b7e1f2ca3d2c7068a7d9598801fb4b112b84b09614",
       "events": 5,
       "leagueSeason": {
         "season": {
@@ -237,7 +237,7 @@
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia/roster",
       "contentType": "application/json;charset=UTF-8",
       "bytes": 115680,
-      "sha256": "8c0477bc1913b6dd03b84ae62bf6502f4dbe786ae502569e999e0874b4bc8f45",
+      "sha256": "1bea11f95701081bcea15b0d53f0e363772ef3acd0bc14eabd059c3767bb7742",
       "athletesPath": "athletes (top level)",
       "athletes": 24,
       "withInjuryListing": 9,
@@ -550,8 +550,8 @@
       "status": 200,
       "finalUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/mia",
       "contentType": "application/json",
-      "bytes": 19872,
-      "sha256": "e85b442490057b9cb0e4c1d4c8ee18643b599dbcc2e2a22659c8e0b7c575398d",
+      "bytes": 19873,
+      "sha256": "ea906187311800abecf81b1c1915fa3a85fe58a76a8616d875413b62da696ddc",
       "teamId": "14",
       "teamNickname": null,
       "teamAbbrev": "MIA",
@@ -574,7 +574,7 @@
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=nba.com",
       "contentType": "application/json; charset=utf-8",
       "bytes": 1352,
-      "sha256": "6a446ad3003f1280c4949290b355b3c7c9f24bc4ffe73805e27fd8441fa665b6",
+      "sha256": "ce7eb635abe53a5acd9a9b2b7944779ba5660efa95181912be0175b615156e72",
       "did": "did:plc:7sfnardo5xxznxc6esxc5ooe",
       "verification": {
         "verifications": [
@@ -591,7 +591,7 @@
         "trustedVerifierStatus": "none"
       },
       "displayName": "NBA",
-      "followers": 129471,
+      "followers": 129686,
       "bioSnippet": "The 2026-27 NBA season tips off Tuesday, Oct. 20 on NBC and Peacock! \ud83c\udfc0 3:00pm/et: Celtics/Pistons \ud83c\udfc0 7:00pm/et: 76ers/Knicks \ud83c\udfc0 9:30pm/et: Thunder/Spurs\n\nThe official account for the NBA",
       "verdict": "OK"
     },
@@ -612,7 +612,7 @@
       "finalUrl": "https://public.api.bsky.app/xrpc/app.bsky.graph.getFollows?actor=nba.com&limit=50",
       "contentType": "application/json; charset=utf-8",
       "bytes": 5246,
-      "sha256": "2ed50cebd41ede74f9eafd209a00546d037d885ccb3b57eb2d5be506e01008aa",
+      "sha256": "0c0dec34f6deda9caa9ef521f782cc633922dd523f1c9266825474ec700fa133",
       "follows": 6,
       "verifiedFollows": 4,
       "unverifiedHandles": [
@@ -702,8 +702,8 @@
       "status": 200,
       "finalUrl": "https://docs.x.com/x-api/getting-started/pricing",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 811541,
-      "sha256": "a6b0aa6333be84e1f503b5ffffc610400663bde8db8f4c57111dd6e25399aaa6",
+      "bytes": 811895,
+      "sha256": "1e94beae6aed9a4b78f9cd24350ed70cc21e71eba993aa7314c518cedf88bf28",
       "probes": {
         "pricing content present": true
       },
@@ -727,8 +727,8 @@
       "status": 200,
       "finalUrl": "https://basketballmonster.com/playernews.aspx",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 115634,
-      "sha256": "be5492f6f7640d7f587f91cc69a6dfa899e4657abad30b34d36fa72b4a4ea322",
+      "bytes": 116400,
+      "sha256": "2fc6f7973f4e61cbccfe59d6e203fe61e23fb8556aa3ead9a3390c0ef9bc5975",
       "probes": {
         "player-news page": true,
         "source attribution": true,
@@ -751,13 +751,13 @@
         "https://sportradar.com/",
         "https://sports.yahoo.com/fantasy/",
         "https://twitter.com/AlexGoldenNBA/status/2109033866065326518",
+        "https://twitter.com/AlexGoldenNBA/status/2110197634535473492",
         "https://twitter.com/BaskMonster",
+        "https://twitter.com/FCartoscelli3/status/2110111551990751429",
         "https://twitter.com/James_HamNBA/status/2109346702058815778",
         "https://twitter.com/RealBobManning/status/2109653654886302124",
-        "https://twitter.com/jovanbuha/status/2109006767720182194",
         "https://twitter.com/tom_orsborn/status/2109794813440856311",
-        "https://x.com/BaskMonster",
-        "https://x.com/kcjhoop/status/2108727626529493381?s=46&amp;t=pn6FykU--0hjwjHDcOYX7w"
+        "https://x.com/BaskMonster"
       ],
       "frames": [],
       "verdict": "OK"
@@ -779,8 +779,8 @@
       "status": 200,
       "finalUrl": "https://www.covers.com/sport/basketball/nba/injuries",
       "contentType": "text/html; charset=utf-8",
-      "bytes": 404255,
-      "sha256": "6e08b7edf506f43c308b28880457a2f9f84d3ff4cff3d2bd9bba07e0b2e13810",
+      "bytes": 415253,
+      "sha256": "ca55b473e3cd90e62e88cff896dc7918dff1bf63e877519b19006010abc2f5a0",
       "probes": {
         "injury table": true,
         "teams named": true
@@ -835,29 +835,29 @@
       "status": 200,
       "finalUrl": "https://www.rotoballer.com/player-news?sport=nba",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 974448,
-      "sha256": "05bfab2447845f0b81274c9c9fc57b55562d27e574ea781ab8a41bec9507e8ae",
+      "bytes": 974295,
+      "sha256": "a4f36aff87529b9ee442a3b05dc817205bdaa4adec1775c9c17fea2214547105",
       "outboundLinks": [
         "http://benchsports.com/?ref=rotoballer",
         "http://custom.transaction",
         "http://eepurl.com/gfwXen",
         "http://ogp.me/ns#",
         "http://www.facebook.com/2008/fbml",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/alexandre-sarr-makes-preseason-debut-after-foot-surgery/1964809&title=Alexandre+Sarr+Makes+Preseason+Debut+After+Foot+Surgery",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/ben-simmons-expected-to-begin-2026-27-season-as-starter/1964843&title=Ben+Simmons+Expected+to+Begin+2026-27+Season+as+Starter",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/brandon-miller-drills-four-triples-in-win-over-bucks/1964231&title=Brandon+Miller+Drills+Four+Triples+in+Win+Over+Bucks",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/cooper-flagg-dishes-seven-assists-in-win-over-rockets/1964236&title=Cooper+Flagg+Dishes+Seven+Assists+in+Win+Over+Rockets",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/gui-santos-positioned-to-start-on-opening-night/1965069&title=Gui+Santos+Positioned+to+Start+on+Opening+Night",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/kawhi-leonard-available-to-play-on-tuesday/1964832&title=Kawhi+Leonard+Available+to+Play+on+Tuesday",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/austin-reaves-pours-in-28-points-against-warriors/1965874&title=Austin+Reaves+Pours+in+28+Points+Against+Warriors",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/brandin-podziemski-tallies-17-points-in-win-over-lakers/1965908&title=Brandin+Podziemski+Tallies+17+Points+in+Win+Over+Lakers",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/dylan-cardwell-sidelined-at-least-two-weeks/1965690&title=Dylan+Cardwell+Sidelined+at+Least+Two+Weeks",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/james-wiseman-posts-double-double-in-preseason-start/1965856&title=James+Wiseman+Posts+Double-Double+in+Preseason+Start",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/kawhi-leonard-looks-sharp-in-toronto-return/1965847&title=Kawhi+Leonard+Looks+Sharp+in+Toronto+Return",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/kristaps-porzingis-still-without-return-to-court-timeline/1965098&title=Kristaps+Porzingis+Still+Without+Return-to-Court+Timeline",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/luka-doncic-resting-tuesday-versus-golden-state/1965698&title=Luka+Doncic+Resting+Tuesday+Versus+Golden+State",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/mikel-brown-jr-expected-to-make-his-preseason-debut-wednesday/1965134&title=Mikel+Brown+Jr.+Expected+to+Make+His+Preseason+Debut+Wednesday",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/miles-bridges-recovering-well-from-ankle-injury/1964821&title=Miles+Bridges+Recovering+Well+from+Ankle+Injury",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/nikola-jokic-posts-triple-double-in-preseason-win-over-bulls/1964244&title=Nikola+Jokic+Posts+Triple-Double+in+Preseason+Win+Over+Bulls",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/nuggets-waive-lonnie-walker-iv/1965107&title=Nuggets+Waive+Lonnie+Walker+IV",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/tyler-herro-scores-preseason-high-18-points-against-hornets/1964250&title=Tyler+Herro+Scores+Preseason-High+18+Points+Against+Hornets",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/tyrese-haliburton-tweaks-right-ankle-hopeful-to-play-on-tuesday/1964850&title=Tyrese+Haliburton+Tweaks+Right+Ankle%2C+Hopeful+to+Play+on+Tuesday",
-        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/yaxel-lendeborg-in-line-for-opening-night-start/1965092&title=Yaxel+Lendeborg+in+Line+for+Opening-Night+Start",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/payton-pritchard-agrees-to-two-year-extension-with-celtics/1965687&title=Payton+Pritchard+Agrees+to+Two-Year+Extension+with+Celtics",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/tyrese-haliburton-scores-24-points-in-return-to-oklahoma-city/1965866&title=Tyrese+Haliburton+Scores+24+Points+in+Return+to+Oklahoma+City",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/walker-kessler-set-to-make-preseason-debut-tuesday/1965692&title=Walker+Kessler+Set+to+Make+Preseason+Debut+Tuesday",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/yaxel-lendeborg-shakes-off-ankle-scare-in-las-vegas/1965891&title=Yaxel+Lendeborg+Shakes+Off+Ankle+Scare+in+Las+Vegas",
         "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/yuki-kawamura-waived-by-clippers/1965118&title=Yuki+Kawamura+Waived+by+Clippers",
+        "http://www.reddit.com/submit?url=https://www.rotoballer.com/player-news/ziaire-williams-ruled-out-again-on-tuesday/1965708&title=Ziaire+Williams+Ruled+Out+Again+on+Tuesday",
         "http://www.theszn.com/rb",
         "http://www.w3.org/1999/xhtml",
         "http://www.w3.org/2000/svg",
@@ -913,8 +913,8 @@
       "status": 200,
       "finalUrl": "https://frontofficesports.com/article/anthony-slater-espn-reporter-nba-bay-area/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 233797,
-      "sha256": "ad1924d648c1d9ee8651d1d756901455ef7e1507be0e92f0ba30cf5377620aaf",
+      "bytes": 232925,
+      "sha256": "c91844f8e3b4bc90dd0b7fc006cd96598e33ba67db04923bc3ac2336f214016f",
       "verdict": "OK"
     },
     {
@@ -935,8 +935,8 @@
       "status": 200,
       "finalUrl": "https://www.sportsmediawatch.com/2026/02/new-york-times-hires-ex-washington-post-sportswriters/",
       "contentType": "text/html; charset=UTF-8",
-      "bytes": 467461,
-      "sha256": "2ea395983ab48ddc0bdb7c07d9f680ef94660c94efb92837d9ab42c61bd6d389",
+      "bytes": 467494,
+      "sha256": "e2822cf00bdcb35bb7c40e9a6a7076e90d2e4aef95aa82789ec5ac2658a60602",
       "verdict": "OK"
     }
   ],
